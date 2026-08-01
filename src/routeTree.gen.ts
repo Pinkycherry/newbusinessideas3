@@ -10,33 +10,102 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BrowseRouteImport } from './routes/browse'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as CategoryCategorySlugRouteImport } from './routes/category.$categorySlug'
+import { Route as IdeaSlugRouteImport } from './routes/idea.$slug'
+import { Route as CategoryCategorySlugSubcategorySlugRouteImport } from './routes/category.$categorySlug.$subcategorySlug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrowseRoute = BrowseRouteImport.update({
+  id: '/browse',
+  path: '/browse',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoryCategorySlugRoute = CategoryCategorySlugRouteImport.update({
+  id: '/category/$categorySlug',
+  path: '/category/$categorySlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IdeaSlugRoute = IdeaSlugRouteImport.update({
+  id: '/idea/$slug',
+  path: '/idea/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoryCategorySlugSubcategorySlugRoute =
+  CategoryCategorySlugSubcategorySlugRouteImport.update({
+    id: '/$subcategorySlug',
+    path: '/$subcategorySlug',
+    getParentRoute: () => CategoryCategorySlugRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/browse': typeof BrowseRoute
+  '/search': typeof SearchRoute
+  '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
+  '/idea/$slug': typeof IdeaSlugRoute
+  '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/browse': typeof BrowseRoute
+  '/search': typeof SearchRoute
+  '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
+  '/idea/$slug': typeof IdeaSlugRoute
+  '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/browse': typeof BrowseRoute
+  '/search': typeof SearchRoute
+  '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
+  '/idea/$slug': typeof IdeaSlugRoute
+  '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/browse'
+    | '/search'
+    | '/category/$categorySlug'
+    | '/idea/$slug'
+    | '/category/$categorySlug/$subcategorySlug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/browse'
+    | '/search'
+    | '/category/$categorySlug'
+    | '/idea/$slug'
+    | '/category/$categorySlug/$subcategorySlug'
+  id:
+    | '__root__'
+    | '/'
+    | '/browse'
+    | '/search'
+    | '/category/$categorySlug'
+    | '/idea/$slug'
+    | '/category/$categorySlug/$subcategorySlug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BrowseRoute: typeof BrowseRoute
+  SearchRoute: typeof SearchRoute
+  CategoryCategorySlugRoute: typeof CategoryCategorySlugRouteWithChildren
+  IdeaSlugRoute: typeof IdeaSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +117,63 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/browse': {
+      id: '/browse'
+      path: '/browse'
+      fullPath: '/browse'
+      preLoaderRoute: typeof BrowseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/category/$categorySlug': {
+      id: '/category/$categorySlug'
+      path: '/category/$categorySlug'
+      fullPath: '/category/$categorySlug'
+      preLoaderRoute: typeof CategoryCategorySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/idea/$slug': {
+      id: '/idea/$slug'
+      path: '/idea/$slug'
+      fullPath: '/idea/$slug'
+      preLoaderRoute: typeof IdeaSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/category/$categorySlug/$subcategorySlug': {
+      id: '/category/$categorySlug/$subcategorySlug'
+      path: '/$subcategorySlug'
+      fullPath: '/category/$categorySlug/$subcategorySlug'
+      preLoaderRoute: typeof CategoryCategorySlugSubcategorySlugRouteImport
+      parentRoute: typeof CategoryCategorySlugRoute
+    }
   }
 }
 
+interface CategoryCategorySlugRouteChildren {
+  CategoryCategorySlugSubcategorySlugRoute: typeof CategoryCategorySlugSubcategorySlugRoute
+}
+
+const CategoryCategorySlugRouteChildren: CategoryCategorySlugRouteChildren = {
+  CategoryCategorySlugSubcategorySlugRoute:
+    CategoryCategorySlugSubcategorySlugRoute,
+}
+
+const CategoryCategorySlugRouteWithChildren =
+  CategoryCategorySlugRoute._addFileChildren(CategoryCategorySlugRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BrowseRoute: BrowseRoute,
+  SearchRoute: SearchRoute,
+  CategoryCategorySlugRoute: CategoryCategorySlugRouteWithChildren,
+  IdeaSlugRoute: IdeaSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
