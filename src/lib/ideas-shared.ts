@@ -55,10 +55,11 @@ export function toStringList(value: unknown): string[] {
       return current.filter((item): item is string => typeof item === "string");
     }
     if (typeof current !== "string") return [];
+    const text: string = current;
     try {
-      current = JSON.parse(current);
+      current = JSON.parse(text);
     } catch {
-      return current.trim() ? [current] : [];
+      return text.trim() ? [text] : [];
     }
   }
   return [];
