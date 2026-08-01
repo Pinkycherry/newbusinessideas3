@@ -1,30 +1,44 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
+import { AmbientScene } from "@/components/ambient-scene";
+
+const navLinks = [
+  { to: "/", label: "Home" },
+  { to: "/browse", label: "Browse" },
+  { to: "/search", label: "Search" },
+];
+
 export function SiteShell({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
-      <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
-          <Link to="/" className="flex items-baseline gap-2">
-            <span className="text-lg font-black uppercase tracking-[0.2em]">Idea</span>
-            <span className="rounded-sm bg-primary px-1.5 py-0.5 text-lg font-black uppercase tracking-[0.2em] text-primary-foreground">
+    <div className="relative flex min-h-screen flex-col text-foreground">
+      <AmbientScene />
+      <header className="sticky top-0 z-40 px-3 pt-3 sm:px-4 sm:pt-5">
+        <div className="glass mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-full px-4 py-3 sm:px-6">
+          <Link to="/" className="flex min-w-0 items-baseline gap-2">
+            <span className="truncate text-base font-black uppercase tracking-[0.22em] [text-shadow:0_0_18px_oklch(1_0_0/45%)] sm:text-lg">
+              Idea
+            </span>
+            <span className="rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-0.5 text-base font-black uppercase tracking-[0.18em] text-primary-foreground shadow-[0_0_24px_oklch(0.723_0.161_56/45%)] sm:text-lg">
               Vault
             </span>
           </Link>
-          <nav className="flex items-center gap-5 text-sm font-medium text-muted-foreground">
-            <Link to="/browse" className="transition-colors hover:text-foreground">
-              Browse
-            </Link>
-            <Link to="/search" className="transition-colors hover:text-foreground">
-              Search
-            </Link>
+          <nav className="flex shrink-0 items-center gap-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground sm:gap-6 sm:text-xs">
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="relative transition-colors duration-300 hover:text-foreground after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-primary after:transition-all after:duration-500 hover:after:w-full"
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
         </div>
       </header>
       <main className="flex-1">{children}</main>
-      <footer className="border-t border-border">
-        <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-muted-foreground">
+      <footer className="px-3 pb-6 pt-16 sm:px-4">
+        <div className="glass mx-auto max-w-6xl rounded-3xl px-6 py-8 text-sm text-muted-foreground">
           IdeaVault AI — business idea blueprints, sourced from the live IdeaVault dataset.
         </div>
       </footer>

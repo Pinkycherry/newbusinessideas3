@@ -7,25 +7,27 @@ export function IdeaCard({ idea }: { idea: IdeaCardData }) {
     <Link
       to="/idea/$slug"
       params={{ slug: idea.slug }}
-      className="group flex h-full flex-col gap-3 rounded-lg border border-border bg-card p-5 transition-colors hover:border-primary"
+      className="glass glass-hover group flex h-full flex-col gap-3 rounded-2xl p-5"
     >
       <div className="flex items-center justify-between gap-3 text-[11px] uppercase tracking-widest text-muted-foreground">
-        <span>{idea.subcategoryName}</span>
+        <span className="truncate">{idea.subcategoryName}</span>
         {idea.locked ? (
-          <span className="rounded-sm bg-primary px-1.5 py-0.5 font-semibold text-primary-foreground">
+          <span className="shrink-0 rounded-full bg-gradient-to-r from-primary to-accent px-2 py-0.5 font-semibold text-primary-foreground">
             Pro
           </span>
         ) : idea.trendScore !== null ? (
-          <span className="text-accent">Trend {idea.trendScore}</span>
+          <span className="shrink-0 text-accent">Trend {idea.trendScore}</span>
         ) : null}
       </div>
-      <h3 className="text-lg font-semibold leading-snug group-hover:text-primary">{idea.title}</h3>
+      <h3 className="text-lg font-semibold leading-snug transition-colors duration-300 group-hover:text-accent">
+        {idea.title}
+      </h3>
       <p className="line-clamp-3 text-sm text-muted-foreground">{idea.summary}</p>
       <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
         {idea.tags.slice(0, 3).map((tag) => (
           <span
             key={tag}
-            className="rounded-sm border border-border px-2 py-0.5 text-[11px] text-muted-foreground"
+            className="rounded-full border border-border px-2.5 py-0.5 text-[11px] text-muted-foreground"
           >
             {tag}
           </span>
