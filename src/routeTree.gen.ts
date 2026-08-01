@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as CategoryCategorySlugRouteImport } from './routes/category.$categorySlug'
+import { Route as CategoryCategorySlugSubcategorySlugRouteImport } from './routes/category.$categorySlug.$subcategorySlug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,57 @@ const CategoryCategorySlugRoute = CategoryCategorySlugRouteImport.update({
   path: '/category/$categorySlug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CategoryCategorySlugSubcategorySlugRoute =
+  CategoryCategorySlugSubcategorySlugRouteImport.update({
+    id: '/$subcategorySlug',
+    path: '/$subcategorySlug',
+    getParentRoute: () => CategoryCategorySlugRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
-  '/category/$categorySlug': typeof CategoryCategorySlugRoute
+  '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
+  '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
-  '/category/$categorySlug': typeof CategoryCategorySlugRoute
+  '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
+  '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
-  '/category/$categorySlug': typeof CategoryCategorySlugRoute
+  '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
+  '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/browse' | '/category/$categorySlug'
+  fullPaths:
+    | '/'
+    | '/browse'
+    | '/category/$categorySlug'
+    | '/category/$categorySlug/$subcategorySlug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/browse' | '/category/$categorySlug'
-  id: '__root__' | '/' | '/browse' | '/category/$categorySlug'
+  to:
+    | '/'
+    | '/browse'
+    | '/category/$categorySlug'
+    | '/category/$categorySlug/$subcategorySlug'
+  id:
+    | '__root__'
+    | '/'
+    | '/browse'
+    | '/category/$categorySlug'
+    | '/category/$categorySlug/$subcategorySlug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BrowseRoute: typeof BrowseRoute
-  CategoryCategorySlugRoute: typeof CategoryCategorySlugRoute
+  CategoryCategorySlugRoute: typeof CategoryCategorySlugRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -82,13 +105,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategoryCategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/category/$categorySlug/$subcategorySlug': {
+      id: '/category/$categorySlug/$subcategorySlug'
+      path: '/$subcategorySlug'
+      fullPath: '/category/$categorySlug/$subcategorySlug'
+      preLoaderRoute: typeof CategoryCategorySlugSubcategorySlugRouteImport
+      parentRoute: typeof CategoryCategorySlugRoute
+    }
   }
 }
+
+interface CategoryCategorySlugRouteChildren {
+  CategoryCategorySlugSubcategorySlugRoute: typeof CategoryCategorySlugSubcategorySlugRoute
+}
+
+const CategoryCategorySlugRouteChildren: CategoryCategorySlugRouteChildren = {
+  CategoryCategorySlugSubcategorySlugRoute:
+    CategoryCategorySlugSubcategorySlugRoute,
+}
+
+const CategoryCategorySlugRouteWithChildren =
+  CategoryCategorySlugRoute._addFileChildren(CategoryCategorySlugRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BrowseRoute: BrowseRoute,
-  CategoryCategorySlugRoute: CategoryCategorySlugRoute,
+  CategoryCategorySlugRoute: CategoryCategorySlugRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
