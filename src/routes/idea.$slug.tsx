@@ -2,6 +2,7 @@ import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
 import { IdeaCard } from "@/components/idea-card";
+import { AiAudit } from "@/components/ai-audit";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getIdeaBySlug } from "@/lib/ideas.functions";
 
@@ -153,6 +154,8 @@ function IdeaPage() {
             )}
           </>
         )}
+
+        <AiAudit slug={idea.slug} />
 
         {idea.tags.length > 0 && (
           <div className="mt-10 flex flex-wrap gap-2">

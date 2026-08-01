@@ -10,8 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as BrowseRouteImport } from './routes/browse'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as GdprRouteImport } from './routes/gdpr'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CategoryCategorySlugRouteImport } from './routes/category.$categorySlug'
 import { Route as IdeaSlugRouteImport } from './routes/idea.$slug'
 import { Route as CategoryCategorySlugSubcategorySlugRouteImport } from './routes/category.$categorySlug.$subcategorySlug'
@@ -21,14 +32,69 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BrowseRoute = BrowseRouteImport.update({
   id: '/browse',
   path: '/browse',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DisclaimerRoute = DisclaimerRouteImport.update({
+  id: '/disclaimer',
+  path: '/disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GdprRoute = GdprRouteImport.update({
+  id: '/gdpr',
+  path: '/gdpr',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundPolicyRoute = RefundPolicyRouteImport.update({
+  id: '/refund-policy',
+  path: '/refund-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
   path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoryCategorySlugRoute = CategoryCategorySlugRouteImport.update({
@@ -50,62 +116,139 @@ const CategoryCategorySlugSubcategorySlugRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/browse': typeof BrowseRoute
+  '/contact': typeof ContactRoute
+  '/disclaimer': typeof DisclaimerRoute
+  '/gdpr': typeof GdprRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/search': typeof SearchRoute
+  '/services': typeof ServicesRoute
+  '/terms': typeof TermsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
   '/idea/$slug': typeof IdeaSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/browse': typeof BrowseRoute
+  '/contact': typeof ContactRoute
+  '/disclaimer': typeof DisclaimerRoute
+  '/gdpr': typeof GdprRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/search': typeof SearchRoute
+  '/services': typeof ServicesRoute
+  '/terms': typeof TermsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
   '/idea/$slug': typeof IdeaSlugRoute
+  '/blog': typeof BlogIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/browse': typeof BrowseRoute
+  '/contact': typeof ContactRoute
+  '/disclaimer': typeof DisclaimerRoute
+  '/gdpr': typeof GdprRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/search': typeof SearchRoute
+  '/services': typeof ServicesRoute
+  '/terms': typeof TermsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
   '/idea/$slug': typeof IdeaSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/browse'
+    | '/contact'
+    | '/disclaimer'
+    | '/gdpr'
+    | '/pricing'
+    | '/privacy'
+    | '/refund-policy'
     | '/search'
+    | '/services'
+    | '/terms'
+    | '/blog/$slug'
     | '/category/$categorySlug'
     | '/idea/$slug'
+    | '/blog/'
     | '/category/$categorySlug/$subcategorySlug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/browse'
+    | '/contact'
+    | '/disclaimer'
+    | '/gdpr'
+    | '/pricing'
+    | '/privacy'
+    | '/refund-policy'
     | '/search'
+    | '/services'
+    | '/terms'
+    | '/blog/$slug'
     | '/category/$categorySlug'
     | '/idea/$slug'
+    | '/blog'
     | '/category/$categorySlug/$subcategorySlug'
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/browse'
+    | '/contact'
+    | '/disclaimer'
+    | '/gdpr'
+    | '/pricing'
+    | '/privacy'
+    | '/refund-policy'
     | '/search'
+    | '/services'
+    | '/terms'
+    | '/blog/$slug'
     | '/category/$categorySlug'
     | '/idea/$slug'
+    | '/blog/'
     | '/category/$categorySlug/$subcategorySlug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   BrowseRoute: typeof BrowseRoute
+  ContactRoute: typeof ContactRoute
+  DisclaimerRoute: typeof DisclaimerRoute
+  GdprRoute: typeof GdprRoute
+  PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
+  RefundPolicyRoute: typeof RefundPolicyRoute
   SearchRoute: typeof SearchRoute
+  ServicesRoute: typeof ServicesRoute
+  TermsRoute: typeof TermsRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   CategoryCategorySlugRoute: typeof CategoryCategorySlugRouteWithChildren
   IdeaSlugRoute: typeof IdeaSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -117,6 +260,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/browse': {
       id: '/browse'
       path: '/browse'
@@ -124,11 +274,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrowseRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/disclaimer': {
+      id: '/disclaimer'
+      path: '/disclaimer'
+      fullPath: '/disclaimer'
+      preLoaderRoute: typeof DisclaimerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gdpr': {
+      id: '/gdpr'
+      path: '/gdpr'
+      fullPath: '/gdpr'
+      preLoaderRoute: typeof GdprRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refund-policy': {
+      id: '/refund-policy'
+      path: '/refund-policy'
+      fullPath: '/refund-policy'
+      preLoaderRoute: typeof RefundPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/search': {
       id: '/search'
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/category/$categorySlug': {
@@ -169,10 +389,21 @@ const CategoryCategorySlugRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   BrowseRoute: BrowseRoute,
+  ContactRoute: ContactRoute,
+  DisclaimerRoute: DisclaimerRoute,
+  GdprRoute: GdprRoute,
+  PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
+  RefundPolicyRoute: RefundPolicyRoute,
   SearchRoute: SearchRoute,
+  ServicesRoute: ServicesRoute,
+  TermsRoute: TermsRoute,
+  BlogSlugRoute: BlogSlugRoute,
   CategoryCategorySlugRoute: CategoryCategorySlugRouteWithChildren,
   IdeaSlugRoute: IdeaSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -45,6 +45,7 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const { data: catalog } = useSuspenseQuery(catalogQuery);
   const { data: trending } = useSuspenseQuery(trendingQuery);
+  const highlights = trending.slice(0, 3);
 
   return (
     <SiteShell>
@@ -102,34 +103,62 @@ function HomePage() {
         </TiltPanel>
       </section>
 
-      <section className="mx-auto max-w-6xl px-3 py-14 sm:px-4">
-        <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-          Categories
-        </h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {catalog.categories.map((category) => (
-            <Link
-              key={category.categorySlug}
-              to="/category/$categorySlug"
-              params={{ categorySlug: category.categorySlug }}
-              className="glass glass-hover rounded-2xl p-5"
-            >
-              <h3 className="text-base font-semibold">{category.categoryName}</h3>
-              <p className="mt-1 text-xs uppercase tracking-widest text-muted-foreground">
-                {category.ideaCount} ideas · {category.subcategories.length} subcategories
-              </p>
-            </Link>
+      <section className="mx-auto max-w-6xl px-3 py-16 sm:px-4">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+              This week's picks
+            </p>
+            <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
+              Three blueprints worth your afternoon
+            </h2>
+          </div>
+          <Link
+            to="/browse"
+            className="text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
+          >
+            See all {catalog.totalIdeas} →
+          </Link>
+        </div>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {highlights.map((idea) => (
+            <IdeaCard key={idea.ideaId} idea={idea} />
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-3 pb-8 sm:px-4">
-        <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-          Highest trend scores
-        </h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {trending.map((idea) => (
-            <IdeaCard key={idea.ideaId} idea={idea} />
+      <section className="mx-auto max-w-6xl px-3 pb-10 sm:px-4">
+        <div className="grid gap-4 lg:grid-cols-3">
+          {[
+            {
+              to: "/browse" as const,
+              eyebrow: "Explore",
+              title: "Browse the vault",
+              body: `Every blueprint, organised across ${catalog.categories.length} categories and ${catalog.totalSubcategories} subcategories.`,
+            },
+            {
+              to: "/search" as const,
+              eyebrow: "Targeted",
+              title: "Search by keyword",
+              body: "Already know your market? Search titles, summaries, descriptions and tags in one pass.",
+            },
+            {
+              to: "/blog" as const,
+              eyebrow: "Long-form",
+              title: "Founder playbooks",
+              body: "Deep-dive articles on building in specific markets — separate from the idea library.",
+            },
+          ].map((card) => (
+            <Link key={card.to} to={card.to} className="glass glass-hover rounded-3xl p-7">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-accent">
+                {card.eyebrow}
+              </p>
+              <h3 className="mt-3 text-xl font-bold tracking-tight">{card.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{card.body}</p>
+              <span className="mt-5 inline-block text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                Open →
+              </span>
+            </Link>
           ))}
         </div>
       </section>
