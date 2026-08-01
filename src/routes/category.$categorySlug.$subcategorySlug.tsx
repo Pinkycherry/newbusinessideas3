@@ -1,0 +1,78 @@
+import { createFileRoute, notFound } from "@tanstack/react-router";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+
+import { IdeaCard } from "@/components/idea-card";
+import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { getSubcategoryPage } from "@/lib/ideas.functions";
+
+const subQuery = (categorySlug: string, subcategorySlug: string) =>
+  queryOptions({
+    queryKey: ["subcategory", categorySlug, subcategorySlug],
+    queryFn: () => getSubcategoryPage({ data: { categorySlug, subcategorySlug } }),
+  });
+
+export const Route = createFileRoute("/category/$categorySlug/$subcategorySlug")({
+  loader: async ({ context, params }) => {
+    const data = await context.queryClient.ensureQueryData(
+      subQuery(params.categorySlug, params.subcategorySlug),
+    );
+    if (!data.subcategoryName) throw notFound();
+    return data;
+  },
+  head: ({ loaderData }) => {
+    const name = loaderData?.subcategoryName ?? "Subcategory";
+    return {
+      meta: [
+        { title: `${name} Ideas | IdeaVault AI` },
+        {
+          name: "description",
+          content: `Business idea blueprints in ${name}: what the business is, who it serves, pros, cons and a founder-fit verdict.`,
+        },
+        { property: "og:title", content: `${name} Ideas | IdeaVault AI` },
+        {
+          property: "og:description",
+          content: `Business idea blueprints in ${name} with pros, cons and a founder-fit verdict.`,
+        },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+    };
+  },
+  component: SubcategoryPage,
+  errorComponent: () => (
+    <SiteShell>
+      <p className="mx-auto max-w-6xl px-4 py-24">This subcategory could not be loaded.</p>
+    </SiteShell>
+  ),
+  notFoundComponent: () => (
+    <SiteShell>
+      <p className="mx-auto max-w-6xl px-4 py-24">No such subcategory.</p>
+    </SiteShell>
+  ),
+});
+
+function SubcategoryPage() {
+  const { categorySlug, subcategorySlug } = Route.useParams();
+  const { data } = useSuspenseQuery(subQuery(categorySlug, subcategorySlug));
+  return (
+    <SiteShell>
+      <div className="mx-auto max-w-6xl px-4 py-12">
+        <Breadcrumbs
+          items={[
+            { label: "Home", to: "/" },
+            { label: "Browse", to: "/browse" },
+            { label: data.categoryName ?? categorySlug, to: "/category/$categorySlug", params: { categorySlug } },
+            { label: data.subcategoryName ?? subcategorySlug },
+          ]}
+        />
+        <h1 className="mt-4 text-3xl font-bold tracking-tight">{data.subcategoryName}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {data.ideas.map((idea) => (
+            <IdeaCard key={idea.ideaId} idea={idea} />
+          ))}
+        </div>
+      </div>
+    </SiteShell>
+  );
+}
