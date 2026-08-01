@@ -77,11 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "IdeaVault AI — Researched Business Idea Blueprints" },
+      {
+        name: "description",
+        content:
+          "Researched business idea blueprints with market context, trend scores, honest verdicts and live AI audits.",
+      },
+      { name: "author", content: "IdeaVault AI" },
+      { property: "og:title", content: "IdeaVault AI" },
+      {
+        property: "og:description",
+        content: "Researched business idea blueprints with trend scores and live AI audits.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
