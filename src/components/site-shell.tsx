@@ -12,10 +12,14 @@ const navLinks = [
   { to: "/search", label: "Search" },
 ];
 
+const isDesktop = () =>
+  typeof window !== "undefined" && window.matchMedia("(min-width: 640px)").matches;
+
 /** Categories are never hardcoded — they come from the live `ideas` table. */
-function CategoryMenu() {
+function CategoryMenu({ onNavigate }: { onNavigate?: () => void }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { data } = useQuery({
     queryKey: ["catalog"],
     queryFn: () => getCatalog(),
@@ -33,12 +37,27 @@ function CategoryMenu() {
 
   const categories = data?.categories ?? [];
 
+  const openOnHover = () => {
+    if (!isDesktop()) return;
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpen(true);
+  };
+  const closeOnLeave = () => {
+    if (!isDesktop()) return;
+    closeTimer.current = setTimeout(() => setOpen(false), 140);
+  };
+  const close = () => {
+    setOpen(false);
+    onNavigate?.();
+  };
+
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative" onMouseEnter={openOnHover} onMouseLeave={closeOnLeave}>
       <button
         type="button"
         aria-expanded={open}
         aria-haspopup="menu"
+        onFocus={openOnHover}
         onClick={() => setOpen((v) => !v)}
         className="flex items-center gap-1.5 uppercase tracking-[0.18em] transition-colors duration-300 hover:text-foreground"
       >
@@ -50,7 +69,7 @@ function CategoryMenu() {
       {open && (
         <div
           role="menu"
-          className="glass absolute right-0 top-[calc(100%+1rem)] z-50 max-h-[60vh] w-[min(20rem,80vw)] overflow-y-auto rounded-2xl p-2"
+          className="glass absolute left-0 top-[calc(100%+0.75rem)] z-50 max-h-[60vh] w-[min(20rem,80vw)] overflow-y-auto rounded-2xl p-2 sm:left-auto sm:right-0 sm:top-[calc(100%+1rem)]"
         >
           {categories.length === 0 ? (
             <p className="px-3 py-2 text-xs normal-case tracking-normal text-muted-foreground">
@@ -62,7 +81,7 @@ function CategoryMenu() {
                 key={c.categorySlug}
                 to="/category/$categorySlug"
                 params={{ categorySlug: c.categorySlug }}
-                onClick={() => setOpen(false)}
+                onClick={close}
                 className="flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
               >
                 <span className="font-semibold">{c.categoryName}</span>
@@ -74,7 +93,7 @@ function CategoryMenu() {
           )}
           <Link
             to="/browse"
-            onClick={() => setOpen(false)}
+            onClick={close}
             className="mt-1 block rounded-xl px-3 py-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary hover:bg-white/10"
           >
             View all →
@@ -101,8 +120,6 @@ const footerColumns: { title: string; links: { to: string; label: string }[] }[]
     links: [
       { to: "/about", label: "About" },
       { to: "/contact", label: "Contact" },
-      { to: "/services", label: "What we do" },
-      { to: "/blog", label: "Founder playbooks" },
     ],
   },
   {
@@ -118,26 +135,44 @@ const footerColumns: { title: string; links: { to: string; label: string }[] }[]
 ];
 
 export function SiteShell({ children }: { children: ReactNode }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
   return (
     <div className="relative flex min-h-screen flex-col text-foreground">
       <AmbientScene />
-      <header className="sticky top-0 z-40 px-3 pt-3 sm:px-4 sm:pt-5">
-        <div className="glass mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-[1.75rem] px-4 py-3 sm:rounded-full sm:px-6">
-          <Link to="/" className="flex min-w-0 items-baseline gap-2">
-            <span className="truncate text-base font-black uppercase tracking-[0.22em] [text-shadow:0_0_18px_oklch(1_0_0/45%)] sm:text-lg">
+      <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">
+        <div className="glass-nav mx-auto max-w-6xl rounded-2xl px-3 py-2.5 sm:flex sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-4 sm:gap-y-2 sm:rounded-full sm:px-6 sm:py-3">
+          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sm:contents">
+          <Link to="/" onClick={() => setMobileOpen(false)} className="flex min-w-0 items-baseline gap-2">
+            <span className="truncate text-sm font-black uppercase tracking-[0.22em] [text-shadow:0_0_18px_oklch(1_0_0/45%)] sm:text-lg">
               Idea
             </span>
-            <span className="rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-0.5 text-base font-black uppercase tracking-[0.18em] text-primary-foreground shadow-[0_0_24px_oklch(0.723_0.161_56/45%)] sm:text-lg">
+            <span className="shrink-0 rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-0.5 text-sm font-black uppercase tracking-[0.18em] text-primary-foreground shadow-[0_0_24px_oklch(0.723_0.161_56/45%)] sm:text-lg">
               Vault
             </span>
           </Link>
-          <nav className="flex shrink-0 items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground sm:gap-6 sm:text-xs">
+          <button
+            type="button"
+            aria-expanded={mobileOpen}
+            aria-label="Toggle navigation menu"
+            onClick={() => setMobileOpen((v) => !v)}
+            className="flex shrink-0 items-center gap-2 rounded-full border border-border px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground sm:hidden"
+          >
+            Menu
+            <span aria-hidden className={`transition-transform duration-300 ${mobileOpen ? "rotate-180" : ""}`}>
+              ▾
+            </span>
+          </button>
+          </div>
+          <nav
+            className={`${mobileOpen ? "mt-3 grid" : "hidden"} gap-1 border-t border-border pt-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground sm:mt-0 sm:flex sm:shrink-0 sm:items-center sm:gap-6 sm:border-0 sm:pt-0 sm:text-xs`}
+          >
             <CategoryMenu />
             {navLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className="relative transition-colors duration-300 hover:text-foreground after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-primary after:transition-all after:duration-500 hover:after:w-full"
+                onClick={() => setMobileOpen(false)}
+                className="relative py-1.5 transition-colors duration-300 hover:text-foreground sm:py-0 sm:after:absolute sm:after:-bottom-1.5 sm:after:left-0 sm:after:h-px sm:after:w-0 sm:after:bg-primary sm:after:transition-all sm:after:duration-500 sm:hover:after:w-full"
               >
                 {link.label}
               </Link>

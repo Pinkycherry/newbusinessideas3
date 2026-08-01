@@ -128,6 +128,78 @@ function HomePage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-3 pb-10 sm:px-4">
+        <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+              Why this exists
+            </p>
+            <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+              A list of ideas is not research.
+            </h2>
+            <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">
+              <p>
+                Most idea lists are written in an afternoon by someone who has never sold the thing
+                they are describing. They tell you the market is growing and stop there. The hard
+                part of starting a business was never finding a plausible-sounding idea — it was
+                working out who pays, how often, at what margin, and what happens on the day a
+                bigger company decides to do the same thing for free.
+              </p>
+              <p>
+                A blueprint in the vault answers those questions before you commit a weekend to it.
+                Each one names the customer specifically rather than as a demographic, explains the
+                revenue mechanics in plain numbers, and lists the failure modes we would expect in
+                the first year — the churn, the acquisition costs that quietly exceed lifetime
+                value, the regulation nobody mentions until you are already trading.
+              </p>
+              <p>
+                The verdict at the end is deliberately blunt. Some entries end with a
+                recommendation not to build. That is the point: research that only ever agrees with
+                you is marketing wearing a lab coat.
+              </p>
+            </div>
+            <Link
+              to="/browse"
+              className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
+            >
+              Read a blueprint
+              <span aria-hidden>→</span>
+            </Link>
+          </div>
+
+          <aside className="glass rounded-3xl p-7 lg:mt-16 lg:self-start sm:p-9">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
+              What every entry has to contain
+            </h3>
+            <dl className="mt-6 divide-y divide-border">
+              {[
+                {
+                  t: "A named buyer",
+                  d: "Not \"small businesses\" — the specific role, the budget it comes out of, and why it is a priority this quarter.",
+                },
+                {
+                  t: "Working money mechanics",
+                  d: "Pricing, delivery cost and the point at which the model stops being a job and starts being a business.",
+                },
+                {
+                  t: "The unglamorous risks",
+                  d: "Platform dependency, seasonality, licensing, and the competitor already halfway there.",
+                },
+                {
+                  t: "A founder-fit verdict",
+                  d: "Who is well placed to build it, and who should walk away from it entirely.",
+                },
+              ].map((row) => (
+                <div key={row.t} className="py-4 first:pt-0 last:pb-0">
+                  <dt className="text-sm font-semibold text-foreground">{row.t}</dt>
+                  <dd className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{row.d}</dd>
+                </div>
+              ))}
+            </dl>
+          </aside>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-3 pb-10 sm:px-4">
         <div className="grid gap-4 lg:grid-cols-3">
           {[
             {
