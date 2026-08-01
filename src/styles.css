@@ -148,6 +148,31 @@
   }
 }
 
+/* Header shell: opaque on phones so page content never bleeds through the
+   sticky bar; identical to `glass` from 640px up (desktop/tablet unchanged). */
+@utility glass-nav {
+  background: oklch(0.255 0.008 274 / 96%);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid oklch(1 0 0 / 20%);
+  box-shadow:
+    0 20px 60px -20px oklch(0 0 0 / 55%),
+    inset 0 1px 0 0 oklch(1 0 0 / 18%);
+  @media (width >= 40rem) {
+    background: oklch(1 0 0 / 8%);
+  }
+}
+
+@utility glass-hover-legacy {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  &:hover {
+    transform: translateY(-6px);
+    border-color: oklch(0.723 0.161 56 / 50%);
+    box-shadow:
+      0 20px 40px oklch(0.687 0.161 51.5 / 25%),
+      inset 0 1px 0 0 oklch(1 0 0 / 24%);
+  }
+}
+
 @utility sheen {
   position: relative;
   overflow: hidden;
