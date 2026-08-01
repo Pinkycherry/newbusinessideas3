@@ -72,12 +72,14 @@ function BlogIndex() {
                 className="glass glass-hover group flex h-full flex-col overflow-hidden rounded-2xl"
               >
                 {post.image && (
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    loading="lazy"
-                    className="h-40 w-full object-cover opacity-90 transition-transform duration-700 ease-glass group-hover:scale-105"
-                  />
+                  <div className="aspect-video w-full overflow-hidden">
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-glass group-hover:scale-105"
+                    />
+                  </div>
                 )}
                 <div className="flex flex-1 flex-col gap-3 p-5">
                   <div className="flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-accent">

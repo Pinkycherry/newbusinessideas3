@@ -83,11 +83,9 @@ function BlogPostPage() {
         </h1>
 
         {post.image && (
-          <img
-            src={post.image}
-            alt={post.title}
-            className="mt-8 w-full rounded-3xl border border-border object-cover"
-          />
+          <div className="mt-8 aspect-video w-full overflow-hidden rounded-3xl border border-border">
+            <img src={post.image} alt={post.title} className="h-full w-full object-cover" />
+          </div>
         )}
 
         <div
