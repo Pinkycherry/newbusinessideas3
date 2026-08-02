@@ -79,6 +79,7 @@ export const getTrendingIdeas = createServerFn({ method: "GET" }).handler(async 
 });
 
 export const getCategoryPage = createServerFn({ method: "GET" })
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   .inputValidator((input: unknown) => z.object({ categorySlug: z.string() }).parse(input))
   .handler(async ({ data: input }) => {
     const { data, error } = await db()
