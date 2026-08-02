@@ -88,14 +88,10 @@ function HomePage() {
               </Link>
             </div>
 
-            <dl className="mt-12 grid gap-3 sm:grid-cols-3">
+            <dl className="mt-12 grid gap-3 sm:grid-cols-2">
               {[
                 { label: "Blueprints", value: catalog.totalIdeas },
                 { label: "Categories", value: catalog.categories.length },
-                {
-                  label: "Subcategories",
-                  value: catalog.categories.reduce((n, c) => n + c.subcategories.length, 0),
-                },
               ].map((stat) => (
                 <div key={stat.label} className="glass glass-hover rounded-2xl px-5 py-4">
                   <dt className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">

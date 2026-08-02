@@ -70,10 +70,9 @@ function BrowsePage() {
                     <Link
                       to="/category/$categorySlug/$subcategorySlug"
                       params={{ categorySlug: category.categorySlug, subcategorySlug: sub.slug }}
-                      className="flex items-center justify-between rounded-md border border-border bg-card px-3 py-2 text-sm transition-colors hover:border-primary"
+                      className="flex items-center rounded-md border border-border bg-card px-3 py-2 text-sm transition-colors hover:border-primary"
                     >
                       <span>{sub.name}</span>
-                      <span className="text-xs text-muted-foreground">{sub.ideaCount}</span>
                     </Link>
                   </li>
                 ))}
