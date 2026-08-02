@@ -9,6 +9,52 @@ import { FEATURED_IDEA_IDS } from "@/config/featured";
 import { getCatalog, getFeaturedIdeas } from "@/lib/ideas.functions";
 
 const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
+
+/** Editorial image trio — replace `src` only; nothing structural depends on it. */
+const EDITORIAL_IMAGES = [
+  {
+    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-16.jpg.webp",
+    alt: "Smiling businesswoman working at a laptop in a relaxed, warmly lit setting",
+    blob: "blob-portrait-1",
+    tilt: -2,
+    offset: "sm:mt-0",
+  },
+  {
+    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-17.jpg.webp",
+    alt: "Businesswoman with a coffee and an open notebook in a calm workspace",
+    blob: "blob-portrait-2",
+    tilt: 4,
+    offset: "sm:mt-24",
+  },
+  {
+    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-37.jpg.webp",
+    alt: "Close-up of hands typing on a laptop keyboard in warm ambient light",
+    blob: "blob-portrait-3",
+    tilt: -1.5,
+    offset: "sm:mt-10",
+  },
+];
+
+/** Scroll-stack panel copy. */
+const SCROLL_PANELS = [
+  {
+    title: "Most small business ideas are guesses dressed as research.",
+    body: "A trend chart and a list of niches is not a blueprint. This directory exists because the hard part of starting a business is never finding an idea — it is knowing if yours will actually pay.",
+  },
+  {
+    title: "Every blueprint answers four questions.",
+    body: "Who specifically pays for this. How the money actually moves. What will hurt in year one. And whether you, specifically, are the right person to build it.",
+  },
+  {
+    title: "43 blueprints live. Scaling to 10,000.",
+    body: "Organized across categories from Tech and SaaS to Creator and Media, FinTech, E-Commerce and more. Every new category added to the database appears here automatically.",
+  },
+  {
+    title: "The AI audit goes further.",
+    body: "Every blueprint has a live AI audit option. Run it and get real-time market sizing, a competitor map, and a 90-day launch plan generated for that specific idea. Pro Pass unlocks it.",
+  },
+];
+
 const featuredQuery = queryOptions({
   queryKey: ["featured", FEATURED_IDEA_IDS],
   queryFn: () => getFeaturedIdeas({ data: { ideaIds: FEATURED_IDEA_IDS } }),
