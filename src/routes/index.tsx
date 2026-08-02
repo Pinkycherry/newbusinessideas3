@@ -190,7 +190,7 @@ function HomePage() {
             </Link>
           </div>
 
-          <aside className="glass rounded-3xl p-7 lg:mt-16 lg:self-start sm:p-9">
+          <aside className="glass blob-3 p-8 lg:mt-16 lg:self-start sm:p-10">
             <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
               What every entry has to contain
             </h3>
@@ -223,40 +223,50 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-3 pb-10 sm:px-4">
-        <div className="grid gap-4 lg:grid-cols-3">
-          {[
-            {
-              to: "/browse" as const,
-              eyebrow: "Explore",
-              title: "Browse the vault",
-              body: `Every blueprint, organised across ${catalog.categories.length} categories and ${catalog.totalSubcategories} subcategories.`,
-            },
-            {
-              to: "/search" as const,
-              eyebrow: "Targeted",
-              title: "Search by keyword",
-              body: "Already know your market? Search titles, summaries, descriptions and tags in one pass.",
-            },
-            {
-              to: "/blog" as const,
-              eyebrow: "Long-form",
-              title: "Founder playbooks",
-              body: "Deep-dive articles on building in specific markets — separate from the idea library.",
-            },
-          ].map((card) => (
-            <Link key={card.to} to={card.to} className="glass glass-hover rounded-3xl p-7">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-accent">
-                {card.eyebrow}
-              </p>
-              <h3 className="mt-3 text-xl font-bold tracking-tight">{card.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{card.body}</p>
-              <span className="mt-5 inline-block text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                Open →
-              </span>
-            </Link>
+      {/* EDITORIAL IMAGE TRIO — swap only the `src` values below to change images. */}
+      <section className="mx-auto max-w-6xl px-3 pb-16 sm:px-4">
+        <div className="grid gap-6 sm:grid-cols-3 sm:items-start">
+          {EDITORIAL_IMAGES.map((img) => (
+            <figure
+              key={img.src}
+              className={`glass relative overflow-hidden ${img.blob} ${img.offset} aspect-[3/4]`}
+              style={{ transform: `rotate(${img.tilt}deg)` }}
+            >
+              <img
+                src={img.src}
+                alt={img.alt}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary to-ember opacity-15"
+              />
+            </figure>
           ))}
         </div>
+      </section>
+
+      {/* SCROLL-STACK — panels pin and stack as you scroll. Edit SCROLL_PANELS below. */}
+      <section className="mx-auto max-w-5xl px-3 pb-24 sm:px-4">
+        {SCROLL_PANELS.map((panel, i) => (
+          <div key={panel.title} className="h-[85vh]">
+            <div
+              className={`glass sticky top-24 p-8 sm:p-12 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
+              style={{ zIndex: i + 1 }}
+            >
+              <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-accent">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h2 className="mt-4 text-2xl font-bold leading-tight tracking-tight sm:text-4xl">
+                {panel.title}
+              </h2>
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+                {panel.body}
+              </p>
+            </div>
+          </div>
+        ))}
       </section>
 
       <div className="px-3 pb-10 sm:px-4">
