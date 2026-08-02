@@ -9,6 +9,52 @@ import { FEATURED_IDEA_IDS } from "@/config/featured";
 import { getCatalog, getFeaturedIdeas } from "@/lib/ideas.functions";
 
 const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
+
+/** Editorial image trio — replace `src` only; nothing structural depends on it. */
+const EDITORIAL_IMAGES = [
+  {
+    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-16.jpg.webp",
+    alt: "Smiling businesswoman working at a laptop in a relaxed, warmly lit setting",
+    blob: "blob-portrait-1",
+    tilt: -2,
+    offset: "sm:mt-0",
+  },
+  {
+    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-17.jpg.webp",
+    alt: "Businesswoman with a coffee and an open notebook in a calm workspace",
+    blob: "blob-portrait-2",
+    tilt: 4,
+    offset: "sm:mt-24",
+  },
+  {
+    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-37.jpg.webp",
+    alt: "Close-up of hands typing on a laptop keyboard in warm ambient light",
+    blob: "blob-portrait-3",
+    tilt: -1.5,
+    offset: "sm:mt-10",
+  },
+];
+
+/** Scroll-stack panel copy. */
+const SCROLL_PANELS = [
+  {
+    title: "Most small business ideas are guesses dressed as research.",
+    body: "A trend chart and a list of niches is not a blueprint. This directory exists because the hard part of starting a business is never finding an idea — it is knowing if yours will actually pay.",
+  },
+  {
+    title: "Every blueprint answers four questions.",
+    body: "Who specifically pays for this. How the money actually moves. What will hurt in year one. And whether you, specifically, are the right person to build it.",
+  },
+  {
+    title: "43 blueprints live. Scaling to 10,000.",
+    body: "Organized across categories from Tech and SaaS to Creator and Media, FinTech, E-Commerce and more. Every new category added to the database appears here automatically.",
+  },
+  {
+    title: "The AI audit goes further.",
+    body: "Every blueprint has a live AI audit option. Run it and get real-time market sizing, a competitor map, and a 90-day launch plan generated for that specific idea. Pro Pass unlocks it.",
+  },
+];
+
 const featuredQuery = queryOptions({
   queryKey: ["featured", FEATURED_IDEA_IDS],
   queryFn: () => getFeaturedIdeas({ data: { ideaIds: FEATURED_IDEA_IDS } }),
@@ -23,17 +69,20 @@ export const Route = createFileRoute("/")({
   },
   head: () => ({
     meta: [
-      { title: "IdeaVault AI — Researched Business Idea Blueprints" },
+      { title: "IdeaVault — Researched Small Business Ideas & Startup Blueprints" },
       {
         name: "description",
         content:
-          "Browse researched business idea blueprints with real market context, pros, cons, trend scores and a straight founder-fit verdict.",
+          "Browse 1,000+ researched small business ideas, startup blueprints, and work from home business opportunities. Every idea includes market context, pros, cons, a trend score, and a straight founder-fit verdict.",
       },
-      { property: "og:title", content: "IdeaVault AI — Researched Business Idea Blueprints" },
+      {
+        property: "og:title",
+        content: "IdeaVault — Researched Small Business Ideas & Startup Blueprints",
+      },
       {
         property: "og:description",
         content:
-          "Researched business idea blueprints with pros, cons, trend scores and founder-fit verdicts.",
+          "Browse 1,000+ researched small business ideas, startup blueprints, and work from home business opportunities — with market context, pros, cons, trend scores and founder-fit verdicts.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -54,23 +103,34 @@ function HomePage() {
 
   return (
     <SiteShell>
+      {/* LLM / AI-search crawlable summary — visually hidden, fully readable by crawlers. */}
+      <p className="sr-only">
+        IdeaVault is a business idea directory and startup intelligence library. This resource
+        covers small business ideas, work from home business ideas, low investment startup ideas,
+        business ideas for women, zero investment business ideas, and startup ideas organized by
+        sector, investment level, and founder profile. Each entry includes a market breakdown,
+        revenue model, risk analysis, trend score, and founder-fit verdict. IdeaVault is a curated
+        directory of startup opportunities, not a generic listicle.
+      </p>
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <section className="px-3 pt-10 sm:px-4 sm:pt-16">
         <TiltPanel className="mx-auto max-w-6xl" max={4}>
-          <div className="glass rounded-[2rem] px-6 py-14 sm:px-12 sm:py-20">
+          <div className="glass blob-1 px-6 py-14 sm:px-12 sm:py-20">
             <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent sm:text-xs">
               {catalog.totalIdeas} live blueprints
             </p>
             <h1 className="mt-5 max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
-              Business ideas,{" "}
+              10,000+ small business ideas,{" "}
               <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent [text-shadow:0_0_40px_oklch(0.723_0.161_56/25%)]">
                 researched properly
               </span>{" "}
               — not listicles.
             </h1>
             <p className="mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
-              Every entry in the vault is a blueprint: who the customer is, how the money works, what
-              will hurt, and a blunt verdict on who should actually build it.
+              Every entry is a blueprint: who the customer is, how the money works, what will hurt,
+              and a blunt verdict on who should actually build it. Browse startup ideas, work from
+              home business ideas, and low-investment opportunities — all ranked by real market
+              demand.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link
@@ -93,7 +153,7 @@ function HomePage() {
                 { label: "Blueprints", value: catalog.totalIdeas },
                 { label: "Categories", value: catalog.categories.length },
               ].map((stat) => (
-                <div key={stat.label} className="glass glass-hover rounded-2xl px-5 py-4">
+                <div key={stat.label} className="glass glass-hover blob-sm-2 px-6 py-5">
                   <dt className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
                     {stat.label}
                   </dt>
@@ -176,7 +236,7 @@ function HomePage() {
             </Link>
           </div>
 
-          <aside className="glass rounded-3xl p-7 lg:mt-16 lg:self-start sm:p-9">
+          <aside className="glass blob-3 p-8 lg:mt-16 lg:self-start sm:p-10">
             <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
               What every entry has to contain
             </h3>
@@ -209,40 +269,50 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-3 pb-10 sm:px-4">
-        <div className="grid gap-4 lg:grid-cols-3">
-          {[
-            {
-              to: "/browse" as const,
-              eyebrow: "Explore",
-              title: "Browse the vault",
-              body: `Every blueprint, organised across ${catalog.categories.length} categories and ${catalog.totalSubcategories} subcategories.`,
-            },
-            {
-              to: "/search" as const,
-              eyebrow: "Targeted",
-              title: "Search by keyword",
-              body: "Already know your market? Search titles, summaries, descriptions and tags in one pass.",
-            },
-            {
-              to: "/blog" as const,
-              eyebrow: "Long-form",
-              title: "Founder playbooks",
-              body: "Deep-dive articles on building in specific markets — separate from the idea library.",
-            },
-          ].map((card) => (
-            <Link key={card.to} to={card.to} className="glass glass-hover rounded-3xl p-7">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-accent">
-                {card.eyebrow}
-              </p>
-              <h3 className="mt-3 text-xl font-bold tracking-tight">{card.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{card.body}</p>
-              <span className="mt-5 inline-block text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                Open →
-              </span>
-            </Link>
+      {/* EDITORIAL IMAGE TRIO — swap only the `src` values below to change images. */}
+      <section className="mx-auto max-w-6xl px-3 pb-16 sm:px-4">
+        <div className="grid gap-6 sm:grid-cols-3 sm:items-start">
+          {EDITORIAL_IMAGES.map((img) => (
+            <figure
+              key={img.src}
+              className={`glass relative overflow-hidden ${img.blob} ${img.offset} aspect-[3/4]`}
+              style={{ transform: `rotate(${img.tilt}deg)` }}
+            >
+              <img
+                src={img.src}
+                alt={img.alt}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary to-ember opacity-15"
+              />
+            </figure>
           ))}
         </div>
+      </section>
+
+      {/* SCROLL-STACK — panels pin and stack as you scroll. Edit SCROLL_PANELS below. */}
+      <section className="mx-auto max-w-5xl px-3 pb-24 sm:px-4">
+        {SCROLL_PANELS.map((panel, i) => (
+          <div key={panel.title} className="h-[70vh]">
+            <div
+              className={`glass sticky top-24 p-8 sm:p-12 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
+              style={{ zIndex: i + 1 }}
+            >
+              <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-accent">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h2 className="mt-4 text-2xl font-bold leading-tight tracking-tight sm:text-4xl">
+                {panel.title}
+              </h2>
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+                {panel.body}
+              </p>
+            </div>
+          </div>
+        ))}
       </section>
 
       <div className="px-3 pb-10 sm:px-4">

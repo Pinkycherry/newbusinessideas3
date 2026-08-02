@@ -2,12 +2,21 @@ import { Link } from "@tanstack/react-router";
 
 import type { IdeaCard as IdeaCardData } from "@/lib/ideas-shared";
 
+const BLOBS = ["blob-sm-1", "blob-sm-2", "blob-sm-3"] as const;
+
 export function IdeaCard({ idea }: { idea: IdeaCardData }) {
+  // Organic blob outline, deterministic per idea so neighbouring cards differ.
+  const blob =
+    BLOBS[
+      Math.abs(
+        idea.slug.split("").reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 7),
+      ) % BLOBS.length
+    ];
   return (
     <Link
       to="/idea/$slug"
       params={{ slug: idea.slug }}
-      className="glass glass-hover group flex h-full flex-col gap-3 rounded-2xl p-5"
+      className={`glass glass-hover group flex h-full flex-col gap-3 ${blob} p-7`}
     >
       <div className="flex items-center justify-between gap-3 text-[11px] uppercase tracking-widest text-muted-foreground">
         <span className="truncate">{idea.subcategoryName}</span>

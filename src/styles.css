@@ -180,6 +180,21 @@
   }
 }
 
+/* Organic blob card outlines — asymmetric, no sharp corners, no perfect circles.
+   Uses border-radius (not clip-path) so the glass border + orange glow survive. */
+@utility blob-1 { border-radius: 22% 34% 26% 30% / 34% 24% 32% 26%; }
+@utility blob-2 { border-radius: 32% 22% 30% 26% / 26% 34% 22% 32%; }
+@utility blob-3 { border-radius: 26% 32% 22% 34% / 32% 22% 34% 24%; }
+@utility blob-4 { border-radius: 34% 24% 32% 22% / 22% 32% 26% 34%; }
+@utility blob-5 { border-radius: 24% 30% 34% 22% / 30% 26% 22% 34%; }
+@utility blob-6 { border-radius: 30% 26% 22% 34% / 24% 34% 30% 22%; }
+@utility blob-sm-1 { border-radius: 18% 30% 22% 26% / 26% 18% 30% 22%; }
+@utility blob-sm-2 { border-radius: 30% 18% 26% 22% / 22% 28% 18% 30%; }
+@utility blob-sm-3 { border-radius: 22% 26% 30% 18% / 30% 22% 26% 18%; }
+@utility blob-portrait-1 { border-radius: 46% 54% 32% 38% / 34% 30% 24% 26%; }
+@utility blob-portrait-2 { border-radius: 52% 44% 38% 30% / 30% 34% 26% 22%; }
+@utility blob-portrait-3 { border-radius: 44% 50% 28% 40% / 28% 32% 22% 28%; }
+
 @utility orb {
   position: absolute;
   border-radius: 9999px;
