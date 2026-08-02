@@ -137,8 +137,8 @@ Shared pieces:
 * **Idea card:** `src/components/idea-card.tsx`
 * **AI Audit block:** `src/components/ai-audit.tsx`
 * **Legal/marketing page shell:** `src/components/page-layout.tsx`
-* **Database connection (Supabase):** `src/lib/ideas.server.ts` (server-only client);
-  queries used by pages are in `src/lib/ideas.functions.ts`
+* **Database connection (Supabase):** `src/lib/ideas.functions.ts` — the `db()` helper at
+  the top creates the server-side client; all idea queries live in the same file
 * **Blog (WordPress) fetching:** `src/lib/blog.server.ts` + `src/lib/blog.functions.ts`
 
 ---
