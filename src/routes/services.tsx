@@ -48,6 +48,7 @@ function ServicesPage() {
       intro="Four ways to work with IdeaVault AI — from self-serve library access to bespoke research on a market you already care about."
       wide
     >
+      {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <div className="grid gap-5 md:grid-cols-2">
         {services.map((service) => (
           <div key={service.name} className="glass glass-hover flex h-full flex-col rounded-2xl px-6 py-7">
@@ -76,6 +77,7 @@ function ServicesPage() {
           .
         </p>
       </Section>
-    </ContentPage>
+    {/* EDITABLE SECTION END */}
+      </ContentPage>
   );
 }

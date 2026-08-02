@@ -42,6 +42,7 @@ function ContactPage() {
       highlight="real person"
       intro="Pick the right channel and you will get a faster, more useful answer. We reply to most messages within two business days."
     >
+      {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <div className="grid gap-4 sm:grid-cols-2">
         {channels.map((c) => (
           <div key={c.value} className="glass glass-hover rounded-2xl px-5 py-6">
@@ -65,6 +66,7 @@ function ContactPage() {
           happen. For data corrections: the idea ID and the specific claim you believe is wrong.
         </p>
       </Section>
-    </ContentPage>
+    {/* EDITABLE SECTION END */}
+      </ContentPage>
   );
 }

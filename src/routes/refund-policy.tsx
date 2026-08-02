@@ -19,6 +19,7 @@ function RefundPage() {
       highlight="policy"
       intro="This policy applies to the IdeaVault Pro Pass. Checkout is not live yet, so nothing has been charged to anyone — these are the terms that will apply the moment it is."
     >
+      {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <Section heading="14-day window">
         <p>
           You can request a full refund within 14 days of purchase if the Pro Pass did not deliver
@@ -63,6 +64,7 @@ function RefundPage() {
           .
         </p>
       </Section>
-    </ContentPage>
+    {/* EDITABLE SECTION END */}
+      </ContentPage>
   );
 }

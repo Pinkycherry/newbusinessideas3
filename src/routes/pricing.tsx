@@ -49,6 +49,7 @@ function PricingPage() {
       intro="Most of the library is open. The Pro Pass exists for the premium entries and the live AI audit that runs on them."
       wide
     >
+      {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <div className="grid gap-5 md:grid-cols-2">
         {plans.map((plan) => (
           <div
@@ -105,6 +106,7 @@ function PricingPage() {
           .
         </p>
       </Section>
-    </ContentPage>
+    {/* EDITABLE SECTION END */}
+      </ContentPage>
   );
 }

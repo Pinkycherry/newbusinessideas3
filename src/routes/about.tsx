@@ -19,6 +19,7 @@ function AboutPage() {
       highlight="not listicles"
       intro="IdeaVault AI exists because most 'business idea' content is filler. We research each idea until it can survive a real conversation with an operator, then publish the whole thing — including the parts that make it a bad idea for most people."
     >
+      {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <Section heading="What an IdeaVault entry actually contains">
         <Bullets
           items={[
@@ -54,6 +55,7 @@ function AboutPage() {
           ]}
         />
       </Section>
-    </ContentPage>
+    {/* EDITABLE SECTION END */}
+      </ContentPage>
   );
 }
