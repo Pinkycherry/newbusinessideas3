@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { Fragment } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
