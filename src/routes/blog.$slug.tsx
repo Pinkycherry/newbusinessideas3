@@ -2,6 +2,7 @@ import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { AdSlot } from "@/components/AdSlot";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPost } from "@/lib/blog.functions";
 
