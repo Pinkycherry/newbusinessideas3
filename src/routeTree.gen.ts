@@ -25,6 +25,7 @@ import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CategoryCategorySlugRouteImport } from './routes/category.$categorySlug'
 import { Route as IdeaSlugRouteImport } from './routes/idea.$slug'
+import { Route as CategoryCategorySlugIndexRouteImport } from './routes/category.$categorySlug.index'
 import { Route as CategoryCategorySlugSubcategorySlugRouteImport } from './routes/category.$categorySlug.$subcategorySlug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -107,6 +108,12 @@ const IdeaSlugRoute = IdeaSlugRouteImport.update({
   path: '/idea/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CategoryCategorySlugIndexRoute =
+  CategoryCategorySlugIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => CategoryCategorySlugRoute,
+  } as any)
 const CategoryCategorySlugSubcategorySlugRoute =
   CategoryCategorySlugSubcategorySlugRouteImport.update({
     id: '/$subcategorySlug',
@@ -132,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/idea/$slug': typeof IdeaSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
+  '/category/$categorySlug/': typeof CategoryCategorySlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -147,10 +155,10 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
   '/idea/$slug': typeof IdeaSlugRoute
   '/blog': typeof BlogIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
+  '/category/$categorySlug': typeof CategoryCategorySlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -171,6 +179,7 @@ export interface FileRoutesById {
   '/idea/$slug': typeof IdeaSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
+  '/category/$categorySlug/': typeof CategoryCategorySlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -192,6 +201,7 @@ export interface FileRouteTypes {
     | '/idea/$slug'
     | '/blog/'
     | '/category/$categorySlug/$subcategorySlug'
+    | '/category/$categorySlug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -207,10 +217,10 @@ export interface FileRouteTypes {
     | '/services'
     | '/terms'
     | '/blog/$slug'
-    | '/category/$categorySlug'
     | '/idea/$slug'
     | '/blog'
     | '/category/$categorySlug/$subcategorySlug'
+    | '/category/$categorySlug'
   id:
     | '__root__'
     | '/'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/idea/$slug'
     | '/blog/'
     | '/category/$categorySlug/$subcategorySlug'
+    | '/category/$categorySlug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -365,6 +376,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IdeaSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/category/$categorySlug/': {
+      id: '/category/$categorySlug/'
+      path: '/'
+      fullPath: '/category/$categorySlug/'
+      preLoaderRoute: typeof CategoryCategorySlugIndexRouteImport
+      parentRoute: typeof CategoryCategorySlugRoute
+    }
     '/category/$categorySlug/$subcategorySlug': {
       id: '/category/$categorySlug/$subcategorySlug'
       path: '/$subcategorySlug'
@@ -377,11 +395,13 @@ declare module '@tanstack/react-router' {
 
 interface CategoryCategorySlugRouteChildren {
   CategoryCategorySlugSubcategorySlugRoute: typeof CategoryCategorySlugSubcategorySlugRoute
+  CategoryCategorySlugIndexRoute: typeof CategoryCategorySlugIndexRoute
 }
 
 const CategoryCategorySlugRouteChildren: CategoryCategorySlugRouteChildren = {
   CategoryCategorySlugSubcategorySlugRoute:
     CategoryCategorySlugSubcategorySlugRoute,
+  CategoryCategorySlugIndexRoute: CategoryCategorySlugIndexRoute,
 }
 
 const CategoryCategorySlugRouteWithChildren =
@@ -408,13 +428,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
