@@ -195,22 +195,6 @@
 @utility blob-portrait-2 { border-radius: 11rem 13rem 6rem 3.5rem / 10rem 9rem 5rem 4rem; }
 @utility blob-portrait-3 { border-radius: 13rem 10rem 3.5rem 6.5rem / 9.5rem 11rem 4.5rem 4rem; }
 
-@utility sheen-old {
-  position: relative;
-  overflow: hidden;
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(115deg, transparent 35%, oklch(1 0 0 / 35%) 50%, transparent 65%);
-    transform: translateX(-120%);
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  &:hover::after {
-    transform: translateX(120%);
-  }
-}
-
 @utility orb {
   position: absolute;
   border-radius: 9999px;
