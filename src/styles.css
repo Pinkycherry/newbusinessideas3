@@ -182,18 +182,18 @@
 
 /* Organic blob card outlines — asymmetric, no sharp corners, no perfect circles.
    Uses border-radius (not clip-path) so the glass border + orange glow survive. */
-@utility blob-1 { border-radius: 3rem 5.5rem 3.5rem 6rem / 4.5rem 3rem 6rem 3.5rem; }
-@utility blob-2 { border-radius: 6rem 3rem 5.5rem 3.5rem / 3.25rem 5.5rem 3rem 6rem; }
-@utility blob-3 { border-radius: 4rem 6.5rem 3rem 4.5rem / 5.5rem 3.5rem 5rem 3rem; }
-@utility blob-4 { border-radius: 5rem 3.5rem 6.5rem 3rem / 3rem 6rem 3.5rem 5.5rem; }
-@utility blob-5 { border-radius: 3.5rem 6rem 4rem 5rem / 6rem 3.25rem 5.5rem 3.5rem; }
-@utility blob-6 { border-radius: 6.5rem 4rem 3.25rem 5.5rem / 3.5rem 5rem 3.25rem 6rem; }
-@utility blob-sm-1 { border-radius: 1.75rem 3.25rem 2rem 3.5rem / 2.75rem 1.75rem 3.5rem 2rem; }
-@utility blob-sm-2 { border-radius: 3.5rem 1.75rem 3.25rem 2rem / 2rem 3.5rem 1.75rem 3.25rem; }
-@utility blob-sm-3 { border-radius: 2.25rem 3.5rem 3rem 1.75rem / 3.25rem 2rem 3.5rem 2.25rem; }
-@utility blob-portrait-1 { border-radius: 12rem 12rem 4rem 6rem / 9rem 10rem 3.5rem 5rem; }
-@utility blob-portrait-2 { border-radius: 11rem 13rem 6rem 3.5rem / 10rem 9rem 5rem 4rem; }
-@utility blob-portrait-3 { border-radius: 13rem 10rem 3.5rem 6.5rem / 9.5rem 11rem 4.5rem 4rem; }
+@utility blob-1 { border-radius: 22% 34% 26% 30% / 34% 24% 32% 26%; }
+@utility blob-2 { border-radius: 32% 22% 30% 26% / 26% 34% 22% 32%; }
+@utility blob-3 { border-radius: 26% 32% 22% 34% / 32% 22% 34% 24%; }
+@utility blob-4 { border-radius: 34% 24% 32% 22% / 22% 32% 26% 34%; }
+@utility blob-5 { border-radius: 24% 30% 34% 22% / 30% 26% 22% 34%; }
+@utility blob-6 { border-radius: 30% 26% 22% 34% / 24% 34% 30% 22%; }
+@utility blob-sm-1 { border-radius: 18% 30% 22% 26% / 26% 18% 30% 22%; }
+@utility blob-sm-2 { border-radius: 30% 18% 26% 22% / 22% 28% 18% 30%; }
+@utility blob-sm-3 { border-radius: 22% 26% 30% 18% / 30% 22% 26% 18%; }
+@utility blob-portrait-1 { border-radius: 46% 54% 32% 38% / 34% 30% 24% 26%; }
+@utility blob-portrait-2 { border-radius: 52% 44% 38% 30% / 30% 34% 26% 22%; }
+@utility blob-portrait-3 { border-radius: 44% 50% 28% 40% / 28% 32% 22% 28%; }
 
 @utility orb {
   position: absolute;
