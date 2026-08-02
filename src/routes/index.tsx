@@ -10,6 +10,13 @@ import { getCatalog, getFeaturedIdeas } from "@/lib/ideas.functions";
 
 const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
 
+/** Split live categories evenly across 4 marquee rows (works for 9 or 100+). */
+function tickerRows<T>(categories: T[], rowCount = 4): T[][] {
+  const rows: T[][] = Array.from({ length: rowCount }, () => []);
+  categories.forEach((c, i) => rows[i % rowCount]!.push(c));
+  return rows.filter((r) => r.length > 0);
+}
+
 /** Editorial image trio — replace `src` only; nothing structural depends on it. */
 const EDITORIAL_IMAGES = [
   {
