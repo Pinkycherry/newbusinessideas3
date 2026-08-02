@@ -8,7 +8,9 @@
 export type Collection = { label: string; url: string };
 
 export const COLLECTIONS: Collection[] = [
-  { label: "Top ideas for women", url: "/browse" },
-  { label: "Zero investment ideas", url: "/browse" },
-  { label: "Work from home ideas", url: "/browse" },
+  { label: "Small business ideas", url: "/browse" },
+  { label: "Work from home business ideas", url: "/browse" },
+  { label: "Startup ideas with low investment", url: "/browse" },
+  { label: "Business ideas for women", url: "/browse" },
+  { label: "Zero investment business ideas", url: "/browse" },
 ];
