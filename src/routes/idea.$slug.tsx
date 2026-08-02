@@ -6,12 +6,17 @@ import { AiAudit } from "@/components/ai-audit";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
 import { getIdeaBySlug, getCategoryPage } from "@/lib/ideas.functions";
+import { type IdeaCard as IdeaCardType, type IdeaDetail } from "@/lib/ideas-shared";
+
+type IdeaDetailData = { idea: IdeaDetail; related: IdeaCardType[] } | null;
 
 const ideaDetailQuery = (slug: string) =>
-  queryOptions({
+  queryOptions<IdeaDetailData>({
     queryKey: ["idea-detail", slug],
     queryFn: async () => {
-      const { idea } = await getIdeaBySlug({ data: { slug } });
+      const result = await getIdeaBySlug({ data: { slug } });
+      if (!result) return null;
+      const { idea } = result;
       if (!idea) return null;
 
       const category = await getCategoryPage({
