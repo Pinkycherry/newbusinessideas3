@@ -19,6 +19,7 @@ function PrivacyPage() {
       highlight="policy"
       intro="This page is maintained by IdeaVault AI and describes how we handle personal data. It reflects current practice and is updated when that practice changes."
     >
+      {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <Section heading="What we collect">
         <Bullets
           items={[
@@ -84,6 +85,7 @@ function PrivacyPage() {
           .
         </p>
       </Section>
-    </ContentPage>
+    {/* EDITABLE SECTION END */}
+      </ContentPage>
   );
 }

@@ -19,6 +19,7 @@ function TermsPage() {
       highlight="service"
       intro="These terms govern your use of IdeaVault AI. By using the site you accept them. If you do not accept them, please do not use the service."
     >
+      {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <Section heading="1. The service">
         <p>
           IdeaVault AI provides researched business idea blueprints, search and browsing tools, an
@@ -91,6 +92,7 @@ function TermsPage() {
           .
         </p>
       </Section>
-    </ContentPage>
+    {/* EDITABLE SECTION END */}
+      </ContentPage>
   );
 }

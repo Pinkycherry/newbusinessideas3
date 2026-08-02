@@ -164,3 +164,26 @@ export const searchIdeas = createServerFn({ method: "GET" })
     if (error) throw new Error(error.message);
     return ((data ?? []) as unknown as IdeaRow[]).map(toIdeaCard);
   });
+
+/**
+ * Featured homepage picks. The ids come from src/config/featured.ts —
+ * this function only resolves them against the live database.
+ */
+export const getFeaturedIdeas = createServerFn({ method: "GET" })
+  .inputValidator((input: unknown) =>
+    z.object({ ideaIds: z.array(z.string()).max(24) }).parse(input),
+  )
+  .handler(async ({ data: input }): Promise<IdeaCard[]> => {
+    if (input.ideaIds.length === 0) return [];
+    const { data, error } = await db()
+      .from("ideas")
+      .select(IDEA_CARD_COLUMNS)
+      .eq("status", "completed")
+      .in("idea_id", input.ideaIds);
+    if (error) throw new Error(error.message);
+    const cards = ((data ?? []) as unknown as IdeaRow[]).map(toIdeaCard);
+    // Preserve the order declared in src/config/featured.ts.
+    return input.ideaIds
+      .map((id) => cards.find((c) => c.ideaId === id))
+      .filter((c): c is IdeaCard => Boolean(c));
+  });

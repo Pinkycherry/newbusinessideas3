@@ -1,10 +1,11 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { z } from "zod";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { AdSlot } from "@/components/AdSlot";
 import { searchIdeas } from "@/lib/ideas.functions";
 
 export const Route = createFileRoute("/search")({
@@ -43,6 +44,7 @@ function SearchPage() {
   return (
     <SiteShell>
       <div className="mx-auto max-w-6xl px-4 py-12">
+        {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
         <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Search" }]} />
         <h1 className="mt-4 text-3xl font-bold tracking-tight">Search the vault</h1>
         <form
@@ -81,13 +83,21 @@ function SearchPage() {
                 {query.data.length} result{query.data.length === 1 ? "" : "s"} for “{q}”
               </p>
               <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {query.data.map((idea) => (
-                  <IdeaCard key={idea.ideaId} idea={idea} />
+                {query.data.map((idea, i) => (
+                  <Fragment key={idea.ideaId}>
+                    <IdeaCard idea={idea} />
+                    {(i + 1) % 5 === 0 && i + 1 < query.data.length && (
+                      <div className="sm:col-span-2 lg:col-span-3">
+                        <AdSlot position={`search-in-results-${(i + 1) / 5}`} size="banner" />
+                      </div>
+                    )}
+                  </Fragment>
                 ))}
               </div>
             </>
           )}
         </div>
+        {/* EDITABLE SECTION END */}
       </div>
     </SiteShell>
   );

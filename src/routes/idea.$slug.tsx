@@ -4,6 +4,7 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { IdeaCard } from "@/components/idea-card";
 import { AiAudit } from "@/components/ai-audit";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { AdSlot } from "@/components/AdSlot";
 import { getIdeaBySlug } from "@/lib/ideas.functions";
 
 const ideaQuery = (slug: string) =>
@@ -58,7 +59,9 @@ function IdeaPage() {
 
   return (
     <SiteShell>
-      <article className="mx-auto max-w-4xl px-4 py-12">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 lg:grid-cols-[minmax(0,1fr)_20rem]">
+        <article className="min-w-0">
+        {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
         <Breadcrumbs
           items={[
             { label: "Home", to: "/" },
@@ -144,6 +147,10 @@ function IdeaPage() {
               </section>
             </div>
 
+            <div className="mt-8">
+              <AdSlot position="idea-detail-between-proscons-verdict" size="banner" />
+            </div>
+
             {idea.verdict && (
               <section className="mt-6 rounded-lg border-l-4 border-primary bg-card p-5">
                 <h2 className="text-sm font-semibold uppercase tracking-widest text-primary">
@@ -152,10 +159,16 @@ function IdeaPage() {
                 <p className="mt-2 leading-relaxed">{idea.verdict}</p>
               </section>
             )}
+
+            <div className="mt-8">
+              <AdSlot position="idea-detail-below-verdict" size="banner" />
+            </div>
           </>
         )}
 
-        <AiAudit slug={idea.slug} />
+        <div id="ai-audit">
+          <AiAudit slug={idea.slug} />
+        </div>
 
         {idea.tags.length > 0 && (
           <div className="mt-10 flex flex-wrap gap-2">
@@ -170,6 +183,10 @@ function IdeaPage() {
           </div>
         )}
 
+        <div className="mt-10">
+          <AdSlot position="idea-detail-above-related" size="banner" />
+        </div>
+
         {related.length > 0 && (
           <section className="mt-16">
             <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
@@ -182,7 +199,61 @@ function IdeaPage() {
             </div>
           </section>
         )}
-      </article>
+        {/* EDITABLE SECTION END */}
+        </article>
+
+        {/* Sticky right column — desktop only. Add or reorder blocks freely. */}
+        <aside className="hidden lg:block">
+          <div className="sticky top-28 space-y-5">
+            <div className="glass rounded-2xl px-5 py-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+                Trend score
+              </p>
+              <p className="mt-1 text-4xl font-extrabold text-accent">
+                {idea.trendScore ?? "—"}
+              </p>
+              <span
+                className={`mt-4 inline-block rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${
+                  idea.locked
+                    ? "bg-gradient-to-r from-primary to-ember text-primary-foreground"
+                    : "border border-border text-muted-foreground"
+                }`}
+              >
+                {idea.locked ? "Pro" : "Free"}
+              </span>
+              <a
+                href="#ai-audit"
+                className="sheen mt-5 block w-full rounded-full bg-gradient-to-r from-primary to-ember px-5 py-3 text-center text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_oklch(0.687_0.161_51.5/40%)] transition-transform duration-300 hover:scale-[1.02]"
+              >
+                Run AI Audit
+              </a>
+            </div>
+
+            <AdSlot position="idea-detail-right-affiliate" size="rectangle" />
+
+            {related.length > 0 && (
+              <div className="glass rounded-2xl px-5 py-5">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent">
+                  More in {idea.categoryName}
+                </p>
+                <ul className="mt-4 space-y-3">
+                  {related.slice(0, 3).map((r) => (
+                    <li key={r.ideaId}>
+                      <Link
+                        to="/idea/$slug"
+                        params={{ slug: r.slug }}
+                        className="block text-sm font-semibold leading-snug text-muted-foreground transition-colors hover:text-primary"
+                      >
+                        {r.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </aside>
+      </div>
     </SiteShell>
   );
 }

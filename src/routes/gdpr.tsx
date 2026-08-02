@@ -19,6 +19,7 @@ function GdprPage() {
       highlight="rights"
       intro="If you are in the EEA or UK, data protection law gives you specific rights over your personal data. This page explains those rights and exactly how to use them with us."
     >
+      {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <Section heading="Your rights">
         <Bullets
           items={[
@@ -66,6 +67,7 @@ function GdprPage() {
           for context on what we collect.
         </p>
       </Section>
-    </ContentPage>
+    {/* EDITABLE SECTION END */}
+      </ContentPage>
   );
 }

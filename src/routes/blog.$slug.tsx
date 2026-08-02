@@ -2,6 +2,7 @@ import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { AdSlot } from "@/components/AdSlot";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPost } from "@/lib/blog.functions";
 
@@ -60,10 +61,18 @@ function BlogPostPage() {
   const { data } = useSuspenseQuery(postQuery(slug));
   if (!data) return null;
   const { post, related } = data;
+  // Split the sanitized article so ad slots can sit after the first
+  // paragraph and at the mid-article point.
+  const blocks = post.html.split(/(?<=<\/p>)/);
+  const firstBlock = blocks.slice(0, 1).join("");
+  const midIndex = Math.max(1, Math.ceil(blocks.length / 2));
+  const secondBlock = blocks.slice(1, midIndex).join("");
+  const thirdBlock = blocks.slice(midIndex).join("");
 
   return (
     <SiteShell>
       <article className="mx-auto max-w-3xl px-3 py-12 sm:px-4">
+        {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
         <Breadcrumbs
           items={[{ label: "Home", to: "/" }, { label: "Blog", to: "/blog" }, { label: post.title }]}
         />
@@ -88,12 +97,17 @@ function BlogPostPage() {
           </div>
         )}
 
-        <div
-          className="wp-prose glass mt-8 rounded-3xl px-5 py-8 sm:px-8"
-          // Content comes from our own CMS and is sanitized server-side
-          // (scripts, iframes, inline handlers and theme classes stripped).
-          dangerouslySetInnerHTML={{ __html: post.html }}
-        />
+        {/* Content comes from our own CMS and is sanitized server-side
+            (scripts, iframes, inline handlers and theme classes stripped). */}
+        <div className="wp-prose glass mt-8 rounded-3xl px-5 py-8 sm:px-8">
+          <div dangerouslySetInnerHTML={{ __html: firstBlock }} />
+          <AdSlot position="blog-post-after-first-paragraph" size="banner" className="my-6" />
+          <div dangerouslySetInnerHTML={{ __html: secondBlock }} />
+          <AdSlot position="blog-post-mid-article" size="rectangle" className="my-6" />
+          <div dangerouslySetInnerHTML={{ __html: thirdBlock }} />
+        </div>
+
+        <AdSlot position="blog-post-after-last-paragraph" size="banner" className="mt-8" />
 
         {related.length > 0 && (
           <section className="mt-14">
@@ -115,6 +129,7 @@ function BlogPostPage() {
             </div>
           </section>
         )}
+        {/* EDITABLE SECTION END */}
       </article>
     </SiteShell>
   );

@@ -19,6 +19,7 @@ function DisclaimerPage() {
       highlight="advice"
       intro="Everything on IdeaVault AI is informational. Starting a business is risky, and nothing here removes that risk or guarantees an outcome."
     >
+      {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <Section heading="No professional advice">
         <p>
           Blueprints, trend scores, verdicts and AI audits do not constitute financial, investment,
@@ -58,6 +59,7 @@ function DisclaimerPage() {
           with the idea ID and we will review it.
         </p>
       </Section>
-    </ContentPage>
+    {/* EDITABLE SECTION END */}
+      </ContentPage>
   );
 }

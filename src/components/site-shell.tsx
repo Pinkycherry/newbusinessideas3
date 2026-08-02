@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { AmbientScene } from "@/components/ambient-scene";
 import { getCatalog } from "@/lib/ideas.functions";
+import { COLLECTIONS } from "@/config/collections";
 
 const navLinks = [
   { to: "/browse", label: "Browse" },
@@ -35,7 +36,8 @@ function CategoryMenu({ onNavigate }: { onNavigate?: () => void }) {
     return () => document.removeEventListener("mousedown", onClick);
   }, [open]);
 
-  const categories = data?.categories ?? [];
+  // Section A: live from the database, top 8 categories by idea count.
+  const categories = (data?.categories ?? []).slice(0, 8);
 
   const openOnHover = () => {
     if (!isDesktop()) return;
@@ -76,7 +78,11 @@ function CategoryMenu({ onNavigate }: { onNavigate?: () => void }) {
               Loading categories…
             </p>
           ) : (
-            categories.map((c) => (
+            <>
+              <p className="px-3 pb-1 pt-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-accent">
+                Browse by type
+              </p>
+              {categories.map((c) => (
               <Link
                 key={c.categorySlug}
                 to="/category/$categorySlug"
@@ -89,7 +95,8 @@ function CategoryMenu({ onNavigate }: { onNavigate?: () => void }) {
                   {c.ideaCount}
                 </span>
               </Link>
-            ))
+              ))}
+            </>
           )}
           <Link
             to="/browse"
@@ -98,6 +105,25 @@ function CategoryMenu({ onNavigate }: { onNavigate?: () => void }) {
           >
             View all →
           </Link>
+
+          {/* Section B: static collections, edited in src/config/collections.ts */}
+          {COLLECTIONS.length > 0 && (
+            <div className="mt-1 border-t border-border pt-2">
+              <p className="px-3 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-accent">
+                Collections
+              </p>
+              {COLLECTIONS.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.url}
+                  onClick={close}
+                  className="block rounded-xl px-3 py-2.5 text-xs font-semibold normal-case tracking-normal text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

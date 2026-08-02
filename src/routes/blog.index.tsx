@@ -48,6 +48,7 @@ function BlogIndex() {
   return (
     <SiteShell>
       <div className="mx-auto max-w-6xl px-3 py-12 sm:px-4">
+        {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
         <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Blog" }]} />
         <h1 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">
           Founder{" "}
@@ -99,6 +100,7 @@ function BlogIndex() {
             ))}
           </div>
         )}
+        {/* EDITABLE SECTION END */}
       </div>
     </SiteShell>
   );

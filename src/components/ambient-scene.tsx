@@ -1,6 +1,15 @@
+/**
+ * Background 3D spheres and rings.
+ * Overall strength is controlled by the `--ambient-opacity` CSS variable
+ * in src/styles.css (`:root`). Set it to e.g. 0.4 to calm the background.
+ */
 export function AmbientScene() {
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div
+      aria-hidden
+      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+      style={{ opacity: "var(--ambient-opacity, 1)" }}
+    >
       <div className="orb h-[26rem] w-[26rem] -right-32 -top-40 opacity-90" />
       <div className="orb h-40 w-40 left-[6%] top-[38%] opacity-80" style={{ animationDelay: "-3s" }} />
       <div className="orb h-64 w-64 -left-24 bottom-[6%] opacity-70" style={{ animationDelay: "-6s" }} />
