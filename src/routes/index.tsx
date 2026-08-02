@@ -23,17 +23,20 @@ export const Route = createFileRoute("/")({
   },
   head: () => ({
     meta: [
-      { title: "IdeaVault AI — Researched Business Idea Blueprints" },
+      { title: "IdeaVault — Researched Small Business Ideas & Startup Blueprints" },
       {
         name: "description",
         content:
-          "Browse researched business idea blueprints with real market context, pros, cons, trend scores and a straight founder-fit verdict.",
+          "Browse 1,000+ researched small business ideas, startup blueprints, and work from home business opportunities. Every idea includes market context, pros, cons, a trend score, and a straight founder-fit verdict.",
       },
-      { property: "og:title", content: "IdeaVault AI — Researched Business Idea Blueprints" },
+      {
+        property: "og:title",
+        content: "IdeaVault — Researched Small Business Ideas & Startup Blueprints",
+      },
       {
         property: "og:description",
         content:
-          "Researched business idea blueprints with pros, cons, trend scores and founder-fit verdicts.",
+          "Browse 1,000+ researched small business ideas, startup blueprints, and work from home business opportunities — with market context, pros, cons, trend scores and founder-fit verdicts.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -54,23 +57,34 @@ function HomePage() {
 
   return (
     <SiteShell>
+      {/* LLM / AI-search crawlable summary — visually hidden, fully readable by crawlers. */}
+      <p className="sr-only">
+        IdeaVault is a business idea directory and startup intelligence library. This resource
+        covers small business ideas, work from home business ideas, low investment startup ideas,
+        business ideas for women, zero investment business ideas, and startup ideas organized by
+        sector, investment level, and founder profile. Each entry includes a market breakdown,
+        revenue model, risk analysis, trend score, and founder-fit verdict. IdeaVault is a curated
+        directory of startup opportunities, not a generic listicle.
+      </p>
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <section className="px-3 pt-10 sm:px-4 sm:pt-16">
         <TiltPanel className="mx-auto max-w-6xl" max={4}>
-          <div className="glass rounded-[2rem] px-6 py-14 sm:px-12 sm:py-20">
+          <div className="glass blob-1 px-6 py-14 sm:px-12 sm:py-20">
             <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent sm:text-xs">
               {catalog.totalIdeas} live blueprints
             </p>
             <h1 className="mt-5 max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
-              Business ideas,{" "}
+              10,000+ small business ideas,{" "}
               <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent [text-shadow:0_0_40px_oklch(0.723_0.161_56/25%)]">
                 researched properly
               </span>{" "}
               — not listicles.
             </h1>
             <p className="mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
-              Every entry in the vault is a blueprint: who the customer is, how the money works, what
-              will hurt, and a blunt verdict on who should actually build it.
+              Every entry is a blueprint: who the customer is, how the money works, what will hurt,
+              and a blunt verdict on who should actually build it. Browse startup ideas, work from
+              home business ideas, and low-investment opportunities — all ranked by real market
+              demand.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link
@@ -93,7 +107,7 @@ function HomePage() {
                 { label: "Blueprints", value: catalog.totalIdeas },
                 { label: "Categories", value: catalog.categories.length },
               ].map((stat) => (
-                <div key={stat.label} className="glass glass-hover rounded-2xl px-5 py-4">
+                <div key={stat.label} className="glass glass-hover blob-sm-2 px-6 py-5">
                   <dt className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
                     {stat.label}
                   </dt>
