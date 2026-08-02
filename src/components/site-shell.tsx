@@ -67,8 +67,26 @@ function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boo
 function CategoryMega() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { data } = useCatalog();
   const categories = (data?.categories ?? []).slice(0, 20);
+
+  /** Hover-gap fix: cancel pending close on re-enter, delay close by 150ms. */
+  const cancelClose = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+  const openNow = () => {
+    cancelClose();
+    setOpen(true);
+  };
+  const closeSoon = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => setOpen(false), 150);
+  };
+  useEffect(() => cancelClose, []);
 
   useEffect(() => {
     if (!open) return;
@@ -83,14 +101,14 @@ function CategoryMega() {
     <div
       ref={ref}
       className="relative"
-      onMouseEnter={() => isDesktop() && setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={() => isDesktop() && openNow()}
+      onMouseLeave={closeSoon}
     >
       <button
         type="button"
         aria-expanded={open}
         aria-haspopup="menu"
-        onFocus={() => isDesktop() && setOpen(true)}
+        onFocus={() => isDesktop() && openNow()}
         onClick={() => setOpen((v) => !v)}
         className="flex items-center gap-1.5 uppercase tracking-[0.18em] transition-colors duration-300 hover:text-foreground"
       >
@@ -102,8 +120,10 @@ function CategoryMega() {
       {open && (
         <div
           role="menu"
+          onMouseEnter={openNow}
+          onMouseLeave={closeSoon}
           style={{ background: "oklch(0.255 0.008 274 / 98%)" }}
-          className="glass-nav fixed left-1/2 top-24 z-50 w-[min(72rem,94vw)] -translate-x-1/2 rounded-3xl p-6"
+          className="glass-nav fixed left-1/2 top-24 z-50 w-[min(72rem,94vw)] -translate-x-1/2 rounded-3xl p-6 before:absolute before:-top-8 before:left-0 before:h-8 before:w-full before:content-['']"
         >
           <div className="grid gap-8 lg:grid-cols-[2.2fr_1fr]">
             <div>
@@ -125,9 +145,6 @@ function CategoryMega() {
                       className="rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
                     >
                       <span className="block font-semibold leading-snug">{c.categoryName}</span>
-                      <span className="mt-1 block text-[10px] uppercase tracking-widest text-accent">
-                        {c.ideaCount} ideas
-                      </span>
                     </Link>
                   ))
                 )}
