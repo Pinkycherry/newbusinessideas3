@@ -65,14 +65,12 @@ function BlogIndex() {
           <p className="mt-12 text-muted-foreground">No posts published yet.</p>
         ) : (
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {data.posts.map((post, i) => (
+            {data.posts.map((post) => (
               <Link
                 key={post.id}
                 to="/blog/$slug"
                 params={{ slug: post.slug }}
-                className={`glass glass-hover group flex h-full flex-col overflow-hidden ${
-                  ["blob-sm-1", "blob-sm-2", "blob-sm-3"][i % 3]
-                }`}
+                className="glass glass-hover group flex h-full flex-col overflow-hidden rounded-2xl"
               >
                 {post.image && (
                   <div className="aspect-video w-full overflow-hidden">
@@ -84,7 +82,7 @@ function BlogIndex() {
                     />
                   </div>
                 )}
-                <div className="flex flex-1 flex-col gap-3 p-5">
+                <div className="flex flex-1 flex-col gap-3 p-5 pb-7">
                   <div className="flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-accent">
                     <span>{formatDate(post.date)}</span>
                     <span aria-hidden className="text-muted-foreground">
