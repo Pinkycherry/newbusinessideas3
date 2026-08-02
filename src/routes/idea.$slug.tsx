@@ -167,7 +167,7 @@ function IdeaPage() {
         )}
 
         <div id="ai-audit">
-          <AiAudit slug={idea.slug} />
+          <AiAudit slug={idea.slug} locked={idea.locked} />
         </div>
 
         {idea.tags.length > 0 && (

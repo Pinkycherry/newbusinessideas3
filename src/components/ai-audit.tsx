@@ -1,11 +1,26 @@
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import { useNavigate } from "@tanstack/react-router";
 
 import { runIdeaAudit } from "@/lib/audit.functions";
 
-export function AiAudit({ slug }: { slug: string }) {
+export function AiAudit({ slug, locked = false }: { slug: string; locked?: boolean }) {
+  const navigate = useNavigate();
   const run = useServerFn(runIdeaAudit);
   const audit = useMutation({ mutationFn: () => run({ data: { slug } }) });
+
+  // No Pro Pass exists for a visitor without a verified entitlement, and checkout
+  // is not live yet — so any premium idea sends the visitor to /pricing.
+  const hasProPass = false;
+  const gated = locked && !hasProPass;
+
+  const handleClick = () => {
+    if (gated) {
+      navigate({ to: "/pricing" });
+      return;
+    }
+    audit.mutate();
+  };
 
   const rows = audit.data
     ? [
@@ -31,13 +46,14 @@ export function AiAudit({ slug }: { slug: string }) {
             Stress-test this idea
           </h2>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Generated at request time from this idea's real record — capital, moat, distribution,
-            kill criteria and the first move that matters.
+            {gated
+              ? "This is a Pro Pass idea. The live AI audit runs only for verified Pro Pass holders — see pricing to unlock it."
+              : "Generated at request time from this idea's real record — capital, moat, distribution, kill criteria and the first move that matters."}
           </p>
         </div>
         <button
           type="button"
-          onClick={() => audit.mutate()}
+          onClick={handleClick}
           disabled={audit.isPending}
           className="sheen inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-ember px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_oklch(0.687_0.161_51.5/40%)] transition-all duration-[400ms] ease-glass hover:scale-105 disabled:cursor-wait disabled:opacity-70"
         >

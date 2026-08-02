@@ -53,6 +53,12 @@ export async function runAudit(slug: string): Promise<AuditResult> {
   if (!data) throw new Error("That idea does not exist in the library.");
   const idea = toIdeaDetail(data as IdeaRow);
 
+  // Server-side entitlement gate: premium ideas require a verified Pro Pass,
+  // which does not exist yet, so the audit never runs for them.
+  if (idea.locked) {
+    throw new Error("This audit is part of the Pro Pass. Visit /pricing to unlock it.");
+  }
+
   const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) throw new Error("AI is not configured: LOVABLE_API_KEY is missing.");
 
