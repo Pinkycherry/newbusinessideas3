@@ -55,6 +55,46 @@ const SCROLL_PANELS = [
   },
 ];
 
+/** Hero content panels. */
+const HERO_PANELS = [
+  {
+    label: "What you get",
+    body: "Every small business idea in this library comes with a named buyer, a revenue model in plain numbers, the failure modes most people find only after spending money, and a direct verdict on who should actually build it. Not a list. A blueprint.",
+  },
+  {
+    label: "How it works",
+    body: "Browse a category. Read the blueprint. If it fits, run a live AI audit and get a real-time market sizing, competitor map, and a 90-day launch plan built for that specific idea. Free to browse. Pro Pass for the audit.",
+  },
+];
+
+/** FAQ content. */
+const FAQS = [
+  {
+    q: "Are these real business ideas or just inspiration?",
+    a: "Every entry is a researched blueprint, not a topic suggestion. Each one covers what the business actually does day to day, who the specific customer is, how money changes hands, what the realistic obstacles are, and a direct verdict on founder fit. You can evaluate any idea in under ten minutes.",
+  },
+  {
+    q: "What is the difference between a free and Pro entry?",
+    a: "Free entries give you the full blueprint — summary, pros, cons, and verdict. Pro entries add the live AI audit: a real-time market sizing, competitor analysis, target customer profile, and a 90-day go-to-market plan generated specifically for that idea.",
+  },
+  {
+    q: "How are trend scores calculated?",
+    a: "Each idea receives a trend score between 55 and 98 based on current market demand signals for that specific micro-niche, not the broader category. A score above 88 indicates strong current momentum and unlocks Pro tier status.",
+  },
+  {
+    q: "Can I suggest a business idea to add to the library?",
+    a: "Yes. Use the Contact page to submit a niche or sector you want covered. We review suggestions and prioritize based on search demand and founder interest.",
+  },
+  {
+    q: "How often is the library updated?",
+    a: "New blueprints are added regularly across all categories. Every new entry appears automatically in the browse page and category listings the moment it is published.",
+  },
+  {
+    q: "Is this useful if I already have a business idea?",
+    a: "Yes. Run the AI audit on the closest matching entry to get a real-time market sizing, competitive landscape, and launch plan that you can adapt to your own version of the idea.",
+  },
+];
+
 const featuredQuery = queryOptions({
   queryKey: ["featured", FEATURED_IDEA_IDS],
   queryFn: () => getFeaturedIdeas({ data: { ideaIds: FEATURED_IDEA_IDS } }),
@@ -132,37 +172,40 @@ function HomePage() {
               home business ideas, and low-investment opportunities — all ranked by real market
               demand.
             </p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Link
-                to="/browse"
-                className="sheen group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-ember px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_oklch(0.687_0.161_51.5/40%)] transition-all duration-[400ms] ease-glass hover:scale-105 hover:shadow-[0_16px_48px_oklch(0.687_0.161_51.5/55%)]"
-              >
-                Browse the vault
-                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-              </Link>
-              <Link
-                to="/search"
-                className="glass rounded-full px-6 py-3 text-sm font-semibold transition-all duration-[400ms] ease-glass hover:scale-105 hover:border-primary"
-              >
-                Search by keyword
-              </Link>
-            </div>
-
-            <dl className="mt-12 grid gap-3 sm:grid-cols-2">
-              {[
-                { label: "Blueprints", value: catalog.totalIdeas },
-                { label: "Categories", value: catalog.categories.length },
-              ].map((stat) => (
-                <div key={stat.label} className="glass glass-hover blob-sm-2 px-6 py-5">
-                  <dt className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
-                    {stat.label}
-                  </dt>
-                  <dd className="mt-1 text-3xl font-bold text-accent">{stat.value}</dd>
+            <div className="mt-12 grid gap-4 sm:grid-cols-2">
+              {HERO_PANELS.map((panel, i) => (
+                <div key={panel.label} className={`glass glass-hover ${i === 0 ? "blob-sm-1" : "blob-sm-2"} px-6 py-7`}>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
+                    {panel.label}
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{panel.body}</p>
                 </div>
               ))}
-            </dl>
+            </div>
           </div>
         </TiltPanel>
+      </section>
+
+      {/* MOVING CATEGORY TICKER — categories are live from the database. */}
+      <section className="pt-10" aria-label="Browse by category">
+        <style>{`@keyframes iv-ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}.iv-ticker-track{animation:iv-ticker 38s linear infinite;width:max-content}.iv-ticker:hover .iv-ticker-track,.iv-ticker:active .iv-ticker-track{animation-play-state:paused}`}</style>
+        <p className="mx-auto max-w-6xl px-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent sm:px-4">
+          Browse by category
+        </p>
+        <div className="iv-ticker mt-4 overflow-x-auto [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden">
+          <div className="iv-ticker-track flex gap-3 px-3 sm:px-4">
+            {[...catalog.categories, ...catalog.categories].map((c, i) => (
+              <Link
+                key={`${c.categorySlug}-${i}`}
+                to="/category/$categorySlug"
+                params={{ categorySlug: c.categorySlug }}
+                className="glass shrink-0 whitespace-nowrap rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-accent transition-all duration-300 hover:border-primary hover:text-primary hover:shadow-[0_0_24px_oklch(0.723_0.161_56/45%)]"
+              >
+                {c.categoryName}
+              </Link>
+            ))}
+          </div>
+        </div>
       </section>
 
       <div className="px-3 pt-8 sm:px-4">
@@ -313,6 +356,59 @@ function HomePage() {
             </div>
           </div>
         ))}
+      </section>
+
+      {/* WHY WE BUILT THIS */}
+      <section className="mx-auto max-w-4xl px-3 pb-24 sm:px-4">
+        <h2 className="text-3xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
+          We got tired of the same 50 ideas recycled into infinity.
+        </h2>
+        <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p>
+            Every business idea list on the internet is the same list. Drop shipping. Print on
+            demand. Start a blog. Sell on Etsy. They are not wrong exactly, but they are not
+            researched either. Nobody tells you the margin, the failure rate, the licensing
+            requirement, or the competitor who already owns the space.
+          </p>
+          <p>
+            This library exists because a genuine small business idea blueprint is worth more than
+            a hundred recycled suggestions. We research each one properly — market context, real
+            revenue mechanics, honest risks — and we tell you directly whether you are the right
+            person to build it.
+          </p>
+        </div>
+        <Link
+          to="/browse"
+          className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
+        >
+          Read a blueprint
+          <span aria-hidden>→</span>
+        </Link>
+      </section>
+
+      {/* FAQ */}
+      <section className="mx-auto max-w-4xl px-3 pb-24 sm:px-4">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+          Common questions
+        </p>
+        <div className="mt-6 divide-y divide-border">
+          {FAQS.map((item) => (
+            <details key={item.q} className="group py-5">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-base font-semibold text-foreground transition-colors hover:text-primary sm:text-lg">
+                {item.q}
+                <span
+                  aria-hidden
+                  className="shrink-0 text-accent transition-transform duration-300 group-open:rotate-45"
+                >
+                  +
+                </span>
+              </summary>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                {item.a}
+              </p>
+            </details>
+          ))}
+        </div>
       </section>
 
       <div className="px-3 pb-10 sm:px-4">
