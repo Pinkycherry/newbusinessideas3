@@ -100,6 +100,8 @@
   --sidebar-accent-foreground: oklch(1 0 0);
   --sidebar-border: oklch(1 0 0 / 20%);
   --sidebar-ring: oklch(0.687 0.161 51.5);
+  /* Ambient background spheres/rings: 0 = invisible, 1 = full strength. */
+  --ambient-opacity: 1;
 }
 
 .dark {
