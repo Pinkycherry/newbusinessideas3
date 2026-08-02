@@ -5,14 +5,34 @@ import { IdeaCard } from "@/components/idea-card";
 import { AiAudit } from "@/components/ai-audit";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
-import { getIdeaBySlug } from "@/lib/ideas.functions";
+import { getIdeaBySlug, getCategoryPage } from "@/lib/ideas.functions";
+import { type IdeaCard as IdeaCardType, type IdeaDetail } from "@/lib/ideas-shared";
 
-const ideaQuery = (slug: string) =>
-  queryOptions({ queryKey: ["idea", slug], queryFn: () => getIdeaBySlug({ data: { slug } }) });
+type IdeaDetailData = { idea: IdeaDetail; related: IdeaCardType[] } | null;
+
+const ideaDetailQuery = (slug: string) =>
+  queryOptions<IdeaDetailData>({
+    queryKey: ["idea-detail", slug],
+    queryFn: async () => {
+      const result = await getIdeaBySlug({ data: { slug } });
+      if (!result) return null;
+      const { idea } = result;
+      if (!idea) return null;
+
+      const category = await getCategoryPage({
+        data: { categorySlug: idea.categorySlug },
+      });
+      const related = category.ideas
+        .filter((i) => i.ideaId !== idea.ideaId)
+        .slice(0, 6);
+
+      return { idea, related };
+    },
+  });
 
 export const Route = createFileRoute("/idea/$slug")({
   loader: async ({ context, params }) => {
-    const data = await context.queryClient.ensureQueryData(ideaQuery(params.slug));
+    const data = await context.queryClient.ensureQueryData(ideaDetailQuery(params.slug));
     if (!data) throw notFound();
     return data;
   },
@@ -53,9 +73,13 @@ export const Route = createFileRoute("/idea/$slug")({
 
 function IdeaPage() {
   const { slug } = Route.useParams();
-  const { data } = useSuspenseQuery(ideaQuery(slug));
+  const { data } = useSuspenseQuery(ideaDetailQuery(slug));
   if (!data) return null;
   const { idea, related } = data;
+
+  const showSidebarList = related.length > 3;
+  const sidebarRelated = showSidebarList ? related.slice(0, 3) : [];
+  const bottomRelated = showSidebarList ? related.slice(3, 6) : related;
 
   return (
     <SiteShell>
@@ -187,13 +211,13 @@ function IdeaPage() {
           <AdSlot position="idea-detail-above-related" size="banner" />
         </div>
 
-        {related.length > 0 && (
+        {bottomRelated.length > 0 && (
           <section className="mt-16">
             <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
               More in {idea.categoryName}
             </h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((r) => (
+              {bottomRelated.map((r) => (
                 <IdeaCard key={r.ideaId} idea={r} />
               ))}
             </div>
@@ -231,13 +255,13 @@ function IdeaPage() {
 
             <AdSlot position="idea-detail-right-affiliate" size="rectangle" />
 
-            {related.length > 0 && (
+            {sidebarRelated.length > 0 && (
               <div className="glass rounded-2xl px-5 py-5">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent">
                   More in {idea.categoryName}
                 </p>
                 <ul className="mt-4 space-y-3">
-                  {related.slice(0, 3).map((r) => (
+                  {sidebarRelated.map((r) => (
                     <li key={r.ideaId}>
                       <Link
                         to="/idea/$slug"
