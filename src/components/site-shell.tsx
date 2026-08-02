@@ -102,6 +102,7 @@ function CategoryMega() {
       {open && (
         <div
           role="menu"
+          style={{ background: "oklch(0.255 0.008 274 / 98%)" }}
           className="glass-nav fixed left-1/2 top-24 z-50 w-[min(72rem,94vw)] -translate-x-1/2 rounded-3xl p-6"
         >
           <div className="grid gap-8 lg:grid-cols-[2.2fr_1fr]">
