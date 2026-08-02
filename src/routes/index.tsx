@@ -188,23 +188,38 @@ function HomePage() {
 
       {/* MOVING CATEGORY TICKER — categories are live from the database. */}
       <section className="pt-10" aria-label="Browse by category">
-        <style>{`@keyframes iv-ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}.iv-ticker-track{animation:iv-ticker 38s linear infinite;width:max-content}.iv-ticker:hover .iv-ticker-track,.iv-ticker:active .iv-ticker-track{animation-play-state:paused}`}</style>
+        <style>{`@keyframes iv-ticker-l{from{transform:translateX(0)}to{transform:translateX(-50%)}}@keyframes iv-ticker-r{from{transform:translateX(-50%)}to{transform:translateX(0)}}.iv-ticker-track{width:max-content;animation:iv-ticker-l 38s linear infinite}.iv-ticker-track.rev{animation-name:iv-ticker-r}.iv-ticker:hover .iv-ticker-track,.iv-ticker:active .iv-ticker-track{animation-play-state:paused}`}</style>
         <p className="mx-auto max-w-6xl px-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent sm:px-4">
           Browse by category
         </p>
-        <div className="iv-ticker mt-4 overflow-x-auto [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden">
-          <div className="iv-ticker-track flex gap-3 px-3 sm:px-4">
-            {[...catalog.categories, ...catalog.categories].map((c, i) => (
-              <Link
-                key={`${c.categorySlug}-${i}`}
-                to="/category/$categorySlug"
-                params={{ categorySlug: c.categorySlug }}
-                className="glass shrink-0 whitespace-nowrap rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-accent transition-all duration-300 hover:border-primary hover:text-primary hover:shadow-[0_0_24px_oklch(0.723_0.161_56/45%)]"
+        <div className="iv-ticker mt-4 grid gap-3">
+          {tickerRows(catalog.categories).map((row, rowIndex) => {
+            // Repeat each row until it is wide enough to loop seamlessly.
+            const repeats = Math.max(2, Math.ceil(14 / Math.max(row.length, 1))) * 2;
+            const items = Array.from({ length: repeats }, () => row).flat();
+            return (
+              <div
+                key={`ticker-row-${rowIndex}`}
+                className="overflow-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               >
-                {c.categoryName}
-              </Link>
-            ))}
-          </div>
+                <div
+                  className={`iv-ticker-track flex gap-3 px-3 sm:px-4 ${rowIndex % 2 === 1 ? "rev" : ""}`}
+                  style={{ animationDuration: `${34 + rowIndex * 6}s` }}
+                >
+                  {items.map((c, i) => (
+                    <Link
+                      key={`${rowIndex}-${c.categorySlug}-${i}`}
+                      to="/category/$categorySlug"
+                      params={{ categorySlug: c.categorySlug }}
+                      className="glass shrink-0 whitespace-nowrap rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-accent transition-all duration-300 hover:border-primary hover:text-primary hover:shadow-[0_0_24px_oklch(0.723_0.161_56/45%)]"
+                    >
+                      {c.categoryName}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
