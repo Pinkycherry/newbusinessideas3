@@ -65,12 +65,14 @@ function BlogIndex() {
           <p className="mt-12 text-muted-foreground">No posts published yet.</p>
         ) : (
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {data.posts.map((post) => (
+            {data.posts.map((post, i) => (
               <Link
                 key={post.id}
                 to="/blog/$slug"
                 params={{ slug: post.slug }}
-                className="glass glass-hover group flex h-full flex-col overflow-hidden rounded-2xl"
+                className={`glass glass-hover group flex h-full flex-col overflow-hidden ${
+                  ["blob-sm-1", "blob-sm-2", "blob-sm-3"][i % 3]
+                }`}
               >
                 {post.image && (
                   <div className="aspect-video w-full overflow-hidden">
