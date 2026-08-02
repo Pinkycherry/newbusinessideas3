@@ -248,6 +248,11 @@ function HomePage() {
           ))}
         </div>
       </section>
+
+      <div className="px-3 pb-10 sm:px-4">
+        <AdSlot position="homepage-above-footer" size="banner" />
+      </div>
+      {/* EDITABLE SECTION END */}
     </SiteShell>
   );
 }
