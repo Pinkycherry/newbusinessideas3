@@ -4,16 +4,21 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
 import { TiltPanel } from "@/components/tilt-panel";
-import { getCatalog, getTrendingIdeas } from "@/lib/ideas.functions";
+import { AdSlot } from "@/components/AdSlot";
+import { FEATURED_IDEA_IDS } from "@/config/featured";
+import { getCatalog, getFeaturedIdeas } from "@/lib/ideas.functions";
 
 const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
-const trendingQuery = queryOptions({ queryKey: ["trending"], queryFn: () => getTrendingIdeas() });
+const featuredQuery = queryOptions({
+  queryKey: ["featured", FEATURED_IDEA_IDS],
+  queryFn: () => getFeaturedIdeas({ data: { ideaIds: FEATURED_IDEA_IDS } }),
+});
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
     await Promise.all([
       context.queryClient.ensureQueryData(catalogQuery),
-      context.queryClient.ensureQueryData(trendingQuery),
+      context.queryClient.ensureQueryData(featuredQuery),
     ]);
   },
   head: () => ({
@@ -44,11 +49,12 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const { data: catalog } = useSuspenseQuery(catalogQuery);
-  const { data: trending } = useSuspenseQuery(trendingQuery);
-  const highlights = trending.slice(0, 3);
+  // Featured picks are configured in src/config/featured.ts
+  const { data: highlights } = useSuspenseQuery(featuredQuery);
 
   return (
     <SiteShell>
+      {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <section className="px-3 pt-10 sm:px-4 sm:pt-16">
         <TiltPanel className="mx-auto max-w-6xl" max={4}>
           <div className="glass rounded-[2rem] px-6 py-14 sm:px-12 sm:py-20">
@@ -103,11 +109,15 @@ function HomePage() {
         </TiltPanel>
       </section>
 
+      <div className="px-3 pt-8 sm:px-4">
+        <AdSlot position="homepage-hero-below" size="banner" />
+      </div>
+
       <section className="mx-auto max-w-6xl px-3 py-16 sm:px-4">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-              This week's picks
+              Featured blueprints
             </p>
             <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
               Three blueprints worth your afternoon
@@ -126,6 +136,10 @@ function HomePage() {
           ))}
         </div>
       </section>
+
+      <div className="px-3 pb-8 sm:px-4">
+        <AdSlot position="homepage-featured-below" size="banner" />
+      </div>
 
       <section className="mx-auto max-w-6xl px-3 pb-10 sm:px-4">
         <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
