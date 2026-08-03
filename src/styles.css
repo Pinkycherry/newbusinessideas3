@@ -301,3 +301,196 @@
 @utility bbi-shape-faq1 { border-radius: 1rem 2.5rem 1rem 2.5rem; }
 @utility bbi-shape-faq2 { border-radius: 2.5rem 1rem 2.5rem 1rem; }
 @utility bbi-shape-faq3 { border-radius: 2rem; }
+
+/* ================================================================
+   BBI ADDITION — CLAYMORPHIC / FACETED SHAPE SYSTEM
+   Replaces the old border-radius blob/pill shapes with clip-path
+   corner facets (cut-corner, Figma-style panels). No rectangles,
+   squares, circles or triangles used as-is. Padding is generous
+   and clamp()-based on every shape so text can never reach a cut
+   corner — this is the fix for the mobile text-overflow bug.
+   Colors are untouched; only shape + shadow layering changes.
+   Safe to delete: remove this whole block, then remove the
+   className references (bbi-shape-*, bbi-clay, bbi-orbit-*) in
+   src/routes/index.tsx.
+   ================================================================ */
+
+@utility bbi-clay {
+  box-shadow:
+    -10px -10px 24px oklch(1 0 0 / 5%),
+    12px 16px 32px oklch(0 0 0 / 50%),
+    inset 0 1px 0 0 oklch(1 0 0 / 12%),
+    inset 0 -1px 0 0 oklch(0 0 0 / 20%);
+}
+
+@utility bbi-shape-banner {
+  clip-path: polygon(0 0, calc(100% - 64px) 0, 100% 64px, 100% 100%, 48px 100%, 0 calc(100% - 48px));
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.75rem, 6vw, 4rem) !important;
+}
+@utility bbi-shape-diamond {
+  clip-path: polygon(40px 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%, 0 40px);
+  padding: clamp(1.75rem, 4vw, 3rem) clamp(1.75rem, 5vw, 3rem) !important;
+}
+@utility bbi-shape-step {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 32px), calc(100% - 32px) 100%, 0 100%);
+  padding: clamp(1.5rem, 4vw, 2rem) !important;
+}
+@utility bbi-shape-step-badge {
+  clip-path: polygon(30% 0, 100% 0, 100% 70%, 70% 100%, 0 100%, 0 30%);
+}
+@utility bbi-shape-soft-deep {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 56px 100%, 0 calc(100% - 56px));
+  padding: clamp(1.75rem, 4vw, 3rem) !important;
+}
+@utility bbi-shape-hex {
+  clip-path: polygon(24px 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%, 0 24px);
+  padding: clamp(1.5rem, 4vw, 2rem) !important;
+}
+@utility bbi-shape-ticket {
+  clip-path: polygon(
+    48px 0, 100% 0, 100% 100%, 48px 100%,
+    48px calc(50% + 14px), 32px 50%, 48px calc(50% - 14px)
+  );
+  padding: clamp(1.75rem, 4vw, 3rem) clamp(1.75rem, 5vw, 3.5rem) !important;
+}
+@utility bbi-shape-card-a {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 40px 100%, 0 calc(100% - 40px));
+  padding: clamp(1.75rem, 4vw, 3rem) !important;
+}
+@utility bbi-shape-compare-sharp {
+  clip-path: polygon(20px 0, 100% 0, 100% 100%, 0 100%, 0 20px);
+  padding: clamp(1.5rem, 4vw, 2rem) !important;
+}
+@utility bbi-shape-compare-round {
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+  padding: clamp(1.5rem, 4vw, 2rem) !important;
+}
+@utility bbi-shape-shield {
+  clip-path: polygon(0 0, 100% 0, 100% 82%, 50% 100%, 0 82%);
+  padding: clamp(1.75rem, 4vw, 3rem) clamp(1.75rem, 5vw, 3rem) 3.5rem !important;
+}
+@utility bbi-shape-faq1 {
+  clip-path: polygon(28px 0, 100% 0, 100% 100%, 0 100%, 0 28px);
+  padding: clamp(1.5rem, 4vw, 2.25rem) !important;
+}
+@utility bbi-shape-faq2 {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%);
+  padding: clamp(1.5rem, 4vw, 2.25rem) !important;
+}
+@utility bbi-shape-faq3 {
+  clip-path: polygon(0 28px, 28px 0, 100% 0, 100% 100%, 0 100%);
+  padding: clamp(1.5rem, 4vw, 2.25rem) !important;
+}
+@utility bbi-shape-stat {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%);
+  padding: clamp(1.5rem, 4vw, 2rem) !important;
+}
+
+/* Smaller cuts on phones — corners stay proportionate, padding above
+   already guarantees text never reaches them. */
+@media (max-width: 640px) {
+  .bbi-shape-banner,
+  .bbi-shape-diamond,
+  .bbi-shape-soft-deep,
+  .bbi-shape-ticket,
+  .bbi-shape-card-a,
+  .bbi-shape-shield {
+    clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 28px 100%, 0 calc(100% - 28px));
+  }
+}
+
+/* ================================================================
+   BBI ADDITION — ORBIT DIAGRAM
+   Pure CSS + JS-computed positions (trig, no external assets).
+   Rings rotate continuously; satellite nodes are placed at fixed
+   points around the circle (percentage-based, so it's naturally
+   responsive) and stay upright — no spinning text.
+   ================================================================ */
+
+.bbi-orbit-wrap {
+  position: relative;
+  width: clamp(15rem, 70vw, 22rem);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+.bbi-orbit-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1px dashed oklch(0.805 0.135 65 / 30%);
+}
+.bbi-orbit-ring-inner {
+  inset: 15%;
+  border-color: oklch(0.687 0.161 51.5 / 40%);
+  animation: bbi-orbit-spin 34s linear infinite;
+}
+.bbi-orbit-ring-outer {
+  animation: bbi-orbit-spin-rev 58s linear infinite;
+}
+@keyframes bbi-orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes bbi-orbit-spin-rev {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+.bbi-orbit-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5rem;
+  background: radial-gradient(circle at 32% 28%, oklch(0.805 0.135 65 / 95%), oklch(0.687 0.161 51.5 / 95%) 60%, oklch(0.56 0.15 44 / 95%) 100%);
+  animation: bbi-orbit-pulse 5s ease-in-out infinite;
+}
+@keyframes bbi-orbit-pulse {
+  0%, 100% { box-shadow: 0 0 36px oklch(0.723 0.161 56 / 35%), inset 0 2px 6px oklch(1 0 0 / 35%); }
+  50% { box-shadow: 0 0 58px oklch(0.723 0.161 56 / 55%), inset 0 2px 6px oklch(1 0 0 / 35%); }
+}
+.bbi-orbit-center-label {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(0.68rem, 2.3vw, 0.9rem);
+  color: oklch(0.18 0.02 60);
+  line-height: 1.15;
+}
+.bbi-orbit-center-sub {
+  margin-top: 0.2rem;
+  font-size: clamp(0.55rem, 1.6vw, 0.62rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: oklch(0.18 0.02 60 / 75%);
+}
+.bbi-orbit-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: max-content;
+  max-width: 6rem;
+  text-align: center;
+}
+.bbi-orbit-dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 9999px;
+  background: var(--accent);
+  box-shadow: 0 0 12px oklch(0.805 0.135 65 / 70%);
+}
+.bbi-orbit-node-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--foreground);
+  line-height: 1.2;
+}
