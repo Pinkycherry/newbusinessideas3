@@ -436,7 +436,89 @@ function HomePage() {
       <div className="px-3 pb-10 sm:px-4">
         <AdSlot position="homepage-above-footer" size="banner" />
       </div>
+
+      {/* ============================================================
+          BBI ADDITION — TRUST STATS BAR
+          Safe to delete: remove this one <TrustStatsBar ... /> line
+          (and this comment), plus the whole block appended at the
+          very bottom of this file (also marked "BBI ADDITION").
+          Nothing else in this file is affected either way.
+         ============================================================ */}
+      <TrustStatsBar totalIdeas={catalog.totalIdeas} categoryCount={catalog.categories.length} />
+
       {/* EDITABLE SECTION END */}
     </SiteShell>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — TRUST STATS BAR
+   Everything below this line is self-contained. To remove: delete
+   this whole block, plus the single <TrustStatsBar ... /> call
+   marked "BBI ADDITION" above. Nothing else in this file changes.
+   ================================================================ */
+
+/**
+ * Real AI idea audits run ahead of BBI's public launch — shared via our
+ * live preview URL with testers across WhatsApp groups, friends and
+ * family. A single idea can be (and has been) audited multiple times by
+ * different people, which is expected and fine.
+ *
+ * No accounts/auth yet, so nothing is logged automatically.
+ * UPDATE THESE TWO NUMBERS BY HAND whenever the real counts change.
+ */
+const BBI_TOTAL_VALIDATIONS = 3797;
+const BBI_VALIDATIONS_LAST_30_DAYS = 1900;
+
+const BBI_STAT_BLOBS = ["blob-sm-1", "blob-sm-2", "blob-sm-3", "blob-sm-1"] as const;
+
+function TrustStatsBar({
+  totalIdeas,
+  categoryCount,
+}: {
+  totalIdeas: number;
+  categoryCount: number;
+}) {
+  const stats = [
+    {
+      value: BBI_TOTAL_VALIDATIONS.toLocaleString(),
+      label: "AI idea audits run",
+      note: "Across our pre-launch testing group",
+    },
+    {
+      value: BBI_VALIDATIONS_LAST_30_DAYS.toLocaleString(),
+      label: "Audits in the last 30 days",
+      note: "And climbing as we head to launch",
+    },
+    {
+      value: totalIdeas.toLocaleString(),
+      label: "Researched blueprints live",
+      note: "Every one a completed, published entry",
+    },
+    {
+      value: categoryCount.toLocaleString(),
+      label: "Categories covered",
+      note: "From fintech to senior care to SaaS",
+    },
+  ];
+
+  return (
+    <div className="mx-auto mt-8 grid max-w-6xl gap-4 px-3 sm:grid-cols-2 sm:px-4 lg:grid-cols-4">
+      {stats.map((stat, i) => (
+        <div
+          key={stat.label}
+          className={`glass glass-hover ${BBI_STAT_BLOBS[i % BBI_STAT_BLOBS.length]} px-6 py-6 text-center sm:text-left`}
+        >
+          <p className="text-3xl font-extrabold tracking-tight text-accent sm:text-4xl">
+            {stat.value}
+            <span aria-hidden>+</span>
+          </p>
+          <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
+            {stat.label}
+          </p>
+          <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{stat.note}</p>
+        </div>
+      ))}
+    </div>
   );
 }
