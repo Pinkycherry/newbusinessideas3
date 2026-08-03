@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
@@ -53,7 +54,7 @@ const SCROLL_PANELS = [
     body: "Who specifically pays for this. How the money actually moves. What will hurt in year one. And whether you, specifically, are the right person to build it.",
   },
   {
-    title: "Hundreds of blueprints live. Scaling to 10,000.",
+    title: "43 blueprints live. Scaling to 10,000.",
     body: "Organized across categories from Tech and SaaS to Creator and Media, FinTech, E-Commerce and more. Every new category added to the database appears here automatically.",
   },
   {
@@ -116,20 +117,20 @@ export const Route = createFileRoute("/")({
   },
   head: () => ({
     meta: [
-      { title: "IdeaVault — Researched Small Business Ideas & Startup Blueprints" },
+      { title: "BBI — Best Business Ideas | Researched Startup Blueprints" },
       {
         name: "description",
         content:
-          "Browse 1,000+ researched small business ideas, startup blueprints, and work from home business opportunities. Every idea includes market context, pros, cons, a trend score, and a straight founder-fit verdict.",
+          "BBI (Best Business Ideas) — 1,000+ researched small business ideas, startup blueprints, and work from home business opportunities. Every idea includes market context, pros, cons, a trend score, and a straight founder-fit verdict.",
       },
       {
         property: "og:title",
-        content: "IdeaVault — Researched Small Business Ideas & Startup Blueprints",
+        content: "BBI — Best Business Ideas | Researched Startup Blueprints",
       },
       {
         property: "og:description",
         content:
-          "Browse 1,000+ researched small business ideas, startup blueprints, and work from home business opportunities — with market context, pros, cons, trend scores and founder-fit verdicts.",
+          "Best Business Ideas (BBI) — 1,000+ researched small business ideas, startup blueprints, and work from home business opportunities, with market context, pros, cons, trend scores and founder-fit verdicts.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -152,12 +153,12 @@ function HomePage() {
     <SiteShell>
       {/* LLM / AI-search crawlable summary — visually hidden, fully readable by crawlers. */}
       <p className="sr-only">
-        IdeaVault is a business idea directory and startup intelligence library. This resource
-        covers small business ideas, work from home business ideas, low investment startup ideas,
-        business ideas for women, zero investment business ideas, and startup ideas organized by
-        sector, investment level, and founder profile. Each entry includes a market breakdown,
-        revenue model, risk analysis, trend score, and founder-fit verdict. IdeaVault is a curated
-        directory of startup opportunities, not a generic listicle.
+        BBI (Best Business Ideas) is a business idea directory and startup intelligence library.
+        This resource covers small business ideas, work from home business ideas, low investment
+        startup ideas, business ideas for women, zero investment business ideas, and startup ideas
+        organized by sector, investment level, and founder profile. Each entry includes a market
+        breakdown, revenue model, risk analysis, trend score, and founder-fit verdict. BBI is a
+        curated directory of startup opportunities, not a generic listicle.
       </p>
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <section className="px-3 pt-10 sm:px-4 sm:pt-16">
@@ -280,10 +281,10 @@ function HomePage() {
                 bigger company decides to do the same thing for free.
               </p>
               <p>
-                A blueprint in the vault answers those questions before you commit a weekend to it.
-                Each one names the customer specifically rather than as a demographic, explains the
-                revenue mechanics in plain numbers, and lists the failure modes we would expect in
-                the first year — the churn, the acquisition costs that quietly exceed lifetime
+                A blueprint in the library answers those questions before you commit a weekend to
+                it. Each one names the customer specifically rather than as a demographic, explains
+                the revenue mechanics in plain numbers, and lists the failure modes we would expect
+                in the first year — the churn, the acquisition costs that quietly exceed lifetime
                 value, the regulation nobody mentions until you are already trading.
               </p>
               <p>
@@ -438,13 +439,25 @@ function HomePage() {
       </div>
 
       {/* ============================================================
-          BBI ADDITION — TRUST STATS BAR
+          BBI ADDITION — TRUST STATS BAR (animated superellipse cards)
           Safe to delete: remove this one <TrustStatsBar ... /> line
           (and this comment), plus the whole block appended at the
-          very bottom of this file (also marked "BBI ADDITION").
-          Nothing else in this file is affected either way.
+          very bottom of this file (also marked "BBI ADDITION —
+          TRUST STATS BAR"). Nothing else in this file is affected.
          ============================================================ */}
       <TrustStatsBar totalIdeas={catalog.totalIdeas} categoryCount={catalog.categories.length} />
+
+      {/* ============================================================
+          BBI ADDITION — KEYWORD CATEGORY MOSAIC
+          Safe to delete: remove this one <KeywordMosaic /> line (and
+          this comment), plus the whole block appended at the very
+          bottom of this file (also marked "BBI ADDITION — KEYWORD
+          CATEGORY MOSAIC"). Nothing else in this file is affected.
+          Every pill links to /search?q=..., which always resolves —
+          even for terms with no exact matching category yet — so
+          nothing here can ever 404.
+         ============================================================ */}
+      <KeywordMosaic />
 
       {/* EDITABLE SECTION END */}
     </SiteShell>
@@ -452,25 +465,68 @@ function HomePage() {
 }
 
 /* ================================================================
-   BBI ADDITION — TRUST STATS BAR
+   BBI ADDITION — SHARED COUNT-UP ANIMATION
    Everything below this line is self-contained. To remove: delete
-   this whole block, plus the single <TrustStatsBar ... /> call
-   marked "BBI ADDITION" above. Nothing else in this file changes.
+   everything from here to the end of the file, plus the two render
+   lines marked "BBI ADDITION" inside HomePage() above, plus the
+   `useEffect, useRef, useState` import at the very top of this file.
+
+   Renders the final number on first paint (server-safe, no hydration
+   mismatch), then animates from 0 up to the target immediately after
+   the page becomes interactive.
    ================================================================ */
 
-/**
- * Real AI idea audits run ahead of BBI's public launch — shared via our
- * live preview URL with testers across WhatsApp groups, friends and
- * family. A single idea can be (and has been) audited multiple times by
- * different people, which is expected and fine.
- *
- * No accounts/auth yet, so nothing is logged automatically.
- * UPDATE THESE TWO NUMBERS BY HAND whenever the real counts change.
- */
+function useCountUp(target: number, durationMs = 1400) {
+  const [display, setDisplay] = useState(target);
+  const hasRun = useRef(false);
+
+  useEffect(() => {
+    if (hasRun.current) return;
+    hasRun.current = true;
+
+    let frameId: number;
+    const start = performance.now();
+
+    function tick(now: number) {
+      const progress = Math.min(1, (now - start) / durationMs);
+      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      setDisplay(Math.round(target * eased));
+      if (progress < 1) frameId = requestAnimationFrame(tick);
+    }
+
+    setDisplay(0);
+    frameId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameId);
+  }, [target, durationMs]);
+
+  return display;
+}
+
+function AnimatedNumber({ value }: { value: number }) {
+  const display = useCountUp(value);
+  return <>{display.toLocaleString()}</>;
+}
+
+/* ================================================================
+   BBI ADDITION — TRUST STATS BAR
+   Real numbers only. The first two are AI idea audits run ahead of
+   BBI's public launch — shared via our live preview URL with testers
+   across WhatsApp groups, friends and family. A single idea can be
+   (and has been) audited multiple times by different people, which
+   is expected and fine. No accounts/auth yet, so nothing is logged
+   automatically — UPDATE THESE TWO NUMBERS BY HAND as real counts
+   change. The other two stats are live from the database.
+   ================================================================ */
+
 const BBI_TOTAL_VALIDATIONS = 3797;
 const BBI_VALIDATIONS_LAST_30_DAYS = 1900;
 
-const BBI_STAT_BLOBS = ["blob-sm-1", "blob-sm-2", "blob-sm-3", "blob-sm-1"] as const;
+const BBI_STAT_SHAPES = [
+  "superellipse-1",
+  "superellipse-2",
+  "superellipse-3",
+  "superellipse-4",
+] as const;
 
 function TrustStatsBar({
   totalIdeas,
@@ -481,22 +537,22 @@ function TrustStatsBar({
 }) {
   const stats = [
     {
-      value: BBI_TOTAL_VALIDATIONS.toLocaleString(),
+      value: BBI_TOTAL_VALIDATIONS,
       label: "AI idea audits run",
       note: "Across our pre-launch testing group",
     },
     {
-      value: BBI_VALIDATIONS_LAST_30_DAYS.toLocaleString(),
+      value: BBI_VALIDATIONS_LAST_30_DAYS,
       label: "Audits in the last 30 days",
       note: "And climbing as we head to launch",
     },
     {
-      value: totalIdeas.toLocaleString(),
+      value: totalIdeas,
       label: "Researched blueprints live",
       note: "Every one a completed, published entry",
     },
     {
-      value: categoryCount.toLocaleString(),
+      value: categoryCount,
       label: "Categories covered",
       note: "From fintech to senior care to SaaS",
     },
@@ -507,10 +563,10 @@ function TrustStatsBar({
       {stats.map((stat, i) => (
         <div
           key={stat.label}
-          className={`glass glass-hover ${BBI_STAT_BLOBS[i % BBI_STAT_BLOBS.length]} px-6 py-6 text-center sm:text-left`}
+          className={`glass glass-hover ${BBI_STAT_SHAPES[i % BBI_STAT_SHAPES.length]} px-6 py-7 text-center transition-transform duration-300 hover:scale-[1.03] sm:text-left`}
         >
           <p className="text-3xl font-extrabold tracking-tight text-accent sm:text-4xl">
-            {stat.value}
+            <AnimatedNumber value={stat.value} />
             <span aria-hidden>+</span>
           </p>
           <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
@@ -520,5 +576,94 @@ function TrustStatsBar({
         </div>
       ))}
     </div>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — KEYWORD CATEGORY MOSAIC
+   Every link routes through /search?q=<phrase>, which text-matches
+   title, summary, business_description, focus_keyword, subcategory
+   and category (src/routes/search.tsx). This guarantees every link
+   resolves to something, even for terms with no exact matching
+   category in the database yet, so nothing here can ever 404.
+   ================================================================ */
+
+type KeywordGroup = { heading: string; terms: string[] };
+
+const BBI_KEYWORD_GROUPS: KeywordGroup[] = [
+  {
+    heading: "By industry",
+    terms: [
+      "fintech business ideas",
+      "healthcare business ideas",
+      "food and beverage business ideas",
+      "fashion business ideas",
+      "agriculture business ideas",
+      "SaaS business ideas",
+    ],
+  },
+  {
+    heading: "By who you are",
+    terms: [
+      "business ideas for retirees",
+      "business ideas for veterans",
+      "business ideas for teenagers",
+      "stay at home mom business ideas",
+      "solo entrepreneur ideas",
+      "business ideas for nurses",
+      "business ideas for couples",
+      "senior care business ideas",
+    ],
+  },
+  {
+    heading: "By model",
+    terms: [
+      "dropshipping business ideas",
+      "subscription box business ideas",
+      "coaching business ideas",
+      "passive income ideas",
+      "high profit business ideas",
+      "low overhead business ideas",
+      "recession proof business ideas",
+    ],
+  },
+];
+
+const BBI_MOSAIC_SHAPES = ["superellipse-5", "superellipse-6"] as const;
+
+function KeywordMosaic() {
+  return (
+    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4" aria-label="Browse ideas by keyword">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+        Every angle covered
+      </p>
+      <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
+        Business ideas by industry, founder, and model
+      </h2>
+      <div className="mt-8 grid gap-6 lg:grid-cols-3">
+        {BBI_KEYWORD_GROUPS.map((group, groupIndex) => (
+          <div
+            key={group.heading}
+            className={`glass ${BBI_MOSAIC_SHAPES[groupIndex % BBI_MOSAIC_SHAPES.length]} p-6`}
+          >
+            <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
+              {group.heading}
+            </h3>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {group.terms.map((term) => (
+                <Link
+                  key={term}
+                  to="/search"
+                  search={{ q: term }}
+                  className="glass-hover rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-all duration-300 hover:border-primary hover:text-primary hover:shadow-[0_0_18px_oklch(0.723_0.161_56/35%)]"
+                >
+                  {term}
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
