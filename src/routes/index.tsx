@@ -54,7 +54,7 @@ const SCROLL_PANELS = [
     body: "Who specifically pays for this. How the money actually moves. What will hurt in year one. And whether you, specifically, are the right person to build it.",
   },
   {
-    title: "43 blueprints live. Scaling to 10,000.",
+    title: "Hundreds of Business Ideas live. Scaling to 10,000.",
     body: "Organized across categories from Tech and SaaS to Creator and Media, FinTech, E-Commerce and more. Every new category added to the database appears here automatically.",
   },
   {
