@@ -303,108 +303,107 @@
 @utility bbi-shape-faq3 { border-radius: 2rem; }
 
 /* ================================================================
-   BBI ADDITION — CLAYMORPHIC / FACETED SHAPE SYSTEM
-   Replaces the old border-radius blob/pill shapes with clip-path
-   corner facets (cut-corner, Figma-style panels). No rectangles,
-   squares, circles or triangles used as-is. Padding is generous
-   and clamp()-based on every shape so text can never reach a cut
-   corner — this is the fix for the mobile text-overflow bug.
-   Colors are untouched; only shape + shadow layering changes.
-   Safe to delete: remove this whole block, then remove the
-   className references (bbi-shape-*, bbi-clay, bbi-orbit-*) in
-   src/routes/index.tsx.
+   BBI ADDITION — SHAPE SYSTEM v2 (fixes black-corner rendering bug)
+
+   THE BUG: clip-path + backdrop-filter:blur() on the SAME element
+   makes Chromium sample blur pixels past the clip edge, find
+   nothing, and paint black at the cut. That is what you were
+   seeing at every corner.
+
+   THE FIX: the blurred glass layer is a separate, deliberately
+   OVERSIZED element (inset: -3rem) sitting under the content. The
+   parent's clip-path crops well inside that oversized layer, so
+   the pixel where blur sampling breaks down is always hidden,
+   never the visible edge.
+
+   Use via the <ShapeCard> component in index.tsx, not by hand —
+   it wires up the 3-layer structure (wrap / fill / content) this
+   requires. Safe to delete: remove this block + <ShapeCard> +
+   its shape="..." usages in src/routes/index.tsx.
    ================================================================ */
 
-@utility bbi-clay {
+.bbi-shape {
+  position: relative;
+  isolation: isolate;
+}
+.bbi-shape-fill {
+  position: absolute;
+  inset: -3rem;
+  background: oklch(1 0 0 / 8%);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid oklch(1 0 0 / 20%);
   box-shadow:
-    -10px -10px 24px oklch(1 0 0 / 5%),
-    12px 16px 32px oklch(0 0 0 / 50%),
-    inset 0 1px 0 0 oklch(1 0 0 / 12%),
-    inset 0 -1px 0 0 oklch(0 0 0 / 20%);
+    0 20px 60px -20px oklch(0 0 0 / 55%),
+    inset 0 1px 0 0 oklch(1 0 0 / 18%);
+  z-index: 0;
+  pointer-events: none;
+}
+.bbi-shape-content {
+  position: relative;
+  z-index: 1;
 }
 
-@utility bbi-shape-banner {
-  clip-path: polygon(0 0, calc(100% - 64px) 0, 100% 64px, 100% 100%, 48px 100%, 0 calc(100% - 48px));
-  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.75rem, 6vw, 4rem) !important;
+/* Eight distinct silhouettes — no two adjacent sections share one. */
+.bbi-shape-ribbon {
+  clip-path: polygon(0 0, calc(100% - 72px) 0, 100% 72px, 100% 100%, 0 100%);
 }
-@utility bbi-shape-diamond {
-  clip-path: polygon(40px 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%, 0 40px);
-  padding: clamp(1.75rem, 4vw, 3rem) clamp(1.75rem, 5vw, 3rem) !important;
-}
-@utility bbi-shape-step {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 32px), calc(100% - 32px) 100%, 0 100%);
-  padding: clamp(1.5rem, 4vw, 2rem) !important;
-}
-@utility bbi-shape-step-badge {
-  clip-path: polygon(30% 0, 100% 0, 100% 70%, 70% 100%, 0 100%, 0 30%);
-}
-@utility bbi-shape-soft-deep {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 56px 100%, 0 calc(100% - 56px));
-  padding: clamp(1.75rem, 4vw, 3rem) !important;
-}
-@utility bbi-shape-hex {
-  clip-path: polygon(24px 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%, 0 24px);
-  padding: clamp(1.5rem, 4vw, 2rem) !important;
-}
-@utility bbi-shape-ticket {
+.bbi-shape-octagon {
   clip-path: polygon(
-    48px 0, 100% 0, 100% 100%, 48px 100%,
-    48px calc(50% + 14px), 32px 50%, 48px calc(50% - 14px)
+    36px 0, calc(100% - 36px) 0, 100% 36px, 100% calc(100% - 36px),
+    calc(100% - 36px) 100%, 36px 100%, 0 calc(100% - 36px), 0 36px
   );
-  padding: clamp(1.75rem, 4vw, 3rem) clamp(1.75rem, 5vw, 3.5rem) !important;
 }
-@utility bbi-shape-card-a {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 40px 100%, 0 calc(100% - 40px));
-  padding: clamp(1.75rem, 4vw, 3rem) !important;
+.bbi-shape-blade {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 60px), calc(100% - 60px) 100%, 0 100%);
 }
-@utility bbi-shape-compare-sharp {
-  clip-path: polygon(20px 0, 100% 0, 100% 100%, 0 100%, 0 20px);
-  padding: clamp(1.5rem, 4vw, 2rem) !important;
+.bbi-shape-shield {
+  clip-path: polygon(0 0, 100% 0, 100% 78%, 50% 100%, 0 78%);
 }
-@utility bbi-shape-compare-round {
-  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
-  padding: clamp(1.5rem, 4vw, 2rem) !important;
+.bbi-shape-hex {
+  clip-path: polygon(28px 0, calc(100% - 28px) 0, 100% 50%, calc(100% - 28px) 100%, 28px 100%, 0 50%);
 }
-@utility bbi-shape-shield {
-  clip-path: polygon(0 0, 100% 0, 100% 82%, 50% 100%, 0 82%);
-  padding: clamp(1.75rem, 4vw, 3rem) clamp(1.75rem, 5vw, 3rem) 3.5rem !important;
+.bbi-shape-tab {
+  clip-path: polygon(0 40px, 40px 0, 100% 0, 100% 100%, 0 100%);
 }
-@utility bbi-shape-faq1 {
-  clip-path: polygon(28px 0, 100% 0, 100% 100%, 0 100%, 0 28px);
-  padding: clamp(1.5rem, 4vw, 2.25rem) !important;
+.bbi-shape-ticket {
+  clip-path: polygon(
+    40px 0, 100% 0, 100% 100%, 40px 100%,
+    40px calc(50% + 16px), 24px 50%, 40px calc(50% - 16px)
+  );
 }
-@utility bbi-shape-faq2 {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%);
-  padding: clamp(1.5rem, 4vw, 2.25rem) !important;
+.bbi-shape-step {
+  clip-path: polygon(
+    0 0, 100% 0, 100% calc(100% - 44px),
+    calc(100% - 44px) calc(100% - 44px), calc(100% - 44px) 100%, 0 100%
+  );
 }
-@utility bbi-shape-faq3 {
-  clip-path: polygon(0 28px, 28px 0, 100% 0, 100% 100%, 0 100%);
-  padding: clamp(1.5rem, 4vw, 2.25rem) !important;
+.bbi-shape-parallelogram {
+  clip-path: polygon(48px 0, 100% 0, calc(100% - 48px) 100%, 0 100%);
 }
-@utility bbi-shape-stat {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%);
-  padding: clamp(1.5rem, 4vw, 2rem) !important;
+.bbi-shape-badge {
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
 }
 
-/* Smaller cuts on phones — corners stay proportionate, padding above
-   already guarantees text never reaches them. */
+/* Smaller cuts on phones — proportionate, never affects the fill layer. */
 @media (max-width: 640px) {
-  .bbi-shape-banner,
-  .bbi-shape-diamond,
-  .bbi-shape-soft-deep,
-  .bbi-shape-ticket,
-  .bbi-shape-card-a,
-  .bbi-shape-shield {
-    clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 28px 100%, 0 calc(100% - 28px));
+  .bbi-shape-ribbon { clip-path: polygon(0 0, calc(100% - 36px) 0, 100% 36px, 100% 100%, 0 100%); }
+  .bbi-shape-octagon {
+    clip-path: polygon(
+      20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px),
+      calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px
+    );
   }
+  .bbi-shape-blade { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 32px), calc(100% - 32px) 100%, 0 100%); }
+  .bbi-shape-tab { clip-path: polygon(0 24px, 24px 0, 100% 0, 100% 100%, 0 100%); }
+  .bbi-shape-step {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 26px), calc(100% - 26px) calc(100% - 26px), calc(100% - 26px) 100%, 0 100%);
+  }
+  .bbi-shape-parallelogram { clip-path: polygon(24px 0, 100% 0, calc(100% - 24px) 100%, 0 100%); }
 }
 
 /* ================================================================
-   BBI ADDITION — ORBIT DIAGRAM
-   Pure CSS + JS-computed positions (trig, no external assets).
-   Rings rotate continuously; satellite nodes are placed at fixed
-   points around the circle (percentage-based, so it's naturally
-   responsive) and stay upright — no spinning text.
+   ORBIT DIAGRAM (unchanged from previous pass — no bug here since
+   it never combines clip-path with backdrop-filter).
    ================================================================ */
 
 .bbi-orbit-wrap {
