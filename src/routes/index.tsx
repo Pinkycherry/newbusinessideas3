@@ -367,10 +367,7 @@ function HomePage() {
               className={`glass sticky top-24 p-8 sm:p-12 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
               style={{ zIndex: i + 1 }}
             >
-              <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-accent">
-                {String(i + 1).padStart(2, "0")}
-              </p>
-              <h2 className="mt-4 text-2xl font-bold leading-tight tracking-tight sm:text-4xl">
+              <h2 className="text-2xl font-bold leading-tight tracking-tight sm:text-4xl">
                 {panel.title}
               </h2>
               <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
@@ -465,45 +462,81 @@ function HomePage() {
 }
 
 /* ================================================================
-   BBI ADDITION — SHARED COUNT-UP ANIMATION
+   BBI ADDITION — SCROLL-TRIGGERED REVEAL
    Everything below this line is self-contained. To remove: delete
    everything from here to the end of the file, plus the two render
    lines marked "BBI ADDITION" inside HomePage() above, plus the
    `useEffect, useRef, useState` import at the very top of this file.
 
-   Renders the final number on first paint (server-safe, no hydration
-   mismatch), then animates from 0 up to the target immediately after
-   the page becomes interactive.
+   useInView watches an element with IntersectionObserver and flips
+   to true the first time it scrolls into the viewport — works the
+   same on mobile, tablet and desktop since it's driven by real
+   viewport geometry, not a fixed timer. It disconnects after firing
+   once, so scrolling past and back doesn't re-trigger the count.
    ================================================================ */
 
-function useCountUp(target: number, durationMs = 1400) {
+function useInView<T extends Element>(threshold = 0.35) {
+  const ref = useRef<T | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      // No observer support: reveal immediately rather than never animating.
+      setInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return { ref, inView };
+}
+
+/**
+ * Renders the final number on first paint (server-safe, no hydration
+ * mismatch), then — once `start` flips true from useInView — resets to 0
+ * and animates up to the target. Nothing moves until the visitor actually
+ * scrolls the section into view.
+ */
+function useCountUp(target: number, start: boolean, durationMs = 1400) {
   const [display, setDisplay] = useState(target);
   const hasRun = useRef(false);
 
   useEffect(() => {
-    if (hasRun.current) return;
+    if (!start || hasRun.current) return;
     hasRun.current = true;
 
     let frameId: number;
-    const start = performance.now();
+    const startTime = performance.now();
+    setDisplay(0);
 
     function tick(now: number) {
-      const progress = Math.min(1, (now - start) / durationMs);
+      const progress = Math.min(1, (now - startTime) / durationMs);
       const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
       setDisplay(Math.round(target * eased));
       if (progress < 1) frameId = requestAnimationFrame(tick);
     }
 
-    setDisplay(0);
     frameId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frameId);
-  }, [target, durationMs]);
+  }, [start, target, durationMs]);
 
   return display;
 }
 
-function AnimatedNumber({ value }: { value: number }) {
-  const display = useCountUp(value);
+function AnimatedNumber({ value, start }: { value: number; start: boolean }) {
+  const display = useCountUp(value, start);
   return <>{display.toLocaleString()}</>;
 }
 
@@ -516,6 +549,12 @@ function AnimatedNumber({ value }: { value: number }) {
    is expected and fine. No accounts/auth yet, so nothing is logged
    automatically — UPDATE THESE TWO NUMBERS BY HAND as real counts
    change. The other two stats are live from the database.
+
+   Shapes: superellipse-1..4 (defined in src/styles.css) give each
+   card a soft, symmetric squircle outline — rounder and calmer than
+   the organic blob-* shapes used elsewhere, on purpose, to read as
+   "data" rather than "editorial." Percentage-based radii scale with
+   the card automatically on mobile/tablet/desktop.
    ================================================================ */
 
 const BBI_TOTAL_VALIDATIONS = 3797;
@@ -535,6 +574,8 @@ function TrustStatsBar({
   totalIdeas: number;
   categoryCount: number;
 }) {
+  const { ref, inView } = useInView<HTMLDivElement>();
+
   const stats = [
     {
       value: BBI_TOTAL_VALIDATIONS,
@@ -559,14 +600,17 @@ function TrustStatsBar({
   ];
 
   return (
-    <div className="mx-auto mt-8 grid max-w-6xl gap-4 px-3 sm:grid-cols-2 sm:px-4 lg:grid-cols-4">
+    <div
+      ref={ref}
+      className="mx-auto mt-8 grid max-w-6xl gap-4 px-3 sm:grid-cols-2 sm:px-4 lg:grid-cols-4"
+    >
       {stats.map((stat, i) => (
         <div
           key={stat.label}
-          className={`glass glass-hover ${BBI_STAT_SHAPES[i % BBI_STAT_SHAPES.length]} px-6 py-7 text-center transition-transform duration-300 hover:scale-[1.03] sm:text-left`}
+          className={`glass glass-hover sheen ${BBI_STAT_SHAPES[i % BBI_STAT_SHAPES.length]} px-6 py-7 text-center transition-transform duration-300 hover:scale-[1.03] sm:text-left`}
         >
           <p className="text-3xl font-extrabold tracking-tight text-accent sm:text-4xl">
-            <AnimatedNumber value={stat.value} />
+            <AnimatedNumber value={stat.value} start={inView} />
             <span aria-hidden>+</span>
           </p>
           <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
@@ -581,50 +625,55 @@ function TrustStatsBar({
 
 /* ================================================================
    BBI ADDITION — KEYWORD CATEGORY MOSAIC
-   Every link routes through /search?q=<phrase>, which text-matches
-   title, summary, business_description, focus_keyword, subcategory
-   and category (src/routes/search.tsx). This guarantees every link
-   resolves to something, even for terms with no exact matching
-   category in the database yet, so nothing here can ever 404.
+   Every chip's visible `label` can stay a full, readable SEO phrase —
+   but the `query` sent to /search is the short core term only. The
+   search function does an ilike match against title/summary/
+   description/keywords/category/subcategory, so a long literal phrase
+   like "fintech business ideas" almost never appears verbatim in a
+   row and returns zero results. A short term like "fintech" matches
+   far more of the library. This guarantees every link resolves to
+   something, even for terms with no exact matching category in the
+   database yet, so nothing here can ever 404 into an empty page.
    ================================================================ */
 
-type KeywordGroup = { heading: string; terms: string[] };
+type KeywordTerm = { label: string; query: string };
+type KeywordGroup = { heading: string; terms: KeywordTerm[] };
 
 const BBI_KEYWORD_GROUPS: KeywordGroup[] = [
   {
     heading: "By industry",
     terms: [
-      "fintech business ideas",
-      "healthcare business ideas",
-      "food and beverage business ideas",
-      "fashion business ideas",
-      "agriculture business ideas",
-      "SaaS business ideas",
+      { label: "fintech business ideas", query: "fintech" },
+      { label: "healthcare business ideas", query: "healthcare" },
+      { label: "food and beverage business ideas", query: "food and beverage" },
+      { label: "fashion business ideas", query: "fashion" },
+      { label: "agriculture business ideas", query: "agriculture" },
+      { label: "SaaS business ideas", query: "SaaS" },
     ],
   },
   {
     heading: "By who you are",
     terms: [
-      "business ideas for retirees",
-      "business ideas for veterans",
-      "business ideas for teenagers",
-      "stay at home mom business ideas",
-      "solo entrepreneur ideas",
-      "business ideas for nurses",
-      "business ideas for couples",
-      "senior care business ideas",
+      { label: "business ideas for retirees", query: "retirees" },
+      { label: "business ideas for veterans", query: "veterans" },
+      { label: "business ideas for teenagers", query: "teenagers" },
+      { label: "stay at home mom business ideas", query: "stay at home mom" },
+      { label: "solo entrepreneur ideas", query: "solo entrepreneur" },
+      { label: "business ideas for nurses", query: "nurses" },
+      { label: "business ideas for couples", query: "couples" },
+      { label: "senior care business ideas", query: "senior care" },
     ],
   },
   {
     heading: "By model",
     terms: [
-      "dropshipping business ideas",
-      "subscription box business ideas",
-      "coaching business ideas",
-      "passive income ideas",
-      "high profit business ideas",
-      "low overhead business ideas",
-      "recession proof business ideas",
+      { label: "dropshipping business ideas", query: "dropshipping" },
+      { label: "subscription box business ideas", query: "subscription box" },
+      { label: "coaching business ideas", query: "coaching" },
+      { label: "passive income ideas", query: "passive income" },
+      { label: "high profit business ideas", query: "high profit" },
+      { label: "low overhead business ideas", query: "low overhead" },
+      { label: "recession proof business ideas", query: "recession proof" },
     ],
   },
 ];
@@ -652,12 +701,12 @@ function KeywordMosaic() {
             <div className="mt-4 flex flex-wrap gap-2">
               {group.terms.map((term) => (
                 <Link
-                  key={term}
+                  key={term.label}
                   to="/search"
-                  search={{ q: term }}
+                  search={{ q: term.query }}
                   className="glass-hover rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-all duration-300 hover:border-primary hover:text-primary hover:shadow-[0_0_18px_oklch(0.723_0.161_56/35%)]"
                 >
-                  {term}
+                  {term.label}
                 </Link>
               ))}
             </div>
