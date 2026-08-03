@@ -589,17 +589,31 @@
   stroke-linecap: round;
   filter: drop-shadow(0 0 3px oklch(0.723 0.161 56 / 70%));
 }
+.bbi-tree-root {
+  fill: none;
+  stroke: oklch(0.723 0.161 56 / 45%);
+  stroke-width: 0.6;
+  stroke-linecap: round;
+}
 .bbi-tree-branch {
   fill: none;
-  stroke-width: 0.55;
   stroke-linecap: round;
 }
 .bbi-tree-branch-lit {
-  stroke: oklch(0.805 0.135 65 / 80%);
-  filter: drop-shadow(0 0 2px oklch(0.805 0.135 65 / 60%));
+  stroke: oklch(0.805 0.135 65 / 85%);
+  filter: drop-shadow(0 0 2px oklch(0.805 0.135 65 / 65%));
 }
 .bbi-tree-branch-dormant {
-  stroke: oklch(1 0 0 / 14%);
+  stroke: oklch(1 0 0 / 13%);
+}
+.bbi-tree-chip {
+  fill: oklch(0.805 0.135 65 / 70%);
+  stroke: oklch(0.805 0.135 65 / 90%);
+  stroke-width: 0.15;
+  filter: drop-shadow(0 0 2px oklch(0.805 0.135 65 / 70%));
+}
+.bbi-tree-dust {
+  fill: oklch(1 0 0 / 10%);
 }
 .bbi-tree-dot {
   position: absolute;
@@ -695,4 +709,67 @@
 .bbi-brick:hover {
   transform: translateX(calc(var(--brick-i) * 0.35rem)) translateY(-2px);
   border-color: oklch(0.805 0.135 65 / 55%);
+}
+
+/* ================================================================
+   BBI ADDITION — GLOWING GLASS GLOBE (ref: image 1, original)
+   A real orb with a tilted orbit ring, floating in the corner of
+   the Featured section's hologram frame. Pure CSS, no image asset.
+   ================================================================ */
+
+.bbi-globe-wrap {
+  position: absolute;
+  top: -2.5rem;
+  right: -2.5rem;
+  width: 9rem;
+  height: 9rem;
+  pointer-events: none;
+  z-index: 0;
+}
+@media (min-width: 640px) {
+  .bbi-globe-wrap { width: 12rem; height: 12rem; top: -3rem; right: -3rem; }
+}
+.bbi-globe {
+  position: absolute;
+  inset: 1.5rem;
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 32% 28%, oklch(0.95 0.08 72 / 90%), oklch(0.805 0.135 65 / 85%) 45%, oklch(0.56 0.15 44 / 80%) 100%);
+  box-shadow:
+    0 0 40px oklch(0.723 0.161 56 / 45%),
+    inset -0.6rem -0.6rem 1.5rem oklch(0.3 0.05 40 / 40%);
+  animation: bbi-globe-float 7s ease-in-out infinite;
+}
+.bbi-globe-ring {
+  position: absolute;
+  inset: 0.4rem;
+  border-radius: 9999px;
+  border: 1px solid oklch(0.805 0.135 65 / 55%);
+  transform: rotate(-18deg) scaleY(0.38);
+  box-shadow: 0 0 12px oklch(0.805 0.135 65 / 35%);
+}
+.bbi-globe-ring::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 9999px;
+  border: 1px dashed oklch(0.687 0.161 51.5 / 35%);
+}
+@keyframes bbi-globe-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ================================================================
+   BBI ADDITION — BRICK DIFFERENTIATION PASS
+   Original .bbi-brick rules stay; this pass adds a per-item glow
+   line and background tint so each brick actually reads as its
+   own distinct layer, not a uniform outlined list.
+   ================================================================ */
+
+.bbi-brick {
+  position: relative;
+  border-left: 3px solid oklch(0.805 0.135 65 / calc(35% + var(--brick-i) * 6%));
+  background:
+    linear-gradient(90deg, oklch(0.687 0.161 51.5 / calc(6% + var(--brick-i) * 2%)), oklch(1 0 0 / 5%) 60%);
 }
