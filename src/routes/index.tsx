@@ -440,3 +440,21 @@ function HomePage() {
     </SiteShell>
   );
 }
+
+
+
+
+<div className="px-3 pb-10 sm:px-4">
+        <AdSlot position="homepage-above-footer" size="banner" />
+      </div>
+
+      {/* ============================================================
+          BBI ADDITION — TRUST STATS BAR
+          Added by Claude, [date]. Safe to delete: remove this one
+          <TrustStatsBar ... /> line below, plus the block of code
+          appended at the very bottom of this file (also marked
+          "BBI ADDITION"), and nothing else in this file is affected.
+         ============================================================ */}
+      <TrustStatsBar totalIdeas={catalog.totalIdeas} categoryCount={catalog.categories.length} />
+
+      {/* EDITABLE SECTION END */}
