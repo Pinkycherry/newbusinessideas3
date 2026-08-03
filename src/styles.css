@@ -282,3 +282,22 @@
 .wp-prose hr { border-color: var(--border); margin: 2.25rem 0; }
 .wp-prose nav ul { list-style: none; padding-left: 0; }
 .wp-prose nav li { margin: 0.3rem 0; }
+/* ================================================================
+   BBI ADDITION — 10-SECTION SHAPE SET
+   Safe to delete: remove these classes, then remove their
+   className references in src/routes/index.tsx.
+   ================================================================ */
+@utility bbi-shape-banner { border-radius: 2.5rem 0 2.5rem 0; }
+@utility bbi-shape-diamond { border-radius: 50px 10px 50px 10px / 10px 50px 10px 50px; }
+@utility bbi-shape-step { border-radius: 40% 60% 55% 45% / 45% 40% 60% 55%; }
+@utility bbi-shape-step-badge { border-radius: 42% 58% 61% 39% / 55% 45% 55% 45%; }
+@utility bbi-shape-soft-deep { border-radius: 4px 3rem 4px 3rem; }
+@utility bbi-shape-hex { border-radius: 2px 3rem 2px 3rem / 3rem 2px 3rem 2px; }
+@utility bbi-shape-ticket { border-radius: 1.75rem 1.75rem 0.5rem 0.5rem; }
+@utility bbi-shape-card-a { border-radius: 1.25rem 3rem 1.25rem 3rem; }
+@utility bbi-shape-compare-round { border-radius: 2.5rem; }
+@utility bbi-shape-compare-sharp { border-radius: 0.5rem; }
+@utility bbi-shape-shield { border-radius: 3.5rem 3.5rem 1rem 1rem; }
+@utility bbi-shape-faq1 { border-radius: 1rem 2.5rem 1rem 2.5rem; }
+@utility bbi-shape-faq2 { border-radius: 2.5rem 1rem 2.5rem 1rem; }
+@utility bbi-shape-faq3 { border-radius: 2rem; }
