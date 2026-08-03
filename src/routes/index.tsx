@@ -239,6 +239,9 @@ function HomePage() {
       {/* BRAND STATEMENT — faceted banner shape */}
       <BrandStatementBanner />
 
+      {/* KEYWORD MOSAIC — moved here, right after "Who we are" */}
+      <KeywordMosaic />
+
       {/* TRUST STRIP — real, non-realtime numbers only */}
       <TrustStatsBar />
 
@@ -433,9 +436,6 @@ function HomePage() {
       <InspiredBySection />
       <ComparisonSection />
       <FutureProofSpotlight />
-
-      {/* KEYWORD MOSAIC */}
-      <KeywordMosaic />
 
       {/* PROMISE + Faq3 inline */}
       <PromiseSection />
