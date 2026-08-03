@@ -589,7 +589,7 @@ function TrustStatsBar({
     },
     {
       value: totalIdeas,
-      label: "Researched blueprints live",
+      label: "Researched Business Ideas live",
       note: "Every one a completed, published entry",
     },
     {
