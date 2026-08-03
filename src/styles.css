@@ -282,25 +282,3 @@
 .wp-prose hr { border-color: var(--border); margin: 2.25rem 0; }
 .wp-prose nav ul { list-style: none; padding-left: 0; }
 .wp-prose nav li { margin: 0.3rem 0; }
-
-
-/* ================================================================
-   BBI ADDITION — SUPERELLIPSE / SQUIRCLE SHAPES
-   Safe to delete: remove these six utility classes, then remove the
-   .superellipse-* className references in src/routes/index.tsx.
-   Nothing else in this file is affected.
-
-   These are border-radius percentages tuned to read as a smooth
-   superellipse/squircle — rounder and more symmetric than the
-   organic blob-* shapes above, distinct shape per card. We
-   deliberately avoid clip-path/SVG mask here: masking would clip
-   the glass box-shadow and backdrop blur these cards rely on,
-   killing the glow effect. border-radius has no such side effect
-   and renders identically in every browser, with zero risk.
-   ================================================================ */
-@utility superellipse-1 { border-radius: 30% / 30%; }
-@utility superellipse-2 { border-radius: 24% / 38%; }
-@utility superellipse-3 { border-radius: 38% / 24%; }
-@utility superellipse-4 { border-radius: 34% / 34%; }
-@utility superellipse-5 { border-radius: 20% 45% 20% 45% / 45% 20% 45% 20%; }
-@utility superellipse-6 { border-radius: 45% 20% 45% 20% / 20% 45% 20% 45%; }
