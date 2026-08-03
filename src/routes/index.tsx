@@ -437,24 +437,34 @@ function HomePage() {
 
       {/* ============================================================
           BBI ADDITION — TRUST STATS BAR (animated superellipse cards)
-          Safe to delete: remove this one <TrustStatsBar ... /> line
-          (and this comment), plus the whole block appended at the
-          very bottom of this file (also marked "BBI ADDITION —
-          TRUST STATS BAR"). Nothing else in this file is affected.
          ============================================================ */}
       <TrustStatsBar totalIdeas={catalog.totalIdeas} categoryCount={catalog.categories.length} />
 
       {/* ============================================================
           BBI ADDITION — KEYWORD CATEGORY MOSAIC
-          Safe to delete: remove this one <KeywordMosaic /> line (and
-          this comment), plus the whole block appended at the very
-          bottom of this file (also marked "BBI ADDITION — KEYWORD
-          CATEGORY MOSAIC"). Nothing else in this file is affected.
-          Every pill links to /search?q=..., which always resolves —
-          even for terms with no exact matching category yet — so
-          nothing here can ever 404.
          ============================================================ */}
       <KeywordMosaic />
+
+      {/* ============================================================
+          BBI ADDITION — 10 NEW SECTIONS + 3 FAQ SECTIONS
+          Safe to delete: remove any single line below (and its
+          comment), plus that section's matching component appended
+          at the very bottom of this file. Each is fully independent
+          of the others — deleting one never affects any other.
+         ============================================================ */}
+      <BrandStatementBanner />
+      <MarketGapSection />
+      <HowItWorksSection />
+      <WhoForSection />
+      <PricingPhilosophySection />
+      <TeamSection />
+      <InspiredBySection />
+      <ComparisonSection />
+      <FutureProofSpotlight />
+      <PromiseSection />
+      <Faq1Section />
+      <Faq2Section />
+      <Faq3Section />
 
       {/* EDITABLE SECTION END */}
     </SiteShell>
@@ -463,16 +473,6 @@ function HomePage() {
 
 /* ================================================================
    BBI ADDITION — SCROLL-TRIGGERED REVEAL
-   Everything below this line is self-contained. To remove: delete
-   everything from here to the end of the file, plus the two render
-   lines marked "BBI ADDITION" inside HomePage() above, plus the
-   `useEffect, useRef, useState` import at the very top of this file.
-
-   useInView watches an element with IntersectionObserver and flips
-   to true the first time it scrolls into the viewport — works the
-   same on mobile, tablet and desktop since it's driven by real
-   viewport geometry, not a fixed timer. It disconnects after firing
-   once, so scrolling past and back doesn't re-trigger the count.
    ================================================================ */
 
 function useInView<T extends Element>(threshold = 0.35) {
@@ -483,7 +483,6 @@ function useInView<T extends Element>(threshold = 0.35) {
     const el = ref.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
-      // No observer support: reveal immediately rather than never animating.
       setInView(true);
       return;
     }
@@ -503,12 +502,6 @@ function useInView<T extends Element>(threshold = 0.35) {
   return { ref, inView };
 }
 
-/**
- * Renders the final number on first paint (server-safe, no hydration
- * mismatch), then — once `start` flips true from useInView — resets to 0
- * and animates up to the target. Nothing moves until the visitor actually
- * scrolls the section into view.
- */
 function useCountUp(target: number, start: boolean, durationMs = 1400) {
   const [display, setDisplay] = useState(target);
   const hasRun = useRef(false);
@@ -523,7 +516,7 @@ function useCountUp(target: number, start: boolean, durationMs = 1400) {
 
     function tick(now: number) {
       const progress = Math.min(1, (now - startTime) / durationMs);
-      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
       setDisplay(Math.round(target * eased));
       if (progress < 1) frameId = requestAnimationFrame(tick);
     }
@@ -542,19 +535,6 @@ function AnimatedNumber({ value, start }: { value: number; start: boolean }) {
 
 /* ================================================================
    BBI ADDITION — TRUST STATS BAR
-   Real numbers only. The first two are AI idea audits run ahead of
-   BBI's public launch — shared via our live preview URL with testers
-   across WhatsApp groups, friends and family. A single idea can be
-   (and has been) audited multiple times by different people, which
-   is expected and fine. No accounts/auth yet, so nothing is logged
-   automatically — UPDATE THESE TWO NUMBERS BY HAND as real counts
-   change. The other two stats are live from the database.
-
-   Shapes: superellipse-1..4 (defined in src/styles.css) give each
-   card a soft, symmetric squircle outline — rounder and calmer than
-   the organic blob-* shapes used elsewhere, on purpose, to read as
-   "data" rather than "editorial." Percentage-based radii scale with
-   the card automatically on mobile/tablet/desktop.
    ================================================================ */
 
 const BBI_TOTAL_VALIDATIONS = 3797;
@@ -625,15 +605,6 @@ function TrustStatsBar({
 
 /* ================================================================
    BBI ADDITION — KEYWORD CATEGORY MOSAIC
-   Every chip's visible `label` can stay a full, readable SEO phrase —
-   but the `query` sent to /search is the short core term only. The
-   search function does an ilike match against title/summary/
-   description/keywords/category/subcategory, so a long literal phrase
-   like "fintech business ideas" almost never appears verbatim in a
-   row and returns zero results. A short term like "fintech" matches
-   far more of the library. This guarantees every link resolves to
-   something, even for terms with no exact matching category in the
-   database yet, so nothing here can ever 404 into an empty page.
    ================================================================ */
 
 type KeywordTerm = { label: string; query: string };
@@ -712,6 +683,509 @@ function KeywordMosaic() {
             </div>
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — SECTION 1: BRAND STATEMENT BANNER
+   ================================================================ */
+
+function BrandStatementBanner() {
+  return (
+    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <div className="glass glass-hover sheen bbi-shape-banner px-6 py-12 sm:px-14 sm:py-16">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
+          Who we are
+        </p>
+        <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
+          BBI — Best Business Ideas.
+        </h2>
+        <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          We&apos;re not another AI validator charging you by the click. BBI is a free, researched
+          library of small business ideas, side hustles, and startup blueprints — built by a team
+          who got tired of paying $20 for four &quot;validations&quot; that told us nothing.
+          Browse for free. Pay once if you want lifetime access. Never pay monthly for an idea.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — SECTION 2: THE MARKET GAP
+   ================================================================ */
+
+function MarketGapSection() {
+  return (
+    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <div className="glass bbi-shape-diamond p-8 sm:p-12">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+          The problem we found
+        </p>
+        <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+          Everyone charges $20 a month. We think that&apos;s the real problem.
+        </h2>
+        <div className="mt-6 max-w-3xl space-y-5 text-base leading-relaxed text-muted-foreground">
+          <p>
+            We went looking for a place to validate business ideas before we built BBI. What we
+            found: platform after platform charging a minimum of $20 for three or four
+            validations, wrapped in language that made it sound like premium research. It isn&apos;t.
+            It&apos;s a wrapper around an AI model call — the same kind of call you can run yourself,
+            a thousand times over, for the price of one month of Claude, Gemini, or ChatGPT.
+          </p>
+          <p>
+            We&apos;re engineers. Most of us work full-time at other companies and build BBI on the
+            side, because we&apos;ve been the person staring at a $20 paywall with nothing to spend it
+            on. So we built the thing we wished existed: a real idea library, free to browse, with
+            no per-validation charge — because the validation itself is something anyone can
+            already do with tools they may already be paying for.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — SECTION 3: HOW BBI ACTUALLY WORKS
+   ================================================================ */
+
+const BBI_HOW_STEPS = [
+  {
+    n: "01",
+    t: "Browse",
+    d: "Search or filter thousands of researched business ideas — by industry, investment level, or who you are: student, retiree, stay-at-home parent, veteran, nurse, teenager, solo founder. All free to read.",
+  },
+  {
+    n: "02",
+    t: "Take it anywhere",
+    d: "Copy the idea, the category, or the full blueprint. Paste it into Claude, ChatGPT, Gemini, or whatever AI tool you already pay for. Ask it to stress-test the idea against your budget, your city, your skills. You already own that tool — use it.",
+  },
+  {
+    n: "03",
+    t: "Go lifetime, once, if you want",
+    d: "If BBI's research saves you time, unlock full lifetime access for a one-time fee — no subscription, no renewal, no \"your trial has expired\" email six months from now.",
+  },
+];
+
+function HowItWorksSection() {
+  return (
+    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">How it works</p>
+      <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
+        Grab the idea. Validate it however you want. Keep the money.
+      </h2>
+      <div className="mt-8 grid gap-5 sm:grid-cols-3">
+        {BBI_HOW_STEPS.map((step) => (
+          <div key={step.n} className="glass glass-hover bbi-shape-step p-6">
+            <span className="bbi-shape-step-badge glass flex h-12 w-12 items-center justify-center text-sm font-extrabold text-accent">
+              {step.n}
+            </span>
+            <h3 className="mt-4 text-base font-semibold text-foreground">{step.t}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.d}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — SECTION 4: WHO BBI IS BUILT FOR
+   ================================================================ */
+
+function WhoForSection() {
+  return (
+    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <div className="glass bbi-shape-soft-deep grid gap-8 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr]">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+            Who we built this for
+          </p>
+          <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+            For the person with an idea and nothing else.
+          </h2>
+          <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
+            <p>
+              Some of us have been jobless. Some of us have started over with no savings. We know
+              what it&apos;s like to have a business idea and no laptop, no capital, no one to ask.
+              BBI is for that person — the one Googling &quot;business ideas&quot; from a phone,
+              at 1am, hoping something makes sense for their actual life.
+            </p>
+            <p>
+              We&apos;re not writing &quot;start a SaaS and make a million dollars&quot; content
+              aimed at people who already have funding. We write for people starting from zero: no
+              investment, no team, no connections. If that&apos;s not you — great, we&apos;ve got
+              the bigger ideas too. But you were never going to be the only person we wrote for.
+            </p>
+          </div>
+        </div>
+        <div className="glass bbi-shape-hex self-start p-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
+            Built with you in mind
+          </p>
+          <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
+            <li>Any business idea without investment</li>
+            <li>Work from home business opportunity</li>
+            <li>Best business to start with little money</li>
+            <li>Side hustle & best side job ideas</li>
+            <li>Business ideas for teenagers & veterans</li>
+            <li>Stay-at-home-mom business ideas</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — SECTION 5: ONE FEE, LIFETIME ACCESS
+   ================================================================ */
+
+function PricingPhilosophySection() {
+  return (
+    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <div className="glass glass-hover bbi-shape-ticket p-8 text-center sm:p-12">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+          Pricing, honestly
+        </p>
+        <h2 className="mx-auto mt-3 max-w-2xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+          One fee. Once. For life. That&apos;s the whole pricing page.
+        </h2>
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
+          No monthly plan. No &quot;Starter / Pro / Enterprise&quot; ladder designed to make you
+          feel small on the cheapest tier. Just one option: pay once, unlock everything, forever —
+          including every idea we add after the day you join. Not ready to pay yet? Most of the
+          library stays free to browse regardless. We priced it low on purpose — we&apos;re not
+          trying to build a subscription business off people who are already struggling to afford
+          the idea in the first place.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — SECTION 6: THE BBI TEAM
+   ================================================================ */
+
+function TeamSection() {
+  return (
+    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <div className="glass bbi-shape-card-a p-8 sm:p-12">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+          Who&apos;s behind this
+        </p>
+        <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+          11 people. 11 states. One website.
+        </h2>
+        <div className="mt-5 max-w-3xl space-y-4 text-base leading-relaxed text-muted-foreground">
+          <p>
+            BBI isn&apos;t a solo founder&apos;s side project with a fake &quot;team&quot; page.
+            It&apos;s built and run by 11 people across 11 Indian states — engineering graduates,
+            working professionals at established companies, side hustlers ourselves. Some of us
+            work from a shared office; most of us work from home. We met through the same
+            communities we built this for.
+          </p>
+          <p>
+            There&apos;s no single point of failure here. Hosting is paid. The work is shared. If
+            any one of us steps away, the rest keep it running — that&apos;s the whole point of
+            doing this as a team instead of a solo bet.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — SECTION 7: INSPIRED BY
+   ================================================================ */
+
+function InspiredBySection() {
+  return (
+    <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
+      <div className="glass bbi-shape-card-a p-8 sm:p-10">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+          Where this came from
+        </p>
+        <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
+          We didn&apos;t invent this model. We learned it.
+        </h2>
+        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+          Our inspiration is EthicalFounder.com — a platform offering free websites, free MSME
+          registration help, and free mentorship to Indian entrepreneurs who can&apos;t afford any
+          of it otherwise. We&apos;re not affiliated with them and we don&apos;t take commissions
+          from anyone. We just watched how they operated — help first, ask for nothing, let the
+          value speak — and decided BBI should work the same way for business idea research
+          specifically.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — SECTION 8: BBI VS. THE $20 VALIDATORS
+   ================================================================ */
+
+function ComparisonSection() {
+  return (
+    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+        The comparison
+      </p>
+      <h2 className="mt-2 max-w-2xl text-2xl font-bold tracking-tight sm:text-3xl">
+        $20 for four validations. Or one AI subscription that does a thousand.
+      </h2>
+      <div className="mt-8 grid gap-5 sm:grid-cols-2">
+        <div className="glass bbi-shape-compare-sharp border border-border/60 p-7 opacity-80">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            Typical validator platform
+          </p>
+          <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
+            <li>Monthly or per-use fee</li>
+            <li>3–5 validations per $20</li>
+            <li>Generic, boilerplate output</li>
+            <li>Paywall before you see anything real</li>
+          </ul>
+        </div>
+        <div className="glass glass-hover sheen bbi-shape-compare-round border border-primary/40 p-7">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+            BBI + your own AI tool
+          </p>
+          <ul className="mt-4 space-y-2.5 text-sm text-foreground">
+            <li>Browse thousands of researched ideas free</li>
+            <li>Pay once for lifetime access, if you want it</li>
+            <li>Validate as many times as you want, no artificial limit</li>
+            <li>Use an AI subscription you may already have</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — SECTION 9: FUTURE-PROOF & HIGH-TREND SPOTLIGHT
+   ================================================================ */
+
+const BBI_FUTURE_TERMS = [
+  { label: "future proof business ideas", query: "future proof" },
+  { label: "recession proof businesses", query: "recession proof" },
+  { label: "AI startup ideas", query: "AI" },
+  { label: "profitable SaaS ideas", query: "SaaS" },
+  { label: "high profit businesses", query: "high profit" },
+  { label: "million dollar company ideas", query: "million dollar" },
+];
+
+function FutureProofSpotlight() {
+  return (
+    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <div className="glass bbi-shape-diamond p-8 sm:p-12">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+          Where the market is headed
+        </p>
+        <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
+          The ideas that don&apos;t age out.
+        </h2>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+          These categories hold up regardless of what the economy does next — pulled straight from
+          the live library, not a marketing list.
+        </p>
+        <div className="mt-6 flex flex-wrap gap-2">
+          {BBI_FUTURE_TERMS.map((term) => (
+            <Link
+              key={term.label}
+              to="/search"
+              search={{ q: term.query }}
+              className="glass-hover rounded-full border border-border px-4 py-2 text-xs font-medium text-muted-foreground transition-all duration-300 hover:border-primary hover:text-primary hover:shadow-[0_0_18px_oklch(0.723_0.161_56/35%)]"
+            >
+              {term.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — SECTION 10: FREE GUIDANCE, NOT A SALES PITCH
+   ================================================================ */
+
+function PromiseSection() {
+  return (
+    <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
+      <div className="glass glass-hover bbi-shape-shield p-8 text-center sm:p-12">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+          Our promise
+        </p>
+        <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
+          We&apos;re not here to sell you a dream. We&apos;re here to hand you the research.
+        </h2>
+        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+          We won&apos;t tell you that you&apos;ll be a millionaire in three months. We won&apos;t
+          show you a lifestyle you can&apos;t verify. What we will do: give you honest research,
+          free guidance, and a starting point that doesn&apos;t cost you $20 before you&apos;ve
+          even decided if the idea is worth pursuing. If you don&apos;t have money to invest yet —
+          that&apos;s exactly who this is for. Come here first. Validate later, wherever you want,
+          however you want.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — FAQ SECTIONS (1 of 3): VALIDATING & USING BBI
+   ================================================================ */
+
+const BBI_FAQ_1 = [
+  {
+    q: "Are these real business ideas or generic AI output?",
+    a: "Every entry is researched — a named buyer, real revenue mechanics, honest risks, and a founder-fit verdict, not a one-line suggestion.",
+  },
+  {
+    q: "Do I have to pay to browse?",
+    a: "No. Browsing the library is free. Lifetime access is a one-time optional unlock, not a requirement to see ideas.",
+  },
+  {
+    q: "Can I use Claude, ChatGPT, or Gemini alongside BBI?",
+    a: "Yes — that's the point. Take any idea from BBI and stress-test it with whatever AI tool you already use.",
+  },
+  {
+    q: "How is this different from an AI idea generator?",
+    a: "BBI isn't generating random ideas on the fly. Every entry is pre-researched and published, so what you're reading has already been through a real process, not invented on the spot for you.",
+  },
+];
+
+function Faq1Section() {
+  return (
+    <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
+      <div className="glass bbi-shape-faq1 p-6 sm:p-9">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+          Validating & using BBI
+        </p>
+        <div className="mt-5 divide-y divide-border">
+          {BBI_FAQ_1.map((item) => (
+            <details key={item.q} className="group py-4">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-sm font-semibold text-foreground transition-colors hover:text-primary sm:text-base">
+                {item.q}
+                <span aria-hidden className="shrink-0 text-accent transition-transform duration-300 group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — FAQ SECTIONS (2 of 3): PRICING & THE MARKET GAP
+   ================================================================ */
+
+const BBI_FAQ_2 = [
+  {
+    q: "Why is BBI so much cheaper than other platforms?",
+    a: "Because we're not charging per validation. We charge once, if at all, for lifetime access to research — not for AI output you could generate yourself elsewhere.",
+  },
+  {
+    q: "Is there a monthly subscription?",
+    a: "No. One fee, once, for life. No renewal, no expiring trial.",
+  },
+  {
+    q: "What does lifetime access actually include?",
+    a: "Every current idea, plus every idea added after you join, for as long as BBI exists.",
+  },
+  {
+    q: "Why don't you charge like everyone else does?",
+    a: "Because we built this after being the person who couldn't afford what everyone else was charging. That's not a tagline — that's why the pricing looks the way it does.",
+  },
+];
+
+function Faq2Section() {
+  return (
+    <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
+      <div className="glass bbi-shape-faq2 p-6 sm:p-9">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+          Pricing & the market gap
+        </p>
+        <div className="mt-5 divide-y divide-border">
+          {BBI_FAQ_2.map((item) => (
+            <details key={item.q} className="group py-4">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-sm font-semibold text-foreground transition-colors hover:text-primary sm:text-base">
+                {item.q}
+                <span aria-hidden className="shrink-0 text-accent transition-transform duration-300 group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   BBI ADDITION — FAQ SECTIONS (3 of 3): LONG-TAIL KEYWORD FAQ
+   ================================================================ */
+
+const BBI_FAQ_3 = [
+  {
+    q: "How do I become an entrepreneur with no experience or capital?",
+    a: "Start with research, not spending. Browse ideas that match zero-investment or low-investment models, and validate with a free or low-cost AI tool before committing any money.",
+  },
+  {
+    q: "What businesses are considered recession-proof?",
+    a: "Categories tied to essential needs — healthcare, senior and elder care, repair services, essential food and goods — tend to hold up better than discretionary spending categories during downturns.",
+  },
+  {
+    q: "How do I validate a SaaS idea before building it?",
+    a: "Talk to potential users first, check if anyone's already solving the problem and how well, and use an AI tool to pressure-test your pricing and market size assumptions before writing code.",
+  },
+  {
+    q: "What is TAM, SAM, and SOM?",
+    a: "Total Addressable Market, Serviceable Available Market, and Serviceable Obtainable Market — three shrinking circles that estimate the whole possible market, the part you could realistically reach, and the part you could realistically capture.",
+  },
+  {
+    q: "What are good home business ideas for working parents?",
+    a: "Look for models with flexible hours and low daily time commitment — coaching, tutoring, subscription-box curation, or service businesses that can run around an existing job or childcare schedule.",
+  },
+  {
+    q: "Why do most startups fail?",
+    a: "Most commonly: building something nobody was asking for, running out of money before finding paying customers, or misjudging how much competition already exists in the space.",
+  },
+];
+
+function Faq3Section() {
+  return (
+    <section className="mx-auto mt-16 max-w-4xl px-3 pb-16 sm:px-4">
+      <div className="glass bbi-shape-faq3 p-6 sm:p-9">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+          Common searches, answered
+        </p>
+        <div className="mt-5 divide-y divide-border">
+          {BBI_FAQ_3.map((item) => (
+            <details key={item.q} className="group py-4">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-sm font-semibold text-foreground transition-colors hover:text-primary sm:text-base">
+                {item.q}
+                <span aria-hidden className="shrink-0 text-accent transition-transform duration-300 group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
+            </details>
+          ))}
+        </div>
       </div>
     </section>
   );
