@@ -245,41 +245,28 @@ function HomePage() {
       {/* MARKET GAP — copy + orbit diagram #1 */}
       <MarketGapSection />
 
-      {/* FEATURED — up to 6, no total-count link. Hologram-panel + globe (ref: image 1). */}
+      {/* FEATURED — up to 6, no total-count link */}
       <section className="mx-auto max-w-6xl px-3 py-16 sm:px-4">
-        <div className="bbi-holo-frame relative p-5 sm:p-8">
-          <span className="bbi-holo-corner bbi-holo-corner-tl" aria-hidden />
-          <span className="bbi-holo-corner bbi-holo-corner-tr" aria-hidden />
-          <span className="bbi-holo-corner bbi-holo-corner-bl" aria-hidden />
-          <span className="bbi-holo-corner bbi-holo-corner-br" aria-hidden />
-          <span className="bbi-holo-orbit-dot" aria-hidden />
-
-          <div className="bbi-globe-wrap" aria-hidden>
-            <span className="bbi-globe" />
-            <span className="bbi-globe-ring" />
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+              Featured blueprints
+            </p>
+            <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
+              Blueprints worth your afternoon
+            </h2>
           </div>
-
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-                Featured blueprints
-              </p>
-              <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-                Blueprints worth your afternoon
-              </h2>
-            </div>
-            <Link
-              to="/browse"
-              className="text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
-            >
-              Browse the full library →
-            </Link>
-          </div>
-          <div className="relative mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((idea) => (
-              <IdeaCard key={idea.ideaId} idea={idea} />
-            ))}
-          </div>
+          <Link
+            to="/browse"
+            className="text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
+          >
+            Browse the full library →
+          </Link>
+        </div>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {featured.map((idea) => (
+            <IdeaCard key={idea.ideaId} idea={idea} />
+          ))}
         </div>
       </section>
 
@@ -447,9 +434,8 @@ function HomePage() {
       <ComparisonSection />
       <FutureProofSpotlight />
 
-      {/* CATEGORY TREE — replaces the old 3-box keyword mosaic entirely. 25 fixed
-          branch slots; only live categories render as lit, clickable nodes. */}
-      <CategoryTreeSection categories={catalog.categories} />
+      {/* KEYWORD MOSAIC */}
+      <KeywordMosaic />
 
       {/* PROMISE + Faq3 inline */}
       <PromiseSection />
@@ -741,29 +727,18 @@ function WhoForSection() {
             </p>
           </div>
         </div>
-        <div className="bbi-brick-bezel self-start">
-          <div className="bbi-brick-bezel-header">
-            <span className="bbi-brick-bezel-dot" />
-            <span className="bbi-brick-bezel-dot" />
-            <span className="bbi-brick-bezel-dot" />
-            <p className="ml-auto text-[10px] font-semibold uppercase tracking-[0.25em] text-accent">
-              Built with you in mind
-            </p>
-          </div>
-          <div className="bbi-brick-stack">
-            {[
-              "Any business idea without investment",
-              "Work from home business opportunity",
-              "Best business to start with little money",
-              "Side hustle & best side job ideas",
-              "Business ideas for teenagers & veterans",
-              "Stay-at-home-mom business ideas",
-            ].map((item, i) => (
-              <div key={item} className="bbi-brick" style={{ "--brick-i": i } as any}>
-                {item}
-              </div>
-            ))}
-          </div>
+        <div className="glass bbi-clay bbi-shape-hex self-start p-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
+            Built with you in mind
+          </p>
+          <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
+            <li>Any business idea without investment</li>
+            <li>Work from home business opportunity</li>
+            <li>Best business to start with little money</li>
+            <li>Side hustle & best side job ideas</li>
+            <li>Business ideas for teenagers & veterans</li>
+            <li>Stay-at-home-mom business ideas</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -984,169 +959,85 @@ function FutureProofSpotlight() {
 }
 
 /* ================================================================
-   CATEGORY TREE — glowing branch tree (ref: image 3), 25 fixed
-   branch slots. Only live categories from the catalog render as
-   lit, clickable glass nodes; the rest render as small dormant
-   dots reserved for categories added later. Replaces the old
-   3-box keyword mosaic entirely — one tree, not three cards.
+   KEYWORD CATEGORY MOSAIC
    ================================================================ */
 
-const BBI_TREE_MAX_BRANCHES = 25;
+type KeywordTerm = { label: string; query: string };
+type KeywordGroup = { heading: string; terms: KeywordTerm[] };
 
-type TreeCategory = { categorySlug: string; categoryName: string };
-
-/** Tiered canopy layout: inner tier closest/thickest, outer tier furthest/thinnest. */
-const BBI_TREE_TIERS = [
-  { count: 6, radius: 22, yBase: 55, spread: 130, thickness: 1.1 },
-  { count: 9, radius: 36, yBase: 36, spread: 165, thickness: 0.75 },
-  { count: 10, radius: 47, yBase: 16, spread: 190, thickness: 0.45 },
+const BBI_KEYWORD_GROUPS: KeywordGroup[] = [
+  {
+    heading: "By industry",
+    terms: [
+      { label: "fintech business ideas", query: "fintech" },
+      { label: "healthcare business ideas", query: "healthcare" },
+      { label: "food and beverage business ideas", query: "food and beverage" },
+      { label: "fashion business ideas", query: "fashion" },
+      { label: "agriculture business ideas", query: "agriculture" },
+      { label: "SaaS business ideas", query: "SaaS" },
+    ],
+  },
+  {
+    heading: "By who you are",
+    terms: [
+      { label: "business ideas for retirees", query: "retirees" },
+      { label: "business ideas for veterans", query: "veterans" },
+      { label: "business ideas for teenagers", query: "teenagers" },
+      { label: "stay at home mom business ideas", query: "stay at home mom" },
+      { label: "solo entrepreneur ideas", query: "solo entrepreneur" },
+      { label: "business ideas for nurses", query: "nurses" },
+      { label: "business ideas for couples", query: "couples" },
+      { label: "senior care business ideas", query: "senior care" },
+    ],
+  },
+  {
+    heading: "By model",
+    terms: [
+      { label: "dropshipping business ideas", query: "dropshipping" },
+      { label: "subscription box business ideas", query: "subscription box" },
+      { label: "coaching business ideas", query: "coaching" },
+      { label: "passive income ideas", query: "passive income" },
+      { label: "high profit business ideas", query: "high profit" },
+      { label: "low overhead business ideas", query: "low overhead" },
+      { label: "recession proof business ideas", query: "recession proof" },
+    ],
+  },
 ];
 
-function treeNodeGeometry(index: number) {
-  let cursor = index;
-  for (const tier of BBI_TREE_TIERS) {
-    if (cursor < tier.count) {
-      const t = tier.count === 1 ? 0.5 : cursor / (tier.count - 1);
-      const angleDeg = -90 - tier.spread / 2 + t * tier.spread;
-      const rad = (angleDeg * Math.PI) / 180;
-      const x = 50 + tier.radius * Math.cos(rad);
-      const y = tier.yBase + tier.radius * 0.5 * Math.sin(rad);
-      return { x, y, thickness: tier.thickness };
-    }
-    cursor -= tier.count;
-  }
-  return { x: 50, y: 14, thickness: 0.35 };
-}
+const BBI_MOSAIC_SHAPES = ["superellipse-5", "superellipse-6"] as const;
 
-/** Organic S-curve branch path — sways out then corrects into the leaf, like a real limb. */
-function treeBranchPath(trunkX: number, trunkY: number, x: number, y: number) {
-  const c1x = trunkX + (x - trunkX) * 0.22;
-  const c1y = trunkY - (trunkY - y) * 0.12;
-  const c2x = trunkX + (x - trunkX) * 0.68;
-  const c2y = y + (trunkY - y) * 0.14;
-  return `M ${trunkX} ${trunkY} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${x} ${y}`;
-}
-
-/** Deterministic golden-angle scatter for ambient background dust — no Math.random (SSR-safe). */
-function treeDustPoints(count: number) {
-  return Array.from({ length: count }, (_, i) => {
-    const angle = (i * 137.5) % 360;
-    const rad = (angle * Math.PI) / 180;
-    const radius = 12 + ((i * 19) % 44);
-    return {
-      x: 50 + radius * Math.cos(rad),
-      y: 10 + (radius * 0.55 + ((i * 7) % 12)),
-      size: 0.25 + (i % 3) * 0.1,
-    };
-  });
-}
-
-const BBI_TREE_DUST = treeDustPoints(28);
-
-function CategoryTreeSection({ categories }: { categories: TreeCategory[] }) {
-  const slots = Array.from({ length: BBI_TREE_MAX_BRANCHES }, (_, i) => categories[i] ?? null);
-  const trunkX = 50;
-  const trunkTopY = 58;
-  const trunkBaseY = 96;
-
+function KeywordMosaic() {
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4" aria-label="Browse categories on the ideas tree">
+    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4" aria-label="Browse ideas by keyword">
       <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-        The ideas tree
+        Every angle covered
       </p>
-      <h2 className="mt-2 max-w-2xl text-2xl font-bold tracking-tight sm:text-3xl">
-        {categories.length} categories live today. Room for {BBI_TREE_MAX_BRANCHES}.
+      <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
+        Business ideas by industry, founder, and model
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-        Every lit branch is a category you can tap into right now. The dim branches are reserved
-        slots — they light up as new categories go live.
-      </p>
-
-      <div className="bbi-tree-wrap glass mt-8 p-4 sm:p-10">
-        <span className="bbi-tree-root-glow" aria-hidden />
-
-        <svg
-          className="bbi-tree-svg"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="xMidYMax meet"
-          aria-hidden
-        >
-          {/* ambient circuit dust, unlit atmosphere in the canopy */}
-          {BBI_TREE_DUST.map((d, i) => (
-            <circle key={`dust-${i}`} cx={d.x} cy={d.y} r={d.size} className="bbi-tree-dust" />
-          ))}
-
-          {/* root flare — a few short tendrils fanning at the base for a grounded trunk */}
-          {[-8, -4, 4, 8].map((dx, i) => (
-            <path
-              key={`root-${i}`}
-              d={`M ${trunkX} ${trunkBaseY - 2} Q ${trunkX + dx * 0.5} ${trunkBaseY + 1}, ${trunkX + dx} ${trunkBaseY + 3}`}
-              className="bbi-tree-root"
-            />
-          ))}
-
-          <path
-            d={`M ${trunkX} ${trunkBaseY} C ${trunkX - 3} ${trunkBaseY - 14}, ${trunkX + 3} ${trunkTopY + 12}, ${trunkX} ${trunkTopY}`}
-            className="bbi-tree-trunk"
-          />
-
-          {slots.map((cat, i) => {
-            const { x, y, thickness } = treeNodeGeometry(i);
-            return (
-              <path
-                key={`branch-${i}`}
-                d={treeBranchPath(trunkX, trunkTopY, x, y)}
-                strokeWidth={thickness}
-                className={cat ? "bbi-tree-branch bbi-tree-branch-lit" : "bbi-tree-branch bbi-tree-branch-dormant"}
-              />
-            );
-          })}
-
-          {/* small chip-style accents along a few branches, echoing the circuit-tree reference */}
-          {slots.map((cat, i) => {
-            if (!cat || i % 3 !== 1) return null;
-            const { x, y } = treeNodeGeometry(i);
-            const chipX = trunkX + (x - trunkX) * 0.55;
-            const chipY = trunkTopY - (trunkTopY - y) * 0.5;
-            return (
-              <rect
-                key={`chip-${i}`}
-                x={chipX - 0.9}
-                y={chipY - 0.9}
-                width="1.8"
-                height="1.8"
-                transform={`rotate(45 ${chipX} ${chipY})`}
-                className="bbi-tree-chip"
-              />
-            );
-          })}
-        </svg>
-
-        {slots.map((cat, i) => {
-          const { x, y } = treeNodeGeometry(i);
-          if (!cat) {
-            return (
-              <span
-                key={`dormant-${i}`}
-                className="bbi-tree-dot bbi-tree-dot-dormant"
-                style={{ left: `${x}%`, top: `${y}%` }}
-                aria-hidden
-              />
-            );
-          }
-          return (
-            <Link
-              key={cat.categorySlug}
-              to="/category/$categorySlug"
-              params={{ categorySlug: cat.categorySlug }}
-              className="bbi-tree-node glass-hover"
-              style={{ left: `${x}%`, top: `${y}%` }}
-            >
-              <span className="bbi-tree-dot bbi-tree-dot-lit" aria-hidden />
-              <span className="bbi-tree-node-label">{cat.categoryName}</span>
-            </Link>
-          );
-        })}
+      <div className="mt-8 grid gap-6 lg:grid-cols-3">
+        {BBI_KEYWORD_GROUPS.map((group, groupIndex) => (
+          <div
+            key={group.heading}
+            className={`glass ${BBI_MOSAIC_SHAPES[groupIndex % BBI_MOSAIC_SHAPES.length]} p-6`}
+          >
+            <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
+              {group.heading}
+            </h3>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {group.terms.map((term) => (
+                <Link
+                  key={term.label}
+                  to="/search"
+                  search={{ q: term.query }}
+                  className="glass-hover rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-all duration-300 hover:border-primary hover:text-primary hover:shadow-[0_0_18px_oklch(0.723_0.161_56/35%)]"
+                >
+                  {term.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
