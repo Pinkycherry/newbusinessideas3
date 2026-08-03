@@ -245,7 +245,7 @@ function HomePage() {
       {/* MARKET GAP — copy + orbit diagram #1 */}
       <MarketGapSection />
 
-      {/* FEATURED — up to 6, no total-count link. Hologram-panel framing (ref: image 1). */}
+      {/* FEATURED — up to 6, no total-count link. Hologram-panel + globe (ref: image 1). */}
       <section className="mx-auto max-w-6xl px-3 py-16 sm:px-4">
         <div className="bbi-holo-frame relative p-5 sm:p-8">
           <span className="bbi-holo-corner bbi-holo-corner-tl" aria-hidden />
@@ -253,6 +253,11 @@ function HomePage() {
           <span className="bbi-holo-corner bbi-holo-corner-bl" aria-hidden />
           <span className="bbi-holo-corner bbi-holo-corner-br" aria-hidden />
           <span className="bbi-holo-orbit-dot" aria-hidden />
+
+          <div className="bbi-globe-wrap" aria-hidden>
+            <span className="bbi-globe" />
+            <span className="bbi-globe-ring" />
+          </div>
 
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
@@ -270,7 +275,7 @@ function HomePage() {
               Browse the full library →
             </Link>
           </div>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="relative mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((idea) => (
               <IdeaCard key={idea.ideaId} idea={idea} />
             ))}
@@ -990,33 +995,59 @@ const BBI_TREE_MAX_BRANCHES = 25;
 
 type TreeCategory = { categorySlug: string; categoryName: string };
 
-/** Tiered fan layout: spreads up to 25 nodes across 3 canopy arcs above the trunk. */
-function treeNodePosition(index: number) {
-  const tiers = [
-    { count: 7, radius: 30, yBase: 60, spread: 150 },
-    { count: 9, radius: 41, yBase: 42, spread: 168 },
-    { count: 9, radius: 49, yBase: 22, spread: 182 },
-  ];
+/** Tiered canopy layout: inner tier closest/thickest, outer tier furthest/thinnest. */
+const BBI_TREE_TIERS = [
+  { count: 6, radius: 22, yBase: 55, spread: 130, thickness: 1.1 },
+  { count: 9, radius: 36, yBase: 36, spread: 165, thickness: 0.75 },
+  { count: 10, radius: 47, yBase: 16, spread: 190, thickness: 0.45 },
+];
+
+function treeNodeGeometry(index: number) {
   let cursor = index;
-  for (const tier of tiers) {
+  for (const tier of BBI_TREE_TIERS) {
     if (cursor < tier.count) {
       const t = tier.count === 1 ? 0.5 : cursor / (tier.count - 1);
       const angleDeg = -90 - tier.spread / 2 + t * tier.spread;
       const rad = (angleDeg * Math.PI) / 180;
       const x = 50 + tier.radius * Math.cos(rad);
       const y = tier.yBase + tier.radius * 0.5 * Math.sin(rad);
-      return { x, y };
+      return { x, y, thickness: tier.thickness };
     }
     cursor -= tier.count;
   }
-  return { x: 50, y: 18 };
+  return { x: 50, y: 14, thickness: 0.35 };
 }
+
+/** Organic S-curve branch path — sways out then corrects into the leaf, like a real limb. */
+function treeBranchPath(trunkX: number, trunkY: number, x: number, y: number) {
+  const c1x = trunkX + (x - trunkX) * 0.22;
+  const c1y = trunkY - (trunkY - y) * 0.12;
+  const c2x = trunkX + (x - trunkX) * 0.68;
+  const c2y = y + (trunkY - y) * 0.14;
+  return `M ${trunkX} ${trunkY} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${x} ${y}`;
+}
+
+/** Deterministic golden-angle scatter for ambient background dust — no Math.random (SSR-safe). */
+function treeDustPoints(count: number) {
+  return Array.from({ length: count }, (_, i) => {
+    const angle = (i * 137.5) % 360;
+    const rad = (angle * Math.PI) / 180;
+    const radius = 12 + ((i * 19) % 44);
+    return {
+      x: 50 + radius * Math.cos(rad),
+      y: 10 + (radius * 0.55 + ((i * 7) % 12)),
+      size: 0.25 + (i % 3) * 0.1,
+    };
+  });
+}
+
+const BBI_TREE_DUST = treeDustPoints(28);
 
 function CategoryTreeSection({ categories }: { categories: TreeCategory[] }) {
   const slots = Array.from({ length: BBI_TREE_MAX_BRANCHES }, (_, i) => categories[i] ?? null);
   const trunkX = 50;
-  const trunkTopY = 60;
-  const trunkBaseY = 94;
+  const trunkTopY = 58;
+  const trunkBaseY = 96;
 
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4" aria-label="Browse categories on the ideas tree">
@@ -1033,32 +1064,66 @@ function CategoryTreeSection({ categories }: { categories: TreeCategory[] }) {
 
       <div className="bbi-tree-wrap glass mt-8 p-4 sm:p-10">
         <span className="bbi-tree-root-glow" aria-hidden />
+
         <svg
           className="bbi-tree-svg"
           viewBox="0 0 100 100"
           preserveAspectRatio="xMidYMax meet"
           aria-hidden
         >
+          {/* ambient circuit dust, unlit atmosphere in the canopy */}
+          {BBI_TREE_DUST.map((d, i) => (
+            <circle key={`dust-${i}`} cx={d.x} cy={d.y} r={d.size} className="bbi-tree-dust" />
+          ))}
+
+          {/* root flare — a few short tendrils fanning at the base for a grounded trunk */}
+          {[-8, -4, 4, 8].map((dx, i) => (
+            <path
+              key={`root-${i}`}
+              d={`M ${trunkX} ${trunkBaseY - 2} Q ${trunkX + dx * 0.5} ${trunkBaseY + 1}, ${trunkX + dx} ${trunkBaseY + 3}`}
+              className="bbi-tree-root"
+            />
+          ))}
+
           <path
-            d={`M ${trunkX} ${trunkBaseY} C ${trunkX - 2.5} ${trunkBaseY - 12}, ${trunkX + 2.5} ${trunkTopY + 10}, ${trunkX} ${trunkTopY}`}
+            d={`M ${trunkX} ${trunkBaseY} C ${trunkX - 3} ${trunkBaseY - 14}, ${trunkX + 3} ${trunkTopY + 12}, ${trunkX} ${trunkTopY}`}
             className="bbi-tree-trunk"
           />
+
           {slots.map((cat, i) => {
-            const { x, y } = treeNodePosition(i);
-            const midX = trunkX + (x - trunkX) * 0.42;
-            const midY = trunkTopY - (trunkTopY - y) * 0.32;
+            const { x, y, thickness } = treeNodeGeometry(i);
             return (
               <path
                 key={`branch-${i}`}
-                d={`M ${trunkX} ${trunkTopY} Q ${midX} ${midY}, ${x} ${y}`}
+                d={treeBranchPath(trunkX, trunkTopY, x, y)}
+                strokeWidth={thickness}
                 className={cat ? "bbi-tree-branch bbi-tree-branch-lit" : "bbi-tree-branch bbi-tree-branch-dormant"}
+              />
+            );
+          })}
+
+          {/* small chip-style accents along a few branches, echoing the circuit-tree reference */}
+          {slots.map((cat, i) => {
+            if (!cat || i % 3 !== 1) return null;
+            const { x, y } = treeNodeGeometry(i);
+            const chipX = trunkX + (x - trunkX) * 0.55;
+            const chipY = trunkTopY - (trunkTopY - y) * 0.5;
+            return (
+              <rect
+                key={`chip-${i}`}
+                x={chipX - 0.9}
+                y={chipY - 0.9}
+                width="1.8"
+                height="1.8"
+                transform={`rotate(45 ${chipX} ${chipY})`}
+                className="bbi-tree-chip"
               />
             );
           })}
         </svg>
 
         {slots.map((cat, i) => {
-          const { x, y } = treeNodePosition(i);
+          const { x, y } = treeNodeGeometry(i);
           if (!cat) {
             return (
               <span
