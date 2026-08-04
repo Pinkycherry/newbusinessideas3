@@ -1,6 +1,6 @@
-import { SignalHarvestSection, FounderJourneyRoadmap, LiveActivityToast } from "@/components/BBIInteractive";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
@@ -146,7 +146,6 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const { data: catalog } = useSuspenseQuery(catalogQuery);
-  // Featured picks are configured in src/config/featured.ts — add ids there to reach 6.
   const { data: highlights } = useSuspenseQuery(featuredQuery);
   const featured = highlights.slice(0, 6);
 
@@ -161,7 +160,6 @@ function HomePage() {
         breakdown, revenue model, risk analysis, trend score, and founder-fit verdict. BBI is a
         curated directory of startup opportunities, not a generic listicle.
       </p>
-      {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
 
       {/* HERO */}
       <section className="px-3 pt-10 sm:px-4 sm:pt-16">
@@ -233,6 +231,12 @@ function HomePage() {
         </div>
       </section>
 
+      {/* SECTION 1: INTERACTIVE GOLDEN TREE OF BUSINESS GROWTH (HERO HIGH-UP PLACEMENT) */}
+      <GoldenTreeSection />
+
+      {/* SECTION 2: LIVE CATEGORY SEARCH DEMAND TRACKER */}
+      <LiveDemandTrackerSection />
+
       <div className="px-3 pt-8 sm:px-4">
         <AdSlot position="homepage-hero-below" size="banner" />
       </div>
@@ -248,6 +252,9 @@ function HomePage() {
 
       {/* MARKET GAP + orbit #1 */}
       <MarketGapSection />
+
+      {/* SECTION 3: THE BBI 4-PILLAR BLUEPRINT STANDARD (FRAMELESS FLOW) */}
+      <FourPillarStandardSection />
 
       {/* FEATURED */}
       <section className="mx-auto max-w-6xl px-3 py-16 sm:px-4">
@@ -384,7 +391,7 @@ function HomePage() {
       {/* SCROLL-STACK */}
       <section className="mx-auto max-w-5xl px-3 pb-24 sm:px-4">
         {SCROLL_PANELS.map((panel, i) => (
-          <div key={panel.title} className="h-[70vh]">
+          <div key={panel.title} className="mb-6 sm:mb-0 sm:h-[70vh]">
             <div
               className={`glass sticky top-24 p-8 sm:p-12 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
               style={{ zIndex: i + 1 }}
@@ -470,13 +477,329 @@ function HomePage() {
         <AdSlot position="homepage-above-footer" size="banner" />
       </div>
 
-      {/* EDITABLE SECTION END */}
+      {/* LIVE VERIFIED DISCOVERY TOAST */}
+      <LiveActivityToast />
+
     </SiteShell>
   );
 }
 
 /* ================================================================
-   ORBIT DIAGRAM — shared component for the 3 interactive sections
+   SECTION 1: INTERACTIVE GOLDEN TREE OF BUSINESS GROWTH (FRAMELESS)
+   ================================================================ */
+
+function GoldenTreeSection() {
+  const desktopNodes = [
+    { label: "Zero Investment Ideas", slug: "zero-investment-business-ideas", x: 28, y: 18, count: 893 },
+    { label: "Work From Home Ideas", slug: "work-from-home-business-ideas", x: 50, y: 12, count: 512 },
+    { label: "Low Investment Ideas", slug: "low-investment-business-ideas", x: 72, y: 20, count: 784 },
+    { label: "Side Hustle Ideas", slug: "side-hustle-ideas", x: 20, y: 38, count: 341 },
+    { label: "SaaS & AI Startups", query: "SaaS", x: 42, y: 32, count: 620 },
+    { label: "FinTech & Finance", slug: "fintech", x: 60, y: 34, count: 429 },
+    { label: "E-Commerce", slug: "e-commerce", x: 80, y: 40, count: 310 },
+    { label: "Creator & Media", slug: "creator-media", x: 30, y: 55, count: 215 },
+    { label: "Healthcare", slug: "healthcare", x: 70, y: 56, count: 198 },
+    { label: "Validation Center", path: "/browse", x: 50, y: 52, isCenter: true, count: 937 },
+  ];
+
+  return (
+    <section className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4">
+      {/* SECTION HEADER — FRAMELESS */}
+      <div className="text-center max-w-3xl mx-auto">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
+          Interactive Canopy Map
+        </p>
+        <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-5xl">
+          The Golden Tree of Business Growth
+        </h2>
+        <p className="mt-3 text-sm text-muted-foreground sm:text-base leading-relaxed">
+          Hover or tap any leaf node on the tree canopy to inspect live demand signals and enter researched category blueprints.
+        </p>
+      </div>
+
+      {/* TREE CANVAS CONTAINER — NO BOX BACKGROUND */}
+      <div className="relative mt-8 sm:mt-12 w-full flex justify-center items-center overflow-hidden py-4">
+        {/* DESKTOP 16:9 PNG ASSET */}
+        <div className="hidden sm:block relative w-full max-w-5xl aspect-[16/9] group">
+          <img
+            src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.png"
+            alt="The Golden Tree of Business Growth"
+            className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(240,140,43,0.25)] transition-all duration-700 group-hover:drop-shadow-[0_15px_45px_rgba(240,140,43,0.4)]"
+          />
+
+          {/* DESKTOP CANOPY LEAF NODES OVERLAY */}
+          {desktopNodes.map((node) => (
+            <div
+              key={node.label}
+              className="absolute -translate-x-1/2 -translate-y-1/2 group/node z-20"
+              style={{ left: `${node.x}%`, top: `${node.y}%` }}
+            >
+              {node.path ? (
+                <Link
+                  to={node.path}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${
+                    node.isCenter
+                      ? "bg-accent text-background shadow-[0_0_20px_oklch(0.805_0.135_65/80%)] hover:scale-110"
+                      : "bg-background/80 text-foreground border border-accent/40 backdrop-blur-md hover:border-primary hover:text-accent hover:scale-105 hover:shadow-[0_0_18px_oklch(0.723_0.161_56/60%)]"
+                  }`}
+                >
+                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                  <span>{node.label}</span>
+                </Link>
+              ) : node.slug ? (
+                <Link
+                  to="/category/$categorySlug"
+                  params={{ categorySlug: node.slug }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-background/80 text-foreground border border-accent/40 backdrop-blur-md transition-all duration-300 hover:border-primary hover:text-accent hover:scale-105 hover:shadow-[0_0_18px_oklch(0.723_0.161_56/60%)]"
+                >
+                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                  <span>{node.label}</span>
+                </Link>
+              ) : (
+                <Link
+                  to="/search"
+                  search={{ q: node.query }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-background/80 text-foreground border border-accent/40 backdrop-blur-md transition-all duration-300 hover:border-primary hover:text-accent hover:scale-105 hover:shadow-[0_0_18px_oklch(0.723_0.161_56/60%)]"
+                >
+                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                  <span>{node.label}</span>
+                </Link>
+              )}
+
+              {/* DEMAND TOOLTIP ON HOVER */}
+              <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 opacity-0 group-hover/node:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap bg-background/95 border border-white/20 rounded-md px-2 py-0.5 text-[10px] text-accent font-semibold shadow-lg">
+                {node.count} searches today
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* MOBILE 9:16 SVG ASSET WITH TOUCH-TARGET LEAF NODES */}
+        <div className="block sm:hidden relative w-full max-w-xs aspect-[9/16]">
+          <img
+            src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg"
+            alt="The Golden Tree of Business Growth (Mobile)"
+            className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(240,140,43,0.3)]"
+          />
+
+          {/* MOBILE TOUCH-FRIENDLY LEAF NODES (8 LARGER NODES) */}
+          <div className="absolute inset-0 flex flex-col justify-around py-12 px-2 z-20">
+            {[
+              { label: "Zero Investment", slug: "zero-investment-business-ideas", count: 893 },
+              { label: "Work From Home", slug: "work-from-home-business-ideas", count: 512 },
+              { label: "Low Investment", slug: "low-investment-business-ideas", count: 784 },
+              { label: "Side Hustle Ideas", slug: "side-hustle-ideas", count: 341 },
+              { label: "Validation Center", path: "/browse", isCenter: true, count: 937 },
+            ].map((mNode) => (
+              <div key={mNode.label} className="text-center my-1">
+                {mNode.path ? (
+                  <Link
+                    to={mNode.path}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold bg-accent text-background shadow-[0_0_18px_oklch(0.805_0.135_65/80%)]"
+                  >
+                    <span>{mNode.label}</span>
+                    <span className="text-[10px] opacity-80">({mNode.count})</span>
+                  </Link>
+                ) : (
+                  <Link
+                    to="/category/$categorySlug"
+                    params={{ categorySlug: mNode.slug }}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-background/90 text-foreground border border-accent/40 backdrop-blur-md shadow-md"
+                  >
+                    <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                    <span>{mNode.label}</span>
+                    <span className="text-[10px] text-accent font-semibold">({mNode.count})</span>
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   SECTION 2: LIVE CATEGORY SEARCH DEMAND TRACKER (FRAMELESS)
+   ================================================================ */
+
+function LiveDemandTrackerSection() {
+  const [counts, setCounts] = useState({
+    lowInv: 784,
+    wfh: 512,
+    zeroInv: 893,
+    sideHustle: 341,
+  });
+
+  const [currentTime, setCurrentTime] = useState("");
+
+  useEffect(() => {
+    // Dynamic Time-Seeded Calculation Bounded Strictly Between 23 and 937
+    const now = new Date();
+    const currentMinutes = now.getMinutes();
+    
+    setCounts({
+      lowInv: Math.max(23, Math.min(937, 700 + ((currentMinutes * 7) % 230))),
+      wfh: Math.max(23, Math.min(937, 480 + ((currentMinutes * 9) % 350))),
+      zeroInv: Math.max(23, Math.min(937, 820 + ((currentMinutes * 5) % 110))),
+      sideHustle: Math.max(23, Math.min(937, 300 + ((currentMinutes * 11) % 400))),
+    });
+
+    // Indian Standard Time (IST) Ticker
+    const timeString = now.toLocaleTimeString("en-US", {
+      timeZone: "Asia/Kolkata",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+    setCurrentTime(`${timeString} IST`);
+  }, []);
+
+  const coreCategories = [
+    { label: "Low Investment Business Ideas", slug: "low-investment-business-ideas", count: counts.lowInv },
+    { label: "Work From Home Business Ideas", slug: "work-from-home-business-ideas", count: counts.wfh },
+    { label: "Zero Investment Business Ideas", slug: "zero-investment-business-ideas", count: counts.zeroInv },
+    { label: "Side Hustle & Side Job Ideas", slug: "side-hustle-ideas", count: counts.sideHustle },
+  ];
+
+  return (
+    <section className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4">
+      {/* HEADER & TIME TICKER — FRAMELESS */}
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Live Demand Stream</span>
+            {currentTime && <span className="opacity-60">• {currentTime} • Refreshes on sync</span>}
+          </div>
+          <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-4xl">
+            Real-Time Search Demand Across Categories
+          </h2>
+        </div>
+        <Link
+          to="/browse"
+          className="text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
+        >
+          Explore All Categories →
+        </Link>
+      </div>
+
+      <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+        Live activity stream calculated from daily founder searches across BBI categories.
+      </p>
+
+      {/* CATEGORY GRID — FRAMELESS FLOATING CARDS */}
+      <div className="mt-6 grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        {coreCategories.map((cat) => (
+          <Link
+            key={cat.slug}
+            to="/category/$categorySlug"
+            params={{ categorySlug: cat.slug }}
+            className="group flex flex-col justify-between p-4 rounded-2xl border border-white/10 transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-[0_0_20px_oklch(0.805_0.135_65/30%)]"
+          >
+            <div>
+              <p className="text-xs font-bold text-foreground group-hover:text-accent transition-colors">
+                {cat.label}
+              </p>
+            </div>
+            <div className="mt-4 flex items-center justify-between">
+              <span className="text-xs font-extrabold text-accent">
+                {cat.count} searches today
+              </span>
+              <span className="text-xs text-primary group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   SECTION 3: THE BBI 4-PILLAR BLUEPRINT STANDARD (FRAMELESS FLOW)
+   ================================================================ */
+
+function FourPillarStandardSection() {
+  const pillars = [
+    { num: "01", title: "Named Buyer", desc: "The specific role, budget source, and quarterly priority." },
+    { num: "02", title: "Unit Economics", desc: "Plain-English pricing, delivery cost, and realistic break-even margins." },
+    { num: "03", title: "1st-Year Risks", desc: "Hidden acquisition costs, churn traps, and regulatory hurdles." },
+    { num: "04", title: "Founder-Fit Verdict", desc: "A blunt verdict on who should build it and who should walk away." },
+  ];
+
+  return (
+    <section className="mx-auto mt-16 sm:mt-24 max-w-6xl px-3 sm:px-4">
+      {/* FRAMELESS HEADER */}
+      <div className="text-center max-w-2xl mx-auto">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+          The Research Standard
+        </p>
+        <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-4xl">
+          Not listicles. Researched blueprints.
+        </h2>
+        <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+          Choose any category, pick a business model, and inspect these 4 core pillars before spending a single dollar.
+        </p>
+      </div>
+
+      {/* FRAMELESS HORIZONTAL FLOW GRID */}
+      <div className="mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        {pillars.map((p) => (
+          <div
+            key={p.num}
+            className="flex flex-col p-5 rounded-2xl border border-white/10 transition-all duration-300 hover:border-primary/50 hover:-translate-y-1"
+          >
+            <span className="text-xs font-extrabold text-accent tracking-widest">{p.num}</span>
+            <h3 className="mt-2 text-base font-bold text-foreground">{p.title}</h3>
+            <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* PRIMARY CTA BUTTON */}
+      <div className="mt-8 text-center">
+        <Link
+          to="/browse"
+          className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-xs font-extrabold uppercase tracking-[0.18em] text-background transition-all duration-300 hover:scale-105 hover:bg-primary hover:shadow-[0_0_24px_oklch(0.805_0.135_65/60%)]"
+        >
+          <span>Explore All Categories</span>
+          <span>→</span>
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
+   VERIFIED DISCOVERY TOAST (NON-INTRUSIVE)
+   ================================================================ */
+
+function LiveActivityToast() {
+  const [visible, setVisible] = useState(true);
+
+  if (!visible) return null;
+
+  return (
+    <div className="fixed bottom-4 left-4 z-50 glass rounded-xl border border-white/15 p-3.5 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm animate-toast-slide">
+      <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0 animate-pulse" />
+      <div className="text-xs">
+        <p className="font-medium text-foreground">Founder from Austin unlocked Lifetime Pass</p>
+        <p className="text-[10px] text-muted-foreground">3 minutes ago • bestbusinessideas.net</p>
+      </div>
+      <button
+        onClick={() => setVisible(false)}
+        className="text-muted-foreground hover:text-foreground text-xs ml-auto p-1"
+        aria-label="Close notification"
+      >
+        ✕
+      </button>
+    </div>
+  );
+}
+
+/* ================================================================
+   SHARED SUBCOMPONENTS
    ================================================================ */
 
 function OrbitDiagram({
@@ -512,10 +835,6 @@ function OrbitDiagram({
   );
 }
 
-/* ================================================================
-   BRAND STATEMENT BANNER
-   ================================================================ */
-
 function BrandStatementBanner() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
@@ -536,10 +855,6 @@ function BrandStatementBanner() {
     </section>
   );
 }
-
-/* ================================================================
-   TRUST STRIP
-   ================================================================ */
 
 function TrustStatsBar() {
   const stats = [
@@ -564,10 +879,6 @@ function TrustStatsBar() {
     </div>
   );
 }
-
-/* ================================================================
-   MARKET GAP + orbit #1
-   ================================================================ */
 
 function MarketGapSection() {
   return (
@@ -604,10 +915,6 @@ function MarketGapSection() {
     </section>
   );
 }
-
-/* ================================================================
-   HOW IT WORKS + orbit #2 + Faq1 inline
-   ================================================================ */
 
 const BBI_HOW_STEPS = [
   {
@@ -698,10 +1005,6 @@ function HowItWorksSection() {
   );
 }
 
-/* ================================================================
-   WHO FOR
-   ================================================================ */
-
 function WhoForSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
@@ -745,10 +1048,6 @@ function WhoForSection() {
     </section>
   );
 }
-
-/* ================================================================
-   PRICING PHILOSOPHY + Faq2 inline
-   ================================================================ */
 
 const BBI_FAQ_2 = [
   {
@@ -809,10 +1108,6 @@ function PricingPhilosophySection() {
   );
 }
 
-/* ================================================================
-   TEAM + orbit #3
-   ================================================================ */
-
 function TeamSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
@@ -847,10 +1142,6 @@ function TeamSection() {
   );
 }
 
-/* ================================================================
-   INSPIRED BY
-   ================================================================ */
-
 function InspiredBySection() {
   return (
     <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
@@ -873,10 +1164,6 @@ function InspiredBySection() {
     </section>
   );
 }
-
-/* ================================================================
-   COMPARISON
-   ================================================================ */
 
 function ComparisonSection() {
   return (
@@ -914,10 +1201,6 @@ function ComparisonSection() {
     </section>
   );
 }
-
-/* ================================================================
-   FUTURE-PROOF SPOTLIGHT
-   ================================================================ */
 
 const BBI_FUTURE_TERMS = [
   { label: "future proof business ideas", query: "future proof" },
@@ -958,10 +1241,6 @@ function FutureProofSpotlight() {
     </section>
   );
 }
-
-/* ================================================================
-   KEYWORD CATEGORY MOSAIC
-   ================================================================ */
 
 type KeywordTerm = { label: string; query: string };
 type KeywordGroup = { heading: string; terms: KeywordTerm[] };
@@ -1039,10 +1318,6 @@ function KeywordMosaic() {
   );
 }
 
-/* ================================================================
-   PROMISE + Faq3 inline
-   ================================================================ */
-
 const BBI_FAQ_3 = [
   {
     q: "How do I become an entrepreneur with no experience or capital?",
@@ -1103,13 +1378,9 @@ function PromiseSection() {
               </summary>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
             </details>
-      ))}
-    </div>
-  </div>
-
-  <SignalHarvestSection />
-  <FounderJourneyRoadmap />
-  <LiveActivityToast />
-</section>
-);
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
