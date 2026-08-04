@@ -162,7 +162,7 @@ function HomePage() {
       </p>
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
 
-      {/* HERO — no live idea count, ever. */}
+      {/* HERO */}
       <section className="px-3 pt-10 sm:px-4 sm:pt-16">
         <TiltPanel className="mx-auto max-w-6xl" max={4}>
           <div className="glass blob-1 px-6 py-14 sm:px-12 sm:py-20">
@@ -196,7 +196,7 @@ function HomePage() {
         </TiltPanel>
       </section>
 
-      {/* MOVING CATEGORY TICKER — categories are live from the database. */}
+      {/* MOVING CATEGORY TICKER */}
       <section className="pt-10" aria-label="Browse by category">
         <style>{`@keyframes iv-ticker-l{from{transform:translateX(0)}to{transform:translateX(-50%)}}@keyframes iv-ticker-r{from{transform:translateX(-50%)}to{transform:translateX(0)}}.iv-ticker-track{width:max-content;animation:iv-ticker-l 70s linear infinite}.iv-ticker-track.rev{animation-name:iv-ticker-r}.iv-ticker:hover .iv-ticker-track,.iv-ticker:active .iv-ticker-track{animation-play-state:paused}`}</style>
         <p className="mx-auto max-w-6xl px-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent sm:px-4">
@@ -236,16 +236,19 @@ function HomePage() {
         <AdSlot position="homepage-hero-below" size="banner" />
       </div>
 
-      {/* BRAND STATEMENT — faceted banner shape */}
+      {/* BRAND STATEMENT */}
       <BrandStatementBanner />
 
-      {/* TRUST STRIP — real, non-realtime numbers only */}
+      {/* KEYWORD MOSAIC */}
+      <KeywordMosaic />
+
+      {/* TRUST STRIP */}
       <TrustStatsBar />
 
-      {/* MARKET GAP — copy + orbit diagram #1 */}
+      {/* MARKET GAP + orbit #1 */}
       <MarketGapSection />
 
-      {/* FEATURED — up to 6, no total-count link */}
+      {/* FEATURED */}
       <section className="mx-auto max-w-6xl px-3 py-16 sm:px-4">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -434,9 +437,6 @@ function HomePage() {
       <ComparisonSection />
       <FutureProofSpotlight />
 
-      {/* KEYWORD MOSAIC */}
-      <KeywordMosaic />
-
       {/* PROMISE + Faq3 inline */}
       <PromiseSection />
 
@@ -518,7 +518,7 @@ function OrbitDiagram({
 function BrandStatementBanner() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass glass-hover bbi-clay bbi-shape-banner px-6 py-12 sm:px-14 sm:py-16">
+      <div className="glass glass-hover bbi-shape-banner px-6 py-12 sm:px-14 sm:py-16">
         <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
           Who we are
         </p>
@@ -537,21 +537,21 @@ function BrandStatementBanner() {
 }
 
 /* ================================================================
-   TRUST STRIP — real, non-realtime numbers only
+   TRUST STRIP
    ================================================================ */
 
 function TrustStatsBar() {
   const stats = [
-    { value: "11", label: "Engineers behind BBI", note: "Across 11 Indian states, building this on the side" },
-    { value: "767", label: "Founders reviewed us", note: "A closed WhatsApp group of working founders and operators" },
-    { value: "1", label: "Price, once, for life", note: "No monthly plan, no expiring trial, ever" },
+    { value: "11", label: "Engineers behind BBI", note: "Across 11 Indian states, building this on the side", shape: "bbi-shape-stat-1" },
+    { value: "767", label: "Founders reviewed us", note: "A closed WhatsApp group of working founders and operators", shape: "bbi-shape-stat-2" },
+    { value: "1", label: "Price, once, for life", note: "No monthly plan, no expiring trial, ever", shape: "bbi-shape-stat-3" },
   ];
   return (
     <div className="mx-auto mt-8 grid max-w-6xl gap-4 px-3 sm:grid-cols-3 sm:px-4">
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="glass glass-hover bbi-clay bbi-shape-stat px-6 py-7 text-center transition-transform duration-300 hover:scale-[1.02] sm:text-left"
+          className={`glass glass-hover ${stat.shape} px-6 py-7 text-center transition-transform duration-300 hover:scale-[1.02] sm:text-left`}
         >
           <p className="text-3xl font-extrabold tracking-tight text-accent sm:text-4xl">{stat.value}</p>
           <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
@@ -571,7 +571,7 @@ function TrustStatsBar() {
 function MarketGapSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-clay bbi-shape-diamond grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      <div className="glass bbi-shape-diamond grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
             The problem we found
@@ -661,7 +661,7 @@ function HowItWorksSection() {
           </h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
             {BBI_HOW_STEPS.map((step) => (
-              <div key={step.n} className="glass glass-hover bbi-clay bbi-shape-step flex gap-4 p-6">
+              <div key={step.n} className="glass glass-hover bbi-shape-step flex gap-4 p-6">
                 <span className="bbi-shape-step-badge glass flex h-11 w-11 shrink-0 items-center justify-center text-sm font-extrabold text-accent">
                   {step.n}
                 </span>
@@ -675,7 +675,7 @@ function HowItWorksSection() {
         </div>
       </div>
 
-      <div className="glass bbi-clay bbi-shape-faq1 mt-10 p-6 sm:p-9">
+      <div className="glass bbi-shape-faq1 mt-10 p-6 sm:p-9">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Validating & using BBI
         </p>
@@ -704,7 +704,7 @@ function HowItWorksSection() {
 function WhoForSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-clay bbi-shape-soft-deep grid gap-8 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="glass bbi-shape-soft-deep grid gap-8 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
             Who we built this for
@@ -727,7 +727,7 @@ function WhoForSection() {
             </p>
           </div>
         </div>
-        <div className="glass bbi-clay bbi-shape-hex self-start p-6">
+        <div className="glass bbi-shape-hex self-start p-6">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
             Built with you in mind
           </p>
@@ -771,7 +771,7 @@ const BBI_FAQ_2 = [
 function PricingPhilosophySection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass glass-hover bbi-clay bbi-shape-ticket p-8 text-center sm:p-12">
+      <div className="glass glass-hover bbi-shape-ticket p-8 text-center sm:p-12">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Pricing, honestly
         </p>
@@ -786,7 +786,7 @@ function PricingPhilosophySection() {
         </p>
       </div>
 
-      <div className="glass bbi-clay bbi-shape-faq2 mt-6 p-6 sm:p-9">
+      <div className="glass bbi-shape-faq2 mt-6 p-6 sm:p-9">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Pricing & the market gap
         </p>
@@ -815,7 +815,7 @@ function PricingPhilosophySection() {
 function TeamSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-clay bbi-shape-card-a grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+      <div className="glass bbi-shape-card-a grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
             Who&apos;s behind this
@@ -853,7 +853,7 @@ function TeamSection() {
 function InspiredBySection() {
   return (
     <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
-      <div className="glass bbi-clay bbi-shape-hex p-8 sm:p-10">
+      <div className="glass bbi-shape-card-a p-8 sm:p-10">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Where this came from
         </p>
@@ -887,7 +887,7 @@ function ComparisonSection() {
         $20 for four validations. Or one AI subscription that does a thousand.
       </h2>
       <div className="mt-8 grid gap-5 sm:grid-cols-2">
-        <div className="glass bbi-clay bbi-shape-compare-sharp border border-border/60 p-7 opacity-80">
+        <div className="glass bbi-shape-compare-sharp border border-border/60 p-7 opacity-80">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
             Typical validator platform
           </p>
@@ -898,7 +898,7 @@ function ComparisonSection() {
             <li>Paywall before you see anything real</li>
           </ul>
         </div>
-        <div className="glass glass-hover bbi-clay bbi-shape-compare-round border border-primary/40 p-7">
+        <div className="glass glass-hover bbi-shape-compare-round border border-primary/40 p-7">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
             BBI + your own AI tool
           </p>
@@ -930,7 +930,7 @@ const BBI_FUTURE_TERMS = [
 function FutureProofSpotlight() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-clay bbi-shape-diamond p-8 sm:p-12">
+      <div className="glass bbi-shape-diamond p-8 sm:p-12">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Where the market is headed
         </p>
@@ -1004,8 +1004,6 @@ const BBI_KEYWORD_GROUPS: KeywordGroup[] = [
   },
 ];
 
-const BBI_MOSAIC_SHAPES = ["superellipse-5", "superellipse-6"] as const;
-
 function KeywordMosaic() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4" aria-label="Browse ideas by keyword">
@@ -1016,11 +1014,8 @@ function KeywordMosaic() {
         Business ideas by industry, founder, and model
       </h2>
       <div className="mt-8 grid gap-6 lg:grid-cols-3">
-        {BBI_KEYWORD_GROUPS.map((group, groupIndex) => (
-          <div
-            key={group.heading}
-            className={`glass ${BBI_MOSAIC_SHAPES[groupIndex % BBI_MOSAIC_SHAPES.length]} p-6`}
-          >
+        {BBI_KEYWORD_GROUPS.map((group) => (
+          <div key={group.heading} className="glass bbi-shape-card-a p-6">
             <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
               {group.heading}
             </h3>
@@ -1077,7 +1072,7 @@ const BBI_FAQ_3 = [
 function PromiseSection() {
   return (
     <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
-      <div className="glass glass-hover bbi-clay bbi-shape-shield p-8 text-center sm:p-12">
+      <div className="glass glass-hover bbi-shape-shield p-8 text-center sm:p-12">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Our promise
         </p>
@@ -1092,7 +1087,7 @@ function PromiseSection() {
         </p>
       </div>
 
-      <div className="glass bbi-clay bbi-shape-faq3 mt-6 p-6 sm:p-9">
+      <div className="glass bbi-shape-faq3 mt-6 p-6 sm:p-9">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Common searches, answered
         </p>
