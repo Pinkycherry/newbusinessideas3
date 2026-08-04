@@ -1,3 +1,4 @@
+import { SignalHarvestSection, FounderJourneyRoadmap, LiveActivityToast } from "@/components/BBIInteractive";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
@@ -1102,9 +1103,13 @@ function PromiseSection() {
               </summary>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
             </details>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+      ))}
+    </div>
+  </div>
+
+  <SignalHarvestSection />
+  <FounderJourneyRoadmap />
+  <LiveActivityToast />
+</section>
+);
 }
