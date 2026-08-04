@@ -490,3 +490,22 @@
 .animate-bbi-toast {
   animation: bbi-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+/* ================================================================
+   3D GLOSSY INFOGRAPHIC STYLES (Image 3 Quality Inspired)
+   ================================================================ */
+
+.bbi-glossy-orb {
+  background: radial-gradient(circle at 35% 30%, oklch(0.9 0.12 72), oklch(0.723 0.161 56) 50%, oklch(0.4 0.12 40) 100%);
+  box-shadow:
+    0 12px 28px -6px oklch(0.687 0.161 51.5 / 50%),
+    inset 0 4px 8px oklch(1 0 0 / 60%),
+    inset 0 -6px 12px oklch(0 0 0 / 60%);
+}
+
+.bbi-glossy-step {
+  background: linear-gradient(135deg, oklch(1 0 0 / 8%), oklch(1 0 0 / 3%));
+  box-shadow:
+    0 8px 24px -4px oklch(0 0 0 / 40%),
+    inset 0 1px 1px oklch(1 0 0 / 25%),
+    inset 0 -2px 4px oklch(0 0 0 / 30%);
+}
