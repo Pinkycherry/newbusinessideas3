@@ -179,7 +179,7 @@
   }
 }
 
-/* --- STANDARDIZED UNIFORM SHAPES (Fixes warped/distorted borders) --- */
+/* --- STANDARDIZED UNIFORM SHAPES --- */
 @utility blob-1 { border-radius: 1.5rem; }
 @utility blob-2 { border-radius: 1.5rem; }
 @utility blob-3 { border-radius: 1.5rem; }
@@ -400,12 +400,18 @@
   line-height: 1.15;
 }
 
-/* ================================================================
-   MOBILE OVERRIDE FIXES (Targeting index.tsx without changing TSX)
-   ================================================================ */
+/* --- TOAST SLIDE ANIMATION --- */
+@keyframes bbi-toast-slide {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
+.animate-toast-slide {
+  animation: bbi-toast-slide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- MOBILE OVERRIDE FIXES --- */
 @media (max-width: 639px) {
-  /* 1. FIX GIANT BLANK SPACE ON RIGHT (Pill Tags in Image 1 & 7) */
   .bbi-shape-card-a .flex.flex-wrap,
   .bbi-shape-diamond .flex.flex-wrap {
     display: grid !important;
@@ -425,7 +431,6 @@
     font-size: 0.68rem !important;
   }
 
-  /* 2. REDUCE EXCESSIVE PADDING (Fixes squished vertical text) */
   .glass {
     padding-left: 1.25rem !important;
     padding-right: 1.25rem !important;
@@ -433,7 +438,6 @@
     padding-bottom: 1.5rem !important;
   }
 
-  /* 3. FIX MOBILE SCROLL STACK OVERLAP (Image 4 & 8) */
   div[class*="h-[70vh]"] {
     height: auto !important;
     margin-bottom: 1.25rem !important;
@@ -444,68 +448,14 @@
     top: 0 !important;
   }
 
-  /* 4. PREVENT HEADER FROM OVERLAPPING TITLES */
   section, [id] {
     scroll-margin-top: 5.5rem !important;
   }
 
-  /* 5. FOOTER & LIST MULTI-COLUMN UTILIZATION */
   ul.space-y-2\.5 {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 0.5rem !important;
     space-y: 0 !important;
   }
-}
-/* ================================================================
-   BBI WORLD-CLASS EXTENSIONS (SAFE APPEND AT BOTTOM)
-   ================================================================ */
-
-@keyframes bbi-subtle-glow {
-  0%, 100% {
-    box-shadow: 0 10px 30px -10px oklch(0.805 0.135 65 / 15%),
-                inset 0 1px 0 0 oklch(1 0 0 / 15%);
-  }
-  50% {
-    box-shadow: 0 14px 40px -8px oklch(0.805 0.135 65 / 35%),
-                inset 0 1px 0 0 oklch(1 0 0 / 25%);
-  }
-}
-
-.bbi-card-glow {
-  animation: bbi-subtle-glow 4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-}
-
-@keyframes bbi-slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-bbi-toast {
-  animation: bbi-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-/* ================================================================
-   3D GLOSSY INFOGRAPHIC STYLES (Image 3 Quality Inspired)
-   ================================================================ */
-
-.bbi-glossy-orb {
-  background: radial-gradient(circle at 35% 30%, oklch(0.9 0.12 72), oklch(0.723 0.161 56) 50%, oklch(0.4 0.12 40) 100%);
-  box-shadow:
-    0 12px 28px -6px oklch(0.687 0.161 51.5 / 50%),
-    inset 0 4px 8px oklch(1 0 0 / 60%),
-    inset 0 -6px 12px oklch(0 0 0 / 60%);
-}
-
-.bbi-glossy-step {
-  background: linear-gradient(135deg, oklch(1 0 0 / 8%), oklch(1 0 0 / 3%));
-  box-shadow:
-    0 8px 24px -4px oklch(0 0 0 / 40%),
-    inset 0 1px 1px oklch(1 0 0 / 25%),
-    inset 0 -2px 4px oklch(0 0 0 / 30%);
 }
