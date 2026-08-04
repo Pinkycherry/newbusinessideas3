@@ -282,8 +282,14 @@
 .wp-prose hr { border-color: var(--border); margin: 2.25rem 0; }
 .wp-prose nav ul { list-style: none; padding-left: 0; }
 .wp-prose nav li { margin: 0.3rem 0; }
+
 /* ================================================================
-   BBI ADDITION — 10-SECTION SHAPE SET
+   BBI SHAPE SET — border-radius only, deliberately. No clip-path
+   anywhere in this file: clip-path combined with backdrop-filter
+   blur produces black-painted corners in Chromium, and fixed-pixel
+   clip-path cuts don't scale on narrow mobile widths. Every shape
+   below is a percentage-based border-radius, so it scales cleanly
+   at any card width and never touches the glass blur/shadow.
    Safe to delete: remove these classes, then remove their
    className references in src/routes/index.tsx.
    ================================================================ */
@@ -301,109 +307,12 @@
 @utility bbi-shape-faq1 { border-radius: 1rem 2.5rem 1rem 2.5rem; }
 @utility bbi-shape-faq2 { border-radius: 2.5rem 1rem 2.5rem 1rem; }
 @utility bbi-shape-faq3 { border-radius: 2rem; }
+@utility bbi-shape-stat-1 { border-radius: 30% / 30%; }
+@utility bbi-shape-stat-2 { border-radius: 24% / 38%; }
+@utility bbi-shape-stat-3 { border-radius: 38% / 24%; }
 
 /* ================================================================
-   BBI ADDITION — SHAPE SYSTEM v2 (fixes black-corner rendering bug)
-
-   THE BUG: clip-path + backdrop-filter:blur() on the SAME element
-   makes Chromium sample blur pixels past the clip edge, find
-   nothing, and paint black at the cut. That is what you were
-   seeing at every corner.
-
-   THE FIX: the blurred glass layer is a separate, deliberately
-   OVERSIZED element (inset: -3rem) sitting under the content. The
-   parent's clip-path crops well inside that oversized layer, so
-   the pixel where blur sampling breaks down is always hidden,
-   never the visible edge.
-
-   Use via the <ShapeCard> component in index.tsx, not by hand —
-   it wires up the 3-layer structure (wrap / fill / content) this
-   requires. Safe to delete: remove this block + <ShapeCard> +
-   its shape="..." usages in src/routes/index.tsx.
-   ================================================================ */
-
-.bbi-shape {
-  position: relative;
-  isolation: isolate;
-}
-.bbi-shape-fill {
-  position: absolute;
-  inset: -3rem;
-  background: oklch(1 0 0 / 8%);
-  backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid oklch(1 0 0 / 20%);
-  box-shadow:
-    0 20px 60px -20px oklch(0 0 0 / 55%),
-    inset 0 1px 0 0 oklch(1 0 0 / 18%);
-  z-index: 0;
-  pointer-events: none;
-}
-.bbi-shape-content {
-  position: relative;
-  z-index: 1;
-}
-
-/* Eight distinct silhouettes — no two adjacent sections share one. */
-.bbi-shape-ribbon {
-  clip-path: polygon(0 0, calc(100% - 72px) 0, 100% 72px, 100% 100%, 0 100%);
-}
-.bbi-shape-octagon {
-  clip-path: polygon(
-    36px 0, calc(100% - 36px) 0, 100% 36px, 100% calc(100% - 36px),
-    calc(100% - 36px) 100%, 36px 100%, 0 calc(100% - 36px), 0 36px
-  );
-}
-.bbi-shape-blade {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 60px), calc(100% - 60px) 100%, 0 100%);
-}
-.bbi-shape-shield {
-  clip-path: polygon(0 0, 100% 0, 100% 78%, 50% 100%, 0 78%);
-}
-.bbi-shape-hex {
-  clip-path: polygon(28px 0, calc(100% - 28px) 0, 100% 50%, calc(100% - 28px) 100%, 28px 100%, 0 50%);
-}
-.bbi-shape-tab {
-  clip-path: polygon(0 40px, 40px 0, 100% 0, 100% 100%, 0 100%);
-}
-.bbi-shape-ticket {
-  clip-path: polygon(
-    40px 0, 100% 0, 100% 100%, 40px 100%,
-    40px calc(50% + 16px), 24px 50%, 40px calc(50% - 16px)
-  );
-}
-.bbi-shape-step {
-  clip-path: polygon(
-    0 0, 100% 0, 100% calc(100% - 44px),
-    calc(100% - 44px) calc(100% - 44px), calc(100% - 44px) 100%, 0 100%
-  );
-}
-.bbi-shape-parallelogram {
-  clip-path: polygon(48px 0, 100% 0, calc(100% - 48px) 100%, 0 100%);
-}
-.bbi-shape-badge {
-  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
-}
-
-/* Smaller cuts on phones — proportionate, never affects the fill layer. */
-@media (max-width: 640px) {
-  .bbi-shape-ribbon { clip-path: polygon(0 0, calc(100% - 36px) 0, 100% 36px, 100% 100%, 0 100%); }
-  .bbi-shape-octagon {
-    clip-path: polygon(
-      20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px),
-      calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px
-    );
-  }
-  .bbi-shape-blade { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 32px), calc(100% - 32px) 100%, 0 100%); }
-  .bbi-shape-tab { clip-path: polygon(0 24px, 24px 0, 100% 0, 100% 100%, 0 100%); }
-  .bbi-shape-step {
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 26px), calc(100% - 26px) calc(100% - 26px), calc(100% - 26px) 100%, 0 100%);
-  }
-  .bbi-shape-parallelogram { clip-path: polygon(24px 0, 100% 0, calc(100% - 24px) 100%, 0 100%); }
-}
-
-/* ================================================================
-   ORBIT DIAGRAM (unchanged from previous pass — no bug here since
-   it never combines clip-path with backdrop-filter).
+   ORBIT DIAGRAM — unchanged, no clip-path used here either.
    ================================================================ */
 
 .bbi-orbit-wrap {
