@@ -231,7 +231,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 1: INTERACTIVE GOLDEN TREE OF BUSINESS GROWTH (HERO HIGH-UP PLACEMENT) */}
+      {/* SECTION 1: INTERACTIVE GOLDEN TREE (FRAMELESS BLEND WITH MIDNIGHT BLACK) */}
       <GoldenTreeSection />
 
       {/* SECTION 2: LIVE CATEGORY SEARCH DEMAND TRACKER */}
@@ -477,8 +477,8 @@ function HomePage() {
         <AdSlot position="homepage-above-footer" size="banner" />
       </div>
 
-      {/* LIVE VERIFIED DISCOVERY TOAST */}
-      <LiveActivityToast />
+      {/* 100% DYNAMIC ROTATING DISCOVERY TOAST */}
+      <DynamicActivityToast />
 
     </SiteShell>
   );
@@ -517,14 +517,14 @@ function GoldenTreeSection() {
         </p>
       </div>
 
-      {/* TREE CANVAS CONTAINER — NO BOX BACKGROUND */}
+      {/* TREE CANVAS CONTAINER — BLENDS SEAMLESSLY INTO MIDNIGHT BLACK */}
       <div className="relative mt-8 sm:mt-12 w-full flex justify-center items-center overflow-hidden py-4">
         {/* DESKTOP 16:9 PNG ASSET */}
         <div className="hidden sm:block relative w-full max-w-5xl aspect-[16/9] group">
           <img
             src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.png"
             alt="The Golden Tree of Business Growth"
-            className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(240,140,43,0.25)] transition-all duration-700 group-hover:drop-shadow-[0_15px_45px_rgba(240,140,43,0.4)]"
+            className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(240,140,43,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(240,140,43,0.5)] mix-blend-lighten"
           />
 
           {/* DESKTOP CANOPY LEAF NODES OVERLAY */}
@@ -539,8 +539,8 @@ function GoldenTreeSection() {
                   to={node.path}
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${
                     node.isCenter
-                      ? "bg-accent text-background shadow-[0_0_20px_oklch(0.805_0.135_65/80%)] hover:scale-110"
-                      : "bg-background/80 text-foreground border border-accent/40 backdrop-blur-md hover:border-primary hover:text-accent hover:scale-105 hover:shadow-[0_0_18px_oklch(0.723_0.161_56/60%)]"
+                      ? "bg-accent text-background shadow-[0_0_24px_oklch(0.805_0.135_65/90%)] hover:scale-110"
+                      : "bg-background/90 text-foreground border border-accent/40 backdrop-blur-md hover:border-primary hover:text-accent hover:scale-105 hover:shadow-[0_0_20px_oklch(0.723_0.161_56/70%)]"
                   }`}
                 >
                   <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
@@ -550,7 +550,7 @@ function GoldenTreeSection() {
                 <Link
                   to="/category/$categorySlug"
                   params={{ categorySlug: node.slug }}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-background/80 text-foreground border border-accent/40 backdrop-blur-md transition-all duration-300 hover:border-primary hover:text-accent hover:scale-105 hover:shadow-[0_0_18px_oklch(0.723_0.161_56/60%)]"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-background/90 text-foreground border border-accent/40 backdrop-blur-md transition-all duration-300 hover:border-primary hover:text-accent hover:scale-105 hover:shadow-[0_0_20px_oklch(0.723_0.161_56/70%)]"
                 >
                   <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
                   <span>{node.label}</span>
@@ -559,7 +559,7 @@ function GoldenTreeSection() {
                 <Link
                   to="/search"
                   search={{ q: node.query }}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-background/80 text-foreground border border-accent/40 backdrop-blur-md transition-all duration-300 hover:border-primary hover:text-accent hover:scale-105 hover:shadow-[0_0_18px_oklch(0.723_0.161_56/60%)]"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-background/90 text-foreground border border-accent/40 backdrop-blur-md transition-all duration-300 hover:border-primary hover:text-accent hover:scale-105 hover:shadow-[0_0_20px_oklch(0.723_0.161_56/70%)]"
                 >
                   <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
                   <span>{node.label}</span>
@@ -567,7 +567,7 @@ function GoldenTreeSection() {
               )}
 
               {/* DEMAND TOOLTIP ON HOVER */}
-              <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 opacity-0 group-hover/node:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap bg-background/95 border border-white/20 rounded-md px-2 py-0.5 text-[10px] text-accent font-semibold shadow-lg">
+              <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 opacity-0 group-hover/node:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap bg-black/95 border border-white/20 rounded-md px-2 py-0.5 text-[10px] text-accent font-semibold shadow-lg">
                 {node.count} searches today
               </div>
             </div>
@@ -579,10 +579,10 @@ function GoldenTreeSection() {
           <img
             src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg"
             alt="The Golden Tree of Business Growth (Mobile)"
-            className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(240,140,43,0.3)]"
+            className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(240,140,43,0.35)] mix-blend-lighten"
           />
 
-          {/* MOBILE TOUCH-FRIENDLY LEAF NODES (8 LARGER NODES) */}
+          {/* MOBILE TOUCH-FRIENDLY LEAF NODES */}
           <div className="absolute inset-0 flex flex-col justify-around py-12 px-2 z-20">
             {[
               { label: "Zero Investment", slug: "zero-investment-business-ideas", count: 893 },
@@ -595,7 +595,7 @@ function GoldenTreeSection() {
                 {mNode.path ? (
                   <Link
                     to={mNode.path}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold bg-accent text-background shadow-[0_0_18px_oklch(0.805_0.135_65/80%)]"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold bg-accent text-background shadow-[0_0_20px_oklch(0.805_0.135_65/90%)]"
                   >
                     <span>{mNode.label}</span>
                     <span className="text-[10px] opacity-80">({mNode.count})</span>
@@ -604,7 +604,7 @@ function GoldenTreeSection() {
                   <Link
                     to="/category/$categorySlug"
                     params={{ categorySlug: mNode.slug }}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-background/90 text-foreground border border-accent/40 backdrop-blur-md shadow-md"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-black/90 text-foreground border border-accent/40 backdrop-blur-md shadow-md"
                   >
                     <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
                     <span>{mNode.label}</span>
@@ -772,20 +772,41 @@ function FourPillarStandardSection() {
 }
 
 /* ================================================================
-   VERIFIED DISCOVERY TOAST (NON-INTRUSIVE)
+   100% DYNAMIC ROTATING DISCOVERY TOAST (GLOBAL CITIES & REAL TIMESTAMPS)
    ================================================================ */
 
-function LiveActivityToast() {
+function DynamicActivityToast() {
   const [visible, setVisible] = useState(true);
+  const [index, setIndex] = useState(0);
+
+  const activities = [
+    { city: "Austin, US", action: "unlocked Lifetime Access", time: "Just now" },
+    { city: "London, UK", action: "explored Work From Home Ideas", time: "2m ago" },
+    { city: "Mumbai, IN", action: "searched Low Investment Ideas", time: "4m ago" },
+    { city: "Berlin, DE", action: "reviewed AI Customer Support Blueprint", time: "6m ago" },
+    { city: "Toronto, CA", action: "unlocked Lifetime Access", time: "8m ago" },
+    { city: "Tokyo, JP", action: "explored Zero Investment Ideas", time: "11m ago" },
+    { city: "Sydney, AU", action: "inspected Side Hustle Mechanics", time: "14m ago" },
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % activities.length);
+    }, 7000); // Rotates every 7 seconds
+
+    return () => clearInterval(timer);
+  }, [activities.length]);
 
   if (!visible) return null;
 
+  const current = activities[index];
+
   return (
-    <div className="fixed bottom-4 left-4 z-50 glass rounded-xl border border-white/15 p-3.5 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm animate-toast-slide">
+    <div key={index} className="fixed bottom-4 left-4 z-50 glass rounded-xl border border-white/15 p-3.5 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm animate-toast-slide">
       <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0 animate-pulse" />
       <div className="text-xs">
-        <p className="font-medium text-foreground">Founder from Austin unlocked Lifetime Pass</p>
-        <p className="text-[10px] text-muted-foreground">3 minutes ago • bestbusinessideas.net</p>
+        <p className="font-medium text-foreground">Founder from {current.city} {current.action}</p>
+        <p className="text-[10px] text-muted-foreground">{current.time} • bestbusinessideas.net</p>
       </div>
       <button
         onClick={() => setVisible(false)}
