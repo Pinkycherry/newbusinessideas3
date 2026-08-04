@@ -1,34 +1,48 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 /* ----------------------------------------------------------------
-   1. ANIMATED COUNTER (Zero external dependencies)
+   1. SCROLL-TRIGGERED COUNT-UP (Only counts when visible on screen)
    ---------------------------------------------------------------- */
-export function AnimatedCount({ target, suffix = "" }: { target: number; suffix?: string }) {
+export function ScrollTriggeredCount({ target, suffix = "" }: { target: number; suffix?: string }) {
   const [count, setCount] = useState(0);
+  const elementRef = useRef<HTMLSpanElement | null>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
-    let start = 0;
-    const duration = 1200;
-    const increment = target / (duration / 16);
+    const currentElement = elementRef.current;
+    if (!currentElement || hasAnimated) return;
 
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasAnimated(true);
+          let start = 0;
+          const duration = 1600; // 1.6 seconds
+          const increment = target / (duration / 16);
 
-    return () => clearInterval(timer);
-  }, [target]);
+          const timer = setInterval(() => {
+            start += increment;
+            if (start >= target) {
+              setCount(target);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(start));
+            }
+          }, 16);
+        }
+      },
+      { threshold: 0.2 }
+    );
 
-  return <span>{count.toLocaleString()}{suffix}</span>;
+    observer.observe(currentElement);
+    return () => observer.disconnect();
+  }, [target, hasAnimated]);
+
+  return <span ref={elementRef}>{count.toLocaleString()}{suffix}</span>;
 }
 
 /* ----------------------------------------------------------------
-   2. LIVE MARKET SIGNAL HARVEST (SVG Vector Icons — No Emojis)
+   2. 3D GLOSSY SIGNAL HARVEST PIPELINE
    ---------------------------------------------------------------- */
 export function SignalHarvestSection() {
   const sources = [
@@ -36,7 +50,7 @@ export function SignalHarvestSection() {
       name: "Reddit Founder Signals",
       tag: "Live Stream",
       svg: (
-        <svg className="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="currentColor">
+        <svg className="w-4 h-4 text-accent shrink-0" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.587 1.328-1.377 1.638.02.193.03.389.03.588 0 2.99-3.791 5.414-8.47 5.414-4.678 0-8.47-2.424-8.47-5.414 0-.199.01-.395.03-.588-.79-.31-1.377-.922-1.377-1.638 0-.968.786-1.754 1.754-1.754.477 0 .899.182 1.207.491 1.194-.856 2.85-1.419 4.674-1.488l.942-4.411 3.28.692c.036.635.567 1.14 1.217 1.14z"/>
         </svg>
       ),
@@ -45,7 +59,7 @@ export function SignalHarvestSection() {
       name: "Product Hunt Trends",
       tag: "Daily Feed",
       svg: (
-        <svg className="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="currentColor">
+        <svg className="w-4 h-4 text-accent shrink-0" viewBox="0 0 24 24" fill="currentColor">
           <path d="M13.604 8.4h-3.405v3.6h3.405c.995 0 1.801-.806 1.801-1.8s-.806-1.8-1.801-1.8zM12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm1.604 14.4h-3.405V18H7.799V6h5.805c2.982 0 5.401 2.419 5.401 5.4 0 2.981-2.419 5.4-5.401 5.4z"/>
         </svg>
       ),
@@ -54,7 +68,7 @@ export function SignalHarvestSection() {
       name: "X (Twitter) Mentions",
       tag: "Realtime",
       svg: (
-        <svg className="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="currentColor">
+        <svg className="w-4 h-4 text-accent shrink-0" viewBox="0 0 24 24" fill="currentColor">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
         </svg>
       ),
@@ -63,7 +77,7 @@ export function SignalHarvestSection() {
       name: "Search Demand Signal",
       tag: "Verified",
       svg: (
-        <svg className="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg className="w-4 h-4 text-accent shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <circle cx="11" cy="11" r="8"/>
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
@@ -72,7 +86,7 @@ export function SignalHarvestSection() {
   ];
 
   return (
-    <section className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4">
+    <section className="mx-auto my-12 sm:my-20 max-w-6xl px-3 sm:px-4">
       <div className="glass rounded-2xl sm:rounded-3xl border border-white/10 p-5 sm:p-10 grid gap-8 lg:grid-cols-2 lg:items-center">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-3 py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-accent border border-accent/20">
@@ -88,33 +102,48 @@ export function SignalHarvestSection() {
             We don&apos;t generate generic AI hallucinations. Our blueprints aggregate real market signals across live web sources into plain-English unit economics and blunt founder-fit verdicts.
           </p>
 
-          <div className="mt-5 grid grid-cols-2 gap-2.5">
+          {/* FIXED NO-OVERLAP GRID */}
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
             {sources.map((s) => (
-              <div key={s.name} className="glass rounded-xl border border-white/10 p-3 flex items-center justify-between">
-                <span className="text-xs font-medium text-foreground flex items-center gap-2">
+              <div key={s.name} className="glass rounded-xl border border-white/10 p-3 flex items-center justify-between gap-2 min-w-0">
+                <span className="text-xs font-medium text-foreground flex items-center gap-2 truncate">
                   {s.svg}
                   <span className="truncate">{s.name}</span>
                 </span>
-                <span className="text-[9px] font-bold text-accent uppercase tracking-wider shrink-0">{s.tag}</span>
+                <span className="text-[9px] font-bold text-accent uppercase tracking-wider shrink-0 bg-accent/10 px-2 py-0.5 rounded-full border border-accent/20">
+                  {s.tag}
+                </span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Live Aggregator Status Panel */}
-        <div className="glass bbi-card-glow rounded-2xl border border-white/15 p-6 relative overflow-hidden">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Cross-Source Validation</p>
-          <h3 className="mt-1 text-base sm:text-lg font-bold text-foreground">Active Market Demand Score</h3>
-          
-          <div className="mt-6 flex items-baseline justify-between">
-            <span className="text-3xl sm:text-4xl font-extrabold text-accent">
-              <AnimatedCount target={94} suffix="%" />
-            </span>
-            <span className="text-xs text-muted-foreground">4,182 Datapoints Processed</span>
+        {/* 3D GLOSSY COUNTER CARD */}
+        <div className="glass bbi-card-glow rounded-2xl border border-white/15 p-6 relative overflow-hidden flex flex-col justify-between">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Cross-Source Validation</p>
+            <h3 className="mt-1 text-base sm:text-lg font-bold text-foreground">Active Market Demand Score</h3>
           </div>
 
-          <div className="mt-3 w-full bg-white/10 rounded-full h-2 overflow-hidden">
-            <div className="bg-gradient-to-r from-primary to-accent h-full w-[94%] transition-all duration-1000" />
+          <div className="my-6 flex items-center justify-between gap-4">
+            {/* 3D Sphere Orb Display */}
+            <div className="bbi-glossy-orb w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center shrink-0">
+              <span className="text-2xl sm:text-3xl font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                <ScrollTriggeredCount target={94} suffix="%" />
+              </span>
+            </div>
+
+            <div className="text-right">
+              <span className="block text-xl sm:text-2xl font-extrabold text-accent">
+                <ScrollTriggeredCount target={4182} />
+              </span>
+              <span className="text-xs text-muted-foreground">Datapoints Filtered Today</span>
+            </div>
+          </div>
+
+          {/* Glowing Neon Bar */}
+          <div className="w-full bg-white/10 rounded-full h-2.5 overflow-hidden shadow-inner">
+            <div className="bg-gradient-to-r from-primary via-accent to-warm h-full w-[94%] transition-all duration-1000 shadow-[0_0_12px_rgba(255,170,77,0.8)]" />
           </div>
 
           <p className="mt-4 text-[11px] text-muted-foreground italic">
@@ -127,7 +156,7 @@ export function SignalHarvestSection() {
 }
 
 /* ----------------------------------------------------------------
-   3. THE 5-STEP FOUNDER JOURNEY (Sleek Modern Step Grid)
+   3. THE 5-STEP FOUNDER JOURNEY (3D Neumorphic Step Cards)
    ---------------------------------------------------------------- */
 export function FounderJourneyRoadmap() {
   const steps = [
@@ -139,7 +168,7 @@ export function FounderJourneyRoadmap() {
   ];
 
   return (
-    <section className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4">
+    <section className="mx-auto my-16 sm:my-24 max-w-6xl px-3 sm:px-4">
       <div className="glass rounded-2xl sm:rounded-3xl border border-white/10 p-5 sm:p-10">
         <div className="text-center max-w-2xl mx-auto">
           <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
@@ -150,14 +179,19 @@ export function FounderJourneyRoadmap() {
           </h2>
         </div>
 
-        <div className="mt-8 grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+        {/* 3D NEUMORPHIC STEP GRID */}
+        <div className="mt-8 grid gap-4 grid-cols-1 sm:grid-cols-3 lg:grid-cols-5">
           {steps.map((s) => (
-            <div key={s.num} className="glass rounded-xl border border-white/10 p-4 text-center transition-all duration-300 hover:border-primary/50">
-              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-accent/15 text-accent font-extrabold text-xs mb-2 border border-accent/20">
+            <div 
+              key={s.num} 
+              className="glass bbi-glossy-step rounded-2xl border border-white/15 p-5 text-center transition-all duration-300 hover:scale-[1.03] hover:border-accent/60"
+            >
+              {/* 3D Glossy Diamond Number Badge */}
+              <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-accent to-primary text-black font-black text-xs mb-3 shadow-[0_4px_12px_rgba(240,140,43,0.4)]">
                 {s.num}
               </span>
-              <h3 className="text-xs sm:text-sm font-semibold text-foreground">{s.title}</h3>
-              <p className="mt-1 text-[11px] text-muted-foreground leading-relaxed">{s.desc}</p>
+              <h3 className="text-xs sm:text-sm font-bold text-foreground">{s.title}</h3>
+              <p className="mt-1.5 text-[11px] text-muted-foreground leading-relaxed">{s.desc}</p>
             </div>
           ))}
         </div>
@@ -167,7 +201,7 @@ export function FounderJourneyRoadmap() {
 }
 
 /* ----------------------------------------------------------------
-   4. VERIFIED ACTIVITY TOAST (Minimal Green Operational Dot)
+   4. VERIFIED ACTIVITY TOAST
    ---------------------------------------------------------------- */
 export function LiveActivityToast() {
   const [visible, setVisible] = useState(true);
@@ -176,7 +210,7 @@ export function LiveActivityToast() {
 
   return (
     <div className="fixed bottom-4 left-4 z-50 glass rounded-xl border border-white/15 p-3.5 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm animate-bbi-toast">
-      <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0 animate-pulse" />
+      <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
       <div className="text-xs">
         <p className="font-medium text-foreground">Founder from New York unlocked Lifetime Access</p>
         <p className="text-[10px] text-muted-foreground">3 minutes ago • bestbusinessideas.net</p>
