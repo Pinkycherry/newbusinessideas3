@@ -458,8 +458,9 @@ function HomePage() {
       <section className="mx-auto max-w-5xl px-3 pb-24 sm:px-4">
         {SCROLL_PANELS.map((panel, i) => (
           <div key={panel.title} className="mb-6 sm:mb-0 sm:h-[70vh]">
+            <Reveal className="sticky top-24" delay={60}>
             <div
-              className={`glass sticky top-24 p-8 sm:p-12 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
+              className={`glass glass-hover p-8 sm:p-12 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
               style={{ zIndex: i + 1 }}
             >
               <h2 className="text-2xl font-bold leading-tight tracking-tight sm:text-4xl">
@@ -469,6 +470,7 @@ function HomePage() {
                 {panel.body}
               </p>
             </div>
+            </Reveal>
           </div>
         ))}
       </section>
