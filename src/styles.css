@@ -618,7 +618,14 @@ a[href*="/search"]:hover {
 .bbi-reveal.rv-lift  { transform: translateY(46px) scale(0.97); filter: blur(4px); }
 .bbi-reveal.rv-slide { transform: translateX(-56px); filter: blur(4px); }
 .bbi-reveal.rv-zoom  { transform: scale(0.86); filter: blur(5px); }
-.bbi-reveal.rv-wipe  { transform: none; filter: none; clip-path: inset(0 100% 0 0); }
+.bbi-reveal.rv-wipe  { transform: none; filter: none; }
+/* Clip the child, not the observed wrapper — a clipped wrapper reports zero
+   intersection area and would never trigger the reveal. */
+.bbi-reveal.rv-wipe > * {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.45s cubic-bezier(0.2, 0.9, 0.24, 1);
+}
+.bbi-reveal.rv-wipe.is-visible > * { clip-path: inset(0 0 0 0); }
 .bbi-reveal.rv-lift,
 .bbi-reveal.rv-slide,
 .bbi-reveal.rv-zoom,
@@ -629,7 +636,6 @@ a[href*="/search"]:hover {
     clip-path 0.45s cubic-bezier(0.2, 0.9, 0.24, 1),
     filter 0.42s ease-out;
 }
-.bbi-reveal.rv-wipe.is-visible { clip-path: inset(0 0 0 0); }
 .bbi-reveal.rv-lift.is-visible,
 .bbi-reveal.rv-slide.is-visible,
 .bbi-reveal.rv-zoom.is-visible { transform: none; filter: blur(0); }
