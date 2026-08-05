@@ -135,9 +135,9 @@
       radial-gradient(1px 1px at 42% 8%, rgba(224, 247, 255, 0.5), transparent 60%),
       radial-gradient(1px 1px at 94% 40%, rgba(224, 247, 255, 0.5), transparent 60%),
       radial-gradient(1px 1px at 22% 44%, rgba(186, 230, 253, 0.45), transparent 60%);
-    background-size: 620px 620px;
+    background-size: 340px 340px;
     background-repeat: repeat;
-    opacity: 0.85;
+    opacity: 1;
     animation: bbi-star-twinkle 7s ease-in-out infinite alternate;
   }
   body::after {
