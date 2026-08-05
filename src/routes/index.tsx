@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
@@ -12,6 +12,46 @@ import { getCatalog, getFeaturedIdeas } from "@/lib/ideas.functions";
 const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
 
 /** Split live categories evenly across 4 marquee rows (works for 9 or 100+). */
+/** Smooth scroll-reveal wrapper — fade + rise + de-blur, once, on enter. */
+function Reveal({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setShown(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`bbi-reveal${shown ? " is-visible" : ""} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
+
 function tickerRows<T>(categories: T[], rowCount = 4): T[][] {
   const rows: T[][] = Array.from({ length: rowCount }, () => []);
   categories.forEach((c, i) => rows[i % rowCount]!.push(c));
@@ -418,8 +458,9 @@ function HomePage() {
       <section className="mx-auto max-w-5xl px-3 pb-24 sm:px-4">
         {SCROLL_PANELS.map((panel, i) => (
           <div key={panel.title} className="mb-6 sm:mb-0 sm:h-[70vh]">
+            <Reveal className="sticky top-24" delay={60}>
             <div
-              className={`glass sticky top-24 p-8 sm:p-12 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
+              className={`glass glass-hover p-8 sm:p-12 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
               style={{ zIndex: i + 1 }}
             >
               <h2 className="text-2xl font-bold leading-tight tracking-tight sm:text-4xl">
@@ -429,6 +470,7 @@ function HomePage() {
                 {panel.body}
               </p>
             </div>
+            </Reveal>
           </div>
         ))}
       </section>
@@ -620,7 +662,7 @@ function GoldenTreeSection() {
                 ) : (
                   <Link
                     to="/category/$categorySlug"
-                    params={{ categorySlug: mNode.slug }}
+                    params={{ categorySlug: mNode.slug ?? "" }}
                     className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold shadow-xl"
                   >
                     <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
@@ -810,6 +852,7 @@ function DynamicActivityToast() {
   if (!visible) return null;
 
   const current = activities[index];
+  if (!current) return null;
 
   return (
     <div key={index} className="fixed bottom-4 left-4 z-50 glass rounded-xl border border-white/15 p-3.5 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm animate-toast-slide">
@@ -914,7 +957,8 @@ function TrustStatsBar() {
 function MarketGapSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-shape-diamond grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      <Reveal>
+      <div className="glass glass-hover bbi-shape-diamond grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
             The problem we found
@@ -943,6 +987,7 @@ function MarketGapSection() {
           nodes={["Named buyer", "Money mechanics", "Real risks", "Founder verdict"]}
         />
       </div>
+      </Reveal>
     </section>
   );
 }
@@ -1326,23 +1371,25 @@ function KeywordMosaic() {
       </h2>
       <div className="mt-8 grid gap-6 lg:grid-cols-3">
         {BBI_KEYWORD_GROUPS.map((group) => (
-          <div key={group.heading} className="glass bbi-shape-card-a p-6">
+          <Reveal key={group.heading} className="h-full">
+          <div className="glass glass-hover bbi-shape-card-a h-full p-6">
             <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
               {group.heading}
             </h3>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap content-start gap-2">
               {group.terms.map((term) => (
                 <Link
                   key={term.label}
                   to="/search"
                   search={{ q: term.query }}
-                  className="glass-pill rounded-full px-3.5 py-1.5 text-xs font-medium transition-all duration-300"
+                  className="glass-pill grow whitespace-nowrap rounded-full px-3.5 py-1.5 text-center text-xs font-medium"
                 >
                   {term.label}
                 </Link>
               ))}
             </div>
           </div>
+          </Reveal>
         ))}
       </div>
     </section>

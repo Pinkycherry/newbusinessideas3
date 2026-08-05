@@ -268,11 +268,36 @@ a[href*="/search"]:hover {
     0 10px 24px -4px rgba(0, 0, 0, 0.5),
     inset 0 1px 2px 0 rgba(255, 255, 255, 0.5) !important;
 }
-/* SOFT FEATHERED EDGES ON GOLDEN TREE CONTAINER */
+/* GOLDEN TREE — drop the baked-in dark square, keep only the glowing tree */
+.tree-asset-container {
+  background: transparent;
+}
 .tree-asset-container img,
 [alt*="Golden Tree"] {
-  mask-image: radial-gradient(ellipse at center, black 68%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 68%, transparent 100%);
+  mix-blend-mode: screen;
+  mask-image: radial-gradient(ellipse at center, black 70%, transparent 100%);
+}
+
+/* ================================================================
+   SCROLL REVEAL — smooth, non-harsh entrance for content sections
+   ================================================================ */
+.bbi-reveal {
+  opacity: 0;
+  transform: translateY(28px) scale(0.985);
+  filter: blur(6px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.bbi-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-reveal { opacity: 1; transform: none; filter: none; transition: none; }
 }
 @utility sheen {
   position: relative;
