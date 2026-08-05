@@ -99,6 +99,9 @@
   --rot-3: #0EA5E9;
   --rot-4: #67E8F9;
   --rot-5: #06B6D4;
+  /* Reference violet companion to the cyan — used in glass gradients + rims */
+  --violet: #8B5CF6;
+  --violet-soft: #A78BFA;
 }
 .dark {
   --background: #020617;
@@ -113,6 +116,44 @@
     font-family: var(--font-sans);
     position: relative;
     overflow-x: hidden;
+  }
+  /* STARFIELD + deep nebula wash — the reference's dark space backdrop */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background-image:
+      radial-gradient(1.5px 1.5px at 12% 18%, rgba(224, 247, 255, 0.9), transparent 60%),
+      radial-gradient(1.5px 1.5px at 78% 12%, rgba(224, 247, 255, 0.75), transparent 60%),
+      radial-gradient(1px 1px at 32% 62%, rgba(186, 230, 253, 0.7), transparent 60%),
+      radial-gradient(1.5px 1.5px at 88% 68%, rgba(196, 181, 253, 0.75), transparent 60%),
+      radial-gradient(1px 1px at 55% 32%, rgba(224, 247, 255, 0.6), transparent 60%),
+      radial-gradient(1px 1px at 8% 82%, rgba(224, 247, 255, 0.55), transparent 60%),
+      radial-gradient(1.5px 1.5px at 66% 88%, rgba(167, 139, 250, 0.6), transparent 60%),
+      radial-gradient(1px 1px at 42% 8%, rgba(224, 247, 255, 0.5), transparent 60%),
+      radial-gradient(1px 1px at 94% 40%, rgba(224, 247, 255, 0.5), transparent 60%),
+      radial-gradient(1px 1px at 22% 44%, rgba(186, 230, 253, 0.45), transparent 60%);
+    background-size: 620px 620px;
+    background-repeat: repeat;
+    opacity: 0.85;
+    animation: bbi-star-twinkle 7s ease-in-out infinite alternate;
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    pointer-events: none;
+    background:
+      radial-gradient(60rem 40rem at 20% 0%, rgba(56, 189, 248, 0.16), transparent 70%),
+      radial-gradient(52rem 38rem at 88% 28%, rgba(139, 92, 246, 0.16), transparent 70%),
+      radial-gradient(46rem 34rem at 50% 100%, rgba(34, 211, 238, 0.12), transparent 70%);
+  }
+  @keyframes bbi-star-twinkle {
+    from { opacity: 0.55; }
+    to { opacity: 0.95; }
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
