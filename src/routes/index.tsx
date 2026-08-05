@@ -667,38 +667,52 @@ function GoldenTreeSection() {
             className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(27,42,107,0.35)]"
           />
 
-          <div className="absolute inset-0 flex flex-col justify-around py-10 px-3 z-20">
+          {/* Nodes sit on the canopy at organic coordinates (not a vertical list). */}
+          <div className="absolute inset-0 z-20">
             {[
-              { label: "Zero Investment", slug: "zero-investment-business-ideas", count: 893 },
-              { label: "Work From Home", slug: "work-from-home-business-ideas", count: 512 },
-              { label: "Low Investment", slug: "low-investment-business-ideas", count: 784 },
-              { label: "Side Hustle Ideas", slug: "side-hustle-ideas", count: 341 },
-              { label: "Validation Center", path: "/browse", count: 937 },
+              { label: "Zero Investment", slug: "zero-investment-business-ideas", x: 30, y: 14, d: 0 },
+              { label: "Work From Home", slug: "work-from-home-business-ideas", x: 70, y: 24, d: 0.8 },
+              { label: "Low Investment", slug: "low-investment-business-ideas", x: 26, y: 36, d: 1.6 },
+              { label: "Side Hustle", slug: "side-hustle-ideas", x: 68, y: 47, d: 2.4 },
+              { label: "Validation Center", path: "/browse", x: 48, y: 60, d: 3.2 },
             ].map((mNode) => (
-              <div key={mNode.label} className="text-center my-1.5">
+              <div
+                key={mNode.label}
+                className="bbi-tree-node-m"
+                style={{ left: `${mNode.x}%`, top: `${mNode.y}%`, animationDelay: `${mNode.d}s` }}
+              >
                 {mNode.path ? (
                   <Link
                     to={mNode.path}
-                    className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold shadow-xl"
+                    className="glass-pill inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-[10px] font-bold shadow-xl"
                   >
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/80" />
                     <span>{mNode.label}</span>
-                    <span className="text-[10px] opacity-80">({mNode.count})</span>
                   </Link>
                 ) : (
                   <Link
                     to="/category/$categorySlug"
                     params={{ categorySlug: mNode.slug ?? "" }}
-                    className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold shadow-xl"
+                    className="glass-pill inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-[10px] font-bold shadow-xl"
                   >
-                    <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/80" />
                     <span>{mNode.label}</span>
-                    <span className="text-[10px] font-semibold">({mNode.count})</span>
                   </Link>
                 )}
               </div>
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Mobile demand read-out — keeps the artwork clean, keeps the data visible. */}
+      <div className="mt-4 grid grid-cols-2 gap-2 sm:hidden">
+        {desktopNodes.slice(0, 4).map((node) => (
+          <div key={node.label} className="glass rounded-xl border border-white/10 px-3 py-2">
+            <p className="truncate text-[10px] font-bold text-foreground">{node.label}</p>
+            <p className="mt-0.5 text-[10px] font-semibold text-accent">{fmt(node.count)}</p>
+          </div>
+        ))}
       </div>
     </section>
   );
