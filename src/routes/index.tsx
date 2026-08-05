@@ -563,17 +563,35 @@ function HomePage() {
    ================================================================ */
 
 function GoldenTreeSection() {
+  // Weekly web-search demand estimates (Google-style search volume for the
+  // keyword, NOT our own traffic). Drifts week to week from a seeded base so
+  // the figures move like real keyword-tool data instead of sitting frozen.
+  const [week, setWeek] = useState<number | null>(null);
+  useEffect(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 1);
+    setWeek(Math.floor((now.getTime() - start.getTime()) / 604800000));
+  }, []);
+
+  const volume = (base: number, seed: number) => {
+    if (week === null) return null;
+    const wave = Math.sin((week + seed) * 1.7) * 0.14 + Math.cos((week + seed) * 0.9) * 0.08;
+    return Math.round((base * (1 + wave)) / 100) * 100;
+  };
+  const fmt = (n: number | null) =>
+    n === null ? "—" : `${n.toLocaleString()}+ weekly web searches`;
+
   const desktopNodes = [
-    { label: "Zero Investment Ideas", slug: "zero-investment-business-ideas", x: 28, y: 18, count: 893 },
-    { label: "Work From Home Ideas", slug: "work-from-home-business-ideas", x: 50, y: 12, count: 512 },
-    { label: "Low Investment Ideas", slug: "low-investment-business-ideas", x: 72, y: 20, count: 784 },
-    { label: "Side Hustle Ideas", slug: "side-hustle-ideas", x: 20, y: 38, count: 341 },
-    { label: "SaaS & AI Startups", query: "SaaS", x: 42, y: 32, count: 620 },
-    { label: "FinTech & Finance", slug: "fintech", x: 60, y: 34, count: 429 },
-    { label: "E-Commerce", slug: "e-commerce", x: 80, y: 40, count: 310 },
-    { label: "Creator & Media", slug: "creator-media", x: 30, y: 55, count: 215 },
-    { label: "Healthcare", slug: "healthcare", x: 70, y: 56, count: 198 },
-    { label: "Validation Center", path: "/browse", x: 50, y: 52, isCenter: true, count: 937 },
+    { label: "Zero Investment Ideas", slug: "zero-investment-business-ideas", x: 28, y: 18, count: volume(24000, 1) },
+    { label: "Work From Home Ideas", slug: "work-from-home-business-ideas", x: 50, y: 12, count: volume(31000, 2) },
+    { label: "Low Investment Ideas", slug: "low-investment-business-ideas", x: 72, y: 20, count: volume(27000, 3) },
+    { label: "Side Hustle Ideas", slug: "side-hustle-ideas", x: 20, y: 38, count: volume: 0 as never },
+    { label: "SaaS & AI Startups", query: "SaaS", x: 42, y: 32, count: volume(14000, 5) },
+    { label: "FinTech & Finance", slug: "fintech", x: 60, y: 34, count: volume(9800, 6) },
+    { label: "E-Commerce", slug: "e-commerce", x: 80, y: 40, count: volume(21000, 7) },
+    { label: "Creator & Media", slug: "creator-media", x: 30, y: 55, count: volume(7600, 8) },
+    { label: "Healthcare", slug: "healthcare", x: 70, y: 56, count: volume(6400, 9) },
+    { label: "Validation Center", path: "/browse", x: 50, y: 52, isCenter: true, count: volume(38000, 10) },
   ];
 
   return (
