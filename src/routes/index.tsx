@@ -936,11 +936,13 @@ function OrbitDiagram({
               style={{
                 left: `${x}%`,
                 top: `${y}%`,
-                animationDelay: `${i * 110}ms, ${i * -110}ms`,
+                animationDelay: `${i * 110}ms`,
               }}
             >
-              <span className="bbi-orbit-dot" aria-hidden />
-              <span className="bbi-orbit-node-label">{label}</span>
+              <span className="bbi-orbit-node-inner">
+                <span className="bbi-orbit-dot" aria-hidden />
+                <span className="bbi-orbit-node-label">{label}</span>
+              </span>
             </div>
           );
         })}
