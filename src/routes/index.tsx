@@ -902,7 +902,7 @@ function DynamicActivityToast() {
   if (!current) return null;
 
   return (
-    <div key={index} className="fixed bottom-4 left-4 z-50 glass rounded-xl border border-white/15 p-3.5 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm animate-toast-slide">
+    <div key={index} className="fixed bottom-4 left-4 z-50 hidden glass rounded-xl border border-white/15 p-3.5 shadow-2xl sm:flex items-center gap-3 max-w-xs sm:max-w-sm animate-toast-slide">
       <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-primary" />
       <div className="text-xs">
         <p className="font-medium text-foreground">Founder from {current.city} {current.action}</p>
