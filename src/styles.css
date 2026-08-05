@@ -55,43 +55,33 @@
 }
 
 :root {
-  --radius: 1rem;
-  /* PURE MIDNIGHT BLACK CANVAS */
+  --radius: 1.25rem;
+  /* PURE MIDNIGHT PITCH BLACK CANVAS (#000000) */
   --background: oklch(0 0 0);
   --foreground: oklch(1 0 0);
-  /* glass panel */
-  --card: oklch(1 0 0 / 6%);
+  /* Liquid Frosted Glass Panel */
+  --card: oklch(1 0 0 / 4%);
   --card-foreground: oklch(1 0 0);
-  --popover: oklch(0.12 0.008 274);
+  --popover: oklch(0.08 0 0);
   --popover-foreground: oklch(1 0 0);
-  /* #E37D24 */
+  /* BBI Accent Colors */
   --primary: oklch(0.687 0.161 51.5);
   --primary-foreground: oklch(0.18 0.02 60);
-  /* #2D2F36 */
-  --secondary: oklch(0.18 0.008 274);
+  --secondary: oklch(0.12 0 0);
   --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(1 0 0 / 6%);
-  /* #D1C7BD */
-  --muted-foreground: oklch(0.828 0.014 76);
-  /* #FFAA4D */
+  --muted: oklch(1 0 0 / 5%);
+  --muted-foreground: oklch(0.85 0.01 80);
   --accent: oklch(0.805 0.135 65);
   --accent-foreground: oklch(0.2 0.02 60);
   --destructive: oklch(0.63 0.21 25);
-  --destructive-foreground: oklch(0.98 0.003 250);
-  --border: oklch(1 0 0 / 14%);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(1 0 0 / 18%);
   --input: oklch(1 0 0 / 16%);
   --ring: oklch(0.687 0.161 51.5);
-  /* #F08C2B */
   --ember: oklch(0.723 0.161 56);
   --amber-glow: oklch(0.805 0.135 65);
-  /* #B8A99C */
   --warm: oklch(0.735 0.02 71);
-  --glass-border: oklch(1 0 0 / 15%);
-  --chart-1: oklch(0.687 0.161 51.5);
-  --chart-2: oklch(0.805 0.135 65);
-  --chart-3: oklch(0.735 0.02 71);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --glass-border: oklch(1 0 0 / 22%);
   --sidebar: oklch(0 0 0);
   --sidebar-foreground: oklch(1 0 0);
   --sidebar-primary: oklch(0.687 0.161 51.5);
@@ -100,7 +90,6 @@
   --sidebar-accent-foreground: oklch(1 0 0);
   --sidebar-border: oklch(1 0 0 / 20%);
   --sidebar-ring: oklch(0.687 0.161 51.5);
-  --ambient-opacity: 1;
 }
 
 .dark {
@@ -112,15 +101,12 @@
     border-color: var(--color-border);
   }
 
+  /* PURE PITCH BLACK BODY (NO BROWN GRADIENTS OR GLOW CIRCLES) */
   body {
-    background-color: #000000;
+    background-color: #000000 !important;
+    background-image: none !important;
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    background-image:
-      radial-gradient(45rem 30rem at 85% -5%, oklch(0.687 0.161 51.5 / 18%), transparent 70%),
-      radial-gradient(40rem 25rem at 5% 25%, oklch(0.805 0.135 65 / 12%), transparent 65%),
-      linear-gradient(180deg, #000000, #08080a);
-    background-attachment: fixed;
   }
 
   h1, h2, h3, h4 {
@@ -128,39 +114,43 @@
   }
 }
 
-/* --- GLASS UTILITIES --- */
+/* ================================================================
+   3D LIQUID FROSTED GLASS UTILITIES (Image Style Inspired)
+   ================================================================ */
+
 @utility glass {
-  background: oklch(1 0 0 / 5%);
-  backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid oklch(1 0 0 / 12%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  ) !important;
+  backdrop-filter: blur(28px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   box-shadow:
-    0 12px 32px -12px oklch(0 0 0 / 60%),
-    inset 0 1px 0 0 oklch(1 0 0 / 14%);
+    0 20px 50px -15px rgba(0, 0, 0, 0.9),
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6) !important;
 }
 
 @utility glass-hover {
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
   &:hover {
-    transform: translateY(-4px);
-    border-color: oklch(0.723 0.161 56 / 45%);
+    transform: translateY(-4px) scale(1.01) !important;
+    border-color: rgba(255, 170, 77, 0.6) !important;
     box-shadow:
-      0 16px 36px -10px oklch(0.687 0.161 51.5 / 25%),
-      inset 0 1px 0 0 oklch(1 0 0 / 22%);
+      0 24px 60px -10px rgba(240, 140, 43, 0.35),
+      inset 0 1px 3px 0 rgba(255, 255, 255, 0.6),
+      inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6) !important;
   }
 }
 
 @utility glass-nav {
   position: relative;
   z-index: 50;
-  background: oklch(0 0 0 / 94%);
-  backdrop-filter: blur(20px) saturate(160%);
-  border-bottom: 1px solid oklch(1 0 0 / 12%);
-  box-shadow: 0 10px 30px -10px oklch(0 0 0 / 70%);
-  @media (width >= 40rem) {
-    background: oklch(1 0 0 / 6%);
-  }
+  background: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.9) !important;
 }
 
 @utility sheen {
@@ -170,7 +160,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(115deg, transparent 35%, oklch(1 0 0 / 25%) 50%, transparent 65%);
+    background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.35) 50%, transparent 65%);
     transform: translateX(-120%);
     transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -179,31 +169,31 @@
   }
 }
 
-/* --- STANDARDIZED UNIFORM SHAPES --- */
-@utility blob-1 { border-radius: 1.5rem; }
-@utility blob-2 { border-radius: 1.5rem; }
-@utility blob-3 { border-radius: 1.5rem; }
-@utility blob-4 { border-radius: 1.5rem; }
-@utility blob-5 { border-radius: 1.5rem; }
-@utility blob-6 { border-radius: 1.5rem; }
+/* --- STANDARDIZED CAPSULE & PILL RADII --- */
+@utility blob-1 { border-radius: 1.75rem; }
+@utility blob-2 { border-radius: 1.75rem; }
+@utility blob-3 { border-radius: 1.75rem; }
+@utility blob-4 { border-radius: 1.75rem; }
+@utility blob-5 { border-radius: 1.75rem; }
+@utility blob-6 { border-radius: 1.75rem; }
 @utility blob-sm-1 { border-radius: 1.25rem; }
 @utility blob-sm-2 { border-radius: 1.25rem; }
 @utility blob-sm-3 { border-radius: 1.25rem; }
-@utility blob-portrait-1 { border-radius: 1.25rem; }
-@utility blob-portrait-2 { border-radius: 1.25rem; }
-@utility blob-portrait-3 { border-radius: 1.25rem; }
+@utility blob-portrait-1 { border-radius: 1.5rem; }
+@utility blob-portrait-2 { border-radius: 1.5rem; }
+@utility blob-portrait-3 { border-radius: 1.5rem; }
 
-@utility bbi-shape-banner { border-radius: 1.5rem; }
-@utility bbi-shape-diamond { border-radius: 1.5rem; }
+@utility bbi-shape-banner { border-radius: 1.75rem; }
+@utility bbi-shape-diamond { border-radius: 1.75rem; }
 @utility bbi-shape-step { border-radius: 1.25rem; }
-@utility bbi-shape-step-badge { border-radius: 0.75rem; }
-@utility bbi-shape-soft-deep { border-radius: 1.5rem; }
+@utility bbi-shape-step-badge { border-radius: 0.85rem; }
+@utility bbi-shape-soft-deep { border-radius: 1.75rem; }
 @utility bbi-shape-hex { border-radius: 1.25rem; }
-@utility bbi-shape-ticket { border-radius: 1.5rem; }
-@utility bbi-shape-card-a { border-radius: 1.5rem; }
-@utility bbi-shape-compare-round { border-radius: 1.25rem; }
-@utility bbi-shape-compare-sharp { border-radius: 0.85rem; }
-@utility bbi-shape-shield { border-radius: 1.5rem; }
+@utility bbi-shape-ticket { border-radius: 1.75rem; }
+@utility bbi-shape-card-a { border-radius: 1.75rem; }
+@utility bbi-shape-compare-round { border-radius: 1.5rem; }
+@utility bbi-shape-compare-sharp { border-radius: 1rem; }
+@utility bbi-shape-shield { border-radius: 1.75rem; }
 @utility bbi-shape-faq1 { border-radius: 1.25rem; }
 @utility bbi-shape-faq2 { border-radius: 1.25rem; }
 @utility bbi-shape-faq3 { border-radius: 1.25rem; }
