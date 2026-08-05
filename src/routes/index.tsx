@@ -151,14 +151,16 @@ function HomePage() {
 
   return (
     <SiteShell>
-      {/* LLM / AI-search crawlable summary — visually hidden, fully readable by crawlers. */}
+      {/* AMBIENT TWIN RINGS (YOU & YOUR WIFE) DANCING IN BACKGROUND */}
+      <div className="bbi-twin-ring ring-1" aria-hidden />
+      <div className="bbi-twin-ring ring-2" aria-hidden />
+
+      {/* LLM crawlable summary */}
       <p className="sr-only">
         BBI (Best Business Ideas) is a business idea directory and startup intelligence library.
         This resource covers small business ideas, work from home business ideas, low investment
         startup ideas, business ideas for women, zero investment business ideas, and startup ideas
-        organized by sector, investment level, and founder profile. Each entry includes a market
-        breakdown, revenue model, risk analysis, trend score, and founder-fit verdict. BBI is a
-        curated directory of startup opportunities, not a generic listicle.
+        organized by sector, investment level, and founder profile.
       </p>
 
       {/* HERO */}
@@ -219,7 +221,7 @@ function HomePage() {
                       key={`${rowIndex}-${c.categorySlug}-${i}`}
                       to="/category/$categorySlug"
                       params={{ categorySlug: c.categorySlug }}
-                      className="glass shrink-0 whitespace-nowrap rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-accent transition-all duration-300 hover:border-primary hover:text-primary hover:shadow-[0_0_24px_oklch(0.723_0.161_56/45%)]"
+                      className="glass glass-hover shrink-0 whitespace-nowrap rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-accent transition-all duration-300"
                     >
                       {c.categoryName}
                     </Link>
@@ -231,7 +233,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 1: INTERACTIVE GOLDEN TREE OF BUSINESS GROWTH (HERO HIGH-UP PLACEMENT) */}
+      {/* SECTION 1: INTERACTIVE GOLDEN TREE */}
       <GoldenTreeSection />
 
       {/* SECTION 2: LIVE CATEGORY SEARCH DEMAND TRACKER */}
@@ -253,7 +255,7 @@ function HomePage() {
       {/* MARKET GAP + orbit #1 */}
       <MarketGapSection />
 
-      {/* SECTION 3: THE BBI 4-PILLAR BLUEPRINT STANDARD (FRAMELESS FLOW) */}
+      {/* SECTION 3: THE BBI 4-PILLAR BLUEPRINT STANDARD */}
       <FourPillarStandardSection />
 
       {/* FEATURED */}
@@ -477,15 +479,15 @@ function HomePage() {
         <AdSlot position="homepage-above-footer" size="banner" />
       </div>
 
-      {/* LIVE VERIFIED DISCOVERY TOAST */}
-      <LiveActivityToast />
+      {/* DYNAMIC ROTATING DISCOVERY TOAST */}
+      <DynamicActivityToast />
 
     </SiteShell>
   );
 }
 
 /* ================================================================
-   SECTION 1: INTERACTIVE GOLDEN TREE OF BUSINESS GROWTH (FRAMELESS)
+   SECTION 1: INTERACTIVE GOLDEN TREE (CURVED LIQUID CAPSULES)
    ================================================================ */
 
 function GoldenTreeSection() {
@@ -504,7 +506,6 @@ function GoldenTreeSection() {
 
   return (
     <section className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4">
-      {/* SECTION HEADER — FRAMELESS */}
       <div className="text-center max-w-3xl mx-auto">
         <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
           Interactive Canopy Map
@@ -513,21 +514,19 @@ function GoldenTreeSection() {
           The Golden Tree of Business Growth
         </h2>
         <p className="mt-3 text-sm text-muted-foreground sm:text-base leading-relaxed">
-          Hover or tap any leaf node on the tree canopy to inspect live demand signals and enter researched category blueprints.
+          Tap or hover any leaf node to inspect live demand signals and enter category blueprints.
         </p>
       </div>
 
-      {/* TREE CANVAS CONTAINER — NO BOX BACKGROUND */}
       <div className="relative mt-8 sm:mt-12 w-full flex justify-center items-center overflow-hidden py-4">
         {/* DESKTOP 16:9 PNG ASSET */}
-        <div className="hidden sm:block relative w-full max-w-5xl aspect-[16/9] group">
+        <div className="hidden sm:block relative w-full max-w-5xl aspect-[16/9] group tree-asset-container">
           <img
             src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.png"
             alt="The Golden Tree of Business Growth"
-            className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(240,140,43,0.25)] transition-all duration-700 group-hover:drop-shadow-[0_15px_45px_rgba(240,140,43,0.4)]"
+            className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(240,140,43,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(240,140,43,0.5)]"
           />
 
-          {/* DESKTOP CANOPY LEAF NODES OVERLAY */}
           {desktopNodes.map((node) => (
             <div
               key={node.label}
@@ -537,11 +536,7 @@ function GoldenTreeSection() {
               {node.path ? (
                 <Link
                   to={node.path}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${
-                    node.isCenter
-                      ? "bg-accent text-background shadow-[0_0_20px_oklch(0.805_0.135_65/80%)] hover:scale-110"
-                      : "bg-background/80 text-foreground border border-accent/40 backdrop-blur-md hover:border-primary hover:text-accent hover:scale-105 hover:shadow-[0_0_18px_oklch(0.723_0.161_56/60%)]"
-                  }`}
+                  className="glass glass-hover inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-accent shadow-lg"
                 >
                   <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
                   <span>{node.label}</span>
@@ -550,7 +545,7 @@ function GoldenTreeSection() {
                 <Link
                   to="/category/$categorySlug"
                   params={{ categorySlug: node.slug }}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-background/80 text-foreground border border-accent/40 backdrop-blur-md transition-all duration-300 hover:border-primary hover:text-accent hover:scale-105 hover:shadow-[0_0_18px_oklch(0.723_0.161_56/60%)]"
+                  className="glass glass-hover inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-foreground hover:text-accent shadow-lg"
                 >
                   <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
                   <span>{node.label}</span>
@@ -559,43 +554,41 @@ function GoldenTreeSection() {
                 <Link
                   to="/search"
                   search={{ q: node.query }}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-background/80 text-foreground border border-accent/40 backdrop-blur-md transition-all duration-300 hover:border-primary hover:text-accent hover:scale-105 hover:shadow-[0_0_18px_oklch(0.723_0.161_56/60%)]"
+                  className="glass glass-hover inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-foreground hover:text-accent shadow-lg"
                 >
                   <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
                   <span>{node.label}</span>
                 </Link>
               )}
 
-              {/* DEMAND TOOLTIP ON HOVER */}
-              <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 opacity-0 group-hover/node:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap bg-background/95 border border-white/20 rounded-md px-2 py-0.5 text-[10px] text-accent font-semibold shadow-lg">
+              <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 opacity-0 group-hover/node:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap glass rounded-md px-2.5 py-1 text-[10px] text-accent font-semibold shadow-xl">
                 {node.count} searches today
               </div>
             </div>
           ))}
         </div>
 
-        {/* MOBILE 9:16 SVG ASSET WITH TOUCH-TARGET LEAF NODES */}
-        <div className="block sm:hidden relative w-full max-w-xs aspect-[9/16]">
+        {/* MOBILE 9:16 SVG ASSET — ORGANIC FLOATING LIQUID CAPSULES */}
+        <div className="block sm:hidden relative w-full max-w-xs aspect-[9/16] tree-asset-container">
           <img
             src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg"
             alt="The Golden Tree of Business Growth (Mobile)"
-            className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(240,140,43,0.3)]"
+            className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(240,140,43,0.35)]"
           />
 
-          {/* MOBILE TOUCH-FRIENDLY LEAF NODES (8 LARGER NODES) */}
-          <div className="absolute inset-0 flex flex-col justify-around py-12 px-2 z-20">
+          <div className="absolute inset-0 flex flex-col justify-around py-10 px-3 z-20">
             {[
               { label: "Zero Investment", slug: "zero-investment-business-ideas", count: 893 },
               { label: "Work From Home", slug: "work-from-home-business-ideas", count: 512 },
               { label: "Low Investment", slug: "low-investment-business-ideas", count: 784 },
               { label: "Side Hustle Ideas", slug: "side-hustle-ideas", count: 341 },
-              { label: "Validation Center", path: "/browse", isCenter: true, count: 937 },
+              { label: "Validation Center", path: "/browse", count: 937 },
             ].map((mNode) => (
-              <div key={mNode.label} className="text-center my-1">
+              <div key={mNode.label} className="text-center my-1.5">
                 {mNode.path ? (
                   <Link
                     to={mNode.path}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold bg-accent text-background shadow-[0_0_18px_oklch(0.805_0.135_65/80%)]"
+                    className="glass glass-hover inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-accent shadow-xl border border-accent/40"
                   >
                     <span>{mNode.label}</span>
                     <span className="text-[10px] opacity-80">({mNode.count})</span>
@@ -604,7 +597,7 @@ function GoldenTreeSection() {
                   <Link
                     to="/category/$categorySlug"
                     params={{ categorySlug: mNode.slug }}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-background/90 text-foreground border border-accent/40 backdrop-blur-md shadow-md"
+                    className="glass glass-hover inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-foreground hover:text-accent shadow-xl"
                   >
                     <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
                     <span>{mNode.label}</span>
@@ -621,7 +614,7 @@ function GoldenTreeSection() {
 }
 
 /* ================================================================
-   SECTION 2: LIVE CATEGORY SEARCH DEMAND TRACKER (FRAMELESS)
+   SECTION 2: LIVE CATEGORY SEARCH DEMAND TRACKER
    ================================================================ */
 
 function LiveDemandTrackerSection() {
@@ -635,7 +628,6 @@ function LiveDemandTrackerSection() {
   const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
-    // Dynamic Time-Seeded Calculation Bounded Strictly Between 23 and 937
     const now = new Date();
     const currentMinutes = now.getMinutes();
     
@@ -646,7 +638,6 @@ function LiveDemandTrackerSection() {
       sideHustle: Math.max(23, Math.min(937, 300 + ((currentMinutes * 11) % 400))),
     });
 
-    // Indian Standard Time (IST) Ticker
     const timeString = now.toLocaleTimeString("en-US", {
       timeZone: "Asia/Kolkata",
       hour: "2-digit",
@@ -665,7 +656,6 @@ function LiveDemandTrackerSection() {
 
   return (
     <section className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4">
-      {/* HEADER & TIME TICKER — FRAMELESS */}
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
@@ -689,17 +679,16 @@ function LiveDemandTrackerSection() {
         Live activity stream calculated from daily founder searches across BBI categories.
       </p>
 
-      {/* CATEGORY GRID — FRAMELESS FLOATING CARDS */}
       <div className="mt-6 grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {coreCategories.map((cat) => (
           <Link
             key={cat.slug}
             to="/category/$categorySlug"
             params={{ categorySlug: cat.slug }}
-            className="group flex flex-col justify-between p-4 rounded-2xl border border-white/10 transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-[0_0_20px_oklch(0.805_0.135_65/30%)]"
+            className="glass glass-hover flex flex-col justify-between p-5 rounded-2xl border border-white/10"
           >
             <div>
-              <p className="text-xs font-bold text-foreground group-hover:text-accent transition-colors">
+              <p className="text-xs font-bold text-foreground transition-colors">
                 {cat.label}
               </p>
             </div>
@@ -707,7 +696,7 @@ function LiveDemandTrackerSection() {
               <span className="text-xs font-extrabold text-accent">
                 {cat.count} searches today
               </span>
-              <span className="text-xs text-primary group-hover:translate-x-1 transition-transform">→</span>
+              <span className="text-xs text-primary">→</span>
             </div>
           </Link>
         ))}
@@ -717,7 +706,7 @@ function LiveDemandTrackerSection() {
 }
 
 /* ================================================================
-   SECTION 3: THE BBI 4-PILLAR BLUEPRINT STANDARD (FRAMELESS FLOW)
+   SECTION 3: THE BBI 4-PILLAR BLUEPRINT STANDARD
    ================================================================ */
 
 function FourPillarStandardSection() {
@@ -730,7 +719,6 @@ function FourPillarStandardSection() {
 
   return (
     <section className="mx-auto mt-16 sm:mt-24 max-w-6xl px-3 sm:px-4">
-      {/* FRAMELESS HEADER */}
       <div className="text-center max-w-2xl mx-auto">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           The Research Standard
@@ -743,12 +731,11 @@ function FourPillarStandardSection() {
         </p>
       </div>
 
-      {/* FRAMELESS HORIZONTAL FLOW GRID */}
       <div className="mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {pillars.map((p) => (
           <div
             key={p.num}
-            className="flex flex-col p-5 rounded-2xl border border-white/10 transition-all duration-300 hover:border-primary/50 hover:-translate-y-1"
+            className="glass glass-hover flex flex-col p-6 rounded-2xl border border-white/10"
           >
             <span className="text-xs font-extrabold text-accent tracking-widest">{p.num}</span>
             <h3 className="mt-2 text-base font-bold text-foreground">{p.title}</h3>
@@ -757,11 +744,10 @@ function FourPillarStandardSection() {
         ))}
       </div>
 
-      {/* PRIMARY CTA BUTTON */}
       <div className="mt-8 text-center">
         <Link
           to="/browse"
-          className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-xs font-extrabold uppercase tracking-[0.18em] text-background transition-all duration-300 hover:scale-105 hover:bg-primary hover:shadow-[0_0_24px_oklch(0.805_0.135_65/60%)]"
+          className="glass glass-hover inline-flex items-center gap-2 rounded-full px-6 py-3 text-xs font-extrabold uppercase tracking-[0.18em] text-accent"
         >
           <span>Explore All Categories</span>
           <span>→</span>
@@ -772,20 +758,41 @@ function FourPillarStandardSection() {
 }
 
 /* ================================================================
-   VERIFIED DISCOVERY TOAST (NON-INTRUSIVE)
+   DYNAMIC ROTATING DISCOVERY TOAST
    ================================================================ */
 
-function LiveActivityToast() {
+function DynamicActivityToast() {
   const [visible, setVisible] = useState(true);
+  const [index, setIndex] = useState(0);
+
+  const activities = [
+    { city: "Austin, US", action: "unlocked Lifetime Access", time: "Just now" },
+    { city: "London, UK", action: "explored Work From Home Ideas", time: "2m ago" },
+    { city: "Mumbai, IN", action: "searched Low Investment Ideas", time: "4m ago" },
+    { city: "Berlin, DE", action: "reviewed AI Customer Support Blueprint", time: "6m ago" },
+    { city: "Toronto, CA", action: "unlocked Lifetime Access", time: "8m ago" },
+    { city: "Tokyo, JP", action: "explored Zero Investment Ideas", time: "11m ago" },
+    { city: "Sydney, AU", action: "inspected Side Hustle Mechanics", time: "14m ago" },
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % activities.length);
+    }, 7000);
+
+    return () => clearInterval(timer);
+  }, [activities.length]);
 
   if (!visible) return null;
 
+  const current = activities[index];
+
   return (
-    <div className="fixed bottom-4 left-4 z-50 glass rounded-xl border border-white/15 p-3.5 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm animate-toast-slide">
+    <div key={index} className="fixed bottom-4 left-4 z-50 glass rounded-xl border border-white/15 p-3.5 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm animate-toast-slide">
       <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0 animate-pulse" />
       <div className="text-xs">
-        <p className="font-medium text-foreground">Founder from Austin unlocked Lifetime Pass</p>
-        <p className="text-[10px] text-muted-foreground">3 minutes ago • bestbusinessideas.net</p>
+        <p className="font-medium text-foreground">Founder from {current.city} {current.action}</p>
+        <p className="text-[10px] text-muted-foreground">{current.time} • bestbusinessideas.net</p>
       </div>
       <button
         onClick={() => setVisible(false)}
@@ -799,7 +806,7 @@ function LiveActivityToast() {
 }
 
 /* ================================================================
-   SHARED SUBCOMPONENTS
+   SHARED SUBCOMPONENTS — NO NOISY CENTER BALLS
    ================================================================ */
 
 function OrbitDiagram({
@@ -815,7 +822,7 @@ function OrbitDiagram({
     <div className="bbi-orbit-wrap" role="img" aria-label={`${centerLabel}: ${nodes.join(", ")}`}>
       <div className="bbi-orbit-ring bbi-orbit-ring-outer" />
       <div className="bbi-orbit-ring bbi-orbit-ring-inner" />
-      <div className="bbi-orbit-center">
+      <div className="bbi-orbit-center glass">
         <span className="bbi-orbit-center-label">{centerLabel}</span>
         <span className="bbi-orbit-center-sub">{centerSub}</span>
       </div>
