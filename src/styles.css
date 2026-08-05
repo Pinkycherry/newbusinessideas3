@@ -611,3 +611,135 @@ a[href*="/search"]:hover {
     space-y: 0 !important;
   }
 }
+
+/* ============================================================
+   HOMEPAGE MOTION SYSTEM (fast, snappy card entrances)
+   ============================================================ */
+.bbi-reveal.rv-lift  { transform: translateY(46px) scale(0.97); filter: blur(4px); }
+.bbi-reveal.rv-slide { transform: translateX(-56px); filter: blur(4px); }
+.bbi-reveal.rv-zoom  { transform: scale(0.86); filter: blur(5px); }
+.bbi-reveal.rv-wipe  { transform: none; filter: none; }
+/* Clip the child, not the observed wrapper — a clipped wrapper reports zero
+   intersection area and would never trigger the reveal. */
+.bbi-reveal.rv-wipe > * {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.45s cubic-bezier(0.2, 0.9, 0.24, 1);
+}
+.bbi-reveal.rv-wipe.is-visible > * { clip-path: inset(0 0 0 0); }
+.bbi-reveal.rv-lift,
+.bbi-reveal.rv-slide,
+.bbi-reveal.rv-zoom,
+.bbi-reveal.rv-wipe {
+  transition:
+    opacity 0.42s cubic-bezier(0.2, 0.9, 0.24, 1),
+    transform 0.52s cubic-bezier(0.16, 1.15, 0.3, 1),
+    clip-path 0.45s cubic-bezier(0.2, 0.9, 0.24, 1),
+    filter 0.42s ease-out;
+}
+.bbi-reveal.rv-lift.is-visible,
+.bbi-reveal.rv-slide.is-visible,
+.bbi-reveal.rv-zoom.is-visible { transform: none; filter: blur(0); }
+
+/* --- TICKER PILLS: lift on hover without colliding with the row above --- */
+.iv-ticker-track { padding-top: 0.45rem; padding-bottom: 0.45rem; }
+.iv-ticker-track .glass-pill:hover { transform: scale(1.06) !important; z-index: 5; position: relative; }
+
+/* ============================================================
+   ORBIT DIAGRAM — visible rings, orbiting nodes, readable labels
+   ============================================================ */
+.bbi-orbit-wrap { width: clamp(15rem, 74vw, 21rem); margin: 1.5rem auto; }
+.bbi-orbit-ring {
+  border: 1.5px solid rgba(96, 165, 250, 0.55);
+  box-shadow:
+    0 0 22px -6px rgba(56, 189, 248, 0.55),
+    inset 0 0 26px -12px rgba(139, 92, 246, 0.6);
+}
+.bbi-orbit-ring-outer {
+  border-style: solid;
+  animation: bbi-ring-pulse 3.6s ease-in-out infinite;
+}
+.bbi-orbit-ring-inner {
+  border-style: dashed;
+  border-color: rgba(165, 180, 252, 0.7);
+  animation: bbi-orbit-spin 18s linear infinite;
+}
+@keyframes bbi-ring-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.55; }
+  50%      { transform: scale(1.06); opacity: 1; }
+}
+.bbi-orbit-rotor {
+  position: absolute;
+  inset: 0;
+  animation: bbi-orbit-spin 26s linear infinite;
+}
+.bbi-orbit-node {
+  max-width: 6.8rem;
+  gap: 0.3rem;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+.bbi-orbit-node-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  animation: bbi-orbit-spin-rev 26s linear infinite;
+}
+.bbi-orbit-wrap.is-live .bbi-orbit-node {
+  animation: bbi-node-in 0.5s cubic-bezier(0.16, 1.15, 0.3, 1) both;
+}
+@keyframes bbi-node-in {
+  from { opacity: 0; transform: translate(calc(-50% - 34px), -50%) scale(0.8); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+.bbi-orbit-dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  background: #7DD3FC;
+  box-shadow: 0 0 14px 2px rgba(56, 189, 248, 0.9);
+  animation: bbi-dot-glow 2.4s ease-in-out infinite;
+}
+@keyframes bbi-dot-glow {
+  0%, 100% { opacity: 0.6; transform: scale(0.9); }
+  50%      { opacity: 1; transform: scale(1.25); }
+}
+.bbi-orbit-node-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #EAF2FF;
+  background: rgba(9, 18, 44, 0.82);
+  border: 1px solid rgba(96, 165, 250, 0.4);
+  border-radius: 9999px;
+  padding: 0.2rem 0.5rem;
+  backdrop-filter: blur(10px);
+  animation: bbi-label-fade 4.5s ease-in-out infinite;
+}
+@keyframes bbi-label-fade {
+  0%, 100% { opacity: 0.72; }
+  50%      { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-orbit-rotor, .bbi-orbit-node, .bbi-orbit-node-inner, .bbi-orbit-ring-inner,
+  .bbi-orbit-ring-outer, .bbi-orbit-dot, .bbi-orbit-node-label { animation: none !important; opacity: 1 !important; }
+}
+
+/* --- GOLDEN TREE: mobile nodes float over the artwork, not in a list --- */
+.bbi-tree-node-m {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: bbi-tree-float 6s ease-in-out infinite;
+}
+@keyframes bbi-tree-float {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50%      { transform: translate(-50%, -50%) translateY(-6px); }
+}
+
+/* Orbit centre must stay legible over the glass layer. */
+.bbi-orbit-center {
+  background: linear-gradient(135deg, #60A5FA 0%, #6366F1 100%) !important;
+  background-image: linear-gradient(135deg, #60A5FA 0%, #6366F1 100%) !important;
+  border: 1px solid rgba(191, 219, 254, 0.7) !important;
+  box-shadow: 0 0 34px -8px rgba(56, 189, 248, 0.75) !important;
+}
+.bbi-orbit-center .bbi-orbit-center-label { color: #050B1F !important; }
+.bbi-orbit-center .bbi-orbit-center-sub { color: rgba(5, 11, 31, 0.8) !important; }

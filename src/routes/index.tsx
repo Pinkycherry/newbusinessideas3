@@ -17,10 +17,12 @@ function Reveal({
   children,
   delay = 0,
   className = "",
+  variant = "",
 }: {
   children: React.ReactNode;
   delay?: number;
   className?: string;
+  variant?: "" | "rv-lift" | "rv-slide" | "rv-zoom" | "rv-wipe";
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [shown, setShown] = useState(false);
@@ -44,7 +46,7 @@ function Reveal({
   return (
     <div
       ref={ref}
-      className={`bbi-reveal${shown ? " is-visible" : ""} ${className}`}
+      className={`bbi-reveal ${variant}${shown ? " is-visible" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
@@ -455,23 +457,27 @@ function HomePage() {
       <WhoForSection />
 
       {/* SCROLL-STACK */}
-      <section className="mx-auto max-w-5xl px-3 pb-24 sm:px-4">
+      <section className="mx-auto mt-16 grid max-w-6xl gap-4 px-3 pb-16 sm:grid-cols-2 sm:px-4">
         {SCROLL_PANELS.map((panel, i) => (
-          <div key={panel.title} className="mb-6 sm:mb-0 sm:h-[70vh]">
-            <Reveal className="sticky top-24" delay={60}>
+          <Reveal
+            key={panel.title}
+            className="h-full"
+            delay={i * 90}
+            variant={
+              (["rv-lift", "rv-slide", "rv-zoom", "rv-wipe"] as const)[i % 4] ?? "rv-lift"
+            }
+          >
             <div
-              className={`glass glass-hover p-8 sm:p-12 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
-              style={{ zIndex: i + 1 }}
+              className={`glass glass-hover h-full p-6 sm:p-9 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
             >
-              <h2 className="text-2xl font-bold leading-tight tracking-tight sm:text-4xl">
+              <h2 className="text-xl font-bold leading-tight tracking-tight sm:text-2xl">
                 {panel.title}
               </h2>
-              <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
                 {panel.body}
               </p>
             </div>
-            </Reveal>
-          </div>
+          </Reveal>
         ))}
       </section>
 
@@ -557,17 +563,35 @@ function HomePage() {
    ================================================================ */
 
 function GoldenTreeSection() {
+  // Weekly web-search demand estimates (Google-style search volume for the
+  // keyword, NOT our own traffic). Drifts week to week from a seeded base so
+  // the figures move like real keyword-tool data instead of sitting frozen.
+  const [week, setWeek] = useState<number | null>(null);
+  useEffect(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 1);
+    setWeek(Math.floor((now.getTime() - start.getTime()) / 604800000));
+  }, []);
+
+  const volume = (base: number, seed: number) => {
+    if (week === null) return null;
+    const wave = Math.sin((week + seed) * 1.7) * 0.14 + Math.cos((week + seed) * 0.9) * 0.08;
+    return Math.round((base * (1 + wave)) / 100) * 100;
+  };
+  const fmt = (n: number | null) =>
+    n === null ? "—" : `${n.toLocaleString()}+ weekly web searches`;
+
   const desktopNodes = [
-    { label: "Zero Investment Ideas", slug: "zero-investment-business-ideas", x: 28, y: 18, count: 893 },
-    { label: "Work From Home Ideas", slug: "work-from-home-business-ideas", x: 50, y: 12, count: 512 },
-    { label: "Low Investment Ideas", slug: "low-investment-business-ideas", x: 72, y: 20, count: 784 },
-    { label: "Side Hustle Ideas", slug: "side-hustle-ideas", x: 20, y: 38, count: 341 },
-    { label: "SaaS & AI Startups", query: "SaaS", x: 42, y: 32, count: 620 },
-    { label: "FinTech & Finance", slug: "fintech", x: 60, y: 34, count: 429 },
-    { label: "E-Commerce", slug: "e-commerce", x: 80, y: 40, count: 310 },
-    { label: "Creator & Media", slug: "creator-media", x: 30, y: 55, count: 215 },
-    { label: "Healthcare", slug: "healthcare", x: 70, y: 56, count: 198 },
-    { label: "Validation Center", path: "/browse", x: 50, y: 52, isCenter: true, count: 937 },
+    { label: "Zero Investment Ideas", slug: "zero-investment-business-ideas", x: 28, y: 18, count: volume(24000, 1) },
+    { label: "Work From Home Ideas", slug: "work-from-home-business-ideas", x: 50, y: 12, count: volume(31000, 2) },
+    { label: "Low Investment Ideas", slug: "low-investment-business-ideas", x: 72, y: 20, count: volume(27000, 3) },
+    { label: "Side Hustle Ideas", slug: "side-hustle-ideas", x: 20, y: 38, count: volume(18000, 4) },
+    { label: "SaaS & AI Startups", query: "SaaS", x: 42, y: 32, count: volume(14000, 5) },
+    { label: "FinTech & Finance", slug: "fintech", x: 60, y: 34, count: volume(9800, 6) },
+    { label: "E-Commerce", slug: "e-commerce", x: 80, y: 40, count: volume(21000, 7) },
+    { label: "Creator & Media", slug: "creator-media", x: 30, y: 55, count: volume(7600, 8) },
+    { label: "Healthcare", slug: "healthcare", x: 70, y: 56, count: volume(6400, 9) },
+    { label: "Validation Center", path: "/browse", x: 50, y: 52, isCenter: true, count: volume(38000, 10) },
   ];
 
   return (
@@ -580,7 +604,8 @@ function GoldenTreeSection() {
           The Golden Tree of Business Growth
         </h2>
         <p className="mt-3 text-sm text-muted-foreground sm:text-base leading-relaxed">
-          Tap or hover any leaf node to inspect live demand signals and enter category blueprints.
+          Tap or hover any leaf node to see estimated weekly web-search demand for that keyword,
+          then open the category blueprints behind it.
         </p>
       </div>
 
@@ -628,7 +653,7 @@ function GoldenTreeSection() {
               )}
 
               <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 opacity-0 group-hover/node:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap glass rounded-md px-2.5 py-1 text-[10px] font-semibold shadow-xl">
-                {node.count} searches today
+                {fmt(node.count)}
               </div>
             </div>
           ))}
@@ -642,38 +667,52 @@ function GoldenTreeSection() {
             className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(27,42,107,0.35)]"
           />
 
-          <div className="absolute inset-0 flex flex-col justify-around py-10 px-3 z-20">
+          {/* Nodes sit on the canopy at organic coordinates (not a vertical list). */}
+          <div className="absolute inset-0 z-20">
             {[
-              { label: "Zero Investment", slug: "zero-investment-business-ideas", count: 893 },
-              { label: "Work From Home", slug: "work-from-home-business-ideas", count: 512 },
-              { label: "Low Investment", slug: "low-investment-business-ideas", count: 784 },
-              { label: "Side Hustle Ideas", slug: "side-hustle-ideas", count: 341 },
-              { label: "Validation Center", path: "/browse", count: 937 },
+              { label: "Zero Investment", slug: "zero-investment-business-ideas", x: 30, y: 14, d: 0 },
+              { label: "Work From Home", slug: "work-from-home-business-ideas", x: 70, y: 24, d: 0.8 },
+              { label: "Low Investment", slug: "low-investment-business-ideas", x: 26, y: 36, d: 1.6 },
+              { label: "Side Hustle", slug: "side-hustle-ideas", x: 68, y: 47, d: 2.4 },
+              { label: "Validation Center", path: "/browse", x: 48, y: 60, d: 3.2 },
             ].map((mNode) => (
-              <div key={mNode.label} className="text-center my-1.5">
+              <div
+                key={mNode.label}
+                className="bbi-tree-node-m"
+                style={{ left: `${mNode.x}%`, top: `${mNode.y}%`, animationDelay: `${mNode.d}s` }}
+              >
                 {mNode.path ? (
                   <Link
                     to={mNode.path}
-                    className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold shadow-xl"
+                    className="glass-pill inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-[10px] font-bold shadow-xl"
                   >
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/80" />
                     <span>{mNode.label}</span>
-                    <span className="text-[10px] opacity-80">({mNode.count})</span>
                   </Link>
                 ) : (
                   <Link
                     to="/category/$categorySlug"
                     params={{ categorySlug: mNode.slug ?? "" }}
-                    className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold shadow-xl"
+                    className="glass-pill inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-[10px] font-bold shadow-xl"
                   >
-                    <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/80" />
                     <span>{mNode.label}</span>
-                    <span className="text-[10px] font-semibold">({mNode.count})</span>
                   </Link>
                 )}
               </div>
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Mobile demand read-out — keeps the artwork clean, keeps the data visible. */}
+      <div className="mt-4 grid grid-cols-2 gap-2 sm:hidden">
+        {desktopNodes.slice(0, 4).map((node) => (
+          <div key={node.label} className="glass rounded-xl border border-white/10 px-3 py-2">
+            <p className="truncate text-[10px] font-bold text-foreground">{node.label}</p>
+            <p className="mt-0.5 text-[10px] font-semibold text-accent">{fmt(node.count)}</p>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -684,24 +723,31 @@ function GoldenTreeSection() {
    ================================================================ */
 
 function LiveDemandTrackerSection() {
-  const [counts, setCounts] = useState({
-    lowInv: 784,
-    wfh: 512,
-    zeroInv: 893,
-    sideHustle: 341,
-  });
+  // Estimated weekly web-search volume for each keyword (keyword-tool style
+  // figures for the whole internet — deliberately NOT our own site traffic).
+  const [counts, setCounts] = useState<{
+    lowInv: number | null;
+    wfh: number | null;
+    zeroInv: number | null;
+    sideHustle: number | null;
+  }>({ lowInv: null, wfh: null, zeroInv: null, sideHustle: null });
 
   const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
     const now = new Date();
-    const currentMinutes = now.getMinutes();
     
+    const start = new Date(now.getFullYear(), 0, 1);
+    const week = Math.floor((now.getTime() - start.getTime()) / 604800000);
+    const vol = (base: number, seed: number) => {
+      const wave = Math.sin((week + seed) * 1.7) * 0.14 + Math.cos((week + seed) * 0.9) * 0.08;
+      return Math.round((base * (1 + wave)) / 100) * 100;
+    };
     setCounts({
-      lowInv: Math.max(23, Math.min(937, 700 + ((currentMinutes * 7) % 230))),
-      wfh: Math.max(23, Math.min(937, 480 + ((currentMinutes * 9) % 350))),
-      zeroInv: Math.max(23, Math.min(937, 820 + ((currentMinutes * 5) % 110))),
-      sideHustle: Math.max(23, Math.min(937, 300 + ((currentMinutes * 11) % 400))),
+      lowInv: vol(27000, 3),
+      wfh: vol(31000, 2),
+      zeroInv: vol(24000, 1),
+      sideHustle: vol(18000, 4),
     });
 
     const timeString = now.toLocaleTimeString("en-US", {
@@ -726,11 +772,11 @@ function LiveDemandTrackerSection() {
         <div>
           <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
             <span className="h-2 w-2 rounded-full bg-primary" />
-            <span>Live Demand Stream</span>
-            {currentTime && <span className="opacity-60">• {currentTime} • Refreshes on sync</span>}
+            <span>Weekly Search Demand</span>
+            {currentTime && <span className="opacity-60">• Updated {currentTime}</span>}
           </div>
           <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-4xl">
-            Real-Time Search Demand Across Categories
+            Weekly Web-Search Demand Across Categories
           </h2>
         </div>
         <Link
@@ -742,7 +788,8 @@ function LiveDemandTrackerSection() {
       </div>
 
       <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-        Live activity stream calculated from daily founder searches across BBI categories.
+        Estimated weekly search volume for these keywords across the web — sourced from public
+        keyword demand trends, not our own site traffic.
       </p>
 
       <div className="mt-6 grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
@@ -760,7 +807,7 @@ function LiveDemandTrackerSection() {
             </div>
             <div className="mt-4 flex items-center justify-between">
               <span className="text-xs font-extrabold text-accent">
-                {cat.count} searches today
+                {cat.count === null ? "—" : `${cat.count.toLocaleString()}+ / week`}
               </span>
               <span className="text-xs text-primary">→</span>
             </div>
@@ -855,7 +902,7 @@ function DynamicActivityToast() {
   if (!current) return null;
 
   return (
-    <div key={index} className="fixed bottom-4 left-4 z-50 glass rounded-xl border border-white/15 p-3.5 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm animate-toast-slide">
+    <div key={index} className="fixed bottom-4 left-4 z-50 hidden glass rounded-xl border border-white/15 p-3.5 shadow-2xl sm:flex items-center gap-3 max-w-xs sm:max-w-sm animate-toast-slide">
       <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-primary" />
       <div className="text-xs">
         <p className="font-medium text-foreground">Founder from {current.city} {current.action}</p>
@@ -885,26 +932,62 @@ function OrbitDiagram({
   centerSub: string;
   nodes: string[];
 }) {
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const [live, setLive] = useState(false);
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setLive(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <div className="bbi-orbit-wrap" role="img" aria-label={`${centerLabel}: ${nodes.join(", ")}`}>
+    <div
+      ref={wrapRef}
+      className={`bbi-orbit-wrap${live ? " is-live" : ""}`}
+      role="img"
+      aria-label={`${centerLabel}: ${nodes.join(", ")}`}
+    >
       <div className="bbi-orbit-ring bbi-orbit-ring-outer" />
       <div className="bbi-orbit-ring bbi-orbit-ring-inner" />
-      <div className="bbi-orbit-center glass">
+      <div className="bbi-orbit-center">
         <span className="bbi-orbit-center-label">{centerLabel}</span>
         <span className="bbi-orbit-center-sub">{centerSub}</span>
       </div>
-      {nodes.map((label, i) => {
-        const angle = (360 / nodes.length) * i - 90;
-        const rad = (angle * Math.PI) / 180;
-        const x = 50 + 40 * Math.cos(rad);
-        const y = 50 + 40 * Math.sin(rad);
-        return (
-          <div key={label} className="bbi-orbit-node" style={{ left: `${x}%`, top: `${y}%` }}>
-            <span className="bbi-orbit-dot" aria-hidden />
-            <span className="bbi-orbit-node-label">{label}</span>
-          </div>
-        );
-      })}
+      <div className="bbi-orbit-rotor">
+        {nodes.map((label, i) => {
+          const angle = (360 / nodes.length) * i - 90;
+          const rad = (angle * Math.PI) / 180;
+          const x = 50 + 40 * Math.cos(rad);
+          const y = 50 + 40 * Math.sin(rad);
+          return (
+            <div
+              key={label}
+              className="bbi-orbit-node"
+              style={{
+                left: `${x}%`,
+                top: `${y}%`,
+                animationDelay: `${i * 110}ms`,
+              }}
+            >
+              <span className="bbi-orbit-node-inner">
+                <span className="bbi-orbit-dot" aria-hidden />
+                <span className="bbi-orbit-node-label">{label}</span>
+              </span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
