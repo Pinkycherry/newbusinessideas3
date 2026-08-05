@@ -810,6 +810,7 @@ function DynamicActivityToast() {
   if (!visible) return null;
 
   const current = activities[index];
+  if (!current) return null;
 
   return (
     <div key={index} className="fixed bottom-4 left-4 z-50 glass rounded-xl border border-white/15 p-3.5 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm animate-toast-slide">
