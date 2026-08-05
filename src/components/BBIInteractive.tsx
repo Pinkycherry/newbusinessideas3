@@ -209,7 +209,7 @@ export function LiveActivityToast() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 z-50 glass rounded-xl border border-white/15 p-3.5 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm animate-bbi-toast">
+    <div className="fixed bottom-4 left-4 z-50 hidden max-w-sm items-center gap-3 rounded-xl border border-border p-3.5 shadow-xl sm:flex glass animate-bbi-toast">
       <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-primary shadow-[0_0_8px_color-mix(in_oklab,var(--primary)_55%,transparent)]" />
       <div className="text-xs">
         <p className="font-medium text-foreground">Founder from New York unlocked Lifetime Access</p>
