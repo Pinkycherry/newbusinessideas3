@@ -620,7 +620,7 @@ function GoldenTreeSection() {
                 ) : (
                   <Link
                     to="/category/$categorySlug"
-                    params={{ categorySlug: mNode.slug }}
+                    params={{ categorySlug: mNode.slug ?? "" }}
                     className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold shadow-xl"
                   >
                     <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
