@@ -57,10 +57,10 @@
 :root {
   --radius: 1.25rem;
   /* DARK OBSIDIAN CANVAS */
-  --background: oklch(0.18 0.008 274);
+  --background: #050508;
   --foreground: #ffffff;
-  /* 3D Liquid Glass Panel */
-  --card: rgba(255, 255, 255, 0.05);
+  /* Image 1 Liquid Glass Panel */
+  --card: rgba(255, 255, 255, 0.06);
   --card-foreground: #ffffff;
   --popover: #0a0a0d;
   --popover-foreground: #ffffff;
@@ -75,14 +75,14 @@
   --accent-foreground: oklch(0.2 0.02 60);
   --destructive: oklch(0.63 0.21 25);
   --destructive-foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.18);
+  --border: rgba(255, 255, 255, 0.2);
   --input: rgba(255, 255, 255, 0.18);
   --ring: oklch(0.687 0.161 51.5);
   --ember: oklch(0.723 0.161 56);
   --amber-glow: oklch(0.805 0.135 65);
   --warm: oklch(0.735 0.02 71);
-  --glass-border: rgba(255, 255, 255, 0.22);
-  --sidebar: #060608;
+  --glass-border: rgba(255, 255, 255, 0.24);
+  --sidebar: #050508;
   --sidebar-foreground: #ffffff;
   --sidebar-primary: oklch(0.687 0.161 51.5);
   --sidebar-primary-foreground: oklch(0.18 0.02 60);
@@ -93,7 +93,7 @@
 }
 
 .dark {
-  --background: oklch(0.18 0.008 274);
+  --background: #050508;
 }
 
 @layer base {
@@ -101,52 +101,85 @@
     border-color: var(--color-border);
   }
 
-  /* AMBIENT BACKGROUND CANVAS — TWIN RINGS PRESERVED & GLOWING */
+  /* DARK CANVAS WITH TWIN RINGS PRESERVED */
   body {
-    background-color: #060608 !important;
+    background-color: #050508 !important;
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    background-image:
-      radial-gradient(38rem 28rem at 75% 15%, oklch(0.687 0.161 51.5 / 22%), transparent 70%),
-      radial-gradient(34rem 24rem at 25% 45%, oklch(0.805 0.135 65 / 18%), transparent 65%),
-      linear-gradient(180deg, #040406 0%, #0a0a0e 100%);
-    background-attachment: fixed;
+    position: relative;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4 {
     font-family: var(--font-display);
   }
 
-  /* PREVENT STICKY NAVBAR FROM OVERLAPPING SECTION HEADINGS */
+  /* PREVENT STICKY NAVBAR OVERLAP ON DESKTOP */
   section, [id] {
     scroll-margin-top: 6.5rem !important;
   }
 }
 
-/* TWIN RINGS (FOUNDER & HIS WIFE) — PRESERVED & VISIBLE */
-.orb,
-[class*="float-orb"] {
-  display: block !important;
-  opacity: 0.85 !important;
-  visibility: visible !important;
+/* ================================================================
+   DYNAMIC TWIN RINGS ANIMATION (YOU & YOUR WIFE) — KISSING DANCE
+   ================================================================ */
+
+.bbi-twin-ring {
+  position: fixed;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(40px);
+  opacity: 0.45;
+  mix-blend-mode: screen;
+}
+
+.bbi-twin-ring.ring-1 {
+  width: clamp(22rem, 45vw, 38rem);
+  height: clamp(22rem, 45vw, 38rem);
+  top: 10%;
+  left: 15%;
+  background: radial-gradient(circle, oklch(0.805 0.135 65 / 40%) 0%, oklch(0.687 0.161 51.5 / 15%) 60%, transparent 100%);
+  animation: bbi-ring-dance-1 22s ease-in-out infinite alternate;
+}
+
+.bbi-twin-ring.ring-2 {
+  width: clamp(20rem, 40vw, 34rem);
+  height: clamp(20rem, 40vw, 34rem);
+  top: 25%;
+  right: 15%;
+  background: radial-gradient(circle, oklch(0.723 0.161 56 / 35%) 0%, oklch(0.805 0.135 65 / 10%) 60%, transparent 100%);
+  animation: bbi-ring-dance-2 26s ease-in-out infinite alternate;
+}
+
+@keyframes bbi-ring-dance-1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(120px, 80px) scale(1.1); } /* Moves toward ring-2 (kissing) */
+  100% { transform: translate(-40px, 140px) scale(0.95); }
+}
+
+@keyframes bbi-ring-dance-2 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-100px, -60px) scale(1.08); } /* Moves toward ring-1 (kissing) */
+  100% { transform: translate(60px, -120px) scale(0.92); }
 }
 
 /* ================================================================
-   DEFAULT 3D LIQUID-GLASS UTILITIES (ACTIVE BEFORE HOVER)
+   IMAGE 1: 3D LIQUID GLASSMORPHISM DASHBOARD UI (GLOBAL PANELS)
    ================================================================ */
 
 @utility glass {
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.1) 0%,
     rgba(255, 255, 255, 0.02) 100%
   ) !important;
   backdrop-filter: blur(28px) saturate(190%) !important;
   border: 1px solid rgba(255, 255, 255, 0.22) !important;
   box-shadow:
-    0 16px 45px -12px rgba(0, 0, 0, 0.85),
-    0 0 20px -4px rgba(240, 140, 43, 0.15),
-    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.45),
+    0 20px 50px -12px rgba(0, 0, 0, 0.85),
+    0 0 24px -4px rgba(240, 140, 43, 0.15),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.5),
     inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.6) !important;
 }
 
@@ -154,11 +187,11 @@
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
   &:hover {
     transform: translateY(-5px) scale(1.01) !important;
-    border-color: rgba(255, 170, 77, 0.75) !important;
+    border-color: rgba(255, 170, 77, 0.8) !important;
     box-shadow:
-      0 24px 60px -10px rgba(240, 140, 43, 0.4),
-      0 0 30px 2px rgba(255, 170, 77, 0.25),
-      inset 0 2px 3px 0 rgba(255, 255, 255, 0.7),
+      0 26px 65px -10px rgba(240, 140, 43, 0.4),
+      0 0 35px 2px rgba(255, 170, 77, 0.28),
+      inset 0 2px 3px 0 rgba(255, 255, 255, 0.75),
       inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.7) !important;
   }
 }
@@ -166,10 +199,45 @@
 @utility glass-nav {
   position: relative;
   z-index: 50;
-  background: rgba(4, 4, 6, 0.92) !important;
+  background: rgba(5, 5, 8, 0.92) !important;
   backdrop-filter: blur(24px) saturate(180%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16) !important;
   box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.95) !important;
+}
+
+/* ================================================================
+   IMAGE 2: SOFT NEUMORPHIC GLASS BUTTONS (BROWSE & CATEGORIES)
+   ================================================================ */
+
+.glass-pill,
+a[href*="/category/"],
+a[href*="/search"] {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)) !important;
+  backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow:
+    0 8px 20px -4px rgba(0, 0, 0, 0.6),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.5) !important;
+  transition: all 0.25s ease !important;
+}
+
+.glass-pill:hover,
+a[href*="/category/"]:hover,
+a[href*="/search"]:hover {
+  transform: translateY(-2px) !important;
+  border-color: rgba(255, 170, 77, 0.7) !important;
+  box-shadow:
+    0 12px 28px -4px rgba(240, 140, 43, 0.35),
+    inset 0 2px 3px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+/* SOFT FEATHERED EDGES ON GOLDEN TREE CONTAINER */
+.tree-asset-container img,
+[alt*="Golden Tree"] {
+  mask-image: radial-gradient(ellipse at center, black 68%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 68%, transparent 100%);
 }
 
 @utility sheen {
@@ -188,23 +256,7 @@
   }
 }
 
-/* 3D LIQUID CAPSULE BUTTONS & LEAF BADGES (DEFAULT STATE) */
-.glass-pill,
-[class*="rounded-full"] {
-  box-shadow:
-    0 4px 14px -2px rgba(0, 0, 0, 0.6),
-    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5),
-    inset 0 -1px 1.5px 0 rgba(0, 0, 0, 0.5);
-}
-
-/* SOFT FEATHERED EDGES ON GOLDEN TREE CONTAINER */
-.tree-asset-container img,
-[alt*="Golden Tree"] {
-  mask-image: radial-gradient(ellipse at center, black 68%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 68%, transparent 100%);
-}
-
-/* --- STANDARDIZED CAPSULE & PILL RADII --- */
+/* --- STANDARDIZED CAPSULE RADII --- */
 @utility blob-1 { border-radius: 1.75rem; }
 @utility blob-2 { border-radius: 1.75rem; }
 @utility blob-3 { border-radius: 1.75rem; }
@@ -235,24 +287,6 @@
 @utility bbi-shape-stat-1 { border-radius: 1.25rem; }
 @utility bbi-shape-stat-2 { border-radius: 1.25rem; }
 @utility bbi-shape-stat-3 { border-radius: 1.25rem; }
-
-@utility orb {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(2px);
-  background: radial-gradient(circle at 32% 28%, oklch(0.9 0.09 72), oklch(0.723 0.161 56) 42%, oklch(0.56 0.15 44) 100%);
-  animation: float-orb 12s ease-in-out infinite;
-}
-
-@keyframes float-orb {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-26px) scale(1.03); }
-}
-
-@keyframes glow-pulse {
-  0%, 100% { opacity: 0.55; }
-  50% { opacity: 1; }
-}
 
 /* WordPress article content */
 .wp-prose {
@@ -373,13 +407,6 @@
   justify-content: center;
   text-align: center;
   padding: 0.4rem;
-  background: radial-gradient(circle at 32% 28%, oklch(0.805 0.135 65 / 95%), oklch(0.687 0.161 51.5 / 95%) 60%, oklch(0.56 0.15 44 / 95%) 100%);
-  animation: bbi-orbit-pulse 5s ease-in-out infinite;
-}
-
-@keyframes bbi-orbit-pulse {
-  0%, 100% { box-shadow: 0 0 24px oklch(0.723 0.161 56 / 35%), inset 0 2px 6px rgba(255, 255, 255, 0.35); }
-  50% { box-shadow: 0 0 38px oklch(0.723 0.161 56 / 55%), inset 0 2px 6px rgba(255, 255, 255, 0.35); }
 }
 
 .bbi-orbit-center-label {
