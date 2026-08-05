@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
@@ -12,6 +12,38 @@ import { getCatalog, getFeaturedIdeas } from "@/lib/ideas.functions";
 const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
 
 /** Split live categories evenly across 4 marquee rows (works for 9 or 100+). */
+/** Smooth scroll-reveal wrapper — fade + rise + de-blur, once, on enter. */
+function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setShown(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`bbi-reveal${shown ? " is-visible" : ""}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
+
 function tickerRows<T>(categories: T[], rowCount = 4): T[][] {
   const rows: T[][] = Array.from({ length: rowCount }, () => []);
   categories.forEach((c, i) => rows[i % rowCount]!.push(c));
