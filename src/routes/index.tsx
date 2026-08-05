@@ -891,26 +891,60 @@ function OrbitDiagram({
   centerSub: string;
   nodes: string[];
 }) {
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const [live, setLive] = useState(false);
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setLive(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <div className="bbi-orbit-wrap" role="img" aria-label={`${centerLabel}: ${nodes.join(", ")}`}>
+    <div
+      ref={wrapRef}
+      className={`bbi-orbit-wrap${live ? " is-live" : ""}`}
+      role="img"
+      aria-label={`${centerLabel}: ${nodes.join(", ")}`}
+    >
       <div className="bbi-orbit-ring bbi-orbit-ring-outer" />
       <div className="bbi-orbit-ring bbi-orbit-ring-inner" />
       <div className="bbi-orbit-center glass">
         <span className="bbi-orbit-center-label">{centerLabel}</span>
         <span className="bbi-orbit-center-sub">{centerSub}</span>
       </div>
-      {nodes.map((label, i) => {
-        const angle = (360 / nodes.length) * i - 90;
-        const rad = (angle * Math.PI) / 180;
-        const x = 50 + 40 * Math.cos(rad);
-        const y = 50 + 40 * Math.sin(rad);
-        return (
-          <div key={label} className="bbi-orbit-node" style={{ left: `${x}%`, top: `${y}%` }}>
-            <span className="bbi-orbit-dot" aria-hidden />
-            <span className="bbi-orbit-node-label">{label}</span>
-          </div>
-        );
-      })}
+      <div className="bbi-orbit-rotor">
+        {nodes.map((label, i) => {
+          const angle = (360 / nodes.length) * i - 90;
+          const rad = (angle * Math.PI) / 180;
+          const x = 50 + 40 * Math.cos(rad);
+          const y = 50 + 40 * Math.sin(rad);
+          return (
+            <div
+              key={label}
+              className="bbi-orbit-node"
+              style={{
+                left: `${x}%`,
+                top: `${y}%`,
+                animationDelay: `${i * 110}ms, ${i * -110}ms`,
+              }}
+            >
+              <span className="bbi-orbit-dot" aria-hidden />
+              <span className="bbi-orbit-node-label">{label}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
