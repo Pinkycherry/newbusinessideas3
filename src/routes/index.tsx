@@ -736,7 +736,6 @@ function LiveDemandTrackerSection() {
 
   useEffect(() => {
     const now = new Date();
-    const currentMinutes = now.getMinutes();
     
     const start = new Date(now.getFullYear(), 0, 1);
     const week = Math.floor((now.getTime() - start.getTime()) / 604800000);
