@@ -1361,23 +1361,25 @@ function KeywordMosaic() {
       </h2>
       <div className="mt-8 grid gap-6 lg:grid-cols-3">
         {BBI_KEYWORD_GROUPS.map((group) => (
-          <div key={group.heading} className="glass bbi-shape-card-a p-6">
+          <Reveal key={group.heading}>
+          <div className="glass glass-hover bbi-shape-card-a h-full p-6">
             <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
               {group.heading}
             </h3>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap content-start gap-2">
               {group.terms.map((term) => (
                 <Link
                   key={term.label}
                   to="/search"
                   search={{ q: term.query }}
-                  className="glass-pill rounded-full px-3.5 py-1.5 text-xs font-medium transition-all duration-300"
+                  className="glass-pill grow whitespace-nowrap rounded-full px-3.5 py-1.5 text-center text-xs font-medium"
                 >
                   {term.label}
                 </Link>
               ))}
             </div>
           </div>
+          </Reveal>
         ))}
       </div>
     </section>
