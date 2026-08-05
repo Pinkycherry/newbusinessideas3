@@ -56,44 +56,44 @@
 
 :root {
   --radius: 1.25rem;
-  /* MIDNIGHT NAVY BLUE BRAND CANVAS (#0a0e1a) */
-  --background: #0a0e1a;
+  /* DARK OBSIDIAN CANVAS */
+  --background: oklch(0.18 0.008 274);
   --foreground: #ffffff;
-  /* Liquid Glass Panel */
-  --card: rgba(255, 255, 255, 0.06);
+  /* 3D Liquid Glass Panel */
+  --card: rgba(255, 255, 255, 0.05);
   --card-foreground: #ffffff;
-  --popover: #0c1222;
+  --popover: #0a0a0d;
   --popover-foreground: #ffffff;
-  /* BBI Accent & Electric Blue Highlights */
+  /* BBI Accent Colors */
   --primary: oklch(0.687 0.161 51.5);
-  --primary-foreground: #ffffff;
-  --secondary: #0f172a;
+  --primary-foreground: oklch(0.18 0.02 60);
+  --secondary: #121216;
   --secondary-foreground: #ffffff;
-  --muted: rgba(255, 255, 255, 0.08);
-  --muted-foreground: #cbd5e1;
+  --muted: rgba(255, 255, 255, 0.06);
+  --muted-foreground: oklch(0.85 0.01 80);
   --accent: oklch(0.805 0.135 65);
-  --accent-foreground: #000000;
+  --accent-foreground: oklch(0.2 0.02 60);
   --destructive: oklch(0.63 0.21 25);
   --destructive-foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.22);
-  --input: rgba(255, 255, 255, 0.2);
+  --border: rgba(255, 255, 255, 0.18);
+  --input: rgba(255, 255, 255, 0.18);
   --ring: oklch(0.687 0.161 51.5);
   --ember: oklch(0.723 0.161 56);
   --amber-glow: oklch(0.805 0.135 65);
   --warm: oklch(0.735 0.02 71);
-  --glass-border: rgba(255, 255, 255, 0.28);
-  --sidebar: #0a0e1a;
+  --glass-border: rgba(255, 255, 255, 0.22);
+  --sidebar: #060608;
   --sidebar-foreground: #ffffff;
   --sidebar-primary: oklch(0.687 0.161 51.5);
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: rgba(255, 255, 255, 0.1);
+  --sidebar-primary-foreground: oklch(0.18 0.02 60);
+  --sidebar-accent: rgba(255, 255, 255, 0.08);
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: rgba(255, 255, 255, 0.2);
+  --sidebar-border: rgba(255, 255, 255, 0.18);
   --sidebar-ring: oklch(0.687 0.161 51.5);
 }
 
 .dark {
-  --background: #0a0e1a;
+  --background: oklch(0.18 0.008 274);
 }
 
 @layer base {
@@ -101,17 +101,15 @@
     border-color: var(--color-border);
   }
 
-  /* MIDNIGHT NAVY BLUE CANVAS WITH AMBIENT SHAYS */
+  /* AMBIENT BACKGROUND CANVAS — TWIN RINGS PRESERVED & GLOWING */
   body {
-    background-color: #0a0e1a !important;
+    background-color: #060608 !important;
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    position: relative;
-    overflow-x: hidden;
     background-image:
-      radial-gradient(50rem 35rem at 80% -10%, rgba(96, 165, 250, 0.15), transparent 70%),
-      radial-gradient(45rem 30rem at 15% 30%, rgba(240, 140, 43, 0.12), transparent 65%),
-      linear-gradient(180deg, #0a0e1a 0%, #0d1322 100%);
+      radial-gradient(38rem 28rem at 75% 15%, oklch(0.687 0.161 51.5 / 22%), transparent 70%),
+      radial-gradient(34rem 24rem at 25% 45%, oklch(0.805 0.135 65 / 18%), transparent 65%),
+      linear-gradient(180deg, #040406 0%, #0a0a0e 100%);
     background-attachment: fixed;
   }
 
@@ -119,258 +117,59 @@
     font-family: var(--font-display);
   }
 
-  /* PREVENT STICKY NAVBAR OVERLAP */
+  /* PREVENT STICKY NAVBAR FROM OVERLAPPING SECTION HEADINGS */
   section, [id] {
     scroll-margin-top: 6.5rem !important;
   }
 }
 
-/* ================================================================
-   DYNAMIC TWIN RINGS (YOU & YOUR WIFE) — COLOR SHIFTING & KISSING
-   ================================================================ */
-
-.bbi-twin-ring {
-  position: fixed;
-  border-radius: 9999px;
-  pointer-events: none;
-  z-index: 0;
-  filter: blur(50px);
-  opacity: 0.6;
-  mix-blend-mode: screen;
-}
-
-.bbi-twin-ring.ring-1 {
-  width: clamp(22rem, 45vw, 40rem);
-  height: clamp(22rem, 45vw, 40rem);
-  top: 10%;
-  left: 10%;
-  border: 2px stroke rgba(147, 197, 253, 0.4);
-  background: radial-gradient(circle, rgba(147, 197, 253, 0.35) 0%, rgba(240, 140, 43, 0.15) 60%, transparent 100%);
-  animation: bbi-twin-rings-kiss-1 20s ease-in-out infinite alternate;
-}
-
-.bbi-twin-ring.ring-2 {
-  width: clamp(20rem, 40vw, 36rem);
-  height: clamp(20rem, 40vw, 36rem);
-  top: 22%;
-  right: 12%;
-  border: 2px stroke rgba(255, 170, 77, 0.4);
-  background: radial-gradient(circle, rgba(255, 170, 77, 0.35) 0%, rgba(96, 165, 250, 0.15) 60%, transparent 100%);
-  animation: bbi-twin-rings-kiss-2 24s ease-in-out infinite alternate;
-}
-
-@keyframes bbi-twin-rings-kiss-1 {
-  0% { transform: translate(0, 0) scale(1); background-color: rgba(147, 197, 253, 0.35); }
-  50% { transform: translate(140px, 90px) scale(1.12); background-color: rgba(240, 140, 43, 0.35); } /* Kissing Overlap */
-  100% { transform: translate(-30px, 150px) scale(0.95); background-color: rgba(192, 132, 252, 0.35); }
-}
-
-@keyframes bbi-twin-rings-kiss-2 {
-  0% { transform: translate(0, 0) scale(1); background-color: rgba(255, 170, 77, 0.35); }
-  50% { transform: translate(-120px, -70px) scale(1.1); background-color: rgba(147, 197, 253, 0.35); } /* Kissing Overlap */
-  100% { transform: translate(70px, -130px) scale(0.9); background-color: rgba(240, 140, 43, 0.35); }
+/* TWIN RINGS (FOUNDER & HIS WIFE) — PRESERVED & VISIBLE */
+.orb,
+[class*="float-orb"] {
+  display: block !important;
+  opacity: 0.85 !important;
+  visibility: visible !important;
 }
 
 /* ================================================================
-   IMAGE 1: 3D LIQUID GLASSMORPHISM DASHBOARD UI (GLOBAL PANELS)
+   DEFAULT 3D LIQUID-GLASS UTILITIES (ACTIVE BEFORE HOVER)
    ================================================================ */
 
 @utility glass {
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.12) 0%,
-    rgba(255, 255, 255, 0.03) 100%
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 100%
   ) !important;
-  backdrop-filter: blur(30px) saturate(200%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  backdrop-filter: blur(28px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
   box-shadow:
-    0 24px 60px -15px rgba(0, 0, 0, 0.9),
-    0 0 30px -5px rgba(96, 165, 250, 0.18),
-    inset 0 2px 3px 0 rgba(255, 255, 255, 0.6),
-    inset 0 -2px 3px 0 rgba(0, 0, 0, 0.7) !important;
+    0 16px 45px -12px rgba(0, 0, 0, 0.85),
+    0 0 20px -4px rgba(240, 140, 43, 0.15),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.6) !important;
 }
 
 @utility glass-hover {
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
   &:hover {
     transform: translateY(-5px) scale(1.01) !important;
-    border-color: rgba(147, 197, 253, 0.8) !important;
+    border-color: rgba(255, 170, 77, 0.75) !important;
     box-shadow:
-      0 30px 70px -10px rgba(96, 165, 250, 0.4),
-      0 0 40px 4px rgba(255, 170, 77, 0.3),
-      inset 0 2.5px 4px 0 rgba(255, 255, 255, 0.85),
-      inset 0 -2px 3px 0 rgba(0, 0, 0, 0.8) !important;
+      0 24px 60px -10px rgba(240, 140, 43, 0.4),
+      0 0 30px 2px rgba(255, 170, 77, 0.25),
+      inset 0 2px 3px 0 rgba(255, 255, 255, 0.7),
+      inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.7) !important;
   }
 }
 
 @utility glass-nav {
   position: relative;
   z-index: 50;
-  background: rgba(10, 14, 26, 0.92) !important;
+  background: rgba(4, 4, 6, 0.92) !important;
   backdrop-filter: blur(24px) saturate(180%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 14px 40px -10px rgba(0, 0, 0, 0.95) !important;
-}
-
-/* ================================================================
-   IMAGE 2: SOFT NEUMORPHIC GLASS BUTTONS (BROWSE & CATEGORIES)
-   ================================================================ */
-
-.glass-pill,
-a[href*="/category/"],
-a[href*="/search"],
-.wp-prose a {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05)) !important;
-  backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  box-shadow:
-    0 10px 24px -4px rgba(0, 0, 0, 0.7),
-    inset 0 2px 3px 0 rgba(255, 255, 255, 0.55),
-    inset 0 -2px 3px 0 rgba(0, 0, 0, 0.6) !important;
-  transition: all 0.28s ease !important;
-}
-
-.glass-pill:hover,
-a[href*="/category/"]:hover,
-a[href*="/search"]:hover {
-  transform: translateY(-2px) scale(1.02) !important;
-  border-color: rgba(147, 197, 253, 0.85) !important;
-  box-shadow:
-    0 14px 32px -4px rgba(96, 165, 250, 0.45),
-    inset 0 2.5px 3.5px 0 rgba(255, 255, 255, 0.75),
-    inset 0 -2px 3px 0 rgba(0, 0, 0, 0.6) !important;
-}
-
-/* ================================================================
-   DYNAMIC DYNAMIC MOVING SHADOWS BEHIND GOLDEN TREE
-   ================================================================ */
-
-.bbi-tree-shadow-box {
-  position: relative;
-}
-
-.bbi-tree-shadow-box::before {
-  content: "";
-  position: absolute;
-  inset: 5%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(96, 165, 250, 0.25) 0%, rgba(240, 140, 43, 0.2) 50%, transparent 80%);
-  filter: blur(60px);
-  z-index: 0;
-  animation: bbi-tree-shadow-drift 12s ease-in-out infinite alternate;
-}
-
-@keyframes bbi-tree-shadow-drift {
-  0% { transform: scale(0.9) translate(-20px, -10px); opacity: 0.5; }
-  50% { transform: scale(1.1) translate(20px, 15px); opacity: 0.8; }
-  100% { transform: scale(1.02) translate(-10px, 20px); opacity: 0.6; }
-}
-
-/* ================================================================
-   ORBIT DIAGRAM ("BBI FREE LIBRARY") OVERHAUL — NO SOLID BALL
-   ================================================================ */
-
-.bbi-orbit-wrap {
-  position: relative;
-  width: clamp(16rem, 65vw, 24rem) !important; /* Larger size */
-  aspect-ratio: 1 / 1;
-  margin: 1.5rem auto;
-}
-
-.bbi-orbit-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  border: 1.5px dashed rgba(147, 197, 253, 0.6) !important; /* Bright Periwinkle Ring */
-  box-shadow: 0 0 20px rgba(96, 165, 250, 0.3);
-}
-
-.bbi-orbit-ring-inner {
-  inset: 18%;
-  border-color: rgba(255, 170, 77, 0.7) !important; /* Bright Amber Ring */
-  animation: bbi-orbit-spin 34s linear infinite;
-}
-
-.bbi-orbit-ring-outer {
-  animation: bbi-orbit-spin-rev 58s linear infinite;
-}
-
-@keyframes bbi-orbit-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes bbi-orbit-spin-rev {
-  from { transform: rotate(360deg); }
-  to { transform: rotate(0deg); }
-}
-
-/* CENTER NODE — SHEER TRANSPARENT LIQUID GLASS (NO DOMINATING SOLID BALL) */
-.bbi-orbit-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 42%;
-  aspect-ratio: 1 / 1;
-  transform: translate(-50%, -50%);
-  border-radius: 9999px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0.5rem;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.03)) !important;
-  backdrop-filter: blur(20px) !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.4) !important;
-  box-shadow:
-    0 0 30px rgba(96, 165, 250, 0.4),
-    inset 0 2px 4px rgba(255, 255, 255, 0.6) !important;
-}
-
-.bbi-orbit-center-label {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(0.75rem, 2.5vw, 1rem);
-  color: #ffffff !important;
-  line-height: 1.1;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-.bbi-orbit-center-sub {
-  margin-top: 0.15rem;
-  font-size: clamp(0.55rem, 1.8vw, 0.68rem);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.85) !important;
-}
-
-.bbi-orbit-node {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  width: max-content;
-  max-width: 5.5rem;
-  text-align: center;
-}
-
-.bbi-orbit-dot {
-  width: 0.6rem;
-  height: 0.6rem;
-  border-radius: 9999px;
-  background: #ffffff;
-  box-shadow: 0 0 12px rgba(147, 197, 253, 0.9);
-}
-
-.bbi-orbit-node-label {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: #ffffff !important;
-  line-height: 1.15;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.95) !important;
 }
 
 @utility sheen {
@@ -389,7 +188,23 @@ a[href*="/search"]:hover {
   }
 }
 
-/* --- STANDARDIZED CAPSULE RADII --- */
+/* 3D LIQUID CAPSULE BUTTONS & LEAF BADGES (DEFAULT STATE) */
+.glass-pill,
+[class*="rounded-full"] {
+  box-shadow:
+    0 4px 14px -2px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 1.5px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* SOFT FEATHERED EDGES ON GOLDEN TREE CONTAINER */
+.tree-asset-container img,
+[alt*="Golden Tree"] {
+  mask-image: radial-gradient(ellipse at center, black 68%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 68%, transparent 100%);
+}
+
+/* --- STANDARDIZED CAPSULE & PILL RADII --- */
 @utility blob-1 { border-radius: 1.75rem; }
 @utility blob-2 { border-radius: 1.75rem; }
 @utility blob-3 { border-radius: 1.75rem; }
@@ -420,6 +235,24 @@ a[href*="/search"]:hover {
 @utility bbi-shape-stat-1 { border-radius: 1.25rem; }
 @utility bbi-shape-stat-2 { border-radius: 1.25rem; }
 @utility bbi-shape-stat-3 { border-radius: 1.25rem; }
+
+@utility orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(2px);
+  background: radial-gradient(circle at 32% 28%, oklch(0.9 0.09 72), oklch(0.723 0.161 56) 42%, oklch(0.56 0.15 44) 100%);
+  animation: float-orb 12s ease-in-out infinite;
+}
+
+@keyframes float-orb {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-26px) scale(1.03); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
 
 /* WordPress article content */
 .wp-prose {
@@ -490,6 +323,107 @@ a[href*="/search"]:hover {
 .wp-prose hr { border-color: var(--border); margin: 2.25rem 0; }
 .wp-prose nav ul { list-style: none; padding-left: 0; }
 .wp-prose nav li { margin: 0.3rem 0; }
+
+/* --- RESPONSIVE ORBIT DIAGRAM --- */
+.bbi-orbit-wrap {
+  position: relative;
+  width: clamp(11rem, 50vw, 17rem);
+  aspect-ratio: 1 / 1;
+  margin: 1rem auto;
+}
+
+.bbi-orbit-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1px dashed oklch(0.805 0.135 65 / 30%);
+}
+
+.bbi-orbit-ring-inner {
+  inset: 15%;
+  border-color: oklch(0.687 0.161 51.5 / 40%);
+  animation: bbi-orbit-spin 34s linear infinite;
+}
+
+.bbi-orbit-ring-outer {
+  animation: bbi-orbit-spin-rev 58s linear infinite;
+}
+
+@keyframes bbi-orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bbi-orbit-spin-rev {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.bbi-orbit-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.4rem;
+  background: radial-gradient(circle at 32% 28%, oklch(0.805 0.135 65 / 95%), oklch(0.687 0.161 51.5 / 95%) 60%, oklch(0.56 0.15 44 / 95%) 100%);
+  animation: bbi-orbit-pulse 5s ease-in-out infinite;
+}
+
+@keyframes bbi-orbit-pulse {
+  0%, 100% { box-shadow: 0 0 24px oklch(0.723 0.161 56 / 35%), inset 0 2px 6px rgba(255, 255, 255, 0.35); }
+  50% { box-shadow: 0 0 38px oklch(0.723 0.161 56 / 55%), inset 0 2px 6px rgba(255, 255, 255, 0.35); }
+}
+
+.bbi-orbit-center-label {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(0.6rem, 2vw, 0.8rem);
+  color: oklch(0.18 0.02 60);
+  line-height: 1.1;
+}
+
+.bbi-orbit-center-sub {
+  margin-top: 0.1rem;
+  font-size: clamp(0.48rem, 1.4vw, 0.58rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: oklch(0.18 0.02 60 / 75%);
+}
+
+.bbi-orbit-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: max-content;
+  max-width: 4.5rem;
+  text-align: center;
+}
+
+.bbi-orbit-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--accent);
+  box-shadow: 0 0 8px oklch(0.805 0.135 65 / 70%);
+}
+
+.bbi-orbit-node-label {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--foreground);
+  line-height: 1.15;
+}
 
 /* --- TOAST SLIDE ANIMATION --- */
 @keyframes bbi-toast-slide {
