@@ -604,7 +604,8 @@ function GoldenTreeSection() {
           The Golden Tree of Business Growth
         </h2>
         <p className="mt-3 text-sm text-muted-foreground sm:text-base leading-relaxed">
-          Tap or hover any leaf node to inspect live demand signals and enter category blueprints.
+          Tap or hover any leaf node to see estimated weekly web-search demand for that keyword,
+          then open the category blueprints behind it.
         </p>
       </div>
 
@@ -652,7 +653,7 @@ function GoldenTreeSection() {
               )}
 
               <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 opacity-0 group-hover/node:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap glass rounded-md px-2.5 py-1 text-[10px] font-semibold shadow-xl">
-                {node.count} searches today
+                {fmt(node.count)}
               </div>
             </div>
           ))}
