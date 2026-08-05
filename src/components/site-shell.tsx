@@ -194,7 +194,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 md:hidden">
       <div className="absolute inset-0 bg-black/60" onClick={onClose} aria-hidden />
-      <div className="glass-nav absolute right-0 top-0 flex h-full w-[86vw] max-w-sm flex-col overflow-y-auto p-5">
+      <div className="glass-nav absolute right-0 top-0 flex h-full w-[min(22rem,92vw)] flex-col overflow-y-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">Menu</span>
           <button
@@ -207,13 +207,13 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
           </button>
         </div>
 
-        <nav className="mt-6 grid gap-1 text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+        <nav className="mt-5 grid gap-1 text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
           {navLinks.map((link) => (
             <Link
               key={link.to}
               to={link.to}
               onClick={onClose}
-              className="rounded-xl px-3 py-3 transition-colors hover:bg-white/10 hover:text-foreground"
+              className="rounded-xl px-3 py-2.5 transition-colors hover:bg-secondary hover:text-foreground"
             >
               {link.label}
             </Link>
@@ -221,7 +221,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
           <Link
             to="/search"
             onClick={onClose}
-            className="rounded-xl px-3 py-3 transition-colors hover:bg-white/10 hover:text-foreground"
+            className="rounded-xl px-3 py-2.5 transition-colors hover:bg-secondary hover:text-foreground"
           >
             Search
           </Link>
@@ -230,7 +230,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
             type="button"
             aria-expanded={catOpen}
             onClick={() => setCatOpen((v) => !v)}
-            className="flex items-center justify-between rounded-xl px-3 py-3 text-left uppercase tracking-[0.18em] transition-colors hover:bg-white/10 hover:text-foreground"
+            className="flex items-center justify-between rounded-xl px-3 py-2.5 text-left uppercase tracking-[0.18em] transition-colors hover:bg-secondary hover:text-foreground"
           >
             Categories
             <span aria-hidden className={`transition-transform duration-300 ${catOpen ? "rotate-180" : ""}`}>
@@ -250,12 +250,9 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
                     to="/category/$categorySlug"
                     params={{ categorySlug: c.categorySlug }}
                     onClick={onClose}
-                    className="flex items-center justify-between rounded-lg px-3 py-2.5 text-xs font-semibold normal-case tracking-normal text-muted-foreground hover:bg-white/10 hover:text-foreground"
+                    className="rounded-lg px-3 py-2 text-xs font-semibold normal-case tracking-normal text-muted-foreground hover:bg-secondary hover:text-foreground"
                   >
                     {c.categoryName}
-                    <span className="text-[10px] uppercase tracking-widest text-accent">
-                      {c.ideaCount}
-                    </span>
                   </Link>
                 ))
               )}
@@ -403,20 +400,20 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
 export function Breadcrumbs({ items }: { items: { label: string; to?: string; params?: Record<string, string> }[] }) {
   return (
-    <nav className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
+    <nav aria-label="Breadcrumb" className="flex max-w-full flex-wrap items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
       {items.map((item, i) => (
-        <span key={`${item.label}-${i}`} className="flex items-center gap-2">
-          {i > 0 && <span aria-hidden>/</span>}
+        <span key={`${item.label}-${i}`} className="flex min-w-0 items-center gap-1.5">
+          {i > 0 && <span aria-hidden className="text-border">›</span>}
           {item.to ? (
             <Link
               to={item.to}
               params={item.params as never}
-              className="transition-colors hover:text-primary"
+              className="rounded-full border border-border/70 bg-secondary/55 px-2.5 py-1 transition-colors hover:border-primary/60 hover:text-foreground"
             >
               {item.label}
             </Link>
           ) : (
-            <span className="text-foreground">{item.label}</span>
+            <span className="max-w-[min(18rem,70vw)] truncate rounded-full border border-border bg-card/70 px-2.5 py-1 text-foreground">{item.label}</span>
           )}
         </span>
       ))}

@@ -228,18 +228,18 @@ function HomePage() {
                 search-style bar plus a rotating-color CTA pill, sitting
                 inline the way "Search..." and "Button" sit in the reference
                 image. Nothing else on the page changes structurally. */}
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-8 grid gap-3 sm:grid-cols-[minmax(0,24rem)_auto] sm:items-center">
               <Link
                 to="/search"
                 search={{ q: "" }}
-                className="glass flex flex-1 items-center gap-2 rounded-full px-5 py-3 text-sm text-muted-foreground sm:max-w-sm"
+                className="glass flex min-w-0 items-center gap-2 rounded-full px-4 py-2.5 text-sm text-muted-foreground"
               >
                 <span aria-hidden>⌕</span>
                 <span>Search idea blueprints…</span>
               </Link>
               <Link
                 to="/browse"
-                className="glass-pill inline-flex items-center justify-center rounded-full px-7 py-3 text-xs font-extrabold uppercase tracking-[0.18em]"
+                className="glass-pill inline-flex items-center justify-center justify-self-start rounded-full px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
               >
                 Browse the library
               </Link>
@@ -285,7 +285,7 @@ function HomePage() {
                       key={`${rowIndex}-${c.categorySlug}-${i}`}
                       to="/category/$categorySlug"
                       params={{ categorySlug: c.categorySlug }}
-                      className="glass-pill shrink-0 whitespace-nowrap rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300"
+                      className="glass-pill shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] transition-all duration-300"
                     >
                       {c.categoryName}
                     </Link>
@@ -725,7 +725,7 @@ function LiveDemandTrackerSection() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="h-2 w-2 rounded-full bg-primary" />
             <span>Live Demand Stream</span>
             {currentTime && <span className="opacity-60">• {currentTime} • Refreshes on sync</span>}
           </div>
@@ -856,7 +856,7 @@ function DynamicActivityToast() {
 
   return (
     <div key={index} className="fixed bottom-4 left-4 z-50 glass rounded-xl border border-white/15 p-3.5 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm animate-toast-slide">
-      <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0 animate-pulse" />
+      <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-primary" />
       <div className="text-xs">
         <p className="font-medium text-foreground">Founder from {current.city} {current.action}</p>
         <p className="text-[10px] text-muted-foreground">{current.time} • bestbusinessideas.net</p>
@@ -1301,13 +1301,13 @@ function FutureProofSpotlight() {
           These categories hold up regardless of what the economy does next — pulled straight from
           the live library, not a marketing list.
         </p>
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div className="mt-6 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
           {BBI_FUTURE_TERMS.map((term) => (
             <Link
               key={term.label}
               to="/search"
               search={{ q: term.query }}
-              className="glass-pill rounded-full px-4 py-2 text-xs font-medium transition-all duration-300"
+              className="glass-pill min-w-0 rounded-full px-3 py-2 text-center text-[11px] font-medium leading-snug transition-all duration-300 sm:px-4 sm:text-xs"
             >
               {term.label}
             </Link>
@@ -1369,20 +1369,20 @@ function KeywordMosaic() {
       <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
         Business ideas by industry, founder, and model
       </h2>
-      <div className="mt-8 grid gap-6 lg:grid-cols-3">
+      <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {BBI_KEYWORD_GROUPS.map((group) => (
           <Reveal key={group.heading} className="h-full">
-          <div className="glass glass-hover bbi-shape-card-a h-full p-6">
+          <div className="glass glass-hover bbi-shape-card-a h-full p-4 sm:p-6">
             <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
               {group.heading}
             </h3>
-            <div className="mt-4 flex flex-wrap content-start gap-2">
+            <div className="mt-4 grid grid-cols-2 content-start gap-2 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] lg:grid-cols-1 xl:grid-cols-2">
               {group.terms.map((term) => (
                 <Link
                   key={term.label}
                   to="/search"
                   search={{ q: term.query }}
-                  className="glass-pill grow whitespace-nowrap rounded-full px-3.5 py-1.5 text-center text-xs font-medium"
+                  className="glass-pill min-w-0 rounded-full px-2.5 py-2 text-center text-[11px] font-medium leading-tight"
                 >
                   {term.label}
                 </Link>
