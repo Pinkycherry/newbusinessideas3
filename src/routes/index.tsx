@@ -1369,7 +1369,7 @@ function KeywordMosaic() {
       </h2>
       <div className="mt-8 grid gap-6 lg:grid-cols-3">
         {BBI_KEYWORD_GROUPS.map((group) => (
-          <Reveal key={group.heading}>
+          <Reveal key={group.heading} className="h-full">
           <div className="glass glass-hover bbi-shape-card-a h-full p-6">
             <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
               {group.heading}
