@@ -56,44 +56,72 @@
 
 :root {
   --radius: 1.25rem;
-  /* DARK OBSIDIAN CANVAS */
-  --background: #050508;
-  --foreground: #ffffff;
-  /* Image 1 Liquid Glass Panel */
-  --card: rgba(255, 255, 255, 0.06);
-  --card-foreground: #ffffff;
-  --popover: #0a0a0d;
-  --popover-foreground: #ffffff;
-  /* BBI Accent Colors */
-  --primary: oklch(0.687 0.161 51.5);
-  --primary-foreground: oklch(0.18 0.02 60);
-  --secondary: #121216;
-  --secondary-foreground: #ffffff;
-  --muted: rgba(255, 255, 255, 0.06);
-  --muted-foreground: oklch(0.85 0.01 80);
-  --accent: oklch(0.805 0.135 65);
-  --accent-foreground: oklch(0.2 0.02 60);
+
+  /* ============================================================
+     BRAND RESET — MIDNIGHT DARK BLUE + WHITE
+     Old orange/amber/ember identity fully removed below.
+     ============================================================ */
+  --background: #060B1F;        /* midnight dark blue canvas, replaces #050508 */
+  --background-2: #0A1230;      /* secondary depth tone for the twin rings */
+  --foreground: #FFFFFF;        /* default text: white, everywhere */
+  --foreground-hover: #06070C;  /* hover text: black */
+
+  /* Frosted glass panel — LIGHT glass (image 1's actual material),
+     floating on the dark midnight canvas rather than dark-tinted glass. */
+  --card: rgba(255, 255, 255, 0.08);
+  --card-foreground: #FFFFFF;
+  --popover: #0A1230;
+  --popover-foreground: #FFFFFF;
+
+  /* Branding color = midnight blue. Used for hover glow / focus states,
+     NOT as a default fill anywhere — "no main color" for default states. */
+  --primary: #1B2A6B;
+  --primary-foreground: #FFFFFF;
+  --secondary: #0B1230;
+  --secondary-foreground: #FFFFFF;
+  --muted: rgba(255, 255, 255, 0.07);
+  --muted-foreground: rgba(255, 255, 255, 0.68);
+
+  /* Accent = pale periwinkle tint of the midnight brand, used only for
+     static labels/eyebrows/links — stays constant, does not rotate. */
+  --accent: #93A8F2;
+  --accent-foreground: #06070C;
+
   --destructive: oklch(0.63 0.21 25);
   --destructive-foreground: #ffffff;
   --border: rgba(255, 255, 255, 0.2);
   --input: rgba(255, 255, 255, 0.18);
-  --ring: oklch(0.687 0.161 51.5);
-  --ember: oklch(0.723 0.161 56);
-  --amber-glow: oklch(0.805 0.135 65);
-  --warm: oklch(0.735 0.02 71);
-  --glass-border: rgba(255, 255, 255, 0.24);
-  --sidebar: #050508;
+  --ring: #1B2A6B;
+
+  /* Former ember/amber-glow/warm tokens repointed into the midnight-blue
+     family so every place that reads them (gradients, orbit dots, chart
+     colors) shifts automatically — nothing orange left referencing these. */
+  --ember: #274690;
+  --amber-glow: #93A8F2;
+  --warm: #C9D3F7;
+
+  --glass-border: rgba(255, 255, 255, 0.28);
+  --sidebar: #060B1F;
   --sidebar-foreground: #ffffff;
-  --sidebar-primary: oklch(0.687 0.161 51.5);
-  --sidebar-primary-foreground: oklch(0.18 0.02 60);
+  --sidebar-primary: #1B2A6B;
+  --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: rgba(255, 255, 255, 0.08);
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: rgba(255, 255, 255, 0.18);
-  --sidebar-ring: oklch(0.687 0.161 51.5);
+  --sidebar-ring: #1B2A6B;
+
+  /* Rotating button palette — the "no single color, colors must rotate"
+     set. Soft-saturated, matching the pastel-vivid mix in your reference
+     images (lavender, sky, mint, blush) rather than the old orange. */
+  --rot-1: #A78BFA; /* lavender */
+  --rot-2: #60A5FA; /* sky blue */
+  --rot-3: #34D399; /* mint */
+  --rot-4: #F472B6; /* blush pink */
+  --rot-5: #7C93E0; /* periwinkle, echoes the midnight brand */
 }
 
 .dark {
-  --background: #050508;
+  --background: #060B1F;
 }
 
 @layer base {
@@ -101,9 +129,8 @@
     border-color: var(--color-border);
   }
 
-  /* DARK CANVAS WITH TWIN RINGS PRESERVED */
   body {
-    background-color: #050508 !important;
+    background-color: #060B1F !important;
     color: var(--color-foreground);
     font-family: var(--font-sans);
     position: relative;
@@ -114,14 +141,22 @@
     font-family: var(--font-display);
   }
 
-  /* PREVENT STICKY NAVBAR OVERLAP ON DESKTOP */
   section, [id] {
     scroll-margin-top: 6.5rem !important;
+  }
+
+  /* Placeholder text stays black even on the dark canvas, since
+     placeholders sit inside light glass-pill fields. */
+  input::placeholder,
+  textarea::placeholder {
+    color: rgba(6, 7, 12, 0.65) !important;
+    opacity: 1;
   }
 }
 
 /* ================================================================
-   DYNAMIC TWIN RINGS ANIMATION (YOU & YOUR WIFE) — KISSING DANCE
+   AMBIENT TWIN RINGS — hollow bands, midnight-blue + rotating palette
+   (previously orange; fully recolored, same construction and motion)
    ================================================================ */
 
 .bbi-twin-ring {
@@ -129,8 +164,6 @@
   border-radius: 9999px;
   pointer-events: none;
   z-index: 0;
-  filter: blur(40px);
-  opacity: 0.45;
   mix-blend-mode: screen;
 }
 
@@ -139,7 +172,18 @@
   height: clamp(22rem, 45vw, 38rem);
   top: 10%;
   left: 15%;
-  background: radial-gradient(circle, oklch(0.805 0.135 65 / 40%) 0%, oklch(0.687 0.161 51.5 / 15%) 60%, transparent 100%);
+  background: radial-gradient(
+    circle,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(147, 168, 242, 0.34) 51%,
+    rgba(27, 42, 107, 0.4) 58%,
+    transparent 65%,
+    transparent 100%
+  );
+  filter: blur(22px);
+  opacity: 0.55;
   animation: bbi-ring-dance-1 22s ease-in-out infinite alternate;
 }
 
@@ -148,89 +192,125 @@
   height: clamp(20rem, 40vw, 34rem);
   top: 25%;
   right: 15%;
-  background: radial-gradient(circle, oklch(0.723 0.161 56 / 35%) 0%, oklch(0.805 0.135 65 / 10%) 60%, transparent 100%);
+  background: radial-gradient(
+    circle,
+    transparent 0%,
+    transparent 38%,
+    rgba(255, 255, 255, 0.09) 43%,
+    rgba(167, 139, 250, 0.32) 49%,
+    rgba(96, 165, 250, 0.26) 56%,
+    transparent 63%,
+    transparent 100%
+  );
+  filter: blur(20px);
+  opacity: 0.5;
   animation: bbi-ring-dance-2 26s ease-in-out infinite alternate;
 }
 
 @keyframes bbi-ring-dance-1 {
   0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(120px, 80px) scale(1.1); } /* Moves toward ring-2 (kissing) */
+  50% { transform: translate(120px, 80px) scale(1.1); }
   100% { transform: translate(-40px, 140px) scale(0.95); }
 }
 
 @keyframes bbi-ring-dance-2 {
   0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-100px, -60px) scale(1.08); } /* Moves toward ring-1 (kissing) */
+  50% { transform: translate(-100px, -60px) scale(1.08); }
   100% { transform: translate(60px, -120px) scale(0.92); }
 }
 
 /* ================================================================
-   IMAGE 1: 3D LIQUID GLASSMORPHISM DASHBOARD UI (GLOBAL PANELS)
+   IMAGE 1: LIGHT FROSTED GLASS PANEL (floating on the midnight canvas)
    ================================================================ */
 
 @utility glass {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.02) 100%
-  ) !important;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.24) 6%, transparent 24%, transparent 76%, rgba(255, 255, 255, 0.08) 94%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%) !important;
   backdrop-filter: blur(28px) saturate(190%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  border: 1px solid rgba(255, 255, 255, 0.26) !important;
+  border-top-color: rgba(255, 255, 255, 0.45);
+  border-left-color: rgba(255, 255, 255, 0.36);
   box-shadow:
     0 20px 50px -12px rgba(0, 0, 0, 0.85),
-    0 0 24px -4px rgba(240, 140, 43, 0.15),
-    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.5),
-    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.6) !important;
+    0 0 24px -4px rgba(27, 42, 107, 0.22),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.55) !important;
+  color: var(--foreground);
 }
 
 @utility glass-hover {
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
   &:hover {
     transform: translateY(-5px) scale(1.01) !important;
-    border-color: rgba(255, 170, 77, 0.8) !important;
+    border-color: rgba(120, 150, 240, 0.85) !important;
     box-shadow:
-      0 26px 65px -10px rgba(240, 140, 43, 0.4),
-      0 0 35px 2px rgba(255, 170, 77, 0.28),
-      inset 0 2px 3px 0 rgba(255, 255, 255, 0.75),
-      inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.7) !important;
+      0 26px 65px -10px rgba(27, 42, 107, 0.45),
+      0 0 35px 2px rgba(120, 150, 240, 0.3),
+      inset 0 2px 3px 0 rgba(255, 255, 255, 0.8),
+      inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.65) !important;
   }
 }
 
 @utility glass-nav {
   position: relative;
   z-index: 50;
-  background: rgba(5, 5, 8, 0.92) !important;
+  background: rgba(6, 11, 31, 0.92) !important;
   backdrop-filter: blur(24px) saturate(180%) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.16) !important;
   box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.95) !important;
 }
 
 /* ================================================================
-   IMAGE 2: SOFT NEUMORPHIC GLASS BUTTONS (BROWSE & CATEGORIES)
+   IMAGE 2: ROTATING-COLOR GLASS PILL BUTTONS
+   White text by default. On hover: animation pauses, fill lightens,
+   a midnight-blue glow/border appears (branding color, hover-only),
+   text flips to black.
    ================================================================ */
 
 .glass-pill,
 a[href*="/category/"],
 a[href*="/search"] {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)) !important;
-  backdrop-filter: blur(16px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #FFFFFF !important;
+  background: linear-gradient(
+    120deg,
+    var(--rot-1) 0%,
+    var(--rot-2) 25%,
+    var(--rot-3) 50%,
+    var(--rot-4) 75%,
+    var(--rot-5) 100%
+  ) !important;
+  background-size: 300% 300% !important;
+  animation: bbi-pill-rotate 9s ease-in-out infinite !important;
+  backdrop-filter: blur(14px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
   box-shadow:
-    0 8px 20px -4px rgba(0, 0, 0, 0.6),
-    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.45),
-    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.5) !important;
-  transition: all 0.25s ease !important;
+    0 8px 20px -4px rgba(0, 0, 0, 0.55),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.35) !important;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.25s ease, color 0.2s ease !important;
+}
+
+@keyframes bbi-pill-rotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .glass-pill:hover,
 a[href*="/category/"]:hover,
 a[href*="/search"]:hover {
+  color: #06070C !important;
+  animation-play-state: paused !important;
   transform: translateY(-2px) !important;
-  border-color: rgba(255, 170, 77, 0.7) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.78)) !important;
+  border-color: #1B2A6B !important;
   box-shadow:
-    0 12px 28px -4px rgba(240, 140, 43, 0.35),
-    inset 0 2px 3px 0 rgba(255, 255, 255, 0.65),
-    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.5) !important;
+    0 12px 28px -4px rgba(27, 42, 107, 0.45),
+    0 0 26px 2px rgba(27, 42, 107, 0.4),
+    inset 0 2px 3px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.15) !important;
 }
 
 /* SOFT FEATHERED EDGES ON GOLDEN TREE CONTAINER */
@@ -247,7 +327,7 @@ a[href*="/search"]:hover {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.35) 50%, transparent 65%);
+    background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.4) 50%, transparent 65%);
     transform: translateX(-120%);
     transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -370,12 +450,12 @@ a[href*="/search"]:hover {
   position: absolute;
   inset: 0;
   border-radius: 9999px;
-  border: 1px dashed oklch(0.805 0.135 65 / 30%);
+  border: 1px dashed rgba(147, 168, 242, 0.35);
 }
 
 .bbi-orbit-ring-inner {
   inset: 15%;
-  border-color: oklch(0.687 0.161 51.5 / 40%);
+  border-color: rgba(27, 42, 107, 0.5);
   animation: bbi-orbit-spin 34s linear infinite;
 }
 
@@ -407,13 +487,14 @@ a[href*="/search"]:hover {
   justify-content: center;
   text-align: center;
   padding: 0.4rem;
+  background: linear-gradient(135deg, #93A8F2, #1B2A6B);
 }
 
 .bbi-orbit-center-label {
   font-family: var(--font-display);
   font-weight: 800;
   font-size: clamp(0.6rem, 2vw, 0.8rem);
-  color: oklch(0.18 0.02 60);
+  color: #FFFFFF;
   line-height: 1.1;
 }
 
@@ -422,7 +503,7 @@ a[href*="/search"]:hover {
   font-size: clamp(0.48rem, 1.4vw, 0.58rem);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: oklch(0.18 0.02 60 / 75%);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .bbi-orbit-node {
@@ -442,7 +523,7 @@ a[href*="/search"]:hover {
   height: 0.5rem;
   border-radius: 9999px;
   background: var(--accent);
-  box-shadow: 0 0 8px oklch(0.805 0.135 65 / 70%);
+  box-shadow: 0 0 8px rgba(147, 168, 242, 0.75);
 }
 
 .bbi-orbit-node-label {
