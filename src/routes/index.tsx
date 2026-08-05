@@ -151,7 +151,7 @@ function HomePage() {
 
   return (
     <SiteShell>
-      {/* AMBIENT TWIN RINGS (YOU & YOUR WIFE) DANCING IN BACKGROUND */}
+      {/* AMBIENT DYNAMIC TWIN RINGS (YOU & YOUR WIFE) DANCING & KISSING IN BACKGROUND */}
       <div className="bbi-twin-ring ring-1" aria-hidden />
       <div className="bbi-twin-ring ring-2" aria-hidden />
 
@@ -487,7 +487,7 @@ function HomePage() {
 }
 
 /* ================================================================
-   SECTION 1: INTERACTIVE GOLDEN TREE (CURVED LIQUID CAPSULES)
+   SECTION 1: INTERACTIVE GOLDEN TREE (DYNAMIC MOVING SHADOWS)
    ================================================================ */
 
 function GoldenTreeSection() {
@@ -518,13 +518,13 @@ function GoldenTreeSection() {
         </p>
       </div>
 
-      <div className="relative mt-8 sm:mt-12 w-full flex justify-center items-center overflow-hidden py-4">
-        {/* DESKTOP 16:9 PNG ASSET */}
+      <div className="relative mt-8 sm:mt-12 w-full flex justify-center items-center overflow-hidden py-4 bbi-tree-shadow-box">
+        {/* DESKTOP 16:9 PNG ASSET WITH DYNAMIC MOVING BACKGROUND SHADOW */}
         <div className="hidden sm:block relative w-full max-w-5xl aspect-[16/9] group tree-asset-container">
           <img
             src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.png"
             alt="The Golden Tree of Business Growth"
-            className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(240,140,43,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(240,140,43,0.5)]"
+            className="w-full h-full object-contain relative z-10 filter drop-shadow-[0_10px_35px_rgba(240,140,43,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(240,140,43,0.5)]"
           />
 
           {desktopNodes.map((node) => (
@@ -568,12 +568,12 @@ function GoldenTreeSection() {
           ))}
         </div>
 
-        {/* MOBILE 9:16 SVG ASSET — ORGANIC FLOATING LIQUID CAPSULES */}
+        {/* MOBILE 9:16 SVG ASSET WITH DYNAMIC MOVING BACKGROUND SHADOW */}
         <div className="block sm:hidden relative w-full max-w-xs aspect-[9/16] tree-asset-container">
           <img
             src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg"
             alt="The Golden Tree of Business Growth (Mobile)"
-            className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(240,140,43,0.35)]"
+            className="w-full h-full object-contain relative z-10 filter drop-shadow-[0_8px_25px_rgba(240,140,43,0.35)]"
           />
 
           <div className="absolute inset-0 flex flex-col justify-around py-10 px-3 z-20">
@@ -806,7 +806,7 @@ function DynamicActivityToast() {
 }
 
 /* ================================================================
-   SHARED SUBCOMPONENTS — NO NOISY CENTER BALLS
+   SHARED SUBCOMPONENTS — NO NOISY DOMINATING CENTER BALLS
    ================================================================ */
 
 function OrbitDiagram({
@@ -822,7 +822,8 @@ function OrbitDiagram({
     <div className="bbi-orbit-wrap" role="img" aria-label={`${centerLabel}: ${nodes.join(", ")}`}>
       <div className="bbi-orbit-ring bbi-orbit-ring-outer" />
       <div className="bbi-orbit-ring bbi-orbit-ring-inner" />
-      <div className="bbi-orbit-center glass">
+      {/* SHEER LIQUID GLASS CENTER RING — NO DOMINATING SOLID BALL */}
+      <div className="bbi-orbit-center">
         <span className="bbi-orbit-center-label">{centerLabel}</span>
         <span className="bbi-orbit-center-sub">{centerSub}</span>
       </div>
