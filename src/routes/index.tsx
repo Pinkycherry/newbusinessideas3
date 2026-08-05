@@ -947,7 +947,8 @@ function TrustStatsBar() {
 function MarketGapSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-shape-diamond grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      <Reveal>
+      <div className="glass glass-hover bbi-shape-diamond grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
             The problem we found
@@ -976,6 +977,7 @@ function MarketGapSection() {
           nodes={["Named buyer", "Money mechanics", "Real risks", "Founder verdict"]}
         />
       </div>
+      </Reveal>
     </section>
   );
 }
