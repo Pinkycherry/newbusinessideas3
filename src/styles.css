@@ -56,44 +56,44 @@
 
 :root {
   --radius: 1.25rem;
-  /* 100% SOLID PURE PITCH BLACK (#000000) */
-  --background: #000000;
+  /* DARK OBSIDIAN CANVAS */
+  --background: oklch(0.18 0.008 274);
   --foreground: #ffffff;
-  /* Liquid Frosted Glass Panel */
-  --card: rgba(255, 255, 255, 0.04);
+  /* 3D Liquid Glass Panel */
+  --card: rgba(255, 255, 255, 0.05);
   --card-foreground: #ffffff;
-  --popover: #0a0a0c;
+  --popover: #0a0a0d;
   --popover-foreground: #ffffff;
   /* BBI Accent Colors */
   --primary: oklch(0.687 0.161 51.5);
   --primary-foreground: oklch(0.18 0.02 60);
-  --secondary: #121214;
+  --secondary: #121216;
   --secondary-foreground: #ffffff;
-  --muted: rgba(255, 255, 255, 0.05);
+  --muted: rgba(255, 255, 255, 0.06);
   --muted-foreground: oklch(0.85 0.01 80);
   --accent: oklch(0.805 0.135 65);
   --accent-foreground: oklch(0.2 0.02 60);
   --destructive: oklch(0.63 0.21 25);
   --destructive-foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.12);
-  --input: rgba(255, 255, 255, 0.15);
+  --border: rgba(255, 255, 255, 0.18);
+  --input: rgba(255, 255, 255, 0.18);
   --ring: oklch(0.687 0.161 51.5);
   --ember: oklch(0.723 0.161 56);
   --amber-glow: oklch(0.805 0.135 65);
   --warm: oklch(0.735 0.02 71);
-  --glass-border: rgba(255, 255, 255, 0.18);
-  --sidebar: #000000;
+  --glass-border: rgba(255, 255, 255, 0.22);
+  --sidebar: #060608;
   --sidebar-foreground: #ffffff;
   --sidebar-primary: oklch(0.687 0.161 51.5);
   --sidebar-primary-foreground: oklch(0.18 0.02 60);
   --sidebar-accent: rgba(255, 255, 255, 0.08);
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: rgba(255, 255, 255, 0.15);
+  --sidebar-border: rgba(255, 255, 255, 0.18);
   --sidebar-ring: oklch(0.687 0.161 51.5);
 }
 
 .dark {
-  --background: #000000;
+  --background: oklch(0.18 0.008 274);
 }
 
 @layer base {
@@ -101,65 +101,74 @@
     border-color: var(--color-border);
   }
 
-  /* ABSOLUTE PURE PITCH BLACK CANVAS — NO ORANGE GRADIENTS */
+  /* AMBIENT BACKGROUND CANVAS — TWIN RINGS PRESERVED & GLOWING */
   body {
-    background-color: #000000 !important;
-    background: #000000 !important;
-    background-image: none !important;
+    background-color: #060608 !important;
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    background-image:
+      radial-gradient(38rem 28rem at 75% 15%, oklch(0.687 0.161 51.5 / 22%), transparent 70%),
+      radial-gradient(34rem 24rem at 25% 45%, oklch(0.805 0.135 65 / 18%), transparent 65%),
+      linear-gradient(180deg, #040406 0%, #0a0a0e 100%);
+    background-attachment: fixed;
   }
 
   h1, h2, h3, h4 {
     font-family: var(--font-display);
   }
+
+  /* PREVENT STICKY NAVBAR FROM OVERLAPPING SECTION HEADINGS */
+  section, [id] {
+    scroll-margin-top: 6.5rem !important;
+  }
 }
 
-/* DISABLE ALL BACKGROUND GLOW ORBS & BLUR CIRCLES */
+/* TWIN RINGS (FOUNDER & HIS WIFE) — PRESERVED & VISIBLE */
 .orb,
-[class*="float-orb"],
-[class*="radial-gradient"] {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
+[class*="float-orb"] {
+  display: block !important;
+  opacity: 0.85 !important;
+  visibility: visible !important;
 }
 
 /* ================================================================
-   3D LIQUID FROSTED GLASS UTILITIES
+   DEFAULT 3D LIQUID-GLASS UTILITIES (ACTIVE BEFORE HOVER)
    ================================================================ */
 
 @utility glass {
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.01) 100%
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 100%
   ) !important;
-  backdrop-filter: blur(24px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  backdrop-filter: blur(28px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
   box-shadow:
-    0 16px 40px -10px rgba(0, 0, 0, 0.95),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
-    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.8) !important;
+    0 16px 45px -12px rgba(0, 0, 0, 0.85),
+    0 0 20px -4px rgba(240, 140, 43, 0.15),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.6) !important;
 }
 
 @utility glass-hover {
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
   &:hover {
-    transform: translateY(-4px) scale(1.01) !important;
-    border-color: rgba(255, 170, 77, 0.6) !important;
+    transform: translateY(-5px) scale(1.01) !important;
+    border-color: rgba(255, 170, 77, 0.75) !important;
     box-shadow:
-      0 20px 50px -10px rgba(240, 140, 43, 0.3),
-      inset 0 1px 2px 0 rgba(255, 255, 255, 0.5),
-      inset 0 -1px 2px 0 rgba(0, 0, 0, 0.8) !important;
+      0 24px 60px -10px rgba(240, 140, 43, 0.4),
+      0 0 30px 2px rgba(255, 170, 77, 0.25),
+      inset 0 2px 3px 0 rgba(255, 255, 255, 0.7),
+      inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.7) !important;
   }
 }
 
 @utility glass-nav {
   position: relative;
   z-index: 50;
-  background: rgba(0, 0, 0, 0.92) !important;
+  background: rgba(4, 4, 6, 0.92) !important;
   backdrop-filter: blur(24px) saturate(180%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
   box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.95) !important;
 }
 
@@ -177,6 +186,22 @@
   &:hover::after {
     transform: translateX(120%);
   }
+}
+
+/* 3D LIQUID CAPSULE BUTTONS & LEAF BADGES (DEFAULT STATE) */
+.glass-pill,
+[class*="rounded-full"] {
+  box-shadow:
+    0 4px 14px -2px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 1.5px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* SOFT FEATHERED EDGES ON GOLDEN TREE CONTAINER */
+.tree-asset-container img,
+[alt*="Golden Tree"] {
+  mask-image: radial-gradient(ellipse at center, black 68%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 68%, transparent 100%);
 }
 
 /* --- STANDARDIZED CAPSULE & PILL RADII --- */
@@ -210,6 +235,24 @@
 @utility bbi-shape-stat-1 { border-radius: 1.25rem; }
 @utility bbi-shape-stat-2 { border-radius: 1.25rem; }
 @utility bbi-shape-stat-3 { border-radius: 1.25rem; }
+
+@utility orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(2px);
+  background: radial-gradient(circle at 32% 28%, oklch(0.9 0.09 72), oklch(0.723 0.161 56) 42%, oklch(0.56 0.15 44) 100%);
+  animation: float-orb 12s ease-in-out infinite;
+}
+
+@keyframes float-orb {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-26px) scale(1.03); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
 
 /* WordPress article content */
 .wp-prose {
