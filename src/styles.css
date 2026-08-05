@@ -56,44 +56,44 @@
 
 :root {
   --radius: 1.25rem;
-  /* PURE MIDNIGHT PITCH BLACK CANVAS (#000000) */
-  --background: oklch(0 0 0);
-  --foreground: oklch(1 0 0);
+  /* 100% SOLID PURE PITCH BLACK (#000000) */
+  --background: #000000;
+  --foreground: #ffffff;
   /* Liquid Frosted Glass Panel */
-  --card: oklch(1 0 0 / 4%);
-  --card-foreground: oklch(1 0 0);
-  --popover: oklch(0.08 0 0);
-  --popover-foreground: oklch(1 0 0);
+  --card: rgba(255, 255, 255, 0.04);
+  --card-foreground: #ffffff;
+  --popover: #0a0a0c;
+  --popover-foreground: #ffffff;
   /* BBI Accent Colors */
   --primary: oklch(0.687 0.161 51.5);
   --primary-foreground: oklch(0.18 0.02 60);
-  --secondary: oklch(0.12 0 0);
-  --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(1 0 0 / 5%);
+  --secondary: #121214;
+  --secondary-foreground: #ffffff;
+  --muted: rgba(255, 255, 255, 0.05);
   --muted-foreground: oklch(0.85 0.01 80);
   --accent: oklch(0.805 0.135 65);
   --accent-foreground: oklch(0.2 0.02 60);
   --destructive: oklch(0.63 0.21 25);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(1 0 0 / 18%);
-  --input: oklch(1 0 0 / 16%);
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.15);
   --ring: oklch(0.687 0.161 51.5);
   --ember: oklch(0.723 0.161 56);
   --amber-glow: oklch(0.805 0.135 65);
   --warm: oklch(0.735 0.02 71);
-  --glass-border: oklch(1 0 0 / 22%);
-  --sidebar: oklch(0 0 0);
-  --sidebar-foreground: oklch(1 0 0);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --sidebar: #000000;
+  --sidebar-foreground: #ffffff;
   --sidebar-primary: oklch(0.687 0.161 51.5);
   --sidebar-primary-foreground: oklch(0.18 0.02 60);
-  --sidebar-accent: oklch(1 0 0 / 8%);
-  --sidebar-accent-foreground: oklch(1 0 0);
-  --sidebar-border: oklch(1 0 0 / 20%);
+  --sidebar-accent: rgba(255, 255, 255, 0.08);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.15);
   --sidebar-ring: oklch(0.687 0.161 51.5);
 }
 
 .dark {
-  --background: oklch(0 0 0);
+  --background: #000000;
 }
 
 @layer base {
@@ -101,9 +101,10 @@
     border-color: var(--color-border);
   }
 
-  /* PURE PITCH BLACK BODY (NO BROWN GRADIENTS OR GLOW CIRCLES) */
+  /* ABSOLUTE PURE PITCH BLACK CANVAS — NO ORANGE GRADIENTS */
   body {
     background-color: #000000 !important;
+    background: #000000 !important;
     background-image: none !important;
     color: var(--color-foreground);
     font-family: var(--font-sans);
@@ -114,22 +115,31 @@
   }
 }
 
+/* DISABLE ALL BACKGROUND GLOW ORBS & BLUR CIRCLES */
+.orb,
+[class*="float-orb"],
+[class*="radial-gradient"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
 /* ================================================================
-   3D LIQUID FROSTED GLASS UTILITIES (Image Style Inspired)
+   3D LIQUID FROSTED GLASS UTILITIES
    ================================================================ */
 
 @utility glass {
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.07) 0%,
-    rgba(255, 255, 255, 0.02) 100%
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.01) 100%
   ) !important;
-  backdrop-filter: blur(28px) saturate(190%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
   box-shadow:
-    0 20px 50px -15px rgba(0, 0, 0, 0.9),
-    inset 0 1px 2px 0 rgba(255, 255, 255, 0.4),
-    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6) !important;
+    0 16px 40px -10px rgba(0, 0, 0, 0.95),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.8) !important;
 }
 
 @utility glass-hover {
@@ -138,19 +148,19 @@
     transform: translateY(-4px) scale(1.01) !important;
     border-color: rgba(255, 170, 77, 0.6) !important;
     box-shadow:
-      0 24px 60px -10px rgba(240, 140, 43, 0.35),
-      inset 0 1px 3px 0 rgba(255, 255, 255, 0.6),
-      inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6) !important;
+      0 20px 50px -10px rgba(240, 140, 43, 0.3),
+      inset 0 1px 2px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -1px 2px 0 rgba(0, 0, 0, 0.8) !important;
   }
 }
 
 @utility glass-nav {
   position: relative;
   z-index: 50;
-  background: rgba(0, 0, 0, 0.85) !important;
+  background: rgba(0, 0, 0, 0.92) !important;
   backdrop-filter: blur(24px) saturate(180%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.9) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.95) !important;
 }
 
 @utility sheen {
@@ -201,24 +211,6 @@
 @utility bbi-shape-stat-2 { border-radius: 1.25rem; }
 @utility bbi-shape-stat-3 { border-radius: 1.25rem; }
 
-@utility orb {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(2px);
-  background: radial-gradient(circle at 32% 28%, oklch(0.9 0.09 72), oklch(0.723 0.161 56) 42%, oklch(0.56 0.15 44) 100%);
-  animation: float-orb 12s ease-in-out infinite;
-}
-
-@keyframes float-orb {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-26px) scale(1.03); }
-}
-
-@keyframes glow-pulse {
-  0%, 100% { opacity: 0.55; }
-  50% { opacity: 1; }
-}
-
 /* WordPress article content */
 .wp-prose {
   font-size: 1rem;
@@ -261,13 +253,13 @@
   font-style: italic;
 }
 .wp-prose code {
-  background: oklch(1 0 0 / 10%);
+  background: rgba(255, 255, 255, 0.1);
   padding: 0.15rem 0.4rem;
   border-radius: 0.35rem;
   font-size: 0.9em;
 }
 .wp-prose pre {
-  background: oklch(0 0 0 / 35%);
+  background: rgba(0, 0, 0, 0.6);
   padding: 1rem;
   border-radius: 1rem;
   overflow-x: auto;
@@ -284,7 +276,7 @@
   padding: 0.6rem 0.75rem;
   text-align: left;
 }
-.wp-prose th { color: var(--foreground); background: oklch(1 0 0 / 6%); }
+.wp-prose th { color: var(--foreground); background: rgba(255, 255, 255, 0.05); }
 .wp-prose hr { border-color: var(--border); margin: 2.25rem 0; }
 .wp-prose nav ul { list-style: none; padding-left: 0; }
 .wp-prose nav li { margin: 0.3rem 0; }
@@ -343,8 +335,8 @@
 }
 
 @keyframes bbi-orbit-pulse {
-  0%, 100% { box-shadow: 0 0 24px oklch(0.723 0.161 56 / 35%), inset 0 2px 6px oklch(1 0 0 / 35%); }
-  50% { box-shadow: 0 0 38px oklch(0.723 0.161 56 / 55%), inset 0 2px 6px oklch(1 0 0 / 35%); }
+  0%, 100% { box-shadow: 0 0 24px oklch(0.723 0.161 56 / 35%), inset 0 2px 6px rgba(255, 255, 255, 0.35); }
+  50% { box-shadow: 0 0 38px oklch(0.723 0.161 56 / 55%), inset 0 2px 6px rgba(255, 255, 255, 0.35); }
 }
 
 .bbi-orbit-center-label {
