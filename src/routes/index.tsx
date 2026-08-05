@@ -960,7 +960,7 @@ function OrbitDiagram({
     >
       <div className="bbi-orbit-ring bbi-orbit-ring-outer" />
       <div className="bbi-orbit-ring bbi-orbit-ring-inner" />
-      <div className="bbi-orbit-center glass">
+      <div className="bbi-orbit-center">
         <span className="bbi-orbit-center-label">{centerLabel}</span>
         <span className="bbi-orbit-center-sub">{centerSub}</span>
       </div>

@@ -735,12 +735,11 @@ a[href*="/search"]:hover {
 }
 
 /* Orbit centre must stay legible over the glass layer. */
-.bbi-orbit-center.glass,
-.glass.bbi-orbit-center {
+.bbi-orbit-center {
   background: linear-gradient(135deg, #60A5FA 0%, #6366F1 100%) !important;
   background-image: linear-gradient(135deg, #60A5FA 0%, #6366F1 100%) !important;
   border: 1px solid rgba(191, 219, 254, 0.7) !important;
   box-shadow: 0 0 34px -8px rgba(56, 189, 248, 0.75) !important;
 }
-.glass.bbi-orbit-center .bbi-orbit-center-label { color: #050B1F !important; }
-.glass.bbi-orbit-center .bbi-orbit-center-sub { color: rgba(5, 11, 31, 0.8) !important; }
+.bbi-orbit-center .bbi-orbit-center-label { color: #050B1F !important; }
+.bbi-orbit-center .bbi-orbit-center-sub { color: rgba(5, 11, 31, 0.8) !important; }
