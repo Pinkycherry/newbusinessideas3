@@ -463,7 +463,9 @@ function HomePage() {
             key={panel.title}
             className="h-full"
             delay={i * 90}
-            variant={(["rv-lift", "rv-slide", "rv-zoom", "rv-wipe"] as const)[i % 4]}
+            variant={
+              (["rv-lift", "rv-slide", "rv-zoom", "rv-wipe"] as const)[i % 4] ?? "rv-lift"
+            }
           >
             <div
               className={`glass glass-hover h-full p-6 sm:p-9 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
