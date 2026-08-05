@@ -17,10 +17,12 @@ function Reveal({
   children,
   delay = 0,
   className = "",
+  variant = "",
 }: {
   children: React.ReactNode;
   delay?: number;
   className?: string;
+  variant?: "" | "rv-lift" | "rv-slide" | "rv-zoom" | "rv-wipe";
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [shown, setShown] = useState(false);
@@ -44,7 +46,7 @@ function Reveal({
   return (
     <div
       ref={ref}
-      className={`bbi-reveal${shown ? " is-visible" : ""} ${className}`}
+      className={`bbi-reveal ${variant}${shown ? " is-visible" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
