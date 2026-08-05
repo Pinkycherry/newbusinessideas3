@@ -14,7 +14,7 @@ export function ScrollTriggeredCount({ target, suffix = "" }: { target: number; 
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setHasAnimated(true);
           let start = 0;
           const duration = 1600; // 1.6 seconds
