@@ -585,7 +585,7 @@ function GoldenTreeSection() {
     { label: "Zero Investment Ideas", slug: "zero-investment-business-ideas", x: 28, y: 18, count: volume(24000, 1) },
     { label: "Work From Home Ideas", slug: "work-from-home-business-ideas", x: 50, y: 12, count: volume(31000, 2) },
     { label: "Low Investment Ideas", slug: "low-investment-business-ideas", x: 72, y: 20, count: volume(27000, 3) },
-    { label: "Side Hustle Ideas", slug: "side-hustle-ideas", x: 20, y: 38, count: volume: 0 as never },
+    { label: "Side Hustle Ideas", slug: "side-hustle-ideas", x: 20, y: 38, count: volume(18000, 4) },
     { label: "SaaS & AI Startups", query: "SaaS", x: 42, y: 32, count: volume(14000, 5) },
     { label: "FinTech & Finance", slug: "fintech", x: 60, y: 34, count: volume(9800, 6) },
     { label: "E-Commerce", slug: "e-commerce", x: 80, y: 40, count: volume(21000, 7) },
