@@ -158,6 +158,15 @@
   h1, h2, h3, h4 {
     font-family: var(--font-display);
   }
+  /* Neon-lit accent words inside headings, like the reference title treatment */
+  h1 .text-accent,
+  h1 .text-primary,
+  h2 .text-accent,
+  h2 .text-primary {
+    text-shadow:
+      0 0 18px rgba(34, 211, 238, 0.55),
+      0 0 44px rgba(34, 211, 238, 0.3);
+  }
   section, [id] {
     scroll-margin-top: 6.5rem !important;
   }
