@@ -210,7 +210,7 @@ export function LiveActivityToast() {
 
   return (
     <div className="fixed bottom-4 left-4 z-50 glass rounded-xl border border-white/15 p-3.5 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm animate-bbi-toast">
-      <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+      <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-primary shadow-[0_0_8px_color-mix(in_oklab,var(--primary)_55%,transparent)]" />
       <div className="text-xs">
         <p className="font-medium text-foreground">Founder from New York unlocked Lifetime Access</p>
         <p className="text-[10px] text-muted-foreground">3 minutes ago • bestbusinessideas.net</p>
