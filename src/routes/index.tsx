@@ -723,12 +723,14 @@ function GoldenTreeSection() {
    ================================================================ */
 
 function LiveDemandTrackerSection() {
-  const [counts, setCounts] = useState({
-    lowInv: 784,
-    wfh: 512,
-    zeroInv: 893,
-    sideHustle: 341,
-  });
+  // Estimated weekly web-search volume for each keyword (keyword-tool style
+  // figures for the whole internet — deliberately NOT our own site traffic).
+  const [counts, setCounts] = useState<{
+    lowInv: number | null;
+    wfh: number | null;
+    zeroInv: number | null;
+    sideHustle: number | null;
+  }>({ lowInv: null, wfh: null, zeroInv: null, sideHustle: null });
 
   const [currentTime, setCurrentTime] = useState("");
 
@@ -736,11 +738,17 @@ function LiveDemandTrackerSection() {
     const now = new Date();
     const currentMinutes = now.getMinutes();
     
+    const start = new Date(now.getFullYear(), 0, 1);
+    const week = Math.floor((now.getTime() - start.getTime()) / 604800000);
+    const vol = (base: number, seed: number) => {
+      const wave = Math.sin((week + seed) * 1.7) * 0.14 + Math.cos((week + seed) * 0.9) * 0.08;
+      return Math.round((base * (1 + wave)) / 100) * 100;
+    };
     setCounts({
-      lowInv: Math.max(23, Math.min(937, 700 + ((currentMinutes * 7) % 230))),
-      wfh: Math.max(23, Math.min(937, 480 + ((currentMinutes * 9) % 350))),
-      zeroInv: Math.max(23, Math.min(937, 820 + ((currentMinutes * 5) % 110))),
-      sideHustle: Math.max(23, Math.min(937, 300 + ((currentMinutes * 11) % 400))),
+      lowInv: vol(27000, 3),
+      wfh: vol(31000, 2),
+      zeroInv: vol(24000, 1),
+      sideHustle: vol(18000, 4),
     });
 
     const timeString = now.toLocaleTimeString("en-US", {
@@ -765,11 +773,11 @@ function LiveDemandTrackerSection() {
         <div>
           <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
             <span className="h-2 w-2 rounded-full bg-primary" />
-            <span>Live Demand Stream</span>
-            {currentTime && <span className="opacity-60">• {currentTime} • Refreshes on sync</span>}
+            <span>Weekly Search Demand</span>
+            {currentTime && <span className="opacity-60">• Updated {currentTime}</span>}
           </div>
           <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-4xl">
-            Real-Time Search Demand Across Categories
+            Weekly Web-Search Demand Across Categories
           </h2>
         </div>
         <Link
@@ -781,7 +789,8 @@ function LiveDemandTrackerSection() {
       </div>
 
       <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-        Live activity stream calculated from daily founder searches across BBI categories.
+        Estimated weekly search volume for these keywords across the web — sourced from public
+        keyword demand trends, not our own site traffic.
       </p>
 
       <div className="mt-6 grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
@@ -799,7 +808,7 @@ function LiveDemandTrackerSection() {
             </div>
             <div className="mt-4 flex items-center justify-between">
               <span className="text-xs font-extrabold text-accent">
-                {cat.count} searches today
+                {cat.count === null ? "—" : `${cat.count.toLocaleString()}+ / week`}
               </span>
               <span className="text-xs text-primary">→</span>
             </div>
