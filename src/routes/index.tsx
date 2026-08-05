@@ -457,23 +457,25 @@ function HomePage() {
       <WhoForSection />
 
       {/* SCROLL-STACK */}
-      <section className="mx-auto max-w-5xl px-3 pb-24 sm:px-4">
+      <section className="mx-auto mt-16 grid max-w-6xl gap-4 px-3 pb-16 sm:grid-cols-2 sm:px-4">
         {SCROLL_PANELS.map((panel, i) => (
-          <div key={panel.title} className="mb-6 sm:mb-0 sm:h-[70vh]">
-            <Reveal className="sticky top-24" delay={60}>
+          <Reveal
+            key={panel.title}
+            className="h-full"
+            delay={i * 90}
+            variant={(["rv-lift", "rv-slide", "rv-zoom", "rv-wipe"] as const)[i % 4]}
+          >
             <div
-              className={`glass glass-hover p-8 sm:p-12 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
-              style={{ zIndex: i + 1 }}
+              className={`glass glass-hover h-full p-6 sm:p-9 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
             >
-              <h2 className="text-2xl font-bold leading-tight tracking-tight sm:text-4xl">
+              <h2 className="text-xl font-bold leading-tight tracking-tight sm:text-2xl">
                 {panel.title}
               </h2>
-              <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
                 {panel.body}
               </p>
             </div>
-            </Reveal>
-          </div>
+          </Reveal>
         ))}
       </section>
 
