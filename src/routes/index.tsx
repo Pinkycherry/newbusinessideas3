@@ -13,7 +13,15 @@ const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCat
 
 /** Split live categories evenly across 4 marquee rows (works for 9 or 100+). */
 /** Smooth scroll-reveal wrapper — fade + rise + de-blur, once, on enter. */
-function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+function Reveal({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [shown, setShown] = useState(false);
 
@@ -36,7 +44,7 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   return (
     <div
       ref={ref}
-      className={`bbi-reveal${shown ? " is-visible" : ""}`}
+      className={`bbi-reveal${shown ? " is-visible" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
