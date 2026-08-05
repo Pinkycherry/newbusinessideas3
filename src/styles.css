@@ -667,16 +667,20 @@ a[href*="/search"]:hover {
   animation: bbi-orbit-spin 26s linear infinite;
 }
 .bbi-orbit-node {
-  max-width: 6.5rem;
+  max-width: 6.8rem;
   gap: 0.3rem;
-  animation: bbi-orbit-spin-rev 26s linear infinite;
   opacity: 0;
   transform: translate(-50%, -50%);
 }
+.bbi-orbit-node-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  animation: bbi-orbit-spin-rev 26s linear infinite;
+}
 .bbi-orbit-wrap.is-live .bbi-orbit-node {
-  animation:
-    bbi-node-in 0.5s cubic-bezier(0.16, 1.15, 0.3, 1) both,
-    bbi-orbit-spin-rev 26s linear infinite;
+  animation: bbi-node-in 0.5s cubic-bezier(0.16, 1.15, 0.3, 1) both;
 }
 @keyframes bbi-node-in {
   from { opacity: 0; transform: translate(calc(-50% - 34px), -50%) scale(0.8); }
@@ -709,7 +713,7 @@ a[href*="/search"]:hover {
   50%      { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bbi-orbit-rotor, .bbi-orbit-node, .bbi-orbit-ring-inner,
+  .bbi-orbit-rotor, .bbi-orbit-node, .bbi-orbit-node-inner, .bbi-orbit-ring-inner,
   .bbi-orbit-ring-outer, .bbi-orbit-dot, .bbi-orbit-node-label { animation: none !important; opacity: 1 !important; }
 }
 
