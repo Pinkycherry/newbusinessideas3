@@ -151,7 +151,7 @@ function HomePage() {
 
   return (
     <SiteShell>
-      {/* AMBIENT TWIN RINGS (YOU & YOUR WIFE) DANCING IN BACKGROUND */}
+      {/* AMBIENT TWIN RINGS — midnight-blue + rotating palette, hollow bands */}
       <div className="bbi-twin-ring ring-1" aria-hidden />
       <div className="bbi-twin-ring ring-2" aria-hidden />
 
@@ -172,7 +172,7 @@ function HomePage() {
             </p>
             <h1 className="mt-5 max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
               Small business ideas,{" "}
-              <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent [text-shadow:0_0_40px_oklch(0.723_0.161_56/25%)]">
+              <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
                 researched properly
               </span>{" "}
               — not listicles.
@@ -183,7 +183,29 @@ function HomePage() {
               home business ideas, and low-investment opportunities — all ranked by real market
               demand.
             </p>
-            <div className="mt-12 grid gap-4 sm:grid-cols-2">
+
+            {/* Quick-action row, styled after the reference: a plain frosted
+                search-style bar plus a rotating-color CTA pill, sitting
+                inline the way "Search..." and "Button" sit in the reference
+                image. Nothing else on the page changes structurally. */}
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Link
+                to="/search"
+                search={{ q: "" }}
+                className="glass flex flex-1 items-center gap-2 rounded-full px-5 py-3 text-sm text-muted-foreground sm:max-w-sm"
+              >
+                <span aria-hidden>⌕</span>
+                <span>Search idea blueprints…</span>
+              </Link>
+              <Link
+                to="/browse"
+                className="glass-pill inline-flex items-center justify-center rounded-full px-7 py-3 text-xs font-extrabold uppercase tracking-[0.18em]"
+              >
+                Browse the library
+              </Link>
+            </div>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-2">
               {HERO_PANELS.map((panel, i) => (
                 <div key={panel.label} className={`glass glass-hover ${i === 0 ? "blob-sm-1" : "blob-sm-2"} px-6 py-7`}>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
@@ -197,7 +219,9 @@ function HomePage() {
         </TiltPanel>
       </section>
 
-      {/* MOVING CATEGORY TICKER */}
+      {/* MOVING CATEGORY TICKER — each pill now rotates through the brand's
+          multi-color set by default (see .glass-pill in globals.css), and
+          resolves to a light fill + midnight-blue glow + black text on hover. */}
       <section className="pt-10" aria-label="Browse by category">
         <style>{`@keyframes iv-ticker-l{from{transform:translateX(0)}to{transform:translateX(-50%)}}@keyframes iv-ticker-r{from{transform:translateX(-50%)}to{transform:translateX(0)}}.iv-ticker-track{width:max-content;animation:iv-ticker-l 70s linear infinite}.iv-ticker-track.rev{animation-name:iv-ticker-r}.iv-ticker:hover .iv-ticker-track,.iv-ticker:active .iv-ticker-track{animation-play-state:paused}`}</style>
         <p className="mx-auto max-w-6xl px-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent sm:px-4">
@@ -221,7 +245,7 @@ function HomePage() {
                       key={`${rowIndex}-${c.categorySlug}-${i}`}
                       to="/category/$categorySlug"
                       params={{ categorySlug: c.categorySlug }}
-                      className="glass glass-hover shrink-0 whitespace-nowrap rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-accent transition-all duration-300"
+                      className="glass-pill shrink-0 whitespace-nowrap rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300"
                     >
                       {c.categoryName}
                     </Link>
@@ -524,7 +548,7 @@ function GoldenTreeSection() {
           <img
             src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.png"
             alt="The Golden Tree of Business Growth"
-            className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(240,140,43,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(240,140,43,0.5)]"
+            className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(27,42,107,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(27,42,107,0.5)]"
           />
 
           {desktopNodes.map((node) => (
@@ -536,32 +560,32 @@ function GoldenTreeSection() {
               {node.path ? (
                 <Link
                   to={node.path}
-                  className="glass glass-hover inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-accent shadow-lg"
+                  className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold shadow-lg"
                 >
-                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
                   <span>{node.label}</span>
                 </Link>
               ) : node.slug ? (
                 <Link
                   to="/category/$categorySlug"
                   params={{ categorySlug: node.slug }}
-                  className="glass glass-hover inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-foreground hover:text-accent shadow-lg"
+                  className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold shadow-lg"
                 >
-                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
                   <span>{node.label}</span>
                 </Link>
               ) : (
                 <Link
                   to="/search"
                   search={{ q: node.query }}
-                  className="glass glass-hover inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-foreground hover:text-accent shadow-lg"
+                  className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold shadow-lg"
                 >
-                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
                   <span>{node.label}</span>
                 </Link>
               )}
 
-              <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 opacity-0 group-hover/node:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap glass rounded-md px-2.5 py-1 text-[10px] text-accent font-semibold shadow-xl">
+              <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 opacity-0 group-hover/node:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap glass rounded-md px-2.5 py-1 text-[10px] font-semibold shadow-xl">
                 {node.count} searches today
               </div>
             </div>
@@ -573,7 +597,7 @@ function GoldenTreeSection() {
           <img
             src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg"
             alt="The Golden Tree of Business Growth (Mobile)"
-            className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(240,140,43,0.35)]"
+            className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(27,42,107,0.35)]"
           />
 
           <div className="absolute inset-0 flex flex-col justify-around py-10 px-3 z-20">
@@ -588,7 +612,7 @@ function GoldenTreeSection() {
                 {mNode.path ? (
                   <Link
                     to={mNode.path}
-                    className="glass glass-hover inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-accent shadow-xl border border-accent/40"
+                    className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold shadow-xl"
                   >
                     <span>{mNode.label}</span>
                     <span className="text-[10px] opacity-80">({mNode.count})</span>
@@ -597,11 +621,11 @@ function GoldenTreeSection() {
                   <Link
                     to="/category/$categorySlug"
                     params={{ categorySlug: mNode.slug }}
-                    className="glass glass-hover inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-foreground hover:text-accent shadow-xl"
+                    className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold shadow-xl"
                   >
-                    <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                    <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
                     <span>{mNode.label}</span>
-                    <span className="text-[10px] text-accent font-semibold">({mNode.count})</span>
+                    <span className="text-[10px] font-semibold">({mNode.count})</span>
                   </Link>
                 )}
               </div>
@@ -747,7 +771,7 @@ function FourPillarStandardSection() {
       <div className="mt-8 text-center">
         <Link
           to="/browse"
-          className="glass glass-hover inline-flex items-center gap-2 rounded-full px-6 py-3 text-xs font-extrabold uppercase tracking-[0.18em] text-accent"
+          className="glass-pill inline-flex items-center gap-2 rounded-full px-6 py-3 text-xs font-extrabold uppercase tracking-[0.18em]"
         >
           <span>Explore All Categories</span>
           <span>→</span>
@@ -1238,7 +1262,7 @@ function FutureProofSpotlight() {
               key={term.label}
               to="/search"
               search={{ q: term.query }}
-              className="glass-hover rounded-full border border-border px-4 py-2 text-xs font-medium text-muted-foreground transition-all duration-300 hover:border-primary hover:text-primary hover:shadow-[0_0_18px_oklch(0.723_0.161_56/35%)]"
+              className="glass-pill rounded-full px-4 py-2 text-xs font-medium transition-all duration-300"
             >
               {term.label}
             </Link>
@@ -1312,7 +1336,7 @@ function KeywordMosaic() {
                   key={term.label}
                   to="/search"
                   search={{ q: term.query }}
-                  className="glass-hover rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-all duration-300 hover:border-primary hover:text-primary hover:shadow-[0_0_18px_oklch(0.723_0.161_56/35%)]"
+                  className="glass-pill rounded-full px-3.5 py-1.5 text-xs font-medium transition-all duration-300"
                 >
                   {term.label}
                 </Link>
