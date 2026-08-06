@@ -123,14 +123,14 @@ function CategoryMega() {
           onMouseEnter={openNow}
           onMouseLeave={closeSoon}
           style={{ background: "oklch(0.255 0.008 274 / 98%)" }}
-          className="glass-nav fixed left-1/2 top-24 z-50 w-[min(72rem,94vw)] -translate-x-1/2 rounded-3xl p-6 before:absolute before:-top-8 before:left-0 before:h-8 before:w-full before:content-['']"
+          className="glass-nav fixed left-1/2 top-20 z-50 w-[min(66rem,94vw)] -translate-x-1/2 rounded-3xl p-5 before:absolute before:-top-6 before:left-0 before:h-6 before:w-full before:content-['']"
         >
-          <div className="grid gap-8 lg:grid-cols-[2.2fr_1fr]">
+          <div className="grid gap-6 lg:grid-cols-[2.2fr_1fr]">
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
                 Browse by category
               </p>
-              <div className="mt-4 grid grid-cols-3 gap-2 lg:grid-cols-5">
+              <div className="mt-3 grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-4">
                 {categories.length === 0 ? (
                   <p className="text-xs normal-case tracking-normal text-muted-foreground">
                     Loading categories…
@@ -142,9 +142,11 @@ function CategoryMega() {
                       to="/category/$categorySlug"
                       params={{ categorySlug: c.categorySlug }}
                       onClick={() => setOpen(false)}
-                      className="rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
+                      className="rounded-full px-3 py-1.5 text-[11px] normal-case tracking-normal text-foreground transition-colors"
                     >
-                      <span className="block font-semibold leading-snug">{c.categoryName}</span>
+                      <span className="block truncate font-semibold leading-snug">
+                        {c.categoryName}
+                      </span>
                     </Link>
                   ))
                 )}
@@ -152,18 +154,18 @@ function CategoryMega() {
               <Link
                 to="/browse"
                 onClick={() => setOpen(false)}
-                className="mt-4 inline-block rounded-xl px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary hover:bg-white/10"
+                className="mt-3 inline-block rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em]"
               >
                 View all categories →
               </Link>
             </div>
-            <div className="grid gap-6 sm:grid-cols-2 lg:border-l lg:border-border lg:pl-8">
+            <div className="grid gap-5 sm:grid-cols-2 lg:border-l lg:border-border lg:pl-6">
               {STATIC_GROUPS.map((group) => (
                 <div key={group.title}>
                   <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
                     {group.title}
                   </p>
-                  <ul className="mt-3 space-y-1">
+                  <ul className="mt-2.5 space-y-1">
                     {group.items.map((item) => (
                       <li key={item}>
                         <Link
