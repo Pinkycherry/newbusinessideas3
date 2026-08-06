@@ -301,19 +301,17 @@ a[href*="/category/"],
 a[href*="/search"] {
   color: #FCFBFE !important;
   background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.72) 0%,
-    rgba(226, 223, 217, 0.6) 100%
+    180deg,
+    rgba(136, 134, 219, 0.26) 0%,
+    rgba(43, 40, 113, 0.34) 55%,
+    rgba(70, 67, 186, 0.28) 100%
   ) !important;
-  backdrop-filter: blur(16px) saturate(160%) !important;
-  border: 1px solid rgba(182, 181, 227, 0.62) !important;
+  backdrop-filter: blur(18px) saturate(150%) !important;
+  border: 1px solid rgba(182, 181, 227, 0.42) !important;
   box-shadow:
-    0 0 0 1px rgba(182, 181, 227, 0.12),
-    0 0 12px -3px rgba(255, 255, 255, 0.42),
-    0 0 26px -10px rgba(136, 134, 219, 0.3),
-    inset 0 0 10px -4px rgba(182, 181, 227, 0.36),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.35),
-    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.35) !important;
+    0 1px 0 0 rgba(255, 255, 255, 0.35) inset,
+    0 0 18px -8px rgba(136, 134, 219, 0.5) inset,
+    0 10px 22px -12px rgba(0, 0, 0, 0.8) !important;
   transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.25s ease, color 0.2s ease, background 0.25s ease !important;
   animation: none !important;
 }
@@ -323,17 +321,17 @@ a[href*="/search"]:hover {
   color: #FFFFFF !important;
   transform: translateY(-2px) !important;
   background: linear-gradient(
-    135deg,
-    rgba(244, 242, 238, 0.94) 0%,
-    rgba(182, 181, 227, 0.92) 100%
+    180deg,
+    rgba(136, 134, 219, 0.42) 0%,
+    rgba(70, 67, 186, 0.44) 55%,
+    rgba(58, 54, 151, 0.4) 100%
   ) !important;
-  border-color: #DAD9F2 !important;
+  border-color: rgba(218, 217, 242, 0.7) !important;
   box-shadow:
-    0 0 0 1px rgba(182, 181, 227, 0.35),
-    0 0 20px -3px rgba(255, 255, 255, 0.52),
-    0 0 42px -10px rgba(136, 134, 219, 0.42),
-    0 10px 24px -4px rgba(0, 0, 0, 0.5),
-    inset 0 1px 2px 0 rgba(255, 255, 255, 0.5) !important;
+    0 1px 0 0 rgba(255, 255, 255, 0.5) inset,
+    0 0 26px -8px rgba(136, 134, 219, 0.7) inset,
+    0 16px 30px -14px rgba(0, 0, 0, 0.85),
+    0 0 24px -10px rgba(136, 134, 219, 0.55) !important;
 }
 /* GOLDEN TREE — drop the baked-in dark square, keep only the glowing tree */
 .tree-asset-container {
