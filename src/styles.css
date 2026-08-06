@@ -240,11 +240,11 @@
    ================================================================ */
 @utility glass {
   background:
-    linear-gradient(140deg, rgba(255, 255, 255, 0.48) 0%, rgba(235, 233, 228, 0.58) 48%, rgba(180, 177, 170, 0.68) 100%) !important;
+    linear-gradient(140deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.05) 48%, rgba(255, 255, 255, 0.03) 100%) !important;
   backdrop-filter: blur(24px) saturate(180%) !important;
-  border: 1px solid rgba(235, 233, 228, 0.34) !important;
-  border-top-color: rgba(255, 255, 255, 0.56);
-  border-left-color: rgba(235, 233, 228, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-top-color: rgba(255, 255, 255, 0.34);
+  border-left-color: rgba(255, 255, 255, 0.26);
   position: relative;
   box-shadow:
     0 0 0 1px rgba(235, 233, 228, 0.08),
