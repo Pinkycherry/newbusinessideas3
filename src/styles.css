@@ -138,7 +138,7 @@
       radial-gradient(1px 1px at 22% 44%, rgba(223, 220, 214, 0.45), transparent 60%);
     background-size: 340px 340px;
     background-repeat: repeat;
-    opacity: 1;
+    opacity: 0.5;
     animation: bbi-star-twinkle 7s ease-in-out infinite alternate;
   }
   body::after {
@@ -148,13 +148,13 @@
     z-index: -3;
     pointer-events: none;
     background:
-      radial-gradient(60rem 40rem at 20% 0%, rgba(255, 255, 255, 0.16), transparent 70%),
-      radial-gradient(52rem 38rem at 88% 28%, rgba(200, 197, 190, 0.16), transparent 70%),
-      radial-gradient(46rem 34rem at 50% 100%, rgba(235, 233, 228, 0.12), transparent 70%);
+      radial-gradient(60rem 40rem at 20% 0%, rgba(255, 255, 255, 0.06), transparent 70%),
+      radial-gradient(52rem 38rem at 88% 28%, rgba(200, 197, 190, 0.05), transparent 70%),
+      radial-gradient(46rem 34rem at 50% 100%, rgba(235, 233, 228, 0.04), transparent 70%);
   }
   @keyframes bbi-star-twinkle {
-    from { opacity: 0.55; }
-    to { opacity: 0.95; }
+    from { opacity: 0.32; }
+    to { opacity: 0.6; }
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
