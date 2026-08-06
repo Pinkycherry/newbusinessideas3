@@ -66,14 +66,14 @@
   --card-foreground: #FCFBFE;
   --popover: #12123A;
   --popover-foreground: #FCFBFE;
-  /* Electric blue + violet: reference glow without a green/teal cast. */
-  --primary: #FCFBFE;
+  /* Tertiary palette (indigo → violet → white) */
+  --primary: #8886DB;
   --primary-foreground: #0C0C25;
   --secondary: #1A1846;
   --secondary-foreground: #FCFBFE;
   --muted: rgba(182, 181, 227, 0.08);
-  --muted-foreground: rgba(238, 236, 248, 0.72);
-  --accent: #8886DB;
+  --muted-foreground: #B6B5E3;
+  --accent: #B6B5E3;
   --accent-foreground: #0C0C25;
   --destructive: oklch(0.63 0.21 25);
   --destructive-foreground: #ffffff;
