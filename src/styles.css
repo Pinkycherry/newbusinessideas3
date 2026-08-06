@@ -743,3 +743,96 @@ a[href*="/search"]:hover {
 }
 .bbi-orbit-center .bbi-orbit-center-label { color: #101012 !important; }
 .bbi-orbit-center .bbi-orbit-center-sub { color: rgba(5, 11, 31, 0.8) !important; }
+
+/* ============================================================
+   SALT & PEPPER GLASS BUTTON SYSTEM
+   Reference: clear glossy capsule — high transparency, blurred
+   backdrop, specular top highlight, inner glow + soft shadow.
+   ============================================================ */
+@utility glass-btn {
+  position: relative;
+  isolation: isolate;
+  border-radius: 9999px;
+  color: #F5F4F1;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.06) 46%, rgba(255, 255, 255, 0.13) 100%);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.55) inset,
+    0 -1px 0 0 rgba(255, 255, 255, 0.22) inset,
+    0 0 18px -6px rgba(255, 255, 255, 0.4) inset,
+    0 10px 24px -10px rgba(0, 0, 0, 0.75),
+    0 2px 6px -2px rgba(0, 0, 0, 0.5);
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s ease;
+}
+
+.glass-btn,
+.glass-pill,
+.sheen,
+a[class*="from-primary"],
+button[class*="from-primary"],
+.iv-ticker-track a {
+  color: #F5F4F1 !important;
+  border-radius: 9999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.06) 46%, rgba(255, 255, 255, 0.13) 100%) !important;
+  backdrop-filter: blur(18px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.34) !important;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.55) inset,
+    0 -1px 0 0 rgba(255, 255, 255, 0.2) inset,
+    0 0 18px -6px rgba(255, 255, 255, 0.4) inset,
+    0 10px 24px -10px rgba(0, 0, 0, 0.75),
+    0 2px 6px -2px rgba(0, 0, 0, 0.5) !important;
+  overflow: hidden;
+  position: relative;
+}
+
+/* specular highlight sweeping the top-left curve of the capsule */
+.glass-btn::before,
+.glass-pill::before,
+.sheen::before,
+a[class*="from-primary"]::before,
+button[class*="from-primary"]::before,
+.iv-ticker-track a::before {
+  content: "";
+  position: absolute;
+  inset: 1px 1px auto 1px;
+  height: 46%;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.06) 100%);
+  opacity: 0.75;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.glass-btn:hover,
+.glass-pill:hover,
+.sheen:hover,
+a[class*="from-primary"]:hover,
+button[class*="from-primary"]:hover,
+.iv-ticker-track a:hover {
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.12) 46%, rgba(255, 255, 255, 0.2) 100%) !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.7) inset,
+    0 0 26px -6px rgba(255, 255, 255, 0.55) inset,
+    0 16px 34px -12px rgba(0, 0, 0, 0.8),
+    0 0 26px -8px rgba(255, 255, 255, 0.35) !important;
+}
+
+.glass-btn:active,
+.glass-pill:active,
+.sheen:active,
+a[class*="from-primary"]:active,
+button[class*="from-primary"]:active {
+  transform: translateY(0) scale(0.985);
+}
