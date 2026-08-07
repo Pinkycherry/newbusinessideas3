@@ -869,6 +869,15 @@ html.light body {
   background-color: #FCFBFE !important;
   color: #0C0C25;
 }
+/* The base body background is `!important` inside @layer base; important
+   declarations in a layer beat unlayered ones, so the light override must
+   live in the same layer to win. */
+@layer base {
+  html.light body {
+    background-color: #FCFBFE !important;
+    color: #0C0C25;
+  }
+}
 html.light body::before {
   opacity: 0.12;
 }
