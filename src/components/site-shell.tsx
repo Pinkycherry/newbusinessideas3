@@ -1,8 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { AmbientScene } from "@/components/ambient-scene";
+import { LiveSearch } from "@/components/live-search";
+import { FloatingDock } from "@/components/floating-dock";
 import { getCatalog } from "@/lib/ideas.functions";
 
 const navLinks = [
@@ -117,9 +120,14 @@ function CategoryMega() {
           ▾
         </span>
       </button>
+      <AnimatePresence>
       {open && (
-        <div
+        <motion.div
           role="menu"
+          initial={{ opacity: 0, y: -10, scale: 0.985 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -10, scale: 0.985 }}
+          transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
           onMouseEnter={openNow}
           onMouseLeave={closeSoon}
           style={{ background: "oklch(0.255 0.008 274 / 98%)" }}
@@ -182,8 +190,9 @@ function CategoryMega() {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -195,8 +204,22 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-50 md:hidden">
-      <div className="absolute inset-0 bg-black/60" onClick={onClose} aria-hidden />
-      <div className="glass-nav absolute right-0 top-0 flex h-full w-[min(22rem,92vw)] flex-col overflow-y-auto px-4 py-4">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        className="absolute inset-0 bg-black/60"
+        onClick={onClose}
+        aria-hidden
+      />
+      <motion.div
+        initial={{ x: "100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "100%" }}
+        transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
+        className="glass-nav absolute right-0 top-0 flex h-full w-[min(22rem,92vw)] flex-col overflow-y-auto px-4 py-4"
+      >
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">Menu</span>
           <button
@@ -208,6 +231,8 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
             ✕
           </button>
         </div>
+
+        <LiveSearch className="mt-4" onNavigate={onClose} />
 
         <nav className="mt-5 grid gap-1 text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
           {navLinks.map((link) => (
@@ -272,7 +297,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
         <div className="mt-auto grid gap-2 pt-8">
           <AuthButtons onNavigate={onClose} full />
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -337,6 +362,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           </nav>
 
           <div className="hidden shrink-0 items-center gap-2 md:flex">
+            <LiveSearch className="w-44 lg:w-56" />
             <AuthButtons />
           </div>
 
@@ -353,8 +379,11 @@ export function SiteShell({ children }: { children: ReactNode }) {
           </button>
         </div>
       </header>
-      {mobileOpen && <MobileMenu onClose={() => setMobileOpen(false)} />}
+      <AnimatePresence>
+        {mobileOpen && <MobileMenu onClose={() => setMobileOpen(false)} />}
+      </AnimatePresence>
       <main className="flex-1">{children}</main>
+      <FloatingDock />
       <footer className="px-3 pb-8 pt-20 sm:px-4">
         <div className="glass mx-auto max-w-6xl rounded-3xl px-6 py-10 sm:px-10">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)]">

@@ -6,6 +6,7 @@ import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
 import { TiltPanel } from "@/components/tilt-panel";
 import { AdSlot } from "@/components/AdSlot";
+import { HeroSlider, Typewriter } from "@/components/hero-slider";
 import { FEATURED_IDEA_IDS } from "@/config/featured";
 import { getCatalog, getFeaturedIdeas } from "@/lib/ideas.functions";
 
@@ -206,20 +207,22 @@ function HomePage() {
       </p>
 
       {/* HERO */}
-      <section className="px-3 pt-10 sm:px-4 sm:pt-16">
+      <section id="hero" data-anchor="hero" data-anchor-label="Top" className="px-3 pt-10 sm:px-4 sm:pt-16">
         <TiltPanel className="mx-auto max-w-6xl" max={4}>
           <div className="glass blob-1 px-6 py-14 sm:px-12 sm:py-20">
             <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent sm:text-xs">
-              BBI — Best Business Ideas
+              <Typewriter text="BBI — Best Business Ideas" />
             </p>
-            <h1 className="mt-5 max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
+            <div className="mt-8 grid items-center gap-8 lg:grid-cols-[1.15fr_1fr]">
+              <div>
+            <h1 className="iv-fade-up max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl" style={{ animationDelay: "260ms" }}>
               Small business ideas,{" "}
               <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
                 researched properly
               </span>{" "}
               — not listicles.
             </h1>
-            <p className="mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
+            <p className="iv-fade-up mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg" style={{ animationDelay: "420ms" }}>
               Every entry is a blueprint: who the customer is, how the money works, what will hurt,
               and a blunt verdict on who should actually build it. Browse startup ideas, work from
               home business ideas, and low-investment opportunities — all ranked by real market
@@ -246,6 +249,11 @@ function HomePage() {
                 Browse the library
               </Link>
             </div>
+              </div>
+              <div className="iv-fade-up" style={{ animationDelay: "540ms" }}>
+                <HeroSlider />
+              </div>
+            </div>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
               {HERO_PANELS.map((panel, i) => (
@@ -264,7 +272,7 @@ function HomePage() {
       {/* MOVING CATEGORY TICKER — each pill now rotates through the brand's
           multi-color set by default (see .glass-pill in globals.css), and
           resolves to a light fill + midnight-blue glow + black text on hover. */}
-      <section className="pt-10" aria-label="Browse by category">
+      <section id="categories" data-anchor="categories" data-anchor-label="Browse by category" className="pt-10" aria-label="Browse by category">
         <style>{`@keyframes iv-ticker-l{from{transform:translateX(0)}to{transform:translateX(-50%)}}@keyframes iv-ticker-r{from{transform:translateX(-50%)}to{transform:translateX(0)}}.iv-ticker-track{width:max-content;animation:iv-ticker-l 70s linear infinite}.iv-ticker-track.rev{animation-name:iv-ticker-r}.iv-ticker:hover .iv-ticker-track,.iv-ticker:active .iv-ticker-track{animation-play-state:paused}`}</style>
         <p className="mx-auto max-w-6xl px-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent sm:px-4">
           Browse by category
@@ -595,7 +603,7 @@ function GoldenTreeSection() {
   ];
 
   return (
-    <section className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4">
+    <section id="golden-tree" data-anchor="golden-tree" data-anchor-label="Golden Tree" className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4">
       <div className="text-center max-w-3xl mx-auto">
         <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
           Interactive Canopy Map
@@ -767,7 +775,7 @@ function LiveDemandTrackerSection() {
   ];
 
   return (
-    <section className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4">
+    <section id="demand" data-anchor="demand" data-anchor-label="Demand tracker" className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
@@ -1508,7 +1516,7 @@ const BBI_FAQ_3 = [
 
 function PromiseSection() {
   return (
-    <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
+    <section id="promise" data-anchor="promise" data-anchor-label="Our promise" className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
       <div className="glass glass-hover bbi-shape-shield p-8 text-center sm:p-12">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Our promise
