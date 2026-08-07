@@ -1,225 +1,318 @@
-# BusinessIdea.io — Master Project Brief for Claude Code
-
-> **Read this file first, every session.** This is the single source of truth for this project. Do not ask me to re-explain context that is already written here — read this file, then ask only about what genuinely isn't covered.
-
-**Owner / Developer:** Cherrry (solo founder, minimal coding background, learning by building this with Claude Code)
-**Domain:** businessidea.io *(confirm exact spelling and DNS before going live — double-check there is no extra letter anywhere in the registered domain)*
-**Stack:** Next.js, deployed on Vercel, GitHub-connected, Supabase backend
-**Timeline:** Full build target — one month from today
-**Market:** India only, for now. All content, tone, pricing, and SEO targeting is India-first. Global expansion is a later-phase decision, not part of this build.
+Here's the full updated brief, exactly as written in the file, for you to listen to:
 
 ---
 
-## 1. How Claude Code should work with me on this project
+**BusinessIdea.io — Master Project Brief for Claude Code**
+
+Read this file first, every session. This is the single source of truth for this project. Do not ask me to re-explain context that is already written here — read this file, then ask only about what genuinely isn't covered.
+
+Owner / Developer: Cherrry (solo founder, minimal coding background, learning by building this with Claude Code)
+Domain: businessidea.io (confirm exact spelling and DNS before going live — double-check there is no extra letter anywhere in the registered domain)
+Stack: Next.js, deployed on Vercel, GitHub-connected, Supabase backend
+Timeline: Everything in this document is being completed within this month. Full stop. There is no "phase two" or "next month" — every section below, including items marked as future-facing inspiration, is in scope for this build cycle. Do not propose multi-month roadmaps.
+Market positioning (read carefully, this was previously stated wrong and must not be repeated): This is not an India-only product. We are an Indian company, proudly positioned as Indian engineers, and India is our first and primary market — which is why pricing is low. But the idea database and platform are being built for global scale from day one. Never say or imply "we only make content for Indians" anywhere in code comments, copy, or explanations back to the founder — the correct framing is "India-first, built for the world."
+
+---
+
+**1. How Claude Code should work with me on this project**
 
 - I am a solo, non-technical founder. Explain changes in plain terms when needed, but don't slow down — just build, and tell me what you did.
-- When I ask "where is X" (a word, an image, a section, a file), always answer with the exact file path and, if relevant, what to search for inside it (e.g. "open `app/idea/[slug]/page.tsx`, press Ctrl+F, search for `heroImage`"). Never make me hunt.
+- When I ask "where is X" (a word, an image, a section, a file), always answer with the exact file path and, if relevant, what to search for inside it (e.g. "open app/idea/[slug]/page.tsx, press Ctrl+F, search for heroImage"). Never make me hunt.
 - I do not want emojis anywhere in the codebase, UI copy, or generated content. None. Not in buttons, not in AI-generated idea text, not in FAQs, nowhere.
 - I do not want generic chatbot-style UI patterns (no ChatGPT-style message bubbles, no cheap/generic animation libraries used without intention). Animations should feel deliberate and premium — closer to Figma-prototype quality than default component-library defaults.
 - All visual assets (icons, illustrations, SVGs) should be custom, not stock or emoji-style. I will generate these myself using AI image generation and drop them into a shared Drive folder, then hand you the links to wire in. Flag clearly, page by page, where an image/icon slot is expected so I know what to generate.
-- We do not copy content, layout text, or structure verbatim from any reference site named in this document. Reference sites below are studied for **information architecture and technical patterns only** — URL structure, template types, schema usage. All copy, design, and voice on businessidea.io is original.
+- We do not copy content, layout text, or structure verbatim from any reference site named in this document. Reference sites below are studied for information architecture and technical patterns only — URL structure, template types, schema usage. All copy, design, and voice on businessidea.io is original.
 - Work in small, reviewable chunks. Don't attempt the entire roadmap in one pass — confirm one piece is working before moving to the next.
+- Keep responses short. Answer in a concise, direct way rather than long exhaustive explanations — this is a token/usage-limit concern across the accounts described in Section 1.1, not a style preference. Give me the short version by default; I'll ask if I want more detail.
+
+**1.1 Primary / backup Claude Pro account workflow — internal only, never disclose**
+
+This section describes how I am personally running this project day-to-day. It is for Claude Code's own understanding of the working environment — it must never appear in code comments, UI copy, README files, or anything a client or outside collaborator could see.
+
+- I am running this build across two paid Claude Pro accounts, not the Claude API, for the actual development/editing/chat work in Claude Code — one Pro account alone cannot cover a full month of heavy back-and-forth.
+- One account is the primary/lead for a given stretch of work; the second is a backup. When the primary account hits its usage limit, I switch to the backup and keep going.
+- GitHub is the shared source of truth between the two accounts. Whichever account I'm using, the actual state of the project is whatever is committed to the repo — not a specific chat history. So when I switch accounts, Claude Code should ground itself in the current repo state (files, this brief, recent commits) rather than assuming it needs prior conversation context to understand what's been done.
+- When I bring a new/backup account onto the project mid-stream, I'll frame it explicitly as "another instance is already working on this, you're picking up as backup" — Claude Code should treat that framing normally and just get to work from the repo state, not treat it as anything unusual.
+- This dual-account approach is purely an operational choice on my side to manage usage limits. It has no bearing on the product itself and should never be mentioned anywhere outward-facing.
 
 ---
 
-## 2. What this product is
+**2. What this product is**
 
-BusinessIdea.io is a searchable library of business ideas for the Indian market. Each idea has its own page with a detailed blueprint. The core differentiator (see Section 3) is that idea *validation* is free — we don't charge for AI analysis, we charge a small platform fee for access, curation, and the data layer. The user runs their own validation using their own Claude or Perplexity account, for free, through a one-click handoff from our site.
+BusinessIdea.io is a searchable library of business ideas for the Indian market. Each idea has its own page with a detailed blueprint. The core differentiator (see Section 3) is that idea validation is free — we don't charge for AI analysis, we charge a small platform fee for access, curation, and the data layer. The user runs their own validation using their own Claude or Perplexity account, for free, through a one-click handoff from our site.
 
-## 3. Unique selling point (do not dilute this in any copy or messaging)
+**3. Unique selling point (do not dilute this in any copy or messaging)**
 
 Every competing "validate your business idea" tool charges $20–$70/month and markets itself as if it has some proprietary validation engine. In reality, they are calling the same public AI APIs (Claude, GPT-4, Gemini) that anyone can access directly. The user paying $20/month usually has no idea their "validation" is just an API call wrapped in a UI.
 
-Our position: **we are transparent about this.** We don't charge for validation — validation is free, because the user runs it themselves on their own AI account. We charge a small platform fee (₹ pricing, India-first) for:
+Our position: we are transparent about this. We don't charge for validation — validation is free, because the user runs it themselves on their own AI account. We charge a small platform fee (₹ pricing, India-first) for:
 - The curated idea database itself (structured blueprints, not raw AI output)
 - Platform access, search, and organization
 - The one-click handoff that saves the user from writing their own research prompts
+
+**3.1 The accessibility/underserved-niche moat**
+
+This is a deliberate, structural part of the strategy, not a side thought: as the category system scales past a handful of demographics into hundreds, we are the ones building dedicated idea libraries for audiences nobody else serves — zero-budget business ideas for blind entrepreneurs, for deaf entrepreneurs, for physically disabled founders, for senior citizens, and similar genuinely underserved groups. No competitor studied in Section 4 has anything like this. These categories should be priced accessibly (low or no premium) and should be planned into the category taxonomy from the start, not bolted on later, since retrofitting category infrastructure is far more expensive than designing for hundreds of categories up front.
 
 This should come through in copy: honest, India-first, "why pay $20 to validate one idea when you can pay us a small platform fee and validate as many as you want using your own AI subscription."
 
 ---
 
-## 4. Reference sites — technical/architecture study only
+**4. Reference sites — technical/architecture study only**
 
-### 4.1 Our own current build
-**Live at:** newbusinessideas3.vercel.app *(pre-launch working domain, will move to businessidea.io)*
+**4.1 Our own current build**
 
-Current confirmed structure:
-- `/` — home
-- `/browse` — master idea listing
-- `/category/[slug]` — category template (currently minor/simple)
-- `/idea/[slug]` — single idea template (this is the main product surface)
-- `/search?q=` — dynamic search (must be set to `noindex,follow`)
-- `/blog`, `/pricing`, `/about`, `/contact`, `/terms`, `/privacy`, `/disclaimer`, `/gdpr`, `/refund-policy`, `/sign-in` — static pages
+Live at: newbusinessideas3.vercel.app (pre-launch working domain, will move to businessidea.io)
+
+Structure as last confirmed by direct inspection:
+- / — home
+- /browse — master idea listing
+- /category/[slug] — category template (currently minor/simple)
+- /idea/[slug] — single idea template (this is the main product surface)
+- /search?q= — dynamic search (must be set to noindex,follow)
+- /blog, /pricing, /about, /contact, /terms, /privacy, /disclaimer, /gdpr, /refund-policy, /sign-in — static pages
+
+Cross-check before building on top of this: the repo may have moved on since this structure was last inspected — files could have been renamed, replaced, or restructured since. Claude Code should re-verify the actual current file/route structure directly against the live repo before making assumptions based on the list above, rather than trusting this document as current truth for the existing codebase.
 
 Data source: Supabase, dumped in via an n8n automation pipeline that's already running and has generated 300+ ideas, scaling toward 1,000+ within days and 3,000+ within the month.
 
-### 4.2 Competitor reference #1 — newbusinessideas-style small competitor
-Studied for basic pattern recognition early in this project (word "lists" used as their blog/post category slug, ~310 indexed URLs at the time of research, roughly 15–20 repeating page templates). Useful for confirming that a small set of repeating templates, run at scale, is the right approach — not for content or design.
+**4.2 Competitor reference — ideaproof.io (the only competitor referenced in this project)**
 
-### 4.3 Competitor reference #2 — ideaproof.io (primary structural reference)
-This is the most structurally mature competitor and the main one to study for **information architecture only**. Do not copy any wording, layout, or visual design from it.
+There is exactly one competitor referenced throughout this project: ideaproof.io. This is the most structurally mature player in the space and the one studied in depth for information architecture only — URL patterns, template types, schema usage. Do not copy any wording, layout, visual design, or content from it. All copy and design on businessidea.io is original.
 
-**Sitemap to check directly:** https://ideaproof.io/sitemap
-**Also published:** ideaproof.io makes available a `llms.txt` file (a machine-readable AI-citation manifest) — this is itself a technique worth adopting later (see Section 11).
+Reference URLs to study (structure and template-type inspiration only, not content):
+- https://ideaproof.io/sitemap — full sitemap
+- https://ideaproof.io/ — homepage layout and banner structure
+- https://ideaproof.io/features, https://ideaproof.io/pricing, https://ideaproof.io/about — standard page patterns
+- https://ideaproof.io/lists/ai-startup-ideas, https://ideaproof.io/lists/side-hustle-ideas, https://ideaproof.io/lists/small-business-ideas — listicle template examples
+- https://ideaproof.io/questions/how-to-validate-business-idea, https://ideaproof.io/questions/how-to-do-market-research — FAQ/question template examples
+- https://ideaproof.io/guides/complete-idea-validation-guide — pillar guide template example
+- https://ideaproof.io/calculators/roi, https://ideaproof.io/calculators/ltv, https://ideaproof.io/calculators/market-size — interactive calculator template examples
+- https://ideaproof.io/tools, https://ideaproof.io/tools/category/validation-research — curated tools directory example
+- https://ideaproof.io/validate-idea/saas, https://ideaproof.io/validate-fintech-idea, https://ideaproof.io/validate-healthtech-idea — industry/vertical landing page examples
+- https://ideaproof.io/compare, https://ideaproof.io/ideaproof-vs-validatorai — comparison page examples
+- https://ideaproof.io/failed-startups, https://ideaproof.io/failure/[slug] — case-study database example (not part of our core concept — noted for completeness, not for building)
 
-Their confirmed URL templates and what each is for:
+Full confirmed URL template inventory and what each is for:
 
-| Pattern | Purpose | Our equivalent |
-|---|---|---|
-| `/lists/[slug]` | Roundup listicle post (e.g. "50 AI Startup Ideas") — top 10 detailed, rest as cards | New template to build — see Section 6.3 |
-| `/questions/[slug]` | Single-question FAQ page, atomic | New template — see Section 6.4 |
-| `/guides/[slug]` | Long-form pillar guide | Later-phase, not in first month |
-| `/calculators/[slug]` | Interactive tool (ROI, CAC, LTV, valuation, etc.) | Later-phase |
-| `/tools/[slug]` and `/tools/category/[slug]` | Curated free-tools directory | Later-phase |
-| `/validate-idea/[vertical]` | Industry landing page (SaaS, fintech, healthtech, etc.) | Later-phase, adapt to Indian verticals |
-| `/failed-startups`, `/failure/[slug]` | Failure case-study database | Not part of our core concept, skip |
-| `/compare`, `/[competitor]-vs-ideaproof` | Comparison pages | Later-phase, low priority |
-| `/about`, `/pricing`, `/terms`, `/privacy` | Standard static pages | We already have equivalents |
+Pattern → Purpose → Our equivalent
 
-**Key architectural takeaways to apply (patterns, not content):**
-1. A small number of repeating templates (9–10 in their case) scaled to thousands of URLs — validates our template-first approach.
+/lists/[slug] → Roundup listicle post (e.g. "50 AI Startup Ideas") — top 10 detailed, rest as cards → Build this month — Section 6.3
+
+/questions/[slug] → Single-question FAQ page, atomic → Build this month — Section 6.4
+
+/guides/[slug] → Long-form pillar guide → Build this month — Section 6.7
+
+/calculators/[slug] → Interactive tool (ROI, CAC, LTV, valuation, etc.) → Build this month — Section 6.8
+
+/tools/[slug] and /tools/category/[slug] → Curated free-tools directory → Build this month — Section 6.9
+
+/validate-idea/[vertical] → Industry landing page (SaaS, fintech, healthtech, etc.) → Build this month, adapted to Indian verticals — Section 6.10
+
+/failed-startups, /failure/[slug] → Failure case-study database → Not part of our core concept, skip entirely
+
+/compare, /[competitor]-vs-ideaproof → Comparison pages → Build this month, low priority within the month — Section 6.11
+
+/about, /pricing, /terms, /privacy → Standard static pages → We already have equivalents
+
+Key architectural takeaways to apply (patterns, not content):
+
+1. A small number of repeating templates scaled to thousands of URLs — validates our template-first approach.
 2. Every template type has its own schema.org type (see Section 7) and its own sitemap file, not one flat sitemap.
-3. Comparison, question, and list content types exist specifically to catch long-tail search volume that a single "idea" page type can't catch alone.
-4. They publish a `llms.txt` — a plain-text file listing their key pages, facts, and citation preferences aimed at being cited correctly by AI assistants and chatbots. Legitimate technique, not something to fabricate false stats in (see Section 11 for the honest version of this for us).
+3. Comparison, question, guide, calculator, and list content types exist specifically to catch long-tail search volume that a single "idea" page type can't catch alone.
+4. They publish a llms.txt — a plain-text file listing key pages, facts, and citation preferences aimed at being cited correctly by AI assistants and chatbots. Legitimate technique, not something to fabricate false stats in (see Section 11 for the honest version of this for us).
 
 ---
 
-## 5. How Google (and any AI crawler) actually tells posts, pages, and categories apart
+**5. How Google (and any AI crawler) actually tells posts, pages, and categories apart**
 
 This was a point of real confusion earlier — writing it here permanently so it's never re-explained.
 
-**The word used in a URL slug has no bearing on classification.** Whether a folder is called `/idea/`, `/list/`, `/entry/`, or anything else is irrelevant to search engines. What actually determines page type:
+The word used in a URL slug has no bearing on classification. Whether a folder is called /idea/, /list/, /entry/, or anything else is irrelevant to search engines. What actually determines page type:
 
-1. **Schema.org JSON-LD markup** in the page `<head>` — this is the primary, authoritative signal. Idea pages should declare `Article`, category/browse pages should declare `CollectionPage`, static pages should declare `WebPage`.
-2. **Sitemap segmentation** — split into `sitemap-ideas.xml`, `sitemap-categories.xml`, `sitemap-pages.xml`, referenced from a `sitemap-index.xml`. Do this before the idea count gets into the thousands.
-3. **Breadcrumb schema** (`BreadcrumbList`) — proves hierarchy (Home > Category > Idea).
-4. **Internal linking pattern and content shape** — category pages link out to many things and repeat short card layouts; idea pages have one long unique body and are linked into from many places.
+1. Schema.org JSON-LD markup in the page <head> — this is the primary, authoritative signal. Idea pages should declare Article, category/browse pages should declare CollectionPage, static pages should declare WebPage.
+2. Sitemap segmentation — split into sitemap-ideas.xml, sitemap-categories.xml, sitemap-pages.xml, referenced from a sitemap-index.xml. Do this before the idea count gets into the thousands.
+3. Breadcrumb schema (BreadcrumbList) — proves hierarchy (Home > Category > Idea).
+4. Internal linking pattern and content shape — category pages link out to many things and repeat short card layouts; idea pages have one long unique body and are linked into from many places.
 
-**Action:** implement all four of the above. None of them require renaming any existing route.
+Action: implement all four of the above. None of them require renaming any existing route.
 
 ---
 
-## 6. Templates — full specification
+**6. Templates — full specification**
 
-We need **five templates total**. Do not build more than this in the first month.
+The core five (6.1–6.5) are the priority build order. Sections 6.7–6.11 are additional templates inspired by the competitor's full page-type inventory (Section 4.2) and are also in scope this month — everything in this document is one build cycle, not phased.
 
-### 6.1 Idea template (`/idea/[slug]`) — the flagship template, gets the most effort
+**6.1 Idea template (/idea/[slug]) — the flagship template, gets the most effort**
 
 Top-to-bottom structure:
 1. Hero — idea title, category tag, one supporting visual (image slot: flag for me to generate)
 2. Main blueprint body — the existing generated content (named buyer, money mechanics, risks, verdict, etc.)
 3. Data visualization block — a simple demand/trend indicator, doesn't need to be complex, just needs to look alive (bar, gauge, or similar)
-4. **Validate This Idea** button — see Section 8 for exact behavior, this is non-negotiable and confirmed working
+4. Validate This Idea button — see Section 8 for exact behavior, this is non-negotiable and confirmed working
 5. FAQ section — 5 questions above additional content, 5 below (see Section 6.5 for how these are generated/pulled)
 6. Related ideas — 3 cards, same category, pulled randomly with a limit, never hardcoded (see Section 9)
 7. Related categories — random subset (e.g. 5), never a full static list of all categories
 8. Trending/most-searched carousel — random pull from top ideas, not fixed
 9. Closing call-to-action block — validate button repeated, plus any other conversion actions
 
-**Layout variation (to avoid the "AI factory" look):** build 3–4 visual layout variants of this template (hero-left vs hero-banner vs stat-forward, etc., plus 3–4 accent color themes). Each idea's slug/ID runs through a deterministic hash function to pick a variant — same idea always renders the same variant, but the library as a whole looks varied and handcrafted rather than stamped out. This logic lives in code, not in the database — no "layout" column needed.
+Layout variation (to avoid the "AI factory" look) — confirmed requirement, explicitly restated by founder: build 3–4 visual layout variants of this template (hero-left vs hero-banner vs stat-forward, etc.) plus 3–4 accent color themes. Unlike the earlier draft of this document, the variant is not fixed per idea — it is chosen randomly on every page render, so if the user refreshes an idea page, the layout and color theme can visibly change along with the random content sections (Section 9). This reinforces the "something is alive behind the scenes" feeling the founder wants across the whole site, not just in the FAQ/related sections. This logic lives entirely in code (pick a random variant client- or server-side on each request) — no "layout" column needed in the database. (See Section 12.2 for the refined version of this — refreshes should cycle through gradient variations of the same brand palette, not unrelated color themes.)
 
-### 6.2 Category template (`/category/[slug]`) — kept minor, as is
+**6.2 Category template (/category/[slug]) — kept minor, as is**
 
 Top 10 ideas shown in detail-ish cards, remainder as simple clickable cards/buttons. One category count (dozens, not thousands) means this template does not need the same variation trick as the idea template.
 
-### 6.3 Listicle template (`/list/[slug]` or similar — pick a slug word freely, it has zero SEO effect per Section 5)
+**6.3 Listicle template (/list/[slug] or similar — pick a slug word freely, it has zero SEO effect per Section 5)**
 
-New template. "50 Zero Investment Business Ideas for India" style. Top 10 get 200–300 words each written directly on the page; remaining ideas display as clickable cards linking to their full `/idea/[slug]` page. This is our fastest lever for both search volume and internal linking density.
+New template. "50 Zero Investment Business Ideas for India" style. Top 10 get 200–300 words each written directly on the page; remaining ideas display as clickable cards linking to their full /idea/[slug] page. This is our fastest lever for both search volume and internal linking density.
 
-### 6.4 FAQ hub template (`/faq/[category-slug]` or similar)
+**6.4 FAQ hub template (/faq/[category-slug] or similar)**
 
 One page per category (e.g. "Low Investment Business Ideas — FAQ", "Side Hustle Ideas — FAQ"). Pulls from the same FAQ pool described in 6.5. This is a standalone page in addition to the embedded FAQ section inside idea pages.
 
-### 6.5 FAQ pool system (solves "we have 300 existing ideas with no FAQs" problem)
+**6.5 FAQ pool system (solves "we have 300 existing ideas with no FAQs" problem)**
 
-Do **not** attempt to write bespoke FAQs for each of the 300+ existing ideas — not necessary and too slow.
+Do not attempt to write bespoke FAQs for each of the 300+ existing ideas — not necessary and too slow.
 
-Instead: generate roughly 10–15 FAQs per category in bulk (one-time job via the n8n + Claude API pipeline), giving a pool of ~150+ FAQs total across ~12 categories. Every idea page, at render time, pulls a random 5–10 FAQs from its own category's pool (`ORDER BY random() LIMIT n` at the Supabase query level). This:
+Instead: generate roughly 10–15 FAQs per category in bulk (one-time job via the n8n + Gemini API pipeline — see Section 10 for the model change), giving a pool of ~150+ FAQs total across ~12 categories. Every idea page, at render time, pulls a random 5–10 FAQs from its own category's pool (ORDER BY random() LIMIT n at the Supabase query level). This:
 - Covers all 300 existing ideas instantly with zero manual work
 - Covers all future ideas automatically (they inherit their category's pool)
 - Satisfies the "page should feel alive on refresh" requirement below, since the visible FAQ set changes each time
 
 Later phase (not month one): idea-specific FAQs generated per-idea through the ongoing n8n pipeline for new content going forward.
 
-### 6.6 Static pages
+**6.6 Static pages**
 
 About, Contact, Terms, Privacy, Disclaimer, GDPR, Refund Policy, Pricing, Sign-in — already exist, no template needed, hand-edit each one's schema individually (10 pages, five-minute job each, see Section 7).
 
+**6.7 Guide template (/guide/[slug])**
+
+Long-form pillar content, inspired by the competitor's /guides/[slug] pattern (Section 4.2). India-first startup/business guidance — e.g. "how to validate a business idea with zero budget," "how to start a side hustle in India." Same schema/breadcrumb pattern as everything else.
+
+**6.8 Calculator template (/calculator/[slug])**
+
+Small interactive tools — ROI, break-even, startup cost, funding-needed calculators, adapted to Indian currency and context. Inspired by the competitor's /calculators/[slug] pattern. Simple client-side calculation widgets, no backend needed per calculator.
+
+**6.9 Tools directory template (/tools and /tools/category/[slug])**
+
+A curated directory of free tools useful to Indian founders (validation, no-code, landing pages, etc.), inspired by the competitor's /tools hub. This can start as a hand-curated list and does not need to be database-driven at launch.
+
+**6.10 Vertical/industry landing page template (/validate/[vertical])**
+
+Industry-specific landing pages — e.g. validate a SaaS idea, validate a D2C brand, validate a fintech idea — adapted to verticals relevant to the Indian market. Each links into the relevant category and idea pages rather than duplicating content.
+
+**6.11 Comparison template (/compare/[slug])**
+
+Comparison-style pages framed around honest value (Section 3), not attacking competitors by name in ways that could be seen as disparaging — e.g. "validating a business idea: platform fee vs $20/month tools" framed generically rather than as a direct competitor callout, to keep this defensible and evergreen.
+
 ---
 
-## 7. Schema markup and breadcrumbs — implementation notes
+**7. Schema markup and breadcrumbs — implementation notes**
 
-**Critical point:** schema logic is written **once per template**, not once per idea. Since every idea renders through the same `idea/[slug]` file, adding a schema-generation function to that one file automatically applies it to all 300+ existing ideas and every future idea Supabase sends in — no new database column needed, no per-idea manual work, no "schema" field required anywhere.
+Critical point: schema logic is written once per template, not once per idea. Since every idea renders through the same idea/[slug] file, adding a schema-generation function to that one file automatically applies it to all 300+ existing ideas and every future idea Supabase sends in — no new database column needed, no per-idea manual work, no "schema" field required anywhere.
 
 Required schema by template:
-- `/idea/[slug]` → `Article` (headline, description, datePublished, category as `about`)
-- `/category/[slug]` → `CollectionPage`
-- `/list/[slug]` → `Article` or `ItemList` depending on final shape
-- `/faq/[slug]` → `FAQPage`
-- Static pages → `WebPage`
-- All pages with a category → `BreadcrumbList`
+- /idea/[slug] → Article (headline, description, datePublished, category as about)
+- /category/[slug] → CollectionPage
+- /list/[slug] → Article or ItemList depending on final shape
+- /faq/[slug] → FAQPage
+- Static pages → WebPage
+- All pages with a category → BreadcrumbList
 
 Also required before scale:
-- Split `sitemap.xml` into `sitemap-ideas.xml`, `sitemap-categories.xml`, `sitemap-pages.xml`, indexed via `sitemap-index.xml`
-- Add `noindex,follow` to `/search?q=*` to prevent crawl-budget waste on infinite query variations
+- Split sitemap.xml into sitemap-ideas.xml, sitemap-categories.xml, sitemap-pages.xml, indexed via sitemap-index.xml
+- Add noindex,follow to /search?q=* to prevent crawl-budget waste on infinite query variations
 
-Do this work **first**, before new templates, since it retroactively fixes all existing content in one deploy.
+Do this work first, before new templates, since it retroactively fixes all existing content in one deploy.
 
 ---
 
-## 8. Validate button — exact confirmed behavior
+**8. Validate button — exact confirmed behavior**
 
 This has been tested live and works. Implement exactly as follows, no copy/paste UI element anywhere.
 
-**Flow:**
-1. User is on any idea page, clicks **Validate for Free**.
+Flow:
+1. User is on any idea page, clicks Validate for Free.
 2. User picks a platform (Claude, Perplexity — no ChatGPT, no Grok, deliberately excluded from this product's positioning).
-3. Backend builds a URL for the chosen platform with the idea's specific validation prompt attached as a query parameter (e.g. `https://claude.ai/new?q=<encoded prompt>`). This happens invisibly — no prompt text is ever shown or copyable in our UI.
+3. Backend builds a URL for the chosen platform with the idea's specific validation prompt attached as a query parameter (e.g. https://claude.ai/new?q=<encoded prompt>). This happens invisibly — no prompt text is ever shown or copyable in our UI.
+
+   The prompt itself must be a fully engineered, detailed instruction — not a casual one-liner. The user is about to spend one of their own daily uses on their own AI account, so this needs to be worth it. The backend prompt template should explicitly instruct the destination AI to: (a) produce a complete, structured markdown-file-style output covering the idea's market analysis, target buyer, revenue model, key risks, and a launch roadmap; and (b) generate an accompanying visual (a chart, diagram, or similar) where the platform supports it, not just plain paragraphs. This prompt template lives once in the backend, is applied to every idea via variable substitution (idea title, category, key facts), and should be treated as one of the highest-leverage pieces of copy in the whole product — it's effectively doing the job a $20/month competitor charges for. If the user's daily platform limit is already used up when they land there, that's expected and outside our control — the platform fee they paid us covers curation and access, not their AI provider's usage limits, and no messaging on our site needs to apologize for or explain that.
 4. New tab opens directly to that platform.
-   - If the user is already logged into that platform (in-browser or via their installed app), the prompt appears pre-filled in the input box. It does **not** auto-submit — the user presses enter themselves, which is expected and fine.
-   - If the user is not logged in, they go through that platform's own login flow, then click **Validate** again on our site — this re-triggers the flow now that they're authenticated.
-5. A short 2–3 line note sits under the Validate button on our site explaining this exact two-step reality, so nobody is confused mid-flow: *"You'll be taken to Claude/Perplexity with your prompt ready — just hit enter. Not signed in yet? Sign in there, then tap Validate again."*
+   - If the user is already logged into that platform (in-browser or via their installed app), the prompt appears pre-filled in the input box. It does not auto-submit — the user presses enter themselves, which is expected and fine.
+   - If the user is not logged in, they go through that platform's own login flow, then click Validate again on our site — this re-triggers the flow now that they're authenticated.
+5. A short 2–3 line note sits under the Validate button on our site explaining this exact two-step reality, so nobody is confused mid-flow: "You'll be taken to Claude/Perplexity with your prompt ready — just hit enter. Not signed in yet? Sign in there, then tap Validate again."
 
-**Known platform-side behavior to be aware of, not a bug:** Claude's input screen may show a small caution notice about links carrying embedded queries, since query-based prompt injection is a known attack pattern the platform watches for generally. This is expected, is not an error, and does not block the flow — it's a standard platform-level notice, not specific to our implementation. Do not attempt to "fix" or suppress this; it's outside our control and not something we need to react to.
+Known platform-side behavior to be aware of, not a bug: Claude's input screen may show a small caution notice about links carrying embedded queries, since query-based prompt injection is a known attack pattern the platform watches for generally. This is expected, is not an error, and does not block the flow — it's a standard platform-level notice, not specific to our implementation. Do not attempt to "fix" or suppress this; it's outside our control and not something we need to react to.
 
-**Important ongoing caveat:** the `?q=` prefill mechanism is not a documented, permanently-guaranteed public API — treat it as best-effort. Test it periodically after platform updates. The fallback note under the button (step 5 above) is also the safety net if this behavior ever changes.
+Important ongoing caveat: the ?q= prefill mechanism is not a documented, permanently-guaranteed public API — treat it as best-effort. Test it periodically after platform updates. The fallback note under the button (step 5 above) is also the safety net if this behavior ever changes.
 
-**Never build:** a visible copy button, a visible prompt textbox, or anything resembling "copy this and paste it into Claude." The entire point is that it's invisible and automatic up to the point the user has to hit enter themselves.
+Never build: a visible copy button, a visible prompt textbox, or anything resembling "copy this and paste it into Claude." The entire point is that it's invisible and automatic up to the point the user has to hit enter themselves.
 
 ---
 
-## 9. "Nothing static" / dynamic-feel requirement
+**8.1 Homepage banner + "Surprise Me" section (do not skip)**
+
+Directly below the hero banner on the homepage, before any other content, add a dedicated interactive section:
+
+- A dropdown lets the visitor pick a category (Work From Home, Side Hustle, Passive Income, etc. — pulls live from the existing category table, so it grows automatically as categories scale into the hundreds).
+- A button labeled "Surprise Me" — clicking it (with or without a category selected) pulls 4–5 random ideas from the database (filtered by category if one was chosen) and displays them right there on the homepage.
+- Clicking any of the 4–5 surprise results takes the user straight to that idea's full /idea/[slug] page.
+
+This is the homepage's primary engagement hook — it should feel instant and a little delightful, not like a search form. It is powered entirely by the same random-pull database logic described in Section 9, just surfaced at the top of the homepage instead of inside an idea page. No new content needs to be written for this — it's a UI layer over data that already exists.
+
+**8.2 Internal linking strategy**
+
+Beyond the "related ideas" cards, every idea and article body needs contextual inline links woven into the actual text — not a dumped list at the end. Rules:
+- Maximum 3 internal links per page. Do not over-link.
+- Links are placed automatically by scanning generated content for phrases that match existing idea titles or category names in the database, and wrapping the first 2–3 genuine matches into working links. No manual placement, ever — this has to scale to thousands of pages.
+- This runs as part of the same automation pipeline that generates the content (Section 10), not as a separate manual pass.
+- Prioritize linking to category/hub-style pages and to closely related ideas over distant/unrelated matches — relevance beats link count.
+
+---
+
+**9. "Nothing static" / dynamic-feel requirement**
 
 Applies everywhere except the core layout/variant of a given idea page (that stays consistent per idea so URLs don't visually flicker):
-
-- Related ideas (3 cards) — random pull from same category, with `LIMIT`, never hardcoded
+- Related ideas (3 cards) — random pull from same category, with LIMIT, never hardcoded
 - Related categories — random subset (e.g. 5 of however many categories exist), never a full static list
 - Trending/most-searched carousel — random pull from top ideas
 - FAQ section — random 5–10 from the category's FAQ pool (Section 6.5)
 
-This is implemented as `ORDER BY random() LIMIT n` (or Supabase's equivalent) at the query level — not application logic, not a cron job, not pre-computed. Every page load recomputes it. This is also what makes the site scale cleanly past 100+ categories and 1,000+ ideas without needing to redesign any section.
+This is implemented as ORDER BY random() LIMIT n (or Supabase's equivalent) at the query level — not application logic, not a cron job, not pre-computed. Every page load recomputes it. This is also what makes the site scale cleanly past 100+ categories and 1,000+ ideas without needing to redesign any section.
 
 ---
 
-## 10. Content pipeline — posts, blog, and future automation
+**10. Content pipeline — posts, blog, and future automation**
 
-- **Blog lives on our own Next.js/Supabase stack, not WordPress.** Headless WordPress caused hosting issues previously and is not worth revisiting. Blog posts render through their own template following the same schema/breadcrumb pattern as everything else, on the same domain — better for SEO than a split domain/platform anyway.
-- **Content generation pipeline:** n8n workflow calling the Claude API (a separate paid product from Claude Pro/Claude Code — budget and purchase this separately) generates idea blueprints, FAQ pool content, and listicle content in bulk, writing into Supabase, which the frontend already reads from live.
-- **Storage for the content pipeline itself:** Supabase remains the source of truth for idea data since the frontend already depends on it and is not prohibitively expensive at current + projected scale (aim for 3,000 ideas within the month) — re-evaluate cost only if actual usage numbers say otherwise. If cost becomes a real concern, Google Docs/Sheets can hold *drafts or the raw prompt/output log* before final content is pushed to Supabase, not as the live data source for the site itself, since the site's queries (random pulls, category filters, joins) need a real database, not a document store.
-- Any new content template (list, FAQ hub, future guide/calculator types) should be built so the n8n workflow can target it directly — i.e., the workflow writes structured fields that map onto whichever template's expected shape, rather than needing a new pipeline built per template.
+Model change — read carefully, this replaces the earlier Claude API plan: all content-pipeline generation — ideas, articles, FAQs, and everything else produced in bulk — runs on the Gemini API, not the Claude API. Claude Pro accounts (Section 1.1) are reserved for development work inside Claude Code, not for automated content generation. Reasoning: running two Claude Pro subscriptions already covers the month's dev budget, and mixing two different model "voices" (Gemini for bulk content, Claude for dev/editorial work) also helps the published content avoid a single-model templated tone — each model has its own default phrasing and body language, and blending sources is intentional here, not an oversight.
+
+- Blog lives on our own Next.js/Supabase stack, not WordPress. Headless WordPress caused hosting issues previously and is not worth revisiting. Blog posts render through their own template following the same schema/breadcrumb pattern as everything else, on the same domain — better for SEO than a split domain/platform anyway.
+- Content generation pipeline: n8n workflow calling the Gemini API generates idea blueprints, FAQ pool content, and listicle content in bulk, writing into Supabase, which the frontend already reads from live.
+- Storage for the content pipeline itself: Supabase remains the source of truth for idea data since the frontend already depends on it. Important cost constraint: the current Supabase plan caps storage at 500MB — if the pipeline starts saving anything beyond core idea records (extra logs, drafts, raw generation output), that risks pushing us over and increasing cost. Before adding any new data type to Supabase, check whether it actually needs to live there. The founder has an unused one-year Google Workspace/Gemini Pro subscription (Drive, Docs, Sheets) that could hold drafts, generation logs, or raw prompt/output history instead — worth exploring as an overflow location so Supabase stays lean and only holds what the live site actually queries (ideas, categories, FAQs — anything needing random pulls, filters, or joins).
+- Any new content template (list, FAQ hub, guide, calculator, and the other types in Section 6.7–6.11) should be built so the n8n workflow can target it directly — i.e., the workflow writes structured fields that map onto whichever template's expected shape, rather than needing a new pipeline built per template.
+- API key rotation: the founder will supply multiple Gemini API keys for the content-generation pipeline (quantity to be confirmed). The n8n workflow (or a thin wrapper around the API calls) should detect a failed/rate-limited call and automatically rotate to the next key, with roughly a 30-second cooldown/retry window before switching, so bulk generation jobs don't stall on a single exhausted key.
+- SEO fields, not just slugs: every piece of generated content (idea, FAQ, listicle, guide, etc.) must come out of the pipeline with a complete SEO package, not just a slug — SEO title, meta description, and slug, all written as structured fields into Supabase alongside the content itself. This is currently missing and needs to be added to the generation prompt/output schema.
+- Image SEO: every image reference generated or attached through the pipeline needs proper alt text — including the brand name, the image's role/position on the page, and a genuinely descriptive caption of what the image shows — not a generic filename or blank alt attribute. Build this into the same automation output rather than handling it separately.
+- New/extended workflow generation: when Claude Code is asked to build a new or extended n8n workflow for this pipeline, default to giving either (a) the actual n8n workflow JSON directly, or (b) a concise, ready-to-paste prompt the founder can run in a separate Claude account to generate that JSON — whichever is more token-efficient for the request at hand. Any workflow built this way must call the Gemini model for content generation — never Claude API, never ChatGPT, to stay consistent with the model decision above.
+- Category scaling — open question to resolve, not yet decided: the current dataset has roughly 250–300 ideas across ~12–15 categories, but distribution is uneven — e.g. Tech & SaaS currently has only ~10 ideas and needs to grow toward 100–200. Before generating a large new batch for any category, propose an approach for adding volume to specific categories without disrupting or duplicating the ideas already live in Supabase, and confirm it with the founder before running it at scale.
 
 ---
 
-## 11. Our own llms.txt (later phase, not month one, but worth planning for)
+**11. Our own llms.txt**
 
-Ideaproof.io publishes an `llms.txt` at their root — a plain-text manifest aimed at helping AI assistants and chatbots cite them accurately (key pages, one-line summaries, FAQ patterns, citation preferences). This is a legitimate and increasingly common practice worth adopting for businessidea.io once the site has real, verifiable numbers to put in it.
+Ideaproof.io publishes an llms.txt at their root — a plain-text manifest aimed at helping AI assistants and chatbots cite them accurately (key pages, one-line summaries, FAQ patterns, citation preferences). This is a legitimate and increasingly common practice, in scope for this build. Build it toward the end of the month once category counts, idea counts, and pricing are stable enough to publish real numbers — sequence it after Section 13's core steps, not as a separate future project.
 
-**Important distinction to hold onto:** several of the numeric claims in competitor manifests (accuracy percentages, user counts, "verified" savings figures) read as marketing copy dressed as data rather than independently audited facts. When we eventually write our own `llms.txt`, only include numbers we can actually stand behind — real idea count, real category count, actual platform fee, honest description of what the free validation flow does. Do not fabricate accuracy percentages, user testimonials, or "verified" statistics we haven't measured.
+Important distinction to hold onto: several of the numeric claims in competitor manifests (accuracy percentages, user counts, "verified" savings figures) read as marketing copy dressed as data rather than independently audited facts. When we eventually write our own llms.txt, only include numbers we can actually stand behind — real idea count, real category count, actual platform fee, honest description of what the free validation flow does. Do not fabricate accuracy percentages, user testimonials, or "verified" statistics we haven't measured.
 
 ---
 
-## 12. Design constraints (non-negotiable)
+**11.1 Brand voice and homepage copy direction**
+
+Position: proud Indian engineers, building for the world. Not a generic SaaS tone, and not a stack of "$20/month" comparisons repeated everywhere — the pricing contrast is a supporting fact, not the whole personality. Homepage copy especially should carry genuine emotional and motivational weight, with some rhythm/punch to the phrasing (short, confident lines rather than paragraph-style marketing copy) — the underlying message being something like: the world is racing to sell you access to AI that's already yours to use, and we'd rather hand you the idea and the strongest possible prompt than sell you a subscription to something you can already do yourself. This tone should run through the hero banner, the Surprise Me section intro line, and the pricing page framing — not just be a one-off homepage headline.
+
+---
+
+**12. Design constraints (non-negotiable)**
 
 - Zero emojis anywhere — UI, buttons, AI-generated content, FAQs, everything.
 - No generic/default component-library animation feel — deliberate, Figma-prototype-quality motion only.
@@ -227,18 +320,66 @@ Ideaproof.io publishes an `llms.txt` at their root — a plain-text manifest aim
 - All icons/illustrations are custom-generated by the founder via AI image generation and supplied as links/files to be wired into the templates — flag every page/section that expects a visual asset so these can be generated in batches.
 - Color system: a small deterministic palette (4–5 themes) cycles across idea pages using the same hash-based logic as the layout variants (Section 6.1), not per-idea manual selection.
 
+**12.1 Homepage hero — mandatory brand visual (new, do not omit)**
+
+The homepage hero carries a fixed, mandatory visual element: two animated ring/circle shapes in the background — one large, one small — representing the founder and his wife. This is a personal brand element, not a placeholder, and must stay in every redesign iteration. What can change freely: the animation style, motion timing, and the color treatment of the rings. What cannot change: the presence of exactly two rings (one large, one small). Pair this with the founder's mandatory hero image already in use.
+
+**12.2 Refresh-based gradient variation (refines Section 6.1)**
+
+The "changes on refresh" behavior across idea pages should specifically be a gradient shift within the same brand color family, not a swap to an unrelated color theme. Same brand colors, varying gradient treatment — visible and alive, never bright, loud, or off-brand. The founder will supply Figma-generated reference images showing the exact target look; match that reference closely once provided.
+
+**12.3 Dark mode / light mode toggle — mandatory**
+
+A dark mode / light mode switch must sit in the header/top of every page. This is not optional or later-phase.
+
+**12.4 Footer — mandatory, must be wide and comprehensive**
+
+The footer must be a full-width, substantial footer bar (not a thin single-row footer) — the founder will share a specific reference example to match the target density and layout; treat the current footer as needing a full rebuild, not a tweak.
+
+**12.5 Header and navigation — critical, currently underbuilt**
+
+The header is the site's primary hook and currently reads as weak — this needs a real redesign pass, not a minor tweak:
+- Expand from the current single "category" dropdown to at least 3–4 dropdowns in the header (category plus additional groupings to be defined).
+- Investigate and fix the current slow page-load issue, particularly around the category dropdown's lazy loading — performance here matters as much as visual design; keep the implementation lightweight while still highly interactive.
+- The founder will supply reference images of dropdown-menu layouts (sourced from other sites) to guide the exact structure and interaction pattern — replicate the structural pattern shown in references, not the branding.
+
+**12.6 Back-to-top button — mandatory**
+
+A simple, no-frills "scroll to top" button (and optionally "scroll to bottom") should be present site-wide, styled in the existing brand colors. No special animation needed — clean and functional.
+
+**12.7 Visual polish standard — Figma-quality, and an explicit brand-safety constraint**
+
+- Cards, layouts, and visual patterns across the site must hit a genuinely premium, Figma-prototype level of polish — not a generic template look, and not a cluttered, dated, over-decorated aesthetic either.
+- Hard constraint, stated explicitly because of a past incident: an earlier AI-generated pass at this site used a dark-navy palette with dense, uniform card grids that ended up looking like a cheap adult-content or tabloid website rather than a professional business directory — this must never happen again. Any dark-mode or dense-card-grid direction needs to be visibly distinct from that look: more whitespace, more intentional hierarchy, no repetitive same-size card walls.
+
+**12.8 Image treatment — no raw/static image drops**
+
+Images should never be dropped in as-is at arbitrary fixed aspect ratios. Every image slot needs custom treatment — subtle gradient overlays, consistent framing/cropping logic, and a genuinely polished presentation — so the site never looks like a stock-photo dump. Apply this consistently across idea cards, listing pages, and template hero images.
+
+**12.9 Mobile and tablet UI — previously missing, must be specified**
+
+This entire brief has so far only implicitly covered desktop. Mobile and tablet behavior needs its own explicit pass covering: responsive breakpoints for every template in Section 6, how the header's 3–4 dropdowns collapse on small screens, how the homepage Surprise Me section and hero rings behave on mobile, and touch-friendly sizing for the back-to-top button and validate button. Treat this as a required deliverable, not an assumed side-effect of responsive CSS.
+
 ---
 
-## 13. Build order (month-one roadmap)
+**13. Build order (all within this month — one build cycle, not phases)**
 
-1. **Schema + breadcrumbs + sitemap segmentation** on existing `idea` and `category` templates — retroactively fixes all 300+ live ideas in one deploy. Add `noindex` to search.
-2. **Validate button** — implement exactly per Section 8, plus the fallback note copy.
-3. **FAQ pool system** — bulk-generate category FAQs via n8n/Claude API, wire the random pull into the idea template and build the standalone FAQ hub template.
-4. **Listicle template** — highest leverage for both search volume and internal linking.
-5. **Layout/color variation system** on the idea template (hash-based, Section 6.1).
-6. **Random-pull sections** — related ideas, related categories, trending carousel (Section 9), if not already done alongside step 1.
-7. **Blog template** on our own stack.
-8. **Auto internal linking** — script that scans generated idea text for matches against other idea titles/categories and wraps 2–3 into working links automatically, no manual placement.
-9. Only after 1–8 are stable: point the custom domain (businessidea.io) at the project and go live.
+1. Cross-check current live structure against Section 4.1 before touching anything (files may have moved since last inspection).
+2. Schema + breadcrumbs + sitemap segmentation on existing idea and category templates — retroactively fixes all 300+ live ideas in one deploy. Add noindex to search.
+3. Validate button — implement exactly per Section 8, including the fully-engineered backend prompt template (8's prompt requirement) and the fallback note copy.
+4. Homepage rebuild — new banner with the mandatory two-ring hero visual (12.1), brand voice (Section 11.1), and the Surprise Me interactive section (Section 8.1).
+5. Header and navigation rebuild — 3–4 dropdowns, lazy-loading/performance fix, dark/light mode toggle, wide footer (Sections 12.3–12.5).
+6. Design system pass — Figma-quality card/visual polish, brand-safety constraint (12.7), image treatment rules (12.8), back-to-top button (12.6).
+7. Mobile and tablet responsive pass across all templates (Section 12.9).
+8. FAQ pool system — bulk-generate category FAQs via n8n/Gemini API, wire the random pull into the idea template and build the standalone FAQ hub template.
+9. Random-pull + refresh-variation system — related ideas, related categories, trending carousel, and the per-refresh gradient variation on the idea template (Sections 6.1, 12.2, and 9).
+10. Listicle template — highest leverage for both search volume and internal linking.
+11. Auto internal linking — max 3 per page, keyword-matched, generated by the same automation pipeline (Section 8.2).
+12. Guide, calculator, tools-directory, vertical landing, and comparison templates (Sections 6.7–6.11).
+13. Blog template on our own stack.
+14. Content pipeline rebuild on Gemini — API key rotation, SEO fields, image SEO/alt text, category-scaling plan, and (if needed) new n8n workflow generation, all per Section 10.
+15. Storage strategy decision — confirm what stays in Supabase vs. what moves to Drive/Docs overflow (Section 10).
+16. Our own llms.txt, using real numbers only (Section 11).
+17. Once everything above is stable: point the custom domain (businessidea.io) at the project and go live.
 
-Do not reorder this list without a clear reason — steps 1–2 are foundational and retroactive, everything after compounds on them.
+This is a large list for one month — sequence matters more than ever. Steps 1–3 are foundational and retroactive; get those genuinely solid before fanning out into the rest, since a mistake in schema or the validate button affects every single page on the site.
