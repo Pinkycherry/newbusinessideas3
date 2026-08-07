@@ -898,6 +898,18 @@ html.light .glass-pill {
 html.light .iv-ticker-track a:hover {
   color: #FFFFFF !important;
 }
+/* Light mode: keep every label inside a light glass surface dark enough to read. */
+html.light .glass-btn,
+html.light .glass-pill,
+html.light .glass-btn *,
+html.light .glass-pill * {
+  color: #0C0C25 !important;
+}
+html.light .sheen,
+html.light a[class*="from-primary"],
+html.light button[class*="from-primary"] {
+  color: #FFFFFF !important;
+}
 
 html,
 body {
