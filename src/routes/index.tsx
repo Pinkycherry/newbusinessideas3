@@ -603,7 +603,7 @@ function GoldenTreeSection() {
   ];
 
   return (
-    <section className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4">
+    <section id="golden-tree" data-anchor="golden-tree" data-anchor-label="Golden Tree" className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4">
       <div className="text-center max-w-3xl mx-auto">
         <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
           Interactive Canopy Map
@@ -775,7 +775,7 @@ function LiveDemandTrackerSection() {
   ];
 
   return (
-    <section className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4">
+    <section id="demand" data-anchor="demand" data-anchor-label="Demand tracker" className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
@@ -1516,7 +1516,7 @@ const BBI_FAQ_3 = [
 
 function PromiseSection() {
   return (
-    <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
+    <section id="faq" data-anchor="faq" data-anchor-label="FAQ" className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
       <div className="glass glass-hover bbi-shape-shield p-8 text-center sm:p-12">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Our promise
