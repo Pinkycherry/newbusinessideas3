@@ -1516,7 +1516,7 @@ const BBI_FAQ_3 = [
 
 function PromiseSection() {
   return (
-    <section id="faq" data-anchor="faq" data-anchor-label="FAQ" className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
+    <section id="promise" data-anchor="promise" data-anchor-label="Our promise" className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
       <div className="glass glass-hover bbi-shape-shield p-8 text-center sm:p-12">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Our promise
