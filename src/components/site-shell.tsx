@@ -188,8 +188,7 @@ function NavDropdown({
             transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
             onMouseEnter={openNow}
             onMouseLeave={closeSoon}
-            style={{ background: "oklch(0.255 0.008 274 / 98%)" }}
-            className={panelClassName}
+            className={`iv-nav-panel ${panelClassName}`}
           >
             {children(() => setOpen(false))}
           </motion.div>
