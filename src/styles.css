@@ -1059,3 +1059,17 @@ html.light .iv-skeleton {
   color: var(--primary) !important;
   transform: none !important;
 }
+
+/* Hero slider frame: the Golden Tree artwork is a transparent PNG that needs a
+   dark plate behind it in both themes. */
+@layer utilities {
+  .iv-hero-frame,
+  html.light .iv-hero-frame {
+    background:
+      radial-gradient(ellipse at 50% 45%, rgba(24, 22, 68, 0.98) 0%, rgba(10, 10, 32, 0.98) 70%),
+      #0A0A20 !important;
+  }
+  .iv-hero-frame img {
+    filter: brightness(1.12) contrast(1.06);
+  }
+}
