@@ -79,14 +79,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "BBI — Bharat Business Ideas | Researched Business Idea Blueprints" },
+      { title: "BBI — Bro Business Ideas | Researched Business Idea Blueprints" },
       {
         name: "description",
         content:
           "Researched business idea blueprints with market context, trend scores and honest founder-fit verdicts.",
       },
-      { name: "author", content: "BBI — Bharat Business Ideas" },
-      { property: "og:title", content: "BBI — Bharat Business Ideas" },
+      { name: "author", content: "BBI — Bro Business Ideas" },
+      { property: "og:title", content: "BBI — Bro Business Ideas" },
       {
         property: "og:description",
         content: "Researched business idea blueprints with market context and trend scores.",
