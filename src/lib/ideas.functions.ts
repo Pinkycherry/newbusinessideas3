@@ -10,7 +10,7 @@ import {
   type IdeaRow,
 } from "./ideas-shared";
 
-function db() {
+export function db() {
   const url = process.env["IDEAVAULT_DB_URL"];
   const key = process.env["IDEAVAULT_DB_ANON_KEY"];
   if (!url || !key) throw new Error("IdeaVault database credentials are not configured.");
@@ -67,16 +67,18 @@ export const getCatalog = createServerFn({ method: "GET" }).handler(async () => 
   };
 });
 
-export const getTrendingIdeas = createServerFn({ method: "GET" }).handler(async (): Promise<IdeaCard[]> => {
-  const { data, error } = await db()
-    .from("ideas")
-    .select(IDEA_CARD_COLUMNS)
-    .eq("status", "completed")
-    .order("trend_score", { ascending: false, nullsFirst: false })
-    .limit(6);
-  if (error) throw new Error(error.message);
-  return ((data ?? []) as unknown as IdeaRow[]).map(toIdeaCard);
-});
+export const getTrendingIdeas = createServerFn({ method: "GET" }).handler(
+  async (): Promise<IdeaCard[]> => {
+    const { data, error } = await db()
+      .from("ideas")
+      .select(IDEA_CARD_COLUMNS)
+      .eq("status", "completed")
+      .order("trend_score", { ascending: false, nullsFirst: false })
+      .limit(6);
+    if (error) throw new Error(error.message);
+    return ((data ?? []) as unknown as IdeaRow[]).map(toIdeaCard);
+  },
+);
 
 export const getCategoryPage = createServerFn({ method: "GET" })
   .inputValidator((input: unknown) => z.object({ categorySlug: z.string() }).parse(input))

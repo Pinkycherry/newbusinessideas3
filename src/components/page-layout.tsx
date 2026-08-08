@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
+import { useRouterState } from "@tanstack/react-router";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { JsonLd, breadcrumbSchema, webPageSchema } from "@/lib/schema";
 
 export function ContentPage({
   eyebrow,
@@ -17,28 +19,44 @@ export function ContentPage({
   children: ReactNode;
   wide?: boolean;
 }) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
   return (
-    <SiteShell>
-      <div className={`mx-auto ${wide ? "max-w-6xl" : "max-w-3xl"} px-3 py-12 sm:px-4`}>
-        <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: eyebrow }]} />
-        <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
-          {eyebrow}
-        </p>
-        <h1 className="mt-4 text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl">
-          {title}
-          {highlight && (
-            <>
-              {" "}
-              <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
-                {highlight}
-              </span>
-            </>
-          )}
-        </h1>
-        <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{intro}</p>
-        <div className="mt-10 space-y-5">{children}</div>
-      </div>
-    </SiteShell>
+    <>
+      <JsonLd
+        schema={[
+          webPageSchema({
+            path: pathname,
+            name: `${title}${highlight ? ` ${highlight}` : ""}`,
+            description: intro,
+          }),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: eyebrow, path: pathname },
+          ]),
+        ]}
+      />
+      <SiteShell>
+        <div className={`mx-auto ${wide ? "max-w-6xl" : "max-w-3xl"} px-3 py-12 sm:px-4`}>
+          <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: eyebrow }]} />
+          <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
+            {eyebrow}
+          </p>
+          <h1 className="mt-4 text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl">
+            {title}
+            {highlight && (
+              <>
+                {" "}
+                <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
+                  {highlight}
+                </span>
+              </>
+            )}
+          </h1>
+          <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{intro}</p>
+          <div className="mt-10 space-y-5">{children}</div>
+        </div>
+      </SiteShell>
+    </>
   );
 }
 

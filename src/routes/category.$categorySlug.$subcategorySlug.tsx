@@ -4,6 +4,7 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getSubcategoryPage } from "@/lib/ideas.functions";
+import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 
 const subQuery = (categorySlug: string, subcategorySlug: string) =>
   queryOptions({
@@ -54,25 +55,50 @@ export const Route = createFileRoute("/category/$categorySlug/$subcategorySlug")
 function SubcategoryPage() {
   const { categorySlug, subcategorySlug } = Route.useParams();
   const { data } = useSuspenseQuery(subQuery(categorySlug, subcategorySlug));
+  const categoryName = data.categoryName ?? categorySlug;
+  const subcategoryName = data.subcategoryName ?? subcategorySlug;
+  const subcategoryPath = `/category/${categorySlug}/${subcategorySlug}`;
   return (
-    <SiteShell>
-      <div className="mx-auto max-w-6xl px-4 py-12">
-        <Breadcrumbs
-          items={[
-            { label: "Home", to: "/" },
-            { label: "Browse", to: "/browse" },
-            { label: data.categoryName ?? categorySlug, to: "/category/$categorySlug", params: { categorySlug } },
-            { label: data.subcategoryName ?? subcategorySlug },
-          ]}
-        />
-        <h1 className="mt-4 text-3xl font-bold tracking-tight">{data.subcategoryName}</h1>
-        <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {data.ideas.map((idea) => (
-            <IdeaCard key={idea.ideaId} idea={idea} />
-          ))}
+    <>
+      <JsonLd
+        schema={[
+          collectionPageSchema({
+            path: subcategoryPath,
+            name: `${subcategoryName} Business Ideas`,
+            description: `Business idea blueprints in ${subcategoryName}: what the business is, who it serves, pros, cons and a founder-fit verdict.`,
+            itemCount: data.ideas.length,
+          }),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Browse", path: "/browse" },
+            { name: categoryName, path: `/category/${categorySlug}` },
+            { name: subcategoryName, path: subcategoryPath },
+          ]),
+        ]}
+      />
+      <SiteShell>
+        <div className="mx-auto max-w-6xl px-4 py-12">
+          <Breadcrumbs
+            items={[
+              { label: "Home", to: "/" },
+              { label: "Browse", to: "/browse" },
+              {
+                label: data.categoryName ?? categorySlug,
+                to: "/category/$categorySlug",
+                params: { categorySlug },
+              },
+              { label: data.subcategoryName ?? subcategorySlug },
+            ]}
+          />
+          <h1 className="mt-4 text-3xl font-bold tracking-tight">{data.subcategoryName}</h1>
+          <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {data.ideas.map((idea) => (
+              <IdeaCard key={idea.ideaId} idea={idea} />
+            ))}
+          </div>
         </div>
-      </div>
-    </SiteShell>
+      </SiteShell>
+    </>
   );
 }
