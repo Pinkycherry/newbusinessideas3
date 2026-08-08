@@ -659,6 +659,12 @@ function HomePage() {
    SECTION 1: INTERACTIVE GOLDEN TREE (CURVED LIQUID CAPSULES)
    ================================================================ */
 
+// The only two tree asset URLs in the app — do not add or swap in others.
+const DESKTOP_TREE_SRC =
+  "https://ethicalfounder.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg";
+const MOBILE_TREE_SRC =
+  "https://ethicalfounder.com/wp-content/uploads/2026/08/new-business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg";
+
 function GoldenTreeSection() {
   // Weekly web-search demand estimates (Google-style search volume for the
   // keyword, NOT our own traffic). Drifts week to week from a seeded base so
@@ -757,13 +763,31 @@ function GoldenTreeSection() {
       {/* No boxed/16:9 backdrop element here on purpose — the dark glow behind the
           tree lives entirely in .tree-asset-container::before in styles.css, as a
           large, heavily-blurred radial glow with no hard edge or rectangle. */}
-      <div className="relative mt-8 sm:mt-12 flex w-full items-center justify-center py-10 sm:py-16">
-        {/* DESKTOP TREE ASSET */}
+      <Reveal
+        variant="rv-zoom"
+        className="relative mt-8 sm:mt-12 flex w-full items-center justify-center py-10 sm:py-16"
+      >
+        {/* DESKTOP TREE ASSET — a JPG can never carry real alpha, so its dark
+            background is punched out with a CSS luminance mask referencing
+            the same file: dark pixels (the background) become transparent,
+            bright pixels (the tree) stay opaque. This is real alpha, not a
+            mix-blend-mode color trick, so it reads correctly in both themes. */}
         <div className="hidden sm:block relative w-full max-w-5xl aspect-[16/9] group tree-asset-container">
           <img
-            src="https://ethicalfounder.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg"
+            src={DESKTOP_TREE_SRC}
             alt="The Golden Tree of Business Growth"
             className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(27,42,107,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(27,42,107,0.5)]"
+            style={{
+              WebkitMaskImage: `url(${DESKTOP_TREE_SRC})`,
+              maskImage: `url(${DESKTOP_TREE_SRC})`,
+              maskMode: "luminance",
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+            }}
           />
 
           {desktopNodes.map((node) => (
@@ -792,12 +816,26 @@ function GoldenTreeSection() {
           ))}
         </div>
 
-        {/* MOBILE TREE ASSET — organic floating liquid capsules */}
+        {/* MOBILE TREE ASSET — same luminance-mask treatment as desktop, so
+            it looks right even if this SVG has any baked-in dark background;
+            harmless no-op on any pixels that are already transparent.
+            Organic floating liquid capsules for the node pills below. */}
         <div className="block sm:hidden relative w-full max-w-xs aspect-[9/16] tree-asset-container">
           <img
-            src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg"
+            src={MOBILE_TREE_SRC}
             alt="The Golden Tree of Business Growth (Mobile)"
             className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(27,42,107,0.35)]"
+            style={{
+              WebkitMaskImage: `url(${MOBILE_TREE_SRC})`,
+              maskImage: `url(${MOBILE_TREE_SRC})`,
+              maskMode: "luminance",
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+            }}
           />
 
           {/* Nodes sit on the canopy at organic coordinates (not a vertical list). */}
@@ -841,7 +879,7 @@ function GoldenTreeSection() {
             ))}
           </div>
         </div>
-      </div>
+      </Reveal>
 
       {/* Mobile demand read-out — keeps the artwork clean, keeps the data visible. */}
       <div className="mt-4 grid grid-cols-2 gap-2 sm:hidden">
