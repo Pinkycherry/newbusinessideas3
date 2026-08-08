@@ -24,6 +24,8 @@ Market positioning (read carefully, this was previously stated wrong and must no
 - We do not copy content, layout text, or structure verbatim from any reference site named in this document. Reference sites below are studied for information architecture and technical patterns only — URL structure, template types, schema usage. All copy, design, and voice on businessidea.io is original.
 - Work in small, reviewable chunks. Don't attempt the entire roadmap in one pass — confirm one piece is working before moving to the next.
 - Keep responses short. Answer in a concise, direct way rather than long exhaustive explanations — this is a token/usage-limit concern across the accounts described in Section 1.1, not a style preference. Give me the short version by default; I'll ask if I want more detail.
+- Butterfly-effect rule (added 2026-08-08): before creating, deleting, or editing any file, think through what else it touches — other files, other sections of this brief, anything built later that might depend on it. If a change is genuinely risky or hard to reverse, tell me before doing it. If it's a normal, contained edit, just do it and log it in `PENDING.md`.
+- External-blocker rule (added 2026-08-08): if something is blocked by anything outside our control — a paid tool with a signup/approval delay, a service that's slow to respond, anything we don't have in hand — don't stall. Find the best free/available alternative and keep moving, and say plainly in the update that this was done because X was blocked. Never just wait silently on something external.
 
 **1.1 Primary / backup Claude Pro account workflow — internal only, never disclose**
 
@@ -403,16 +405,20 @@ This entire brief has so far only implicitly covered desktop. Mobile and tablet 
 
 **13. Build order (all within this month — one build cycle, not phases)**
 
-STATUS 2026-08-08 — steps 1–3 below:
-- Step 1 (cross-check live structure): done — found the codebase is actually TanStack Start on Vercel/Lovable, not Next.js as originally assumed; brief corrected accordingly.
-- Step 2 (schema/breadcrumbs/sitemap): done.
-- Step 3 (Validate button) + Section 3.2 (access tiers): code is done and confirmed working end to end — Google sign-in creates real sessions (verified directly in Supabase auth logs and the auth.users/profiles tables), the redirect-back-to-the-right-page bug from launch day is fixed, and the blur/lock gating and Step 0 plan-check are live. The one thing not done: real checkout. ₹199/₹399 buttons currently route to /pricing rather than charging anything — blocked on the founder's Razorpay account (pending approval) or a UPI QR interim (needs the founder's UPI VPA). Do not treat Step 3 as fully closed until one of those lands.
-- Custom domain (businessidea.io) is intentionally not connected yet — that's Step 17, last on purpose. Testing happens on the Vercel-assigned production domain until then; branch/PR preview subdomains are incidental to testing, not a target to configure around.
+Custom domain (businessidea.io) is intentionally not connected yet — that's Step 17, last on purpose. Testing happens on the Vercel-assigned production domain until then; branch/PR preview subdomains are incidental to testing, not a target to configure around.
 
 1. Cross-check current live structure against Section 4.1 before touching anything (files may have moved since last inspection).
+   - DONE 2026-08-08 — found the codebase is actually TanStack Start on Vercel/Lovable, not Next.js as originally assumed; brief corrected accordingly.
 2. Schema + breadcrumbs + sitemap segmentation on existing idea and category templates — retroactively fixes all 300+ live ideas in one deploy. Add noindex to search.
+   - DONE 2026-08-08.
 3. Validate button — implement exactly per Section 8, including the fully-engineered backend prompt template (8's prompt requirement) and the fallback note copy.
+   - DONE 2026-08-08 — Section 8 flow live; old Pro Pass/Stripe/server-side Gemini audit mechanism fully removed (confirmed by repo-wide grep, not just memory).
+   - DONE 2026-08-08 — Section 3.2 access tiers live and confirmed: Google sign-in creates real sessions (verified in Supabase auth.users/profiles), redirect-destination bug fixed, blur/lock gating and Step 0 plan-check working, expiry enforced read-side.
+   - DONE 2026-08-08 — closed a real RLS hole found during audit: profiles had a client-writable UPDATE policy, meaning any signed-in user could have self-granted a paid plan via the browser console. Policy dropped; plan changes now only possible via direct DB access. See PENDING.md.
+   - PENDING — real checkout. ₹199/₹399 buttons route to /pricing, charge nothing. Razorpay deprioritized by founder (2026-08-08, not urgent). Manual activation (Claude running SQL via Supabase MCP) is the working fallback — no self-serve admin UI exists yet. See PENDING.md.
+   - PENDING — no visible signed-in state anywhere in the UI (no name/account indicator). Flagged by founder 2026-08-08, not urgent, deferred behind Step 4.
 4. Homepage rebuild — new banner with the mandatory two-ring hero visual (12.1), brand voice (Section 11.1), and the Surprise Me interactive section (Section 8.1).
+   - IN PROGRESS 2026-08-08.
 5. Header and navigation rebuild — 3–4 dropdowns, lazy-loading/performance fix, dark/light mode toggle, wide footer (Sections 12.3–12.5).
 6. Design system pass — Figma-quality card/visual polish, brand-safety constraint (12.7), image treatment rules (12.8), back-to-top button (12.6).
 7. Mobile and tablet responsive pass across all templates (Section 12.9).
