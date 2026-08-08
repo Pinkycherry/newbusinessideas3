@@ -10,13 +10,26 @@ import { createClient } from "@supabase/supabase-js";
 export const authClient = createClient(
   import.meta.env["VITE_IDEAVAULT_DB_URL"] as string,
   import.meta.env["VITE_IDEAVAULT_DB_ANON_KEY"] as string,
-  { auth: { persistSession: true, autoRefreshToken: true } },
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      flowType: "pkce",
+    },
+  },
 );
 
-export async function signInWithGoogle(redirectTo?: string) {
+/**
+ * redirectTo must be an absolute URL back into this app (Supabase rejects/
+ * falls back otherwise). Callers pass where the user actually was — never
+ * omit it, or Google drops them back on whatever page called this function
+ * (e.g. /sign-in itself) instead of where they started.
+ */
+export async function signInWithGoogle(redirectTo: string) {
   return authClient.auth.signInWithOAuth({
     provider: "google",
-    options: { redirectTo: redirectTo ?? window.location.href },
+    options: { redirectTo },
   });
 }
 

@@ -216,6 +216,7 @@ function IdeaPage() {
                   <p className="text-sm font-semibold">Sign in free to read the full blueprint</p>
                   <Link
                     to="/sign-in"
+                    search={{ redirect: ideaPath }}
                     className="sheen rounded-full bg-gradient-to-r from-primary to-ember px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground shadow-[0_10px_36px_oklch(0.687_0.161_51.5/40%)] transition-transform duration-300 hover:scale-105"
                   >
                     Continue with Google

@@ -403,6 +403,12 @@ This entire brief has so far only implicitly covered desktop. Mobile and tablet 
 
 **13. Build order (all within this month — one build cycle, not phases)**
 
+STATUS 2026-08-08 — steps 1–3 below:
+- Step 1 (cross-check live structure): done — found the codebase is actually TanStack Start on Vercel/Lovable, not Next.js as originally assumed; brief corrected accordingly.
+- Step 2 (schema/breadcrumbs/sitemap): done.
+- Step 3 (Validate button) + Section 3.2 (access tiers): code is done and confirmed working end to end — Google sign-in creates real sessions (verified directly in Supabase auth logs and the auth.users/profiles tables), the redirect-back-to-the-right-page bug from launch day is fixed, and the blur/lock gating and Step 0 plan-check are live. The one thing not done: real checkout. ₹199/₹399 buttons currently route to /pricing rather than charging anything — blocked on the founder's Razorpay account (pending approval) or a UPI QR interim (needs the founder's UPI VPA). Do not treat Step 3 as fully closed until one of those lands.
+- Custom domain (businessidea.io) is intentionally not connected yet — that's Step 17, last on purpose. Testing happens on the Vercel-assigned production domain until then; branch/PR preview subdomains are incidental to testing, not a target to configure around.
+
 1. Cross-check current live structure against Section 4.1 before touching anything (files may have moved since last inspection).
 2. Schema + breadcrumbs + sitemap segmentation on existing idea and category templates — retroactively fixes all 300+ live ideas in one deploy. Add noindex to search.
 3. Validate button — implement exactly per Section 8, including the fully-engineered backend prompt template (8's prompt requirement) and the fallback note copy.

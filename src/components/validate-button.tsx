@@ -16,6 +16,7 @@ import { PaywallPopup } from "@/components/paywall-popup";
  * a query param in the tab we open.
  */
 export function ValidateButton({ slug }: { slug: string }) {
+  const ideaPath = `/idea/${slug}`;
   const auth = useAuth();
   const navigate = useNavigate();
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -53,7 +54,7 @@ export function ValidateButton({ slug }: { slug: string }) {
               // first rather than seeing a price before they even have an
               // account to attach a plan to.
               if (auth.status === "anonymous") {
-                navigate({ to: "/sign-in" });
+                navigate({ to: "/sign-in", search: { redirect: ideaPath } });
               } else if (auth.status === "authenticated" && auth.hasActivePlan) {
                 setPickerOpen(true);
               } else {
