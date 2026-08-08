@@ -2,19 +2,36 @@ import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { User } from "lucide-react";
 
 import { AmbientScene } from "@/components/ambient-scene";
 import { LiveSearch } from "@/components/live-search";
 import { FloatingDock } from "@/components/floating-dock";
-import { getCatalog } from "@/lib/ideas.functions";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { catalogQuery } from "@/lib/ideas.functions";
+import { useAuth } from "@/hooks/use-auth";
+import { signOut } from "@/lib/auth-client";
 
-const navLinks = [
-  { to: "/browse", label: "Browse" },
+/**
+ * Header/nav grouping (PROJECT_BRIEF.md Section 12.5 — 3-4 dropdowns).
+ * Exact structure is provisional pending the founder's reference images;
+ * see PENDING.md.
+ */
+const navLinks = [{ to: "/pricing", label: "Pricing" }];
+
+const EXPLORE_ITEMS = [
+  { to: "/browse", label: "Browse all ideas" },
+  { to: "/search", label: "Search" },
   { to: "/blog", label: "Blog" },
-  { to: "/pricing", label: "Pricing" },
+  { to: "/services", label: "Services" },
 ];
 
-/** Static grouped columns shown to the right of the live category grid. */
+const COMPANY_ITEMS = [
+  { to: "/about", label: "About" },
+  { to: "/contact", label: "Contact" },
+];
+
+/** Curated static groupings — link through to /browse (no dedicated filtered route yet). */
 const STATIC_GROUPS: { title: string; items: string[] }[] = [
   {
     title: "By Who You Are",
@@ -42,10 +59,38 @@ const isDesktop = () =>
   typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
 
 function useCatalog() {
-  return useQuery({ queryKey: ["catalog"], queryFn: () => getCatalog(), staleTime: 60_000 });
+  return useQuery(catalogQuery);
 }
 
 function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boolean }) {
+  const auth = useAuth();
+
+  if (auth.status === "authenticated") {
+    const metadata = auth.session.user.user_metadata as Record<string, unknown> | undefined;
+    const fullName = metadata?.["full_name"] as string | undefined;
+    const name = fullName?.split(" ")[0] ?? auth.session.user.email?.split("@")[0] ?? "Account";
+    return (
+      <div className={`flex items-center gap-2 ${full ? "flex-col" : ""}`}>
+        <span
+          className={`glass flex items-center gap-1.5 rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground ${full ? "w-full justify-center" : ""}`}
+        >
+          <User className="h-3.5 w-3.5 shrink-0" aria-hidden />
+          <span className="truncate">{name}</span>
+        </span>
+        <button
+          type="button"
+          onClick={() => {
+            void signOut();
+            onNavigate?.();
+          }}
+          className={`rounded-full border border-border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-300 hover:border-primary hover:text-foreground ${full ? "w-full" : ""}`}
+        >
+          Sign out
+        </button>
+      </div>
+    );
+  }
+
   return (
     <>
       <Link
@@ -67,14 +112,24 @@ function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boo
 }
 
 /** Desktop mega-menu. Categories are never hardcoded — live from the `ideas` table. */
-function CategoryMega() {
+/**
+ * Shared dropdown shell (hover-open with a close-delay gap fix, outside-click
+ * close, keyboard focus support). Every header dropdown is built on this one
+ * implementation instead of four copies of the same open/close logic.
+ */
+function NavDropdown({
+  label,
+  panelClassName = "glass-nav absolute left-0 top-full z-50 mt-3 w-64 rounded-2xl p-3",
+  children,
+}: {
+  label: string;
+  panelClassName?: string;
+  children: (close: () => void) => ReactNode;
+}) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const { data } = useCatalog();
-  const categories = (data?.categories ?? []).slice(0, 20);
 
-  /** Hover-gap fix: cancel pending close on re-enter, delay close by 150ms. */
   const cancelClose = () => {
     if (closeTimer.current) {
       clearTimeout(closeTimer.current);
@@ -115,7 +170,7 @@ function CategoryMega() {
         onClick={() => setOpen((v) => !v)}
         className="flex items-center gap-1.5 uppercase tracking-[0.18em] transition-colors duration-300 hover:text-foreground"
       >
-        Categories
+        {label}
         <span
           aria-hidden
           className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
@@ -134,69 +189,123 @@ function CategoryMega() {
             onMouseEnter={openNow}
             onMouseLeave={closeSoon}
             style={{ background: "oklch(0.255 0.008 274 / 98%)" }}
-            className="glass-nav fixed left-1/2 top-20 z-50 w-[min(66rem,94vw)] -translate-x-1/2 rounded-3xl p-5 before:absolute before:-top-6 before:left-0 before:h-6 before:w-full before:content-['']"
+            className={panelClassName}
           >
-            <div className="grid gap-6 lg:grid-cols-[2.2fr_1fr]">
-              <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
-                  Browse by category
-                </p>
-                <div className="mt-3 grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-4">
-                  {categories.length === 0 ? (
-                    <p className="text-xs normal-case tracking-normal text-muted-foreground">
-                      Loading categories…
-                    </p>
-                  ) : (
-                    categories.map((c) => (
-                      <Link
-                        key={c.categorySlug}
-                        to="/category/$categorySlug"
-                        params={{ categorySlug: c.categorySlug }}
-                        onClick={() => setOpen(false)}
-                        className="rounded-full px-3 py-1.5 text-[11px] normal-case tracking-normal text-foreground transition-colors"
-                      >
-                        <span className="block truncate font-semibold leading-snug">
-                          {c.categoryName}
-                        </span>
-                      </Link>
-                    ))
-                  )}
-                </div>
-                <Link
-                  to="/browse"
-                  onClick={() => setOpen(false)}
-                  className="mt-3 inline-block rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em]"
-                >
-                  View all categories →
-                </Link>
-              </div>
-              <div className="grid gap-5 sm:grid-cols-2 lg:border-l lg:border-border lg:pl-6">
-                {STATIC_GROUPS.map((group) => (
-                  <div key={group.title}>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
-                      {group.title}
-                    </p>
-                    <ul className="mt-2.5 space-y-1">
-                      {group.items.map((item) => (
-                        <li key={item}>
-                          <Link
-                            to="/browse"
-                            onClick={() => setOpen(false)}
-                            className="block rounded-lg px-2 py-1.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
-                          >
-                            {item}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
+            {children(() => setOpen(false))}
           </motion.div>
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+function CategoryMega() {
+  const { data } = useCatalog();
+  const categories = (data?.categories ?? []).slice(0, 20);
+
+  return (
+    <NavDropdown
+      label="Categories"
+      panelClassName="glass-nav fixed left-1/2 top-20 z-50 w-[min(48rem,94vw)] -translate-x-1/2 rounded-3xl p-5 before:absolute before:-top-6 before:left-0 before:h-6 before:w-full before:content-['']"
+    >
+      {(close) => (
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
+            Browse by category
+          </p>
+          <div className="mt-3 grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-4">
+            {categories.length === 0 ? (
+              <p className="text-xs normal-case tracking-normal text-muted-foreground">
+                Loading categories…
+              </p>
+            ) : (
+              categories.map((c) => (
+                <Link
+                  key={c.categorySlug}
+                  to="/category/$categorySlug"
+                  params={{ categorySlug: c.categorySlug }}
+                  onClick={close}
+                  className="rounded-full px-3 py-1.5 text-[11px] normal-case tracking-normal text-foreground transition-colors"
+                >
+                  <span className="block truncate font-semibold leading-snug">
+                    {c.categoryName}
+                  </span>
+                </Link>
+              ))
+            )}
+          </div>
+          <Link
+            to="/browse"
+            onClick={close}
+            className="mt-3 inline-block rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em]"
+          >
+            View all categories →
+          </Link>
+        </div>
+      )}
+    </NavDropdown>
+  );
+}
+
+function BrowseByTypeDropdown() {
+  return (
+    <NavDropdown
+      label="Browse by type"
+      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 w-[min(32rem,90vw)] rounded-2xl p-4"
+    >
+      {(close) => (
+        <div className="grid gap-5 sm:grid-cols-2">
+          {STATIC_GROUPS.map((group) => (
+            <div key={group.title}>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
+                {group.title}
+              </p>
+              <ul className="mt-2.5 space-y-1">
+                {group.items.map((item) => (
+                  <li key={item}>
+                    <Link
+                      to="/browse"
+                      onClick={close}
+                      className="block rounded-lg px-2 py-1.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
+    </NavDropdown>
+  );
+}
+
+function LinkListDropdown({
+  label,
+  items,
+}: {
+  label: string;
+  items: { to: string; label: string }[];
+}) {
+  return (
+    <NavDropdown label={label}>
+      {(close) => (
+        <ul className="space-y-1">
+          {items.map((item) => (
+            <li key={item.to}>
+              <Link
+                to={item.to}
+                onClick={close}
+                className="block rounded-lg px-3 py-2 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </NavDropdown>
   );
 }
 
@@ -227,14 +336,17 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
             Menu
           </span>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close navigation menu"
-            className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
-          >
-            ✕
-          </button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle className="h-9 w-9" />
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close navigation menu"
+              className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
+            >
+              ✕
+            </button>
+          </div>
         </div>
 
         <LiveSearch className="mt-4" onNavigate={onClose} />
@@ -250,13 +362,6 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
               {link.label}
             </Link>
           ))}
-          <Link
-            to="/search"
-            onClick={onClose}
-            className="rounded-xl px-3 py-2.5 transition-colors hover:bg-secondary hover:text-foreground"
-          >
-            Search
-          </Link>
 
           <button
             type="button"
@@ -300,6 +405,30 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
               </Link>
             </div>
           )}
+
+          <p className="mt-4 px-3 text-[10px] normal-case tracking-normal text-accent">Explore</p>
+          {EXPLORE_ITEMS.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              onClick={onClose}
+              className="rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            >
+              {item.label}
+            </Link>
+          ))}
+
+          <p className="mt-4 px-3 text-[10px] normal-case tracking-normal text-accent">Company</p>
+          {COMPANY_ITEMS.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              onClick={onClose}
+              className="rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <div className="mt-auto grid gap-2 pt-8">
@@ -342,6 +471,8 @@ const footerColumns: { title: string; links: { to: string; label: string }[] }[]
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { data: catalog } = useCatalog();
+  const popularCategories = (catalog?.categories ?? []).slice(0, 6);
   return (
     <div className="relative flex min-h-screen flex-col text-foreground">
       <AmbientScene />
@@ -359,6 +490,9 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
           <nav className="hidden items-center gap-6 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground md:flex">
             <CategoryMega />
+            <BrowseByTypeDropdown />
+            <LinkListDropdown label="Explore" items={EXPLORE_ITEMS} />
+            <LinkListDropdown label="Company" items={COMPANY_ITEMS} />
             {navLinks.map((link) => (
               <Link
                 key={link.to}
@@ -372,6 +506,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
           <div className="hidden shrink-0 items-center gap-2 md:flex">
             <LiveSearch className="w-44 lg:w-56" />
+            <ThemeToggle className="h-9 w-9" />
             <AuthButtons />
           </div>
 
@@ -394,8 +529,8 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
       <FloatingDock />
       <footer className="px-3 pb-8 pt-20 sm:px-4">
-        <div className="glass mx-auto max-w-6xl rounded-3xl px-6 py-10 sm:px-10">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
+        <div className="glass mx-auto max-w-7xl rounded-3xl px-6 py-10 sm:px-10">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_repeat(4,1fr)]">
             <div>
               <Link to="/" className="flex items-baseline gap-2">
                 <span className="rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-0.5 text-base font-black uppercase tracking-[0.18em] text-primary-foreground">
@@ -404,7 +539,8 @@ export function SiteShell({ children }: { children: ReactNode }) {
               </Link>
               <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
                 Researched business idea blueprints with real market context, trend scoring and a
-                blunt founder-fit verdict.
+                blunt founder-fit verdict. Validate any idea free, on your own Claude or Perplexity
+                account.
               </p>
             </div>
             {footerColumns.map((col) => (
@@ -426,6 +562,28 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 </ul>
               </div>
             ))}
+            <div>
+              <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
+                Popular categories
+              </h3>
+              <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
+                {popularCategories.length === 0 ? (
+                  <li className="text-xs text-muted-foreground">Loading…</li>
+                ) : (
+                  popularCategories.map((c) => (
+                    <li key={c.categorySlug}>
+                      <Link
+                        to="/category/$categorySlug"
+                        params={{ categorySlug: c.categorySlug }}
+                        className="transition-colors duration-300 hover:text-primary"
+                      >
+                        {c.categoryName}
+                      </Link>
+                    </li>
+                  ))
+                )}
+              </ul>
+            </div>
           </div>
           <div className="mt-10 flex flex-col gap-2 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
             <p>© {new Date().getFullYear()} BBI. All rights reserved.</p>

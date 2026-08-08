@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
+import { queryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 
 import {
@@ -66,6 +67,14 @@ export const getCatalog = createServerFn({ method: "GET" }).handler(async () => 
     totalSubcategories: categories.reduce((sum, c) => sum + c.subcategories.length, 0),
   };
 });
+
+/**
+ * SINGLE SOURCE OF TRUTH for the catalog query. Prefetched once in the root
+ * route's loader (see __root.tsx) so the header's category dropdown reads
+ * from an already-warm cache on every page, not a fresh client-only fetch
+ * per visit — that per-page-visit fetch was the "slow dropdown" complaint.
+ */
+export const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
 
 export const getTrendingIdeas = createServerFn({ method: "GET" }).handler(
   async (): Promise<IdeaCard[]> => {

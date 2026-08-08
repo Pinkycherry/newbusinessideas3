@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp, Compass } from "lucide-react";
 
-import { ThemeToggle } from "@/components/theme-toggle";
-
 type Anchor = { id: string; label: string };
 
 /**
@@ -69,7 +67,9 @@ export function FloatingDock() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.03 * i, duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
                 className={`block w-full truncate rounded-xl px-3 py-2 text-left text-xs font-semibold transition-colors ${
-                  active === a.id ? "bg-primary/25 text-foreground" : "text-muted-foreground hover:bg-white/10 hover:text-foreground"
+                  active === a.id
+                    ? "bg-primary/25 text-foreground"
+                    : "text-muted-foreground hover:bg-white/10 hover:text-foreground"
                 }`}
               >
                 {a.label}
@@ -97,8 +97,6 @@ export function FloatingDock() {
           )}
         </AnimatePresence>
 
-        <ThemeToggle />
-
         {anchors.length > 0 && (
           <motion.button
             type="button"
@@ -108,7 +106,11 @@ export function FloatingDock() {
             aria-label="Jump to a section"
             className="glass-btn grid h-11 w-11 place-items-center rounded-full"
           >
-            <motion.span animate={{ rotate: open ? 135 : 0 }} transition={{ duration: 0.3 }} className="grid place-items-center">
+            <motion.span
+              animate={{ rotate: open ? 135 : 0 }}
+              transition={{ duration: 0.3 }}
+              className="grid place-items-center"
+            >
               <Compass className="h-4 w-4" />
             </motion.span>
           </motion.button>
