@@ -229,6 +229,8 @@ Do this work first, before new templates, since it retroactively fixes all exist
 
 **8. Validate button — exact confirmed behavior**
 
+RESOLVED 2026-08-08 — this section is now the sole source of truth for idea validation. The codebase previously had a different, undocumented mechanism live: a "Pro Pass" ($49 one-time, Stripe checkout never actually wired up) gating "premium" ideas, plus a "Live AI Audit" that called Gemini directly from our own server (via a Lovable AI gateway) and rendered the result in our UI. That entire mechanism has been removed — no more locked/Pro/tier gating on any idea, no more server-side AI audit call, no more Pro Pass plan, checkout stub, or Stripe reference anywhere in the codebase. All ideas are fully readable. The Validate button below is the only validation mechanism now, implemented exactly as this section describes (free, handoff to the user's own Claude/Perplexity account, nothing generated or stored on our servers). Pricing, terms, privacy, refund-policy, services and homepage copy referencing the old Pro Pass/AI-audit mechanism were updated to match. A real platform-access pricing model (Section 3) is still undecided — pricing.tsx currently says so honestly rather than inventing numbers.
+
 This has been tested live and works. Implement exactly as follows, no copy/paste UI element anywhere.
 
 Flow:

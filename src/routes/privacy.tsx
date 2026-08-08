@@ -24,11 +24,15 @@ function PrivacyPage() {
         <Bullets
           items={[
             "Information you send us directly, such as your email address and message content when you contact us.",
-            "Purchase information when Pro Pass checkout is live — handled by our payment provider, not stored by us.",
             "Technical request data such as IP address, browser type and pages requested, used to operate and secure the service.",
-            "Text you submit to an AI audit request, which is sent to our AI provider to generate the response.",
           ]}
         />
+        <p>
+          The Validate button does not send your data to an AI provider on our servers — it opens
+          Claude or Perplexity in a new tab, pre-filled, on your own account. That exchange happens
+          directly between you and the platform you chose, governed by that platform's own privacy
+          policy, not ours.
+        </p>
       </Section>
       <Section heading="What we do not collect">
         <p>
@@ -48,21 +52,18 @@ function PrivacyPage() {
           items={[
             "Hosting and application delivery infrastructure.",
             "A managed database provider that stores the idea library.",
-            "An AI model provider that generates AI audit responses at request time.",
             "A content management system that serves blog articles.",
-            "A payment provider, once Pro Pass checkout is live.",
           ]}
         />
         <p>
-          These providers process data on our instructions only. We can supply the current
-          provider list on request.
+          These providers process data on our instructions only. We can supply the current provider
+          list on request.
         </p>
       </Section>
       <Section heading="Retention">
         <p>
           Contact correspondence is retained while the enquiry is open and for a reasonable period
-          afterwards. Technical logs are short-lived. Purchase records are retained as long as tax
-          and accounting law requires.
+          afterwards. Technical logs are short-lived.
         </p>
       </Section>
       <Section heading="Cookies">
@@ -79,13 +80,16 @@ function PrivacyPage() {
             GDPR page
           </Link>{" "}
           for how to exercise these rights, or email{" "}
-          <a href="mailto:privacy@ideavault.ai" className="text-accent underline underline-offset-4">
+          <a
+            href="mailto:privacy@ideavault.ai"
+            className="text-accent underline underline-offset-4"
+          >
             privacy@ideavault.ai
           </a>
           .
         </p>
       </Section>
-    {/* EDITABLE SECTION END */}
-      </ContentPage>
+      {/* EDITABLE SECTION END */}
+    </ContentPage>
   );
 }

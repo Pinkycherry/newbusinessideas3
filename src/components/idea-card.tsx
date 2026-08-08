@@ -8,9 +8,8 @@ export function IdeaCard({ idea }: { idea: IdeaCardData }) {
   // Organic blob outline, deterministic per idea so neighbouring cards differ.
   const blob =
     BLOBS[
-      Math.abs(
-        idea.slug.split("").reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 7),
-      ) % BLOBS.length
+      Math.abs(idea.slug.split("").reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 7)) %
+        BLOBS.length
     ];
   return (
     <Link
@@ -20,13 +19,9 @@ export function IdeaCard({ idea }: { idea: IdeaCardData }) {
     >
       <div className="flex items-center justify-between gap-3 text-[11px] uppercase tracking-widest text-muted-foreground">
         <span className="truncate">{idea.subcategoryName}</span>
-        {idea.locked ? (
-          <span className="shrink-0 rounded-full bg-gradient-to-r from-primary to-accent px-2 py-0.5 font-semibold text-primary-foreground">
-            Pro
-          </span>
-        ) : idea.trendScore !== null ? (
+        {idea.trendScore !== null && (
           <span className="shrink-0 text-accent">Trend {idea.trendScore}</span>
-        ) : null}
+        )}
       </div>
       <h3 className="break-words text-lg font-semibold leading-snug transition-colors duration-300 group-hover:text-accent">
         {idea.title}

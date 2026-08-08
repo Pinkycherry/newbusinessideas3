@@ -56,11 +56,11 @@ function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boo
         Sign In
       </a>
       <Link
-        to="/pricing"
+        to="/browse"
         onClick={onNavigate}
         className={`sheen rounded-full bg-gradient-to-r from-primary to-ember px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary-foreground shadow-[0_8px_28px_oklch(0.687_0.161_51.5/40%)] transition-all duration-300 hover:scale-105 ${full ? "block text-center" : ""}`}
       >
-        Get Pro Pass
+        Browse free
       </Link>
     </>
   );
@@ -116,82 +116,85 @@ function CategoryMega() {
         className="flex items-center gap-1.5 uppercase tracking-[0.18em] transition-colors duration-300 hover:text-foreground"
       >
         Categories
-        <span aria-hidden className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}>
+        <span
+          aria-hidden
+          className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+        >
           ▾
         </span>
       </button>
       <AnimatePresence>
-      {open && (
-        <motion.div
-          role="menu"
-          initial={{ opacity: 0, y: -10, scale: 0.985 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -10, scale: 0.985 }}
-          transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-          onMouseEnter={openNow}
-          onMouseLeave={closeSoon}
-          style={{ background: "oklch(0.255 0.008 274 / 98%)" }}
-          className="glass-nav fixed left-1/2 top-20 z-50 w-[min(66rem,94vw)] -translate-x-1/2 rounded-3xl p-5 before:absolute before:-top-6 before:left-0 before:h-6 before:w-full before:content-['']"
-        >
-          <div className="grid gap-6 lg:grid-cols-[2.2fr_1fr]">
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
-                Browse by category
-              </p>
-              <div className="mt-3 grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-4">
-                {categories.length === 0 ? (
-                  <p className="text-xs normal-case tracking-normal text-muted-foreground">
-                    Loading categories…
-                  </p>
-                ) : (
-                  categories.map((c) => (
-                    <Link
-                      key={c.categorySlug}
-                      to="/category/$categorySlug"
-                      params={{ categorySlug: c.categorySlug }}
-                      onClick={() => setOpen(false)}
-                      className="rounded-full px-3 py-1.5 text-[11px] normal-case tracking-normal text-foreground transition-colors"
-                    >
-                      <span className="block truncate font-semibold leading-snug">
-                        {c.categoryName}
-                      </span>
-                    </Link>
-                  ))
-                )}
-              </div>
-              <Link
-                to="/browse"
-                onClick={() => setOpen(false)}
-                className="mt-3 inline-block rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em]"
-              >
-                View all categories →
-              </Link>
-            </div>
-            <div className="grid gap-5 sm:grid-cols-2 lg:border-l lg:border-border lg:pl-6">
-              {STATIC_GROUPS.map((group) => (
-                <div key={group.title}>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
-                    {group.title}
-                  </p>
-                  <ul className="mt-2.5 space-y-1">
-                    {group.items.map((item) => (
-                      <li key={item}>
-                        <Link
-                          to="/browse"
-                          onClick={() => setOpen(false)}
-                          className="block rounded-lg px-2 py-1.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
-                        >
-                          {item}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+        {open && (
+          <motion.div
+            role="menu"
+            initial={{ opacity: 0, y: -10, scale: 0.985 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.985 }}
+            transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+            onMouseEnter={openNow}
+            onMouseLeave={closeSoon}
+            style={{ background: "oklch(0.255 0.008 274 / 98%)" }}
+            className="glass-nav fixed left-1/2 top-20 z-50 w-[min(66rem,94vw)] -translate-x-1/2 rounded-3xl p-5 before:absolute before:-top-6 before:left-0 before:h-6 before:w-full before:content-['']"
+          >
+            <div className="grid gap-6 lg:grid-cols-[2.2fr_1fr]">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
+                  Browse by category
+                </p>
+                <div className="mt-3 grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-4">
+                  {categories.length === 0 ? (
+                    <p className="text-xs normal-case tracking-normal text-muted-foreground">
+                      Loading categories…
+                    </p>
+                  ) : (
+                    categories.map((c) => (
+                      <Link
+                        key={c.categorySlug}
+                        to="/category/$categorySlug"
+                        params={{ categorySlug: c.categorySlug }}
+                        onClick={() => setOpen(false)}
+                        className="rounded-full px-3 py-1.5 text-[11px] normal-case tracking-normal text-foreground transition-colors"
+                      >
+                        <span className="block truncate font-semibold leading-snug">
+                          {c.categoryName}
+                        </span>
+                      </Link>
+                    ))
+                  )}
                 </div>
-              ))}
+                <Link
+                  to="/browse"
+                  onClick={() => setOpen(false)}
+                  className="mt-3 inline-block rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em]"
+                >
+                  View all categories →
+                </Link>
+              </div>
+              <div className="grid gap-5 sm:grid-cols-2 lg:border-l lg:border-border lg:pl-6">
+                {STATIC_GROUPS.map((group) => (
+                  <div key={group.title}>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
+                      {group.title}
+                    </p>
+                    <ul className="mt-2.5 space-y-1">
+                      {group.items.map((item) => (
+                        <li key={item}>
+                          <Link
+                            to="/browse"
+                            onClick={() => setOpen(false)}
+                            className="block rounded-lg px-2 py-1.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
+                          >
+                            {item}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </motion.div>
-      )}
+          </motion.div>
+        )}
       </AnimatePresence>
     </div>
   );
@@ -221,7 +224,9 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
         className="glass-nav absolute right-0 top-0 flex h-full w-[min(22rem,92vw)] flex-col overflow-y-auto px-4 py-4"
       >
         <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">Menu</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
+            Menu
+          </span>
           <button
             type="button"
             onClick={onClose}
@@ -260,7 +265,10 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
             className="flex items-center justify-between rounded-xl px-3 py-2.5 text-left uppercase tracking-[0.18em] transition-colors hover:bg-secondary hover:text-foreground"
           >
             Categories
-            <span aria-hidden className={`transition-transform duration-300 ${catOpen ? "rotate-180" : ""}`}>
+            <span
+              aria-hidden
+              className={`transition-transform duration-300 ${catOpen ? "rotate-180" : ""}`}
+            >
               ▾
             </span>
           </button>
@@ -308,7 +316,7 @@ const footerColumns: { title: string; links: { to: string; label: string }[] }[]
     links: [
       { to: "/browse", label: "Browse ideas" },
       { to: "/search", label: "Search" },
-      { to: "/pricing", label: "Pro Pass pricing" },
+      { to: "/pricing", label: "Pricing" },
       { to: "/services", label: "Services" },
       { to: "/blog", label: "Blog" },
     ],
@@ -339,7 +347,11 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <AmbientScene />
       <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">
         <div className="glass-nav mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full px-4 py-2.5 sm:px-6 sm:py-3">
-          <Link to="/" onClick={() => setMobileOpen(false)} className="flex min-w-0 items-baseline gap-2">
+          <Link
+            to="/"
+            onClick={() => setMobileOpen(false)}
+            className="flex min-w-0 items-baseline gap-2"
+          >
             <span className="truncate text-sm font-black uppercase tracking-[0.22em] [text-shadow:0_0_18px_oklch(1_0_0/45%)] sm:text-lg">
               Idea
             </span>
@@ -429,12 +441,23 @@ export function SiteShell({ children }: { children: ReactNode }) {
   );
 }
 
-export function Breadcrumbs({ items }: { items: { label: string; to?: string; params?: Record<string, string> }[] }) {
+export function Breadcrumbs({
+  items,
+}: {
+  items: { label: string; to?: string; params?: Record<string, string> }[];
+}) {
   return (
-    <nav aria-label="Breadcrumb" className="flex max-w-full flex-wrap items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
+    <nav
+      aria-label="Breadcrumb"
+      className="flex max-w-full flex-wrap items-center gap-1.5 text-[11px] font-medium text-muted-foreground"
+    >
       {items.map((item, i) => (
         <span key={`${item.label}-${i}`} className="flex min-w-0 items-center gap-1.5">
-          {i > 0 && <span aria-hidden className="text-border">›</span>}
+          {i > 0 && (
+            <span aria-hidden className="text-border">
+              ›
+            </span>
+          )}
           {item.to ? (
             <Link
               to={item.to}
@@ -444,7 +467,9 @@ export function Breadcrumbs({ items }: { items: { label: string; to?: string; pa
               {item.label}
             </Link>
           ) : (
-            <span className="max-w-[min(18rem,70vw)] truncate rounded-full border border-border bg-card/70 px-2.5 py-1 text-foreground">{item.label}</span>
+            <span className="max-w-[min(18rem,70vw)] truncate rounded-full border border-border bg-card/70 px-2.5 py-1 text-foreground">
+              {item.label}
+            </span>
           )}
         </span>
       ))}

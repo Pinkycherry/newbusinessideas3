@@ -2,7 +2,7 @@ import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
 import { IdeaCard } from "@/components/idea-card";
-import { AiAudit } from "@/components/ai-audit";
+import { ValidateButton } from "@/components/validate-button";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
 import { getIdeaBySlug, getCategoryPage } from "@/lib/ideas.functions";
@@ -137,88 +137,70 @@ function IdeaPage() {
               {idea.trendScore !== null && (
                 <span className="text-accent">Trend score {idea.trendScore}</span>
               )}
-              {idea.locked && (
-                <span className="rounded-sm bg-primary px-2 py-1 text-primary-foreground">
-                  Pro Pass idea
-                </span>
-              )}
             </div>
 
             <h1 className="mt-3 text-4xl font-bold leading-tight tracking-tight">{idea.title}</h1>
             <p className="mt-4 text-lg text-muted-foreground">{idea.businessDescription}</p>
 
-            {idea.locked ? (
-              <div className="mt-10 rounded-lg border border-primary/50 bg-card p-6">
-                <h2 className="text-lg font-semibold">This blueprint is part of the Pro Pass</h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  The full breakdown, pros, cons and founder-fit verdict for this idea are marked{" "}
-                  <span className="text-foreground">premium</span> in the library. Pro Pass checkout
-                  is not live yet, so this content stays locked rather than being faked.
-                </p>
-              </div>
-            ) : (
-              <>
-                <section className="mt-10">
-                  <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                    The breakdown
-                  </h2>
-                  <p className="mt-3 whitespace-pre-line leading-relaxed">{idea.summary}</p>
-                </section>
+            <section className="mt-10">
+              <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                The breakdown
+              </h2>
+              <p className="mt-3 whitespace-pre-line leading-relaxed">{idea.summary}</p>
+            </section>
 
-                <div className="mt-10 grid gap-4 md:grid-cols-2">
-                  <section className="rounded-lg border border-border bg-card p-5">
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
-                      Why it works
-                    </h2>
-                    <ul className="mt-3 space-y-3 text-sm">
-                      {idea.pros.map((pro) => (
-                        <li key={pro} className="flex gap-2">
-                          <span aria-hidden className="text-accent">
-                            +
-                          </span>
-                          <span>{pro}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                  <section className="rounded-lg border border-border bg-card p-5">
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-destructive">
-                      What will hurt
-                    </h2>
-                    <ul className="mt-3 space-y-3 text-sm">
-                      {idea.cons.map((con) => (
-                        <li key={con} className="flex gap-2">
-                          <span aria-hidden className="text-destructive">
-                            −
-                          </span>
-                          <span>{con}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                </div>
+            <div className="mt-10 grid gap-4 md:grid-cols-2">
+              <section className="rounded-lg border border-border bg-card p-5">
+                <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
+                  Why it works
+                </h2>
+                <ul className="mt-3 space-y-3 text-sm">
+                  {idea.pros.map((pro) => (
+                    <li key={pro} className="flex gap-2">
+                      <span aria-hidden className="text-accent">
+                        +
+                      </span>
+                      <span>{pro}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+              <section className="rounded-lg border border-border bg-card p-5">
+                <h2 className="text-sm font-semibold uppercase tracking-widest text-destructive">
+                  What will hurt
+                </h2>
+                <ul className="mt-3 space-y-3 text-sm">
+                  {idea.cons.map((con) => (
+                    <li key={con} className="flex gap-2">
+                      <span aria-hidden className="text-destructive">
+                        −
+                      </span>
+                      <span>{con}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </div>
 
-                <div className="mt-8">
-                  <AdSlot position="idea-detail-between-proscons-verdict" size="banner" />
-                </div>
+            <div className="mt-8">
+              <AdSlot position="idea-detail-between-proscons-verdict" size="banner" />
+            </div>
 
-                {idea.verdict && (
-                  <section className="mt-6 rounded-lg border-l-4 border-primary bg-card p-5">
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-primary">
-                      Verdict
-                    </h2>
-                    <p className="mt-2 leading-relaxed">{idea.verdict}</p>
-                  </section>
-                )}
-
-                <div className="mt-8">
-                  <AdSlot position="idea-detail-below-verdict" size="banner" />
-                </div>
-              </>
+            {idea.verdict && (
+              <section className="mt-6 rounded-lg border-l-4 border-primary bg-card p-5">
+                <h2 className="text-sm font-semibold uppercase tracking-widest text-primary">
+                  Verdict
+                </h2>
+                <p className="mt-2 leading-relaxed">{idea.verdict}</p>
+              </section>
             )}
 
-            <div id="ai-audit">
-              <AiAudit slug={idea.slug} locked={idea.locked} />
+            <div className="mt-8">
+              <AdSlot position="idea-detail-below-verdict" size="banner" />
+            </div>
+
+            <div id="validate">
+              <ValidateButton slug={idea.slug} />
             </div>
 
             {idea.tags.length > 0 && (
@@ -261,20 +243,11 @@ function IdeaPage() {
                   Trend score
                 </p>
                 <p className="mt-1 text-4xl font-extrabold text-accent">{idea.trendScore ?? "—"}</p>
-                <span
-                  className={`mt-4 inline-block rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${
-                    idea.locked
-                      ? "bg-gradient-to-r from-primary to-ember text-primary-foreground"
-                      : "border border-border text-muted-foreground"
-                  }`}
-                >
-                  {idea.locked ? "Pro" : "Free"}
-                </span>
                 <a
-                  href="#ai-audit"
+                  href="#validate"
                   className="sheen mt-5 block w-full rounded-full bg-gradient-to-r from-primary to-ember px-5 py-3 text-center text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_oklch(0.687_0.161_51.5/40%)] transition-transform duration-300 hover:scale-[1.02]"
                 >
-                  Run AI Audit
+                  Validate for free
                 </a>
               </div>
 
