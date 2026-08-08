@@ -565,7 +565,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
               <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
                 Popular categories
               </h3>
-              <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
+              <ul className="iv-plainlinks mt-4 space-y-2.5 text-sm text-muted-foreground">
                 {popularCategories.length === 0 ? (
                   <li className="text-xs text-muted-foreground">Loading…</li>
                 ) : (
