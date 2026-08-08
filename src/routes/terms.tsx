@@ -5,8 +5,8 @@ import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout
 export const Route = createFileRoute("/terms")({
   head: () =>
     metaFor(
-      "Terms of Service | IdeaVault AI",
-      "The terms governing your use of the IdeaVault AI idea library and the free validation handoff.",
+      "Terms of Service | BBI",
+      "The terms governing your use of the BBI idea library and the free validation handoff.",
     ),
   component: TermsPage,
 });
@@ -17,14 +17,14 @@ function TermsPage() {
       eyebrow="Terms of service"
       title="Terms of"
       highlight="service"
-      intro="These terms govern your use of IdeaVault AI. By using the site you accept them. If you do not accept them, please do not use the service."
+      intro="These terms govern your use of BBI. By using the site you accept them. If you do not accept them, please do not use the service."
     >
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <Section heading="1. The service">
         <p>
-          IdeaVault AI provides researched business idea blueprints, search and browsing tools, an
-          editorial blog, and a free handoff that lets you validate any idea using your own Claude
-          or Perplexity account. The service is informational. It is not investment, legal, tax or
+          BBI provides researched business idea blueprints, search and browsing tools, an editorial
+          blog, and a free handoff that lets you validate any idea using your own Claude or
+          Perplexity account. The service is informational. It is not investment, legal, tax or
           professional advice.
         </p>
       </Section>
@@ -49,9 +49,9 @@ function TermsPage() {
       <Section heading="4. Intellectual property">
         <p>
           All blueprints, editorial content, scoring, branding and interface design remain the
-          property of IdeaVault AI or its licensors. You get a personal, non-exclusive,
-          non-transferable licence to read and use the content for your own business planning. The
-          business ideas themselves are not proprietary — you are free to build them.
+          property of BBI or its licensors. You get a personal, non-exclusive, non-transferable
+          licence to read and use the content for your own business planning. The business ideas
+          themselves are not proprietary — you are free to build them.
         </p>
       </Section>
       <Section heading="5. Validation handoff to third-party AI platforms">
@@ -75,10 +75,10 @@ function TermsPage() {
       </Section>
       <Section heading="7. Limitation of liability">
         <p>
-          To the maximum extent permitted by law, IdeaVault AI is not liable for lost profits, lost
-          business, lost data or any indirect or consequential loss arising from your use of the
-          service or decisions made on the basis of its content. Nothing in these terms limits
-          liability that cannot lawfully be limited.
+          To the maximum extent permitted by law, BBI is not liable for lost profits, lost business,
+          lost data or any indirect or consequential loss arising from your use of the service or
+          decisions made on the basis of its content. Nothing in these terms limits liability that
+          cannot lawfully be limited.
         </p>
       </Section>
       <Section heading="8. Termination">

@@ -14,16 +14,16 @@ export const Route = createFileRoute("/blog/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(postsQuery),
   head: () => ({
     meta: [
-      { title: "Blog — Founder Playbooks | IdeaVault AI" },
+      { title: "Blog — Founder Playbooks | BBI" },
       {
         name: "description",
         content:
-          "Long-form founder playbooks and market breakdowns, published from our editorial CMS and rendered natively inside IdeaVault AI.",
+          "Long-form founder playbooks and market breakdowns, published from our editorial CMS and rendered natively inside BBI.",
       },
-      { property: "og:title", content: "Blog — Founder Playbooks | IdeaVault AI" },
+      { property: "og:title", content: "Blog — Founder Playbooks | BBI" },
       {
         property: "og:description",
-        content: "Long-form founder playbooks and market breakdowns from IdeaVault AI.",
+        content: "Long-form founder playbooks and market breakdowns from BBI.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -57,8 +57,8 @@ function BlogIndex() {
           </span>
         </h1>
         <p className="mt-4 max-w-2xl text-muted-foreground">
-          Long-form articles published from our editorial CMS, rendered in IdeaVault's own design
-          system. The idea library and the blog stay separate systems.
+          Long-form articles published from our editorial CMS, rendered in BBI's own design system.
+          The idea library and the blog stay separate systems.
         </p>
 
         {data.posts.length === 0 ? (

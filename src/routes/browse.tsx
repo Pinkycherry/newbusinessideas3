@@ -11,16 +11,16 @@ export const Route = createFileRoute("/browse")({
   loader: ({ context }) => context.queryClient.ensureQueryData(catalogQuery),
   head: () => ({
     meta: [
-      { title: "Browse Business Idea Categories | IdeaVault AI" },
+      { title: "Browse Business Idea Categories | BBI" },
       {
         name: "description",
         content:
-          "Browse every business idea category and subcategory in the IdeaVault library, from AI automation to fintech and creator media.",
+          "Browse every business idea category and subcategory in the BBI library, from AI automation to fintech and creator media.",
       },
-      { property: "og:title", content: "Browse Business Idea Categories | IdeaVault AI" },
+      { property: "og:title", content: "Browse Business Idea Categories | BBI" },
       {
         property: "og:description",
-        content: "Every category and subcategory in the IdeaVault business idea library.",
+        content: "Every category and subcategory in the BBI business idea library.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -48,7 +48,7 @@ function BrowsePage() {
           collectionPageSchema({
             path: "/browse",
             name: "Browse Business Idea Categories",
-            description: "Every category and subcategory in the IdeaVault business idea library.",
+            description: "Every category and subcategory in the BBI business idea library.",
             itemCount: data.totalIdeas,
           }),
           breadcrumbSchema([

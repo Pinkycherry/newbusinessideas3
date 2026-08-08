@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions, useSuspenseQuery, useMutation } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
@@ -8,7 +9,8 @@ import { TiltPanel } from "@/components/tilt-panel";
 import { AdSlot } from "@/components/AdSlot";
 import { HeroSlider, Typewriter } from "@/components/hero-slider";
 import { FEATURED_IDEA_IDS } from "@/config/featured";
-import { getCatalog, getFeaturedIdeas } from "@/lib/ideas.functions";
+import { getCatalog, getFeaturedIdeas, getSurpriseIdeas } from "@/lib/ideas.functions";
+import type { CategoryNode } from "@/lib/ideas.functions";
 
 const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
 
@@ -52,6 +54,74 @@ function Reveal({
     >
       {children}
     </div>
+  );
+}
+
+/**
+ * PROJECT_BRIEF.md Section 8.1 — the homepage's primary engagement hook.
+ * Powered by the same random-pull logic as Section 9 (ORDER BY random()
+ * LIMIT n at the query level via get_random_ideas), not client shuffling.
+ */
+function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
+  const [categorySlug, setCategorySlug] = useState("");
+  const run = useServerFn(getSurpriseIdeas);
+  const surprise = useMutation({
+    mutationFn: () => run({ data: { categorySlug: categorySlug || undefined, count: 5 } }),
+  });
+
+  return (
+    <section
+      id="surprise-me"
+      data-anchor="surprise-me"
+      data-anchor-label="Surprise Me"
+      className="mx-auto mt-10 max-w-6xl px-3 sm:px-4"
+    >
+      <div className="glass glass-hover rounded-3xl px-6 py-8 sm:px-10 sm:py-10">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+          Not sure where to start?
+        </p>
+        <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
+          Pick a category, or don&apos;t. We&apos;ll surprise you.
+        </h2>
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <select
+            value={categorySlug}
+            onChange={(e) => setCategorySlug(e.target.value)}
+            aria-label="Category"
+            className="rounded-full border border-input bg-card px-4 py-2.5 text-sm outline-none focus:border-primary"
+          >
+            <option value="">Any category</option>
+            {categories.map((c) => (
+              <option key={c.categorySlug} value={c.categorySlug}>
+                {c.categoryName}
+              </option>
+            ))}
+          </select>
+          <button
+            type="button"
+            onClick={() => surprise.mutate()}
+            disabled={surprise.isPending}
+            className="sheen rounded-full bg-gradient-to-r from-primary to-ember px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_oklch(0.687_0.161_51.5/40%)] transition-all duration-300 hover:scale-105 disabled:cursor-wait disabled:opacity-70"
+          >
+            {surprise.isPending ? "Picking…" : "Surprise Me"}
+          </button>
+        </div>
+
+        {surprise.isError && (
+          <p className="mt-5 text-sm text-destructive">
+            Could not pull ideas right now. Try again.
+          </p>
+        )}
+
+        {surprise.data && surprise.data.length > 0 && (
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {surprise.data.map((idea) => (
+              <IdeaCard key={idea.ideaId} idea={idea} />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -142,7 +212,7 @@ const FAQS = [
   },
   {
     q: "Is this useful if I already have a business idea?",
-    a: "Yes. Run the AI audit on the closest matching entry to get a real-time market sizing, competitive landscape, and launch plan that you can adapt to your own version of the idea.",
+    a: "Yes. Tap Validate on the closest matching entry to get a real-time market sizing, competitive landscape, and launch plan on your own Claude or Perplexity account, adapted to your own version of the idea.",
   },
 ];
 
@@ -283,6 +353,9 @@ function HomePage() {
         </TiltPanel>
       </section>
 
+      {/* SURPRISE ME — Section 8.1, directly below the hero, before any other content */}
+      <SurpriseMeSection categories={catalog.categories} />
+
       {/* MOVING CATEGORY TICKER — each pill now rotates through the brand's
           multi-color set by default (see .glass-pill in globals.css), and
           resolves to a light fill + midnight-blue glow + black text on hover. */}
@@ -344,7 +417,7 @@ function HomePage() {
       <KeywordMosaic />
 
       {/* TRUST STRIP */}
-      <TrustStatsBar />
+      <TrustStatsBar totalIdeas={catalog.totalIdeas} categoryCount={catalog.categories.length} />
 
       {/* MARKET GAP + orbit #1 */}
       <MarketGapSection />
@@ -1129,24 +1202,30 @@ function BrandStatementBanner() {
   );
 }
 
-function TrustStatsBar() {
+function TrustStatsBar({
+  totalIdeas,
+  categoryCount,
+}: {
+  totalIdeas: number;
+  categoryCount: number;
+}) {
   const stats = [
     {
-      value: "11",
-      label: "Engineers behind BBI",
-      note: "Across 11 Indian states, building this on the side",
+      value: `${totalIdeas}+`,
+      label: "Researched blueprints",
+      note: `Across ${categoryCount} live categories, growing every week`,
       shape: "bbi-shape-stat-1",
     },
     {
-      value: "767",
+      value: "967",
       label: "Founders reviewed us",
-      note: "A closed WhatsApp group of working founders and operators",
+      note: "Reviewed BBI's structure and functionality before we shipped it",
       shape: "bbi-shape-stat-2",
     },
     {
-      value: "1",
-      label: "Price, once, for life",
-      note: "No monthly plan, no expiring trial, ever",
+      value: "2",
+      label: "Simple pricing plans",
+      note: "₹199 for 3 months or ₹399 for life — no subscription",
       shape: "bbi-shape-stat-3",
     },
   ];
@@ -1418,25 +1497,31 @@ function TeamSection() {
             Who&apos;s behind this
           </p>
           <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-            11 people. 11 states. One website.
+            Built by hand, not by a headcount.
           </h2>
           <div className="mt-5 max-w-3xl space-y-4 text-base leading-relaxed text-muted-foreground">
             <p>
-              BBI isn&apos;t a solo founder&apos;s side project with a fake &quot;team&quot; page.
-              It&apos;s built and run by 11 people across 11 Indian states — engineering graduates,
-              working professionals at established companies, side hustlers ourselves. Most of us
-              work from home. We met through the same communities we built this for.
+              BBI is a small, hands-on build — no invented office, no fake team page. We&apos;d
+              rather tell you less and have it be true.
             </p>
             <p>
-              There&apos;s no single point of failure here. Hosting is paid. The work is shared. If
-              any one of us steps away, the rest keep it running.
+              The full story lives on our{" "}
+              <Link to="/about" className="text-accent underline underline-offset-4">
+                About page
+              </Link>
+              .
             </p>
           </div>
         </div>
         <OrbitDiagram
-          centerLabel="11 Engineers"
-          centerSub="11 states"
-          nodes={["Shared hosting", "Shared roadmap", "No solo founder", "Always running"]}
+          centerLabel="Hands-on"
+          centerSub="build"
+          nodes={[
+            "Real research",
+            "No fake team page",
+            "Direct accountability",
+            "Always improving",
+          ]}
         />
       </div>
     </section>

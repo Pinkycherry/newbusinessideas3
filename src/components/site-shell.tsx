@@ -352,11 +352,8 @@ export function SiteShell({ children }: { children: ReactNode }) {
             onClick={() => setMobileOpen(false)}
             className="flex min-w-0 items-baseline gap-2"
           >
-            <span className="truncate text-sm font-black uppercase tracking-[0.22em] [text-shadow:0_0_18px_oklch(1_0_0/45%)] sm:text-lg">
-              Idea
-            </span>
             <span className="shrink-0 rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-0.5 text-sm font-black uppercase tracking-[0.18em] text-primary-foreground shadow-[0_0_24px_oklch(0.723_0.161_56/45%)] sm:text-lg">
-              Vault
+              BBI
             </span>
           </Link>
 
@@ -401,14 +398,13 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
             <div>
               <Link to="/" className="flex items-baseline gap-2">
-                <span className="text-base font-black uppercase tracking-[0.22em]">Idea</span>
                 <span className="rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-0.5 text-base font-black uppercase tracking-[0.18em] text-primary-foreground">
-                  Vault
+                  BBI
                 </span>
               </Link>
               <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
                 Researched business idea blueprints with real market context, trend scoring and a
-                blunt founder-fit verdict — plus live AI audits on Pro entries.
+                blunt founder-fit verdict.
               </p>
             </div>
             {footerColumns.map((col) => (
@@ -432,8 +428,8 @@ export function SiteShell({ children }: { children: ReactNode }) {
             ))}
           </div>
           <div className="mt-10 flex flex-col gap-2 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-            <p>© {new Date().getFullYear()} IdeaVault AI. All rights reserved.</p>
-            <p>Idea data served live from the IdeaVault database.</p>
+            <p>© {new Date().getFullYear()} BBI. All rights reserved.</p>
+            <p>Idea data served live from the BBI database.</p>
           </div>
         </div>
       </footer>

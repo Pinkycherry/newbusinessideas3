@@ -39,7 +39,7 @@ export const Route = createFileRoute("/idea/$slug")({
   },
   head: ({ loaderData }) => {
     const idea = loaderData?.idea;
-    const title = idea ? `${idea.title} | IdeaVault AI` : "Business Idea | IdeaVault AI";
+    const title = idea ? `${idea.title} | BBI` : "Business Idea | BBI";
     const description =
       idea?.businessDescription?.slice(0, 155) ??
       "A researched business idea blueprint with pros, cons and a founder-fit verdict.";

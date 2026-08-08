@@ -24,12 +24,12 @@ export const Route = createFileRoute("/category/$categorySlug/")({
     const name = loaderData?.categoryName ?? "Category";
     return {
       meta: [
-        { title: `${name} Business Ideas | IdeaVault AI` },
+        { title: `${name} Business Ideas | BBI` },
         {
           name: "description",
           content: `Explore ${loaderData?.ideas.length ?? 0} researched ${name} business ideas with pros, cons, verdicts and trend scores.`,
         },
-        { property: "og:title", content: `${name} Business Ideas | IdeaVault AI` },
+        { property: "og:title", content: `${name} Business Ideas | BBI` },
         {
           property: "og:description",
           content: `Researched ${name} business blueprints with pros, cons and verdicts.`,

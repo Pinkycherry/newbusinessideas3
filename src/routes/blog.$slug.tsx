@@ -7,7 +7,10 @@ import { formatDate } from "@/lib/blog-shared";
 import { getBlogPost } from "@/lib/blog.functions";
 
 const postQuery = (slug: string) =>
-  queryOptions({ queryKey: ["blog", "post", slug], queryFn: () => getBlogPost({ data: { slug } }) });
+  queryOptions({
+    queryKey: ["blog", "post", slug],
+    queryFn: () => getBlogPost({ data: { slug } }),
+  });
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ context, params }) => {
@@ -17,10 +20,12 @@ export const Route = createFileRoute("/blog/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Article not found | IdeaVault AI" }, { name: "robots", content: "noindex" }] };
+      return {
+        meta: [{ title: "Article not found | BBI" }, { name: "robots", content: "noindex" }],
+      };
     }
     const { post } = loaderData;
-    const title = `${post.title} | IdeaVault AI`;
+    const title = `${post.title} | BBI`;
     return {
       meta: [
         { title },
@@ -74,7 +79,11 @@ function BlogPostPage() {
       <article className="mx-auto max-w-3xl px-3 py-12 sm:px-4">
         {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
         <Breadcrumbs
-          items={[{ label: "Home", to: "/" }, { label: "Blog", to: "/blog" }, { label: post.title }]}
+          items={[
+            { label: "Home", to: "/" },
+            { label: "Blog", to: "/blog" },
+            { label: post.title },
+          ]}
         />
 
         <div className="mt-5 flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-accent">

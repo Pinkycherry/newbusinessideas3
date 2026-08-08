@@ -5,7 +5,7 @@ import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout
 export const Route = createFileRoute("/services")({
   head: () =>
     metaFor(
-      "Services — Idea Research, Free Validation & Custom Blueprints | IdeaVault AI",
+      "Services — Idea Research, Free Validation & Custom Blueprints | BBI",
       "Idea library access, a free AI validation handoff, custom blueprint research and market validation sprints for founders and operators.",
     ),
   component: ServicesPage,
@@ -33,7 +33,7 @@ const services = [
   },
   {
     name: "Custom blueprint research",
-    body: "You bring a market, sector or thesis; we produce an IdeaVault-grade blueprint on it, in the same structure as the library.",
+    body: "You bring a market, sector or thesis; we produce a BBI-grade blueprint on it, in the same structure as the library.",
     points: [
       "Scoped to your market",
       "Delivered as a full blueprint",
@@ -57,7 +57,7 @@ function ServicesPage() {
       eyebrow="Services"
       title="Research you can"
       highlight="actually act on"
-      intro="Four ways to work with IdeaVault AI — from self-serve library access to bespoke research on a market you already care about."
+      intro="Four ways to work with BBI — from self-serve library access to bespoke research on a market you already care about."
       wide
     >
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}

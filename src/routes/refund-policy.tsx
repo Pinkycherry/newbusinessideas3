@@ -5,8 +5,8 @@ import { ContentPage, Section, metaFor } from "@/components/page-layout";
 export const Route = createFileRoute("/refund-policy")({
   head: () =>
     metaFor(
-      "Refund Policy | IdeaVault AI",
-      "IdeaVault AI does not currently charge for anything, so there is nothing to refund.",
+      "Refund Policy | BBI",
+      "BBI does not currently charge for anything, so there is nothing to refund.",
     ),
   component: RefundPage,
 });

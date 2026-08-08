@@ -12,17 +12,17 @@ export const Route = createFileRoute("/search")({
   validateSearch: z.object({ q: z.string().optional() }),
   head: () => ({
     meta: [
-      { title: "Search Business Ideas | IdeaVault AI" },
+      { title: "Search Business Ideas | BBI" },
       { name: "robots", content: "noindex,follow" },
       {
         name: "description",
         content:
-          "Search the IdeaVault library by keyword, market or model to find the business idea blueprint that fits you.",
+          "Search the BBI library by keyword, market or model to find the business idea blueprint that fits you.",
       },
-      { property: "og:title", content: "Search Business Ideas | IdeaVault AI" },
+      { property: "og:title", content: "Search Business Ideas | BBI" },
       {
         property: "og:description",
-        content: "Search the IdeaVault library by keyword, market or business model.",
+        content: "Search the BBI library by keyword, market or business model.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

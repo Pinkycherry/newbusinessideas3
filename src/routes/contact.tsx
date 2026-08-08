@@ -5,8 +5,8 @@ import { ContentPage, Section, metaFor } from "@/components/page-layout";
 export const Route = createFileRoute("/contact")({
   head: () =>
     metaFor(
-      "Contact IdeaVault AI — Research, Support & Partnerships",
-      "Reach the IdeaVault AI team about library access, the validation handoff, custom blueprint research, data corrections or partnerships.",
+      "Contact BBI — Research, Support & Partnerships",
+      "Reach the BBI team about library access, the validation handoff, custom blueprint research, data corrections or partnerships.",
     ),
   component: ContactPage,
 });
