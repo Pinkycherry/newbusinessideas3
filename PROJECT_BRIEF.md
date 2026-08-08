@@ -58,6 +58,42 @@ This should come through in copy: honest, India-first, "why pay $20 to validate 
 
 ---
 
+**3.2 Access, login, and pricing (new — read before touching Section 8, auth, or any pricing/payment code)**
+
+RESOLVED 2026-08-08 — this replaces any prior pricing/access assumption, including the Pro Pass model that was removed from the codebase. This is now the confirmed source of truth for pricing and access tiers.
+
+Pricing — only two tiers exist:
+- ₹199 — 3-month access
+- ₹399 — Lifetime access
+
+No other plans, trials, or price points exist unless explicitly added later. Whatever pricing currently lives in the code should be checked against these two numbers specifically, not assumed correct.
+
+Login method: Google/Gmail sign-in only. No email/password signup, no other OAuth providers (no Facebook, no phone-number login, nothing else) — Gmail is the single, deliberate choice.
+
+Three levels of access, not two:
+1. No login required — every page type except gated idea content is fully visible to any anonymous visitor: homepage, `/browse`, category pages, blog, static pages, the FAQ hub, listicles. Nothing about these should be blurred or locked.
+2. Logged in (free Gmail account, no payment yet) — idea page content unlocks and displays normally. Before login, idea cards and idea detail pages show a blurred preview with a lock icon overlay instead of the real content.
+3. Active paid plan holder (₹199 or ₹399) — required specifically to use the Validate button (Section 8). Being logged in is not enough on its own to validate — the account must have an active plan.
+
+Open question, not yet resolved — confirm with the founder before building: whether pillar/guide-style long-form pages (Section 6.7) sit in tier 1 (public) or get grouped with idea pages under tier 2 (login-gated). Everything else above is unambiguous. Section 6.7 has not been built yet, so this does not block anything currently in progress — resolve it before that template is built.
+
+Amendment to Section 8 (Validate button): insert a new precondition as Step 0, before the existing Step 1 — check whether the logged-in user has an active paid plan. If not, do not proceed to the platform-picker flow; show the paywall popup described below instead.
+
+The paywall popup — tone and content requirements:
+Warm, a little playful, emotionally direct — not a cold "upgrade required" dialog. Follows the same brand voice as Section 11.1 (honest, India-first, confident). Structure: a short emotional heading, then a short paragraph contrasting competitor pricing with ours, ending in a clear call to action showing both prices.
+
+Heading: "Hold on — this one's worth doing right."
+Body: "Everywhere else, someone's charging you $20 to $100 a month just to validate a handful of ideas. We're not charging you a rupee for the AI part — that's free, forever, on your own account. This small fee is just for our time and effort building this for you. ₹199 gets you 3 months. ₹399 gets you lifetime access, every future update, and unlimited validations. No subscriptions, no surprises."
+Buttons: "Get 3 Months — ₹199" / "Get Lifetime — ₹399"
+
+(Wording can be adjusted freely — keep the contrast and the honesty.)
+
+Build order note: Gmail-only login, the blur/lock UI on idea cards, and the pricing/payment integration need to exist before or alongside Step 3 (Validate button) in Section 13 — the button's behavior now depends on plan status, so it cannot be finished in isolation.
+
+Implementation note (added by Claude Code): actually charging ₹199/₹399 requires a real payment gateway account (e.g. Razorpay, the standard for one-time INR payments) with live API keys, plus Google OAuth credentials configured in the Supabase Auth dashboard. Neither exists in this session — both need the founder to set up externally before checkout or Google sign-in can go live end to end. Per this brief's own validation culture (Section 1, README "Validation Culture" / "WHAT NOT TO DO"), no payment or login flow will be presented as working until it genuinely is. Frontend/schema groundwork that does not require those credentials is safe to build now; the checkout call and the Google OAuth handshake itself are blocked on the founder's setup.
+
+---
+
 **4. Reference sites — technical/architecture study only**
 
 **4.1 Our own current build**
@@ -229,9 +265,12 @@ Do this work first, before new templates, since it retroactively fixes all exist
 
 **8. Validate button — exact confirmed behavior**
 
+RESOLVED 2026-08-08 — this section is now the sole source of truth for idea validation. The codebase previously had a different, undocumented mechanism live: a "Pro Pass" ($49 one-time, Stripe checkout never actually wired up) gating "premium" ideas, plus a "Live AI Audit" that called Gemini directly from our own server (via a Lovable AI gateway) and rendered the result in our UI. That entire mechanism has been removed — no more locked/Pro/tier gating on any idea, no more server-side AI audit call, no more Pro Pass plan, checkout stub, or Stripe reference anywhere in the codebase. All ideas are fully readable. The Validate button below is the only validation mechanism now, implemented exactly as this section describes (free, handoff to the user's own Claude/Perplexity account, nothing generated or stored on our servers). Pricing, terms, privacy, refund-policy, services and homepage copy referencing the old Pro Pass/AI-audit mechanism were updated to match. Platform-access pricing is now decided — see Section 3.2 (₹199 / 3 months, ₹399 / lifetime) — and Section 3.2 adds a Step 0 precondition below: an active paid plan is required before the platform-picker flow runs.
+
 This has been tested live and works. Implement exactly as follows, no copy/paste UI element anywhere.
 
 Flow:
+0. Precondition (added by Section 3.2): check whether the logged-in user has an active paid plan (₹199 3-month or ₹399 lifetime). If not, do not proceed to Step 1 — show the paywall popup from Section 3.2 instead.
 1. User is on any idea page, clicks Validate for Free.
 2. User picks a platform (Claude, Perplexity — no ChatGPT, no Grok, deliberately excluded from this product's positioning).
 3. Backend builds a URL for the chosen platform with the idea's specific validation prompt attached as a query parameter (e.g. https://claude.ai/new?q=<encoded prompt>). This happens invisibly — no prompt text is ever shown or copyable in our UI.

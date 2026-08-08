@@ -6,7 +6,7 @@ export const Route = createFileRoute("/terms")({
   head: () =>
     metaFor(
       "Terms of Service | IdeaVault AI",
-      "The terms governing your use of the IdeaVault AI idea library, Pro Pass and AI audit features.",
+      "The terms governing your use of the IdeaVault AI idea library and the free validation handoff.",
     ),
   component: TermsPage,
 });
@@ -23,15 +23,17 @@ function TermsPage() {
       <Section heading="1. The service">
         <p>
           IdeaVault AI provides researched business idea blueprints, search and browsing tools, an
-          editorial blog and — for premium entries — an AI-generated audit. The service is
-          informational. It is not investment, legal, tax or professional advice.
+          editorial blog, and a free handoff that lets you validate any idea using your own Claude
+          or Perplexity account. The service is informational. It is not investment, legal, tax or
+          professional advice.
         </p>
       </Section>
-      <Section heading="2. Accounts and the Pro Pass">
+      <Section heading="2. Accounts">
         <p>
-          Some content is marked premium and requires a Pro Pass. Access is personal to you. You may
-          not share credentials, resell access, or provide bulk access to third parties. We may
-          suspend access where we reasonably believe these terms have been breached.
+          The library is free to browse and every idea's validation handoff is free to use. Where an
+          account exists, access is personal to you — you may not share credentials, resell access,
+          or provide bulk access to third parties. We may suspend access where we reasonably believe
+          these terms have been breached.
         </p>
       </Section>
       <Section heading="3. Acceptable use">
@@ -39,7 +41,6 @@ function TermsPage() {
           items={[
             "Do not scrape, mirror or bulk-extract the idea library.",
             "Do not republish blueprints as your own work or resell them.",
-            "Do not attempt to bypass access controls on premium entries.",
             "Do not use the service to build a competing idea database.",
             "Do not probe, disrupt or overload the service or its infrastructure.",
           ]}
@@ -53,10 +54,13 @@ function TermsPage() {
           business ideas themselves are not proprietary — you are free to build them.
         </p>
       </Section>
-      <Section heading="5. AI-generated content">
+      <Section heading="5. Validation handoff to third-party AI platforms">
         <p>
-          AI audits are generated at request time by a large language model. They can be incomplete
-          or wrong. Treat them as a structured second opinion, never as verified fact. See our{" "}
+          The Validate button opens Claude or Perplexity in a new tab with a research prompt
+          pre-filled, on your own account. We do not generate, store or see the response — it runs
+          entirely on the third-party platform you choose, under that platform's own terms. The
+          pre-fill mechanism is best-effort and can change without notice on the platform's side.
+          Treat any output as a structured second opinion, never as verified fact. See our{" "}
           <Link to="/disclaimer" className="text-accent underline underline-offset-4">
             disclaimer
           </Link>
@@ -92,7 +96,7 @@ function TermsPage() {
           .
         </p>
       </Section>
-    {/* EDITABLE SECTION END */}
-      </ContentPage>
+      {/* EDITABLE SECTION END */}
+    </ContentPage>
   );
 }

@@ -1,13 +1,15 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { Lock } from "lucide-react";
 
 import { IdeaCard } from "@/components/idea-card";
-import { AiAudit } from "@/components/ai-audit";
+import { ValidateButton } from "@/components/validate-button";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
 import { getIdeaBySlug, getCategoryPage } from "@/lib/ideas.functions";
 import { type IdeaCard as IdeaCardType, type IdeaDetail } from "@/lib/ideas-shared";
 import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/schema";
+import { useAuth } from "@/hooks/use-auth";
 
 type IdeaDetailData = { idea: IdeaDetail; related: IdeaCardType[] } | null;
 
@@ -73,8 +75,12 @@ export const Route = createFileRoute("/idea/$slug")({
 function IdeaPage() {
   const { slug } = Route.useParams();
   const { data } = useSuspenseQuery(ideaDetailQuery(slug));
+  const auth = useAuth();
   if (!data) return null;
   const { idea, related } = data;
+  // PROJECT_BRIEF.md Section 3.2 — full blueprint content is blurred behind
+  // a sign-in gate; the title/description teaser above stays visible.
+  const contentLocked = auth.status !== "authenticated";
 
   const showSidebarList = related.length > 3;
   const sidebarRelated = showSidebarList ? related.slice(0, 3) : [];
@@ -137,27 +143,15 @@ function IdeaPage() {
               {idea.trendScore !== null && (
                 <span className="text-accent">Trend score {idea.trendScore}</span>
               )}
-              {idea.locked && (
-                <span className="rounded-sm bg-primary px-2 py-1 text-primary-foreground">
-                  Pro Pass idea
-                </span>
-              )}
             </div>
 
             <h1 className="mt-3 text-4xl font-bold leading-tight tracking-tight">{idea.title}</h1>
             <p className="mt-4 text-lg text-muted-foreground">{idea.businessDescription}</p>
 
-            {idea.locked ? (
-              <div className="mt-10 rounded-lg border border-primary/50 bg-card p-6">
-                <h2 className="text-lg font-semibold">This blueprint is part of the Pro Pass</h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  The full breakdown, pros, cons and founder-fit verdict for this idea are marked{" "}
-                  <span className="text-foreground">premium</span> in the library. Pro Pass checkout
-                  is not live yet, so this content stays locked rather than being faked.
-                </p>
-              </div>
-            ) : (
-              <>
+            <div className="relative">
+              <div
+                className={contentLocked ? "pointer-events-none select-none blur-sm" : undefined}
+              >
                 <section className="mt-10">
                   <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                     The breakdown
@@ -214,11 +208,24 @@ function IdeaPage() {
                 <div className="mt-8">
                   <AdSlot position="idea-detail-below-verdict" size="banner" />
                 </div>
-              </>
-            )}
+              </div>
 
-            <div id="ai-audit">
-              <AiAudit slug={idea.slug} locked={idea.locked} />
+              {contentLocked && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-background/55 text-center">
+                  <Lock className="h-6 w-6 text-accent" aria-hidden />
+                  <p className="text-sm font-semibold">Sign in free to read the full blueprint</p>
+                  <Link
+                    to="/sign-in"
+                    className="sheen rounded-full bg-gradient-to-r from-primary to-ember px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground shadow-[0_10px_36px_oklch(0.687_0.161_51.5/40%)] transition-transform duration-300 hover:scale-105"
+                  >
+                    Continue with Google
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            <div id="validate">
+              <ValidateButton slug={idea.slug} />
             </div>
 
             {idea.tags.length > 0 && (
@@ -261,20 +268,11 @@ function IdeaPage() {
                   Trend score
                 </p>
                 <p className="mt-1 text-4xl font-extrabold text-accent">{idea.trendScore ?? "—"}</p>
-                <span
-                  className={`mt-4 inline-block rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${
-                    idea.locked
-                      ? "bg-gradient-to-r from-primary to-ember text-primary-foreground"
-                      : "border border-border text-muted-foreground"
-                  }`}
-                >
-                  {idea.locked ? "Pro" : "Free"}
-                </span>
                 <a
-                  href="#ai-audit"
+                  href="#validate"
                   className="sheen mt-5 block w-full rounded-full bg-gradient-to-r from-primary to-ember px-5 py-3 text-center text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_oklch(0.687_0.161_51.5/40%)] transition-transform duration-300 hover:scale-[1.02]"
                 >
-                  Run AI Audit
+                  Validate for free
                 </a>
               </div>
 

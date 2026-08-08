@@ -6,7 +6,7 @@ export const Route = createFileRoute("/contact")({
   head: () =>
     metaFor(
       "Contact IdeaVault AI — Research, Support & Partnerships",
-      "Reach the IdeaVault AI team about library access, Pro Pass support, custom blueprint research, data corrections or partnerships.",
+      "Reach the IdeaVault AI team about library access, the validation handoff, custom blueprint research, data corrections or partnerships.",
     ),
   component: ContactPage,
 });
@@ -15,7 +15,7 @@ const channels = [
   {
     label: "General & support",
     value: "hello@ideavault.ai",
-    note: "Access questions, Pro Pass issues, anything about the library.",
+    note: "Access questions, the validation handoff, anything about the library.",
   },
   {
     label: "Custom research",
@@ -66,7 +66,7 @@ function ContactPage() {
           happen. For data corrections: the idea ID and the specific claim you believe is wrong.
         </p>
       </Section>
-    {/* EDITABLE SECTION END */}
-      </ContentPage>
+      {/* EDITABLE SECTION END */}
+    </ContentPage>
   );
 }
