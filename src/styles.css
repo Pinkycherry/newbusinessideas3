@@ -333,14 +333,33 @@ a[href*="/search"]:hover {
     0 16px 30px -14px rgba(0, 0, 0, 0.85),
     0 0 24px -10px rgba(136, 134, 219, 0.55) !important;
 }
-/* GOLDEN TREE — drop the baked-in dark square, keep only the glowing tree */
+/* GOLDEN TREE — the artwork is a screen-blended transparent PNG, so it needs a
+   dark backing plate of its own; on a light page it would otherwise vanish. */
 .tree-asset-container {
-  background: transparent;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(8, 8, 26, 0.96) 0%,
+    rgba(12, 12, 37, 0.9) 45%,
+    rgba(12, 12, 37, 0.55) 72%,
+    rgba(12, 12, 37, 0) 100%
+  );
+  border-radius: 2.5rem;
 }
 .tree-asset-container img,
 [alt*="Golden Tree"] {
   mix-blend-mode: screen;
-  mask-image: radial-gradient(ellipse at center, black 70%, transparent 100%);
+  filter: brightness(1.18) contrast(1.08) saturate(1.05);
+  mask-image: radial-gradient(ellipse at center, black 74%, transparent 100%);
+}
+html.light .tree-asset-container {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(8, 8, 26, 0.99) 0%,
+    rgba(18, 17, 52, 0.95) 50%,
+    rgba(43, 40, 113, 0.5) 78%,
+    rgba(238, 236, 248, 0) 100%
+  );
+  box-shadow: 0 30px 70px -40px rgba(12, 12, 37, 0.6);
 }
 
 /* ================================================================
