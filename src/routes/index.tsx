@@ -229,20 +229,20 @@ export const Route = createFileRoute("/")({
   },
   head: () => ({
     meta: [
-      { title: "BBI — Best Business Ideas | Researched Startup Blueprints" },
+      { title: "BBI — Bharat Business Ideas | Researched Startup Blueprints" },
       {
         name: "description",
         content:
-          "BBI (Best Business Ideas) — researched small business ideas, startup blueprints, and work from home business opportunities. Every idea includes market context, pros, cons, a trend score, and a straight founder-fit verdict.",
+          "BBI (Bharat Business Ideas) — researched small business ideas, startup blueprints, and work from home business opportunities. Every idea includes market context, pros, cons, a trend score, and a straight founder-fit verdict.",
       },
       {
         property: "og:title",
-        content: "BBI — Best Business Ideas | Researched Startup Blueprints",
+        content: "BBI — Bharat Business Ideas | Researched Startup Blueprints",
       },
       {
         property: "og:description",
         content:
-          "Best Business Ideas (BBI) — researched small business ideas, startup blueprints, and work from home business opportunities, with market context, pros, cons, trend scores and founder-fit verdicts.",
+          "Bharat Business Ideas (BBI) — researched small business ideas, startup blueprints, and work from home business opportunities, with market context, pros, cons, trend scores and founder-fit verdicts.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -269,7 +269,7 @@ function HomePage() {
 
       {/* LLM crawlable summary */}
       <p className="sr-only">
-        BBI (Best Business Ideas) is a business idea directory and startup intelligence library.
+        BBI (Bharat Business Ideas) is a business idea directory and startup intelligence library.
         This resource covers small business ideas, work from home business ideas, low investment
         startup ideas, business ideas for women, zero investment business ideas, and startup ideas
         organized by sector, investment level, and founder profile.
@@ -285,7 +285,7 @@ function HomePage() {
         <TiltPanel className="mx-auto max-w-6xl" max={4}>
           <div className="glass blob-1 px-6 py-14 sm:px-12 sm:py-20">
             <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent sm:text-xs">
-              <Typewriter text="BBI — Best Business Ideas" />
+              <Typewriter text="BBI — Bharat Business Ideas" />
             </p>
             <div className="mt-8 grid items-center gap-8 lg:grid-cols-[1.15fr_1fr]">
               <div>
@@ -1193,7 +1193,7 @@ function BrandStatementBanner() {
           Who we are
         </p>
         <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
-          BBI — Best Business Ideas.
+          BBI — Bharat Business Ideas.
         </h2>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
           We&apos;re not another AI validator charging you by the click. BBI is a free, researched
