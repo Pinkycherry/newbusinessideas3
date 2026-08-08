@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import "../styles.css";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { catalogQuery } from "../lib/ideas.functions";
 
 function NotFoundComponent() {
   return (
@@ -73,6 +74,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  loader: ({ context }) => context.queryClient.ensureQueryData(catalogQuery),
   head: () => ({
     meta: [
       { charSet: "utf-8" },

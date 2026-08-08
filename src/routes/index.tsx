@@ -9,10 +9,8 @@ import { TiltPanel } from "@/components/tilt-panel";
 import { AdSlot } from "@/components/AdSlot";
 import { HeroSlider, Typewriter } from "@/components/hero-slider";
 import { FEATURED_IDEA_IDS } from "@/config/featured";
-import { getCatalog, getFeaturedIdeas, getSurpriseIdeas } from "@/lib/ideas.functions";
+import { catalogQuery, getFeaturedIdeas, getSurpriseIdeas } from "@/lib/ideas.functions";
 import type { CategoryNode } from "@/lib/ideas.functions";
-
-const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
 
 /** Split live categories evenly across 4 marquee rows (works for 9 or 100+). */
 /** Smooth scroll-reveal wrapper — fade + rise + de-blur, once, on enter. */
