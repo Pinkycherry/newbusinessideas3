@@ -41,7 +41,8 @@ export function useAuth(): AuthState {
       .select("plan_tier,plan_expires_at")
       .eq("id", userId)
       .maybeSingle()
-      .then(({ data }: { data: Record<string, unknown> | null }) => {
+      .then(
+        ({ data }: { data: Record<string, unknown> | null }) => {
         if (cancelled) return;
         const tier = data?.["plan_tier"] as PlanTier | undefined;
         if (tier === "lifetime") {
@@ -55,10 +56,11 @@ export function useAuth(): AuthState {
         } else {
           setPlanTier("none");
         }
-      })
-      .catch(() => {
-        if (!cancelled) setPlanTier("none");
-      });
+        },
+        () => {
+          if (!cancelled) setPlanTier("none");
+        },
+      );
     return () => {
       cancelled = true;
     };
