@@ -80,19 +80,19 @@ function BrowsePage() {
                     {category.ideaCount} ideas
                   </span>
                 </div>
-                <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                {/* Fluid tag cloud — width is driven by label length, never a rigid grid. */}
+                <div className="iv-tag-cloud mt-4">
                   {category.subcategories.map((sub) => (
-                    <li key={sub.slug}>
-                      <Link
-                        to="/category/$categorySlug/$subcategorySlug"
-                        params={{ categorySlug: category.categorySlug, subcategorySlug: sub.slug }}
-                        className="flex items-center rounded-md border border-border bg-card px-3 py-2 text-sm transition-colors hover:border-primary"
-                      >
-                        <span>{sub.name}</span>
-                      </Link>
-                    </li>
+                    <Link
+                      key={sub.slug}
+                      to="/category/$categorySlug/$subcategorySlug"
+                      params={{ categorySlug: category.categorySlug, subcategorySlug: sub.slug }}
+                      className="glass-pill iv-tag px-4 py-2 text-sm"
+                    >
+                      {sub.name}
+                    </Link>
                   ))}
-                </ul>
+                </div>
               </section>
             ))}
           </div>
