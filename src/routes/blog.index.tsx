@@ -65,39 +65,57 @@ function BlogIndex() {
           <p className="mt-12 text-muted-foreground">No posts published yet.</p>
         ) : (
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {data.posts.map((post) => (
-              <Link
-                key={post.id}
-                to="/blog/$slug"
-                params={{ slug: post.slug }}
-                className="glass glass-hover group flex h-full flex-col overflow-hidden rounded-2xl"
-              >
-                {post.image && (
-                  <div className="aspect-video w-full overflow-hidden">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      loading="lazy"
-                      className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-glass group-hover:scale-105"
-                    />
-                  </div>
-                )}
-                <div className="flex flex-1 flex-col gap-3 p-5 pb-7">
-                  <div className="flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-accent">
-                    <span>{formatDate(post.date)}</span>
-                    <span aria-hidden className="text-muted-foreground">
-                      ·
+            {data.posts.map((post, i) => {
+              // The most recent post reads as a genuine feature, not just the
+              // first tile in an identical grid (brief 12.7 — no repetitive
+              // same-size card walls).
+              const featured = i === 0 && data.posts.length > 2;
+              return (
+                <Link
+                  key={post.id}
+                  to="/blog/$slug"
+                  params={{ slug: post.slug }}
+                  className={`glass glass-hover group flex h-full flex-col overflow-hidden rounded-2xl ${
+                    featured ? "sm:col-span-2 lg:col-span-2" : ""
+                  }`}
+                >
+                  {post.image && (
+                    <div
+                      className={`relative w-full overflow-hidden ${featured ? "aspect-[21/9]" : "aspect-video"}`}
+                    >
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        loading="lazy"
+                        className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-glass group-hover:scale-105"
+                      />
+                      {/* Gradient scrim so text over/near the image always stays
+                          legible and the photo never looks like a raw drop-in
+                          (brief 12.8). */}
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/70 via-background/0 to-transparent" />
+                    </div>
+                  )}
+                  <div className="flex flex-1 flex-col gap-3 p-5 pb-7">
+                    <div className="flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-accent">
+                      <span>{formatDate(post.date)}</span>
+                      <span aria-hidden className="text-muted-foreground">
+                        ·
+                      </span>
+                      <span className="text-muted-foreground">{post.readingMinutes} min read</span>
+                    </div>
+                    <h2
+                      className={`font-semibold leading-snug ${featured ? "text-2xl" : "text-lg"}`}
+                    >
+                      {post.title}
+                    </h2>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
+                    <span className="mt-auto pt-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                      Read article →
                     </span>
-                    <span className="text-muted-foreground">{post.readingMinutes} min read</span>
                   </div>
-                  <h2 className="text-lg font-semibold leading-snug">{post.title}</h2>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
-                  <span className="mt-auto pt-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                    Read article →
-                  </span>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         )}
         {/* EDITABLE SECTION END */}
