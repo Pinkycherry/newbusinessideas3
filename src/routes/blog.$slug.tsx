@@ -101,8 +101,11 @@ function BlogPostPage() {
         </h1>
 
         {post.image && (
-          <div className="mt-8 aspect-video w-full overflow-hidden rounded-3xl border border-border">
+          <div className="relative mt-8 aspect-video w-full overflow-hidden rounded-3xl border border-border">
             <img src={post.image} alt={post.title} className="h-full w-full object-cover" />
+            {/* Subtle corner wash so the photo reads as art-directed, not a
+                raw drop-in (brief 12.8). */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/45 via-transparent to-transparent" />
           </div>
         )}
 
