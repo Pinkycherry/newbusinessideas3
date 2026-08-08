@@ -1,5 +1,6 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { Lock } from "lucide-react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { ValidateButton } from "@/components/validate-button";
@@ -8,6 +9,7 @@ import { AdSlot } from "@/components/AdSlot";
 import { getIdeaBySlug, getCategoryPage } from "@/lib/ideas.functions";
 import { type IdeaCard as IdeaCardType, type IdeaDetail } from "@/lib/ideas-shared";
 import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/schema";
+import { useAuth } from "@/hooks/use-auth";
 
 type IdeaDetailData = { idea: IdeaDetail; related: IdeaCardType[] } | null;
 
@@ -73,8 +75,12 @@ export const Route = createFileRoute("/idea/$slug")({
 function IdeaPage() {
   const { slug } = Route.useParams();
   const { data } = useSuspenseQuery(ideaDetailQuery(slug));
+  const auth = useAuth();
   if (!data) return null;
   const { idea, related } = data;
+  // PROJECT_BRIEF.md Section 3.2 — full blueprint content is blurred behind
+  // a sign-in gate; the title/description teaser above stays visible.
+  const contentLocked = auth.status !== "authenticated";
 
   const showSidebarList = related.length > 3;
   const sidebarRelated = showSidebarList ? related.slice(0, 3) : [];
@@ -142,61 +148,80 @@ function IdeaPage() {
             <h1 className="mt-3 text-4xl font-bold leading-tight tracking-tight">{idea.title}</h1>
             <p className="mt-4 text-lg text-muted-foreground">{idea.businessDescription}</p>
 
-            <section className="mt-10">
-              <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                The breakdown
-              </h2>
-              <p className="mt-3 whitespace-pre-line leading-relaxed">{idea.summary}</p>
-            </section>
+            <div className="relative">
+              <div
+                className={contentLocked ? "pointer-events-none select-none blur-sm" : undefined}
+              >
+                <section className="mt-10">
+                  <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                    The breakdown
+                  </h2>
+                  <p className="mt-3 whitespace-pre-line leading-relaxed">{idea.summary}</p>
+                </section>
 
-            <div className="mt-10 grid gap-4 md:grid-cols-2">
-              <section className="rounded-lg border border-border bg-card p-5">
-                <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
-                  Why it works
-                </h2>
-                <ul className="mt-3 space-y-3 text-sm">
-                  {idea.pros.map((pro) => (
-                    <li key={pro} className="flex gap-2">
-                      <span aria-hidden className="text-accent">
-                        +
-                      </span>
-                      <span>{pro}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-              <section className="rounded-lg border border-border bg-card p-5">
-                <h2 className="text-sm font-semibold uppercase tracking-widest text-destructive">
-                  What will hurt
-                </h2>
-                <ul className="mt-3 space-y-3 text-sm">
-                  {idea.cons.map((con) => (
-                    <li key={con} className="flex gap-2">
-                      <span aria-hidden className="text-destructive">
-                        −
-                      </span>
-                      <span>{con}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            </div>
+                <div className="mt-10 grid gap-4 md:grid-cols-2">
+                  <section className="rounded-lg border border-border bg-card p-5">
+                    <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
+                      Why it works
+                    </h2>
+                    <ul className="mt-3 space-y-3 text-sm">
+                      {idea.pros.map((pro) => (
+                        <li key={pro} className="flex gap-2">
+                          <span aria-hidden className="text-accent">
+                            +
+                          </span>
+                          <span>{pro}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                  <section className="rounded-lg border border-border bg-card p-5">
+                    <h2 className="text-sm font-semibold uppercase tracking-widest text-destructive">
+                      What will hurt
+                    </h2>
+                    <ul className="mt-3 space-y-3 text-sm">
+                      {idea.cons.map((con) => (
+                        <li key={con} className="flex gap-2">
+                          <span aria-hidden className="text-destructive">
+                            −
+                          </span>
+                          <span>{con}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                </div>
 
-            <div className="mt-8">
-              <AdSlot position="idea-detail-between-proscons-verdict" size="banner" />
-            </div>
+                <div className="mt-8">
+                  <AdSlot position="idea-detail-between-proscons-verdict" size="banner" />
+                </div>
 
-            {idea.verdict && (
-              <section className="mt-6 rounded-lg border-l-4 border-primary bg-card p-5">
-                <h2 className="text-sm font-semibold uppercase tracking-widest text-primary">
-                  Verdict
-                </h2>
-                <p className="mt-2 leading-relaxed">{idea.verdict}</p>
-              </section>
-            )}
+                {idea.verdict && (
+                  <section className="mt-6 rounded-lg border-l-4 border-primary bg-card p-5">
+                    <h2 className="text-sm font-semibold uppercase tracking-widest text-primary">
+                      Verdict
+                    </h2>
+                    <p className="mt-2 leading-relaxed">{idea.verdict}</p>
+                  </section>
+                )}
 
-            <div className="mt-8">
-              <AdSlot position="idea-detail-below-verdict" size="banner" />
+                <div className="mt-8">
+                  <AdSlot position="idea-detail-below-verdict" size="banner" />
+                </div>
+              </div>
+
+              {contentLocked && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-background/55 text-center">
+                  <Lock className="h-6 w-6 text-accent" aria-hidden />
+                  <p className="text-sm font-semibold">Sign in free to read the full blueprint</p>
+                  <Link
+                    to="/sign-in"
+                    className="sheen rounded-full bg-gradient-to-r from-primary to-ember px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground shadow-[0_10px_36px_oklch(0.687_0.161_51.5/40%)] transition-transform duration-300 hover:scale-105"
+                  >
+                    Continue with Google
+                  </Link>
+                </div>
+              )}
             </div>
 
             <div id="validate">

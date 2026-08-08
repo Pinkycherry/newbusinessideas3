@@ -1,17 +1,25 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import { useNavigate } from "@tanstack/react-router";
 
 import { getValidateUrl } from "@/lib/validate.functions";
 import { VALIDATE_PLATFORMS, type ValidatePlatform } from "@/lib/validate-shared";
+import { useAuth } from "@/hooks/use-auth";
+import { PaywallPopup } from "@/components/paywall-popup";
 
 /**
- * PROJECT_BRIEF.md Section 8 — Validate for Free. No visible prompt text or
- * copy button anywhere: the platform picker is the entire UI, the prompt is
- * built server-side and only ever exists as a query param in the tab we open.
+ * PROJECT_BRIEF.md Section 8 — Validate for Free, with Section 3.2's Step 0
+ * precondition: an active paid plan is required before the platform picker
+ * runs. No visible prompt text or copy button anywhere: the platform picker
+ * is the entire UI, the prompt is built server-side and only ever exists as
+ * a query param in the tab we open.
  */
 export function ValidateButton({ slug }: { slug: string }) {
+  const auth = useAuth();
+  const navigate = useNavigate();
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [paywallOpen, setPaywallOpen] = useState(false);
   const run = useServerFn(getValidateUrl);
   const go = useMutation({
     mutationFn: (platform: ValidatePlatform) => run({ data: { slug, platform } }),
@@ -38,8 +46,21 @@ export function ValidateButton({ slug }: { slug: string }) {
         {!pickerOpen ? (
           <button
             type="button"
-            onClick={() => setPickerOpen(true)}
-            className="sheen inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-ember px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_oklch(0.687_0.161_51.5/40%)] transition-all duration-[400ms] ease-glass hover:scale-105"
+            disabled={auth.status === "loading"}
+            onClick={() => {
+              // Step 0 (PROJECT_BRIEF.md Section 3.2): plan required, being
+              // logged in alone is not enough. Anonymous visitors go sign in
+              // first rather than seeing a price before they even have an
+              // account to attach a plan to.
+              if (auth.status === "anonymous") {
+                navigate({ to: "/sign-in" });
+              } else if (auth.status === "authenticated" && auth.hasActivePlan) {
+                setPickerOpen(true);
+              } else {
+                setPaywallOpen(true);
+              }
+            }}
+            className="sheen inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-ember px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_oklch(0.687_0.161_51.5/40%)] transition-all duration-[400ms] ease-glass hover:scale-105 disabled:cursor-wait disabled:opacity-70"
           >
             Validate for free
           </button>
@@ -70,6 +91,8 @@ export function ValidateButton({ slug }: { slug: string }) {
         You&apos;ll be taken to Claude or Perplexity with your prompt ready — just hit enter. Not
         signed in yet? Sign in there, then tap Validate again.
       </p>
+
+      <PaywallPopup open={paywallOpen} onOpenChange={setPaywallOpen} />
     </section>
   );
 }

@@ -48,13 +48,13 @@ function useCatalog() {
 function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boolean }) {
   return (
     <>
-      <a
-        href="/sign-in"
+      <Link
+        to="/sign-in"
         onClick={onNavigate}
         className={`glass rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground transition-all duration-300 hover:border-primary ${full ? "block text-center" : ""}`}
       >
         Sign In
-      </a>
+      </Link>
       <Link
         to="/browse"
         onClick={onNavigate}
