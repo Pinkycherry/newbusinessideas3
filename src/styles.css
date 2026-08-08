@@ -341,9 +341,15 @@ a[href*="/search"]:hover {
     0 16px 30px -14px rgba(0, 0, 0, 0.85),
     0 0 24px -10px rgba(136, 134, 219, 0.55) !important;
 }
-/* GOLDEN TREE — real transparency comes from a per-image luminance mask (see
-   index.tsx), not this backdrop. This backdrop just gives the masked-out tree
-   something dark to sit on so it doesn't vanish on a light page.
+/* GOLDEN TREE — both tree assets are hotlinked from a different domain
+   (ethicalfounder.com), so any technique that reads their actual pixel data
+   (a CSS mask-image, an SVG luminance filter) is blocked by the browser
+   unless that domain sends CORS headers — it doesn't, and a real attempt at
+   that made the tree fully invisible. mix-blend-mode:screen below is a pure
+   rendering composite (no pixel read required), so it's the only
+   cross-origin-safe way to fade the image's own dark background into this
+   glow. It won't be pixel-perfect transparency; a real fix needs either a
+   source file with a genuine alpha channel, or CORS headers on the host.
    No box, no fixed aspect-ratio frame, no rounded card — just a large, heavily
    blurred glow sitting behind the artwork so the screen-blended tree has
    something dark to read against, with zero perceptible edge in any theme.
@@ -372,12 +378,7 @@ a[href*="/search"]:hover {
   mix-blend-mode: screen;
   filter: brightness(1.18) contrast(1.08) saturate(1.05);
 }
-/* Real alpha transparency via a luminance mask referencing the image's own
-   src (set inline per-image in index.tsx, since each tree asset has a
-   different URL) — dark background pixels punch out to transparent, bright
-   tree pixels stay opaque. Works identically in light and dark mode because
-   it's true alpha, not a color-blend trick relative to what's behind it.
-   The "alive" motion lives on the ::before glow (opacity breathing) rather
+/* The "alive" motion lives on the ::before glow (opacity breathing) rather
    than the img itself, so it never fights the img's own Tailwind filter/
    drop-shadow utilities for control of the `filter` property. */
 @keyframes bbi-tree-glow-pulse {
