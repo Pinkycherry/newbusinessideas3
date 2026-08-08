@@ -1,10 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { z } from "zod";
 
 import { ContentPage, metaFor } from "@/components/page-layout";
 import { signInWithGoogle } from "@/lib/auth-client";
 
 export const Route = createFileRoute("/sign-in")({
+  validateSearch: z.object({ redirect: z.string().optional() }),
   head: () =>
     metaFor(
       "Sign In | IdeaVault AI",
@@ -14,13 +16,19 @@ export const Route = createFileRoute("/sign-in")({
 });
 
 function SignInPage() {
+  const { redirect } = Route.useSearch();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSignIn = async () => {
     setPending(true);
     setError(null);
-    const { error: signInError } = await signInWithGoogle();
+    // Google must drop the user back where they actually were, not on
+    // /sign-in itself — that was the bug that made login look like it did
+    // nothing.
+    const destination =
+      window.location.origin + (redirect && redirect.startsWith("/") ? redirect : "/");
+    const { error: signInError } = await signInWithGoogle(destination);
     if (signInError) {
       setError(signInError.message);
       setPending(false);
