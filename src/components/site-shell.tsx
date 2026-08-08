@@ -565,23 +565,22 @@ export function SiteShell({ children }: { children: ReactNode }) {
               <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
                 Popular categories
               </h3>
-              <ul className="iv-plainlinks mt-4 space-y-2.5 text-sm text-muted-foreground">
+              <div className="iv-tag-cloud mt-4">
                 {popularCategories.length === 0 ? (
-                  <li className="text-xs text-muted-foreground">Loading…</li>
+                  <span className="text-xs text-muted-foreground">Loading…</span>
                 ) : (
                   popularCategories.map((c) => (
-                    <li key={c.categorySlug}>
-                      <Link
-                        to="/category/$categorySlug"
-                        params={{ categorySlug: c.categorySlug }}
-                        className="transition-colors duration-300 hover:text-primary"
-                      >
-                        {c.categoryName}
-                      </Link>
-                    </li>
+                    <Link
+                      key={c.categorySlug}
+                      to="/category/$categorySlug"
+                      params={{ categorySlug: c.categorySlug }}
+                      className="glass-pill iv-tag px-3.5 py-1.5 text-xs"
+                    >
+                      {c.categoryName}
+                    </Link>
                   ))
                 )}
-              </ul>
+              </div>
             </div>
           </div>
           <div className="mt-10 flex flex-col gap-2 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
