@@ -5,8 +5,8 @@ import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout
 export const Route = createFileRoute("/gdpr")({
   head: () =>
     metaFor(
-      "GDPR & Your Data Rights | IdeaVault AI",
-      "How to exercise your GDPR rights with IdeaVault AI: access, rectification, erasure, portability, restriction and objection.",
+      "GDPR & Your Data Rights | BBI",
+      "How to exercise your GDPR rights with BBI: access, rectification, erasure, portability, restriction and objection.",
     ),
   component: GdprPage,
 });
@@ -36,7 +36,10 @@ function GdprPage() {
       <Section heading="How to make a request">
         <p>
           Email{" "}
-          <a href="mailto:privacy@ideavault.ai" className="text-accent underline underline-offset-4">
+          <a
+            href="mailto:privacy@ideavault.ai"
+            className="text-accent underline underline-offset-4"
+          >
             privacy@ideavault.ai
           </a>{" "}
           stating which right you are exercising and the email address you used with us. We respond
@@ -67,7 +70,7 @@ function GdprPage() {
           for context on what we collect.
         </p>
       </Section>
-    {/* EDITABLE SECTION END */}
-      </ContentPage>
+      {/* EDITABLE SECTION END */}
+    </ContentPage>
   );
 }

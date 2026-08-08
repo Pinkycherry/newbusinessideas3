@@ -5,7 +5,7 @@ import { ContentPage, Section, metaFor } from "@/components/page-layout";
 export const Route = createFileRoute("/pricing")({
   head: () =>
     metaFor(
-      "Pricing | IdeaVault AI",
+      "Pricing | BBI",
       "₹199 for 3 months or ₹399 for lifetime access. Validation itself is always free, on your own Claude or Perplexity account.",
     ),
   component: PricingPage,

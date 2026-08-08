@@ -5,8 +5,8 @@ import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout
 export const Route = createFileRoute("/about")({
   head: () =>
     metaFor(
-      "About IdeaVault AI — How We Research Business Ideas",
-      "IdeaVault AI turns raw market signal into researched business blueprints with pros, cons, trend scores and honest founder-fit verdicts.",
+      "About BBI — How We Research Business Ideas",
+      "BBI turns raw market signal into researched business blueprints with pros, cons, trend scores and honest founder-fit verdicts.",
     ),
   component: AboutPage,
 });
@@ -17,10 +17,10 @@ function AboutPage() {
       eyebrow="About"
       title="We publish blueprints,"
       highlight="not listicles"
-      intro="IdeaVault AI exists because most 'business idea' content is filler. We research each idea until it can survive a real conversation with an operator, then publish the whole thing — including the parts that make it a bad idea for most people."
+      intro="BBI exists because most 'business idea' content is filler. We research each idea until it can survive a real conversation with an operator, then publish the whole thing — including the parts that make it a bad idea for most people."
     >
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
-      <Section heading="What an IdeaVault entry actually contains">
+      <Section heading="What a BBI entry actually contains">
         <Bullets
           items={[
             "A concrete business description: who the customer is and what they are paying for.",
@@ -40,10 +40,10 @@ function AboutPage() {
       </Section>
       <Section heading="Where AI fits">
         <p>
-          AI is used for structured analysis, not for filling pages. Pro entries include a live AI
-          Audit that stress-tests the idea on demand: capital intensity, moat, distribution
-          difficulty, the fastest realistic route to first revenue and the failure mode most likely
-          to kill it. It runs at request time against the real record — it is not pre-written text.
+          We don&apos;t charge for AI analysis. Every blueprint has a Validate button that hands you
+          a fully researched prompt on your own Claude or Perplexity account, free — market sizing,
+          target buyer, revenue model, risks and a launch roadmap, built from that idea&apos;s real
+          record. It runs on your account, not ours.
         </p>
       </Section>
       <Section heading="What we do not do">
@@ -55,7 +55,7 @@ function AboutPage() {
           ]}
         />
       </Section>
-    {/* EDITABLE SECTION END */}
-      </ContentPage>
+      {/* EDITABLE SECTION END */}
+    </ContentPage>
   );
 }

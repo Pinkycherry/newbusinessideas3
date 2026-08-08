@@ -77,21 +77,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "IdeaVault AI — Researched Business Idea Blueprints" },
+      { title: "BBI — Bharat Business Ideas | Researched Business Idea Blueprints" },
       {
         name: "description",
         content:
-          "Researched business idea blueprints with market context, trend scores, honest verdicts and live AI audits.",
+          "Researched business idea blueprints with market context, trend scores and honest founder-fit verdicts.",
       },
-      { name: "author", content: "IdeaVault AI" },
-      { property: "og:title", content: "IdeaVault AI" },
+      { name: "author", content: "BBI — Bharat Business Ideas" },
+      { property: "og:title", content: "BBI — Bharat Business Ideas" },
       {
         property: "og:description",
-        content: "Researched business idea blueprints with trend scores and live AI audits.",
+        content: "Researched business idea blueprints with market context and trend scores.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },

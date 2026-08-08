@@ -19,7 +19,7 @@ const SLIDES = [
   {
     src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-37.jpg.webp",
     alt: "Close-up of hands typing on a laptop keyboard",
-    caption: "Live AI audits on every Pro blueprint",
+    caption: "Free validation on every blueprint",
   },
 ];
 

@@ -5,8 +5,8 @@ import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout
 export const Route = createFileRoute("/privacy")({
   head: () =>
     metaFor(
-      "Privacy Policy | IdeaVault AI",
-      "What data IdeaVault AI collects, why we collect it, who processes it and how you exercise your privacy rights.",
+      "Privacy Policy | BBI",
+      "What data BBI collects, why we collect it, who processes it and how you exercise your privacy rights.",
     ),
   component: PrivacyPage,
 });
@@ -17,7 +17,7 @@ function PrivacyPage() {
       eyebrow="Privacy policy"
       title="Privacy"
       highlight="policy"
-      intro="This page is maintained by IdeaVault AI and describes how we handle personal data. It reflects current practice and is updated when that practice changes."
+      intro="This page is maintained by BBI and describes how we handle personal data. It reflects current practice and is updated when that practice changes."
     >
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <Section heading="What we collect">

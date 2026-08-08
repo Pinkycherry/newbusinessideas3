@@ -13,7 +13,7 @@ import {
 export function db() {
   const url = process.env["IDEAVAULT_DB_URL"];
   const key = process.env["IDEAVAULT_DB_ANON_KEY"];
-  if (!url || !key) throw new Error("IdeaVault database credentials are not configured.");
+  if (!url || !key) throw new Error("BBI database credentials are not configured.");
   return createClient(url, key, {
     auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
   });
@@ -163,6 +163,26 @@ export const searchIdeas = createServerFn({ method: "GET" })
         ].join(","),
       )
       .limit(50);
+    if (error) throw new Error(error.message);
+    return ((data ?? []) as unknown as IdeaRow[]).map(toIdeaCard);
+  });
+
+/**
+ * PROJECT_BRIEF.md Section 8.1 — "Surprise Me". Uses the get_random_ideas
+ * Postgres function (ORDER BY random() LIMIT n at the query level, per
+ * Section 9) rather than fetching everything and shuffling client-side.
+ */
+export const getSurpriseIdeas = createServerFn({ method: "GET" })
+  .inputValidator((input: unknown) =>
+    z
+      .object({ categorySlug: z.string().optional(), count: z.number().min(1).max(5).default(5) })
+      .parse(input),
+  )
+  .handler(async ({ data: input }): Promise<IdeaCard[]> => {
+    const { data, error } = await db().rpc("get_random_ideas", {
+      cat_slug: input.categorySlug ?? null,
+      lim: input.count,
+    });
     if (error) throw new Error(error.message);
     return ((data ?? []) as unknown as IdeaRow[]).map(toIdeaCard);
   });
