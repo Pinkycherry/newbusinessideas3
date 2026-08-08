@@ -13,6 +13,7 @@ export const Route = createFileRoute("/search")({
   head: () => ({
     meta: [
       { title: "Search Business Ideas | IdeaVault AI" },
+      { name: "robots", content: "noindex,follow" },
       {
         name: "description",
         content:

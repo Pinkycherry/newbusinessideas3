@@ -45,6 +45,7 @@ export type IdeaDetail = IdeaCard & {
   cons: string[];
   verdict: string;
   keywords: string[];
+  createdAt: string | null;
 };
 
 /** jsonb columns in this dataset hold JSON-encoded strings, so parse defensively. */
@@ -96,5 +97,6 @@ export function toIdeaDetail(row: IdeaRow): IdeaDetail {
     keywords: [row.focus_keyword, row.additional_keyword_1, row.additional_keyword_2].filter(
       (k): k is string => Boolean(k && k.trim()),
     ),
+    createdAt: row.created_at,
   };
 }
