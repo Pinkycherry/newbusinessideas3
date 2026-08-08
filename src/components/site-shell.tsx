@@ -315,7 +315,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
   const categories = data?.categories ?? [];
 
   return (
-    <div className="fixed inset-0 z-50 md:hidden">
+    <div className="fixed inset-0 z-50 lg:hidden">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -337,7 +337,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
             Menu
           </span>
           <div className="flex items-center gap-2">
-            <ThemeToggle className="h-9 w-9" />
+            <ThemeToggle />
             <button
               type="button"
               onClick={onClose}
@@ -488,7 +488,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-6 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground md:flex">
+          <nav className="hidden items-center gap-5 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground lg:flex">
             <CategoryMega />
             <BrowseByTypeDropdown />
             <LinkListDropdown label="Explore" items={EXPLORE_ITEMS} />
@@ -504,9 +504,9 @@ export function SiteShell({ children }: { children: ReactNode }) {
             ))}
           </nav>
 
-          <div className="hidden shrink-0 items-center gap-2 md:flex">
-            <LiveSearch className="w-44 lg:w-56" />
-            <ThemeToggle className="h-9 w-9" />
+          <div className="hidden shrink-0 items-center gap-2 lg:flex">
+            <LiveSearch className="w-44 xl:w-56" />
+            <ThemeToggle />
             <AuthButtons />
           </div>
 
@@ -515,7 +515,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             aria-expanded={mobileOpen}
             aria-label="Open navigation menu"
             onClick={() => setMobileOpen(true)}
-            className="flex shrink-0 flex-col gap-1.5 rounded-full border border-border px-3 py-2.5 md:hidden"
+            className="flex shrink-0 flex-col gap-1.5 rounded-full border border-border px-3 py-2.5 lg:hidden"
           >
             <span aria-hidden className="block h-0.5 w-5 bg-foreground" />
             <span aria-hidden className="block h-0.5 w-5 bg-foreground" />
