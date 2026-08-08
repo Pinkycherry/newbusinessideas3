@@ -1217,13 +1217,13 @@ const BBI_HOW_STEPS = [
   },
   {
     n: "02",
-    t: "Take it anywhere",
-    d: "Copy the idea, the category, or the full blueprint. Paste it into Claude, ChatGPT, Gemini, or whatever AI tool you already pay for. Ask it to stress-test the idea against your budget, your city, your skills.",
+    t: "Validate it, free",
+    d: "Tap Validate on any idea and we hand you a fully researched prompt on your own Claude or Perplexity account — no copying, no pasting, nothing to write yourself. Free, every time.",
   },
   {
     n: "03",
-    t: "Go lifetime, once, if you want",
-    d: 'If BBI\'s research saves you time, unlock full lifetime access for a one-time fee — no subscription, no renewal, no "your trial has expired" email six months from now.',
+    t: "₹199 for 3 months, or ₹399 for life",
+    d: "Sign in with Google to unlock full blueprints and the Validate button. ₹199 gets you 3 months, ₹399 gets you lifetime access — no subscription, no renewal.",
   },
 ];
 
@@ -1237,8 +1237,8 @@ const BBI_FAQ_1 = [
     a: "No. Browsing the library is free. Lifetime access is a one-time optional unlock, not a requirement to see ideas.",
   },
   {
-    q: "Can I use Claude, ChatGPT, or Gemini alongside BBI?",
-    a: "Yes — that's the point. Take any idea from BBI and stress-test it with whatever AI tool you already use.",
+    q: "Which AI does the Validate button use?",
+    a: "Claude or Perplexity, your choice — free, on your own account. We deliberately don't support ChatGPT or Grok.",
   },
   {
     q: "How is this different from an AI idea generator?",
