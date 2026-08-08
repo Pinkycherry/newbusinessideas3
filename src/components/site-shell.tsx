@@ -256,19 +256,18 @@ function BrowseByTypeDropdown() {
               <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
                 {group.title}
               </p>
-              <ul className="mt-2.5 space-y-1">
+              <div className="iv-tag-cloud mt-2.5">
                 {group.items.map((item) => (
-                  <li key={item}>
-                    <Link
-                      to="/browse"
-                      onClick={close}
-                      className="block rounded-lg px-2 py-1.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
-                    >
-                      {item}
-                    </Link>
-                  </li>
+                  <CategoryBadge
+                    key={item}
+                    to="/browse"
+                    label={item}
+                    size="sm"
+                    className="iv-tag"
+                    onClick={close}
+                  />
                 ))}
-              </ul>
+              </div>
             </div>
           ))}
         </div>
@@ -287,19 +286,18 @@ function LinkListDropdown({
   return (
     <NavDropdown label={label}>
       {(close) => (
-        <ul className="space-y-1">
+        <div className="iv-tag-cloud">
           {items.map((item) => (
-            <li key={item.to}>
-              <Link
-                to={item.to}
-                onClick={close}
-                className="block rounded-lg px-3 py-2 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
-              >
-                {item.label}
-              </Link>
-            </li>
+            <CategoryBadge
+              key={item.to}
+              to={item.to}
+              label={item.label}
+              size="sm"
+              className="iv-tag"
+              onClick={close}
+            />
           ))}
-        </ul>
+        </div>
       )}
     </NavDropdown>
   );
@@ -544,18 +542,17 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
                   {col.title}
                 </h3>
-                <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
+                <div className="iv-tag-cloud mt-4">
                   {col.links.map((link) => (
-                    <li key={`${col.title}-${link.to}-${link.label}`}>
-                      <Link
-                        to={link.to}
-                        className="transition-colors duration-300 hover:text-primary"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
+                    <CategoryBadge
+                      key={`${col.title}-${link.to}-${link.label}`}
+                      to={link.to}
+                      label={link.label}
+                      size="sm"
+                      className="iv-tag"
+                    />
                   ))}
-                </ul>
+                </div>
               </div>
             ))}
             <div>

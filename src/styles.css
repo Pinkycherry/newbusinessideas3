@@ -343,15 +343,27 @@ a[href*="/search"]:hover {
 }
 /* GOLDEN TREE — the artwork is a screen-blended transparent PNG, so it needs a
    dark backing plate of its own; on a light page it would otherwise vanish. */
+/* No box, no fixed aspect-ratio frame, no rounded card — just a large, heavily
+   blurred glow sitting behind the artwork so the screen-blended tree has
+   something dark to read against, with zero perceptible edge in any theme.
+   isolation:isolate keeps the img's mix-blend-mode contained to this glow
+   only, not the whole page, so the result is consistent in light and dark. */
 .tree-asset-container {
+  isolation: isolate;
+}
+.tree-asset-container::before {
+  content: "";
+  position: absolute;
+  inset: -22%;
+  z-index: -1;
+  pointer-events: none;
   background: radial-gradient(
-    ellipse at center,
-    rgba(8, 8, 26, 0.96) 0%,
-    rgba(12, 12, 37, 0.9) 45%,
-    rgba(12, 12, 37, 0.55) 72%,
-    rgba(12, 12, 37, 0) 100%
+    ellipse 50% 50% at 50% 48%,
+    rgba(70, 67, 186, 0.55) 0%,
+    rgba(12, 12, 37, 0.88) 38%,
+    rgba(12, 12, 37, 0) 70%
   );
-  border-radius: 2.5rem;
+  filter: blur(48px);
 }
 .tree-asset-container img,
 [alt*="Golden Tree"] {
@@ -359,15 +371,13 @@ a[href*="/search"]:hover {
   filter: brightness(1.18) contrast(1.08) saturate(1.05);
   mask-image: radial-gradient(ellipse at center, black 74%, transparent 100%);
 }
-html.light .tree-asset-container {
+html.light .tree-asset-container::before {
   background: radial-gradient(
-    ellipse at center,
-    rgba(8, 8, 26, 0.99) 0%,
-    rgba(18, 17, 52, 0.95) 50%,
-    rgba(43, 40, 113, 0.5) 78%,
-    rgba(238, 236, 248, 0) 100%
+    ellipse 50% 50% at 50% 48%,
+    rgba(43, 40, 113, 0.65) 0%,
+    rgba(12, 12, 37, 0.94) 38%,
+    rgba(12, 12, 37, 0) 70%
   );
-  box-shadow: 0 30px 70px -40px rgba(12, 12, 37, 0.6);
 }
 
 /* ================================================================

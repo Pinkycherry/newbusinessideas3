@@ -754,101 +754,91 @@ function GoldenTreeSection() {
         </p>
       </div>
 
-      {/* Full-bleed dark radial canopy backdrop — always matches the header/footer
-          "Glow & Glass" palette regardless of the active light/dark theme, so the
-          tree reads as one seamless night-sky panel instead of a boxed asset. */}
-      <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 70% 65% at 50% 42%, rgba(70,67,186,0.38) 0%, rgba(12,12,37,0.94) 55%, rgba(12,12,37,0) 100%)",
-          }}
-        />
-        <div className="relative mt-8 sm:mt-12 flex w-full items-center justify-center py-10 sm:py-16">
-          {/* DESKTOP TREE ASSET */}
-          <div className="hidden sm:block relative w-full max-w-5xl aspect-[16/9] group tree-asset-container">
-            <img
-              src="https://ethicalfounder.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg"
-              alt="The Golden Tree of Business Growth"
-              className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(27,42,107,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(27,42,107,0.5)]"
-            />
+      {/* No boxed/16:9 backdrop element here on purpose — the dark glow behind the
+          tree lives entirely in .tree-asset-container::before in styles.css, as a
+          large, heavily-blurred radial glow with no hard edge or rectangle. */}
+      <div className="relative mt-8 sm:mt-12 flex w-full items-center justify-center py-10 sm:py-16">
+        {/* DESKTOP TREE ASSET */}
+        <div className="hidden sm:block relative w-full max-w-5xl aspect-[16/9] group tree-asset-container">
+          <img
+            src="https://ethicalfounder.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg"
+            alt="The Golden Tree of Business Growth"
+            className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(27,42,107,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(27,42,107,0.5)]"
+          />
 
-            {desktopNodes.map((node) => (
+          {desktopNodes.map((node) => (
+            <div
+              key={node.label}
+              className="bbi-tree-node-d absolute group/node z-20"
+              style={{ left: `${node.x}%`, top: `${node.y}%`, animationDelay: `${node.d}s` }}
+            >
+              {node.path ? (
+                <CategoryBadge to={node.path} label={node.label} dot />
+              ) : node.slug ? (
+                <CategoryBadge slug={node.slug} label={node.label} dot />
+              ) : (
+                <CategoryBadge
+                  to="/search"
+                  search={{ q: node.query ?? "" }}
+                  label={node.label}
+                  dot
+                />
+              )}
+
+              <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 opacity-0 group-hover/node:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap glass rounded-md px-2.5 py-1 text-[10px] font-semibold shadow-xl">
+                {fmt(node.count)}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* MOBILE TREE ASSET — organic floating liquid capsules */}
+        <div className="block sm:hidden relative w-full max-w-xs aspect-[9/16] tree-asset-container">
+          <img
+            src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg"
+            alt="The Golden Tree of Business Growth (Mobile)"
+            className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(27,42,107,0.35)]"
+          />
+
+          {/* Nodes sit on the canopy at organic coordinates (not a vertical list). */}
+          <div className="absolute inset-0 z-20">
+            {[
+              {
+                label: "Zero Investment",
+                slug: "zero-investment-business-ideas",
+                x: 30,
+                y: 14,
+                d: 0,
+              },
+              {
+                label: "Work From Home",
+                slug: "work-from-home-business-ideas",
+                x: 70,
+                y: 24,
+                d: 0.8,
+              },
+              {
+                label: "Low Investment",
+                slug: "low-investment-business-ideas",
+                x: 26,
+                y: 36,
+                d: 1.6,
+              },
+              { label: "Side Hustle", slug: "side-hustle-ideas", x: 68, y: 47, d: 2.4 },
+              { label: "Validation Center", path: "/browse", x: 48, y: 60, d: 3.2 },
+            ].map((mNode) => (
               <div
-                key={node.label}
-                className="bbi-tree-node-d absolute group/node z-20"
-                style={{ left: `${node.x}%`, top: `${node.y}%`, animationDelay: `${node.d}s` }}
+                key={mNode.label}
+                className="bbi-tree-node-m"
+                style={{ left: `${mNode.x}%`, top: `${mNode.y}%`, animationDelay: `${mNode.d}s` }}
               >
-                {node.path ? (
-                  <CategoryBadge to={node.path} label={node.label} dot />
-                ) : node.slug ? (
-                  <CategoryBadge slug={node.slug} label={node.label} dot />
+                {mNode.path ? (
+                  <CategoryBadge to={mNode.path} label={mNode.label} size="sm" dot />
                 ) : (
-                  <CategoryBadge
-                    to="/search"
-                    search={{ q: node.query ?? "" }}
-                    label={node.label}
-                    dot
-                  />
+                  <CategoryBadge slug={mNode.slug ?? ""} label={mNode.label} size="sm" dot />
                 )}
-
-                <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 opacity-0 group-hover/node:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap glass rounded-md px-2.5 py-1 text-[10px] font-semibold shadow-xl">
-                  {fmt(node.count)}
-                </div>
               </div>
             ))}
-          </div>
-
-          {/* MOBILE TREE ASSET — organic floating liquid capsules */}
-          <div className="block sm:hidden relative w-full max-w-xs aspect-[9/16] tree-asset-container">
-            <img
-              src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg"
-              alt="The Golden Tree of Business Growth (Mobile)"
-              className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(27,42,107,0.35)]"
-            />
-
-            {/* Nodes sit on the canopy at organic coordinates (not a vertical list). */}
-            <div className="absolute inset-0 z-20">
-              {[
-                {
-                  label: "Zero Investment",
-                  slug: "zero-investment-business-ideas",
-                  x: 30,
-                  y: 14,
-                  d: 0,
-                },
-                {
-                  label: "Work From Home",
-                  slug: "work-from-home-business-ideas",
-                  x: 70,
-                  y: 24,
-                  d: 0.8,
-                },
-                {
-                  label: "Low Investment",
-                  slug: "low-investment-business-ideas",
-                  x: 26,
-                  y: 36,
-                  d: 1.6,
-                },
-                { label: "Side Hustle", slug: "side-hustle-ideas", x: 68, y: 47, d: 2.4 },
-                { label: "Validation Center", path: "/browse", x: 48, y: 60, d: 3.2 },
-              ].map((mNode) => (
-                <div
-                  key={mNode.label}
-                  className="bbi-tree-node-m"
-                  style={{ left: `${mNode.x}%`, top: `${mNode.y}%`, animationDelay: `${mNode.d}s` }}
-                >
-                  {mNode.path ? (
-                    <CategoryBadge to={mNode.path} label={mNode.label} size="sm" dot />
-                  ) : (
-                    <CategoryBadge slug={mNode.slug ?? ""} label={mNode.label} size="sm" dot />
-                  )}
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>
