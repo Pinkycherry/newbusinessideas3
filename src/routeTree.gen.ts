@@ -20,6 +20,11 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as SitemapCategoriesDotxmlRouteImport } from './routes/sitemap-categories[.]xml'
+import { Route as SitemapIdeasDotxmlRouteImport } from './routes/sitemap-ideas[.]xml'
+import { Route as SitemapIndexDotxmlRouteImport } from './routes/sitemap-index[.]xml'
+import { Route as SitemapPagesDotxmlRouteImport } from './routes/sitemap-pages[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
@@ -83,6 +88,31 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapCategoriesDotxmlRoute = SitemapCategoriesDotxmlRouteImport.update({
+  id: '/sitemap-categories.xml',
+  path: '/sitemap-categories.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapIdeasDotxmlRoute = SitemapIdeasDotxmlRouteImport.update({
+  id: '/sitemap-ideas.xml',
+  path: '/sitemap-ideas.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapIndexDotxmlRoute = SitemapIndexDotxmlRouteImport.update({
+  id: '/sitemap-index.xml',
+  path: '/sitemap-index.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapPagesDotxmlRoute = SitemapPagesDotxmlRouteImport.update({
+  id: '/sitemap-pages.xml',
+  path: '/sitemap-pages.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -133,6 +163,11 @@ export interface FileRoutesByFullPath {
   '/refund-policy': typeof RefundPolicyRoute
   '/search': typeof SearchRoute
   '/services': typeof ServicesRoute
+  '/sign-in': typeof SignInRoute
+  '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
+  '/sitemap-ideas.xml': typeof SitemapIdeasDotxmlRoute
+  '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
+  '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
@@ -153,6 +188,11 @@ export interface FileRoutesByTo {
   '/refund-policy': typeof RefundPolicyRoute
   '/search': typeof SearchRoute
   '/services': typeof ServicesRoute
+  '/sign-in': typeof SignInRoute
+  '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
+  '/sitemap-ideas.xml': typeof SitemapIdeasDotxmlRoute
+  '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
+  '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
@@ -173,6 +213,11 @@ export interface FileRoutesById {
   '/refund-policy': typeof RefundPolicyRoute
   '/search': typeof SearchRoute
   '/services': typeof ServicesRoute
+  '/sign-in': typeof SignInRoute
+  '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
+  '/sitemap-ideas.xml': typeof SitemapIdeasDotxmlRoute
+  '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
+  '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
@@ -195,6 +240,11 @@ export interface FileRouteTypes {
     | '/refund-policy'
     | '/search'
     | '/services'
+    | '/sign-in'
+    | '/sitemap-categories.xml'
+    | '/sitemap-ideas.xml'
+    | '/sitemap-index.xml'
+    | '/sitemap-pages.xml'
     | '/terms'
     | '/blog/$slug'
     | '/category/$categorySlug'
@@ -215,6 +265,11 @@ export interface FileRouteTypes {
     | '/refund-policy'
     | '/search'
     | '/services'
+    | '/sign-in'
+    | '/sitemap-categories.xml'
+    | '/sitemap-ideas.xml'
+    | '/sitemap-index.xml'
+    | '/sitemap-pages.xml'
     | '/terms'
     | '/blog/$slug'
     | '/idea/$slug'
@@ -234,6 +289,11 @@ export interface FileRouteTypes {
     | '/refund-policy'
     | '/search'
     | '/services'
+    | '/sign-in'
+    | '/sitemap-categories.xml'
+    | '/sitemap-ideas.xml'
+    | '/sitemap-index.xml'
+    | '/sitemap-pages.xml'
     | '/terms'
     | '/blog/$slug'
     | '/category/$categorySlug'
@@ -255,6 +315,11 @@ export interface RootRouteChildren {
   RefundPolicyRoute: typeof RefundPolicyRoute
   SearchRoute: typeof SearchRoute
   ServicesRoute: typeof ServicesRoute
+  SignInRoute: typeof SignInRoute
+  SitemapCategoriesDotxmlRoute: typeof SitemapCategoriesDotxmlRoute
+  SitemapIdeasDotxmlRoute: typeof SitemapIdeasDotxmlRoute
+  SitemapIndexDotxmlRoute: typeof SitemapIndexDotxmlRoute
+  SitemapPagesDotxmlRoute: typeof SitemapPagesDotxmlRoute
   TermsRoute: typeof TermsRoute
   BlogSlugRoute: typeof BlogSlugRoute
   CategoryCategorySlugRoute: typeof CategoryCategorySlugRouteWithChildren
@@ -341,6 +406,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap-categories.xml': {
+      id: '/sitemap-categories.xml'
+      path: '/sitemap-categories.xml'
+      fullPath: '/sitemap-categories.xml'
+      preLoaderRoute: typeof SitemapCategoriesDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap-ideas.xml': {
+      id: '/sitemap-ideas.xml'
+      path: '/sitemap-ideas.xml'
+      fullPath: '/sitemap-ideas.xml'
+      preLoaderRoute: typeof SitemapIdeasDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap-index.xml': {
+      id: '/sitemap-index.xml'
+      path: '/sitemap-index.xml'
+      fullPath: '/sitemap-index.xml'
+      preLoaderRoute: typeof SitemapIndexDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap-pages.xml': {
+      id: '/sitemap-pages.xml'
+      path: '/sitemap-pages.xml'
+      fullPath: '/sitemap-pages.xml'
+      preLoaderRoute: typeof SitemapPagesDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -419,6 +519,11 @@ const rootRouteChildren: RootRouteChildren = {
   RefundPolicyRoute: RefundPolicyRoute,
   SearchRoute: SearchRoute,
   ServicesRoute: ServicesRoute,
+  SignInRoute: SignInRoute,
+  SitemapCategoriesDotxmlRoute: SitemapCategoriesDotxmlRoute,
+  SitemapIdeasDotxmlRoute: SitemapIdeasDotxmlRoute,
+  SitemapIndexDotxmlRoute: SitemapIndexDotxmlRoute,
+  SitemapPagesDotxmlRoute: SitemapPagesDotxmlRoute,
   TermsRoute: TermsRoute,
   BlogSlugRoute: BlogSlugRoute,
   CategoryCategorySlugRoute: CategoryCategorySlugRouteWithChildren,

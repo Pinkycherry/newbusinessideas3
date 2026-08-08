@@ -15,6 +15,10 @@ export function FloatingDock() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    // Back-to-top must work on every route, anchors or not.
+    const onScroll = () => setScrolled(window.scrollY > 400);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-anchor]"));
     setAnchors(
       nodes.map((n) => ({
@@ -22,7 +26,9 @@ export function FloatingDock() {
         label: n.dataset["anchorLabel"] ?? n.dataset["anchor"] ?? "",
       })),
     );
-    if (nodes.length === 0) return;
+    if (nodes.length === 0) {
+      return () => window.removeEventListener("scroll", onScroll);
+    }
     const io = new IntersectionObserver(
       (entries) => {
         const visible = entries.filter((e) => e.isIntersecting);
@@ -31,9 +37,6 @@ export function FloatingDock() {
       { rootMargin: "-35% 0px -55% 0px" },
     );
     nodes.forEach((n) => io.observe(n));
-    const onScroll = () => setScrolled(window.scrollY > 400);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       io.disconnect();
       window.removeEventListener("scroll", onScroll);

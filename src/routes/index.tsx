@@ -620,7 +620,7 @@ function HomePage() {
       <PromiseSection />
 
       {/* GENERAL CLOSING FAQ */}
-      <section className="mx-auto max-w-4xl px-3 pb-24 sm:px-4">
+      <section className="mx-auto mt-20 max-w-4xl border-t border-border/60 px-3 pt-16 pb-24 sm:mt-28 sm:px-4 sm:pt-20">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Common questions
         </p>

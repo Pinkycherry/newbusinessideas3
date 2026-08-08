@@ -300,6 +300,14 @@
 a[href*="/category/"],
 a[href*="/search"] {
   color: #FCFBFE !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  line-height: 1.25;
   background: linear-gradient(
     180deg,
     rgba(136, 134, 219, 0.26) 0%,
@@ -333,14 +341,33 @@ a[href*="/search"]:hover {
     0 16px 30px -14px rgba(0, 0, 0, 0.85),
     0 0 24px -10px rgba(136, 134, 219, 0.55) !important;
 }
-/* GOLDEN TREE — drop the baked-in dark square, keep only the glowing tree */
+/* GOLDEN TREE — the artwork is a screen-blended transparent PNG, so it needs a
+   dark backing plate of its own; on a light page it would otherwise vanish. */
 .tree-asset-container {
-  background: transparent;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(8, 8, 26, 0.96) 0%,
+    rgba(12, 12, 37, 0.9) 45%,
+    rgba(12, 12, 37, 0.55) 72%,
+    rgba(12, 12, 37, 0) 100%
+  );
+  border-radius: 2.5rem;
 }
 .tree-asset-container img,
 [alt*="Golden Tree"] {
   mix-blend-mode: screen;
-  mask-image: radial-gradient(ellipse at center, black 70%, transparent 100%);
+  filter: brightness(1.18) contrast(1.08) saturate(1.05);
+  mask-image: radial-gradient(ellipse at center, black 74%, transparent 100%);
+}
+html.light .tree-asset-container {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(8, 8, 26, 0.99) 0%,
+    rgba(18, 17, 52, 0.95) 50%,
+    rgba(43, 40, 113, 0.5) 78%,
+    rgba(238, 236, 248, 0) 100%
+  );
+  box-shadow: 0 30px 70px -40px rgba(12, 12, 37, 0.6);
 }
 
 /* ================================================================
@@ -964,4 +991,85 @@ html.light .iv-skeleton {
     rgba(43, 40, 113, 0.18) 42%,
     rgba(43, 40, 113, 0.08) 64%
   );
+}
+
+/* ============================================================
+   THEME-AWARE NAV PANELS + LIGHT-MODE WINS
+   Tailwind utilities live in @layer utilities; an !important
+   declaration inside a layer beats an unlayered one, so these
+   light-mode overrides must sit in the same layer to apply.
+   ============================================================ */
+@layer utilities {
+  .iv-nav-panel {
+    background: rgba(10, 10, 32, 0.97) !important;
+    border: 1px solid rgba(182, 181, 227, 0.22) !important;
+    box-shadow: 0 26px 60px -24px rgba(0, 0, 0, 0.85) !important;
+  }
+  html.light .iv-nav-panel,
+  html.light .glass-nav {
+    background: rgba(255, 255, 255, 0.98) !important;
+    border-color: rgba(43, 40, 113, 0.14) !important;
+    color: #0C0C25 !important;
+    box-shadow: 0 24px 60px -30px rgba(12, 12, 37, 0.45) !important;
+  }
+  html.light .iv-nav-panel a,
+  html.light .iv-nav-panel button,
+  html.light .glass-nav a,
+  html.light .glass-nav button {
+    color: #0C0C25 !important;
+  }
+  html.light .iv-nav-panel a:hover,
+  html.light .glass-nav a:hover {
+    color: #2B2871 !important;
+  }
+  html.light .glass,
+  html.light .glass-btn,
+  html.light .glass-pill,
+  html.light a[href*="/category/"],
+  html.light a[href*="/search"] {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(238, 236, 248, 0.9) 100%) !important;
+    border: 1px solid rgba(43, 40, 113, 0.16) !important;
+    color: #0C0C25 !important;
+    box-shadow:
+      0 1px 0 0 rgba(255, 255, 255, 0.95) inset,
+      0 18px 40px -26px rgba(12, 12, 37, 0.45) !important;
+  }
+  html.light .glass-btn:hover,
+  html.light .glass-pill:hover,
+  html.light a[href*="/category/"]:hover,
+  html.light a[href*="/search"]:hover {
+    background: linear-gradient(180deg, rgba(238, 236, 248, 0.98) 0%, rgba(218, 217, 242, 0.95) 100%) !important;
+    border-color: rgba(70, 67, 186, 0.42) !important;
+    color: #2B2871 !important;
+  }
+}
+
+/* Footer + plain list links must stay text, not capsules. */
+.iv-plainlinks a[href*="/category/"] {
+  display: inline !important;
+  padding: 0 !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  font-weight: 500;
+  transition: color 0.25s ease !important;
+}
+.iv-plainlinks a[href*="/category/"]:hover {
+  color: var(--primary) !important;
+  transform: none !important;
+}
+
+/* Hero slider frame: the Golden Tree artwork is a transparent PNG that needs a
+   dark plate behind it in both themes. */
+@layer utilities {
+  .iv-hero-frame,
+  html.light .iv-hero-frame {
+    background:
+      radial-gradient(ellipse at 50% 45%, rgba(24, 22, 68, 0.98) 0%, rgba(10, 10, 32, 0.98) 70%),
+      #0A0A20 !important;
+  }
+  .iv-hero-frame img {
+    filter: brightness(1.12) contrast(1.06);
+  }
 }

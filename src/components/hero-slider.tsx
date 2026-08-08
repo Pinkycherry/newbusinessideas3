@@ -35,7 +35,7 @@ export function HeroSlider() {
 
   return (
     <div className="relative">
-      <div className="glass relative aspect-[16/10] w-full overflow-hidden rounded-[2rem]">
+      <div className="iv-hero-frame glass relative aspect-[16/10] w-full overflow-hidden rounded-[2rem]">
         <AnimatePresence mode="sync">
           <motion.img
             key={slide.src}

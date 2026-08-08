@@ -188,8 +188,7 @@ function NavDropdown({
             transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
             onMouseEnter={openNow}
             onMouseLeave={closeSoon}
-            style={{ background: "oklch(0.255 0.008 274 / 98%)" }}
-            className={panelClassName}
+            className={`iv-nav-panel ${panelClassName}`}
           >
             {children(() => setOpen(false))}
           </motion.div>
@@ -566,7 +565,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
               <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
                 Popular categories
               </h3>
-              <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
+              <ul className="iv-plainlinks mt-4 space-y-2.5 text-sm text-muted-foreground">
                 {popularCategories.length === 0 ? (
                   <li className="text-xs text-muted-foreground">Loading…</li>
                 ) : (
