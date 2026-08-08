@@ -300,6 +300,14 @@
 a[href*="/category/"],
 a[href*="/search"] {
   color: #FCFBFE !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  line-height: 1.25;
   background: linear-gradient(
     180deg,
     rgba(136, 134, 219, 0.26) 0%,
