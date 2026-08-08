@@ -8,6 +8,7 @@ import { AmbientScene } from "@/components/ambient-scene";
 import { LiveSearch } from "@/components/live-search";
 import { FloatingDock } from "@/components/floating-dock";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { CategoryBadge } from "@/components/category-badge";
 import { catalogQuery } from "@/lib/ideas.functions";
 import { useAuth } from "@/hooks/use-auth";
 import { signOut } from "@/lib/auth-client";
@@ -103,7 +104,7 @@ function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boo
       <Link
         to="/browse"
         onClick={onNavigate}
-        className={`sheen rounded-full bg-gradient-to-r from-primary to-ember px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary-foreground shadow-[0_8px_28px_oklch(0.687_0.161_51.5/40%)] transition-all duration-300 hover:scale-105 ${full ? "block text-center" : ""}`}
+        className={`sheen rounded-full bg-gradient-to-r from-primary to-ember px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary-foreground shadow-[0_8px_28px_color-mix(in_oklab,var(--primary)_40%,transparent)] transition-all duration-300 hover:scale-105 ${full ? "block text-center" : ""}`}
       >
         Browse free
       </Link>
@@ -205,31 +206,27 @@ function CategoryMega() {
   return (
     <NavDropdown
       label="Categories"
-      panelClassName="glass-nav fixed left-1/2 top-20 z-50 w-[min(48rem,94vw)] -translate-x-1/2 rounded-3xl p-5 before:absolute before:-top-6 before:left-0 before:h-6 before:w-full before:content-['']"
+      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 w-[min(48rem,94vw)] rounded-3xl p-5"
     >
       {(close) => (
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
             Browse by category
           </p>
-          <div className="mt-3 grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-4">
+          <div className="iv-tag-cloud mt-3">
             {categories.length === 0 ? (
               <p className="text-xs normal-case tracking-normal text-muted-foreground">
                 Loading categories…
               </p>
             ) : (
               categories.map((c) => (
-                <Link
+                <CategoryBadge
                   key={c.categorySlug}
-                  to="/category/$categorySlug"
-                  params={{ categorySlug: c.categorySlug }}
+                  slug={c.categorySlug}
+                  label={c.categoryName}
                   onClick={close}
-                  className="rounded-full px-3 py-1.5 text-[11px] normal-case tracking-normal text-foreground transition-colors"
-                >
-                  <span className="block truncate font-semibold leading-snug">
-                    {c.categoryName}
-                  </span>
-                </Link>
+                  className="iv-tag"
+                />
               ))
             )}
           </div>
@@ -482,7 +479,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             onClick={() => setMobileOpen(false)}
             className="flex min-w-0 items-baseline gap-2"
           >
-            <span className="shrink-0 rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-0.5 text-sm font-black uppercase tracking-[0.18em] text-primary-foreground shadow-[0_0_24px_oklch(0.723_0.161_56/45%)] sm:text-lg">
+            <span className="shrink-0 rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-0.5 text-sm font-black uppercase tracking-[0.18em] text-primary-foreground shadow-[0_0_24px_color-mix(in_oklab,var(--primary)_45%,transparent)] sm:text-lg">
               BBI
             </span>
           </Link>
@@ -570,14 +567,13 @@ export function SiteShell({ children }: { children: ReactNode }) {
                   <span className="text-xs text-muted-foreground">Loading…</span>
                 ) : (
                   popularCategories.map((c) => (
-                    <Link
+                    <CategoryBadge
                       key={c.categorySlug}
-                      to="/category/$categorySlug"
-                      params={{ categorySlug: c.categorySlug }}
-                      className="glass-pill iv-tag px-3.5 py-1.5 text-xs"
-                    >
-                      {c.categoryName}
-                    </Link>
+                      slug={c.categorySlug}
+                      label={c.categoryName}
+                      size="sm"
+                      className="iv-tag"
+                    />
                   ))
                 )}
               </div>

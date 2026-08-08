@@ -758,6 +758,18 @@ html.light .tree-asset-container {
   0%, 100% { transform: translate(-50%, -50%) translateY(0); }
   50%      { transform: translate(-50%, -50%) translateY(-6px); }
 }
+/* --- GOLDEN TREE: desktop nodes drift gently instead of sitting static --- */
+.bbi-tree-node-d {
+  transform: translate(-50%, -50%);
+  animation: bbi-tree-float-d 7s ease-in-out infinite;
+}
+@keyframes bbi-tree-float-d {
+  0%, 100%  { transform: translate(-50%, -50%) translate(0, 0); }
+  50%       { transform: translate(-50%, -50%) translate(3px, -8px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-tree-node-m, .bbi-tree-node-d { animation: none !important; }
+}
 
 /* Orbit centre must stay legible over the glass layer. */
 .bbi-orbit-center {

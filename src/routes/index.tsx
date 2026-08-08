@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
+import { CategoryBadge } from "@/components/category-badge";
 import { TiltPanel } from "@/components/tilt-panel";
 import { AdSlot } from "@/components/AdSlot";
 import { HeroSlider, Typewriter } from "@/components/hero-slider";
@@ -99,7 +100,7 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
             type="button"
             onClick={() => surprise.mutate()}
             disabled={surprise.isPending}
-            className="sheen rounded-full bg-gradient-to-r from-primary to-ember px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_oklch(0.687_0.161_51.5/40%)] transition-all duration-300 hover:scale-105 disabled:cursor-wait disabled:opacity-70"
+            className="sheen rounded-full bg-gradient-to-r from-primary to-ember px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_color-mix(in_oklab,var(--primary)_40%,transparent)] transition-all duration-300 hover:scale-105 disabled:cursor-wait disabled:opacity-70"
           >
             {surprise.isPending ? "Picking…" : "Surprise Me"}
           </button>
@@ -683,6 +684,7 @@ function GoldenTreeSection() {
       slug: "zero-investment-business-ideas",
       x: 28,
       y: 18,
+      d: 0,
       count: volume(24000, 1),
     },
     {
@@ -690,6 +692,7 @@ function GoldenTreeSection() {
       slug: "work-from-home-business-ideas",
       x: 50,
       y: 12,
+      d: 0.6,
       count: volume(31000, 2),
     },
     {
@@ -697,6 +700,7 @@ function GoldenTreeSection() {
       slug: "low-investment-business-ideas",
       x: 72,
       y: 20,
+      d: 1.2,
       count: volume(27000, 3),
     },
     {
@@ -704,19 +708,28 @@ function GoldenTreeSection() {
       slug: "side-hustle-ideas",
       x: 20,
       y: 38,
+      d: 1.8,
       count: volume(18000, 4),
     },
-    { label: "SaaS & AI Startups", query: "SaaS", x: 42, y: 32, count: volume(14000, 5) },
-    { label: "FinTech & Finance", slug: "fintech", x: 60, y: 34, count: volume(9800, 6) },
-    { label: "E-Commerce", slug: "e-commerce", x: 80, y: 40, count: volume(21000, 7) },
-    { label: "Creator & Media", slug: "creator-media", x: 30, y: 55, count: volume(7600, 8) },
-    { label: "Healthcare", slug: "healthcare", x: 70, y: 56, count: volume(6400, 9) },
+    { label: "SaaS & AI Startups", query: "SaaS", x: 42, y: 32, d: 2.4, count: volume(14000, 5) },
+    { label: "FinTech & Finance", slug: "fintech", x: 60, y: 34, d: 3.0, count: volume(9800, 6) },
+    { label: "E-Commerce", slug: "e-commerce", x: 80, y: 40, d: 3.6, count: volume(21000, 7) },
+    {
+      label: "Creator & Media",
+      slug: "creator-media",
+      x: 30,
+      y: 55,
+      d: 4.2,
+      count: volume(7600, 8),
+    },
+    { label: "Healthcare", slug: "healthcare", x: 70, y: 56, d: 4.8, count: volume(6400, 9) },
     {
       label: "Validation Center",
       path: "/browse",
       x: 50,
       y: 52,
       isCenter: true,
+      d: 5.4,
       count: volume(38000, 10),
     },
   ];
@@ -741,116 +754,101 @@ function GoldenTreeSection() {
         </p>
       </div>
 
-      <div className="relative mt-8 sm:mt-12 w-full flex justify-center items-center overflow-hidden py-4">
-        {/* DESKTOP 16:9 PNG ASSET */}
-        <div className="hidden sm:block relative w-full max-w-5xl aspect-[16/9] group tree-asset-container">
-          <img
-            src="https://ethicalfounder.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg"
-            alt="The Golden Tree of Business Growth"
-            className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(27,42,107,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(27,42,107,0.5)]"
-          />
+      {/* Full-bleed dark radial canopy backdrop — always matches the header/footer
+          "Glow & Glass" palette regardless of the active light/dark theme, so the
+          tree reads as one seamless night-sky panel instead of a boxed asset. */}
+      <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 65% at 50% 42%, rgba(70,67,186,0.38) 0%, rgba(12,12,37,0.94) 55%, rgba(12,12,37,0) 100%)",
+          }}
+        />
+        <div className="relative mt-8 sm:mt-12 flex w-full items-center justify-center py-10 sm:py-16">
+          {/* DESKTOP TREE ASSET */}
+          <div className="hidden sm:block relative w-full max-w-5xl aspect-[16/9] group tree-asset-container">
+            <img
+              src="https://ethicalfounder.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg"
+              alt="The Golden Tree of Business Growth"
+              className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(27,42,107,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(27,42,107,0.5)]"
+            />
 
-          {desktopNodes.map((node) => (
-            <div
-              key={node.label}
-              className="absolute -translate-x-1/2 -translate-y-1/2 group/node z-20"
-              style={{ left: `${node.x}%`, top: `${node.y}%` }}
-            >
-              {node.path ? (
-                <Link
-                  to={node.path}
-                  className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold shadow-lg"
-                >
-                  <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
-                  <span>{node.label}</span>
-                </Link>
-              ) : node.slug ? (
-                <Link
-                  to="/category/$categorySlug"
-                  params={{ categorySlug: node.slug }}
-                  className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold shadow-lg"
-                >
-                  <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
-                  <span>{node.label}</span>
-                </Link>
-              ) : (
-                <Link
-                  to="/search"
-                  search={{ q: node.query }}
-                  className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold shadow-lg"
-                >
-                  <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
-                  <span>{node.label}</span>
-                </Link>
-              )}
-
-              <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 opacity-0 group-hover/node:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap glass rounded-md px-2.5 py-1 text-[10px] font-semibold shadow-xl">
-                {fmt(node.count)}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* MOBILE 9:16 SVG ASSET — ORGANIC FLOATING LIQUID CAPSULES */}
-        <div className="block sm:hidden relative w-full max-w-xs aspect-[9/16] tree-asset-container">
-          <img
-            src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg"
-            alt="The Golden Tree of Business Growth (Mobile)"
-            className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(27,42,107,0.35)]"
-          />
-
-          {/* Nodes sit on the canopy at organic coordinates (not a vertical list). */}
-          <div className="absolute inset-0 z-20">
-            {[
-              {
-                label: "Zero Investment",
-                slug: "zero-investment-business-ideas",
-                x: 30,
-                y: 14,
-                d: 0,
-              },
-              {
-                label: "Work From Home",
-                slug: "work-from-home-business-ideas",
-                x: 70,
-                y: 24,
-                d: 0.8,
-              },
-              {
-                label: "Low Investment",
-                slug: "low-investment-business-ideas",
-                x: 26,
-                y: 36,
-                d: 1.6,
-              },
-              { label: "Side Hustle", slug: "side-hustle-ideas", x: 68, y: 47, d: 2.4 },
-              { label: "Validation Center", path: "/browse", x: 48, y: 60, d: 3.2 },
-            ].map((mNode) => (
+            {desktopNodes.map((node) => (
               <div
-                key={mNode.label}
-                className="bbi-tree-node-m"
-                style={{ left: `${mNode.x}%`, top: `${mNode.y}%`, animationDelay: `${mNode.d}s` }}
+                key={node.label}
+                className="bbi-tree-node-d absolute group/node z-20"
+                style={{ left: `${node.x}%`, top: `${node.y}%`, animationDelay: `${node.d}s` }}
               >
-                {mNode.path ? (
-                  <Link
-                    to={mNode.path}
-                    className="glass-pill inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-[10px] font-bold shadow-xl"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-white/80" />
-                    <span>{mNode.label}</span>
-                  </Link>
+                {node.path ? (
+                  <CategoryBadge to={node.path} label={node.label} dot />
+                ) : node.slug ? (
+                  <CategoryBadge slug={node.slug} label={node.label} dot />
                 ) : (
-                  <Link
-                    to="/category/$categorySlug"
-                    params={{ categorySlug: mNode.slug ?? "" }}
-                    className="glass-pill inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-[10px] font-bold shadow-xl"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-white/80" />
-                    <span>{mNode.label}</span>
-                  </Link>
+                  <CategoryBadge
+                    to="/search"
+                    search={{ q: node.query ?? "" }}
+                    label={node.label}
+                    dot
+                  />
                 )}
+
+                <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 opacity-0 group-hover/node:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap glass rounded-md px-2.5 py-1 text-[10px] font-semibold shadow-xl">
+                  {fmt(node.count)}
+                </div>
               </div>
             ))}
+          </div>
+
+          {/* MOBILE TREE ASSET — organic floating liquid capsules */}
+          <div className="block sm:hidden relative w-full max-w-xs aspect-[9/16] tree-asset-container">
+            <img
+              src="https://upcomingtools.com/wp-content/uploads/2026/08/business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg"
+              alt="The Golden Tree of Business Growth (Mobile)"
+              className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(27,42,107,0.35)]"
+            />
+
+            {/* Nodes sit on the canopy at organic coordinates (not a vertical list). */}
+            <div className="absolute inset-0 z-20">
+              {[
+                {
+                  label: "Zero Investment",
+                  slug: "zero-investment-business-ideas",
+                  x: 30,
+                  y: 14,
+                  d: 0,
+                },
+                {
+                  label: "Work From Home",
+                  slug: "work-from-home-business-ideas",
+                  x: 70,
+                  y: 24,
+                  d: 0.8,
+                },
+                {
+                  label: "Low Investment",
+                  slug: "low-investment-business-ideas",
+                  x: 26,
+                  y: 36,
+                  d: 1.6,
+                },
+                { label: "Side Hustle", slug: "side-hustle-ideas", x: 68, y: 47, d: 2.4 },
+                { label: "Validation Center", path: "/browse", x: 48, y: 60, d: 3.2 },
+              ].map((mNode) => (
+                <div
+                  key={mNode.label}
+                  className="bbi-tree-node-m"
+                  style={{ left: `${mNode.x}%`, top: `${mNode.y}%`, animationDelay: `${mNode.d}s` }}
+                >
+                  {mNode.path ? (
+                    <CategoryBadge to={mNode.path} label={mNode.label} size="sm" dot />
+                  ) : (
+                    <CategoryBadge slug={mNode.slug ?? ""} label={mNode.label} size="sm" dot />
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

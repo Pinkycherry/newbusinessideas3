@@ -44,7 +44,7 @@ function PricingPage() {
             key={plan.name}
             className={`glass glass-hover flex h-full flex-col rounded-3xl px-6 py-8 ${
               plan.highlighted
-                ? "border-primary/60 shadow-[0_20px_60px_oklch(0.687_0.161_51.5/25%)]"
+                ? "border-primary/60 shadow-[0_20px_60px_color-mix(in_oklab,var(--primary)_25%,transparent)]"
                 : ""
             }`}
           >

@@ -46,7 +46,7 @@ export function PaywallPopup({
           <Link
             to="/pricing"
             onClick={() => onOpenChange(false)}
-            className="sheen flex-1 rounded-full bg-gradient-to-r from-primary to-ember px-5 py-3 text-center text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_oklch(0.687_0.161_51.5/40%)] transition-all duration-300 hover:scale-[1.02]"
+            className="sheen flex-1 rounded-full bg-gradient-to-r from-primary to-ember px-5 py-3 text-center text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_color-mix(in_oklab,var(--primary)_40%,transparent)] transition-all duration-300 hover:scale-[1.02]"
           >
             Get Lifetime — ₹399
           </Link>
