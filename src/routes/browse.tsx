@@ -102,7 +102,7 @@ function BrowsePage() {
                   <Link
                     to="/category/$categorySlug"
                     params={{ categorySlug: category.categorySlug }}
-                    className="text-xl font-bold tracking-tight text-foreground transition-colors hover:text-primary sm:text-2xl"
+                    className="bbi-heading-glow text-xl font-bold tracking-tight text-foreground transition-colors hover:text-primary sm:text-2xl"
                   >
                     {category.categoryName}
                   </Link>

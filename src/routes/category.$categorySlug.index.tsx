@@ -84,7 +84,9 @@ function CategoryPage() {
               { label: data.categoryName ?? categorySlug },
             ]}
           />
-          <h1 className="mt-4 text-3xl font-bold tracking-tight">{data.categoryName}</h1>
+          <h1 className="bbi-heading-glow mt-4 text-3xl font-bold tracking-tight">
+            {data.categoryName}
+          </h1>
           <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
 
           <div className="mt-8">
