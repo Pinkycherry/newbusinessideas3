@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, lazy, Suspense, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User } from "lucide-react";
 
@@ -9,8 +9,12 @@ import { LiveSearch } from "@/components/live-search";
 import { FloatingDock } from "@/components/floating-dock";
 import { CategoryBadge } from "@/components/category-badge";
 import { Spotlight } from "@/components/spotlight";
-import { CursorSmoke } from "@/components/cursor-smoke";
 import { catalogQuery } from "@/lib/ideas.functions";
+
+/** Code-split out of the initial bundle — not needed for first paint. */
+const CursorGlow = lazy(() =>
+  import("@/components/cursor-glow").then((m) => ({ default: m.CursorGlow })),
+);
 import { useAuth } from "@/hooks/use-auth";
 import { signOut } from "@/lib/auth-client";
 import { usePillInteraction } from "@/hooks/use-pill-interaction";
@@ -551,7 +555,9 @@ export function SiteShell({ children }: { children: ReactNode }) {
   const popularCategories = (catalog?.categories ?? []).slice(0, 6);
   return (
     <div className="relative flex min-h-screen flex-col text-foreground">
-      <CursorSmoke />
+      <Suspense fallback={null}>
+        <CursorGlow />
+      </Suspense>
       <AmbientScene />
       <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">
         <div className="glass-nav mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full px-4 py-2.5 sm:px-6 sm:py-3">
