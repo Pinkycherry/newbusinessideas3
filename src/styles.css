@@ -51,6 +51,10 @@
   --ease-glass: cubic-bezier(0.16, 1, 0.3, 1);
 }
 :root {
+  /* Dark mode is removed; <html> now always carries class="light" (set
+     statically in __root.tsx, not toggled), so the html.light block below
+     always wins the cascade over these base values. Kept as the fallback
+     for any render path that somehow skips that class, not as a live theme. */
   --radius: 1.25rem;
   /* ============================================================
      FINAL LOOK — GLOW & GLASS (Image 2 exact match)
