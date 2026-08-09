@@ -12,8 +12,8 @@ import { Spotlight } from "@/components/spotlight";
 import { catalogQuery } from "@/lib/ideas.functions";
 
 /** Code-split out of the initial bundle — not needed for first paint. */
-const CursorGlow = lazy(() =>
-  import("@/components/cursor-glow").then((m) => ({ default: m.CursorGlow })),
+const CursorTrail = lazy(() =>
+  import("@/components/cursor-trail").then((m) => ({ default: m.CursorTrail })),
 );
 import { useAuth } from "@/hooks/use-auth";
 import { signOut } from "@/lib/auth-client";
@@ -556,7 +556,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
   return (
     <div className="relative flex min-h-screen flex-col text-foreground">
       <Suspense fallback={null}>
-        <CursorGlow />
+        <CursorTrail />
       </Suspense>
       <AmbientScene />
       <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">

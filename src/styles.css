@@ -964,92 +964,77 @@ body {
 }
 
 /* ============================================================
-   CURSOR GLOW — see src/components/cursor-glow.tsx
-   Position is driven purely by JS (transform, written every animation
-   frame — no CSS transition on transform, that would fight the per-frame
-   updates). Everything that changes rarely (hover scale, opacity, blur)
-   uses a CSS transition instead, which is why the dot is split into a
-   position wrapper (.bbi-cursor-dot-pos, JS-driven) and a visual inner
-   element (.bbi-cursor-dot-visual, CSS-driven) — the glow doesn't need
-   this split since only its opacity/blur transition, never its transform.
-
-   z-index is a deliberate 3, not the literal 9999 floated in spec — at
-   *any* explicit z-index, a position:fixed element paints above normal
-   in-flow content (that's how CSS stacking works: explicitly-positioned
-   layers always sit above the unpositioned document, regardless of the
-   number), so 9999 would render the glow *over* card text exactly like
-   the too-strong effect that was called out as the bad reference. A low
-   value keeps it visually "background-ish" without actually changing
-   whether it blocks clicks (still pointer-events:none either way).
+   CURSOR TRAIL — see src/components/cursor-trail.tsx
+   The whole "ghost trail" chain-lag effect is a CSS transition-duration
+   stagger, nothing more: every circle gets the exact same left/top target
+   on mousemove (written directly to the DOM, no React state), and each
+   circle's own transition-duration (i/20 seconds) determines how long it
+   takes to visually catch up — slower circles lag further behind,
+   producing the trail. No animation loop, no lerp math.
    ============================================================ */
-.bbi-cursor-glow {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 600px;
-  height: 400px;
-  margin-left: -300px;
-  margin-top: -200px;
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse,
-    color-mix(in oklab, var(--primary) 70%, transparent) 0%,
-    color-mix(in oklab, var(--violet) 55%, transparent) 40%,
-    color-mix(in oklab, var(--violet-soft) 35%, transparent) 65%,
-    transparent 78%
-  );
-  filter: blur(calc(90px + var(--cursor-glow-hover, 0) * 15px));
-  opacity: var(--cursor-glow-o, 0.42);
-  transition: opacity 0.4s ease, filter 0.4s ease;
-  will-change: transform;
-}
-.bbi-cursor-dot-pos {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 0;
-  height: 0;
-  will-change: transform;
-}
-.bbi-cursor-dot-visual {
-  position: absolute;
-  left: -6px;
-  top: -6px;
-  width: 12px;
-  height: 12px;
-  border-radius: 9999px;
-  background: var(--accent);
-  transform: scale(var(--cursor-dot-scale, 1));
-  opacity: var(--cursor-dot-o, 1);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
-}
-
-/* Footer-local accent — same proven pattern as .bbi-spotlight (isolated
-   stacking context + a ::before at z-index:-1), so the glow genuinely
-   paints behind footer text with zero cross-context z-index guessing.
-   Coordinates (--fx/--fy, footer-local) and opacity (--fo) are written by
-   the same rAF loop in cursor-glow.tsx. */
-.bbi-footer-glow-host {
-  isolation: isolate;
-  position: relative;
-}
-.bbi-footer-glow-accent {
-  position: absolute;
+.bbi-cursor-trail {
+  position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 3;
   pointer-events: none;
-  background: radial-gradient(
-    500px 360px at var(--fx, 50%) var(--fy, 50%),
-    color-mix(in oklab, var(--primary) 75%, transparent) 0%,
-    color-mix(in oklab, var(--violet) 55%, transparent) 45%,
-    transparent 75%
-  );
-  filter: blur(70px);
-  opacity: var(--fo, 0);
-  transition: opacity 0.4s ease;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.bbi-trail-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 9999px;
+  transition-property: left, top;
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: bbi-trail-pulse 3s ease-in-out infinite;
+}
+@keyframes bbi-trail-pulse {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+.bbi-trail-face {
+  animation: none;
+}
+.bbi-trail-eye {
+  position: absolute;
+  top: 38%;
+  width: 12%;
+  height: 12%;
+  border-radius: 9999px;
+  background: var(--foreground);
+}
+.bbi-trail-eye-l { left: 32%; }
+.bbi-trail-eye-r { left: 56%; }
+.bbi-trail-mouth {
+  position: absolute;
+  left: 38%;
+  top: 52%;
+  width: 24%;
+  height: 24%;
+  border: 2px solid transparent;
+  border-bottom-color: var(--foreground);
+  border-radius: 50%;
+}
+.bbi-trail-arm {
+  position: absolute;
+  top: 62%;
+  width: 10%;
+  height: 26%;
+  border-radius: 9999px;
+  background: color-mix(in oklab, var(--foreground) 30%, transparent);
+  transform-origin: top center;
+  animation: bbi-trail-wave 1.6s ease-in-out infinite;
+}
+.bbi-trail-arm-l { left: 8%; animation-delay: 0.2s; }
+.bbi-trail-arm-r { left: 82%; }
+@keyframes bbi-trail-wave {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(8deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bbi-cursor-glow, .bbi-cursor-dot-pos, .bbi-footer-glow-accent {
+  .bbi-cursor-trail {
     display: none;
   }
 }
