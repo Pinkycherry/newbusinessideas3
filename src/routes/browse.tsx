@@ -95,15 +95,15 @@ function BrowsePage() {
           <div className="mt-10 space-y-10">
             {data.categories.map((category) => (
               <section key={category.categorySlug}>
-                <div className="flex items-baseline justify-between border-b border-border pb-2">
+                <div className="iv-plainlinks flex flex-col gap-1 border-b border-border pb-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
                   <Link
                     to="/category/$categorySlug"
                     params={{ categorySlug: category.categorySlug }}
-                    className="text-xl font-semibold hover:text-primary"
+                    className="text-xl font-semibold text-foreground"
                   >
                     {category.categoryName}
                   </Link>
-                  <span className="text-xs uppercase tracking-widest text-muted-foreground">
+                  <span className="shrink-0 text-xs uppercase tracking-widest text-muted-foreground">
                     {category.ideaCount} ideas
                   </span>
                 </div>

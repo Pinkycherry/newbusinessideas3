@@ -382,20 +382,28 @@ function HomePage() {
       <GoldenTreeSection />
 
       {/* SECTION 2: LIVE CATEGORY SEARCH DEMAND TRACKER */}
-      <LiveDemandTrackerSection />
+      <Reveal variant="rv-lift">
+        <LiveDemandTrackerSection />
+      </Reveal>
 
       <div className="px-3 pt-8 sm:px-4">
         <AdSlot position="homepage-hero-below" size="banner" />
       </div>
 
       {/* BRAND STATEMENT */}
-      <BrandStatementBanner />
+      <Reveal variant="rv-lift">
+        <BrandStatementBanner />
+      </Reveal>
 
       {/* KEYWORD MOSAIC */}
-      <KeywordMosaic />
+      <Reveal variant="rv-lift">
+        <KeywordMosaic />
+      </Reveal>
 
       {/* TRUST STRIP */}
-      <TrustStatsBar totalIdeas={catalog.totalIdeas} categoryCount={catalog.categories.length} />
+      <Reveal variant="rv-lift">
+        <TrustStatsBar totalIdeas={catalog.totalIdeas} categoryCount={catalog.categories.length} />
+      </Reveal>
 
       {/* MARKET GAP + orbit #1 */}
       <MarketGapSection />
@@ -528,10 +536,14 @@ function HomePage() {
       </section>
 
       {/* HOW IT WORKS + orbit #2 + Faq1 inline */}
-      <HowItWorksSection />
+      <Reveal variant="rv-lift">
+        <HowItWorksSection />
+      </Reveal>
 
       {/* WHO FOR */}
-      <WhoForSection />
+      <Reveal variant="rv-lift">
+        <WhoForSection />
+      </Reveal>
 
       {/* SCROLL-STACK */}
       <section className="mx-auto mt-16 grid max-w-6xl gap-4 px-3 pb-16 sm:grid-cols-2 sm:px-4">
@@ -557,45 +569,59 @@ function HomePage() {
       </section>
 
       {/* PRICING PHILOSOPHY + Faq2 inline */}
-      <PricingPhilosophySection />
+      <Reveal variant="rv-lift">
+        <PricingPhilosophySection />
+      </Reveal>
 
       {/* WHY WE BUILT THIS */}
-      <section className="mx-auto max-w-4xl px-3 pb-24 sm:px-4">
-        <h2 className="text-3xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
-          We got tired of the same 50 ideas recycled into infinity.
-        </h2>
-        <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
-          <p>
-            Every business idea list on the internet is the same list. Drop shipping. Print on
-            demand. Start a blog. Sell on Etsy. They are not wrong exactly, but they are not
-            researched either. Nobody tells you the margin, the failure rate, the licensing
-            requirement, or the competitor who already owns the space.
-          </p>
-          <p>
-            This library exists because a genuine small business idea blueprint is worth more than a
-            hundred recycled suggestions. We research each one properly — market context, real
-            revenue mechanics, honest risks — and we tell you directly whether you are the right
-            person to build it.
-          </p>
-        </div>
-        <Link
-          to="/browse"
-          className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
-        >
-          Read a blueprint
-          <span aria-hidden>→</span>
-        </Link>
-      </section>
+      <Reveal variant="rv-lift">
+        <section className="mx-auto max-w-4xl px-3 pb-24 sm:px-4">
+          <h2 className="text-3xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
+            We got tired of the same 50 ideas recycled into infinity.
+          </h2>
+          <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p>
+              Every business idea list on the internet is the same list. Drop shipping. Print on
+              demand. Start a blog. Sell on Etsy. They are not wrong exactly, but they are not
+              researched either. Nobody tells you the margin, the failure rate, the licensing
+              requirement, or the competitor who already owns the space.
+            </p>
+            <p>
+              This library exists because a genuine small business idea blueprint is worth more than
+              a hundred recycled suggestions. We research each one properly — market context, real
+              revenue mechanics, honest risks — and we tell you directly whether you are the right
+              person to build it.
+            </p>
+          </div>
+          <Link
+            to="/browse"
+            className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
+          >
+            Read a blueprint
+            <span aria-hidden>→</span>
+          </Link>
+        </section>
+      </Reveal>
 
       {/* TEAM + orbit #3 */}
-      <TeamSection />
+      <Reveal variant="rv-lift">
+        <TeamSection />
+      </Reveal>
 
-      <InspiredBySection />
-      <ComparisonSection />
-      <FutureProofSpotlight />
+      <Reveal variant="rv-lift">
+        <InspiredBySection />
+      </Reveal>
+      <Reveal variant="rv-lift">
+        <ComparisonSection />
+      </Reveal>
+      <Reveal variant="rv-lift">
+        <FutureProofSpotlight />
+      </Reveal>
 
       {/* PROMISE + Faq3 inline */}
-      <PromiseSection />
+      <Reveal variant="rv-lift">
+        <PromiseSection />
+      </Reveal>
 
       {/* GENERAL CLOSING FAQ */}
       <section className="mx-auto mt-20 max-w-4xl border-t border-border/60 px-3 pt-16 pb-24 sm:mt-28 sm:px-4 sm:pt-20">

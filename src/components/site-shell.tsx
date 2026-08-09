@@ -3,6 +3,25 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState, lazy, Suspense, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User } from "lucide-react";
+import type { IconType } from "react-icons";
+import {
+  SiReact,
+  SiTypescript,
+  SiVite,
+  SiTailwindcss,
+  SiShadcnui,
+  SiGsap,
+  SiFramer,
+  SiTanstack,
+  SiNodedotjs,
+  SiSupabase,
+  SiVercel,
+  SiGithub,
+  SiClaude,
+  SiClaudecode,
+  SiN8N,
+  SiGooglegemini,
+} from "react-icons/si";
 
 import { AmbientScene } from "@/components/ambient-scene";
 import { LiveSearch } from "@/components/live-search";
@@ -10,6 +29,7 @@ import { FloatingDock } from "@/components/floating-dock";
 import { CategoryBadge } from "@/components/category-badge";
 import { Spotlight } from "@/components/spotlight";
 import { catalogQuery } from "@/lib/ideas.functions";
+import { prefersReducedMotion } from "@/lib/motion";
 
 /** Code-split out of the initial bundle — not needed for first paint. */
 const CursorTrail = lazy(() =>
@@ -40,36 +60,79 @@ function FooterCta() {
   );
 }
 
+type BuiltWithItem = { name: string; href: string; Icon: IconType | null };
+
 /**
  * Trust/stack showcase, placed directly before the footer on every page.
- * These are monogram badges, not real brand marks — this codebase has no
- * licensed SVG logo assets for any of these, and lucide-react doesn't carry
- * brand icons either. Flagging per Section 1 of the brief: real logo SVGs
- * for each of these need to come from the founder before this can show
- * actual brand marks instead of initials.
+ * Each entry links out to that technology's real official site and shows
+ * its real brand mark from the licensed Simple Icons set (via
+ * react-icons/si) — no more monogram-initial placeholders.
+ *
+ * Two entries (ChatGPT, Grok) have no icon here on purpose, not by
+ * oversight: Simple Icons pulled both marks after trademark disputes with
+ * OpenAI/xAI, so there is no licensed asset to show. Rather than fabricate
+ * a logo, those two keep a plain text label. Icons render in one flat
+ * tone (not each brand's exact hex) so this list never shows a guessed —
+ * and possibly wrong — brand color.
  */
-const BUILT_WITH: string[] = [
-  "React",
-  "TypeScript",
-  "Vite",
-  "Tailwind CSS",
-  "shadcn/ui",
-  "GSAP",
-  "Framer",
-  "TanStack",
-  "Node.js",
-  "Supabase",
-  "Vercel",
-  "GitHub",
-  "Claude",
-  "Claude Code",
-  "n8n",
-  "ChatGPT",
-  "Grok",
-  "Gemini",
+const BUILT_WITH: BuiltWithItem[] = [
+  { name: "React", href: "https://react.dev", Icon: SiReact },
+  { name: "TypeScript", href: "https://www.typescriptlang.org", Icon: SiTypescript },
+  { name: "Vite", href: "https://vite.dev", Icon: SiVite },
+  { name: "Tailwind CSS", href: "https://tailwindcss.com", Icon: SiTailwindcss },
+  { name: "shadcn/ui", href: "https://ui.shadcn.com", Icon: SiShadcnui },
+  { name: "GSAP", href: "https://gsap.com", Icon: SiGsap },
+  { name: "Framer Motion", href: "https://motion.dev", Icon: SiFramer },
+  { name: "TanStack", href: "https://tanstack.com", Icon: SiTanstack },
+  { name: "Node.js", href: "https://nodejs.org", Icon: SiNodedotjs },
+  { name: "Supabase", href: "https://supabase.com", Icon: SiSupabase },
+  { name: "Vercel", href: "https://vercel.com", Icon: SiVercel },
+  { name: "GitHub", href: "https://github.com", Icon: SiGithub },
+  { name: "Claude", href: "https://claude.com", Icon: SiClaude },
+  { name: "Claude Code", href: "https://claude.com", Icon: SiClaudecode },
+  { name: "n8n", href: "https://n8n.io", Icon: SiN8N },
+  { name: "ChatGPT", href: "https://chatgpt.com", Icon: null },
+  { name: "Grok", href: "https://x.ai", Icon: null },
+  { name: "Gemini", href: "https://gemini.google.com", Icon: SiGooglegemini },
 ];
 
+function BuiltWithItemLink({ item }: { item: BuiltWithItem }) {
+  const { name, href, Icon } = item;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="glass glass-hover flex shrink-0 items-center gap-2.5 rounded-full px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+    >
+      {Icon ? (
+        <Icon aria-hidden className="h-5 w-5 shrink-0 text-accent" />
+      ) : (
+        <span
+          aria-hidden
+          className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gradient-to-r from-primary to-accent text-[9px] font-black text-primary-foreground"
+        >
+          {name.slice(0, 2).toUpperCase()}
+        </span>
+      )}
+      <span className="whitespace-nowrap">{name}</span>
+    </a>
+  );
+}
+
 function BuiltWithSection() {
+  const [looping, setLooping] = useState(true);
+
+  useEffect(() => {
+    setLooping(!prefersReducedMotion());
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => setLooping(!mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  const items = looping ? [...BUILT_WITH, ...BUILT_WITH] : BUILT_WITH;
+
   return (
     <section className="px-3 pb-12 pt-6 sm:px-4" aria-labelledby="built-with-heading">
       <div className="mx-auto max-w-7xl">
@@ -79,21 +142,15 @@ function BuiltWithSection() {
         >
           Built with
         </p>
-        <div className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
-          {BUILT_WITH.map((name) => (
-            <div
-              key={name}
-              className="glass glass-hover flex flex-col items-center gap-2 rounded-2xl px-3 py-4 text-center"
-            >
-              <span
-                aria-hidden
-                className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-r from-primary to-accent text-xs font-black text-primary-foreground"
-              >
-                {name.slice(0, 2).toUpperCase()}
-              </span>
-              <span className="text-xs font-medium text-muted-foreground">{name}</span>
-            </div>
-          ))}
+        <div className="bbi-built-ticker mt-6">
+          <div
+            className={`bbi-built-ticker-track ${looping ? "" : "bbi-built-ticker-static"}`}
+            style={looping ? { animationDuration: "38s" } : undefined}
+          >
+            {items.map((item, i) => (
+              <BuiltWithItemLink key={`${item.name}-${i}`} item={item} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
