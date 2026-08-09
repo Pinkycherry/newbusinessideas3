@@ -964,6 +964,28 @@ body {
 }
 
 /* ============================================================
+   CURSOR SMOKE TRAIL — see src/components/cursor-smoke.tsx
+   Soft, layered blue "smoke" that follows the pointer across the whole
+   site. Position is fixed top:0/left:0 + a negative margin (set inline,
+   half the layer's own size) to center on the point; GSAP quickTo then
+   writes the actual x/y translate per frame.
+   ============================================================ */
+.bbi-cursor-smoke-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--primary) 55%, transparent) 0%,
+    color-mix(in oklab, var(--accent) 35%, transparent) 45%,
+    transparent 72%
+  );
+  transition: opacity 0.4s ease;
+  will-change: transform, opacity;
+}
+
+/* ============================================================
    CARD FAN-REVEAL — see src/components/card-fan.tsx
    ============================================================ */
 .bbi-fan-card {

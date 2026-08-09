@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from "react";
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
 import { CategoryBadge } from "@/components/category-badge";
-import { TiltPanel } from "@/components/tilt-panel";
 import { AdSlot } from "@/components/AdSlot";
 import { HeroSlider, Typewriter } from "@/components/hero-slider";
 import { Reveal } from "@/components/reveal";
@@ -265,7 +264,7 @@ function HomePage() {
         data-anchor-label="Top"
         className="px-3 pt-10 sm:px-4 sm:pt-16"
       >
-        <TiltPanel className="mx-auto max-w-6xl" max={4}>
+        <div className="mx-auto max-w-6xl">
           <div className="glass blob-1 px-6 py-14 sm:px-12 sm:py-20">
             <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent sm:text-xs">
               <Typewriter text="The Truth About Business Ideas" />
@@ -329,7 +328,7 @@ function HomePage() {
               ))}
             </div>
           </div>
-        </TiltPanel>
+        </div>
       </section>
 
       {/* SURPRISE ME — Section 8.1, directly below the hero, before any other content */}

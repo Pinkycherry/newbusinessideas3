@@ -9,6 +9,7 @@ import { LiveSearch } from "@/components/live-search";
 import { FloatingDock } from "@/components/floating-dock";
 import { CategoryBadge } from "@/components/category-badge";
 import { Spotlight } from "@/components/spotlight";
+import { CursorSmoke } from "@/components/cursor-smoke";
 import { catalogQuery } from "@/lib/ideas.functions";
 import { useAuth } from "@/hooks/use-auth";
 import { signOut } from "@/lib/auth-client";
@@ -550,6 +551,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
   const popularCategories = (catalog?.categories ?? []).slice(0, 6);
   return (
     <div className="relative flex min-h-screen flex-col text-foreground">
+      <CursorSmoke />
       <AmbientScene />
       <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">
         <div className="glass-nav mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full px-4 py-2.5 sm:px-6 sm:py-3">
