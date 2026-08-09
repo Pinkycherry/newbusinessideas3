@@ -7,7 +7,6 @@ import { User } from "lucide-react";
 import { AmbientScene } from "@/components/ambient-scene";
 import { LiveSearch } from "@/components/live-search";
 import { FloatingDock } from "@/components/floating-dock";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { CategoryBadge } from "@/components/category-badge";
 import { catalogQuery } from "@/lib/ideas.functions";
 import { useAuth } from "@/hooks/use-auth";
@@ -331,7 +330,6 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
             Menu
           </span>
           <div className="flex items-center gap-2">
-            <ThemeToggle />
             <button
               type="button"
               onClick={onClose}
@@ -500,7 +498,6 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
           <div className="hidden shrink-0 items-center gap-2 lg:flex">
             <LiveSearch className="w-44 xl:w-56" />
-            <ThemeToggle />
             <AuthButtons />
           </div>
 

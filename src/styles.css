@@ -1,7 +1,6 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
-@custom-variant dark (&:is(.dark *));
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -100,9 +99,6 @@
   /* Reference violet companion to the cyan — used in glass gradients + rims */
   --violet: #8886DB;
   --violet-soft: #B6B5E3;
-}
-.dark {
-  --background: #0C0C25;
 }
 @layer base {
   html {
