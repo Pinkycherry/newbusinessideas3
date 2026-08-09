@@ -4,6 +4,7 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getCatalog } from "@/lib/ideas.functions";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { usePillInteraction } from "@/hooks/use-pill-interaction";
 
 const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
 
@@ -38,6 +39,32 @@ export const Route = createFileRoute("/browse")({
     </SiteShell>
   ),
 });
+
+function SubcategoryPill({
+  categorySlug,
+  subcategorySlug,
+  label,
+}: {
+  categorySlug: string;
+  subcategorySlug: string;
+  label: string;
+}) {
+  const pill = usePillInteraction<HTMLAnchorElement>();
+  return (
+    <Link
+      to="/category/$categorySlug/$subcategorySlug"
+      params={{ categorySlug, subcategorySlug }}
+      className="glass-pill iv-tag px-4 py-2 text-sm"
+      ref={pill.ref}
+      onMouseEnter={pill.onMouseEnter}
+      onMouseLeave={pill.onMouseLeave}
+      onPointerDown={pill.onPointerDown}
+      onPointerUp={pill.onPointerUp}
+    >
+      {label}
+    </Link>
+  );
+}
 
 function BrowsePage() {
   const { data } = useSuspenseQuery(catalogQuery);
@@ -83,14 +110,12 @@ function BrowsePage() {
                 {/* Fluid tag cloud — width is driven by label length, never a rigid grid. */}
                 <div className="iv-tag-cloud mt-4">
                   {category.subcategories.map((sub) => (
-                    <Link
+                    <SubcategoryPill
                       key={sub.slug}
-                      to="/category/$categorySlug/$subcategorySlug"
-                      params={{ categorySlug: category.categorySlug, subcategorySlug: sub.slug }}
-                      className="glass-pill iv-tag px-4 py-2 text-sm"
-                    >
-                      {sub.name}
-                    </Link>
+                      categorySlug={category.categorySlug}
+                      subcategorySlug={sub.slug}
+                      label={sub.name}
+                    />
                   ))}
                 </div>
               </section>

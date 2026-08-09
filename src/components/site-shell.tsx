@@ -8,9 +8,92 @@ import { AmbientScene } from "@/components/ambient-scene";
 import { LiveSearch } from "@/components/live-search";
 import { FloatingDock } from "@/components/floating-dock";
 import { CategoryBadge } from "@/components/category-badge";
+import { Spotlight } from "@/components/spotlight";
 import { catalogQuery } from "@/lib/ideas.functions";
 import { useAuth } from "@/hooks/use-auth";
 import { signOut } from "@/lib/auth-client";
+import { usePillInteraction } from "@/hooks/use-pill-interaction";
+
+/** Footer's primary CTA — spotlight glow behind a pill with GSAP hover/press motion. */
+function FooterCta() {
+  const pill = usePillInteraction<HTMLAnchorElement>();
+  return (
+    <Spotlight className="mt-5 inline-block rounded-full">
+      <Link
+        to="/browse"
+        className="glass-pill inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
+        ref={pill.ref}
+        onMouseEnter={pill.onMouseEnter}
+        onMouseLeave={pill.onMouseLeave}
+        onPointerDown={pill.onPointerDown}
+        onPointerUp={pill.onPointerUp}
+      >
+        <span aria-hidden>⌕</span>
+        <span>Browse the library free</span>
+      </Link>
+    </Spotlight>
+  );
+}
+
+/**
+ * Trust/stack showcase, placed directly before the footer on every page.
+ * These are monogram badges, not real brand marks — this codebase has no
+ * licensed SVG logo assets for any of these, and lucide-react doesn't carry
+ * brand icons either. Flagging per Section 1 of the brief: real logo SVGs
+ * for each of these need to come from the founder before this can show
+ * actual brand marks instead of initials.
+ */
+const BUILT_WITH: string[] = [
+  "React",
+  "TypeScript",
+  "Vite",
+  "Tailwind CSS",
+  "shadcn/ui",
+  "GSAP",
+  "Framer",
+  "TanStack",
+  "Node.js",
+  "Supabase",
+  "Vercel",
+  "GitHub",
+  "Claude",
+  "Claude Code",
+  "n8n",
+  "ChatGPT",
+  "Grok",
+  "Gemini",
+];
+
+function BuiltWithSection() {
+  return (
+    <section className="px-3 pb-12 pt-6 sm:px-4" aria-labelledby="built-with-heading">
+      <div className="mx-auto max-w-7xl">
+        <p
+          id="built-with-heading"
+          className="text-center text-[11px] font-semibold uppercase tracking-[0.3em] text-accent"
+        >
+          Built with
+        </p>
+        <div className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
+          {BUILT_WITH.map((name) => (
+            <div
+              key={name}
+              className="glass glass-hover flex flex-col items-center gap-2 rounded-2xl px-3 py-4 text-center"
+            >
+              <span
+                aria-hidden
+                className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-r from-primary to-accent text-xs font-black text-primary-foreground"
+              >
+                {name.slice(0, 2).toUpperCase()}
+              </span>
+              <span className="text-xs font-medium text-muted-foreground">{name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 /**
  * Header/nav grouping (PROJECT_BRIEF.md Section 12.5 — 3-4 dropdowns).
@@ -519,6 +602,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       </AnimatePresence>
       <main className="flex-1">{children}</main>
       <FloatingDock />
+      <BuiltWithSection />
       <footer className="px-3 pb-8 pt-20 sm:px-4">
         <div className="glass mx-auto max-w-7xl rounded-3xl px-6 py-10 sm:px-10">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_repeat(4,1fr)]">
@@ -533,6 +617,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 blunt founder-fit verdict. Validate any idea free, using AI tools you already pay
                 for.
               </p>
+              <FooterCta />
             </div>
             {footerColumns.map((col) => (
               <div key={col.title}>

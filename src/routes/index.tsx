@@ -9,52 +9,35 @@ import { CategoryBadge } from "@/components/category-badge";
 import { TiltPanel } from "@/components/tilt-panel";
 import { AdSlot } from "@/components/AdSlot";
 import { HeroSlider, Typewriter } from "@/components/hero-slider";
+import { Reveal } from "@/components/reveal";
+import { CardFan } from "@/components/card-fan";
+import { Spotlight } from "@/components/spotlight";
 import { FEATURED_IDEA_IDS } from "@/config/featured";
 import { catalogQuery, getFeaturedIdeas, getSurpriseIdeas } from "@/lib/ideas.functions";
 import type { CategoryNode } from "@/lib/ideas.functions";
+import { usePillInteraction } from "@/hooks/use-pill-interaction";
 
-/** Split live categories evenly across 4 marquee rows (works for 9 or 100+). */
-/** Smooth scroll-reveal wrapper — fade + rise + de-blur, once, on enter. */
-function Reveal({
-  children,
-  delay = 0,
-  className = "",
-  variant = "",
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-  variant?: "" | "rv-lift" | "rv-slide" | "rv-zoom" | "rv-wipe";
-}) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [shown, setShown] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setShown(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
+/** Hero's primary CTA — spotlight glow behind a pill with GSAP hover/press motion. */
+function HeroCta() {
+  const pill = usePillInteraction<HTMLAnchorElement>();
   return (
-    <div
-      ref={ref}
-      className={`bbi-reveal ${variant}${shown ? " is-visible" : ""} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
-    </div>
+    <Spotlight className="inline-block justify-self-start rounded-full">
+      <Link
+        to="/browse"
+        className="glass-pill inline-flex items-center justify-center rounded-full px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
+        ref={pill.ref}
+        onMouseEnter={pill.onMouseEnter}
+        onMouseLeave={pill.onMouseLeave}
+        onPointerDown={pill.onPointerDown}
+        onPointerUp={pill.onPointerUp}
+      >
+        Browse the library
+      </Link>
+    </Spotlight>
   );
 }
+
+/** Split live categories evenly across 4 marquee rows (works for 9 or 100+). */
 
 /**
  * PROJECT_BRIEF.md Section 8.1 — the homepage's primary engagement hook.
@@ -324,12 +307,7 @@ function HomePage() {
                     <span aria-hidden>⌕</span>
                     <span>Search idea blueprints…</span>
                   </Link>
-                  <Link
-                    to="/browse"
-                    className="glass-pill inline-flex items-center justify-center justify-self-start rounded-full px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
-                  >
-                    Browse the library
-                  </Link>
+                  <HeroCta />
                 </div>
               </div>
               <div className="iv-fade-up" style={{ animationDelay: "540ms" }}>
@@ -1031,7 +1009,9 @@ function FourPillarStandardSection() {
         </p>
       </div>
 
-      <div className="mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Mobile: plain stacked grid — a fanned arc needs room neighbors don't
+          have on narrow viewports, so it only renders at sm: and up. */}
+      <div className="mt-10 grid gap-4 grid-cols-1 sm:hidden">
         {pillars.map((p) => (
           <div
             key={p.num}
@@ -1042,6 +1022,20 @@ function FourPillarStandardSection() {
             <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
           </div>
         ))}
+      </div>
+      <div className="mt-10 hidden sm:block">
+        <CardFan
+          overlap="-1.75rem"
+          cardClassName="glass glass-hover flex w-56 flex-col p-6 rounded-2xl border border-white/10 bg-background"
+        >
+          {pillars.map((p) => (
+            <div key={p.num}>
+              <span className="text-xs font-extrabold text-accent tracking-widest">{p.num}</span>
+              <h3 className="mt-2 text-base font-bold text-foreground">{p.title}</h3>
+              <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
+            </div>
+          ))}
+        </CardFan>
       </div>
 
       <div className="mt-8 text-center">
