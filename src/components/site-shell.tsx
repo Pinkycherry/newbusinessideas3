@@ -533,8 +533,8 @@ export function SiteShell({ children }: { children: ReactNode }) {
               </Link>
               <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
                 Researched business idea blueprints with real market context, trend scoring and a
-                blunt founder-fit verdict. Validate any idea free, on your own Claude or Perplexity
-                account.
+                blunt founder-fit verdict. Validate any idea free, using AI tools you already pay
+                for.
               </p>
             </div>
             {footerColumns.map((col) => (
@@ -576,9 +576,14 @@ export function SiteShell({ children }: { children: ReactNode }) {
               </div>
             </div>
           </div>
-          <div className="mt-10 flex flex-col gap-2 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-            <p>© {new Date().getFullYear()} BBI. All rights reserved.</p>
-            <p>Idea data served live from the BBI database.</p>
+          <div className="mt-10 border-t border-border pt-6 text-xs text-muted-foreground">
+            <p className="font-medium text-foreground">
+              Bro Business Ideas — built by people who&apos;ve been where you are. Businessidea.io
+            </p>
+            <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <p>© {new Date().getFullYear()} BBI. All rights reserved.</p>
+              <p>Idea data served live from the BBI database.</p>
+            </div>
           </div>
         </div>
       </footer>

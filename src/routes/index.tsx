@@ -171,7 +171,7 @@ const SCROLL_PANELS = [
   },
   {
     title: "Validation is free, on your own AI account.",
-    body: "Every blueprint has a Validate button. It hands you a fully researched prompt on your own Claude or Perplexity account, free — market sizing, target buyer, revenue model, risks and a launch roadmap.",
+    body: "Every blueprint has a Validate button. Tap it, and get real research on your idea — market size, your ideal buyer, the money model, and the risks — free, using AI tools you already pay for. No extra cost. No limit.",
   },
 ];
 
@@ -179,11 +179,11 @@ const SCROLL_PANELS = [
 const HERO_PANELS = [
   {
     label: "What you get",
-    body: "Every small business idea in this library comes with a named buyer, a revenue model in plain numbers, the failure modes most people find only after spending money, and a direct verdict on who should actually build it. Not a list. A blueprint.",
+    body: "Every idea here comes with four honest things: who will actually buy from you, how the money really works, the painful risks people find out too late, and a straight answer — build it, or walk away. This is not a list. This is the research you wish someone gave you before you spent your time or money.",
   },
   {
     label: "How it works",
-    body: "Browse a category. Read the blueprint. If it fits, tap Validate and run a real-time market sizing, competitor map, and a launch roadmap on your own Claude or Perplexity account. Free to browse. Free to validate.",
+    body: "Browse any category. Read the full blueprint. If it feels right, tap Validate — and get real research on your idea for free, using AI tools you already pay for. No extra charge. No monthly limit. Free to browse. Free to validate, again and again.",
   },
 ];
 
@@ -195,7 +195,7 @@ const FAQS = [
   },
   {
     q: "Is the whole library free?",
-    a: "Yes. Every blueprint — summary, pros, cons, and verdict — is free to read in full. Validating an idea is free too: the Validate button hands you a fully researched prompt on your own Claude or Perplexity account, at no cost.",
+    a: "Yes. Every blueprint is free to read, start to finish. Validating an idea is free too — you use AI tools you already pay for, so it costs you nothing extra, ever.",
   },
   {
     q: "How are trend scores calculated?",
@@ -211,7 +211,7 @@ const FAQS = [
   },
   {
     q: "Is this useful if I already have a business idea?",
-    a: "Yes. Tap Validate on the closest matching entry to get a real-time market sizing, competitive landscape, and launch plan on your own Claude or Perplexity account, adapted to your own version of the idea.",
+    a: "Yes. Find the closest matching idea and tap Validate. You'll get real research — market size, competitors, and a launch plan — shaped around your own version of the idea, at no extra cost.",
   },
 ];
 
@@ -285,7 +285,7 @@ function HomePage() {
         <TiltPanel className="mx-auto max-w-6xl" max={4}>
           <div className="glass blob-1 px-6 py-14 sm:px-12 sm:py-20">
             <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent sm:text-xs">
-              <Typewriter text="BBI — Bro Business Ideas" />
+              <Typewriter text="The Truth About Business Ideas" />
             </p>
             <div className="mt-8 grid items-center gap-8 lg:grid-cols-[1.15fr_1fr]">
               <div>
@@ -293,20 +293,22 @@ function HomePage() {
                   className="iv-fade-up max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl"
                   style={{ animationDelay: "260ms" }}
                 >
-                  Small business ideas,{" "}
+                  Tired of paying just to check if your{" "}
                   <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
-                    researched properly
-                  </span>{" "}
-                  — not listicles.
+                    idea will work
+                  </span>
+                  ?
                 </h1>
                 <p
                   className="iv-fade-up mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg"
                   style={{ animationDelay: "420ms" }}
                 >
-                  Every entry is a blueprint: who the customer is, how the money works, what will
-                  hurt, and a blunt verdict on who should actually build it. Browse startup ideas,
-                  work from home business ideas, and low-investment opportunities — all ranked by
-                  real market demand.
+                  We built a free home for real business ideas — side hustles, zero investment
+                  ideas, work from home ideas, and low investment ideas. Every idea is researched,
+                  not guessed. We tell you who will actually pay you, how the money works, and what
+                  will hurt you in year one. Then we give it to you straight — build it, or walk
+                  away. Browse for free. Validate as many times as you want. Pay only once, if you
+                  ever want full access.
                 </p>
 
                 {/* Quick-action row, styled after the reference: a plain frosted
@@ -461,26 +463,24 @@ function HomePage() {
               Why this exists
             </p>
             <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-              A list of ideas is not research.
+              A list of ideas is not research. And it can cost you money.
             </h2>
             <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">
               <p>
-                Most idea lists are written in an afternoon by someone who has never sold the thing
-                they are describing. They tell you the market is growing and stop there. The hard
-                part of starting a business was never finding a plausible-sounding idea — it was
-                working out who pays, how often, at what margin, and what happens on the day a
-                bigger company decides to do the same thing for free.
+                Most &quot;100 business ideas&quot; pages are written in one afternoon by someone
+                who never actually sold anything. They just say &quot;the market is growing&quot;
+                and stop there. Finding an idea was never the hard part. The hard part is knowing
+                who will really pay you, how often, and what happens when a bigger company copies
+                you for free.
               </p>
               <p>
-                A blueprint in the library answers those questions before you commit a weekend to
-                it. Each one names the customer specifically rather than as a demographic, explains
-                the revenue mechanics in plain numbers, and lists the failure modes we would expect
-                in the first year — the churn, the acquisition costs that quietly exceed lifetime
-                value, the regulation nobody mentions until you are already trading.
+                That is why every blueprint here answers those questions first. We name your exact
+                customer. We show you the real numbers. We tell you the risks most people only find
+                out after they&apos;ve already spent their money.
               </p>
               <p>
-                The verdict at the end is deliberately blunt. Some entries end with a recommendation
-                not to build. That is the point: research that only ever agrees with you is
+                Sometimes the honest answer is: don&apos;t build this one. That&apos;s the whole
+                point. Research that only ever agrees with you isn&apos;t research — it&apos;s
                 marketing wearing a lab coat.
               </p>
             </div>
@@ -501,19 +501,19 @@ function HomePage() {
               {[
                 {
                   t: "A named buyer",
-                  d: 'Not "small businesses" — the specific role, the budget it comes out of, and why it is a priority this quarter.',
+                  d: 'Not "small businesses." The real person, their budget, and why they need this now.',
                 },
                 {
                   t: "Working money mechanics",
-                  d: "Pricing, delivery cost and the point at which the model stops being a job and starts being a business.",
+                  d: "What you charge, what it costs you, and the point where this stops being a side job and becomes a real business.",
                 },
                 {
                   t: "The unglamorous risks",
-                  d: "Platform dependency, seasonality, licensing, and the competitor already halfway there.",
+                  d: "The platform risks, slow seasons, and the competitor who's already halfway there.",
                 },
                 {
                   t: "A founder-fit verdict",
-                  d: "Who is well placed to build it, and who should walk away from it entirely.",
+                  d: "Who should build this — and who should walk away.",
                 },
               ].map((row) => (
                 <div key={row.t} className="py-4 first:pt-0 last:pb-0">
@@ -998,22 +998,22 @@ function FourPillarStandardSection() {
     {
       num: "01",
       title: "Named Buyer",
-      desc: "The specific role, budget source, and quarterly priority.",
+      desc: "Exactly who will pay you, and why they have money ready right now.",
     },
     {
       num: "02",
       title: "Unit Economics",
-      desc: "Plain-English pricing, delivery cost, and realistic break-even margins.",
+      desc: "Simple numbers on price, cost, and when you actually start making profit.",
     },
     {
       num: "03",
       title: "1st-Year Risks",
-      desc: "Hidden acquisition costs, churn traps, and regulatory hurdles.",
+      desc: "The hidden costs and traps that quietly kill new businesses.",
     },
     {
       num: "04",
       title: "Founder-Fit Verdict",
-      desc: "A blunt verdict on who should build it and who should walk away.",
+      desc: "An honest answer: should you build this, or walk away?",
     },
   ];
 
@@ -1024,11 +1024,10 @@ function FourPillarStandardSection() {
           The Research Standard
         </p>
         <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-4xl">
-          Not listicles. Researched blueprints.
+          Not just a list. Real research you can trust.
         </h2>
         <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-          Choose any category, pick a business model, and inspect these 4 core pillars before
-          spending a single dollar.
+          Before you spend a rupee or a weekend, check these 4 things on every idea.
         </p>
       </div>
 
@@ -1196,10 +1195,13 @@ function BrandStatementBanner() {
           BBI — Bro Business Ideas.
         </h2>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-          We&apos;re not another AI validator charging you by the click. BBI is a free, researched
-          library of small business ideas, side hustles, and startup blueprints — built by a team
-          who got tired of paying $20 for four &quot;validations&quot; that told us nothing. Browse
-          for free. Pay once if you want lifetime access. Never pay monthly for an idea.
+          We have been where you are. We paid for those $20 &quot;validation&quot; platforms too. We
+          got a few generic lines back, spent our money, and got nothing real in return. When we
+          asked for help, no one answered. That hurt. So we built the thing we needed back then — a
+          free, honest library of small business ideas and side hustles, with real research, not
+          empty hype. Browse for free, always. Validate as many times as you want, on your own
+          account, at no extra cost. Pay once — ₹199 for 3 months or ₹399 for life — only if you
+          want full access. Never a monthly bill.
         </p>
       </div>
     </section>
@@ -1229,7 +1231,7 @@ function TrustStatsBar({
     {
       value: "2",
       label: "Simple pricing plans",
-      note: "₹199 for 3 months or ₹399 for life — no subscription",
+      note: "₹199 for 3 months, ₹399 for life. Pay once. No surprise bills, ever.",
       shape: "bbi-shape-stat-3",
     },
   ];
@@ -1263,21 +1265,20 @@ function MarketGapSection() {
               The problem we found
             </p>
             <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-              Everyone charges $20 a month. We think that&apos;s the real problem.
+              Why is everyone still charging you $20 to check one idea?
             </h2>
             <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">
               <p>
-                We went looking for a place to validate business ideas before we built BBI. What we
-                found: platform after platform charging a minimum of $20 for three or four
-                validations, wrapped in language that made it sound like premium research. It
-                isn&apos;t. It&apos;s a wrapper around an AI model call — the same kind of call you
-                can run yourself, a thousand times over, for the price of one month of Claude,
-                Gemini, or ChatGPT.
+                Before we built BBI, we went looking for a place to check our own business ideas.
+                Every place we found charged at least $20 for three or four &quot;validations.&quot;
+                It sounded like deep research. It wasn&apos;t. It was really just one AI call — the
+                same kind of call you could run yourself, a hundred times over, for the price of one
+                month of Claude or Perplexity.
               </p>
               <p>
-                We&apos;re engineers. Most of us work full-time at other companies and build BBI on
-                the side, because we&apos;ve been the person staring at a $20 paywall with nothing
-                to spend it on. So we built the thing we wished existed.
+                We are regular people. Most of us have full-time jobs and build BBI at night and on
+                weekends, because we know what it feels like to stare at a $20 paywall with nothing
+                left to spend. So we built the thing we wished someone had built for us.
               </p>
             </div>
           </div>
@@ -1301,7 +1302,7 @@ const BBI_HOW_STEPS = [
   {
     n: "02",
     t: "Validate it, free",
-    d: "Tap Validate on any idea and we hand you a fully researched prompt on your own Claude or Perplexity account — no copying, no pasting, nothing to write yourself. Free, every time.",
+    d: "Tap Validate on any idea and get real research on it — free, using AI tools you already pay for. No extra cost, every time.",
   },
   {
     n: "03",
