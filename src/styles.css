@@ -1228,20 +1228,33 @@ html.light .iv-skeleton {
   }
 }
 
-/* Footer + plain list links must stay text, not capsules. */
-.iv-plainlinks a[href*="/category/"] {
-  display: inline !important;
-  padding: 0 !important;
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  color: inherit !important;
-  font-weight: 500;
-  transition: color 0.25s ease !important;
-}
-.iv-plainlinks a[href*="/category/"]:hover {
-  color: var(--primary) !important;
-  transform: none !important;
+/* Footer + plain list links must stay text, not capsules.
+   Lives inside @layer utilities, not unlayered, and repeats the selector
+   with an html.light prefix: cascade layers rank ABOVE specificity for
+   `!important` declarations, and `html.light a[href*="/category/"]`
+   (also `!important`, also inside @layer utilities, ~30 lines up) was
+   silently winning over this rule's plain form every time — the category
+   heading kept rendering as a pill because that light-mode rule matches
+   any link whose href contains "/category/", heading included. Matching
+   both the layer and the specificity is what actually beats it. */
+@layer utilities {
+  .iv-plainlinks a[href*="/category/"],
+  html.light .iv-plainlinks a[href*="/category/"] {
+    display: inline !important;
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    font-weight: 500;
+    transition: color 0.25s ease !important;
+  }
+  .iv-plainlinks a[href*="/category/"]:hover,
+  html.light .iv-plainlinks a[href*="/category/"]:hover {
+    color: var(--primary) !important;
+    transform: none !important;
+  }
 }
 
 /* Hero slider frame: the Golden Tree artwork is a transparent PNG that needs a

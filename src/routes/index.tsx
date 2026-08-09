@@ -11,6 +11,13 @@ import { HeroSlider, Typewriter } from "@/components/hero-slider";
 import { Reveal } from "@/components/reveal";
 import { CardFan } from "@/components/card-fan";
 import { Spotlight } from "@/components/spotlight";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { FEATURED_IDEA_IDS } from "@/config/featured";
 import { catalogQuery, getFeaturedIdeas, getSurpriseIdeas } from "@/lib/ideas.functions";
 import type { CategoryNode } from "@/lib/ideas.functions";
@@ -65,19 +72,22 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
           Pick a category, or don&apos;t. We&apos;ll surprise you.
         </h2>
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          <select
-            value={categorySlug}
-            onChange={(e) => setCategorySlug(e.target.value)}
-            aria-label="Category"
-            className="rounded-full border border-input bg-card px-4 py-2.5 text-sm outline-none focus:border-primary"
+          <Select
+            value={categorySlug || "any"}
+            onValueChange={(v) => setCategorySlug(v === "any" ? "" : v)}
           >
-            <option value="">Any category</option>
-            {categories.map((c) => (
-              <option key={c.categorySlug} value={c.categorySlug}>
-                {c.categoryName}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger aria-label="Category">
+              <SelectValue placeholder="Any category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="any">Any category</SelectItem>
+              {categories.map((c) => (
+                <SelectItem key={c.categorySlug} value={c.categorySlug}>
+                  {c.categoryName}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <button
             type="button"
             onClick={() => surprise.mutate()}
