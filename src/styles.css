@@ -977,10 +977,12 @@ body {
   border-radius: 9999px;
   background: radial-gradient(
     circle,
-    color-mix(in oklab, var(--primary) 55%, transparent) 0%,
-    color-mix(in oklab, var(--accent) 35%, transparent) 45%,
-    transparent 72%
+    color-mix(in oklab, var(--primary) 85%, transparent) 0%,
+    color-mix(in oklab, var(--primary) 65%, transparent) 35%,
+    color-mix(in oklab, var(--accent) 45%, transparent) 60%,
+    transparent 80%
   );
+  mix-blend-mode: darken;
   transition: opacity 0.4s ease;
   will-change: transform, opacity;
 }

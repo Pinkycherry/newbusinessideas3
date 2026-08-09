@@ -79,11 +79,11 @@ export function CursorSmoke() {
           className="bbi-cursor-smoke-layer"
           style={{
             opacity: 0,
-            width: `${320 - i * 60}px`,
-            height: `${320 - i * 60}px`,
-            marginLeft: `${-(320 - i * 60) / 2}px`,
-            marginTop: `${-(320 - i * 60) / 2}px`,
-            filter: `blur(${46 + i * 18}px)`,
+            width: `${480 - i * 80}px`,
+            height: `${480 - i * 80}px`,
+            marginLeft: `${-(480 - i * 80) / 2}px`,
+            marginTop: `${-(480 - i * 80) / 2}px`,
+            filter: `blur(${34 + i * 14}px)`,
           }}
         />
       ))}
