@@ -32,8 +32,8 @@ import { catalogQuery } from "@/lib/ideas.functions";
 import { prefersReducedMotion } from "@/lib/motion";
 
 /** Code-split out of the initial bundle — not needed for first paint. */
-const CursorTrail = lazy(() =>
-  import("@/components/cursor-trail").then((m) => ({ default: m.CursorTrail })),
+const MagicCursor = lazy(() =>
+  import("@/components/magic-cursor").then((m) => ({ default: m.MagicCursor })),
 );
 import { useAuth } from "@/hooks/use-auth";
 import { signOut } from "@/lib/auth-client";
@@ -613,7 +613,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
   return (
     <div className="relative flex min-h-screen flex-col text-foreground">
       <Suspense fallback={null}>
-        <CursorTrail />
+        <MagicCursor />
       </Suspense>
       <AmbientScene />
       <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">

@@ -1005,112 +1005,50 @@ body {
 }
 
 /* ============================================================
-   CURSOR TRAIL — see src/components/cursor-trail.tsx
-   The whole "ghost trail" chain-lag effect is a CSS transition-duration
-   stagger, nothing more: every circle gets the exact same left/top target
-   on mousemove (written directly to the DOM, no React state), and each
-   circle's own transition-duration (i/20 seconds) determines how long it
-   takes to visually catch up — slower circles lag further behind,
-   producing the trail. No animation loop, no lerp math.
+   MAGIC CURSOR — see src/components/magic-cursor.tsx
+   A small solid dot glued to the pointer plus a larger hollow ring that
+   trails it with easing (gsap.quickTo on transform, not left/top), scaling
+   up over anything clickable. Deliberately hollow — a filled shape here
+   was the earlier mascot's actual bug (a 96px opaque circle plus a missing
+   z-index on .glass-pill let it fully occlude button text); a ring's
+   transparent center structurally can't reproduce that.
    ============================================================ */
-.bbi-cursor-trail {
+.bbi-cursor {
   position: fixed;
   inset: 0;
   z-index: 3;
   pointer-events: none;
-  overflow: hidden;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-.bbi-trail-circle {
+.bbi-cursor-dot,
+.bbi-cursor-ring {
   position: absolute;
   top: 0;
   left: 0;
   border-radius: 9999px;
-  transition-property: left, top;
-  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  /* No continuous animation here — the previous version ran an infinite
-     pulse on all 20 circles at all times, a real, always-on compositor
-     cost for zero purpose while idle. Everything now is purely event- or
-     timeout-driven (see cursor-trail.tsx) and costs nothing at rest. */
 }
-/* The face's visual body is a separate inner element (not the outer
-   .bbi-trail-face circle) specifically so the squash/stretch transform
-   applied on movement never fights the outer circle's own left/top
-   position writes — position and "acting" are fully decoupled. */
-.bbi-trail-face-body {
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background: var(--violet-soft);
-  box-shadow: inset 0 -6px 10px color-mix(in oklab, var(--primary) 22%, transparent);
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+.bbi-cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--primary);
 }
-.bbi-trail-tail {
-  position: absolute;
-  right: -14%;
-  top: 46%;
-  width: 22%;
-  height: 14%;
-  border-radius: 9999px;
-  background: var(--violet-soft);
-  transform: rotate(-10deg);
+.bbi-cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--violet-soft);
+  background: transparent;
+  transition: border-color 0.25s ease;
+  /* The hover scale-up is driven by gsap (see magic-cursor.tsx), not a
+     width/height transition here — width/height force layout on every
+     frame instead of being compositor-only. Only border-color (cheap,
+     one-time repaint) is a CSS transition. */
 }
-.bbi-trail-leg {
-  position: absolute;
-  bottom: -10%;
-  width: 16%;
-  height: 16%;
-  border-radius: 9999px;
-  background: var(--violet-soft);
-}
-.bbi-trail-leg-l { left: 22%; }
-.bbi-trail-leg-r { left: 62%; }
-.bbi-trail-eye {
-  position: absolute;
-  top: 36%;
-  width: 12%;
-  height: 12%;
-  border-radius: 9999px;
-  background: var(--foreground);
-}
-.bbi-trail-eye-l { left: 30%; }
-.bbi-trail-eye-r { left: 58%; }
-.bbi-trail-mouth {
-  position: absolute;
-  left: 38%;
-  top: 50%;
-  width: 24%;
-  height: 24%;
-  border: 2px solid transparent;
-  border-bottom-color: var(--foreground);
-  border-radius: 50%;
-}
-.bbi-trail-arm {
-  position: absolute;
-  top: 58%;
-  width: 12%;
-  height: 22%;
-  border-radius: 9999px;
-  background: color-mix(in oklab, var(--foreground) 28%, transparent);
-  transform-origin: top center;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.bbi-trail-arm-l { left: 4%; }
-.bbi-trail-arm-r { right: 4%; }
-/* Applied only while idle over empty space with a nearby clickable
-   element — the arm rotation itself is set inline (angle depends on
-   where the target actually is), this class just adds the little
-   attention-getting lift/bounce on top of that rotation. */
-.bbi-trail-arm-pointing {
-  animation: bbi-trail-point-bounce 0.9s ease-in-out infinite;
-}
-@keyframes bbi-trail-point-bounce {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -15%; }
+.bbi-cursor-ring.is-hover {
+  border-color: var(--primary);
 }
 @media (prefers-reduced-motion: reduce) {
-  .bbi-cursor-trail {
+  .bbi-cursor {
     display: none;
   }
 }
