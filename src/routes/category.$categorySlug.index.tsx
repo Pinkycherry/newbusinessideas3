@@ -96,7 +96,7 @@ function CategoryPage() {
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {data.ideas.map((idea, i) => (
               <Fragment key={idea.ideaId}>
-                <IdeaCard idea={idea} />
+                <IdeaCard idea={idea} featured={i % 7 === 0} />
                 {(i + 1) % 6 === 0 && i + 1 < data.ideas.length && (
                   <div className="sm:col-span-2 lg:col-span-3">
                     <AdSlot position={`category-in-grid-${(i + 1) / 6}`} size="banner" />
