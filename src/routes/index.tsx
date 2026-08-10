@@ -22,6 +22,7 @@ import { FEATURED_IDEA_IDS } from "@/config/featured";
 import { catalogQuery, getFeaturedIdeas, getSurpriseIdeas } from "@/lib/ideas.functions";
 import type { CategoryNode } from "@/lib/ideas.functions";
 import { usePillInteraction } from "@/hooks/use-pill-interaction";
+import { hideImgIfBroken } from "@/lib/utils";
 
 /** Hero's primary CTA — spotlight glow behind a pill with GSAP hover/press motion. */
 function HeroCta() {
@@ -531,10 +532,12 @@ function HomePage() {
               style={{ transform: `rotate(${img.tilt}deg)` }}
             >
               <img
+                ref={hideImgIfBroken}
                 src={img.src}
                 alt={img.alt}
                 loading="lazy"
                 className="h-full w-full object-cover"
+                onError={(e) => (e.currentTarget.style.display = "none")}
               />
               <span
                 aria-hidden
@@ -790,9 +793,12 @@ function GoldenTreeSection() {
             option here; see .tree-asset-container img in styles.css. */}
         <div className="hidden sm:block relative w-full max-w-5xl aspect-[16/9] group tree-asset-container">
           <img
+            ref={hideImgIfBroken}
             src={DESKTOP_TREE_SRC}
             alt="The Golden Tree of Business Growth"
+            fetchPriority="high"
             className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(27,42,107,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(27,42,107,0.5)]"
+            onError={(e) => (e.currentTarget.style.display = "none")}
           />
 
           {desktopNodes.map((node) => (
@@ -826,9 +832,12 @@ function GoldenTreeSection() {
             node pills below. */}
         <div className="block sm:hidden relative w-full max-w-xs aspect-[9/16] tree-asset-container">
           <img
+            ref={hideImgIfBroken}
             src={MOBILE_TREE_SRC}
             alt="The Golden Tree of Business Growth (Mobile)"
+            fetchPriority="high"
             className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(27,42,107,0.35)]"
+            onError={(e) => (e.currentTarget.style.display = "none")}
           />
 
           {/* Nodes sit on the canopy at organic coordinates (not a vertical list). */}
