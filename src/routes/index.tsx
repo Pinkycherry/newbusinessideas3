@@ -23,6 +23,9 @@ import { catalogQuery, getFeaturedIdeas, getSurpriseIdeas } from "@/lib/ideas.fu
 import type { CategoryNode } from "@/lib/ideas.functions";
 import { usePillInteraction } from "@/hooks/use-pill-interaction";
 import { hideImgIfBroken } from "@/lib/utils";
+import { AccordionItem } from "@/components/accordion-item";
+import { CountUp } from "@/components/count-up";
+import { loadGsap, prefersReducedMotion } from "@/lib/motion";
 
 /** Hero's primary CTA — spotlight glow behind a pill with GSAP hover/press motion. */
 function HeroCta() {
@@ -57,6 +60,23 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
   const surprise = useMutation({
     mutationFn: () => run({ data: { categorySlug: categorySlug || undefined, count: 5 } }),
   });
+  const resultsRef = useRef<HTMLDivElement | null>(null);
+
+  // Results appear via a mutation, not a scroll — Reveal's rv-wipe variant
+  // is ScrollTrigger-driven and doesn't fit here, so this fires the same
+  // clip-path wipe directly on the mutation succeeding instead.
+  useEffect(() => {
+    const el = resultsRef.current;
+    if (!surprise.data || !el || prefersReducedMotion()) return;
+    loadGsap().then((gsap) => {
+      if (!resultsRef.current) return;
+      gsap.fromTo(
+        resultsRef.current,
+        { clipPath: "inset(0 100% 0 0)", opacity: 0.5 },
+        { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 0.7, ease: "power3.out" },
+      );
+    });
+  }, [surprise.data]);
 
   return (
     <section
@@ -106,7 +126,7 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
         )}
 
         {surprise.data && surprise.data.length > 0 && (
-          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div ref={resultsRef} className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {surprise.data.map((idea) => (
               <IdeaCard key={idea.ideaId} idea={idea} />
             ))}
@@ -643,20 +663,7 @@ function HomePage() {
         </p>
         <div className="mt-6 divide-y divide-border">
           {FAQS.map((item) => (
-            <details key={item.q} className="group py-5">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-base font-semibold text-foreground transition-colors hover:text-primary sm:text-lg">
-                {item.q}
-                <span
-                  aria-hidden
-                  className="shrink-0 text-accent transition-transform duration-300 group-open:rotate-45"
-                >
-                  +
-                </span>
-              </summary>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                {item.a}
-              </p>
-            </details>
+            <AccordionItem key={item.q} question={item.q} answer={item.a} size="base" />
           ))}
         </div>
       </section>
@@ -1210,9 +1217,11 @@ function OrbitDiagram({
                 animationDelay: `${i * 110}ms`,
               }}
             >
-              <span className="bbi-orbit-node-inner">
-                <span className="bbi-orbit-dot" aria-hidden />
-                <span className="bbi-orbit-node-label">{label}</span>
+              <span className="bbi-orbit-node-bob" style={{ animationDelay: `${i * 240}ms` }}>
+                <span className="bbi-orbit-node-inner">
+                  <span className="bbi-orbit-dot" aria-hidden />
+                  <span className="bbi-orbit-node-label">{label}</span>
+                </span>
               </span>
             </div>
           );
@@ -1255,19 +1264,22 @@ function TrustStatsBar({
 }) {
   const stats = [
     {
-      value: `${totalIdeas}+`,
+      value: totalIdeas,
+      suffix: "+",
       label: "Researched blueprints",
       note: `Across ${categoryCount} live categories, growing every week`,
       shape: "bbi-shape-stat-1",
     },
     {
-      value: "967",
+      value: 967,
+      suffix: "",
       label: "Founders reviewed us",
       note: "Reviewed BBI's structure and functionality before we shipped it",
       shape: "bbi-shape-stat-2",
     },
     {
-      value: "2",
+      value: 2,
+      suffix: "",
       label: "Simple pricing plans",
       note: "₹199 for 3 months, ₹399 for life. Pay once. No surprise bills, ever.",
       shape: "bbi-shape-stat-3",
@@ -1281,7 +1293,7 @@ function TrustStatsBar({
           className={`glass glass-hover ${stat.shape} px-6 py-7 text-center transition-transform duration-300 hover:scale-[1.02] sm:text-left`}
         >
           <p className="text-3xl font-extrabold tracking-tight text-accent sm:text-4xl">
-            {stat.value}
+            <CountUp value={stat.value} suffix={stat.suffix} />
           </p>
           <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
             {stat.label}
@@ -1406,18 +1418,7 @@ function HowItWorksSection() {
         </p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_1.map((item) => (
-            <details key={item.q} className="group py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-sm font-semibold text-foreground transition-colors hover:text-primary sm:text-base">
-                {item.q}
-                <span
-                  aria-hidden
-                  className="shrink-0 text-accent transition-transform duration-300 group-open:rotate-45"
-                >
-                  +
-                </span>
-              </summary>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
-            </details>
+            <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
           ))}
         </div>
       </div>
@@ -1512,18 +1513,7 @@ function PricingPhilosophySection() {
         </p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_2.map((item) => (
-            <details key={item.q} className="group py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-sm font-semibold text-foreground transition-colors hover:text-primary sm:text-base">
-                {item.q}
-                <span
-                  aria-hidden
-                  className="shrink-0 text-accent transition-transform duration-300 group-open:rotate-45"
-                >
-                  +
-                </span>
-              </summary>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
-            </details>
+            <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
           ))}
         </div>
       </div>
@@ -1594,7 +1584,53 @@ function InspiredBySection() {
   );
 }
 
+/**
+ * The two comparison cards slide in from opposite sides and converge, with
+ * a brief glow pulse on arrival — built locally with gsap + ScrollTrigger
+ * (same loadGsap(true)/once:true pattern as Reveal) rather than through
+ * Reveal itself, since the "glow on arrival" step is specific to this
+ * section's own visual language, not something every Reveal caller wants.
+ */
 function ComparisonSection() {
+  const leftRef = useRef<HTMLDivElement | null>(null);
+  const rightRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    const left = leftRef.current;
+    const right = rightRef.current;
+    if (!left || !right) return;
+
+    const restShadow = getComputedStyle(left).boxShadow;
+    const glowShadow = `0 0 0 1px color-mix(in oklab, var(--primary) 55%, transparent), 0 0 34px -6px color-mix(in oklab, var(--primary) 60%, transparent), ${restShadow}`;
+
+    let cancelled = false;
+    let tl: gsap.core.Timeline | null = null;
+
+    loadGsap(true).then((gsap) => {
+      if (cancelled) return;
+      // The left card keeps its resting opacity-80 (Tailwind class) — it's
+      // deliberately dimmed relative to the highlighted right card, so the
+      // reveal must animate each card TO its own resting opacity, not both
+      // to fully opaque.
+      gsap.set(left, { x: -60, opacity: 0 });
+      gsap.set(right, { x: 60, opacity: 0 });
+      tl = gsap.timeline({
+        scrollTrigger: { trigger: left, start: "top 85%", once: true },
+      });
+      tl.to(left, { x: 0, opacity: 0.8, duration: 0.7, ease: "power3.out" }, 0)
+        .to(right, { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0)
+        .to([left, right], { boxShadow: glowShadow, duration: 0.25, ease: "power1.out" })
+        .to([left, right], { boxShadow: restShadow, duration: 0.7, ease: "power1.out" });
+    });
+
+    return () => {
+      cancelled = true;
+      tl?.scrollTrigger?.kill();
+      tl?.kill();
+    };
+  }, []);
+
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
@@ -1604,7 +1640,10 @@ function ComparisonSection() {
         $20 for four validations. Or one AI subscription that does a thousand.
       </h2>
       <div className="mt-8 grid gap-5 sm:grid-cols-2">
-        <div className="glass bbi-shape-compare-sharp border border-border/60 p-7 opacity-80">
+        <div
+          ref={leftRef}
+          className="glass bbi-shape-compare-sharp border border-border/60 p-7 opacity-80"
+        >
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
             Typical validator platform
           </p>
@@ -1615,7 +1654,10 @@ function ComparisonSection() {
             <li>Paywall before you see anything real</li>
           </ul>
         </div>
-        <div className="glass glass-hover bbi-shape-compare-round border border-primary/40 p-7">
+        <div
+          ref={rightRef}
+          className="glass glass-hover bbi-shape-compare-round border border-primary/40 p-7"
+        >
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
             BBI + your own AI tool
           </p>
@@ -1805,18 +1847,7 @@ function PromiseSection() {
         </p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_3.map((item) => (
-            <details key={item.q} className="group py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-sm font-semibold text-foreground transition-colors hover:text-primary sm:text-base">
-                {item.q}
-                <span
-                  aria-hidden
-                  className="shrink-0 text-accent transition-transform duration-300 group-open:rotate-45"
-                >
-                  +
-                </span>
-              </summary>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
-            </details>
+            <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
           ))}
         </div>
       </div>

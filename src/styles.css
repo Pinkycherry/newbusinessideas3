@@ -725,12 +725,34 @@ html.light .tree-asset-container::before {
   opacity: 0;
   transform: translate(-50%, -50%);
 }
+/* Idle bob lives on its own wrapper between .bbi-orbit-node (owns the
+   one-shot entry transform) and .bbi-orbit-node-inner (owns the continuous
+   counter-rotation transform) — two CSS animations can't cleanly share one
+   element's `transform` property, so each animated effect here gets its
+   own element instead of fighting over the same one. */
+.bbi-orbit-node-bob {
+  display: inline-flex;
+  animation: bbi-orbit-node-bob 3.4s ease-in-out infinite;
+}
+@keyframes bbi-orbit-node-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
 .bbi-orbit-node-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.3rem;
   animation: bbi-orbit-spin-rev 26s linear infinite;
+}
+/* Hover-tilt: .bbi-orbit-node-label only animates opacity (bbi-label-fade),
+   so adding a static hover transform here doesn't fight a running
+   transform-animation the way it would on -inner or the outer node. */
+.bbi-orbit-node-label {
+  transition: transform 0.3s ease;
+}
+.bbi-orbit-node:hover .bbi-orbit-node-label {
+  transform: perspective(300px) rotateX(8deg) rotateY(-8deg) scale(1.08);
 }
 .bbi-orbit-wrap.is-live .bbi-orbit-node {
   animation: bbi-node-in 0.5s cubic-bezier(0.16, 1.15, 0.3, 1) both;
@@ -766,7 +788,7 @@ html.light .tree-asset-container::before {
   50%      { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bbi-orbit-rotor, .bbi-orbit-node, .bbi-orbit-node-inner, .bbi-orbit-ring-inner,
+  .bbi-orbit-rotor, .bbi-orbit-node, .bbi-orbit-node-bob, .bbi-orbit-node-inner, .bbi-orbit-ring-inner,
   .bbi-orbit-ring-outer, .bbi-orbit-dot, .bbi-orbit-node-label { animation: none !important; opacity: 1 !important; }
 }
 
