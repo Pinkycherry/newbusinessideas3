@@ -42,12 +42,12 @@ export const Route = createFileRoute("/category/$categorySlug/")({
   component: CategoryPage,
   errorComponent: () => (
     <SiteShell>
-      <p className="mx-auto max-w-6xl px-4 py-24">This category could not be loaded.</p>
+      <p className="mx-auto max-w-6xl px-4 py-24">Couldn't load this category — try refreshing.</p>
     </SiteShell>
   ),
   notFoundComponent: () => (
     <SiteShell>
-      <p className="mx-auto max-w-6xl px-4 py-24">No such category.</p>
+      <p className="mx-auto max-w-6xl px-4 py-24">We don't have that category.</p>
     </SiteShell>
   ),
 });
