@@ -1111,11 +1111,11 @@ function DynamicActivityToast() {
   const [index, setIndex] = useState(0);
 
   const activities = [
-    { city: "Austin, US", action: "unlocked Lifetime Access", time: "Just now" },
+    { city: "Austin, US", action: "checked out Lifetime Access pricing", time: "Just now" },
     { city: "London, UK", action: "explored Work From Home Ideas", time: "2m ago" },
     { city: "Mumbai, IN", action: "searched Low Investment Ideas", time: "4m ago" },
     { city: "Berlin, DE", action: "reviewed AI Customer Support Blueprint", time: "6m ago" },
-    { city: "Toronto, CA", action: "unlocked Lifetime Access", time: "8m ago" },
+    { city: "Toronto, CA", action: "checked out Lifetime Access pricing", time: "8m ago" },
     { city: "Tokyo, JP", action: "explored Zero Investment Ideas", time: "11m ago" },
     { city: "Sydney, AU", action: "inspected Side Hustle Mechanics", time: "14m ago" },
   ];
@@ -1143,7 +1143,7 @@ function DynamicActivityToast() {
         <p className="font-medium text-foreground">
           Founder from {current.city} {current.action}
         </p>
-        <p className="text-[10px] text-muted-foreground">{current.time} • bestbusinessideas.net</p>
+        <p className="text-[10px] text-muted-foreground">{current.time} • businessidea.io</p>
       </div>
       <button
         onClick={() => setVisible(false)}
