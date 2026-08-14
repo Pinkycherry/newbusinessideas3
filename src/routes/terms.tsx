@@ -90,8 +90,11 @@ function TermsPage() {
       <Section heading="9. Contact">
         <p>
           Questions about these terms:{" "}
-          <a href="mailto:hello@ideavault.ai" className="text-accent underline underline-offset-4">
-            hello@ideavault.ai
+          <a
+            href="mailto:hello@businessidea.io"
+            className="text-accent underline underline-offset-4"
+          >
+            hello@businessidea.io
           </a>
           .
         </p>

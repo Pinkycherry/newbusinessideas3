@@ -30,8 +30,11 @@ function RefundPage() {
       <Section heading="Questions">
         <p>
           Email{" "}
-          <a href="mailto:hello@ideavault.ai" className="text-accent underline underline-offset-4">
-            hello@ideavault.ai
+          <a
+            href="mailto:hello@businessidea.io"
+            className="text-accent underline underline-offset-4"
+          >
+            hello@businessidea.io
           </a>
           . See also our{" "}
           <Link to="/terms" className="text-accent underline underline-offset-4">

@@ -18,7 +18,7 @@ export const Route = createFileRoute("/blog/")({
       {
         name: "description",
         content:
-          "Long-form founder playbooks and market breakdowns, published from our editorial CMS and rendered natively inside BBI.",
+          "Long-form founder playbooks and market breakdowns from BBI — real research, no filler.",
       },
       { property: "og:title", content: "Blog — Founder Playbooks | BBI" },
       {
@@ -35,7 +35,8 @@ export const Route = createFileRoute("/blog/")({
       <div className="mx-auto max-w-6xl px-4 py-24">
         <h1 className="text-2xl font-bold">The blog feed is unavailable</h1>
         <p className="mt-2 text-muted-foreground">
-          The connected WordPress instance did not respond. Nothing is cached or faked here.
+          We couldn&apos;t reach the blog just now. Nothing here is cached or faked — try again in a
+          moment.
         </p>
       </div>
     </SiteShell>
@@ -57,8 +58,8 @@ function BlogIndex() {
           </span>
         </h1>
         <p className="mt-4 max-w-2xl text-muted-foreground">
-          Long-form articles published from our editorial CMS, rendered in BBI's own design system.
-          The idea library and the blog stay separate systems.
+          Long-form writing on markets, founders and what actually works — a different shelf from
+          the idea library, held to the same standard: real research, no filler.
         </p>
 
         {data.posts.length === 0 ? (

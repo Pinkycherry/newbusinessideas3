@@ -722,7 +722,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             </p>
             <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <p>© {new Date().getFullYear()} BBI. All rights reserved.</p>
-              <p>Idea data served live from the BBI database.</p>
+              <p>Every idea here is live — updated in real time, never stale.</p>
             </div>
           </div>
         </div>
