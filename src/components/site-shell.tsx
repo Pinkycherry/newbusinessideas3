@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User } from "lucide-react";
 import type { IconType } from "react-icons";
@@ -538,6 +538,27 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
               </Link>
             </div>
           )}
+
+          <p className="mt-4 px-3 text-[10px] normal-case tracking-normal text-accent">
+            Browse by type
+          </p>
+          {STATIC_GROUPS.map((group) => (
+            <Fragment key={group.title}>
+              <p className="mt-2 px-3 text-[10px] normal-case tracking-normal text-muted-foreground/70">
+                {group.title}
+              </p>
+              {group.items.map((item) => (
+                <Link
+                  key={item}
+                  to="/browse"
+                  onClick={onClose}
+                  className="rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                >
+                  {item}
+                </Link>
+              ))}
+            </Fragment>
+          ))}
 
           <p className="mt-4 px-3 text-[10px] normal-case tracking-normal text-accent">Explore</p>
           {EXPLORE_ITEMS.map((item) => (
