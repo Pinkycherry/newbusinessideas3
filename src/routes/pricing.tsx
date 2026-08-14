@@ -70,10 +70,10 @@ function PricingPage() {
       </div>
       <Section heading="Why validation is free">
         <p>
-          Every tool that charges $20–$100/month for "idea validation" is calling the same public AI
-          APIs anyone can access directly. We don't charge for that — you run it yourself, on your
-          own account, through the Validate button on every idea page. The ₹199/₹399 fee is for our
-          time building and maintaining the library, not for AI access.
+          Every $20–$100/month "validation" tool is really just an AI call — the same kind you could
+          make yourself. So we don't charge for that part. Tap Validate on any idea, free, on your
+          own account, every single time. ₹199 or ₹399 pays for something else entirely: our time
+          building and keeping this library alive. Not for AI access you already have.
         </p>
       </Section>
       <Section heading="Checkout status">
