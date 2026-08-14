@@ -47,7 +47,7 @@ export const Route = createFileRoute("/blog/$slug")({
   notFoundComponent: () => (
     <SiteShell>
       <div className="mx-auto max-w-6xl px-4 py-24">
-        <p>That article does not exist on the connected blog.</p>
+        <p>That article doesn&apos;t exist — it may have been moved or taken down.</p>
         <Link to="/blog" className="mt-4 inline-block text-primary underline">
           Back to the blog
         </Link>
