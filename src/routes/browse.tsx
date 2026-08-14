@@ -30,12 +30,14 @@ export const Route = createFileRoute("/browse")({
   component: BrowsePage,
   errorComponent: () => (
     <SiteShell>
-      <p className="mx-auto max-w-6xl px-4 py-24">The idea library could not be loaded.</p>
+      <p className="mx-auto max-w-6xl px-4 py-24">
+        Couldn't load the idea library — try refreshing.
+      </p>
     </SiteShell>
   ),
   notFoundComponent: () => (
     <SiteShell>
-      <p className="mx-auto max-w-6xl px-4 py-24">Not found.</p>
+      <p className="mx-auto max-w-6xl px-4 py-24">That page doesn't exist.</p>
     </SiteShell>
   ),
 });

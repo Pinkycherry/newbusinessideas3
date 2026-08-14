@@ -42,12 +42,14 @@ export const Route = createFileRoute("/category/$categorySlug/$subcategorySlug")
   component: SubcategoryPage,
   errorComponent: () => (
     <SiteShell>
-      <p className="mx-auto max-w-6xl px-4 py-24">This subcategory could not be loaded.</p>
+      <p className="mx-auto max-w-6xl px-4 py-24">
+        Couldn't load this subcategory — try refreshing.
+      </p>
     </SiteShell>
   ),
   notFoundComponent: () => (
     <SiteShell>
-      <p className="mx-auto max-w-6xl px-4 py-24">No such subcategory.</p>
+      <p className="mx-auto max-w-6xl px-4 py-24">We don't have that subcategory.</p>
     </SiteShell>
   ),
 });
