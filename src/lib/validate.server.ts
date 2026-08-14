@@ -10,7 +10,7 @@ import type { ValidatePlatform } from "./validate-shared";
  * account running this, so it asks for a complete structured report, not a
  * one-liner.
  */
-function buildValidationPrompt(idea: IdeaDetail): string {
+function buildValidationPrompt(idea: IdeaDetail, extraContext?: string): string {
   const lines = [
     "Act as a blunt, operator-grade startup analyst. Produce a complete, structured, markdown-formatted validation report for the business idea below. Be specific to this idea and its actual market — no generic startup platitudes, no hedging, no marketing language.",
     "",
@@ -20,6 +20,14 @@ function buildValidationPrompt(idea: IdeaDetail): string {
   ];
   if (idea.pros.length > 0) lines.push(`Claimed strengths on file: ${idea.pros.join("; ")}`);
   if (idea.cons.length > 0) lines.push(`Claimed risks on file: ${idea.cons.join("; ")}`);
+  const trimmedContext = extraContext?.trim();
+  if (trimmedContext) {
+    lines.push(
+      "",
+      "The user added this context themselves before sending — it's real signal, not filler. Weave it into whichever sections above it actually bears on, rather than tacking it on as an afterthought:",
+      trimmedContext,
+    );
+  }
   lines.push(
     "",
     "Structure the report with these sections, each with real substance:",
@@ -40,10 +48,14 @@ function platformUrl(platform: ValidatePlatform, prompt: string): string {
   return `https://www.perplexity.ai/search?q=${encoded}`;
 }
 
-export async function buildValidateUrl(platform: ValidatePlatform, slug: string): Promise<string> {
+export async function buildValidateUrl(
+  platform: ValidatePlatform,
+  slug: string,
+  extraContext?: string,
+): Promise<string> {
   const { data, error } = await db().from("ideas").select("*").eq("slug", slug).maybeSingle();
   if (error) throw new Error(error.message);
   if (!data) throw new Error("That idea does not exist in the library.");
   const idea = toIdeaDetail(data as IdeaRow);
-  return platformUrl(platform, buildValidationPrompt(idea));
+  return platformUrl(platform, buildValidationPrompt(idea, extraContext));
 }
