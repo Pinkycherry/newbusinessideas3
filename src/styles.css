@@ -1027,55 +1027,6 @@ body {
 }
 
 /* ============================================================
-   MAGIC CURSOR — see src/components/magic-cursor.tsx
-   A small solid dot glued to the pointer plus a larger hollow ring that
-   trails it with easing (gsap.quickTo on transform, not left/top), scaling
-   up over anything clickable. Deliberately hollow — a filled shape here
-   was the earlier mascot's actual bug (a 96px opaque circle plus a missing
-   z-index on .glass-pill let it fully occlude button text); a ring's
-   transparent center structurally can't reproduce that.
-   ============================================================ */
-.bbi-cursor {
-  position: fixed;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.bbi-cursor-dot,
-.bbi-cursor-ring {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 9999px;
-}
-.bbi-cursor-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--primary);
-}
-.bbi-cursor-ring {
-  width: 36px;
-  height: 36px;
-  border: 2px solid var(--violet-soft);
-  background: transparent;
-  transition: border-color 0.25s ease;
-  /* The hover scale-up is driven by gsap (see magic-cursor.tsx), not a
-     width/height transition here — width/height force layout on every
-     frame instead of being compositor-only. Only border-color (cheap,
-     one-time repaint) is a CSS transition. */
-}
-.bbi-cursor-ring.is-hover {
-  border-color: var(--primary);
-}
-@media (prefers-reduced-motion: reduce) {
-  .bbi-cursor {
-    display: none;
-  }
-}
-
-/* ============================================================
    CARD FAN-REVEAL — see src/components/card-fan.tsx
    ============================================================ */
 .bbi-fan-card {
