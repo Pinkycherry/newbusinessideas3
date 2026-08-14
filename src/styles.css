@@ -1,7 +1,6 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
-@custom-variant dark (&:is(.dark *));
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -52,6 +51,10 @@
   --ease-glass: cubic-bezier(0.16, 1, 0.3, 1);
 }
 :root {
+  /* Dark mode is removed; <html> now always carries class="light" (set
+     statically in __root.tsx, not toggled), so the html.light block below
+     always wins the cascade over these base values. Kept as the fallback
+     for any render path that somehow skips that class, not as a live theme. */
   --radius: 1.25rem;
   /* ============================================================
      FINAL LOOK — GLOW & GLASS (Image 2 exact match)
@@ -100,9 +103,6 @@
   /* Reference violet companion to the cyan — used in glass gradients + rims */
   --violet: #8886DB;
   --violet-soft: #B6B5E3;
-}
-.dark {
-  --background: #0C0C25;
 }
 @layer base {
   html {
@@ -320,14 +320,14 @@ a[href*="/search"] {
     0 1px 0 0 rgba(255, 255, 255, 0.35) inset,
     0 0 18px -8px rgba(136, 134, 219, 0.5) inset,
     0 10px 22px -12px rgba(0, 0, 0, 0.8) !important;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.25s ease, color 0.2s ease, background 0.25s ease !important;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, color 0.2s ease, background 0.25s ease !important;
   animation: none !important;
 }
 .glass-pill:hover,
 a[href*="/category/"]:hover,
 a[href*="/search"]:hover {
   color: #FFFFFF !important;
-  transform: translateY(-2px) !important;
+  /* transform is owned by the GSAP pill-interaction hook, not this rule. */
   background: linear-gradient(
     180deg,
     rgba(136, 134, 219, 0.42) 0%,
@@ -397,27 +397,8 @@ html.light .tree-asset-container::before {
   );
 }
 
-/* ================================================================
-   SCROLL REVEAL — smooth, non-harsh entrance for content sections
-   ================================================================ */
-.bbi-reveal {
-  opacity: 0;
-  transform: translateY(28px) scale(0.985);
-  filter: blur(6px);
-  transition:
-    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-.bbi-reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
-}
-@media (prefers-reduced-motion: reduce) {
-  .bbi-reveal { opacity: 1; transform: none; filter: none; transition: none; }
-}
+/* Scroll reveal is now GSAP/ScrollTrigger-driven — see
+   src/components/reveal.tsx. No CSS class hooks needed here anymore. */
 @utility sheen {
   position: relative;
   overflow: hidden;
@@ -664,37 +645,51 @@ html.light .tree-asset-container::before {
   }
 }
 
-/* ============================================================
-   HOMEPAGE MOTION SYSTEM (fast, snappy card entrances)
-   ============================================================ */
-.bbi-reveal.rv-lift  { transform: translateY(46px) scale(0.97); filter: blur(4px); }
-.bbi-reveal.rv-slide { transform: translateX(-56px); filter: blur(4px); }
-.bbi-reveal.rv-zoom  { transform: scale(0.86); filter: blur(5px); }
-.bbi-reveal.rv-wipe  { transform: none; filter: none; }
-/* Clip the child, not the observed wrapper — a clipped wrapper reports zero
-   intersection area and would never trigger the reveal. */
-.bbi-reveal.rv-wipe > * {
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 0.45s cubic-bezier(0.2, 0.9, 0.24, 1);
-}
-.bbi-reveal.rv-wipe.is-visible > * { clip-path: inset(0 0 0 0); }
-.bbi-reveal.rv-lift,
-.bbi-reveal.rv-slide,
-.bbi-reveal.rv-zoom,
-.bbi-reveal.rv-wipe {
-  transition:
-    opacity 0.42s cubic-bezier(0.2, 0.9, 0.24, 1),
-    transform 0.52s cubic-bezier(0.16, 1.15, 0.3, 1),
-    clip-path 0.45s cubic-bezier(0.2, 0.9, 0.24, 1),
-    filter 0.42s ease-out;
-}
-.bbi-reveal.rv-lift.is-visible,
-.bbi-reveal.rv-slide.is-visible,
-.bbi-reveal.rv-zoom.is-visible { transform: none; filter: blur(0); }
 
 /* --- TICKER PILLS: lift on hover without colliding with the row above --- */
 .iv-ticker-track { padding-top: 0.45rem; padding-bottom: 0.45rem; }
 .iv-ticker-track .glass-pill:hover { transform: scale(1.06) !important; z-index: 5; position: relative; }
+
+/* ============================================================
+   BUILT WITH — horizontal auto-scrolling marquee of real outbound
+   brand links. See BuiltWithSection in site-shell.tsx. The track
+   renders the item list twice back-to-back and loops the first
+   half's width via translateX(-50%), the same seamless-marquee
+   technique .iv-ticker-track uses for the homepage category strip.
+   Edge mask fades items in/out at the container's left/right edge
+   instead of hard-cutting them mid-pill.
+   ============================================================ */
+.bbi-built-ticker {
+  overflow: hidden;
+  padding: 0.5rem 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+.bbi-built-ticker-track {
+  display: flex;
+  width: max-content;
+  gap: 0.75rem;
+  animation-name: bbi-built-scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.bbi-built-ticker:hover .bbi-built-ticker-track,
+.bbi-built-ticker:active .bbi-built-ticker-track {
+  animation-play-state: paused;
+}
+.bbi-built-ticker-track.bbi-built-ticker-static {
+  animation: none;
+  flex-wrap: wrap;
+  width: auto;
+  justify-content: center;
+}
+@keyframes bbi-built-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-built-ticker-track { animation: none; }
+}
 
 /* ============================================================
    ORBIT DIAGRAM — visible rings, orbiting nodes, readable labels
@@ -730,12 +725,34 @@ html.light .tree-asset-container::before {
   opacity: 0;
   transform: translate(-50%, -50%);
 }
+/* Idle bob lives on its own wrapper between .bbi-orbit-node (owns the
+   one-shot entry transform) and .bbi-orbit-node-inner (owns the continuous
+   counter-rotation transform) — two CSS animations can't cleanly share one
+   element's `transform` property, so each animated effect here gets its
+   own element instead of fighting over the same one. */
+.bbi-orbit-node-bob {
+  display: inline-flex;
+  animation: bbi-orbit-node-bob 3.4s ease-in-out infinite;
+}
+@keyframes bbi-orbit-node-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
 .bbi-orbit-node-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.3rem;
   animation: bbi-orbit-spin-rev 26s linear infinite;
+}
+/* Hover-tilt: .bbi-orbit-node-label only animates opacity (bbi-label-fade),
+   so adding a static hover transform here doesn't fight a running
+   transform-animation the way it would on -inner or the outer node. */
+.bbi-orbit-node-label {
+  transition: transform 0.3s ease;
+}
+.bbi-orbit-node:hover .bbi-orbit-node-label {
+  transform: perspective(300px) rotateX(8deg) rotateY(-8deg) scale(1.08);
 }
 .bbi-orbit-wrap.is-live .bbi-orbit-node {
   animation: bbi-node-in 0.5s cubic-bezier(0.16, 1.15, 0.3, 1) both;
@@ -771,7 +788,7 @@ html.light .tree-asset-container::before {
   50%      { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bbi-orbit-rotor, .bbi-orbit-node, .bbi-orbit-node-inner, .bbi-orbit-ring-inner,
+  .bbi-orbit-rotor, .bbi-orbit-node, .bbi-orbit-node-bob, .bbi-orbit-node-inner, .bbi-orbit-ring-inner,
   .bbi-orbit-ring-outer, .bbi-orbit-dot, .bbi-orbit-node-label { animation: none !important; opacity: 1 !important; }
 }
 
@@ -828,8 +845,8 @@ html.light .tree-asset-container::before {
     0 0 18px -6px rgba(255, 255, 255, 0.4) inset,
     0 10px 24px -10px rgba(0, 0, 0, 0.75),
     0 2px 6px -2px rgba(0, 0, 0, 0.5);
+  /* transform is owned by the GSAP pill-interaction hook, not a CSS transition. */
   transition:
-    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
     background 0.35s cubic-bezier(0.16, 1, 0.3, 1),
     border-color 0.35s ease;
@@ -883,7 +900,9 @@ a[class*="from-primary"]:hover,
 button[class*="from-primary"]:hover,
 .iv-ticker-track a:hover {
   color: #FFFFFF !important;
-  transform: translateY(-2px);
+  /* transform is owned by the GSAP pill-interaction hook (see
+     src/hooks/use-pill-interaction.ts) so hover/press motion has one
+     source of truth instead of fighting a CSS transition. */
   background:
     linear-gradient(180deg, rgba(136, 134, 219, 0.46) 0%, rgba(70, 67, 186, 0.46) 52%, rgba(58, 54, 151, 0.42) 100%) !important;
   border-color: rgba(255, 255, 255, 0.6) !important;
@@ -894,13 +913,7 @@ button[class*="from-primary"]:hover,
     0 0 26px -8px rgba(255, 255, 255, 0.35) !important;
 }
 
-.glass-btn:active,
-.glass-pill:active,
-.sheen:active,
-a[class*="from-primary"]:active,
-button[class*="from-primary"]:active {
-  transform: translateY(0) scale(0.985);
-}
+/* :active transform is likewise owned by the GSAP pill-interaction hook. */
 
 /* ============================================================
    LIGHT MODE — html.light overrides (flicker-free, set pre-hydration)
@@ -980,6 +993,49 @@ html.light button[class*="from-primary"] {
 html,
 body {
   transition: background-color 240ms ease;
+}
+
+/* ============================================================
+   CURSOR-FOLLOW SPOTLIGHT — see src/components/spotlight.tsx
+   --spot-x/--spot-y/--spot-o are written by GSAP quickTo (JS); this layer
+   is pure CSS so the animated property itself stays GPU-cheap.
+   ============================================================ */
+.bbi-spotlight {
+  --spot-x: 50%;
+  --spot-y: 50%;
+  --spot-o: 0;
+}
+.bbi-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: var(--spot-o);
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    var(--spot-size, 220px) var(--spot-size, 220px) at var(--spot-x) var(--spot-y),
+    color-mix(in oklab, var(--primary) 55%, transparent) 0%,
+    transparent 70%
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-spotlight::before {
+    display: none;
+  }
+}
+
+/* ============================================================
+   CARD FAN-REVEAL — see src/components/card-fan.tsx
+   ============================================================ */
+.bbi-fan-card {
+  transform-origin: center bottom;
+  will-change: transform;
+}
+.bbi-fan-card:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
 }
 
 /* ============================================================
@@ -1083,20 +1139,72 @@ html.light .iv-skeleton {
   }
 }
 
-/* Footer + plain list links must stay text, not capsules. */
-.iv-plainlinks a[href*="/category/"] {
-  display: inline !important;
-  padding: 0 !important;
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  color: inherit !important;
-  font-weight: 500;
-  transition: color 0.25s ease !important;
+/* Footer + plain list links must stay text, not capsules.
+   Lives inside @layer utilities, not unlayered, and repeats the selector
+   with an html.light prefix: cascade layers rank ABOVE specificity for
+   `!important` declarations, and `html.light a[href*="/category/"]`
+   (also `!important`, also inside @layer utilities, ~30 lines up) was
+   silently winning over this rule's plain form every time — the category
+   heading kept rendering as a pill because that light-mode rule matches
+   any link whose href contains "/category/", heading included. Matching
+   both the layer and the specificity is what actually beats it. */
+@layer utilities {
+  .iv-plainlinks a[href*="/category/"],
+  html.light .iv-plainlinks a[href*="/category/"] {
+    display: inline !important;
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    font-weight: 500;
+    transition: color 0.25s ease !important;
+  }
+  .iv-plainlinks a[href*="/category/"]:hover,
+  html.light .iv-plainlinks a[href*="/category/"]:hover {
+    color: var(--primary) !important;
+    transform: none !important;
+  }
 }
-.iv-plainlinks a[href*="/category/"]:hover {
-  color: var(--primary) !important;
-  transform: none !important;
+
+/* ============================================================
+   CATEGORY HEADING GLOW — breathing brand-color halo behind
+   category-name headings (browse page cards, category page H1).
+
+   Perf note (real regression, found and fixed same session): the first
+   version of this animated the `text-shadow` property itself between two
+   states with different blur radii. Animating shadow blur is NOT
+   compositor-only — the browser has to recompute and repaint the blurred
+   shadow bitmap every frame, on every heading, for as long as the page is
+   open. Stacked three layers deep and repeated per category card, that is
+   real, continuous main-thread cost, worst on exactly the low-end/low-
+   power devices where it matters most. Fixed by making the text-shadow
+   itself STATIC (computed once) and animating `opacity` instead, which is
+   compositor-only and effectively free. Same visual "breathing" glow,
+   without the per-frame repaint.
+   ============================================================ */
+@keyframes bbi-heading-glow-pulse {
+  0%, 100% { opacity: 0.7; }
+  50%      { opacity: 1; }
+}
+/* The category-card heading is also an `a[href*="/category/"]`, which
+   earlier in this file sets `animation: none !important` (a broad pill
+   reset). Repeating the selector with that attribute clause is what
+   actually out-specifies it — plain `.bbi-heading-glow` alone loses. */
+.bbi-heading-glow,
+a[href*="/category/"].bbi-heading-glow {
+  text-shadow:
+    0 0 12px rgba(136, 134, 219, 0.4),
+    0 0 26px rgba(70, 67, 186, 0.26);
+  animation: bbi-heading-glow-pulse 3.4s ease-in-out infinite !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-heading-glow,
+  a[href*="/category/"].bbi-heading-glow {
+    animation: none !important;
+    opacity: 1;
+  }
 }
 
 /* Hero slider frame: the Golden Tree artwork is a transparent PNG that needs a
@@ -1115,7 +1223,14 @@ html.light .iv-skeleton {
 
 /* ============================================================
    TAG CLOUD — fluid flex-wrap pill rows (no rigid grids)
-   Sizing is driven purely by label length; labels never wrap.
+   Sizing is driven purely by label length. Short labels stay on
+   one line at their natural width; a label too long for the row
+   wraps onto a second line inside its own pill instead of being
+   clipped — .glass-pill centers its content (justify-content:
+   center), and text-overflow:ellipsis does not reliably fire on
+   a centered flex child, so a long label was rendering with
+   characters silently cut from BOTH ends and no "…" shown. Full
+   label text must always stay intact and visible.
    ============================================================ */
 .iv-tag-cloud {
   display: flex;
@@ -1127,9 +1242,9 @@ html.light .iv-skeleton {
   flex: 0 1 auto;
   width: auto;
   max-width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  text-align: center;
   display: inline-flex;
 }
 /* Footer column is narrow — keep the gap tighter there. */

@@ -6,55 +6,48 @@ import { useEffect, useRef, useState } from "react";
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
 import { CategoryBadge } from "@/components/category-badge";
-import { TiltPanel } from "@/components/tilt-panel";
 import { AdSlot } from "@/components/AdSlot";
 import { HeroSlider, Typewriter } from "@/components/hero-slider";
+import { Reveal } from "@/components/reveal";
+import { CardFan } from "@/components/card-fan";
+import { Spotlight } from "@/components/spotlight";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { FEATURED_IDEA_IDS } from "@/config/featured";
 import { catalogQuery, getFeaturedIdeas, getSurpriseIdeas } from "@/lib/ideas.functions";
 import type { CategoryNode } from "@/lib/ideas.functions";
+import { usePillInteraction } from "@/hooks/use-pill-interaction";
+import { hideImgIfBroken } from "@/lib/utils";
+import { AccordionItem } from "@/components/accordion-item";
+import { CountUp } from "@/components/count-up";
+import { loadGsap, prefersReducedMotion } from "@/lib/motion";
 
-/** Split live categories evenly across 4 marquee rows (works for 9 or 100+). */
-/** Smooth scroll-reveal wrapper — fade + rise + de-blur, once, on enter. */
-function Reveal({
-  children,
-  delay = 0,
-  className = "",
-  variant = "",
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-  variant?: "" | "rv-lift" | "rv-slide" | "rv-zoom" | "rv-wipe";
-}) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [shown, setShown] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setShown(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
+/** Hero's primary CTA — spotlight glow behind a pill with GSAP hover/press motion. */
+function HeroCta() {
+  const pill = usePillInteraction<HTMLAnchorElement>();
   return (
-    <div
-      ref={ref}
-      className={`bbi-reveal ${variant}${shown ? " is-visible" : ""} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
-    </div>
+    <Spotlight className="inline-block justify-self-start rounded-full">
+      <Link
+        to="/browse"
+        className="glass-pill inline-flex items-center justify-center rounded-full px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
+        ref={pill.ref}
+        onMouseEnter={pill.onMouseEnter}
+        onMouseLeave={pill.onMouseLeave}
+        onPointerDown={pill.onPointerDown}
+        onPointerUp={pill.onPointerUp}
+      >
+        Browse the library
+      </Link>
+    </Spotlight>
   );
 }
+
+/** Split live categories evenly across 4 marquee rows (works for 9 or 100+). */
 
 /**
  * PROJECT_BRIEF.md Section 8.1 — the homepage's primary engagement hook.
@@ -67,6 +60,23 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
   const surprise = useMutation({
     mutationFn: () => run({ data: { categorySlug: categorySlug || undefined, count: 5 } }),
   });
+  const resultsRef = useRef<HTMLDivElement | null>(null);
+
+  // Results appear via a mutation, not a scroll — Reveal's rv-wipe variant
+  // is ScrollTrigger-driven and doesn't fit here, so this fires the same
+  // clip-path wipe directly on the mutation succeeding instead.
+  useEffect(() => {
+    const el = resultsRef.current;
+    if (!surprise.data || !el || prefersReducedMotion()) return;
+    loadGsap().then((gsap) => {
+      if (!resultsRef.current) return;
+      gsap.fromTo(
+        resultsRef.current,
+        { clipPath: "inset(0 100% 0 0)", opacity: 0.5 },
+        { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 0.7, ease: "power3.out" },
+      );
+    });
+  }, [surprise.data]);
 
   return (
     <section
@@ -83,19 +93,22 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
           Pick a category, or don&apos;t. We&apos;ll surprise you.
         </h2>
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          <select
-            value={categorySlug}
-            onChange={(e) => setCategorySlug(e.target.value)}
-            aria-label="Category"
-            className="rounded-full border border-input bg-card px-4 py-2.5 text-sm outline-none focus:border-primary"
+          <Select
+            value={categorySlug || "any"}
+            onValueChange={(v) => setCategorySlug(v === "any" ? "" : v)}
           >
-            <option value="">Any category</option>
-            {categories.map((c) => (
-              <option key={c.categorySlug} value={c.categorySlug}>
-                {c.categoryName}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger aria-label="Category">
+              <SelectValue placeholder="Any category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="any">Any category</SelectItem>
+              {categories.map((c) => (
+                <SelectItem key={c.categorySlug} value={c.categorySlug}>
+                  {c.categoryName}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <button
             type="button"
             onClick={() => surprise.mutate()}
@@ -113,7 +126,7 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
         )}
 
         {surprise.data && surprise.data.length > 0 && (
-          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div ref={resultsRef} className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {surprise.data.map((idea) => (
               <IdeaCard key={idea.ideaId} idea={idea} />
             ))}
@@ -171,7 +184,7 @@ const SCROLL_PANELS = [
   },
   {
     title: "Validation is free, on your own AI account.",
-    body: "Every blueprint has a Validate button. It hands you a fully researched prompt on your own Claude or Perplexity account, free — market sizing, target buyer, revenue model, risks and a launch roadmap.",
+    body: "Every blueprint has a Validate button. Tap it, and get real research on your idea — market size, your ideal buyer, the money model, and the risks — free, using AI tools you already pay for. No extra cost. No limit.",
   },
 ];
 
@@ -179,11 +192,11 @@ const SCROLL_PANELS = [
 const HERO_PANELS = [
   {
     label: "What you get",
-    body: "Every small business idea in this library comes with a named buyer, a revenue model in plain numbers, the failure modes most people find only after spending money, and a direct verdict on who should actually build it. Not a list. A blueprint.",
+    body: "Every idea here comes with four honest things: who will actually buy from you, how the money really works, the painful risks people find out too late, and a straight answer — build it, or walk away. This is not a list. This is the research you wish someone gave you before you spent your time or money.",
   },
   {
     label: "How it works",
-    body: "Browse a category. Read the blueprint. If it fits, tap Validate and run a real-time market sizing, competitor map, and a launch roadmap on your own Claude or Perplexity account. Free to browse. Free to validate.",
+    body: "Browse any category. Read the full blueprint. If it feels right, tap Validate — and get real research on your idea for free, using AI tools you already pay for. No extra charge. No monthly limit. Free to browse. Free to validate, again and again.",
   },
 ];
 
@@ -195,7 +208,7 @@ const FAQS = [
   },
   {
     q: "Is the whole library free?",
-    a: "Yes. Every blueprint — summary, pros, cons, and verdict — is free to read in full. Validating an idea is free too: the Validate button hands you a fully researched prompt on your own Claude or Perplexity account, at no cost.",
+    a: "Yes. Every blueprint is free to read, start to finish. Validating an idea is free too — you use AI tools you already pay for, so it costs you nothing extra, ever.",
   },
   {
     q: "How are trend scores calculated?",
@@ -211,7 +224,7 @@ const FAQS = [
   },
   {
     q: "Is this useful if I already have a business idea?",
-    a: "Yes. Tap Validate on the closest matching entry to get a real-time market sizing, competitive landscape, and launch plan on your own Claude or Perplexity account, adapted to your own version of the idea.",
+    a: "Yes. Find the closest matching idea and tap Validate. You'll get real research — market size, competitors, and a launch plan — shaped around your own version of the idea, at no extra cost.",
   },
 ];
 
@@ -282,10 +295,10 @@ function HomePage() {
         data-anchor-label="Top"
         className="px-3 pt-10 sm:px-4 sm:pt-16"
       >
-        <TiltPanel className="mx-auto max-w-6xl" max={4}>
+        <div className="mx-auto max-w-6xl">
           <div className="glass blob-1 px-6 py-14 sm:px-12 sm:py-20">
             <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent sm:text-xs">
-              <Typewriter text="BBI — Bro Business Ideas" />
+              <Typewriter text="The Truth About Business Ideas" />
             </p>
             <div className="mt-8 grid items-center gap-8 lg:grid-cols-[1.15fr_1fr]">
               <div>
@@ -293,20 +306,22 @@ function HomePage() {
                   className="iv-fade-up max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl"
                   style={{ animationDelay: "260ms" }}
                 >
-                  Small business ideas,{" "}
+                  Tired of paying just to check if your{" "}
                   <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
-                    researched properly
-                  </span>{" "}
-                  — not listicles.
+                    idea will work
+                  </span>
+                  ?
                 </h1>
                 <p
                   className="iv-fade-up mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg"
                   style={{ animationDelay: "420ms" }}
                 >
-                  Every entry is a blueprint: who the customer is, how the money works, what will
-                  hurt, and a blunt verdict on who should actually build it. Browse startup ideas,
-                  work from home business ideas, and low-investment opportunities — all ranked by
-                  real market demand.
+                  We built a free home for real business ideas — side hustles, zero investment
+                  ideas, work from home ideas, and low investment ideas. Every idea is researched,
+                  not guessed. We tell you who will actually pay you, how the money works, and what
+                  will hurt you in year one. Then we give it to you straight — build it, or walk
+                  away. Browse for free. Validate as many times as you want. Pay only once, if you
+                  ever want full access.
                 </p>
 
                 {/* Quick-action row, styled after the reference: a plain frosted
@@ -322,12 +337,7 @@ function HomePage() {
                     <span aria-hidden>⌕</span>
                     <span>Search idea blueprints…</span>
                   </Link>
-                  <Link
-                    to="/browse"
-                    className="glass-pill inline-flex items-center justify-center justify-self-start rounded-full px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
-                  >
-                    Browse the library
-                  </Link>
+                  <HeroCta />
                 </div>
               </div>
               <div className="iv-fade-up" style={{ animationDelay: "540ms" }}>
@@ -349,7 +359,7 @@ function HomePage() {
               ))}
             </div>
           </div>
-        </TiltPanel>
+        </div>
       </section>
 
       {/* SURPRISE ME — Section 8.1, directly below the hero, before any other content */}
@@ -403,20 +413,28 @@ function HomePage() {
       <GoldenTreeSection />
 
       {/* SECTION 2: LIVE CATEGORY SEARCH DEMAND TRACKER */}
-      <LiveDemandTrackerSection />
+      <Reveal variant="rv-lift">
+        <LiveDemandTrackerSection />
+      </Reveal>
 
       <div className="px-3 pt-8 sm:px-4">
         <AdSlot position="homepage-hero-below" size="banner" />
       </div>
 
       {/* BRAND STATEMENT */}
-      <BrandStatementBanner />
+      <Reveal variant="rv-lift">
+        <BrandStatementBanner />
+      </Reveal>
 
       {/* KEYWORD MOSAIC */}
-      <KeywordMosaic />
+      <Reveal variant="rv-lift">
+        <KeywordMosaic />
+      </Reveal>
 
       {/* TRUST STRIP */}
-      <TrustStatsBar totalIdeas={catalog.totalIdeas} categoryCount={catalog.categories.length} />
+      <Reveal variant="rv-lift">
+        <TrustStatsBar totalIdeas={catalog.totalIdeas} categoryCount={catalog.categories.length} />
+      </Reveal>
 
       {/* MARKET GAP + orbit #1 */}
       <MarketGapSection />
@@ -461,26 +479,24 @@ function HomePage() {
               Why this exists
             </p>
             <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-              A list of ideas is not research.
+              A list of ideas is not research. And it can cost you money.
             </h2>
             <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">
               <p>
-                Most idea lists are written in an afternoon by someone who has never sold the thing
-                they are describing. They tell you the market is growing and stop there. The hard
-                part of starting a business was never finding a plausible-sounding idea — it was
-                working out who pays, how often, at what margin, and what happens on the day a
-                bigger company decides to do the same thing for free.
+                Most &quot;100 business ideas&quot; pages are written in one afternoon by someone
+                who never actually sold anything. They just say &quot;the market is growing&quot;
+                and stop there. Finding an idea was never the hard part. The hard part is knowing
+                who will really pay you, how often, and what happens when a bigger company copies
+                you for free.
               </p>
               <p>
-                A blueprint in the library answers those questions before you commit a weekend to
-                it. Each one names the customer specifically rather than as a demographic, explains
-                the revenue mechanics in plain numbers, and lists the failure modes we would expect
-                in the first year — the churn, the acquisition costs that quietly exceed lifetime
-                value, the regulation nobody mentions until you are already trading.
+                That is why every blueprint here answers those questions first. We name your exact
+                customer. We show you the real numbers. We tell you the risks most people only find
+                out after they&apos;ve already spent their money.
               </p>
               <p>
-                The verdict at the end is deliberately blunt. Some entries end with a recommendation
-                not to build. That is the point: research that only ever agrees with you is
+                Sometimes the honest answer is: don&apos;t build this one. That&apos;s the whole
+                point. Research that only ever agrees with you isn&apos;t research — it&apos;s
                 marketing wearing a lab coat.
               </p>
             </div>
@@ -501,19 +517,19 @@ function HomePage() {
               {[
                 {
                   t: "A named buyer",
-                  d: 'Not "small businesses" — the specific role, the budget it comes out of, and why it is a priority this quarter.',
+                  d: 'Not "small businesses." The real person, their budget, and why they need this now.',
                 },
                 {
                   t: "Working money mechanics",
-                  d: "Pricing, delivery cost and the point at which the model stops being a job and starts being a business.",
+                  d: "What you charge, what it costs you, and the point where this stops being a side job and becomes a real business.",
                 },
                 {
                   t: "The unglamorous risks",
-                  d: "Platform dependency, seasonality, licensing, and the competitor already halfway there.",
+                  d: "The platform risks, slow seasons, and the competitor who's already halfway there.",
                 },
                 {
                   t: "A founder-fit verdict",
-                  d: "Who is well placed to build it, and who should walk away from it entirely.",
+                  d: "Who should build this — and who should walk away.",
                 },
               ].map((row) => (
                 <div key={row.t} className="py-4 first:pt-0 last:pb-0">
@@ -536,10 +552,12 @@ function HomePage() {
               style={{ transform: `rotate(${img.tilt}deg)` }}
             >
               <img
+                ref={hideImgIfBroken}
                 src={img.src}
                 alt={img.alt}
                 loading="lazy"
                 className="h-full w-full object-cover"
+                onError={(e) => (e.currentTarget.style.display = "none")}
               />
               <span
                 aria-hidden
@@ -551,10 +569,14 @@ function HomePage() {
       </section>
 
       {/* HOW IT WORKS + orbit #2 + Faq1 inline */}
-      <HowItWorksSection />
+      <Reveal variant="rv-lift">
+        <HowItWorksSection />
+      </Reveal>
 
       {/* WHO FOR */}
-      <WhoForSection />
+      <Reveal variant="rv-lift">
+        <WhoForSection />
+      </Reveal>
 
       {/* SCROLL-STACK */}
       <section className="mx-auto mt-16 grid max-w-6xl gap-4 px-3 pb-16 sm:grid-cols-2 sm:px-4">
@@ -580,45 +602,59 @@ function HomePage() {
       </section>
 
       {/* PRICING PHILOSOPHY + Faq2 inline */}
-      <PricingPhilosophySection />
+      <Reveal variant="rv-lift">
+        <PricingPhilosophySection />
+      </Reveal>
 
       {/* WHY WE BUILT THIS */}
-      <section className="mx-auto max-w-4xl px-3 pb-24 sm:px-4">
-        <h2 className="text-3xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
-          We got tired of the same 50 ideas recycled into infinity.
-        </h2>
-        <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
-          <p>
-            Every business idea list on the internet is the same list. Drop shipping. Print on
-            demand. Start a blog. Sell on Etsy. They are not wrong exactly, but they are not
-            researched either. Nobody tells you the margin, the failure rate, the licensing
-            requirement, or the competitor who already owns the space.
-          </p>
-          <p>
-            This library exists because a genuine small business idea blueprint is worth more than a
-            hundred recycled suggestions. We research each one properly — market context, real
-            revenue mechanics, honest risks — and we tell you directly whether you are the right
-            person to build it.
-          </p>
-        </div>
-        <Link
-          to="/browse"
-          className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
-        >
-          Read a blueprint
-          <span aria-hidden>→</span>
-        </Link>
-      </section>
+      <Reveal variant="rv-lift">
+        <section className="mx-auto max-w-4xl px-3 pb-24 sm:px-4">
+          <h2 className="text-3xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
+            We got tired of the same 50 ideas recycled into infinity.
+          </h2>
+          <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p>
+              Every business idea list on the internet is the same list. Drop shipping. Print on
+              demand. Start a blog. Sell on Etsy. They are not wrong exactly, but they are not
+              researched either. Nobody tells you the margin, the failure rate, the licensing
+              requirement, or the competitor who already owns the space.
+            </p>
+            <p>
+              This library exists because a genuine small business idea blueprint is worth more than
+              a hundred recycled suggestions. We research each one properly — market context, real
+              revenue mechanics, honest risks — and we tell you directly whether you are the right
+              person to build it.
+            </p>
+          </div>
+          <Link
+            to="/browse"
+            className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
+          >
+            Read a blueprint
+            <span aria-hidden>→</span>
+          </Link>
+        </section>
+      </Reveal>
 
       {/* TEAM + orbit #3 */}
-      <TeamSection />
+      <Reveal variant="rv-lift">
+        <TeamSection />
+      </Reveal>
 
-      <InspiredBySection />
-      <ComparisonSection />
-      <FutureProofSpotlight />
+      <Reveal variant="rv-lift">
+        <InspiredBySection />
+      </Reveal>
+      <Reveal variant="rv-lift">
+        <ComparisonSection />
+      </Reveal>
+      <Reveal variant="rv-lift">
+        <FutureProofSpotlight />
+      </Reveal>
 
       {/* PROMISE + Faq3 inline */}
-      <PromiseSection />
+      <Reveal variant="rv-lift">
+        <PromiseSection />
+      </Reveal>
 
       {/* GENERAL CLOSING FAQ */}
       <section className="mx-auto mt-20 max-w-4xl border-t border-border/60 px-3 pt-16 pb-24 sm:mt-28 sm:px-4 sm:pt-20">
@@ -627,20 +663,7 @@ function HomePage() {
         </p>
         <div className="mt-6 divide-y divide-border">
           {FAQS.map((item) => (
-            <details key={item.q} className="group py-5">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-base font-semibold text-foreground transition-colors hover:text-primary sm:text-lg">
-                {item.q}
-                <span
-                  aria-hidden
-                  className="shrink-0 text-accent transition-transform duration-300 group-open:rotate-45"
-                >
-                  +
-                </span>
-              </summary>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                {item.a}
-              </p>
-            </details>
+            <AccordionItem key={item.q} question={item.q} answer={item.a} size="base" />
           ))}
         </div>
       </section>
@@ -777,9 +800,12 @@ function GoldenTreeSection() {
             option here; see .tree-asset-container img in styles.css. */}
         <div className="hidden sm:block relative w-full max-w-5xl aspect-[16/9] group tree-asset-container">
           <img
+            ref={hideImgIfBroken}
             src={DESKTOP_TREE_SRC}
             alt="The Golden Tree of Business Growth"
+            fetchPriority="high"
             className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(27,42,107,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(27,42,107,0.5)]"
+            onError={(e) => (e.currentTarget.style.display = "none")}
           />
 
           {desktopNodes.map((node) => (
@@ -813,9 +839,12 @@ function GoldenTreeSection() {
             node pills below. */}
         <div className="block sm:hidden relative w-full max-w-xs aspect-[9/16] tree-asset-container">
           <img
+            ref={hideImgIfBroken}
             src={MOBILE_TREE_SRC}
             alt="The Golden Tree of Business Growth (Mobile)"
+            fetchPriority="high"
             className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(27,42,107,0.35)]"
+            onError={(e) => (e.currentTarget.style.display = "none")}
           />
 
           {/* Nodes sit on the canopy at organic coordinates (not a vertical list). */}
@@ -998,22 +1027,22 @@ function FourPillarStandardSection() {
     {
       num: "01",
       title: "Named Buyer",
-      desc: "The specific role, budget source, and quarterly priority.",
+      desc: "Exactly who will pay you, and why they have money ready right now.",
     },
     {
       num: "02",
       title: "Unit Economics",
-      desc: "Plain-English pricing, delivery cost, and realistic break-even margins.",
+      desc: "Simple numbers on price, cost, and when you actually start making profit.",
     },
     {
       num: "03",
       title: "1st-Year Risks",
-      desc: "Hidden acquisition costs, churn traps, and regulatory hurdles.",
+      desc: "The hidden costs and traps that quietly kill new businesses.",
     },
     {
       num: "04",
       title: "Founder-Fit Verdict",
-      desc: "A blunt verdict on who should build it and who should walk away.",
+      desc: "An honest answer: should you build this, or walk away?",
     },
   ];
 
@@ -1024,15 +1053,16 @@ function FourPillarStandardSection() {
           The Research Standard
         </p>
         <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-4xl">
-          Not listicles. Researched blueprints.
+          Not just a list. Real research you can trust.
         </h2>
         <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-          Choose any category, pick a business model, and inspect these 4 core pillars before
-          spending a single dollar.
+          Before you spend a rupee or a weekend, check these 4 things on every idea.
         </p>
       </div>
 
-      <div className="mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Mobile: plain stacked grid — a fanned arc needs room neighbors don't
+          have on narrow viewports, so it only renders at sm: and up. */}
+      <div className="mt-10 grid gap-4 grid-cols-1 sm:hidden">
         {pillars.map((p) => (
           <div
             key={p.num}
@@ -1043,6 +1073,20 @@ function FourPillarStandardSection() {
             <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
           </div>
         ))}
+      </div>
+      <div className="mt-10 hidden sm:block">
+        <CardFan
+          overlap="-1.75rem"
+          cardClassName="glass glass-hover flex w-56 flex-col p-6 rounded-2xl border border-white/10 bg-background"
+        >
+          {pillars.map((p) => (
+            <div key={p.num}>
+              <span className="text-xs font-extrabold text-accent tracking-widest">{p.num}</span>
+              <h3 className="mt-2 text-base font-bold text-foreground">{p.title}</h3>
+              <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
+            </div>
+          ))}
+        </CardFan>
       </div>
 
       <div className="mt-8 text-center">
@@ -1173,9 +1217,11 @@ function OrbitDiagram({
                 animationDelay: `${i * 110}ms`,
               }}
             >
-              <span className="bbi-orbit-node-inner">
-                <span className="bbi-orbit-dot" aria-hidden />
-                <span className="bbi-orbit-node-label">{label}</span>
+              <span className="bbi-orbit-node-bob" style={{ animationDelay: `${i * 240}ms` }}>
+                <span className="bbi-orbit-node-inner">
+                  <span className="bbi-orbit-dot" aria-hidden />
+                  <span className="bbi-orbit-node-label">{label}</span>
+                </span>
               </span>
             </div>
           );
@@ -1196,10 +1242,13 @@ function BrandStatementBanner() {
           BBI — Bro Business Ideas.
         </h2>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-          We&apos;re not another AI validator charging you by the click. BBI is a free, researched
-          library of small business ideas, side hustles, and startup blueprints — built by a team
-          who got tired of paying $20 for four &quot;validations&quot; that told us nothing. Browse
-          for free. Pay once if you want lifetime access. Never pay monthly for an idea.
+          We have been where you are. We paid for those $20 &quot;validation&quot; platforms too. We
+          got a few generic lines back, spent our money, and got nothing real in return. When we
+          asked for help, no one answered. That hurt. So we built the thing we needed back then — a
+          free, honest library of small business ideas and side hustles, with real research, not
+          empty hype. Browse for free, always. Validate as many times as you want, on your own
+          account, at no extra cost. Pay once — ₹199 for 3 months or ₹399 for life — only if you
+          want full access. Never a monthly bill.
         </p>
       </div>
     </section>
@@ -1215,21 +1264,24 @@ function TrustStatsBar({
 }) {
   const stats = [
     {
-      value: `${totalIdeas}+`,
+      value: totalIdeas,
+      suffix: "+",
       label: "Researched blueprints",
       note: `Across ${categoryCount} live categories, growing every week`,
       shape: "bbi-shape-stat-1",
     },
     {
-      value: "967",
+      value: 967,
+      suffix: "",
       label: "Founders reviewed us",
       note: "Reviewed BBI's structure and functionality before we shipped it",
       shape: "bbi-shape-stat-2",
     },
     {
-      value: "2",
+      value: 2,
+      suffix: "",
       label: "Simple pricing plans",
-      note: "₹199 for 3 months or ₹399 for life — no subscription",
+      note: "₹199 for 3 months, ₹399 for life. Pay once. No surprise bills, ever.",
       shape: "bbi-shape-stat-3",
     },
   ];
@@ -1241,7 +1293,7 @@ function TrustStatsBar({
           className={`glass glass-hover ${stat.shape} px-6 py-7 text-center transition-transform duration-300 hover:scale-[1.02] sm:text-left`}
         >
           <p className="text-3xl font-extrabold tracking-tight text-accent sm:text-4xl">
-            {stat.value}
+            <CountUp value={stat.value} suffix={stat.suffix} />
           </p>
           <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
             {stat.label}
@@ -1263,21 +1315,20 @@ function MarketGapSection() {
               The problem we found
             </p>
             <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-              Everyone charges $20 a month. We think that&apos;s the real problem.
+              Why is everyone still charging you $20 to check one idea?
             </h2>
             <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">
               <p>
-                We went looking for a place to validate business ideas before we built BBI. What we
-                found: platform after platform charging a minimum of $20 for three or four
-                validations, wrapped in language that made it sound like premium research. It
-                isn&apos;t. It&apos;s a wrapper around an AI model call — the same kind of call you
-                can run yourself, a thousand times over, for the price of one month of Claude,
-                Gemini, or ChatGPT.
+                Before we built BBI, we went looking for a place to check our own business ideas.
+                Every place we found charged at least $20 for three or four &quot;validations.&quot;
+                It sounded like deep research. It wasn&apos;t. It was really just one AI call — the
+                same kind of call you could run yourself, a hundred times over, for the price of one
+                month of Claude or Perplexity.
               </p>
               <p>
-                We&apos;re engineers. Most of us work full-time at other companies and build BBI on
-                the side, because we&apos;ve been the person staring at a $20 paywall with nothing
-                to spend it on. So we built the thing we wished existed.
+                We are regular people. Most of us have full-time jobs and build BBI at night and on
+                weekends, because we know what it feels like to stare at a $20 paywall with nothing
+                left to spend. So we built the thing we wished someone had built for us.
               </p>
             </div>
           </div>
@@ -1301,7 +1352,7 @@ const BBI_HOW_STEPS = [
   {
     n: "02",
     t: "Validate it, free",
-    d: "Tap Validate on any idea and we hand you a fully researched prompt on your own Claude or Perplexity account — no copying, no pasting, nothing to write yourself. Free, every time.",
+    d: "Tap Validate on any idea and get real research on it — free, using AI tools you already pay for. No extra cost, every time.",
   },
   {
     n: "03",
@@ -1367,18 +1418,7 @@ function HowItWorksSection() {
         </p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_1.map((item) => (
-            <details key={item.q} className="group py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-sm font-semibold text-foreground transition-colors hover:text-primary sm:text-base">
-                {item.q}
-                <span
-                  aria-hidden
-                  className="shrink-0 text-accent transition-transform duration-300 group-open:rotate-45"
-                >
-                  +
-                </span>
-              </summary>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
-            </details>
+            <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
           ))}
         </div>
       </div>
@@ -1473,18 +1513,7 @@ function PricingPhilosophySection() {
         </p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_2.map((item) => (
-            <details key={item.q} className="group py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-sm font-semibold text-foreground transition-colors hover:text-primary sm:text-base">
-                {item.q}
-                <span
-                  aria-hidden
-                  className="shrink-0 text-accent transition-transform duration-300 group-open:rotate-45"
-                >
-                  +
-                </span>
-              </summary>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
-            </details>
+            <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
           ))}
         </div>
       </div>
@@ -1555,7 +1584,53 @@ function InspiredBySection() {
   );
 }
 
+/**
+ * The two comparison cards slide in from opposite sides and converge, with
+ * a brief glow pulse on arrival — built locally with gsap + ScrollTrigger
+ * (same loadGsap(true)/once:true pattern as Reveal) rather than through
+ * Reveal itself, since the "glow on arrival" step is specific to this
+ * section's own visual language, not something every Reveal caller wants.
+ */
 function ComparisonSection() {
+  const leftRef = useRef<HTMLDivElement | null>(null);
+  const rightRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    const left = leftRef.current;
+    const right = rightRef.current;
+    if (!left || !right) return;
+
+    const restShadow = getComputedStyle(left).boxShadow;
+    const glowShadow = `0 0 0 1px color-mix(in oklab, var(--primary) 55%, transparent), 0 0 34px -6px color-mix(in oklab, var(--primary) 60%, transparent), ${restShadow}`;
+
+    let cancelled = false;
+    let tl: gsap.core.Timeline | null = null;
+
+    loadGsap(true).then((gsap) => {
+      if (cancelled) return;
+      // The left card keeps its resting opacity-80 (Tailwind class) — it's
+      // deliberately dimmed relative to the highlighted right card, so the
+      // reveal must animate each card TO its own resting opacity, not both
+      // to fully opaque.
+      gsap.set(left, { x: -60, opacity: 0 });
+      gsap.set(right, { x: 60, opacity: 0 });
+      tl = gsap.timeline({
+        scrollTrigger: { trigger: left, start: "top 85%", once: true },
+      });
+      tl.to(left, { x: 0, opacity: 0.8, duration: 0.7, ease: "power3.out" }, 0)
+        .to(right, { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0)
+        .to([left, right], { boxShadow: glowShadow, duration: 0.25, ease: "power1.out" })
+        .to([left, right], { boxShadow: restShadow, duration: 0.7, ease: "power1.out" });
+    });
+
+    return () => {
+      cancelled = true;
+      tl?.scrollTrigger?.kill();
+      tl?.kill();
+    };
+  }, []);
+
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
@@ -1565,7 +1640,10 @@ function ComparisonSection() {
         $20 for four validations. Or one AI subscription that does a thousand.
       </h2>
       <div className="mt-8 grid gap-5 sm:grid-cols-2">
-        <div className="glass bbi-shape-compare-sharp border border-border/60 p-7 opacity-80">
+        <div
+          ref={leftRef}
+          className="glass bbi-shape-compare-sharp border border-border/60 p-7 opacity-80"
+        >
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
             Typical validator platform
           </p>
@@ -1576,7 +1654,10 @@ function ComparisonSection() {
             <li>Paywall before you see anything real</li>
           </ul>
         </div>
-        <div className="glass glass-hover bbi-shape-compare-round border border-primary/40 p-7">
+        <div
+          ref={rightRef}
+          className="glass glass-hover bbi-shape-compare-round border border-primary/40 p-7"
+        >
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
             BBI + your own AI tool
           </p>
@@ -1766,18 +1847,7 @@ function PromiseSection() {
         </p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_3.map((item) => (
-            <details key={item.q} className="group py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-sm font-semibold text-foreground transition-colors hover:text-primary sm:text-base">
-                {item.q}
-                <span
-                  aria-hidden
-                  className="shrink-0 text-accent transition-transform duration-300 group-open:rotate-45"
-                >
-                  +
-                </span>
-              </summary>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
-            </details>
+            <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
           ))}
         </div>
       </div>

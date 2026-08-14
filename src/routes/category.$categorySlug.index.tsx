@@ -84,7 +84,9 @@ function CategoryPage() {
               { label: data.categoryName ?? categorySlug },
             ]}
           />
-          <h1 className="mt-4 text-3xl font-bold tracking-tight">{data.categoryName}</h1>
+          <h1 className="bbi-heading-glow mt-4 text-3xl font-bold tracking-tight">
+            {data.categoryName}
+          </h1>
           <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
 
           <div className="mt-8">
@@ -94,7 +96,7 @@ function CategoryPage() {
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {data.ideas.map((idea, i) => (
               <Fragment key={idea.ideaId}>
-                <IdeaCard idea={idea} />
+                <IdeaCard idea={idea} featured={i % 7 === 0} />
                 {(i + 1) % 6 === 0 && i + 1 < data.ideas.length && (
                   <div className="sm:col-span-2 lg:col-span-3">
                     <AdSlot position={`category-in-grid-${(i + 1) / 6}`} size="banner" />
