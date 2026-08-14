@@ -6,7 +6,12 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", ".output", ".vinxi"] },
+  // .claude/skills holds third-party Claude Code skill reference scripts
+  // (added by the "Add third-party marketing skills" commit) — standalone
+  // tooling, not part of this app's source or build, and not written to
+  // this repo's lint/format conventions. Linting them here was never
+  // intentional; it just wasn't excluded when they were added.
+  { ignores: ["dist", ".output", ".vinxi", ".claude/skills"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
