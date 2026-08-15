@@ -2,21 +2,36 @@
 
 Status: **plan only, no edits yet.** This touches the core (workflow, SEO, idea-page structure, data layer), so it is planned against `BUTTERFLY_EFFECT.md` first. Existing 280 ideas and the sheet are protected throughout.
 
-## Who writes which column
+## Who writes which column (corrected: Claude = research/SEO only, Gemini = all writing)
 
-**Claude Code + Coworkers write (24 columns) — the SEO-critical + research-backed layer:**
-`idea_id, category_id, category_name, category_slug, subcategory_id, subcategory_name, subcategory_slug, focus_keyword, additional_keyword_1, additional_keyword_2, business_description, collection_id, status, title, summary, tags, slug, seo_title, meta_description, income_potential, getting_started_steps, tools_needed, external_links, internal_link_anchors`
+Principle: **Claude researches and validates; Gemini writes the story from Claude's validated data.** Keeps Claude tokens low, offloads the expensive prose to free Gemini, and Gemini can never fabricate because it only phrases researched facts.
 
-**Gemini (n8n, free-key rotation) writes (the rest) — the narrative body layer:**
-`market_opportunity, target_customer, how_you_make_money, startup_cost, competition_edge, time_to_first_customer, faq_json, pros_json, cons_json, verdict, trend_score, tier`
+**Claude Code + Coworkers own (8 fields — short or data, low-token):**
+- `title`, `slug`, `seo_title`, `meta_description`, `tags` — the search identity (precision-critical, cheap to write)
+- `external_links` — 2–4 **real, verified** authoritative links per idea → across 1000s of ideas = 1000s–5000s distinct real links (the scaling backlink pool, not a fixed 12)
+- `internal_link_anchors`
+- `research_facts` **(NEW jsonb column)** — the validated numbers, stats, benchmark ranges, and source URLs Claude researches per idea
 
-Rationale: Claude owns everything that decides search ranking + anything needing **real researched data** (it has live web search); Gemini cheaply expands the qualitative prose from Claude's ground-truth fields.
+(`focus_keyword` + `additional_keyword_1/2` + the category/subcategory fields come from the Stage-1 seeds.)
 
-## The one risk in this split (needs your call)
+**Gemini (n8n, free-key rotation) writes (16 fields — all narrative, strictly from `research_facts`):**
+`summary, market_opportunity, target_customer, how_you_make_money, startup_cost, income_potential, competition_edge, getting_started_steps, tools_needed, time_to_first_customer, faq_json, pros_json, cons_json, verdict, trend_score, tier`
 
-- "No guessing, no random numbers, no fabrication" — but **Gemini cannot research; it will invent numbers.** Two money fields are currently on Gemini's side: `startup_cost` and `how_you_make_money`.
-- **Recommendation:** move `startup_cost` + `how_you_make_money` to **Claude** too (so every hard number is researched, not guessed). Gemini then writes only non-numeric narrative (`target_customer, competition_edge, time_to_first_customer, faq_json, pros_json, cons_json, verdict`) + `trend_score`/`tier`.
-- Your choice: keep the split as-is (Gemini reasons ranges, not researched) OR move the 2 money fields to Claude (all numbers researched). I recommend the latter.
+## The anti-fabrication mechanism (`research_facts`)
+
+- Claude puts **real numbers + stats + source URLs** into `research_facts`.
+- Gemini's prompt becomes: **"Write every section ONLY from research_facts. Never invent a number. Weave in the external links naturally."**
+- So Gemini does the heavy writing but **cannot fabricate** — every figure traces to Claude's research. No content field needs to move to Claude; only the *data* does.
+
+## Cost math (why this split)
+
+- Claude writing full 500-word ideas ≈ **4,500 tokens/idea** (paid).
+- This split: Claude does research + short SEO fields only ≈ **1,500–2,000 tokens/idea**; the 500-word prose → **Gemini, free.**
+- ≈ **60–65% fewer Claude tokens/idea**, bulk writing at **$0**. Coworkers parallelize the research across categories to speed wall-clock.
+
+## New column to add (additive, safe)
+
+- `research_facts jsonb` — same additive/nullable migration pattern as the other new columns; existing 280 rows get NULL, nothing breaks.
 
 ## How Claude hits "100% top-notch SEO" per page (the quality standard)
 
