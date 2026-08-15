@@ -13,6 +13,54 @@ import { useAuth } from "@/hooks/use-auth";
 
 type IdeaDetailData = { idea: IdeaDetail; related: IdeaCardType[] } | null;
 
+type ContextualLink = { key: string; label: string; to: string; params: Record<string, string> };
+
+/**
+ * PROJECT_BRIEF.md Section 8.2 / Build Order step 11 — up to 3 automatic,
+ * keyword-matched internal links per page, prioritizing hub-style pages
+ * (subcategory, then category) over distant matches. Reuses data already
+ * loaded for this page (no extra Supabase round-trip): the idea's own
+ * keywords/tags are scanned against the `related` list already fetched for
+ * the sidebar/bottom cards to find one genuinely on-topic idea link.
+ */
+function pickContextualLinks(idea: IdeaDetail, related: IdeaCardType[]): ContextualLink[] {
+  const links: ContextualLink[] = [
+    {
+      key: "subcategory",
+      label: idea.subcategoryName,
+      to: "/category/$categorySlug/$subcategorySlug",
+      params: { categorySlug: idea.categorySlug, subcategorySlug: idea.subcategorySlug },
+    },
+    {
+      key: "category",
+      label: idea.categoryName,
+      to: "/category/$categorySlug",
+      params: { categorySlug: idea.categorySlug },
+    },
+  ];
+
+  const keywordPool = [...idea.keywords, ...idea.tags]
+    .map((k) => k.trim().toLowerCase())
+    .filter(Boolean);
+  const match = keywordPool.length
+    ? related.find((r) => {
+        const haystack = `${r.title} ${r.summary} ${r.tags.join(" ")}`.toLowerCase();
+        return keywordPool.some((k) => haystack.includes(k));
+      })
+    : undefined;
+
+  if (match) {
+    links.push({
+      key: match.ideaId,
+      label: match.title,
+      to: "/idea/$slug",
+      params: { slug: match.slug },
+    });
+  }
+
+  return links.slice(0, 3);
+}
+
 const ideaDetailQuery = (slug: string) =>
   queryOptions<IdeaDetailData>({
     queryKey: ["idea-detail", slug],
@@ -85,6 +133,8 @@ function IdeaPage() {
   const showSidebarList = related.length > 3;
   const sidebarRelated = showSidebarList ? related.slice(0, 3) : [];
   const bottomRelated = showSidebarList ? related.slice(3, 6) : related;
+  const contextualLinks = pickContextualLinks(idea, related);
+  const [subcategoryLink, categoryLink, matchedIdeaLink] = contextualLinks;
 
   const ideaPath = `/idea/${idea.slug}`;
   const breadcrumbItems = [
@@ -240,6 +290,51 @@ function IdeaPage() {
                   </span>
                 ))}
               </div>
+            )}
+
+            {subcategoryLink && (
+              <section className="mt-8 rounded-lg border border-border bg-card p-5">
+                <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                  Keep exploring
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  This blueprint sits inside{" "}
+                  <Link
+                    to={subcategoryLink.to}
+                    params={subcategoryLink.params as never}
+                    className="font-semibold text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary"
+                  >
+                    {subcategoryLink.label}
+                  </Link>
+                  {categoryLink && (
+                    <>
+                      , part of the wider{" "}
+                      <Link
+                        to={categoryLink.to}
+                        params={categoryLink.params as never}
+                        className="font-semibold text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary"
+                      >
+                        {categoryLink.label}
+                      </Link>{" "}
+                      lineup
+                    </>
+                  )}
+                  {matchedIdeaLink && (
+                    <>
+                      . If it resonates,{" "}
+                      <Link
+                        to={matchedIdeaLink.to}
+                        params={matchedIdeaLink.params as never}
+                        className="font-semibold text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary"
+                      >
+                        {matchedIdeaLink.label}
+                      </Link>{" "}
+                      explores a nearby angle worth a look
+                    </>
+                  )}
+                  .
+                </p>
+              </section>
             )}
 
             <div className="mt-10">
