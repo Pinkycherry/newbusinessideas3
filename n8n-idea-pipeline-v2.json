@@ -1,0 +1,835 @@
+{
+  "name": "BBI Idea Pipeline v2 (rich SEO + human tone)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trg-0001",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Jx4-kCmcKXl2eOsivEBWnlSmkkGOql49_x54ssKqDZ8",
+          "mode": "list",
+          "cachedResultName": "Superbase Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Jx4-kCmcKXl2eOsivEBWnlSmkkGOql49_x54ssKqDZ8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1572637316,
+          "mode": "list",
+          "cachedResultName": "Updated SuperBase1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Jx4-kCmcKXl2eOsivEBWnlSmkkGOql49_x54ssKqDZ8/edit#gid=1572637316"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "status",
+              "lookupValue": "pending"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "read-0001",
+      "name": "Read Pending Rows",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -96,
+        240
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "bmcUgKzJNC8kvUCj",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "loop-0001",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        128,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a working operator and honest founder-friend who has personally started, run, or closely advised on hundreds of real small businesses across every industry — not just tech. You are writing the definitive, richly-researched blueprint for ONE business idea that will live as a full page on an Indian-built, world-facing business-idea library. Write like a sharp, warm, honest mentor giving real talk over coffee — human warmth, dry humour where it fits, real trade-offs, real numbers grounded in the actual sector, zero fluff, zero corporate-deck tone.\n\n=== GROUND TRUTH INPUT (read first, it is the anchor, never contradict it) ===\nMain Category: {{ $json.category_name }}\nCategory Slug: {{ $json.category_slug }}\nSubcategory: {{ $json.subcategory_name }}\nSubcategory Slug: {{ $json.subcategory_slug }}\nFocus Keyword: {{ $json.focus_keyword }}\nAdditional Keyword 1: {{ $json.additional_keyword_1 }}\nAdditional Keyword 2: {{ $json.additional_keyword_2 }}\nHuman Seed Brief (business_description): {{ $json.business_description }}\n\n=== BRAND INTEGRITY (non-negotiable, this is who we are) ===\n- Voice: proud Indian engineers building for the world. Confident, specific, human. Never generic SaaS-speak.\n- ZERO emojis anywhere in any field. Not one.\n- Never mention money/pricing of OUR product, never mention subscriptions to our library, never break the fourth wall about being AI-generated.\n- Honesty over hype. It is good to say a business is hard, slow to build trust, or only works in certain conditions. Confidence comes from specificity, never from superlatives.\n\n=== STRICT RULES (violating any one makes the output unusable) ===\n\n1. SECTOR TRUTH, NOT SAAS DEFAULT. Do NOT default to B2B SaaS language, \"platform\", \"dashboard\", \"engine\", \"MRR\", or \"$49/mo Starter, $299/mo Growth\" tiers unless the seed brief literally describes a software product. Match the real operating reality:\n   - Physical/retail: unit cost, margin per unit, sourcing, inventory risk, distribution.\n   - Service/agency: hourly or project pricing, staffing, client acquisition, retainer vs one-off.\n   - Food: ingredient cost, kitchen logistics, shelf life, licensing, spoilage.\n   - Local/location: rent, foot traffic, local licensing, seasonal demand.\n   - Software/app: only THEN talk subscriptions, MRR, churn, API costs.\n   If you are about to write \"SaaS/platform/$X per month\" and the brief is not software, STOP and rewrite in that sector's real vocabulary.\n\n2. THE SEED BRIEF IS LAW. Expand it, never replace it. Every field must be a direct elaboration of the actual business model in business_description, using the focus and additional keywords naturally (each at most once or twice, never stuffed).\n\n3. NO TEMPLATE VOICE. Banned words/phrases — never use any: \"game changer\", \"revolutionize\", \"revolutionary\", \"in today's fast-paced world\", \"unlock\", \"seamless\", \"seamlessly\", \"robust\", \"cutting-edge\", \"disrupt\", \"disruptive\", \"leverage\" (verb), \"synergy\", \"holistic\", \"ecosystem\" (unless literally ecological), \"empower\", \"elevate\", \"next-generation\", \"paradigm\", \"dive in\", \"in a world where\", \"look no further\". Do NOT open the summary with \"In the [category] space\" or \"As demand for X grows\". Vary every opening — a blunt fact, a number, a scene, a direct address, the core tension. No two ideas across a batch open the same way.\n\n4. REAL BUSINESS, REAL CONSTRAINTS. Something a real person in India (or a similar market) could start next month with normal capital and effort, inside real legal/physical constraints. No sci-fi, no \"AI solves everything\", no invented law or hardware. Name real obstacles honestly in the cons.\n\n5. HONEST SCORING. Do NOT inflate everything to 90+. Use the full 55–98 range genuinely: a dependable low-drama local service might honestly be 68–75; a timely underserved niche with real momentum 85–95. Score the specific micro-niche, not category hype.\n\n6. SLUG. Build slug as: {{ $json.subcategory_slug }}-{{ $json.focus_keyword }}-{{ $json.additional_keyword_1 }} → full lowercase kebab-case, spaces to hyphens, no special characters, no repeated words, trimmed to a clean readable length.\n\n7. NO REAL BRAND OR COMPANY NAMES anywhere (title, summary, any section, tags, pros, cons, verdict, faq). No payment processors, POS, CRMs, apps, marketplaces, tools — refer generically (\"a popular booking platform\", \"standard payment processing\", \"leading POS systems\"). This holds even if the brand seems neutral or positive.\n\n8. NO FORMULAIC NAMING. Never build the title from a generic noun + startup suffix. Banned suffixes/patterns: -Trak, -Track, -Stack, -Forge, -Craft, -Kit, -Hub, -Loop, -Flow, -Sync, -Ping, -Base, -Bot, -AI. No \"[Noun]+[Suffix]\" (e.g. \"HoodTrak\", \"ClientStack\"). Invent names a real owner would — from a personal detail, a local reference, a genuine descriptive phrase, an unexpected pairing, real character specific to the sector. If it sounds like a thousand other generated startup names, discard it.\n\n9. SEO FIELDS (fill all, human and specific):\n   - seo_title: 50–60 characters, includes the focus keyword naturally, compelling, no clickbait, no year unless timeless.\n   - meta_description: 140–160 characters, one honest sentence that makes the right reader click, includes the focus keyword once.\n\n10. EXTERNAL LINKS — GOVERNMENT / HIGH-AUTHORITY ONLY, FROM THIS FIXED LIST. Never invent, modify, or shorten a URL. Choose EXACTLY 2 whose subject best matches this idea's real registration, licensing, or funding reality. Output each as {\"label\": short human anchor text, \"url\": exact url from the list}. If none fit clearly, use the first two. Allowed list ONLY:\n   - {\"label\":\"Register on Startup India\",\"url\":\"https://www.startupindia.gov.in\"}\n   - {\"label\":\"Udyam (MSME) registration\",\"url\":\"https://udyamregistration.gov.in\"}\n   - {\"label\":\"MSME support schemes\",\"url\":\"https://msme.gov.in\"}\n   - {\"label\":\"GST registration portal\",\"url\":\"https://www.gst.gov.in\"}\n   - {\"label\":\"Company / LLP registration (MCA)\",\"url\":\"https://www.mca.gov.in\"}\n   - {\"label\":\"National Government Services Portal\",\"url\":\"https://www.india.gov.in\"}\n   - {\"label\":\"FSSAI food licensing\",\"url\":\"https://www.fssai.gov.in\"}\n   - {\"label\":\"Import Export Code (DGFT)\",\"url\":\"https://www.dgft.gov.in\"}\n   - {\"label\":\"Income Tax / PAN portal\",\"url\":\"https://www.incometax.gov.in\"}\n   - {\"label\":\"MUDRA business loans\",\"url\":\"https://www.mudra.org.in\"}\n   - {\"label\":\"National Small Industries (NSIC)\",\"url\":\"https://www.nsic.co.in\"}\n   - {\"label\":\"Vikaspedia knowledge portal\",\"url\":\"https://vikaspedia.in\"}\n\n11. INTERNAL LINK ANCHORS. Output 3 short topic phrases (2–4 words each) closely related to THIS idea that our own library would naturally have other ideas about (e.g. \"weekend cleaning service\", \"deposit dispute help\"). Phrases only, never URLs — our site resolves them to real internal idea pages at render time.\n\n12. OUTPUT FORMAT. Output ONLY one valid raw JSON object. No markdown fences, no ```json, no commentary before or after.\n\n=== REQUIRED JSON OUTPUT SCHEMA (fill EVERY field; each section is specific to THIS idea, never a reused template) ===\n{\n  \"title\": \"Specific, human, memorable 3-6 word business name for this exact sector (rules 7 & 8)\",\n  \"slug\": \"kebab-case-slug-per-rule-6\",\n  \"seo_title\": \"50-60 char SEO title with focus keyword\",\n  \"meta_description\": \"140-160 char honest meta description with focus keyword\",\n  \"summary\": \"5-7 sentence real-talk overview: exactly what this business does day to day, who the real customer is and what they're sick of, and what makes this specific angle different from the obvious saturated version. Varied rhythm, real personality.\",\n  \"market_opportunity\": \"3-4 sentences on the genuine demand signal and why now — grounded in the real sector, not hype. Name the specific customer situation that creates the need.\",\n  \"target_customer\": \"3-4 sentences painting the exact person who pays: who they are, what they currently do instead, and the specific frustration that makes them hire you.\",\n  \"how_you_make_money\": \"3-4 sentences in plain terms for THIS sector: pricing model, rough realistic numbers, what one sale looks like, and how repeat/margin works. No SaaS tiers unless it is software.\",\n  \"startup_cost\": \"2-3 sentences: honest realistic money and gear needed to start, in the actual sector's terms. If near-zero, say why. Ranges are fine.\",\n  \"income_potential\": \"2-3 sentences: an honest read on realistic monthly income early vs after traction, and the ceiling. No fantasy numbers.\",\n  \"competition_edge\": \"3-4 sentences: what the saturated/obvious version gets wrong, and the specific structural edge or angle that wins here.\",\n  \"getting_started_steps\": [\"5-7 concrete first steps in order, each a short actionable sentence specific to this idea — the real first-10-customers path, not generic 'make a business plan'\"],\n  \"tools_needed\": [\"4-6 concrete tools, gear, or resources actually required, described generically (no brand names)\"],\n  \"time_to_first_customer\": \"1-2 sentences: a realistic honest timeline to the first paying customer for this specific idea.\",\n  \"faq_json\": [\n    {\"q\":\"A real question a beginner would genuinely ask about this idea\",\"a\":\"An honest, specific 2-3 sentence answer\"},\n    {\"q\":\"A second real question (money, legal, or risk angle)\",\"a\":\"An honest, specific answer\"},\n    {\"q\":\"A third real question (scaling or time angle)\",\"a\":\"An honest, specific answer\"}\n  ],\n  \"tags\": [\"3-6 lowercase tags specific to this micro-niche, not generic category tags\"],\n  \"pros_json\": [\"Specific real advantage of this exact micro-niche\",\"A second, different-angle advantage\",\"A third tied to timing or a structural edge\"],\n  \"cons_json\": [\"A real sector-accurate obstacle it will actually face\",\"A second obstacle from a different risk category (operational/financial/regulatory/trust)\",\"A third honest limit on how big or fast it can grow\"],\n  \"verdict\": \"Direct honest 2-3 sentence read from a mentor who wants this person to win: who it genuinely fits and who should skip it.\",\n  \"external_links\": [{\"label\":\"...\",\"url\":\"...\"},{\"label\":\"...\",\"url\":\"...\"}],\n  \"internal_link_anchors\": [\"short topic phrase\",\"short topic phrase\",\"short topic phrase\"],\n  \"trend_score\": 78,\n  \"tier\": \"free\"\n}\n\nSCORING RULES:\n- trend_score: honest integer 55-98 for THIS micro-niche's genuine current demand. Spread the range across a batch; do not cluster near 90.\n- tier: \"premium\" only if trend_score >= 88, else \"free\".\n\nBefore you output, silently check: does this read like someone who has actually seen this business up close, in plain human language specific to its real industry, with every section genuinely different from a template? If any field still sounds like generic startup-pitch filler, rewrite it before outputting."
+      },
+      "id": "llm-0001",
+      "name": "Basic LLM Chain",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [
+        352,
+        16
+      ]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.6-flash",
+        "options": {
+          "temperature": 1
+        }
+      },
+      "id": "gem-0001",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        432,
+        240
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "lgFdMUWoybo6ngbt",
+          "name": "Current"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const inputData = $input.item.json;\nlet rawText = inputData.text || inputData.output || (typeof inputData === 'string' ? inputData : JSON.stringify(inputData));\nconst cleaned = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();\n\nlet parsed = null;\ntry { parsed = JSON.parse(cleaned); } catch (e) { parsed = null; }\n\nlet loopContext = {};\ntry { loopContext = $('Loop Over Items').item.json; } catch (err) { loopContext = {}; }\n\nconst ideaId = loopContext.idea_id || inputData.idea_id || (\"IDEA-\" + Date.now());\n\nconst source = {\n  idea_id: ideaId,\n  category_id: loopContext.category_id || \"\",\n  category_name: loopContext.category_name || \"\",\n  category_slug: loopContext.category_slug || \"\",\n  subcategory_id: loopContext.subcategory_id || \"\",\n  subcategory_name: loopContext.subcategory_name || \"\",\n  subcategory_slug: loopContext.subcategory_slug || \"\",\n  focus_keyword: loopContext.focus_keyword || \"\",\n  additional_keyword_1: loopContext.additional_keyword_1 || \"\",\n  additional_keyword_2: loopContext.additional_keyword_2 || \"\",\n  business_description: loopContext.business_description || \"\",\n  collection_id: loopContext.collection_id || \"\"\n};\n\n// If parsing failed or required fields missing, mark for retry — never fabricate biased placeholder content.\nif (!parsed || !parsed.title || !parsed.summary) {\n  return { json: { ...source, status: \"needs_retry\" } };\n}\n\nconst str = (v) => (v === undefined || v === null) ? \"\" : String(v);\nconst arr = (v) => Array.isArray(v) ? JSON.stringify(v) : (typeof v === 'string' ? v : JSON.stringify(v || []));\nconst trendScore = parseInt(parsed.trend_score, 10) || 70;\nconst tier = parsed.tier || (trendScore >= 88 ? \"premium\" : \"free\");\n\nreturn {\n  json: {\n    ...source,\n    title: str(parsed.title),\n    slug: str(parsed.slug),\n    seo_title: str(parsed.seo_title),\n    meta_description: str(parsed.meta_description),\n    summary: str(parsed.summary),\n    market_opportunity: str(parsed.market_opportunity),\n    target_customer: str(parsed.target_customer),\n    how_you_make_money: str(parsed.how_you_make_money),\n    startup_cost: str(parsed.startup_cost),\n    income_potential: str(parsed.income_potential),\n    competition_edge: str(parsed.competition_edge),\n    getting_started_steps: arr(parsed.getting_started_steps),\n    tools_needed: arr(parsed.tools_needed),\n    time_to_first_customer: str(parsed.time_to_first_customer),\n    faq_json: arr(parsed.faq_json),\n    tags: arr(parsed.tags),\n    pros_json: arr(parsed.pros_json),\n    cons_json: arr(parsed.cons_json),\n    verdict: str(parsed.verdict),\n    external_links: arr(parsed.external_links),\n    internal_link_anchors: arr(parsed.internal_link_anchors),\n    trend_score: trendScore,\n    tier: tier,\n    status: \"completed\"\n  }\n};"
+      },
+      "id": "parse-0001",
+      "name": "Code JSON Parser",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Jx4-kCmcKXl2eOsivEBWnlSmkkGOql49_x54ssKqDZ8",
+          "mode": "list",
+          "cachedResultName": "Superbase Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Jx4-kCmcKXl2eOsivEBWnlSmkkGOql49_x54ssKqDZ8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1572637316,
+          "mode": "list",
+          "cachedResultName": "Updated SuperBase1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Jx4-kCmcKXl2eOsivEBWnlSmkkGOql49_x54ssKqDZ8/edit#gid=1572637316"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "idea_id": "={{ $json.idea_id }}",
+            "title": "={{ $json.title }}",
+            "slug": "={{ $json.slug }}",
+            "seo_title": "={{ $json.seo_title }}",
+            "meta_description": "={{ $json.meta_description }}",
+            "summary": "={{ $json.summary }}",
+            "market_opportunity": "={{ $json.market_opportunity }}",
+            "target_customer": "={{ $json.target_customer }}",
+            "how_you_make_money": "={{ $json.how_you_make_money }}",
+            "startup_cost": "={{ $json.startup_cost }}",
+            "income_potential": "={{ $json.income_potential }}",
+            "competition_edge": "={{ $json.competition_edge }}",
+            "getting_started_steps": "={{ $json.getting_started_steps }}",
+            "tools_needed": "={{ $json.tools_needed }}",
+            "time_to_first_customer": "={{ $json.time_to_first_customer }}",
+            "faq_json": "={{ $json.faq_json }}",
+            "tags": "={{ $json.tags }}",
+            "pros_json": "={{ $json.pros_json }}",
+            "cons_json": "={{ $json.cons_json }}",
+            "verdict": "={{ $json.verdict }}",
+            "external_links": "={{ $json.external_links }}",
+            "internal_link_anchors": "={{ $json.internal_link_anchors }}",
+            "trend_score": "={{ $json.trend_score }}",
+            "tier": "={{ $json.tier }}",
+            "status": "={{ $json.status }}"
+          },
+          "matchingColumns": [
+            "idea_id"
+          ],
+          "schema": [
+            {
+              "id": "idea_id",
+              "displayName": "idea_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "category_id",
+              "displayName": "category_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "category_name",
+              "displayName": "category_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "category_slug",
+              "displayName": "category_slug",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "subcategory_id",
+              "displayName": "subcategory_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "subcategory_name",
+              "displayName": "subcategory_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "subcategory_slug",
+              "displayName": "subcategory_slug",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "focus_keyword",
+              "displayName": "focus_keyword",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "additional_keyword_1",
+              "displayName": "additional_keyword_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "additional_keyword_2",
+              "displayName": "additional_keyword_2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "business_description",
+              "displayName": "business_description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "collection_id",
+              "displayName": "collection_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "slug",
+              "displayName": "slug",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "seo_title",
+              "displayName": "seo_title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "meta_description",
+              "displayName": "meta_description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "market_opportunity",
+              "displayName": "market_opportunity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "target_customer",
+              "displayName": "target_customer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "how_you_make_money",
+              "displayName": "how_you_make_money",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "startup_cost",
+              "displayName": "startup_cost",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "income_potential",
+              "displayName": "income_potential",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "competition_edge",
+              "displayName": "competition_edge",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "getting_started_steps",
+              "displayName": "getting_started_steps",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tools_needed",
+              "displayName": "tools_needed",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "time_to_first_customer",
+              "displayName": "time_to_first_customer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "faq_json",
+              "displayName": "faq_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tags",
+              "displayName": "tags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "pros_json",
+              "displayName": "pros_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "cons_json",
+              "displayName": "cons_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "verdict",
+              "displayName": "verdict",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "external_links",
+              "displayName": "external_links",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "internal_link_anchors",
+              "displayName": "internal_link_anchors",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "trend_score",
+              "displayName": "trend_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tier",
+              "displayName": "tier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "upd-0001",
+      "name": "Update Row in Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        928,
+        128
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "bmcUgKzJNC8kvUCj",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "ideas",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "idea_id",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.idea_id }}"
+            },
+            {
+              "fieldId": "category_id",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.category_id }}"
+            },
+            {
+              "fieldId": "category_name",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.category_name }}"
+            },
+            {
+              "fieldId": "category_slug",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.category_slug }}"
+            },
+            {
+              "fieldId": "subcategory_id",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.subcategory_id }}"
+            },
+            {
+              "fieldId": "subcategory_name",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.subcategory_name }}"
+            },
+            {
+              "fieldId": "subcategory_slug",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.subcategory_slug }}"
+            },
+            {
+              "fieldId": "focus_keyword",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.focus_keyword }}"
+            },
+            {
+              "fieldId": "additional_keyword_1",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.additional_keyword_1 }}"
+            },
+            {
+              "fieldId": "additional_keyword_2",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.additional_keyword_2 }}"
+            },
+            {
+              "fieldId": "business_description",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.business_description }}"
+            },
+            {
+              "fieldId": "collection_id",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.collection_id }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.status }}"
+            },
+            {
+              "fieldId": "title",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.title }}"
+            },
+            {
+              "fieldId": "slug",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.slug }}"
+            },
+            {
+              "fieldId": "seo_title",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.seo_title }}"
+            },
+            {
+              "fieldId": "meta_description",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.meta_description }}"
+            },
+            {
+              "fieldId": "summary",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.summary }}"
+            },
+            {
+              "fieldId": "market_opportunity",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.market_opportunity }}"
+            },
+            {
+              "fieldId": "target_customer",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.target_customer }}"
+            },
+            {
+              "fieldId": "how_you_make_money",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.how_you_make_money }}"
+            },
+            {
+              "fieldId": "startup_cost",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.startup_cost }}"
+            },
+            {
+              "fieldId": "income_potential",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.income_potential }}"
+            },
+            {
+              "fieldId": "competition_edge",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.competition_edge }}"
+            },
+            {
+              "fieldId": "getting_started_steps",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.getting_started_steps }}"
+            },
+            {
+              "fieldId": "tools_needed",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.tools_needed }}"
+            },
+            {
+              "fieldId": "time_to_first_customer",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.time_to_first_customer }}"
+            },
+            {
+              "fieldId": "faq_json",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.faq_json }}"
+            },
+            {
+              "fieldId": "tags",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.tags }}"
+            },
+            {
+              "fieldId": "pros_json",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.pros_json }}"
+            },
+            {
+              "fieldId": "cons_json",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.cons_json }}"
+            },
+            {
+              "fieldId": "verdict",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.verdict }}"
+            },
+            {
+              "fieldId": "external_links",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.external_links }}"
+            },
+            {
+              "fieldId": "internal_link_anchors",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.internal_link_anchors }}"
+            },
+            {
+              "fieldId": "trend_score",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.trend_score }}"
+            },
+            {
+              "fieldId": "tier",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.tier }}"
+            }
+          ]
+        }
+      },
+      "id": "sup-0001",
+      "name": "Sync to Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1152,
+        240
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "B7VX9z6RAJCh89LB",
+          "name": "Supabase account"
+        }
+      },
+      "notes": "Inserts into the ideas table, mapping every column (existing + new rich/SEO fields) explicitly from Code JSON Parser output."
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Read Pending Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Pending Rows": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Code JSON Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code JSON Parser": {
+      "main": [
+        [
+          {
+            "node": "Update Row in Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Row in Sheet": {
+      "main": [
+        [
+          {
+            "node": "Sync to Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sync to Supabase": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "bbi-v2-0001",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "id": "BBIIdeaPipelineV2",
+  "tags": []
+}
