@@ -22,6 +22,10 @@ import {
   SiN8N,
   SiGooglegemini,
 } from "react-icons/si";
+// ChatGPT (OpenAI) and Grok (xAI) marks live in the Remix Icon set, not
+// Simple Icons — so all 18 entries below render a real brand logo, none a
+// text placeholder.
+import { RiOpenaiFill, RiGrokAiFill } from "react-icons/ri";
 
 import { AmbientScene } from "@/components/ambient-scene";
 import { LiveSearch } from "@/components/live-search";
@@ -56,44 +60,48 @@ function FooterCta() {
   );
 }
 
-type BuiltWithItem = { name: string; href: string; Icon: IconType | null };
+type BuiltWithItem = { name: string; href: string; Icon: IconType; color: string };
 
 /**
  * Trust/stack showcase, placed directly before the footer on every page.
  * Each entry links out to that technology's real official site and shows
- * its real brand mark from the licensed Simple Icons set (via
- * react-icons/si) — no more monogram-initial placeholders.
- *
- * Two entries (ChatGPT, Grok) have no icon here on purpose, not by
- * oversight: Simple Icons pulled both marks after trademark disputes with
- * OpenAI/xAI, so there is no licensed asset to show. Rather than fabricate
- * a logo, those two keep a plain text label. Icons render in one flat
- * tone (not each brand's exact hex) so this list never shows a guessed —
- * and possibly wrong — brand color.
+ * its real brand mark, rendered in that brand's own color so it reads as
+ * the actual recognizable logo (not a faint one-tone glyph). All 18 have a
+ * real logo — the ChatGPT (OpenAI) and Grok (xAI) marks come from the
+ * Remix Icon set since Simple Icons doesn't carry them. Marks that are
+ * black in their brand guidelines (shadcn, Vercel, GitHub, ChatGPT, Grok)
+ * use the site's near-black foreground so they stay crisp on the light
+ * glass surface.
  */
+const INK = "#0C0C25";
 const BUILT_WITH: BuiltWithItem[] = [
-  { name: "React", href: "https://react.dev", Icon: SiReact },
-  { name: "TypeScript", href: "https://www.typescriptlang.org", Icon: SiTypescript },
-  { name: "Vite", href: "https://vite.dev", Icon: SiVite },
-  { name: "Tailwind CSS", href: "https://tailwindcss.com", Icon: SiTailwindcss },
-  { name: "shadcn/ui", href: "https://ui.shadcn.com", Icon: SiShadcnui },
-  { name: "GSAP", href: "https://gsap.com", Icon: SiGsap },
-  { name: "Framer Motion", href: "https://motion.dev", Icon: SiFramer },
-  { name: "TanStack", href: "https://tanstack.com", Icon: SiTanstack },
-  { name: "Node.js", href: "https://nodejs.org", Icon: SiNodedotjs },
-  { name: "Supabase", href: "https://supabase.com", Icon: SiSupabase },
-  { name: "Vercel", href: "https://vercel.com", Icon: SiVercel },
-  { name: "GitHub", href: "https://github.com", Icon: SiGithub },
-  { name: "Claude", href: "https://claude.com", Icon: SiClaude },
-  { name: "Claude Code", href: "https://claude.com", Icon: SiClaudecode },
-  { name: "n8n", href: "https://n8n.io", Icon: SiN8N },
-  { name: "ChatGPT", href: "https://chatgpt.com", Icon: null },
-  { name: "Grok", href: "https://x.ai", Icon: null },
-  { name: "Gemini", href: "https://gemini.google.com", Icon: SiGooglegemini },
+  { name: "React", href: "https://react.dev", Icon: SiReact, color: "#61DAFB" },
+  {
+    name: "TypeScript",
+    href: "https://www.typescriptlang.org",
+    Icon: SiTypescript,
+    color: "#3178C6",
+  },
+  { name: "Vite", href: "https://vite.dev", Icon: SiVite, color: "#646CFF" },
+  { name: "Tailwind CSS", href: "https://tailwindcss.com", Icon: SiTailwindcss, color: "#06B6D4" },
+  { name: "shadcn/ui", href: "https://ui.shadcn.com", Icon: SiShadcnui, color: INK },
+  { name: "GSAP", href: "https://gsap.com", Icon: SiGsap, color: "#0AE448" },
+  { name: "Framer Motion", href: "https://motion.dev", Icon: SiFramer, color: "#0055FF" },
+  { name: "TanStack", href: "https://tanstack.com", Icon: SiTanstack, color: "#FF4154" },
+  { name: "Node.js", href: "https://nodejs.org", Icon: SiNodedotjs, color: "#5FA04E" },
+  { name: "Supabase", href: "https://supabase.com", Icon: SiSupabase, color: "#3FCF8E" },
+  { name: "Vercel", href: "https://vercel.com", Icon: SiVercel, color: INK },
+  { name: "GitHub", href: "https://github.com", Icon: SiGithub, color: INK },
+  { name: "Claude", href: "https://claude.com", Icon: SiClaude, color: "#D97757" },
+  { name: "Claude Code", href: "https://claude.com", Icon: SiClaudecode, color: "#D97757" },
+  { name: "n8n", href: "https://n8n.io", Icon: SiN8N, color: "#EA4B71" },
+  { name: "ChatGPT", href: "https://chatgpt.com", Icon: RiOpenaiFill, color: INK },
+  { name: "Grok", href: "https://x.ai", Icon: RiGrokAiFill, color: INK },
+  { name: "Gemini", href: "https://gemini.google.com", Icon: SiGooglegemini, color: "#8E75B2" },
 ];
 
 function BuiltWithItemLink({ item }: { item: BuiltWithItem }) {
-  const { name, href, Icon } = item;
+  const { name, href, Icon, color } = item;
   return (
     <a
       href={href}
@@ -101,16 +109,7 @@ function BuiltWithItemLink({ item }: { item: BuiltWithItem }) {
       rel="noopener noreferrer"
       className="glass glass-hover flex shrink-0 items-center gap-2.5 rounded-full px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
     >
-      {Icon ? (
-        <Icon aria-hidden className="h-5 w-5 shrink-0 text-accent" />
-      ) : (
-        <span
-          aria-hidden
-          className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gradient-to-r from-primary to-accent text-[9px] font-black text-primary-foreground"
-        >
-          {name.slice(0, 2).toUpperCase()}
-        </span>
-      )}
+      <Icon aria-hidden className="h-6 w-6 shrink-0" style={{ color }} />
       <span className="whitespace-nowrap">{name}</span>
     </a>
   );
