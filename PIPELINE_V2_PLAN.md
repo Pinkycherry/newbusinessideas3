@@ -72,6 +72,14 @@ slug	seo_title	meta_description	market_opportunity	target_customer	how_you_make_
 - Existing rows just get empty cells for the new columns = same as NULL. No existing data is lost.
 - The workflow's "Update Row in Sheet" node already knows these columns and will fill them on each run.
 
+## Slugs — the 3-slug plan stays; only the SEO slug rule improved
+
+- URL structure is unchanged: `/category/<category_slug>`, `/category/<category_slug>/<subcategory_slug>`, `/idea/<slug>`.
+- `category_slug` + `subcategory_slug` are generated in **Claude (Stage 1)** and are never rebuilt or touched by the workflow.
+- The **SEO `slug`** (the `/idea/` URL) is the only slug generated in **Gemini**. Its rule was rewritten to produce a **strong 3-5 word slug with no keyword stuffing** — no chaining of all keywords, no repeating the subcategory. Example: `grape-vine-cutting-side-income` instead of `backyard-grape-vine-cutting-sales-home-growers-passive-income`.
+- **Nothing deleted or replaced.** Existing 280 slugs are left as-is (changing a live slug breaks its URL). Only new ideas get the cleaner slug.
+- `slug` has a UNIQUE constraint in Supabase; a rare collision fails that one insert and marks the row `needs_retry` (visible, safe) — no numbers appended to keep URLs clean.
+
 ## Order to roll this out (safe sequence)
 
 1. **Run the Supabase migration** (SQL above) — additive, 280 rows safe.
