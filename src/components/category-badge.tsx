@@ -7,8 +7,19 @@ import { usePillInteraction } from "@/hooks/use-pill-interaction";
  * Single reusable pill for every category (or category-shaped) tag in the
  * app — header dropdown, Golden Tree nodes, footer "Popular categories".
  * Visual styling for `.glass-pill`-class links lives centrally in
- * styles.css; this component just centralizes the markup (dot, truncation,
+ * styles.css; this component just centralizes the markup (dot, wrapping,
  * sizing) so every call site stays in sync.
+ *
+ * Long labels WRAP onto a second line rather than truncating with an
+ * ellipsis. `.glass-pill` centers its flex content (`justify-content:
+ * center`), and a `text-overflow: ellipsis` span inside a centered flex
+ * parent is unreliable (see the `.iv-tag-cloud .iv-tag` fix in styles.css
+ * for the original, more severe version of this bug — silent clipping with
+ * no "…" shown at all). Here the ellipsis rendered correctly, but it still
+ * meant 2 of the 10 "Browse by type" pills ("Zero Investment Business
+ * Ideas", "Work From Home Business Ideas") had real label text hidden
+ * behind it. Wrapping keeps every full label visible, on every call site,
+ * without depending on each caller opting in via a shared wrapper class.
  */
 type CategoryBadgeBase = {
   label: string;
@@ -27,18 +38,22 @@ export function CategoryBadge(props: CategoryBadgeProps) {
   const pill = usePillInteraction<HTMLAnchorElement>();
 
   const sizeClasses =
-    size === "sm" ? "px-2.5 py-0.5 text-[11px] font-semibold" : "px-3 py-1.5 text-[11px] font-bold";
+    size === "sm"
+      ? "px-2.5 py-1 text-[11px] font-semibold cb-sm"
+      : "px-3 py-2 text-[11px] font-bold cb-md";
 
   const content: ReactNode = (
     <>
       {dot && (
         <span aria-hidden className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-white/80" />
       )}
-      <span className="truncate">{label}</span>
+      <span className="category-badge-label whitespace-normal break-words leading-snug">
+        {label}
+      </span>
     </>
   );
 
-  const linkClassName = `glass-pill inline-flex max-w-full items-center gap-1.5 truncate rounded-full normal-case tracking-normal shadow-lg transition-colors ${sizeClasses} ${className}`;
+  const linkClassName = `glass-pill category-badge inline-flex max-w-full items-center gap-1.5 rounded-full text-center normal-case tracking-normal shadow-lg transition-colors ${sizeClasses} ${className}`;
   const motionProps = {
     ref: pill.ref,
     onMouseEnter: pill.onMouseEnter,

@@ -792,9 +792,25 @@ html.light .tree-asset-container::before {
   .bbi-orbit-ring-outer, .bbi-orbit-dot, .bbi-orbit-node-label { animation: none !important; opacity: 1 !important; }
 }
 
-/* --- GOLDEN TREE: mobile nodes float over the artwork, not in a list --- */
+/* --- GOLDEN TREE: mobile nodes float over the artwork, not in a list ---
+   `width: max-content` matters here, not just cosmetic: these nodes are
+   `position: absolute` with only `left` set (no `right`), so an `auto`-width
+   box's shrink-to-fit sizing is bounded by "containing-block width minus
+   left offset" — for a node placed toward the right edge (e.g. x:70%) that
+   leaves very little room. A `white-space: nowrap` label (the pre-wrap-fix
+   CategoryBadge) was immune to this because nowrap forces min-content to
+   equal max-content, so shrink-to-fit always resolved to the label's full
+   natural width regardless. Once CategoryBadge's label became wrappable
+   (white-space: normal), min-content shrank to just its widest single word,
+   so the same squeeze now had room to actually apply — a short label like
+   "Work From Home" was getting force-wrapped one word per line. `width:
+   max-content` opts these standalone nodes out of that squeeze entirely,
+   since their labels are always short by design and were never meant to
+   wrap in the first place (unlike the header dropdown/footer pills, which
+   sit in normal flex flow and don't have this absolute-position quirk). */
 .bbi-tree-node-m {
   position: absolute;
+  width: max-content;
   transform: translate(-50%, -50%);
   animation: bbi-tree-float 6s ease-in-out infinite;
 }
@@ -804,6 +820,7 @@ html.light .tree-asset-container::before {
 }
 /* --- GOLDEN TREE: desktop nodes drift gently instead of sitting static --- */
 .bbi-tree-node-d {
+  width: max-content;
   transform: translate(-50%, -50%);
   animation: bbi-tree-float-d 7s ease-in-out infinite;
 }
@@ -1263,6 +1280,31 @@ html.light .iv-tag-cloud .iv-tag:hover {
   background: linear-gradient(180deg, rgba(238, 236, 248, 1) 0%, rgba(218, 217, 242, 0.98) 100%) !important;
   border-color: rgba(70, 67, 186, 0.42) !important;
   color: #2B2871 !important;
+}
+
+/* ============================================================
+   CATEGORY BADGE — every `CategoryBadge` pill (component:
+   src/components/category-badge.tsx) wraps long labels onto a second
+   line instead of truncating, using the component's own baked-in
+   `.category-badge`/`.category-badge-label` classes (Tailwind's
+   `whitespace-normal`/`break-words` on the label already do the actual
+   wrapping — see the component). This block only adds the visual
+   polish so a wrapped pill still reads as intentional rather than
+   cramped: a floor height so short single-line labels keep their
+   original proportions, and enough line-height for a readable second
+   line. Scoped to `.category-badge` itself (not just `.iv-tag-cloud
+   .iv-tag` above) because CategoryBadge also renders standalone pills
+   that never sit inside a tag-cloud wrapper — the Golden Tree's
+   absolutely-positioned nodes on the homepage.
+   ============================================================ */
+.category-badge.cb-sm {
+  min-height: 1.75rem;
+}
+.category-badge.cb-md {
+  min-height: 2.25rem;
+}
+.category-badge-label {
+  text-wrap: balance;
 }
 
 /* ============================================================
