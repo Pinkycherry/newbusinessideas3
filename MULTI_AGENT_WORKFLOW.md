@@ -39,3 +39,20 @@ Agent 2 (mobile menu) merges **before** Agent 6 (footer copy) — both touch `si
 ## Honest time note
 
 Founder asked for full completion by 11:00 AM IST (started ~9:50 AM IST). Given this session's own established verification bar (real `tsc`/`eslint`/`build`/Playwright checks per change, not just written code), 6 agents doing that properly in parallel realistically land in 20–40 minutes each once fully underway, plus serial merge/verify time after. Real, verified progress across all 6 by 11 AM is the goal; if brand-voice coverage (Agents 4–6) is the piece still running past 11, that will be reported plainly rather than marked done early.
+
+---
+
+# Round 2 — 2026-08-14 (remaining pending items)
+
+Six agents, each strictly one disjoint file set (no two agents touch the same file), same rules as Round 1 (only transform/opacity in loops; tsc+eslint+build clean before commit; revert BBI_LOCAL_MOCK + routeTree.gen.ts; PENDING.md entry per change; zero emojis; no payment/Razorpay code; no Gemini/n8n pipeline; never reintroduce the cursor). Coordinator merges each branch serially with a full build after each.
+
+| # | Agent | Files (exclusive) | Task |
+|---|---|---|---|
+| 1 | Palette Cleanup | `src/components/ambient-scene.tsx` | Replace the 2 hardcoded orange `oklch()` ring accents with the brand indigo/violet tokens used everywhere else. |
+| 2 | Copy Consistency | `src/routes/services.tsx` | Fix the mechanism-leak phrasing (same fix already applied to about.tsx); verify brand name/domain/zero-emoji. |
+| 3 | Pill Truncation | `src/components/category-badge.tsx`, `src/styles.css` | Let long `CategoryBadge` labels wrap instead of clip; sole owner of styles.css this round. |
+| 4 | llms.txt | new file(s) only (`public/llms.txt` + any build wiring) | Generate llms.txt with real catalog numbers (Build Order step 16), no external deps. |
+| 5 | Idea-page internal linking | `src/routes/idea.$slug.tsx` | Add in-content keyword-matched internal links, max 3 (Section 8.2 / step 11), distinct from the existing related-idea cards. |
+| 6 | Loading-flash polish | `src/components/idea-card.tsx` | Remove the brief "locked" flash before the auth session resolves, using the existing `auth.status` states only (no hook signature changes). |
+
+Blocked / not in this round (need founder assets or external systems, NOT payment): ChatGPT+Grok real logos (need a licensed asset URL from founder), FAQ pool generation + content pipeline (need the n8n/Gemini systems), Golden Tree transparency polish (needs a screenshot round-trip), header-dropdown/footer reference layouts (need founder reference images), Section 12.2 refresh gradient (founder said they'd supply a Figma reference — not guessing it blind).
