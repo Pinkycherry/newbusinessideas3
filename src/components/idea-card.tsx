@@ -19,7 +19,12 @@ export function IdeaCard({
   const auth = useAuth();
   // PROJECT_BRIEF.md Section 3.2 — idea content is blurred for anonymous
   // visitors; the browse/category page shell around it stays fully visible.
-  const locked = auth.status !== "authenticated";
+  // While the session is still resolving (auth.status === "loading"), we do
+  // NOT know yet whether the visitor is signed in — treat that brief window
+  // as unlocked-neutral rather than locked, so an already-logged-in user
+  // never sees a flash of the "Sign in to view" overlay. Only the definitive
+  // "anonymous" status renders the locked treatment.
+  const locked = auth.status === "anonymous";
 
   // Organic blob outline, deterministic per idea so neighbouring cards differ.
   const blob =
