@@ -79,11 +79,11 @@ export function AmbientScene() {
         style={{ opacity: 0.32, animation: "drift-d 29s linear infinite", animationDelay: "-5s" }}
       />
       <div
-        className="absolute left-[18%] top-[14%] h-56 w-56 rounded-full border-[26px] border-[oklch(0.723_0.161_56)] blur-[3px]"
+        className="absolute left-[18%] top-[14%] h-56 w-56 rounded-full border-[26px] border-[oklch(0.658_0.125_283.5)] blur-[3px]"
         style={{ opacity: 0.25, animation: "drift-e 47s linear infinite" }}
       />
       <div
-        className="absolute right-[30%] bottom-[8%] h-40 w-40 rounded-full border-[20px] border-[oklch(0.805_0.135_65)] blur-[3px]"
+        className="absolute right-[30%] bottom-[8%] h-40 w-40 rounded-full border-[20px] border-[oklch(0.79_0.065_285.8)] blur-[3px]"
         style={{ opacity: 0.25, animation: "drift-f 61s linear infinite", animationDelay: "-14s" }}
       />
     </div>
