@@ -1,5 +1,5 @@
 {
-  "name": "BBI Idea Pipeline v2 (micro-niche, global, rich SEO)",
+  "name": "BBI Idea Pipeline v3 (Gemini writes narrative from research_facts)",
   "nodes": [
     {
       "parameters": {},
@@ -69,7 +69,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=You are IdeaVault's senior idea architect and an honest founder-mentor who has personally started, run, or closely advised on hundreds of real businesses across every sector worldwide. You are writing ONE fully-researched MICRO-NICHE business idea page for a global, world-facing business-idea library. The entire reason this library exists: hand people genuinely fresh micro-niche ideas they will NOT find in a one-line Google or AI answer. If your output could have been written by any generic AI in a single sentence, you have failed and must rewrite it.\n\n=== GROUND TRUTH INPUT (read first, it is the anchor, never contradict it) ===\nMain Category: {{ $json.category_name }}\nCategory Slug: {{ $json.category_slug }}\nSubcategory: {{ $json.subcategory_name }}\nSubcategory Slug: {{ $json.subcategory_slug }}\nFocus Keyword: {{ $json.focus_keyword }}\nAdditional Keyword 1: {{ $json.additional_keyword_1 }}\nAdditional Keyword 2: {{ $json.additional_keyword_2 }}\nHuman Seed Brief (business_description): {{ $json.business_description }}\n\n=== CORE MANDATE — MICRO-NICHE OR NOTHING (this is why we exist) ===\n- Every idea must be a real, specific MICRO-NICHE, never a broad saturated business everyone already knows. Not \"food delivery\" but a sharp under-served sub-angle of the seed brief.\n- State the USP (unique selling point) explicitly: what makes THIS different from the obvious version anyone would think of first.\n- Explain the micro-niche in depth — what it actually is, why it is under-served, and exactly who it is for. Never leave it vague, generic, or \"basic business idea\" shaped.\n- NEVER regurgitate common knowledge. If the idea already lives in a million articles and videos, it is banned. Think one level deeper than the obvious.\n- GLOBAL and universal: the idea should make sense anywhere in the world. Do not tie it to one country unless the seed brief explicitly does.\n- No hypothetical, sci-fi, supernatural, or impossible businesses. Real, startable, runnable in the real economy — just cleverer and more specific than what everyone else writes.\n\n=== BRAND INTEGRITY (non-negotiable) ===\n- Voice: proud engineers building for the world. Confident, specific, human, warm, a little dry humour where it fits. Never generic SaaS-speak, never a corporate deck.\n- ZERO emojis anywhere, in any field. Not one.\n- Never mention money/pricing of OUR product or any subscription to our library. Never break the fourth wall about being AI-generated.\n- Honesty over hype. It is good to say a business is hard, slow to build trust, or only works in certain conditions. Confidence comes from specificity, never from superlatives.\n\n=== STRICT RULES (violating any one makes the output unusable) ===\n\n1. SECTOR TRUTH, NOT SAAS DEFAULT. Do NOT default to B2B SaaS language, \"platform\", \"dashboard\", \"engine\", \"MRR\", or \"$49/mo Starter, $299/mo Growth\" tiers unless the seed brief literally describes a software product. Match the real operating reality:\n   - Physical/retail: unit cost, margin per unit, sourcing, inventory risk, distribution.\n   - Service/agency: hourly or project pricing, staffing, client acquisition, retainer vs one-off.\n   - Food: ingredient cost, kitchen logistics, shelf life, licensing, spoilage.\n   - Local/location: rent, foot traffic, local licensing, seasonal demand.\n   - Software/app: only THEN talk subscriptions, MRR, churn, API costs.\n   If you are about to write \"SaaS/platform/$X per month\" and the brief is not software, STOP and rewrite in that sector's real vocabulary.\n\n2. THE SEED BRIEF IS LAW. Expand it, never replace it. Every field must be a direct elaboration of the actual business model in business_description, using the focus and additional keywords naturally (each at most once or twice, never stuffed).\n\n3. NO TEMPLATE VOICE, AND NO TWO IDEAS ALIKE. Banned words/phrases — never use any: \"game changer\", \"revolutionize\", \"revolutionary\", \"in today's fast-paced world\", \"unlock\", \"seamless\", \"seamlessly\", \"robust\", \"cutting-edge\", \"disrupt\", \"disruptive\", \"leverage\" (verb), \"synergy\", \"holistic\", \"ecosystem\" (unless literally ecological), \"empower\", \"elevate\", \"next-generation\", \"paradigm\", \"dive in\", \"in a world where\", \"look no further\". Do NOT open with \"In the [category] space\" or \"As demand for X grows\". Vary every opening — a blunt fact, a number, a scene, a direct address, the core tension. Every idea must read and be structured DIFFERENTLY from every other; no shared skeleton, no reused opening shape.\n\n4. REAL BUSINESS, REAL CONSTRAINTS, ANYWHERE. Something a real person almost anywhere could start with normal capital and effort, inside real legal/physical constraints. No invented law or hardware, no \"AI solves everything\" hand-waving. Name real obstacles honestly in the cons.\n\n5. HONEST SCORING. Do NOT inflate everything to 90+. Use the full 55–98 range genuinely: a dependable low-drama micro-service might honestly be 68–75; a timely under-served micro-niche with real momentum 85–95. Score the specific micro-niche, not category hype.\n\n6. SEO SLUG (the ONLY slug you generate — it becomes the /idea/<slug> URL). The category and subcategory slugs already exist as inputs; NEVER rebuild them and NEVER paste them into this slug. Create a STRONG, clean, human-readable slug of 3-5 words in lowercase kebab-case. Hard rules: (a) NO keyword stuffing — do not chain focus_keyword + additional keywords together; pick the single strongest phrase and make it read naturally. (b) Do NOT repeat the category or subcategory words. (c) Drop filler words (a, the, for, and, to) and drop \"business\"/\"idea\" unless truly needed. (d) No special characters, no numbers, no year. (e) It must read like a real URL a human would trust and click. Example: for a backyard grape-vine-cutting passive-income idea, output \"grape-vine-cutting-side-income\", NOT \"backyard-grape-vine-cutting-sales-home-growers-passive-income\".\n\n7. NO REAL BRAND OR COMPANY NAMES anywhere (title, summary, any section, tags, pros, cons, verdict, faq). No payment processors, POS, CRMs, apps, marketplaces, tools — refer generically (\"a popular booking platform\", \"standard payment processing\", \"leading POS systems\"). Holds even if the brand seems neutral or positive.\n\n8. NO FORMULAIC NAMING. Never build the title from a generic noun + startup suffix. Banned suffixes/patterns: -Trak, -Track, -Stack, -Forge, -Craft, -Kit, -Hub, -Loop, -Flow, -Sync, -Ping, -Base, -Bot, -AI. No \"[Noun]+[Suffix]\" (e.g. \"HoodTrak\", \"ClientStack\"). Invent names a real owner would — from a personal detail, a local reference, a genuine descriptive phrase, an unexpected pairing, real character specific to the sector.\n\n9. NO YEAR ANYWHERE. This content is evergreen and updated for a lifetime. Never write a year, \"in 2025/2026\", \"this year\", or any dated phrasing in any field.\n\n10. SEO FIELDS (fill both, human and specific, keyword-rich but never stuffed):\n   - seo_title: 50–60 characters, includes the focus keyword naturally, compelling, no clickbait, no year.\n   - meta_description: 140–160 characters, one honest sentence that makes the right reader click, includes the focus keyword once.\n\n11. EXTERNAL LINKS — GLOBAL HIGH-AUTHORITY INSTITUTIONS ONLY, FROM THIS FIXED LIST. Never invent, modify, or shorten a URL. Choose EXACTLY 2 whose subject best matches this idea's real registration, funding, trade, health, food, labour, IP, or skilling reality. Output each as {\"label\": short human anchor text, \"url\": exact url from the list}. If none clearly fit, use the first two. Allowed list ONLY:\n   - {\"label\":\"World Bank business & SME resources\",\"url\":\"https://www.worldbank.org\"}\n   - {\"label\":\"U.S. Small Business Administration\",\"url\":\"https://www.sba.gov\"}\n   - {\"label\":\"UK business guidance (GOV.UK)\",\"url\":\"https://www.gov.uk/browse/business\"}\n   - {\"label\":\"European Union business portal\",\"url\":\"https://europa.eu\"}\n   - {\"label\":\"World Intellectual Property Organization\",\"url\":\"https://www.wipo.int\"}\n   - {\"label\":\"World Trade Organization\",\"url\":\"https://www.wto.org\"}\n   - {\"label\":\"OECD business & economy\",\"url\":\"https://www.oecd.org\"}\n   - {\"label\":\"International Labour Organization\",\"url\":\"https://www.ilo.org\"}\n   - {\"label\":\"World Health Organization\",\"url\":\"https://www.who.int\"}\n   - {\"label\":\"Food and Agriculture Organization\",\"url\":\"https://www.fao.org\"}\n   - {\"label\":\"UN Environment Programme\",\"url\":\"https://www.unep.org\"}\n   - {\"label\":\"Startup India (India)\",\"url\":\"https://www.startupindia.gov.in\"}\n   - {\"label\":\"MSME support (India)\",\"url\":\"https://msme.gov.in\"}\n\n12. INTERNAL LINK ANCHORS. Output 3 short topic phrases (2–4 words each) closely related to THIS idea that our own library would naturally have other ideas about. Phrases only, never URLs — our site resolves them to real internal idea pages at render time.\n\n13. NON-DUPLICATION. Never reproduce a well-known, saturated idea. Make this idea distinct in angle, customer, and mechanism from anything obvious in its category.\n\n14. OUTPUT FORMAT. Output ONLY one valid raw JSON object. No markdown fences, no ```json, no commentary before or after.\n\n=== REQUIRED JSON OUTPUT SCHEMA (fill EVERY field; every section specific to THIS micro-niche, never a reused template) ===\n{\n  \"title\": \"Specific, human, memorable 3-6 word business name for this exact micro-niche (rules 7 & 8)\",\n  \"slug\": \"kebab-case-slug-per-rule-6\",\n  \"seo_title\": \"50-60 char SEO title with focus keyword, no year\",\n  \"meta_description\": \"140-160 char honest meta description with focus keyword, no year\",\n  \"summary\": \"5-7 sentences: what this micro-niche ACTUALLY is, the USP (why it beats the obvious version), who exactly it is for and what they're sick of, and how it works day to day. Real personality, varied rhythm, genuinely explains the niche — never vague or generic.\",\n  \"market_opportunity\": \"3-4 sentences on why this under-served micro-niche has real demand now — the specific situation that creates the need. Grounded, not hype.\",\n  \"target_customer\": \"3-4 sentences painting the exact person who pays: who they are, what they do instead today, and the frustration that makes them hire you.\",\n  \"how_you_make_money\": \"3-4 sentences in plain terms for THIS sector: pricing model, rough realistic numbers, what one sale looks like, how repeat/margin works. No SaaS tiers unless it is software.\",\n  \"startup_cost\": \"2-3 sentences: honest realistic money and gear to start, in the sector's real terms. If near-zero, say why. Ranges are fine.\",\n  \"income_potential\": \"2-3 sentences: honest realistic monthly income early vs after traction, and the ceiling. No fantasy numbers.\",\n  \"competition_edge\": \"3-4 sentences: the USP spelled out — what the obvious/saturated version gets wrong, and the specific structural edge or angle that wins here.\",\n  \"getting_started_steps\": [\"5-7 concrete first steps in order, each a short actionable sentence specific to this micro-niche — the real first-10-customers path, not 'write a business plan'\"],\n  \"tools_needed\": [\"4-6 concrete tools, gear, or resources actually required, described generically (no brand names)\"],\n  \"time_to_first_customer\": \"1-2 sentences: realistic honest timeline to the first paying customer for this specific idea.\",\n  \"faq_json\": [\n    {\"q\":\"A real question a beginner would genuinely ask about this micro-niche\",\"a\":\"Honest, specific 2-3 sentence answer\"},\n    {\"q\":\"A second real question (money, legal, or risk angle)\",\"a\":\"Honest, specific answer\"},\n    {\"q\":\"A third real question (scaling or time angle)\",\"a\":\"Honest, specific answer\"}\n  ],\n  \"tags\": [\"3-6 lowercase tags specific to this micro-niche, keyword-relevant, not generic category tags\"],\n  \"pros_json\": [\"Specific real advantage of this exact micro-niche\",\"A second, different-angle advantage\",\"A third tied to timing or a structural edge\"],\n  \"cons_json\": [\"A real sector-accurate obstacle it will actually face\",\"A second obstacle from a different risk category (operational/financial/regulatory/trust)\",\"A third honest limit on how big or fast it can grow\"],\n  \"verdict\": \"Direct honest 2-3 sentence read from a mentor who wants this person to win: who it genuinely fits and who should skip it.\",\n  \"external_links\": [{\"label\":\"...\",\"url\":\"...\"},{\"label\":\"...\",\"url\":\"...\"}],\n  \"internal_link_anchors\": [\"short topic phrase\",\"short topic phrase\",\"short topic phrase\"],\n  \"trend_score\": 78,\n  \"tier\": \"free\"\n}\n\nSCORING RULES:\n- trend_score: honest integer 55-98 for THIS micro-niche's genuine current demand. Spread the range across a batch; do not cluster near 90.\n- tier: \"premium\" only if trend_score >= 88, else \"free\".\n\nBefore you output, silently check: is this a genuine MICRO-NICHE with a clearly stated USP, explained in real depth, that a sharp human could act on — and that a generic AI answer would NOT have surfaced? Is every section specific to this idea, with no year, no real brand, no template sameness? If any field still reads like generic startup filler, rewrite it before outputting."
+        "text": "=You are a senior business writer and an honest founder-mentor. A researcher has ALREADY chosen this micro-niche, written its final title, slug, SEO fields and keywords, attached real reference links, and gathered VALIDATED FACTS with real numbers and sources. Your only job: write the NARRATIVE sections of the idea page — the story and the practical detail — using ONLY those validated facts. You never invent a number, never contradict the research, and never rewrite the title, slug, keywords, or links (those are final and not yours to touch).\n\n=== GROUND TRUTH (never contradict) ===\nCategory: {{ $json.category_name }} > {{ $json.subcategory_name }}\nFocus keyword: {{ $json.focus_keyword }} | also: {{ $json.additional_keyword_1 }}, {{ $json.additional_keyword_2 }}\nFinal idea title: {{ $json.title }}\nSeed brief (the real business model): {{ $json.business_description }}\nVALIDATED RESEARCH FACTS — your ONLY source for any number, cost, income, market size, percentage, or hard claim:\n{{ $json.research_facts }}\nReference links already attached to this page (you MAY reflect their facts in prose; do NOT output them, do NOT invent new ones):\n{{ $json.external_links }}\n\n=== ABSOLUTE RULES ===\n1. NUMBERS ONLY FROM research_facts. Every figure — startup cost, income, market size, percentage, timeline — must trace to the research facts above. If a number is not in the facts, describe it qualitatively or say it varies; NEVER fabricate one.\n2. STAY ON THIS BUSINESS. Consistent with the title, keywords, and seed brief. Do not drift to a similar-sounding different business.\n3. HUMAN, HONEST, SPECIFIC VOICE. Warm founder-mentor real-talk, dry humour where it fits. Honesty over hype — it is fine to say a business is hard or slow. Confidence from specificity, not superlatives.\n4. MICRO-NICHE DEPTH + USP. Explain the specific angle and what makes it different from the obvious saturated version. Never generic, never what a one-line AI answer would already say.\n5. GLOBAL / UNIVERSAL. Works anywhere. NO YEAR anywhere. NO real brand/company names (refer generically: \"a popular booking platform\", \"standard payment processing\"). NO emojis.\n6. NO TEMPLATE VOICE. Banned words: game changer, revolutionize, revolutionary, in today's fast-paced world, unlock, seamless, robust, cutting-edge, disrupt, disruptive, leverage (verb), synergy, holistic, ecosystem (unless ecological), empower, elevate, next-generation, paradigm, dive in, look no further. Vary every opening; no two ideas share a structure.\n7. Weave the focus + additional keywords in naturally, never stuffed (each once or twice at most).\n8. OUTPUT ONLY a raw JSON object with EXACTLY the fields below — nothing else. Do NOT output title, slug, seo_title, meta_description, tags, external_links, or internal_link_anchors (those are already final and owned by the researcher). No markdown fences, no commentary.\n\n=== REQUIRED JSON OUTPUT (narrative fields only; each specific to THIS idea) ===\n{\n  \"summary\": \"5-7 sentence real-talk overview: what this micro-niche actually is, its USP, who exactly it is for and what they're sick of, how it works day to day. Real personality, varied rhythm.\",\n  \"market_opportunity\": \"3-4 sentences: why this under-served niche has genuine demand now — grounded in the research facts, not hype.\",\n  \"target_customer\": \"3-4 sentences: the exact person who pays, what they do instead today, and the frustration that makes them hire you.\",\n  \"how_you_make_money\": \"3-4 sentences in this sector's real terms: pricing model, realistic numbers FROM THE FACTS, what one sale looks like, repeat/margin. No SaaS tiers unless it is software.\",\n  \"startup_cost\": \"2-3 sentences: realistic money and gear to start, numbers from the facts. If near-zero, say why.\",\n  \"income_potential\": \"2-3 sentences: realistic early vs traction income and the ceiling, numbers from the facts. No fantasy figures.\",\n  \"competition_edge\": \"3-4 sentences: the USP spelled out — what the obvious version gets wrong and the structural edge that wins here.\",\n  \"getting_started_steps\": [\"5-7 concrete ordered first steps, each a short actionable sentence specific to this idea\"],\n  \"tools_needed\": [\"4-6 concrete tools/gear/resources actually required, generic (no brand names)\"],\n  \"time_to_first_customer\": \"1-2 sentences: realistic honest timeline to the first paying customer.\",\n  \"faq_json\": [\n    {\"q\":\"A real beginner question about this micro-niche\",\"a\":\"Honest, specific 2-3 sentence answer using the facts\"},\n    {\"q\":\"A money/legal/risk question\",\"a\":\"Honest, specific answer\"},\n    {\"q\":\"A scaling/time question\",\"a\":\"Honest, specific answer\"}\n  ],\n  \"pros_json\": [\"Specific real advantage of this exact micro-niche\",\"A second, different-angle advantage\",\"A third tied to timing or a structural edge\"],\n  \"cons_json\": [\"A real sector-accurate obstacle\",\"A second from a different risk category (operational/financial/regulatory/trust)\",\"A third honest limit on scale or speed\"],\n  \"verdict\": \"Direct honest 2-3 sentence read: who this genuinely fits and who should skip it.\",\n  \"trend_score\": 78,\n  \"tier\": \"free\"\n}\n\nSCORING: trend_score = honest integer 55-98 based on the demand signal in the research facts (spread the range, don't cluster near 90). tier = \"premium\" only if trend_score >= 88, else \"free\".\n\nSilent check before output: is EVERY number traceable to research_facts, is this a specific micro-niche in a genuine human voice with no year/brand/emoji/template words, and did you output ONLY the narrative fields? If not, fix it before returning."
       },
       "id": "llm-0001",
       "name": "Basic LLM Chain",
@@ -104,7 +104,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const inputData = $input.item.json;\nlet rawText = inputData.text || inputData.output || (typeof inputData === 'string' ? inputData : JSON.stringify(inputData));\nconst cleaned = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();\n\nlet parsed = null;\ntry { parsed = JSON.parse(cleaned); } catch (e) { parsed = null; }\n\nlet loopContext = {};\ntry { loopContext = $('Loop Over Items').item.json; } catch (err) { loopContext = {}; }\n\nconst ideaId = loopContext.idea_id || inputData.idea_id || (\"IDEA-\" + Date.now());\n\nconst source = {\n  idea_id: ideaId,\n  category_id: loopContext.category_id || \"\",\n  category_name: loopContext.category_name || \"\",\n  category_slug: loopContext.category_slug || \"\",\n  subcategory_id: loopContext.subcategory_id || \"\",\n  subcategory_name: loopContext.subcategory_name || \"\",\n  subcategory_slug: loopContext.subcategory_slug || \"\",\n  focus_keyword: loopContext.focus_keyword || \"\",\n  additional_keyword_1: loopContext.additional_keyword_1 || \"\",\n  additional_keyword_2: loopContext.additional_keyword_2 || \"\",\n  business_description: loopContext.business_description || \"\",\n  collection_id: loopContext.collection_id || \"\"\n};\n\n// If parsing failed or required fields missing, mark for retry — never fabricate biased placeholder content.\nif (!parsed || !parsed.title || !parsed.summary) {\n  return { json: { ...source, status: \"needs_retry\" } };\n}\n\nconst str = (v) => (v === undefined || v === null) ? \"\" : String(v);\nconst arr = (v) => Array.isArray(v) ? JSON.stringify(v) : (typeof v === 'string' ? v : JSON.stringify(v || []));\nconst trendScore = parseInt(parsed.trend_score, 10) || 70;\nconst tier = parsed.tier || (trendScore >= 88 ? \"premium\" : \"free\");\n\nreturn {\n  json: {\n    ...source,\n    title: str(parsed.title),\n    slug: str(parsed.slug),\n    seo_title: str(parsed.seo_title),\n    meta_description: str(parsed.meta_description),\n    summary: str(parsed.summary),\n    market_opportunity: str(parsed.market_opportunity),\n    target_customer: str(parsed.target_customer),\n    how_you_make_money: str(parsed.how_you_make_money),\n    startup_cost: str(parsed.startup_cost),\n    income_potential: str(parsed.income_potential),\n    competition_edge: str(parsed.competition_edge),\n    getting_started_steps: arr(parsed.getting_started_steps),\n    tools_needed: arr(parsed.tools_needed),\n    time_to_first_customer: str(parsed.time_to_first_customer),\n    faq_json: arr(parsed.faq_json),\n    tags: arr(parsed.tags),\n    pros_json: arr(parsed.pros_json),\n    cons_json: arr(parsed.cons_json),\n    verdict: str(parsed.verdict),\n    external_links: arr(parsed.external_links),\n    internal_link_anchors: arr(parsed.internal_link_anchors),\n    trend_score: trendScore,\n    tier: tier,\n    status: \"completed\"\n  }\n};"
+        "jsCode": "const inputData = $input.item.json;\nlet rawText = inputData.text || inputData.output || (typeof inputData === 'string' ? inputData : JSON.stringify(inputData));\nconst cleaned = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();\n\nlet g = null;\ntry { g = JSON.parse(cleaned); } catch (e) { g = null; }\n\nlet src = {};\ntry { src = $('Loop Over Items').item.json; } catch (err) { src = {}; }\n\n// Pass Claude/seed fields straight through, untouched.\nconst pass = {\n  idea_id: src.idea_id || \"\",\n  category_id: src.category_id || \"\",\n  category_name: src.category_name || \"\",\n  category_slug: src.category_slug || \"\",\n  subcategory_id: src.subcategory_id || \"\",\n  subcategory_name: src.subcategory_name || \"\",\n  subcategory_slug: src.subcategory_slug || \"\",\n  focus_keyword: src.focus_keyword || \"\",\n  additional_keyword_1: src.additional_keyword_1 || \"\",\n  additional_keyword_2: src.additional_keyword_2 || \"\",\n  business_description: src.business_description || \"\",\n  collection_id: src.collection_id || \"\",\n  title: src.title || \"\",\n  slug: src.slug || \"\",\n  seo_title: src.seo_title || \"\",\n  meta_description: src.meta_description || \"\",\n  tags: src.tags || \"[]\",\n  external_links: src.external_links || \"[]\",\n  internal_link_anchors: src.internal_link_anchors || \"[]\",\n  research_facts: src.research_facts || \"{}\"\n};\n\n// If Gemini failed, mark for retry but KEEP all of Claude's work intact.\nif (!g || !g.summary) {\n  return { json: { ...pass, status: \"needs_retry\" } };\n}\n\nconst str = (v) => (v === undefined || v === null) ? \"\" : String(v);\nconst arr = (v) => Array.isArray(v) ? JSON.stringify(v) : (typeof v === 'string' ? v : JSON.stringify(v || []));\nconst trend = parseInt(g.trend_score, 10) || 70;\nconst tier = g.tier || (trend >= 88 ? \"premium\" : \"free\");\n\nreturn {\n  json: {\n    ...pass,\n    summary: str(g.summary),\n    market_opportunity: str(g.market_opportunity),\n    target_customer: str(g.target_customer),\n    how_you_make_money: str(g.how_you_make_money),\n    startup_cost: str(g.startup_cost),\n    income_potential: str(g.income_potential),\n    competition_edge: str(g.competition_edge),\n    getting_started_steps: arr(g.getting_started_steps),\n    tools_needed: arr(g.tools_needed),\n    time_to_first_customer: str(g.time_to_first_customer),\n    faq_json: arr(g.faq_json),\n    pros_json: arr(g.pros_json),\n    cons_json: arr(g.cons_json),\n    verdict: str(g.verdict),\n    trend_score: trend,\n    tier: tier,\n    status: \"completed\"\n  }\n};"
       },
       "id": "parse-0001",
       "name": "Code JSON Parser",
@@ -136,10 +136,6 @@
           "mappingMode": "defineBelow",
           "value": {
             "idea_id": "={{ $json.idea_id }}",
-            "title": "={{ $json.title }}",
-            "slug": "={{ $json.slug }}",
-            "seo_title": "={{ $json.seo_title }}",
-            "meta_description": "={{ $json.meta_description }}",
             "summary": "={{ $json.summary }}",
             "market_opportunity": "={{ $json.market_opportunity }}",
             "target_customer": "={{ $json.target_customer }}",
@@ -151,12 +147,9 @@
             "tools_needed": "={{ $json.tools_needed }}",
             "time_to_first_customer": "={{ $json.time_to_first_customer }}",
             "faq_json": "={{ $json.faq_json }}",
-            "tags": "={{ $json.tags }}",
             "pros_json": "={{ $json.pros_json }}",
             "cons_json": "={{ $json.cons_json }}",
             "verdict": "={{ $json.verdict }}",
-            "external_links": "={{ $json.external_links }}",
-            "internal_link_anchors": "={{ $json.internal_link_anchors }}",
             "trend_score": "={{ $json.trend_score }}",
             "tier": "={{ $json.tier }}",
             "status": "={{ $json.status }}"
@@ -168,166 +161,6 @@
             {
               "id": "idea_id",
               "displayName": "idea_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "category_id",
-              "displayName": "category_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "category_name",
-              "displayName": "category_name",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "category_slug",
-              "displayName": "category_slug",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "subcategory_id",
-              "displayName": "subcategory_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "subcategory_name",
-              "displayName": "subcategory_name",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "subcategory_slug",
-              "displayName": "subcategory_slug",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "focus_keyword",
-              "displayName": "focus_keyword",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "additional_keyword_1",
-              "displayName": "additional_keyword_1",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "additional_keyword_2",
-              "displayName": "additional_keyword_2",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "business_description",
-              "displayName": "business_description",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "collection_id",
-              "displayName": "collection_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "status",
-              "displayName": "status",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "title",
-              "displayName": "title",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "slug",
-              "displayName": "slug",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "seo_title",
-              "displayName": "seo_title",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "meta_description",
-              "displayName": "meta_description",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -446,16 +279,6 @@
               "removed": false
             },
             {
-              "id": "tags",
-              "displayName": "tags",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
               "id": "pros_json",
               "displayName": "pros_json",
               "required": false,
@@ -486,26 +309,6 @@
               "removed": false
             },
             {
-              "id": "external_links",
-              "displayName": "external_links",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "internal_link_anchors",
-              "displayName": "internal_link_anchors",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
               "id": "trend_score",
               "displayName": "trend_score",
               "required": false,
@@ -518,6 +321,16 @@
             {
               "id": "tier",
               "displayName": "tier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -611,10 +424,6 @@
               "fieldValue": "={{ $('Code JSON Parser').item.json.collection_id }}"
             },
             {
-              "fieldId": "status",
-              "fieldValue": "={{ $('Code JSON Parser').item.json.status }}"
-            },
-            {
               "fieldId": "title",
               "fieldValue": "={{ $('Code JSON Parser').item.json.title }}"
             },
@@ -629,6 +438,26 @@
             {
               "fieldId": "meta_description",
               "fieldValue": "={{ $('Code JSON Parser').item.json.meta_description }}"
+            },
+            {
+              "fieldId": "tags",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.tags }}"
+            },
+            {
+              "fieldId": "external_links",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.external_links }}"
+            },
+            {
+              "fieldId": "internal_link_anchors",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.internal_link_anchors }}"
+            },
+            {
+              "fieldId": "research_facts",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.research_facts }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.status }}"
             },
             {
               "fieldId": "summary",
@@ -675,10 +504,6 @@
               "fieldValue": "={{ $('Code JSON Parser').item.json.faq_json }}"
             },
             {
-              "fieldId": "tags",
-              "fieldValue": "={{ $('Code JSON Parser').item.json.tags }}"
-            },
-            {
               "fieldId": "pros_json",
               "fieldValue": "={{ $('Code JSON Parser').item.json.pros_json }}"
             },
@@ -689,14 +514,6 @@
             {
               "fieldId": "verdict",
               "fieldValue": "={{ $('Code JSON Parser').item.json.verdict }}"
-            },
-            {
-              "fieldId": "external_links",
-              "fieldValue": "={{ $('Code JSON Parser').item.json.external_links }}"
-            },
-            {
-              "fieldId": "internal_link_anchors",
-              "fieldValue": "={{ $('Code JSON Parser').item.json.internal_link_anchors }}"
             },
             {
               "fieldId": "trend_score",
@@ -724,7 +541,7 @@
           "name": "Supabase account"
         }
       },
-      "notes": "Inserts into the ideas table, mapping every column (existing + new rich/SEO fields) from Code JSON Parser output."
+      "notes": "Inserts full row: Claude's SEO/seed/research columns (passed through) + Gemini's narrative fields."
     }
   ],
   "pinData": {},
@@ -825,11 +642,11 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "bbi-v2-0002",
+  "versionId": "bbi-v3-0001",
   "meta": {
     "templateCredsSetupCompleted": true
   },
   "nodeGroups": [],
-  "id": "BBIIdeaPipelineV2",
+  "id": "BBIIdeaPipelineV3",
   "tags": []
 }
