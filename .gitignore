@@ -33,3 +33,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Secrets — never commit credentials to the repo
+LOGIN_CREDENTIALS_AND_API_KEYS.md
