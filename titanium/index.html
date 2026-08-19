@@ -3,234 +3,196 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TITANIUM — Protein, Engineered</title>
-<meta name="description" content="Titanium Protein: 32g of grass-fed isolate, zero filler, engineered for people who train like it matters.">
+<title>Titanium — Protein without the padding.</title>
+<meta name="description" content="Titanium is grass-fed whey isolate, cold-filtered, third-party assayed. 32g of protein and nothing that didn't earn its place.">
 <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
 
+<canvas id="ambient" aria-hidden="true"></canvas>
+
 <nav class="nav">
-  <div class="wrap">
-    <a class="logo" href="#">TITA<span>NIUM</span></a>
+  <div class="wrap nav-inner">
+    <a class="logo" href="#">
+      <svg class="logo-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="24" y2="24">
+          <stop offset="0" stop-color="#8052ff"/><stop offset="1" stop-color="#15846e"/>
+        </linearGradient></defs>
+        <path d="M12 2 L22 20 L2 20 Z" fill="url(#lg)"/>
+      </svg>
+      <span class="logo-word">Titanium</span>
+    </a>
     <div class="nav-links">
-      <a href="#product">Product</a>
-      <a href="#specs">Engineering</a>
-      <a href="#flavours">Flavours</a>
-      <a href="#science">Science</a>
+      <a href="#formula">Formula</a>
+      <a href="#assay">Assay</a>
+      <a href="#range">Range</a>
+      <a href="#standard">Standard</a>
     </div>
-    <a class="btn btn--ice" href="#buy">Buy now</a>
+    <a class="btn-primary" href="#order">Order now</a>
   </div>
 </nav>
 
-<!-- ================= HERO ================= -->
-<header class="hero">
-  <div class="hero-bg">
-    <div class="grid-lines"></div>
-    <div class="glow g1"></div>
-    <div class="glow g2"></div>
-  </div>
-  <div class="wrap hero-inner">
-    <div>
-      <p class="kicker">Grade&nbsp;5 formulation &nbsp;·&nbsp; <b>32g protein</b> &nbsp;·&nbsp; zero filler</p>
-      <h1 class="display h1">Built<br><span class="ti-text">like</span><br>metal.</h1>
-      <p class="lead">Most protein is padded with maltodextrin and hope. Titanium is grass-fed whey isolate, cold-filtered, and nothing else that doesn't earn its place. Engineered for people who treat training like work.</p>
-      <div class="hero-cta">
-        <a class="btn btn--ice" href="#buy">Shop the range</a>
-        <a class="btn" href="#science">See the breakdown</a>
-      </div>
-      <div class="hero-meta">
-        <div><p>32g</p><p>Protein / scoop</p></div>
-        <div><p>0g</p><p>Added sugar</p></div>
-        <div><p>96%</p><p>Isolate purity</p></div>
-        <div><p>3rd</p><p>Party tested</p></div>
-      </div>
-    </div>
+<main>
 
-    <div class="can-stage">
-      <div class="can-halo"></div>
-      <div class="can-ring"></div>
-      <div class="can-ring r2"></div>
-      <div class="can">
-        <div class="can-lid"></div>
-        <div class="can-label">
-          <p class="ti">Titanium</p>
-          <p class="sub">WHEY ISOLATE</p>
-          <p class="n">32<span style="font-size:.4em">g</span></p>
-          <p class="g">PROTEIN PER SERVING</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- ================= MARQUEE ================= -->
-<div class="marquee">
-  <div class="marquee-track">
-    <span>No filler</span><span>Cold filtered</span><span>Grass fed</span><span>Lab verified</span><span>Zero sugar</span>
-    <span>No filler</span><span>Cold filtered</span><span>Grass fed</span><span>Lab verified</span><span>Zero sugar</span>
-  </div>
-</div>
-
-<!-- ================= SPECS ================= -->
-<section class="section" id="specs">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <p class="kicker">01 — Engineering</p>
-      <h2 class="display h2">Nothing in the tub<br>without a reason.</h2>
-      <p class="lead">Every gram is accounted for. If an ingredient is there to bulk the scoop or sweeten the label, it didn't make the cut.</p>
-    </div>
-    <div class="specs">
-      <div class="spec rv">
-        <p class="n">/ 01</p>
-        <h3>Cold-filtered isolate</h3>
-        <p>Microfiltered below 10°C so the protein structure stays intact. No heat denaturing, no acid wash, no shortcuts that trade quality for yield.</p>
-      </div>
-      <div class="spec rv">
-        <p class="n">/ 02</p>
-        <h3>Grass-fed source</h3>
-        <p>Single-origin dairy from pasture-raised herds. Traceable to the farm, batch-coded on every tub, and tested before it ever gets blended.</p>
-      </div>
-      <div class="spec rv">
-        <p class="n">/ 03</p>
-        <h3>Verified, not claimed</h3>
-        <p>Independent third-party assay on every production run — protein content, heavy metals, banned substances. Results published by batch number.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= STATS ================= -->
-<section class="section" style="padding-top:0">
-  <div class="wrap">
-    <div class="stats rv">
-      <div class="stat"><p class="v">32<em>g</em></p><p class="l">Protein per scoop</p></div>
-      <div class="stat"><p class="v">6.8<em>g</em></p><p class="l">BCAA complex</p></div>
-      <div class="stat"><p class="v">&lt;1<em>g</em></p><p class="l">Carbs &amp; fat</p></div>
-      <div class="stat"><p class="v">128</p><p class="l">Calories</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FLAVOURS ================= -->
-<section class="section" id="flavours">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <p class="kicker">02 — The range</p>
-      <h2 class="display h2">Three flavours.<br>No novelty.</h2>
-      <p class="lead">We'd rather make three that taste right than twelve that taste like a candy aisle.</p>
-    </div>
-    <div class="flavours">
-      <article class="flav rv">
-        <div class="orb" style="background:radial-gradient(circle,#8B5A2B,transparent 65%)"></div>
-        <h3>Dark Cocoa</h3>
-        <p class="note">Dutch-process · unsweetened</p>
-        <p class="lead" style="font-size:.92rem;margin-top:1rem">Bitter-edged and clean. Tastes like cocoa, not frosting.</p>
-        <p class="price">₹3,299 <s>₹3,899</s></p>
-      </article>
-      <article class="flav rv">
-        <div class="orb" style="background:radial-gradient(circle,#C9CED6,transparent 65%)"></div>
-        <h3>Bourbon Vanilla</h3>
-        <p class="note">Madagascar · single origin</p>
-        <p class="lead" style="font-size:.92rem;margin-top:1rem">Warm, rounded, and quiet enough to mix into anything.</p>
-        <p class="price">₹3,299 <s>₹3,899</s></p>
-      </article>
-      <article class="flav rv">
-        <div class="orb" style="background:radial-gradient(circle,#7DE2F5,transparent 65%)"></div>
-        <h3>Unflavoured</h3>
-        <p class="note">Zero additives · pure isolate</p>
-        <p class="lead" style="font-size:.92rem;margin-top:1rem">Nothing added. For people who put it in coffee, oats, or anything else.</p>
-        <p class="price">₹3,099 <s>₹3,699</s></p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ================= SCIENCE ================= -->
-<section class="section" id="science">
-  <div class="wrap">
-    <div class="science rv">
-      <div class="split">
-        <div>
-          <p class="kicker">03 — The breakdown</p>
-          <h2 class="display h3" style="margin:.4em 0 .5em">Read the label<br>like an engineer.</h2>
-          <p class="lead">Per 34g scoop, measured on the finished product — not calculated from raw inputs. That difference is why most labels overstate.</p>
-        </div>
-        <div class="bars">
-          <div class="bar"><div class="top"><span>Whey isolate</span><b>94%</b></div><div class="rail"><div class="fill" data-w="94"></div></div></div>
-          <div class="bar"><div class="top"><span>Protein by weight</span><b>32g</b></div><div class="rail"><div class="fill" data-w="88"></div></div></div>
-          <div class="bar alt"><div class="top"><span>Carbohydrate</span><b>0.8g</b></div><div class="rail"><div class="fill" data-w="6"></div></div></div>
-          <div class="bar alt"><div class="top"><span>Fat</span><b>0.4g</b></div><div class="rail"><div class="fill" data-w="4"></div></div></div>
-          <div class="bar"><div class="top"><span>Leucine</span><b>2.9g</b></div><div class="rail"><div class="fill" data-w="72"></div></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= QUOTE ================= -->
-<section class="section" style="padding-top:0">
-  <div class="wrap">
-    <div class="quote rv">
-      <p>"I stopped rotating brands. This one is the same every tub, and the assay is public. That's the whole review."</p>
-      <p class="who">— Strength coach, 11 years training athletes</p>
-    </div>
-  </div>
-</section>
-
-<!-- ================= CTA ================= -->
-<section class="section cta" id="buy">
-  <div class="ring"></div>
-  <div class="ring b"></div>
-  <div class="wrap" style="position:relative;z-index:2">
-    <p class="kicker">04 — Start</p>
-    <h2 class="display h2" style="margin:.3em auto .5em">Stop guessing<br><span class="ti-text">what's in it.</span></h2>
-    <p class="lead" style="margin:0 auto 2.4rem;text-align:center">Free shipping over ₹2,500. Batch assay in every box. If it isn't what the label says, we refund it and publish why.</p>
-    <div class="hero-cta" style="justify-content:center">
-      <a class="btn btn--ice" href="#">Buy Titanium — ₹3,299</a>
-      <a class="btn" href="#specs">Read the spec sheet</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <div class="foot-grid">
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap two-col two-col--wide-left">
       <div>
-        <a class="logo" href="#">TITA<span>NIUM</span></a>
-        <p class="lead" style="font-size:.88rem;margin-top:1rem;max-width:32ch">Protein, engineered. Made for people who read the label before they read the marketing.</p>
+        <span class="label">Grade 5 · 32g protein · zero filler</span>
+        <h1 class="display">Protein without<br>the padding.</h1>
+        <p class="body">Most tubs are half maltodextrin and marketing. Titanium is cold-filtered grass-fed isolate, assayed by an independent lab, and nothing else that couldn't justify its place on the label.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#order">Order now</a>
+          <a class="btn-ghost" href="#assay">Read the assay <span class="spark">→</span></a>
+        </div>
       </div>
-      <div><h4>Product</h4><ul><li><a href="#flavours">Flavours</a></li><li><a href="#specs">Engineering</a></li><li><a href="#science">Lab results</a></li></ul></div>
-      <div><h4>Support</h4><ul><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li><li><a href="#">Contact</a></li></ul></div>
-      <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Sourcing</a></li><li><a href="#">Press</a></li></ul></div>
+      <div>
+        <canvas id="constellation" aria-label="Particle constellation forming the Titanium molecular core"></canvas>
+      </div>
     </div>
-    <div class="foot-bottom">
-      <span>© 2026 Titanium Nutrition</span>
-      <span>Batch-tested · Third-party verified</span>
-    </div>
-  </div>
-</footer>
+  </section>
 
-<script>
-(function(){
-  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var els = document.querySelectorAll(".rv");
-  if(reduce || !("IntersectionObserver" in window)){
-    els.forEach(function(e){e.classList.add("in")});
-    document.querySelectorAll(".fill").forEach(function(f){f.style.width=f.dataset.w+"%"});
-    return;
-  }
-  var io = new IntersectionObserver(function(en){
-    en.forEach(function(e){
-      if(!e.isIntersecting) return;
-      e.target.classList.add("in");
-      e.target.querySelectorAll(".fill").forEach(function(f,i){
-        setTimeout(function(){ f.style.width = f.dataset.w + "%"; }, i*140);
-      });
-      io.unobserve(e.target);
-    });
-  },{threshold:.18, rootMargin:"0px 0px -8% 0px"});
-  els.forEach(function(e){io.observe(e)});
-})();
-</script>
+  <!-- ============ STATS ============ -->
+  <section class="section">
+    <div class="wrap stat-row rv">
+      <div class="stat"><p class="v">32<em>g</em></p><p class="k">Protein per scoop</p></div>
+      <div class="stat"><p class="v">6.8<em>g</em></p><p class="k">BCAA complex</p></div>
+      <div class="stat"><p class="v">0<em>g</em></p><p class="k">Added sugar</p></div>
+      <div class="stat"><p class="v">128</p><p class="k">Calories</p></div>
+    </div>
+  </section>
+
+  <!-- ============ FORMULA — visual left / text right ============ -->
+  <section class="section" id="formula">
+    <div class="wrap two-col">
+      <div class="rv">
+        <span class="label">01 — The formula</span>
+        <h2 class="h-lg">Nothing in the tub<br>without a reason.</h2>
+        <p class="body muted" style="margin-top:var(--spacing-30)">Every gram is accounted for. If an ingredient exists to bulk the scoop, sweeten the label, or pad the protein count, it did not make the cut.</p>
+      </div>
+      <div class="spec-list rv">
+        <div class="spec">
+          <p class="n">/ 01</p>
+          <h3 class="h-2xs">Cold-filtered isolate</h3>
+          <p>Microfiltered below 10°C so the protein structure stays intact. No heat denaturing, no acid wash, no shortcuts that trade quality for yield.</p>
+        </div>
+        <div class="spec">
+          <p class="n">/ 02</p>
+          <h3 class="h-2xs">Single-origin, grass-fed</h3>
+          <p>Pasture-raised dairy traceable to the farm. Batch-coded on every tub, tested before it is ever blended.</p>
+        </div>
+        <div class="spec">
+          <p class="n">/ 03</p>
+          <h3 class="h-2xs">Verified, not claimed</h3>
+          <p>Independent third-party assay on every run — protein content, heavy metals, banned substances. Results published by batch number.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ASSAY — text left / bars right ============ -->
+  <section class="section" id="assay">
+    <div class="wrap two-col two-col--wide-left">
+      <div class="rv">
+        <span class="label">02 — The breakdown</span>
+        <h2 class="h-lg">Read the label<br>like an engineer.</h2>
+        <p class="body muted" style="margin-top:var(--spacing-30)">Measured on the finished product, per 34g scoop — not calculated from raw inputs. That difference is exactly why most labels overstate.</p>
+      </div>
+      <div class="assay rv">
+        <div class="row"><div class="top"><span>Whey isolate</span><b>94%</b></div><div class="rail"><div class="fill" data-w="94"></div></div></div>
+        <div class="row"><div class="top"><span>Protein by weight</span><b>32g</b></div><div class="rail"><div class="fill" data-w="88"></div></div></div>
+        <div class="row q"><div class="top"><span>Leucine</span><b>2.9g</b></div><div class="rail"><div class="fill" data-w="72"></div></div></div>
+        <div class="row"><div class="top"><span>Carbohydrate</span><b>0.8g</b></div><div class="rail"><div class="fill" data-w="7"></div></div></div>
+        <div class="row"><div class="top"><span>Fat</span><b>0.4g</b></div><div class="rail"><div class="fill" data-w="4"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RANGE ============ -->
+  <section class="section" id="range">
+    <div class="wrap">
+      <div class="rv" style="max-width:720px">
+        <span class="label">03 — The range</span>
+        <h2 class="h-lg">Three flavours.<br>No novelty.</h2>
+        <p class="body muted" style="margin-top:var(--spacing-30)">We would rather make three that taste right than twelve that taste like a candy aisle.</p>
+      </div>
+
+      <div class="flavour-list">
+        <article class="flavour rv">
+          <div class="name">
+            <span class="swatch" style="background:#8b5a2b"></span>
+            <div><p class="h-sm">Dark Cocoa</p><p class="note">Dutch-process · unsweetened</p></div>
+          </div>
+          <p class="desc">Bitter-edged and clean. Tastes like cocoa, not frosting.</p>
+          <p class="price">₹3,299</p>
+        </article>
+        <article class="flavour rv">
+          <div class="name">
+            <span class="swatch" style="background:#e8dcc0"></span>
+            <div><p class="h-sm">Bourbon Vanilla</p><p class="note">Madagascar · single origin</p></div>
+          </div>
+          <p class="desc">Warm, rounded, and quiet enough to mix into anything.</p>
+          <p class="price">₹3,299</p>
+        </article>
+        <article class="flavour rv">
+          <div class="name">
+            <span class="swatch" style="background:#8052ff"></span>
+            <div><p class="h-sm">Unflavoured</p><p class="note">Zero additives · pure isolate</p></div>
+          </div>
+          <p class="desc">Nothing added. For coffee, oats, or anything else you build around it.</p>
+          <p class="price">₹3,099</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUOTE ============ -->
+  <section class="section" id="standard">
+    <div class="wrap quote rv">
+      <span class="label">04 — The standard</span>
+      <p class="h-md">“I stopped rotating brands. It is the same every tub, and the assay is public. That is the whole review.”</p>
+      <p class="who">Strength coach · eleven years training athletes</p>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="section cta" id="order">
+    <div class="wrap rv">
+      <span class="label" style="text-align:center">05 — Start</span>
+      <h2 class="h-lg">Stop guessing<br>what is in it.</h2>
+      <p class="body muted">Free shipping over ₹2,500. A batch assay in every box. If it is not what the label says, we refund it and publish why.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#">Order Titanium — ₹3,299</a>
+        <a class="btn-ghost" href="#formula">See the formula <span class="spark">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <a class="logo" href="#" style="margin-bottom:var(--spacing-24)">
+            <svg class="logo-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2 L22 20 L2 20 Z" fill="url(#lg)"/>
+            </svg>
+            <span class="logo-word">Titanium</span>
+          </a>
+          <p class="body muted" style="max-width:320px;font-size:var(--text-nav-label)">Protein, engineered. Made for people who read the label before they read the marketing.</p>
+        </div>
+        <div><h4>Product</h4><ul><li><a href="#range">Range</a></li><li><a href="#formula">Formula</a></li><li><a href="#assay">Lab results</a></li></ul></div>
+        <div><h4>Support</h4><ul><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li><li><a href="#">Contact</a></li></ul></div>
+        <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Sourcing</a></li><li><a href="#">Press</a></li></ul></div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 Titanium Nutrition</span>
+        <span>Batch-tested · Third-party verified</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script src="assets/particles.js"></script>
 </body>
 </html>
