@@ -28,6 +28,7 @@ import {
 import { RiOpenaiFill, RiGrokAiFill } from "react-icons/ri";
 
 import { AmbientScene } from "@/components/ambient-scene";
+import { InteractiveBackground } from "@/components/interactive-background";
 import { LiveSearch } from "@/components/live-search";
 import { FloatingDock } from "@/components/floating-dock";
 import { CategoryBadge } from "@/components/category-badge";
@@ -629,6 +630,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
   return (
     <div className="relative flex min-h-screen flex-col text-foreground">
       <AmbientScene />
+      <InteractiveBackground />
       <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">
         <div className="glass-nav mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full px-4 py-2.5 sm:px-6 sm:py-3">
           <Link
