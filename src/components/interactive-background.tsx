@@ -1,45 +1,43 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Site-wide interactive particle background.
+ * Site-wide 3D particle-cloud background.
  *
- * A field of small outlined triangles in the brand palette that drifts
- * continuously and reacts to the pointer: nearby particles are pushed away,
- * brighten, and link to the cursor and to each other with hairlines.
+ * A volumetric point cloud of outlined triangles rendered with a real
+ * perspective projection: the cloud holds a brain silhouette, rotates
+ * continuously, tilts toward the pointer, and morphs between shapes as the
+ * page scrolls (brain -> dispersed -> sphere). Particles are depth-sorted
+ * and scale/fade with distance, and a handful of large "near-camera"
+ * triangles drift in front for parallax.
  *
  * Strictly a background layer:
- *  - `position: fixed` + negative z-index, so it never participates in layout
- *  - `pointer-events: none`, so it can never intercept a click on a button,
- *    link, or form control
- *  - fully disabled (single static paint) under `prefers-reduced-motion`
- *
- * Only `transform`-free canvas painting is used, so nothing here triggers
- * layout or style recalculation on the rest of the page.
+ *  - `position: fixed` at a negative z-index, so it never affects layout
+ *  - `pointer-events: none`, so it can never intercept a click
+ *  - a single static paint under `prefers-reduced-motion`
  */
 
-type Particle = {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  r: number;
-  rot: number;
+type P = {
+  // shape targets
+  bx: number; by: number; bz: number; // brain
+  sx: number; sy: number; sz: number; // sphere
+  dx: number; dy: number; dz: number; // dispersed
+  // live position
+  x: number; y: number; z: number;
+  r: number;      // base radius
+  rot: number;    // 2D glyph rotation
   spin: number;
   color: string;
   alpha: number;
+  filled: boolean;
 };
 
-/** Brand palette — readable on the light (#FCFBFE) canvas. */
 const PALETTE = [
-  "#4643BA", // primary indigo
-  "#8886DB", // ember / violet-soft
-  "#3A3697", // warm deep indigo
-  "#B6B5E3", // pale violet
-  "#5B57D6", // mid violet
+  "#4643BA", "#5B57D6", "#8886DB", "#3A3697",
+  "#7C3AED", "#15846e", "#B45309", "#0C0C25", "#6D28D9",
 ];
 
-const LINK_DIST = 132; // px — particle-to-particle link radius
-const MOUSE_DIST = 190; // px — cursor influence radius
+const FOV = 900;          // perspective strength
+let CLOUD = 300;          // world radius of the cloud (set from viewport)
 
 export function InteractiveBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -53,159 +51,252 @@ export function InteractiveBackground() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    let width = 0;
-    let height = 0;
-    let particles: Particle[] = [];
-    let raf = 0;
-
-    // Pointer lives outside the viewport until the user actually moves it, so
-    // nothing is highlighted on first paint.
-    const pointer = { x: -9999, y: -9999, active: false };
+    let W = 0, H = 0, raf = 0;
+    let pts: P[] = [];
+    let near: P[] = [];
 
     const rand = (a: number, b: number) => a + Math.random() * (b - a);
+    const pick = <T,>(a: T[]) => a[(Math.random() * a.length) | 0]!;
+
+    /** Point on a unit sphere (even distribution). */
+    function onSphere() {
+      const u = Math.random(), v = Math.random();
+      const theta = 2 * Math.PI * u;
+      const phi = Math.acos(2 * v - 1);
+      return {
+        x: Math.sin(phi) * Math.cos(theta),
+        y: Math.sin(phi) * Math.sin(theta),
+        z: Math.cos(phi),
+      };
+    }
+
+    /**
+     * Brain shell: an ellipsoid deformed by low-frequency noise to suggest
+     * gyri, split by a central longitudinal fissure, with a cerebellum lobe
+     * at the lower rear.
+     */
+    function brainPoint() {
+      // cerebellum for ~14% of points
+      if (Math.random() < 0.14) {
+        const s = onSphere();
+        return {
+          x: s.x * 0.34 + 0.0,
+          y: s.y * 0.26 - 0.62,
+          z: s.z * 0.30 - 0.52,
+        };
+      }
+      const s = onSphere();
+      // ellipsoid: longer front-to-back, narrower side-to-side
+      let x = s.x * 0.74;
+      let y = s.y * 0.72;
+      let z = s.z * 0.95;
+      // gyri: low-frequency radial wobble
+      const bump =
+        Math.sin(x * 7.5) * Math.cos(z * 6.2) * 0.055 +
+        Math.sin(y * 8.8 + z * 3.1) * 0.045;
+      const len = Math.hypot(x, y, z) || 1;
+      x += (x / len) * bump; y += (y / len) * bump; z += (z / len) * bump;
+      // frontal lobe taper
+      if (z > 0.4) { x *= 0.9; y *= 0.94; }
+      // longitudinal fissure down the middle
+      if (Math.abs(x) < 0.055 && y > -0.25) {
+        if (Math.random() > 0.16) return null;
+        y -= 0.03;
+      }
+      return { x, y, z };
+    }
 
     function build() {
-      const count = width < 700 ? 46 : width < 1200 ? 78 : 104;
-      particles = Array.from({ length: count }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: rand(-0.16, 0.16),
-        vy: rand(-0.16, 0.16),
-        r: rand(3, 8),
-        rot: rand(0, Math.PI * 2),
-        spin: rand(-0.004, 0.004),
-        color: PALETTE[(Math.random() * PALETTE.length) | 0]!,
-        alpha: rand(0.32, 0.62),
-      }));
+      const count = W < 700 ? 1500 : W < 1300 ? 2800 : 4200;
+      pts = [];
+      while (pts.length < count) {
+        const b = brainPoint();
+        if (!b) continue;
+        const s = onSphere();
+        const d = onSphere();
+        const dScale = rand(1.15, 2.3);
+        pts.push({
+          bx: b.x * CLOUD, by: b.y * CLOUD, bz: b.z * CLOUD,
+          sx: s.x * CLOUD * 0.96, sy: s.y * CLOUD * 0.96, sz: s.z * CLOUD * 0.96,
+          dx: d.x * CLOUD * dScale, dy: d.y * CLOUD * dScale, dz: d.z * CLOUD * dScale,
+          x: 0, y: 0, z: 0,
+          r: rand(1.9, 4.2),
+          rot: rand(0, Math.PI * 2),
+          spin: rand(-0.02, 0.02),
+          color: pick(PALETTE),
+          alpha: rand(0.55, 1),
+          filled: Math.random() < 0.1,
+        });
+      }
+      // large near-camera drifters for parallax
+      near = Array.from({ length: W < 700 ? 7 : 14 }, () => {
+        const d = onSphere();
+        return {
+          bx: d.x * CLOUD * 2.4, by: d.y * CLOUD * 2.4, bz: d.z * CLOUD * 1.6,
+          sx: 0, sy: 0, sz: 0, dx: 0, dy: 0, dz: 0,
+          x: 0, y: 0, z: 0,
+          r: rand(10, 26),
+          rot: rand(0, Math.PI * 2),
+          spin: rand(-0.006, 0.006),
+          color: pick(PALETTE),
+          alpha: rand(0.35, 0.8),
+          filled: false,
+        } as P;
+      });
     }
 
     function resize() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas!.width = Math.floor(width * dpr);
-      canvas!.height = Math.floor(height * dpr);
-      canvas!.style.width = `${width}px`;
-      canvas!.style.height = `${height}px`;
+      W = window.innerWidth; H = window.innerHeight;
+      CLOUD = Math.min(W, H) * 0.42;
+      canvas!.width = Math.floor(W * dpr);
+      canvas!.height = Math.floor(H * dpr);
+      canvas!.style.width = `${W}px`;
+      canvas!.style.height = `${H}px`;
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
       build();
     }
 
-    function triangle(p: Particle, alpha: number, lineWidth: number) {
+    // pointer drives tilt; smoothed so it never snaps
+    const ptr = { x: 0, y: 0, tx: 0, ty: 0 };
+    let scrollT = 0, scrollTarget = 0;
+    let yaw = 0;
+
+    function glyph(sx: number, sy: number, r: number, rot: number,
+                   color: string, alpha: number, filled: boolean) {
       ctx!.save();
-      ctx!.translate(p.x, p.y);
-      ctx!.rotate(p.rot);
+      ctx!.translate(sx, sy);
+      ctx!.rotate(rot);
       ctx!.beginPath();
       for (let i = 0; i < 3; i += 1) {
         const a = ((Math.PI * 2) / 3) * i - Math.PI / 2;
-        const px = Math.cos(a) * p.r;
-        const py = Math.sin(a) * p.r;
-        if (i === 0) ctx!.moveTo(px, py);
-        else ctx!.lineTo(px, py);
+        const px = Math.cos(a) * r, py = Math.sin(a) * r;
+        if (i === 0) ctx!.moveTo(px, py); else ctx!.lineTo(px, py);
       }
       ctx!.closePath();
       ctx!.globalAlpha = alpha;
-      ctx!.strokeStyle = p.color;
-      ctx!.lineWidth = lineWidth;
-      ctx!.stroke();
+      if (filled) {
+        ctx!.fillStyle = color;
+        ctx!.fill();
+      } else {
+        ctx!.strokeStyle = color;
+        ctx!.lineWidth = Math.max(0.6, r * 0.22);
+        ctx!.stroke();
+      }
       ctx!.restore();
     }
 
+    // scratch buffer so we never allocate inside the frame loop
+    let order: { i: number; z: number }[] = [];
+
     function frame() {
-      ctx!.clearRect(0, 0, width, height);
+      ctx!.clearRect(0, 0, W, H);
 
-      for (const p of particles) {
-        if (!reduce) {
-          p.x += p.vx;
-          p.y += p.vy;
-          p.rot += p.spin;
+      // ease pointer + scroll
+      ptr.x += (ptr.tx - ptr.x) * 0.05;
+      ptr.y += (ptr.ty - ptr.y) * 0.05;
+      scrollT += (scrollTarget - scrollT) * 0.06;
+      if (!reduce) yaw += 0.0016;
 
-          // Wrap around the viewport edges for a seamless field.
-          if (p.x < -20) p.x = width + 20;
-          if (p.x > width + 20) p.x = -20;
-          if (p.y < -20) p.y = height + 20;
-          if (p.y > height + 20) p.y = -20;
-        }
+      // morph weights: 0 -> brain, 0.5 -> dispersed, 1 -> sphere
+      const toDisp = Math.min(1, scrollT * 2);
+      const toSphere = Math.max(0, scrollT * 2 - 1);
 
-        let alpha = p.alpha;
-        let lw = 1;
+      const pitch = ptr.y * 0.45;
+      const roll = ptr.x * 0.6 + yaw;
+      const cosY = Math.cos(roll), sinY = Math.sin(roll);
+      const cosX = Math.cos(pitch), sinX = Math.sin(pitch);
 
-        if (pointer.active) {
-          const dx = p.x - pointer.x;
-          const dy = p.y - pointer.y;
-          const dist = Math.hypot(dx, dy);
-          if (dist < MOUSE_DIST) {
-            const force = (1 - dist / MOUSE_DIST) ** 2;
-            // Gentle repulsion away from the cursor.
-            if (!reduce && dist > 0.5) {
-              p.x += (dx / dist) * force * 1.9;
-              p.y += (dy / dist) * force * 1.9;
-            }
-            alpha = Math.min(1, alpha + force * 0.55);
-            lw = 1 + force * 0.9;
+      const cx = W * 0.5, cy = H * 0.5;
 
-            // Hairline from the cursor to the particle.
-            ctx!.globalAlpha = force * 0.38;
-            ctx!.strokeStyle = p.color;
-            ctx!.lineWidth = 1;
-            ctx!.beginPath();
-            ctx!.moveTo(pointer.x, pointer.y);
-            ctx!.lineTo(p.x, p.y);
-            ctx!.stroke();
-          }
-        }
-
-        triangle(p, alpha, lw);
+      if (order.length !== pts.length) {
+        order = pts.map((_, i) => ({ i, z: 0 }));
       }
 
-      // Constellation links between neighbours.
-      for (let i = 0; i < particles.length; i += 1) {
-        const a = particles[i]!;
-        for (let j = i + 1; j < particles.length; j += 1) {
-          const b = particles[j]!;
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const d2 = dx * dx + dy * dy;
-          if (d2 > LINK_DIST * LINK_DIST) continue;
-          const d = Math.sqrt(d2);
-          ctx!.globalAlpha = (1 - d / LINK_DIST) * 0.22;
-          ctx!.strokeStyle = a.color;
-          ctx!.lineWidth = 1;
-          ctx!.beginPath();
-          ctx!.moveTo(a.x, a.y);
-          ctx!.lineTo(b.x, b.y);
-          ctx!.stroke();
-        }
+      for (let i = 0; i < pts.length; i += 1) {
+        const p = pts[i]!;
+        // brain -> dispersed -> sphere
+        const ax = p.bx + (p.dx - p.bx) * toDisp;
+        const ay = p.by + (p.dy - p.by) * toDisp;
+        const az = p.bz + (p.dz - p.bz) * toDisp;
+        p.x = ax + (p.sx - ax) * toSphere;
+        p.y = ay + (p.sy - ay) * toSphere;
+        p.z = az + (p.sz - az) * toSphere;
+
+        // rotate Y then X
+        const x1 = p.x * cosY - p.z * sinY;
+        const z1 = p.x * sinY + p.z * cosY;
+        const y2 = p.y * cosX - z1 * sinX;
+        const z2 = p.y * sinX + z1 * cosX;
+
+        order[i]!.i = i;
+        order[i]!.z = z2;
+        // stash projected depth on the particle for the draw pass
+        (p as unknown as { _px: number })._px = x1;
+        (p as unknown as { _py: number })._py = y2;
+        (p as unknown as { _pz: number })._pz = z2;
+        if (!reduce) p.rot += p.spin;
+      }
+
+      // painter's algorithm — far first
+      order.sort((a, b) => a.z - b.z);
+
+      for (let k = 0; k < order.length; k += 1) {
+        const p = pts[order[k]!.i]!;
+        const px = (p as unknown as { _px: number })._px;
+        const py = (p as unknown as { _py: number })._py;
+        const pz = (p as unknown as { _pz: number })._pz;
+        const depth = FOV + pz;
+        if (depth <= 1) continue;
+        const k2 = FOV / depth;
+        const sx = cx + px * k2;
+        const sy = cy + py * k2;
+        if (sx < -60 || sx > W + 60 || sy < -60 || sy > H + 60) continue;
+        // depth cue: nearer = bigger + brighter
+        const t = (pz + CLOUD * 2) / (CLOUD * 4);
+        const a = p.alpha * (0.30 + 0.70 * Math.max(0, Math.min(1, t)));
+        glyph(sx, sy, p.r * k2 * 1.15, p.rot, p.color, a, p.filled);
+      }
+
+      // near-camera parallax drifters, drawn last (closest)
+      for (const p of near) {
+        const x1 = p.bx * cosY - p.bz * sinY;
+        const z1 = p.bx * sinY + p.bz * cosY;
+        const y2 = p.by * cosX - z1 * sinX;
+        const z2 = p.by * sinX + z1 * cosX;
+        const depth = FOV + z2 - 520; // pulled toward the camera
+        if (depth <= 1) continue;
+        const k2 = FOV / depth;
+        const sx = cx + x1 * k2, sy = cy + y2 * k2;
+        if (!reduce) p.rot += p.spin;
+        glyph(sx, sy, p.r * k2, p.rot, p.color, p.alpha * 0.35, false);
       }
 
       ctx!.globalAlpha = 1;
       if (!reduce) raf = window.requestAnimationFrame(frame);
     }
 
-    function onPointerMove(e: PointerEvent) {
-      pointer.x = e.clientX;
-      pointer.y = e.clientY;
-      pointer.active = true;
+    function onMove(e: PointerEvent) {
+      ptr.tx = (e.clientX / window.innerWidth) * 2 - 1;
+      ptr.ty = (e.clientY / window.innerHeight) * 2 - 1;
     }
-    function onPointerLeave() {
-      pointer.active = false;
-      pointer.x = -9999;
-      pointer.y = -9999;
+    function onScroll() {
+      const max = Math.max(1, document.body.scrollHeight - window.innerHeight);
+      scrollTarget = Math.min(1, window.scrollY / max);
     }
 
     resize();
+    onScroll();
     frame();
 
     window.addEventListener("resize", resize, { passive: true });
-    // Listening on the window (not the canvas) keeps the canvas itself
-    // pointer-transparent while still tracking the cursor everywhere.
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    document.addEventListener("pointerleave", onPointerLeave);
+    window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
       window.cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
-      window.removeEventListener("pointermove", onPointerMove);
-      document.removeEventListener("pointerleave", onPointerLeave);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
