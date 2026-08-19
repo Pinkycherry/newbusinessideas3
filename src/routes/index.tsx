@@ -7,6 +7,7 @@ import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
 import { CategoryBadge } from "@/components/category-badge";
 import { AdSlot } from "@/components/AdSlot";
+import { BusinessBrain } from "@/components/business-brain";
 import { HeroSlider, Typewriter } from "@/components/hero-slider";
 import { Reveal } from "@/components/reveal";
 import { CardFan } from "@/components/card-fan";
@@ -407,6 +408,28 @@ function HomePage() {
             );
           })}
         </div>
+      </section>
+
+      {/* THE BUSINESS BRAIN — living constellation of opportunities */}
+      <section
+        id="business-brain"
+        data-anchor="business-brain"
+        data-anchor-label="The Business Brain"
+        className="mx-auto mt-16 max-w-6xl px-3 sm:mt-24 sm:px-4"
+      >
+        <div className="mx-auto mb-8 max-w-2xl text-center">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+            The Business Brain
+          </p>
+          <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-4xl">
+            Thousands of opportunities. One living map.
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
+            Every particle is a researched business idea. Move through the field and the
+            clusters respond — each one a category you can open.
+          </p>
+        </div>
+        <BusinessBrain />
       </section>
 
       {/* SECTION 1: INTERACTIVE GOLDEN TREE */}
