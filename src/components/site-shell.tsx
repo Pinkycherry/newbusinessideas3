@@ -1,17 +1,156 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User } from "lucide-react";
+import type { IconType } from "react-icons";
+import {
+  SiReact,
+  SiTypescript,
+  SiVite,
+  SiTailwindcss,
+  SiShadcnui,
+  SiGsap,
+  SiFramer,
+  SiTanstack,
+  SiNodedotjs,
+  SiSupabase,
+  SiVercel,
+  SiGithub,
+  SiClaude,
+  SiClaudecode,
+  SiN8N,
+  SiGooglegemini,
+} from "react-icons/si";
+// ChatGPT (OpenAI) and Grok (xAI) marks live in the Remix Icon set, not
+// Simple Icons — so all 18 entries below render a real brand logo, none a
+// text placeholder.
+import { RiOpenaiFill, RiGrokAiFill } from "react-icons/ri";
 
 import { AmbientScene } from "@/components/ambient-scene";
 import { LiveSearch } from "@/components/live-search";
 import { FloatingDock } from "@/components/floating-dock";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { CategoryBadge } from "@/components/category-badge";
+import { Spotlight } from "@/components/spotlight";
 import { catalogQuery } from "@/lib/ideas.functions";
+import { prefersReducedMotion } from "@/lib/motion";
+
 import { useAuth } from "@/hooks/use-auth";
 import { signOut } from "@/lib/auth-client";
+import { usePillInteraction } from "@/hooks/use-pill-interaction";
+
+/** Footer's primary CTA — spotlight glow behind a pill with GSAP hover/press motion. */
+function FooterCta() {
+  const pill = usePillInteraction<HTMLAnchorElement>();
+  return (
+    <Spotlight className="mt-5 inline-block rounded-full">
+      <Link
+        to="/browse"
+        className="glass-pill inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
+        ref={pill.ref}
+        onMouseEnter={pill.onMouseEnter}
+        onMouseLeave={pill.onMouseLeave}
+        onPointerDown={pill.onPointerDown}
+        onPointerUp={pill.onPointerUp}
+      >
+        <span aria-hidden>⌕</span>
+        <span>Browse the library free</span>
+      </Link>
+    </Spotlight>
+  );
+}
+
+type BuiltWithItem = { name: string; href: string; Icon: IconType; color: string };
+
+/**
+ * Trust/stack showcase, placed directly before the footer on every page.
+ * Each entry links out to that technology's real official site and shows
+ * its real brand mark, rendered in that brand's own color so it reads as
+ * the actual recognizable logo (not a faint one-tone glyph). All 18 have a
+ * real logo — the ChatGPT (OpenAI) and Grok (xAI) marks come from the
+ * Remix Icon set since Simple Icons doesn't carry them. Marks that are
+ * black in their brand guidelines (shadcn, Vercel, GitHub, ChatGPT, Grok)
+ * use the site's near-black foreground so they stay crisp on the light
+ * glass surface.
+ */
+const INK = "#0C0C25";
+const BUILT_WITH: BuiltWithItem[] = [
+  { name: "React", href: "https://react.dev", Icon: SiReact, color: "#61DAFB" },
+  {
+    name: "TypeScript",
+    href: "https://www.typescriptlang.org",
+    Icon: SiTypescript,
+    color: "#3178C6",
+  },
+  { name: "Vite", href: "https://vite.dev", Icon: SiVite, color: "#646CFF" },
+  { name: "Tailwind CSS", href: "https://tailwindcss.com", Icon: SiTailwindcss, color: "#06B6D4" },
+  { name: "shadcn/ui", href: "https://ui.shadcn.com", Icon: SiShadcnui, color: INK },
+  { name: "GSAP", href: "https://gsap.com", Icon: SiGsap, color: "#0AE448" },
+  { name: "Framer Motion", href: "https://motion.dev", Icon: SiFramer, color: "#0055FF" },
+  { name: "TanStack", href: "https://tanstack.com", Icon: SiTanstack, color: "#FF4154" },
+  { name: "Node.js", href: "https://nodejs.org", Icon: SiNodedotjs, color: "#5FA04E" },
+  { name: "Supabase", href: "https://supabase.com", Icon: SiSupabase, color: "#3FCF8E" },
+  { name: "Vercel", href: "https://vercel.com", Icon: SiVercel, color: INK },
+  { name: "GitHub", href: "https://github.com", Icon: SiGithub, color: INK },
+  { name: "Claude", href: "https://claude.com", Icon: SiClaude, color: "#D97757" },
+  { name: "Claude Code", href: "https://claude.com", Icon: SiClaudecode, color: "#D97757" },
+  { name: "n8n", href: "https://n8n.io", Icon: SiN8N, color: "#EA4B71" },
+  { name: "ChatGPT", href: "https://chatgpt.com", Icon: RiOpenaiFill, color: INK },
+  { name: "Grok", href: "https://x.ai", Icon: RiGrokAiFill, color: INK },
+  { name: "Gemini", href: "https://gemini.google.com", Icon: SiGooglegemini, color: "#8E75B2" },
+];
+
+function BuiltWithItemLink({ item }: { item: BuiltWithItem }) {
+  const { name, href, Icon, color } = item;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="glass glass-hover flex shrink-0 items-center gap-2.5 rounded-full px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+    >
+      <Icon aria-hidden className="h-6 w-6 shrink-0" style={{ color }} />
+      <span className="whitespace-nowrap">{name}</span>
+    </a>
+  );
+}
+
+function BuiltWithSection() {
+  const [looping, setLooping] = useState(true);
+
+  useEffect(() => {
+    setLooping(!prefersReducedMotion());
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => setLooping(!mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  const items = looping ? [...BUILT_WITH, ...BUILT_WITH] : BUILT_WITH;
+
+  return (
+    <section className="px-3 pb-12 pt-6 sm:px-4" aria-labelledby="built-with-heading">
+      <div className="mx-auto max-w-7xl">
+        <p
+          id="built-with-heading"
+          className="text-center text-[11px] font-semibold uppercase tracking-[0.3em] text-accent"
+        >
+          Built with
+        </p>
+        <div className="bbi-built-ticker mt-6">
+          <div
+            className={`bbi-built-ticker-track ${looping ? "" : "bbi-built-ticker-static"}`}
+            style={looping ? { animationDuration: "38s" } : undefined}
+          >
+            {items.map((item, i) => (
+              <BuiltWithItemLink key={`${item.name}-${i}`} item={item} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 /**
  * Header/nav grouping (PROJECT_BRIEF.md Section 12.5 — 3-4 dropdowns).
@@ -331,7 +470,6 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
             Menu
           </span>
           <div className="flex items-center gap-2">
-            <ThemeToggle />
             <button
               type="button"
               onClick={onClose}
@@ -399,6 +537,27 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
               </Link>
             </div>
           )}
+
+          <p className="mt-4 px-3 text-[10px] normal-case tracking-normal text-accent">
+            Browse by type
+          </p>
+          {STATIC_GROUPS.map((group) => (
+            <Fragment key={group.title}>
+              <p className="mt-2 px-3 text-[10px] normal-case tracking-normal text-muted-foreground/70">
+                {group.title}
+              </p>
+              {group.items.map((item) => (
+                <Link
+                  key={item}
+                  to="/browse"
+                  onClick={onClose}
+                  className="rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                >
+                  {item}
+                </Link>
+              ))}
+            </Fragment>
+          ))}
 
           <p className="mt-4 px-3 text-[10px] normal-case tracking-normal text-accent">Explore</p>
           {EXPLORE_ITEMS.map((item) => (
@@ -500,7 +659,6 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
           <div className="hidden shrink-0 items-center gap-2 lg:flex">
             <LiveSearch className="w-44 xl:w-56" />
-            <ThemeToggle />
             <AuthButtons />
           </div>
 
@@ -522,6 +680,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       </AnimatePresence>
       <main className="flex-1">{children}</main>
       <FloatingDock />
+      <BuiltWithSection />
       <footer className="px-3 pb-8 pt-20 sm:px-4">
         <div className="glass mx-auto max-w-7xl rounded-3xl px-6 py-10 sm:px-10">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_repeat(4,1fr)]">
@@ -533,9 +692,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
               </Link>
               <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
                 Researched business idea blueprints with real market context, trend scoring and a
-                blunt founder-fit verdict. Validate any idea free, on your own Claude or Perplexity
-                account.
+                blunt founder-fit verdict. Validate any idea free, using AI tools you already pay
+                for.
               </p>
+              <FooterCta />
             </div>
             {footerColumns.map((col) => (
               <div key={col.title}>
@@ -576,9 +736,14 @@ export function SiteShell({ children }: { children: ReactNode }) {
               </div>
             </div>
           </div>
-          <div className="mt-10 flex flex-col gap-2 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-            <p>© {new Date().getFullYear()} BBI. All rights reserved.</p>
-            <p>Idea data served live from the BBI database.</p>
+          <div className="mt-10 border-t border-border pt-6 text-xs text-muted-foreground">
+            <p className="font-medium text-foreground">
+              Bro Business Ideas — built by people who&apos;ve been where you are. Businessidea.io
+            </p>
+            <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <p>© {new Date().getFullYear()} BBI. All rights reserved.</p>
+              <p>Every idea here is live — updated in real time, never stale.</p>
+            </div>
           </div>
         </div>
       </footer>

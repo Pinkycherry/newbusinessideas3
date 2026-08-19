@@ -6,7 +6,16 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", ".output", ".vinxi"] },
+  // .claude/skills holds third-party Claude Code skill reference scripts
+  // (added by the "Add third-party marketing skills" commit) — standalone
+  // tooling, not part of this app's source or build, and not written to
+  // this repo's lint/format conventions. Linting them here was never
+  // intentional; it just wasn't excluded when they were added.
+  // .claude/worktrees holds full source checkouts for parallel background
+  // agents (git worktree) — each one duplicates the entire src/ tree, so a
+  // root-level `eslint .` without this exclusion multiplies every real
+  // finding by however many worktrees happen to exist at the time.
+  { ignores: ["dist", ".output", ".vinxi", ".claude/skills", ".claude/worktrees"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],

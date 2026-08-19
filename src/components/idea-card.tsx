@@ -6,11 +6,25 @@ import { useAuth } from "@/hooks/use-auth";
 
 const BLOBS = ["blob-sm-1", "blob-sm-2", "blob-sm-3"] as const;
 
-export function IdeaCard({ idea }: { idea: IdeaCardData }) {
+export function IdeaCard({
+  idea,
+  featured = false,
+}: {
+  idea: IdeaCardData;
+  /** Section 12.7 — no repetitive same-size card walls. Pass true for roughly
+   * one card in seven (see callers) so a long grid reads as curated rather
+   * than a uniform tile wall; spans 2 grid columns and gets larger type. */
+  featured?: boolean;
+}) {
   const auth = useAuth();
   // PROJECT_BRIEF.md Section 3.2 — idea content is blurred for anonymous
   // visitors; the browse/category page shell around it stays fully visible.
-  const locked = auth.status !== "authenticated";
+  // While the session is still resolving (auth.status === "loading"), we do
+  // NOT know yet whether the visitor is signed in — treat that brief window
+  // as unlocked-neutral rather than locked, so an already-logged-in user
+  // never sees a flash of the "Sign in to view" overlay. Only the definitive
+  // "anonymous" status renders the locked treatment.
+  const locked = auth.status === "anonymous";
 
   // Organic blob outline, deterministic per idea so neighbouring cards differ.
   const blob =
@@ -22,7 +36,9 @@ export function IdeaCard({ idea }: { idea: IdeaCardData }) {
     <Link
       to="/idea/$slug"
       params={{ slug: idea.slug }}
-      className={`glass glass-hover group relative flex h-full min-w-0 flex-col overflow-hidden ${blob} p-5 sm:p-7`}
+      className={`glass glass-hover group relative flex h-full min-w-0 flex-col overflow-hidden ${blob} p-5 sm:p-7 ${
+        featured ? "sm:col-span-2" : ""
+      }`}
     >
       <div
         className={`flex h-full flex-col gap-3 ${locked ? "pointer-events-none select-none blur-sm" : ""}`}
@@ -33,12 +49,22 @@ export function IdeaCard({ idea }: { idea: IdeaCardData }) {
             <span className="shrink-0 text-accent">Trend {idea.trendScore}</span>
           )}
         </div>
-        <h3 className="break-words text-lg font-semibold leading-snug transition-colors duration-300 group-hover:text-accent">
+        <h3
+          className={`break-words font-semibold leading-snug transition-colors duration-300 group-hover:text-accent ${
+            featured ? "text-2xl" : "text-lg"
+          }`}
+        >
           {idea.title}
         </h3>
-        <p className="line-clamp-3 break-words text-sm text-muted-foreground">{idea.summary}</p>
+        <p
+          className={`break-words text-sm text-muted-foreground ${
+            featured ? "line-clamp-4" : "line-clamp-3"
+          }`}
+        >
+          {idea.summary}
+        </p>
         <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
-          {idea.tags.slice(0, 3).map((tag) => (
+          {idea.tags.slice(0, featured ? 5 : 3).map((tag) => (
             <span
               key={tag}
               className="max-w-full truncate rounded-full border border-border px-2.5 py-0.5 text-[11px] text-muted-foreground"

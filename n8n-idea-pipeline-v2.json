@@ -1,0 +1,703 @@
+{
+  "name": "BBI Idea Pipeline v3 (Gemini writes narrative from research_facts)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trg-0001",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Jx4-kCmcKXl2eOsivEBWnlSmkkGOql49_x54ssKqDZ8",
+          "mode": "list",
+          "cachedResultName": "Superbase Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Jx4-kCmcKXl2eOsivEBWnlSmkkGOql49_x54ssKqDZ8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1572637316,
+          "mode": "list",
+          "cachedResultName": "Updated SuperBase1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Jx4-kCmcKXl2eOsivEBWnlSmkkGOql49_x54ssKqDZ8/edit#gid=1572637316"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "status",
+              "lookupValue": "pending"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "read-0001",
+      "name": "Read Pending Rows",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -96,
+        240
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "bmcUgKzJNC8kvUCj",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "loop-0001",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        128,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "rf-check",
+              "leftValue": "={{ String($json.research_facts || '') }}",
+              "rightValue": "facts",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-0001",
+      "name": "Has research_facts?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        300,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a senior business writer and an honest founder-mentor. A researcher has ALREADY chosen this micro-niche, written its final title, slug, SEO fields and keywords, attached real reference links, and gathered VALIDATED FACTS with real numbers and sources. Your only job: write the NARRATIVE sections of the idea page — the story and the practical detail — using ONLY those validated facts. You never invent a number, never contradict the research, and never rewrite the title, slug, keywords, or links (those are final and not yours to touch).\n\n=== GROUND TRUTH (never contradict) ===\nCategory: {{ $json.category_name }} > {{ $json.subcategory_name }}\nFocus keyword: {{ $json.focus_keyword }} | also: {{ $json.additional_keyword_1 }}, {{ $json.additional_keyword_2 }}\nFinal idea title: {{ $json.title }}\nSeed brief (the real business model): {{ $json.business_description }}\nVALIDATED RESEARCH FACTS — your ONLY source for any number, cost, income, market size, percentage, or hard claim:\n{{ $json.research_facts }}\nReference links already attached to this page (you MAY reflect their facts in prose; do NOT output them, do NOT invent new ones):\n{{ $json.external_links }}\n\n=== ABSOLUTE RULES ===\n1. NUMBERS ONLY FROM research_facts. Every figure — startup cost, income, market size, percentage, timeline — must trace to the research facts above. If a number is not in the facts, describe it qualitatively or say it varies; NEVER fabricate one.\n2. STAY ON THIS BUSINESS. Consistent with the title, keywords, and seed brief. Do not drift to a similar-sounding different business.\n3. HUMAN, HONEST, SPECIFIC VOICE. Warm founder-mentor real-talk, dry humour where it fits. Honesty over hype — it is fine to say a business is hard or slow. Confidence from specificity, not superlatives.\n4. MICRO-NICHE DEPTH + USP. Explain the specific angle and what makes it different from the obvious saturated version. Never generic, never what a one-line AI answer would already say.\n5. GLOBAL / UNIVERSAL. Works anywhere. NO YEAR anywhere. NO real brand/company names (refer generically: \"a popular booking platform\", \"standard payment processing\"). NO emojis.\n6. NO TEMPLATE VOICE. Banned words: game changer, revolutionize, revolutionary, in today's fast-paced world, unlock, seamless, robust, cutting-edge, disrupt, disruptive, leverage (verb), synergy, holistic, ecosystem (unless ecological), empower, elevate, next-generation, paradigm, dive in, look no further. Vary every opening; no two ideas share a structure.\n7. Weave the focus + additional keywords in naturally, never stuffed (each once or twice at most).\n8. VARIATION — NO TWO IDEAS MAY READ ALIKE. The research_facts may include a \"voice_angle\" (the emotional stance for THIS idea) and an \"open_with\" hint (how to start). If present, follow them exactly. If absent, silently pick a DISTINCT combination for this idea — openings: {a blunt number, a customer's specific frustration, a small real scene, a myth to bust, a direct challenge to the reader, a contrarian claim}; structures: {problem then angle then proof, a day in the operator's life, who-wins vs who-loses, the-math-first, the-story-first}. Never fall back on the same opening or structure you would default to. Uniqueness comes from the specific facts and this idea's real details — lean on them, not on a house template.\n9. OUTPUT ONLY a raw JSON object with EXACTLY the fields below — nothing else. Do NOT output title, slug, seo_title, meta_description, tags, external_links, or internal_link_anchors (those are already final and owned by the researcher). No markdown fences, no commentary.\n\n=== REQUIRED JSON OUTPUT (narrative fields only; each specific to THIS idea) ===\n{\n  \"summary\": \"5-7 sentence real-talk overview: what this micro-niche actually is, its USP, who exactly it is for and what they're sick of, how it works day to day. Real personality, varied rhythm.\",\n  \"market_opportunity\": \"3-4 sentences: why this under-served niche has genuine demand now — grounded in the research facts, not hype.\",\n  \"target_customer\": \"3-4 sentences: the exact person who pays, what they do instead today, and the frustration that makes them hire you.\",\n  \"how_you_make_money\": \"3-4 sentences in this sector's real terms: pricing model, realistic numbers FROM THE FACTS, what one sale looks like, repeat/margin. No SaaS tiers unless it is software.\",\n  \"startup_cost\": \"2-3 sentences: realistic money and gear to start, numbers from the facts. If near-zero, say why.\",\n  \"income_potential\": \"2-3 sentences: realistic early vs traction income and the ceiling, numbers from the facts. No fantasy figures.\",\n  \"competition_edge\": \"3-4 sentences: the USP spelled out — what the obvious version gets wrong and the structural edge that wins here.\",\n  \"getting_started_steps\": [\"5-7 concrete ordered first steps, each a short actionable sentence specific to this idea\"],\n  \"tools_needed\": [\"4-6 concrete tools/gear/resources actually required, generic (no brand names)\"],\n  \"time_to_first_customer\": \"1-2 sentences: realistic honest timeline to the first paying customer.\",\n  \"faq_json\": [\n    {\"q\":\"A real beginner question about this micro-niche\",\"a\":\"Honest, specific 2-3 sentence answer using the facts\"},\n    {\"q\":\"A money/legal/risk question\",\"a\":\"Honest, specific answer\"},\n    {\"q\":\"A scaling/time question\",\"a\":\"Honest, specific answer\"}\n  ],\n  \"pros_json\": [\"Specific real advantage of this exact micro-niche\",\"A second, different-angle advantage\",\"A third tied to timing or a structural edge\"],\n  \"cons_json\": [\"A real sector-accurate obstacle\",\"A second from a different risk category (operational/financial/regulatory/trust)\",\"A third honest limit on scale or speed\"],\n  \"verdict\": \"Direct honest 2-3 sentence read: who this genuinely fits and who should skip it.\",\n  \"trend_score\": 78,\n  \"tier\": \"free\"\n}\n\nSCORING: trend_score = honest integer 55-98 based on the demand signal in the research facts (spread the range, don't cluster near 90). tier = \"premium\" only if trend_score >= 88, else \"free\".\n\nSilent check before output: is EVERY number traceable to research_facts, is this a specific micro-niche in a genuine human voice with no year/brand/emoji/template words, and did you output ONLY the narrative fields? If not, fix it before returning."
+      },
+      "id": "llm-0001",
+      "name": "Basic LLM Chain",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [
+        352,
+        16
+      ]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.6-flash",
+        "options": {
+          "temperature": 1
+        }
+      },
+      "id": "gem-0001",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        432,
+        240
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "lgFdMUWoybo6ngbt",
+          "name": "Current"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const inputData = $input.item.json;\nlet rawText = inputData.text || inputData.output || (typeof inputData === 'string' ? inputData : JSON.stringify(inputData));\nconst cleaned = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();\n\nlet g = null;\ntry { g = JSON.parse(cleaned); } catch (e) { g = null; }\n\nlet src = {};\ntry { src = $('Loop Over Items').item.json; } catch (err) { src = {}; }\n\n// Pass Claude/seed fields straight through, untouched.\nconst pass = {\n  idea_id: src.idea_id || \"\",\n  category_id: src.category_id || \"\",\n  category_name: src.category_name || \"\",\n  category_slug: src.category_slug || \"\",\n  subcategory_id: src.subcategory_id || \"\",\n  subcategory_name: src.subcategory_name || \"\",\n  subcategory_slug: src.subcategory_slug || \"\",\n  focus_keyword: src.focus_keyword || \"\",\n  additional_keyword_1: src.additional_keyword_1 || \"\",\n  additional_keyword_2: src.additional_keyword_2 || \"\",\n  business_description: src.business_description || \"\",\n  collection_id: src.collection_id || \"\",\n  title: src.title || \"\",\n  slug: src.slug || \"\",\n  seo_title: src.seo_title || \"\",\n  meta_description: src.meta_description || \"\",\n  tags: src.tags || \"[]\",\n  external_links: src.external_links || \"[]\",\n  internal_link_anchors: src.internal_link_anchors || \"[]\",\n  research_facts: src.research_facts || \"{}\"\n};\n\n// If Gemini failed, mark for retry but KEEP all of Claude's work intact.\nif (!g || !g.summary) {\n  return { json: { ...pass, status: \"needs_retry\" } };\n}\n\nconst str = (v) => (v === undefined || v === null) ? \"\" : String(v);\nconst arr = (v) => Array.isArray(v) ? JSON.stringify(v) : (typeof v === 'string' ? v : JSON.stringify(v || []));\nconst trend = parseInt(g.trend_score, 10) || 70;\nconst tier = g.tier || (trend >= 88 ? \"premium\" : \"free\");\n\nreturn {\n  json: {\n    ...pass,\n    summary: str(g.summary),\n    market_opportunity: str(g.market_opportunity),\n    target_customer: str(g.target_customer),\n    how_you_make_money: str(g.how_you_make_money),\n    startup_cost: str(g.startup_cost),\n    income_potential: str(g.income_potential),\n    competition_edge: str(g.competition_edge),\n    getting_started_steps: arr(g.getting_started_steps),\n    tools_needed: arr(g.tools_needed),\n    time_to_first_customer: str(g.time_to_first_customer),\n    faq_json: arr(g.faq_json),\n    pros_json: arr(g.pros_json),\n    cons_json: arr(g.cons_json),\n    verdict: str(g.verdict),\n    trend_score: trend,\n    tier: tier,\n    status: \"completed\"\n  }\n};"
+      },
+      "id": "parse-0001",
+      "name": "Code JSON Parser",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Jx4-kCmcKXl2eOsivEBWnlSmkkGOql49_x54ssKqDZ8",
+          "mode": "list",
+          "cachedResultName": "Superbase Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Jx4-kCmcKXl2eOsivEBWnlSmkkGOql49_x54ssKqDZ8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1572637316,
+          "mode": "list",
+          "cachedResultName": "Updated SuperBase1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Jx4-kCmcKXl2eOsivEBWnlSmkkGOql49_x54ssKqDZ8/edit#gid=1572637316"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "idea_id": "={{ $json.idea_id }}",
+            "summary": "={{ $json.summary }}",
+            "market_opportunity": "={{ $json.market_opportunity }}",
+            "target_customer": "={{ $json.target_customer }}",
+            "how_you_make_money": "={{ $json.how_you_make_money }}",
+            "startup_cost": "={{ $json.startup_cost }}",
+            "income_potential": "={{ $json.income_potential }}",
+            "competition_edge": "={{ $json.competition_edge }}",
+            "getting_started_steps": "={{ $json.getting_started_steps }}",
+            "tools_needed": "={{ $json.tools_needed }}",
+            "time_to_first_customer": "={{ $json.time_to_first_customer }}",
+            "faq_json": "={{ $json.faq_json }}",
+            "pros_json": "={{ $json.pros_json }}",
+            "cons_json": "={{ $json.cons_json }}",
+            "verdict": "={{ $json.verdict }}",
+            "trend_score": "={{ $json.trend_score }}",
+            "tier": "={{ $json.tier }}",
+            "status": "={{ $json.status }}"
+          },
+          "matchingColumns": [
+            "idea_id"
+          ],
+          "schema": [
+            {
+              "id": "idea_id",
+              "displayName": "idea_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "market_opportunity",
+              "displayName": "market_opportunity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "target_customer",
+              "displayName": "target_customer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "how_you_make_money",
+              "displayName": "how_you_make_money",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "startup_cost",
+              "displayName": "startup_cost",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "income_potential",
+              "displayName": "income_potential",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "competition_edge",
+              "displayName": "competition_edge",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "getting_started_steps",
+              "displayName": "getting_started_steps",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tools_needed",
+              "displayName": "tools_needed",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "time_to_first_customer",
+              "displayName": "time_to_first_customer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "faq_json",
+              "displayName": "faq_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "pros_json",
+              "displayName": "pros_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "cons_json",
+              "displayName": "cons_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "verdict",
+              "displayName": "verdict",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "trend_score",
+              "displayName": "trend_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tier",
+              "displayName": "tier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "upd-0001",
+      "name": "Update Row in Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        928,
+        128
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "bmcUgKzJNC8kvUCj",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "ideas",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "idea_id",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.idea_id }}"
+            },
+            {
+              "fieldId": "category_id",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.category_id }}"
+            },
+            {
+              "fieldId": "category_name",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.category_name }}"
+            },
+            {
+              "fieldId": "category_slug",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.category_slug }}"
+            },
+            {
+              "fieldId": "subcategory_id",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.subcategory_id }}"
+            },
+            {
+              "fieldId": "subcategory_name",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.subcategory_name }}"
+            },
+            {
+              "fieldId": "subcategory_slug",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.subcategory_slug }}"
+            },
+            {
+              "fieldId": "focus_keyword",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.focus_keyword }}"
+            },
+            {
+              "fieldId": "additional_keyword_1",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.additional_keyword_1 }}"
+            },
+            {
+              "fieldId": "additional_keyword_2",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.additional_keyword_2 }}"
+            },
+            {
+              "fieldId": "business_description",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.business_description }}"
+            },
+            {
+              "fieldId": "collection_id",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.collection_id }}"
+            },
+            {
+              "fieldId": "title",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.title }}"
+            },
+            {
+              "fieldId": "slug",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.slug }}"
+            },
+            {
+              "fieldId": "seo_title",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.seo_title }}"
+            },
+            {
+              "fieldId": "meta_description",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.meta_description }}"
+            },
+            {
+              "fieldId": "tags",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.tags }}"
+            },
+            {
+              "fieldId": "external_links",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.external_links }}"
+            },
+            {
+              "fieldId": "internal_link_anchors",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.internal_link_anchors }}"
+            },
+            {
+              "fieldId": "research_facts",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.research_facts }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.status }}"
+            },
+            {
+              "fieldId": "summary",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.summary }}"
+            },
+            {
+              "fieldId": "market_opportunity",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.market_opportunity }}"
+            },
+            {
+              "fieldId": "target_customer",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.target_customer }}"
+            },
+            {
+              "fieldId": "how_you_make_money",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.how_you_make_money }}"
+            },
+            {
+              "fieldId": "startup_cost",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.startup_cost }}"
+            },
+            {
+              "fieldId": "income_potential",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.income_potential }}"
+            },
+            {
+              "fieldId": "competition_edge",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.competition_edge }}"
+            },
+            {
+              "fieldId": "getting_started_steps",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.getting_started_steps }}"
+            },
+            {
+              "fieldId": "tools_needed",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.tools_needed }}"
+            },
+            {
+              "fieldId": "time_to_first_customer",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.time_to_first_customer }}"
+            },
+            {
+              "fieldId": "faq_json",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.faq_json }}"
+            },
+            {
+              "fieldId": "pros_json",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.pros_json }}"
+            },
+            {
+              "fieldId": "cons_json",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.cons_json }}"
+            },
+            {
+              "fieldId": "verdict",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.verdict }}"
+            },
+            {
+              "fieldId": "trend_score",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.trend_score }}"
+            },
+            {
+              "fieldId": "tier",
+              "fieldValue": "={{ $('Code JSON Parser').item.json.tier }}"
+            }
+          ]
+        }
+      },
+      "id": "sup-0001",
+      "name": "Sync to Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1152,
+        240
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "B7VX9z6RAJCh89LB",
+          "name": "Supabase account"
+        }
+      },
+      "notes": "Inserts full row: Claude's SEO/seed/research columns (passed through) + Gemini's narrative fields."
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Read Pending Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Pending Rows": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Has research_facts?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has research_facts?": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Code JSON Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code JSON Parser": {
+      "main": [
+        [
+          {
+            "node": "Update Row in Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Row in Sheet": {
+      "main": [
+        [
+          {
+            "node": "Sync to Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sync to Supabase": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "bbi-v3-0001",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "id": "BBIIdeaPipelineV3",
+  "tags": []
+}

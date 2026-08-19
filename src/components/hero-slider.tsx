@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { hideImgIfBroken } from "@/lib/utils";
+
 /**
  * Hero imagery slider. Slides use the imagery already used across the site
  * (the Golden Tree artwork first) — purely visual, no clickable nodes on top.
@@ -39,14 +41,23 @@ export function HeroSlider() {
         <AnimatePresence mode="sync">
           <motion.img
             key={slide.src}
+            ref={hideImgIfBroken}
             src={slide.src}
             alt={slide.alt}
-            loading="lazy"
+            // The first slide is the LCP-critical hero image — always
+            // visible on load, never actually below the fold, so
+            // loading="lazy" on it was actively counterproductive (telling
+            // the browser to deprioritize the one image that most needs
+            // priority). Later slides genuinely aren't needed until the
+            // interval rotates to them, so they stay lazy.
+            loading={index === 0 ? "eager" : "lazy"}
+            fetchPriority={index === 0 ? "high" : "auto"}
             initial={{ opacity: 0, scale: 1.08 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.02 }}
             transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
             className="absolute inset-0 h-full w-full object-cover"
+            onError={(e) => (e.currentTarget.style.display = "none")}
           />
         </AnimatePresence>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent" />

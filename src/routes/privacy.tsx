@@ -81,10 +81,10 @@ function PrivacyPage() {
           </Link>{" "}
           for how to exercise these rights, or email{" "}
           <a
-            href="mailto:privacy@ideavault.ai"
+            href="mailto:privacy@businessidea.io"
             className="text-accent underline underline-offset-4"
           >
-            privacy@ideavault.ai
+            privacy@businessidea.io
           </a>
           .
         </p>

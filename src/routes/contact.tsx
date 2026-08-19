@@ -14,22 +14,22 @@ export const Route = createFileRoute("/contact")({
 const channels = [
   {
     label: "General & support",
-    value: "hello@ideavault.ai",
+    value: "hello@businessidea.io",
     note: "Access questions, the validation handoff, anything about the library.",
   },
   {
     label: "Custom research",
-    value: "research@ideavault.ai",
+    value: "research@businessidea.io",
     note: "Bespoke blueprints and validation sprints. Include the market you care about.",
   },
   {
     label: "Privacy & data requests",
-    value: "privacy@ideavault.ai",
+    value: "privacy@businessidea.io",
     note: "Access, correction, deletion and other GDPR requests.",
   },
   {
     label: "Security reports",
-    value: "security@ideavault.ai",
+    value: "security@businessidea.io",
     note: "Responsible disclosure. Please do not test against live user data.",
   },
 ];

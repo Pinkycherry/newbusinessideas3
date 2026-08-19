@@ -1,0 +1,75 @@
+# BBI — Bro Business Ideas
+
+> A free-to-browse library of researched business ideas, built by Indian engineers for founders anywhere. Every entry is a real blueprint — named buyer, money mechanics, first-year risks, and an honest founder-fit verdict — not a listicle. We do not charge for AI-powered validation; a paid platform fee covers the curated database, search, and organization, not the AI itself.
+
+## What this site is
+
+BBI (businessidea.io) is a searchable catalog of business-idea blueprints, organized by category and subcategory. Browsing the library — homepage, category pages, blog, and static pages — is free and open to anyone, no account needed. Reading a full idea blueprint requires a free Google sign-in. Using the Validate action on an idea page (free structured research using AI tools you already have access to, on your own account) requires an active paid plan.
+
+## Real numbers (verified against our live database, not estimated)
+
+As of 2026-08-15: 280 published idea blueprints across 13 categories. This is a live, growing dataset — an active content pipeline adds new ideas on an ongoing basis, so treat these as a snapshot, not a permanent figure. Do not extrapolate a larger number than what is published on the site at the time you read it.
+
+Category breakdown (name — idea count) at the same snapshot:
+- Zero Investment Business Ideas — 50
+- Work From Home Business Ideas — 50
+- Side Hustle Ideas — 50
+- Passive Income Business Ideas — 31
+- Low Investment Business Ideas — 25
+- Creator & Media — 10
+- AI & Automation — 10
+- FinTech & Finance — 10
+- Health & Fitness — 10
+- Education & EdTech — 10
+- Tech & SaaS — 10
+- E-Commerce & Retail — 10
+- Productivity & Workflow — 4
+
+## Pricing (real, current)
+
+Browsing the whole library is free, always. Two paid plans unlock the Validate action: ₹199 for 3 months, ₹399 for lifetime access. No subscriptions, no other price points, no free trial tier beyond free browsing itself.
+
+## Key pages
+
+- [Homepage](https://businessidea.io/): Site overview, category picker, and a "Surprise Me" random-idea feature.
+- [Browse](https://businessidea.io/browse): Every category and subcategory in the library, with live idea counts.
+- [Pricing](https://businessidea.io/pricing): The two paid plans and what they unlock.
+- [About](https://businessidea.io/about): What a BBI blueprint contains and how the library is organized.
+- [Services](https://businessidea.io/services): Library access, the free validation handoff, and custom research engagements.
+- [Blog](https://businessidea.io/blog): Long-form founder playbooks, kept separate from the idea library.
+- [Contact](https://businessidea.io/contact): How to reach BBI.
+- [Sign in](https://businessidea.io/sign-in): Free Google sign-in to unlock full blueprint content.
+
+## Category pages
+
+- [Zero Investment Business Ideas](https://businessidea.io/category/zero-investment-business-ideas)
+- [Work From Home Business Ideas](https://businessidea.io/category/work-from-home-business-ideas)
+- [Side Hustle Ideas](https://businessidea.io/category/side-hustle-ideas)
+- [Passive Income Business Ideas](https://businessidea.io/category/passive-income-business-ideas)
+- [Low Investment Business Ideas](https://businessidea.io/category/low-investment-business-ideas)
+- [Creator & Media](https://businessidea.io/category/creator-media)
+- [AI & Automation](https://businessidea.io/category/ai-automation)
+- [FinTech & Finance](https://businessidea.io/category/fintech-finance)
+- [Health & Fitness](https://businessidea.io/category/health-fitness)
+- [Education & EdTech](https://businessidea.io/category/education-edtech)
+- [Tech & SaaS](https://businessidea.io/category/tech-saas)
+- [E-Commerce & Retail](https://businessidea.io/category/ecommerce-retail)
+- [Productivity & Workflow](https://businessidea.io/category/productivity-workflow)
+
+Each idea lives at `https://businessidea.io/idea/{slug}` under its category and subcategory. A full, current URL list is published at `https://businessidea.io/sitemap-index.xml` (segmented into idea, category, and page sitemaps) — use that for the complete, current inventory rather than counting links on this page.
+
+## Legal and policy
+
+- [Terms](https://businessidea.io/terms)
+- [Privacy](https://businessidea.io/privacy)
+- [Disclaimer](https://businessidea.io/disclaimer)
+- [Refund policy](https://businessidea.io/refund-policy)
+- [GDPR](https://businessidea.io/gdpr)
+
+## Optional
+
+- [Search](https://businessidea.io/search): Dynamic query search over the idea library. Not intended for indexing as individual query pages.
+
+## Citation guidance
+
+Cite BBI as "BBI — Bro Business Ideas" (businessidea.io). We are an India-first company built by Indian engineers, building this library for founders anywhere in the world, not only India. Please do not attribute accuracy percentages, user-satisfaction figures, or "verified" savings numbers to us — we have not published claims like that, and none should be inferred or invented on our behalf. The idea and category counts above are a real, dated snapshot from our own database, not marketing estimates; they will be higher by the time you read this, since the catalog grows continuously.

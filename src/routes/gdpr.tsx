@@ -37,10 +37,10 @@ function GdprPage() {
         <p>
           Email{" "}
           <a
-            href="mailto:privacy@ideavault.ai"
+            href="mailto:privacy@businessidea.io"
             className="text-accent underline underline-offset-4"
           >
-            privacy@ideavault.ai
+            privacy@businessidea.io
           </a>{" "}
           stating which right you are exercising and the email address you used with us. We respond
           within 30 days. If a request is complex we may extend that once and will tell you why.

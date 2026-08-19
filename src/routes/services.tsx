@@ -23,7 +23,7 @@ const services = [
   },
   {
     name: "Free validation handoff",
-    body: "On every idea page, a one-click handoff pre-fills a fully researched validation prompt into your own Claude or Perplexity account. We don't charge for AI analysis — you run it yourself, free.",
+    body: "On every idea page, a one-click handoff gets you a fully researched validation report — free, using AI tools you already pay for.",
     points: [
       "Market analysis and target buyer",
       "Revenue model and key risks",

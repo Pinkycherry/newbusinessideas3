@@ -4,6 +4,7 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getCatalog } from "@/lib/ideas.functions";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { usePillInteraction } from "@/hooks/use-pill-interaction";
 
 const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
 
@@ -29,15 +30,43 @@ export const Route = createFileRoute("/browse")({
   component: BrowsePage,
   errorComponent: () => (
     <SiteShell>
-      <p className="mx-auto max-w-6xl px-4 py-24">The idea library could not be loaded.</p>
+      <p className="mx-auto max-w-6xl px-4 py-24">
+        Couldn't load the idea library — try refreshing.
+      </p>
     </SiteShell>
   ),
   notFoundComponent: () => (
     <SiteShell>
-      <p className="mx-auto max-w-6xl px-4 py-24">Not found.</p>
+      <p className="mx-auto max-w-6xl px-4 py-24">That page doesn't exist.</p>
     </SiteShell>
   ),
 });
+
+function SubcategoryPill({
+  categorySlug,
+  subcategorySlug,
+  label,
+}: {
+  categorySlug: string;
+  subcategorySlug: string;
+  label: string;
+}) {
+  const pill = usePillInteraction<HTMLAnchorElement>();
+  return (
+    <Link
+      to="/category/$categorySlug/$subcategorySlug"
+      params={{ categorySlug, subcategorySlug }}
+      className="glass-pill iv-tag px-4 py-2 text-sm"
+      ref={pill.ref}
+      onMouseEnter={pill.onMouseEnter}
+      onMouseLeave={pill.onMouseLeave}
+      onPointerDown={pill.onPointerDown}
+      onPointerUp={pill.onPointerUp}
+    >
+      {label}
+    </Link>
+  );
+}
 
 function BrowsePage() {
   const { data } = useSuspenseQuery(catalogQuery);
@@ -65,32 +94,33 @@ function BrowsePage() {
             {data.totalIdeas} ideas · {data.totalSubcategories} subcategories ·{" "}
             {data.categories.length} categories
           </p>
-          <div className="mt-10 space-y-10">
+          <div className="mt-10 space-y-6">
             {data.categories.map((category) => (
-              <section key={category.categorySlug}>
-                <div className="flex items-baseline justify-between border-b border-border pb-2">
+              <section
+                key={category.categorySlug}
+                className="glass glass-hover rounded-3xl px-5 py-6 sm:px-8 sm:py-7"
+              >
+                <div className="iv-plainlinks flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
                   <Link
                     to="/category/$categorySlug"
                     params={{ categorySlug: category.categorySlug }}
-                    className="text-xl font-semibold hover:text-primary"
+                    className="bbi-heading-glow text-xl font-bold tracking-tight text-foreground transition-colors hover:text-primary sm:text-2xl"
                   >
                     {category.categoryName}
                   </Link>
-                  <span className="text-xs uppercase tracking-widest text-muted-foreground">
+                  <span className="inline-flex w-fit shrink-0 items-center rounded-full bg-primary/10 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-primary">
                     {category.ideaCount} ideas
                   </span>
                 </div>
                 {/* Fluid tag cloud — width is driven by label length, never a rigid grid. */}
-                <div className="iv-tag-cloud mt-4">
+                <div className="iv-tag-cloud mt-5">
                   {category.subcategories.map((sub) => (
-                    <Link
+                    <SubcategoryPill
                       key={sub.slug}
-                      to="/category/$categorySlug/$subcategorySlug"
-                      params={{ categorySlug: category.categorySlug, subcategorySlug: sub.slug }}
-                      className="glass-pill iv-tag px-4 py-2 text-sm"
-                    >
-                      {sub.name}
-                    </Link>
+                      categorySlug={category.categorySlug}
+                      subcategorySlug={sub.slug}
+                      label={sub.name}
+                    />
                   ))}
                 </div>
               </section>

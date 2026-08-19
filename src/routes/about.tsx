@@ -33,24 +33,24 @@ function AboutPage() {
       </Section>
       <Section heading="How ideas are organised">
         <p>
-          Every idea lives inside a category and a subcategory. Both are read live from our idea
-          database, so the navigation, category pages and counts always reflect what is actually
-          published — nothing about the taxonomy is hardcoded in the interface.
+          Every idea lives inside a category and a subcategory, and both stay current on their own —
+          navigation, category pages and counts always match what is actually published. Nothing
+          here goes stale.
         </p>
       </Section>
       <Section heading="Where AI fits">
         <p>
-          We don&apos;t charge for AI analysis. Every blueprint has a Validate button that hands you
-          a fully researched prompt on your own Claude or Perplexity account, free — market sizing,
-          target buyer, revenue model, risks and a launch roadmap, built from that idea&apos;s real
-          record. It runs on your account, not ours.
+          We don&apos;t charge for AI analysis. Every blueprint has a Validate button that gets you
+          real research — market sizing, target buyer, revenue model, risks and a launch roadmap,
+          built from that idea&apos;s real record — free, using AI tools you already pay for. It
+          runs on your account, not ours.
         </p>
       </Section>
       <Section heading="What we do not do">
         <Bullets
           items={[
             "We do not publish ideas we could not describe to an operator in detail.",
-            "We do not present editorial articles as database entries — the blog is a separate system.",
+            "We do not present editorial articles as database entries — the blog and the idea library are kept apart, on purpose.",
             "We do not promise outcomes. A blueprint is research, not a guarantee.",
           ]}
         />

@@ -91,6 +91,8 @@ export function FloatingDock() {
               initial={{ opacity: 0, scale: 0.7 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.7 }}
+              whileHover={{ scale: 1.045, y: -2 }}
+              whileTap={{ scale: 0.96 }}
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               aria-label="Back to top"
               className="glass-btn grid h-11 w-11 place-items-center rounded-full"
@@ -103,6 +105,7 @@ export function FloatingDock() {
         {anchors.length > 0 && (
           <motion.button
             type="button"
+            whileHover={{ scale: 1.045, y: -2 }}
             whileTap={{ scale: 0.94 }}
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
