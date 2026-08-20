@@ -87,9 +87,12 @@ export const Route = createFileRoute("/idea/$slug")({
   },
   head: ({ loaderData }) => {
     const idea = loaderData?.idea;
-    const title = idea ? `${idea.title} | BBI` : "Business Idea | BBI";
+    // Prefer the researched SEO fields when the pipeline has filled them;
+    // fall back to the previous behaviour for un-enriched ideas.
+    const title = idea ? (idea.seoTitle || `${idea.title} | BBI`) : "Business Idea | BBI";
     const description =
-      idea?.businessDescription?.slice(0, 155) ??
+      idea?.metaDescription ||
+      idea?.businessDescription?.slice(0, 155) ||
       "A researched business idea blueprint with pros, cons and a founder-fit verdict.";
     return {
       meta: [
@@ -100,6 +103,7 @@ export const Route = createFileRoute("/idea/$slug")({
         { property: "og:type", content: "article" },
         { name: "twitter:card", content: "summary_large_image" },
       ],
+      links: idea ? [{ rel: "canonical", href: `https://businessidea.io/idea/${idea.slug}` }] : [],
     };
   },
   component: IdeaPage,
@@ -119,6 +123,19 @@ export const Route = createFileRoute("/idea/$slug")({
     </SiteShell>
   ),
 });
+
+/** A plain prose block that renders only when the field has content. */
+function RichSection({ title, body }: { title: string; body: string }) {
+  if (!body) return null;
+  return (
+    <section className="mt-10">
+      <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+        {title}
+      </h2>
+      <p className="mt-3 whitespace-pre-line leading-relaxed">{body}</p>
+    </section>
+  );
+}
 
 function IdeaPage() {
   const { slug } = Route.useParams();
@@ -252,6 +269,114 @@ function IdeaPage() {
                       Verdict
                     </h2>
                     <p className="mt-2 leading-relaxed">{idea.verdict}</p>
+                  </section>
+                )}
+
+                {/* Researched detail — each block renders only when the pipeline
+                    has filled it, so un-enriched ideas are unaffected. */}
+                <RichSection title="The opportunity" body={idea.marketOpportunity} />
+                <RichSection title="Who actually pays you" body={idea.targetCustomer} />
+                <RichSection title="How the money works" body={idea.howYouMakeMoney} />
+
+                {(idea.startupCost || idea.incomePotential) && (
+                  <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                    {idea.startupCost && (
+                      <section className="rounded-lg border border-border bg-card p-5">
+                        <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
+                          What it costs to start
+                        </h2>
+                        <p className="mt-2 text-sm leading-relaxed">{idea.startupCost}</p>
+                      </section>
+                    )}
+                    {idea.incomePotential && (
+                      <section className="rounded-lg border border-border bg-card p-5">
+                        <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
+                          What you can earn
+                        </h2>
+                        <p className="mt-2 text-sm leading-relaxed">{idea.incomePotential}</p>
+                      </section>
+                    )}
+                  </div>
+                )}
+
+                <RichSection title="Your edge" body={idea.competitionEdge} />
+
+                {idea.gettingStartedSteps.length > 0 && (
+                  <section className="mt-10">
+                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                      How to start
+                    </h2>
+                    <ol className="mt-4 space-y-3">
+                      {idea.gettingStartedSteps.map((step, i) => (
+                        <li key={step} className="flex gap-3 text-sm leading-relaxed">
+                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">
+                            {i + 1}
+                          </span>
+                          <span>{step}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </section>
+                )}
+
+                {idea.toolsNeeded.length > 0 && (
+                  <section className="mt-10">
+                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                      What you need
+                    </h2>
+                    <ul className="mt-3 flex flex-wrap gap-2">
+                      {idea.toolsNeeded.map((tool) => (
+                        <li
+                          key={tool}
+                          className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
+                        >
+                          {tool}
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+
+                <RichSection title="Time to first customer" body={idea.timeToFirstCustomer} />
+
+                {idea.faq.length > 0 && (
+                  <section className="mt-10">
+                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                      Questions people ask
+                    </h2>
+                    <div className="mt-4 space-y-3">
+                      {idea.faq.map((item) => (
+                        <details
+                          key={item.q}
+                          className="rounded-lg border border-border bg-card p-4 text-sm"
+                        >
+                          <summary className="cursor-pointer font-semibold">{item.q}</summary>
+                          <p className="mt-2 leading-relaxed text-muted-foreground">{item.a}</p>
+                        </details>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {idea.externalLinks.length > 0 && (
+                  <section className="mt-10">
+                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                      Useful resources
+                    </h2>
+                    <ul className="mt-3 space-y-2 text-sm">
+                      {idea.externalLinks.map((link) => (
+                        <li key={link.url}>
+                          <a
+                            href={link.url}
+                            target="_blank"
+                            rel="nofollow noopener"
+                            className="font-semibold text-primary underline decoration-border underline-offset-4 hover:text-accent"
+                          >
+                            {link.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
                   </section>
                 )}
 
