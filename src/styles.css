@@ -1414,3 +1414,170 @@ html.light .idea-shell::before { opacity: 0.42; }
   .demand-gauge-fill { animation: none; width: calc(var(--pct) * 1%); }
   .demand-bars span { animation: none; }
 }
+
+/* ==================================================================
+   SCROLL-DEVICE FLOOR — scrollcraft principles, no literal engine
+   (2026-08-23, see PENDING.md same date)
+
+   Everything below is .sc-*-scoped and additive only. Zero new colors —
+   every value here is var(--primary)/var(--accent)/var(--foreground)/
+   var(--border) via color-mix, i.e. the real html.light tokens above.
+   Paired with src/lib/scroll-devices.ts. Motion rule throughout, per
+   taste.md: transform + opacity for anything continuous, clip-path for
+   wipes only, never width/height/top/left, never transition: all.
+   ================================================================== */
+
+:root {
+  --sc-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --sc-e1: 0 1px 2px color-mix(in oklab, var(--foreground) 6%, transparent);
+  --sc-e2: 0 8px 24px -12px color-mix(in oklab, var(--foreground) 22%, transparent);
+  --sc-e3: 0 24px 56px -20px color-mix(in oklab, var(--foreground) 32%, transparent);
+  --sc-edge: inset 0 1px 0 color-mix(in oklab, white 60%, transparent);
+}
+
+/* ---- flow + in: reveal on entry (see useStaggerReveal) ---------- */
+.sc-flow-item {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 520ms var(--sc-ease-out),
+    transform 520ms var(--sc-ease-out);
+}
+.sc-flow-item.sc-in { opacity: 1; transform: translateY(0); }
+
+/* ---- kinetic type: masked line reveal (see useKineticLines) ----- */
+.sc-kinetic-mask { display: block; overflow: hidden; padding-bottom: 0.08em; }
+.sc-kinetic-line { display: inline-block; will-change: transform; }
+
+/* ---- depth: edge light + grain (taste.md "Depth") ---------------- */
+.sc-edge-lit { box-shadow: var(--sc-edge), var(--sc-e2); }
+.sc-elevate-1 { box-shadow: var(--sc-e1); }
+.sc-elevate-2 { box-shadow: var(--sc-e2); }
+.sc-elevate-3 { box-shadow: var(--sc-e3); }
+
+.sc-grain { position: relative; isolation: isolate; }
+.sc-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- text-over-media scrims (taste.md "Text over media") -------- */
+/* Sibling of the copy block, never a child — see scroll-devices.ts note. */
+.sc-scrim { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.sc-scrim--lead {
+  background: radial-gradient(
+    ellipse 60% 70% at 18% 82%,
+    color-mix(in oklab, var(--foreground) 55%, transparent) 0%,
+    transparent 70%
+  );
+}
+.sc-scrim--trail {
+  background: radial-gradient(
+    ellipse 60% 70% at 82% 82%,
+    color-mix(in oklab, var(--foreground) 55%, transparent) 0%,
+    transparent 70%
+  );
+}
+.sc-scrim--band {
+  background: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--foreground) 58%, transparent) 0%,
+    transparent 58%
+  );
+}
+@media (max-width: 860px) {
+  .sc-scrim--lead,
+  .sc-scrim--trail { background: none; }
+  .sc-scrim--lead::before,
+  .sc-scrim--trail::before { content: none; }
+}
+
+/* ---- rail (see useRail) ------------------------------------------ */
+.sc-rail-wrap { overflow: hidden; }
+.sc-rail-wrap[style*="overflow-x: auto"] {
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-inline: 1rem;
+}
+.sc-rail { display: flex; will-change: transform; }
+.sc-rail > * { scroll-snap-align: start; }
+
+/* ---- pointer devices: press feedback (taste.md "Motion") --------- */
+.sc-press { transition: transform 140ms var(--sc-ease-out); }
+.sc-press:active { transform: scale(0.97); }
+
+/* ---- gallery/catalog: museum-label schema, shared across cards --- */
+.sc-spec-label {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.6rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--muted-foreground);
+}
+.sc-spec-label dt { font-weight: 600; color: var(--foreground); }
+.sc-spec-label dt::after { content: ":"; margin-right: 0.2rem; }
+.sc-spec-label dd { margin: 0; }
+.sc-spec-label dd:not(:last-child)::after { content: "·"; margin-left: 0.6rem; color: var(--border); }
+
+/* ---- chaptered editorial: folio + hard-cut chapter ground --------- */
+.sc-chapter { position: relative; }
+.sc-folio {
+  position: sticky;
+  top: 5.5rem;
+  float: left;
+  width: 3.25rem;
+  margin-left: -3.75rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  writing-mode: vertical-rl;
+}
+@media (max-width: 1100px) {
+  .sc-folio { display: none; }
+}
+
+/* ---- split stage: divider carries the argument -------------------- */
+.sc-split { display: grid; grid-template-columns: 1fr; position: relative; }
+@media (min-width: 900px) {
+  .sc-split { grid-template-columns: 1fr auto 1fr; align-items: stretch; }
+}
+.sc-split-divider {
+  display: none;
+}
+@media (min-width: 900px) {
+  .sc-split-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 2px;
+    background: var(--border);
+    position: relative;
+  }
+  .sc-split-divider > span {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    background: var(--background);
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-flow-item { transition: opacity 300ms ease; transform: none; }
+  .sc-grain::after { display: none; }
+}
