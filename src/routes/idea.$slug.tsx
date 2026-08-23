@@ -1,6 +1,7 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions } from "@tanstack/react-query";
 import { Lock } from "lucide-react";
+import { useRef } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { ValidateButton } from "@/components/validate-button";
@@ -15,6 +16,7 @@ import {
 import { type IdeaCard as IdeaCardType, type IdeaDetail } from "@/lib/ideas-shared";
 import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { useAuth } from "@/hooks/use-auth";
+import { usePinProgress } from "@/lib/scroll-devices";
 
 type IdeaDetailData = {
   idea: IdeaDetail;
@@ -76,10 +78,16 @@ function pickContextualLinks(idea: IdeaDetail, related: IdeaCardType[]): Context
 const ideaDetailQuery = (slug: string) =>
   queryOptions<IdeaDetailData>({
     queryKey: ["idea-detail", slug],
-    // Section 9: the related/trending/category pulls are random per request,
-    // so this must not be served from a warm cache on revisit.
+    // Used only inside the route loader's ensureQueryData call below, purely
+    // as a typed fetch-and-return helper — the component reads the result via
+    // Route.useLoaderData(), not via useSuspenseQuery, so these cache settings
+    // no longer affect what's rendered (see the note on IdeaPage's data line
+    // for why: router.tsx doesn't dehydrate the QueryClient to the client, so
+    // a client-side useSuspenseQuery on this query would re-run it — a real
+    // problem for Section 9's per-request-random variant/gradient/related
+    // picks, since two independent calls return different results).
     staleTime: 0,
-    gcTime: 0,
+    gcTime: 60_000,
     queryFn: async () => {
       const result = await getIdeaBySlug({ data: { slug } });
       if (!result?.idea) return null;
@@ -97,7 +105,7 @@ export const Route = createFileRoute("/idea/$slug")({
     const idea = loaderData?.idea;
     // Prefer the researched SEO fields when the pipeline has filled them;
     // fall back to the previous behaviour for un-enriched ideas.
-    const title = idea ? (idea.seoTitle || `${idea.title} | BBI`) : "Business Idea | BBI";
+    const title = idea ? idea.seoTitle || `${idea.title} | BBI` : "Business Idea | BBI";
     const description =
       idea?.metaDescription ||
       idea?.businessDescription?.slice(0, 155) ||
@@ -171,6 +179,75 @@ function DemandBlock({ score }: { score: number | null }) {
   );
 }
 
+/**
+ * The blueprint's real pros/cons/verdict, computed state advancing while the
+ * frame holds — the `pin` device (devices.md §2), the one leaned on hardest
+ * by the Live Surface grammar. Three real panels, not a fake sequence: pros
+ * and cons are both visible from the start (nothing here is hidden to force
+ * a reveal), the verdict crossfades in as `--sc-p` passes its threshold. No
+ * invented copy — every word is the idea's own `pros`/`cons`/`verdict` data.
+ */
+function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
+  const stageRef = useRef<HTMLDivElement | null>(null);
+  usePinProgress(stageRef, { spanVh: 1.6 });
+
+  return (
+    <section
+      ref={stageRef}
+      data-anchor="verdict"
+      data-anchor-label="Verdict"
+      className="mt-10 flex min-h-[1px] flex-col justify-center rounded-lg border border-border bg-card p-5 sm:p-7"
+    >
+      <div className="grid gap-4 md:grid-cols-2">
+        <div>
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
+            Why it works
+          </h2>
+          <ul className="mt-3 space-y-3 text-sm">
+            {idea.pros.map((pro) => (
+              <li key={pro} className="flex gap-2">
+                <span aria-hidden className="text-accent">
+                  +
+                </span>
+                <span>{pro}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-destructive">
+            What will hurt
+          </h2>
+          <ul className="mt-3 space-y-3 text-sm">
+            {idea.cons.map((con) => (
+              <li key={con} className="flex gap-2">
+                <span aria-hidden className="text-destructive">
+                  −
+                </span>
+                <span>{con}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {idea.verdict && (
+        <div
+          className="mt-6 border-t border-primary/30 pt-5"
+          style={{
+            opacity: "clamp(0, calc((var(--sc-p, 1) - 0.55) * 4), 1)",
+            transform:
+              "translateY(calc((1 - clamp(0, calc((var(--sc-p, 1) - 0.55) * 4), 1)) * 10px))",
+          }}
+        >
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-primary">Verdict</h2>
+          <p className="mt-2 leading-relaxed">{idea.verdict}</p>
+        </div>
+      )}
+    </section>
+  );
+}
+
 /** A plain prose block that renders only when the field has content. */
 function RichSection({ title, body }: { title: string; body: string }) {
   if (!body) return null;
@@ -185,8 +262,21 @@ function RichSection({ title, body }: { title: string; body: string }) {
 }
 
 function IdeaPage() {
-  const { slug } = Route.useParams();
-  const { data } = useSuspenseQuery(ideaDetailQuery(slug));
+  // Reads the router's own loaderData rather than re-running the query via
+  // useSuspenseQuery. router.tsx creates a fresh, empty QueryClient on both
+  // server and client with no dehydration between them, so a client-side
+  // useSuspenseQuery here doesn't read cached SSR data — it genuinely
+  // re-invokes getIdeaBySlug from the browser on first render. For most
+  // queries that's merely a wasted round trip; for this one, whose random
+  // variant/gradient/related picks are recomputed server-side per call
+  // (Section 9's "nothing static" rule), the two independent calls return
+  // different results and React flags a real hydration mismatch — reproduced
+  // via Playwright and confirmed before this fix. TanStack Router's own
+  // loaderData transport does not have this problem: it serializes the
+  // loader's single server-computed result to the client once.
+  // Non-null by construction: the loader throws notFound() when the query
+  // returns null, so this component never renders without data.
+  const data = Route.useLoaderData() as NonNullable<IdeaDetailData>;
   const auth = useAuth();
   if (!data) return null;
   const { idea, related, relatedCategories, trending, variant, gradient } = data;
@@ -254,31 +344,46 @@ function IdeaPage() {
               ]}
             />
 
-            {/* Section 6.1 item 1 — hero. The wrapper classes let the chosen
-                layout variant genuinely restructure this block (see styles.css). */}
-            <div className="idea-hero mt-5">
+            {/* Section 6.1 item 1 — hero, built as a Live Surface status bar rather
+                than a marketing banner: the blueprint's own computed state,
+                already in view, no separate title treatment or CTA pill layered
+                on top of it (uniqueness.md §2.3 bans marketing chrome here — the
+                "validate" action lives at the page's actual close instead). The
+                wrapper classes let the chosen layout variant genuinely restructure
+                this block (see styles.css). */}
+            <div className="idea-hero mt-5" data-anchor="top" data-anchor-label="Top">
               <div className="min-w-0">
                 <div className="idea-hero-meta flex flex-wrap items-center gap-3 text-xs uppercase tracking-widest">
-                  <span className="rounded-sm bg-secondary px-2 py-1 text-secondary-foreground">
+                  <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-secondary-foreground">
                     {idea.ideaId}
                   </span>
                   <span className="text-accent">{idea.categoryName}</span>
+                  <span className="text-muted-foreground">/</span>
+                  <span className="text-muted-foreground">{idea.subcategoryName}</span>
                 </div>
 
-                <h1 className="mt-3 text-4xl font-bold leading-tight tracking-tight">{idea.title}</h1>
+                <h1 className="mt-3 text-4xl font-bold leading-tight tracking-tight">
+                  {idea.title}
+                </h1>
                 <p className="mt-4 text-lg text-muted-foreground">{idea.businessDescription}</p>
               </div>
 
-              {/* Visual slot: the trend read doubles as the hero's supporting
-                  visual until the founder supplies per-idea imagery. */}
+              {/* A real telemetry readout, not a decorative visual: the idea's
+                  own trend_score, already computed, with the verdict's status
+                  read alongside it. */}
               <div className="idea-hero-aside">
                 <div className="glass rounded-2xl p-5">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
-                    Trend score
-                  </p>
-                  <p className="mt-1 text-5xl font-extrabold leading-none text-accent">
-                    {idea.trendScore ?? "—"}
-                  </p>
+                  <dl className="sc-spec-label !text-[10px]">
+                    <div className="w-full">
+                      <dt>Momentum</dt>
+                      <dd className="!ml-0 block">
+                        <span className="font-mono text-4xl font-bold leading-none tabular-nums text-foreground">
+                          {idea.trendScore ?? "—"}
+                        </span>
+                        <span className="ml-1 text-xs text-muted-foreground">/ 100</span>
+                      </dd>
+                    </div>
+                  </dl>
                   {idea.keywords.length > 0 && (
                     <div className="mt-4 flex flex-wrap gap-1.5">
                       {idea.keywords.slice(0, 3).map((k) => (
@@ -291,12 +396,6 @@ function IdeaPage() {
                       ))}
                     </div>
                   )}
-                  <a
-                    href="#validate"
-                    className="sheen mt-5 block w-full rounded-full bg-gradient-to-r from-primary to-ember px-5 py-2.5 text-center text-xs font-semibold uppercase tracking-widest text-primary-foreground"
-                  >
-                    Validate for free
-                  </a>
                 </div>
               </div>
             </div>
@@ -305,90 +404,52 @@ function IdeaPage() {
               <div
                 className={contentLocked ? "pointer-events-none select-none blur-sm" : undefined}
               >
-                <section className="mt-10">
+                <section className="mt-10" data-anchor="breakdown" data-anchor-label="Breakdown">
                   <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                     The breakdown
                   </h2>
                   <p className="mt-3 whitespace-pre-line leading-relaxed">{idea.summary}</p>
                 </section>
 
-                <div className="mt-10 grid gap-4 md:grid-cols-2">
-                  <section className="rounded-lg border border-border bg-card p-5">
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
-                      Why it works
-                    </h2>
-                    <ul className="mt-3 space-y-3 text-sm">
-                      {idea.pros.map((pro) => (
-                        <li key={pro} className="flex gap-2">
-                          <span aria-hidden className="text-accent">
-                            +
-                          </span>
-                          <span>{pro}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                  <section className="rounded-lg border border-border bg-card p-5">
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-destructive">
-                      What will hurt
-                    </h2>
-                    <ul className="mt-3 space-y-3 text-sm">
-                      {idea.cons.map((con) => (
-                        <li key={con} className="flex gap-2">
-                          <span aria-hidden className="text-destructive">
-                            −
-                          </span>
-                          <span>{con}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                </div>
+                <ComputedVerdictPanel idea={idea} />
 
                 <div className="mt-8">
                   <AdSlot position="idea-detail-between-proscons-verdict" size="banner" />
                 </div>
 
-                {idea.verdict && (
-                  <section className="mt-6 rounded-lg border-l-4 border-primary bg-card p-5">
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-primary">
-                      Verdict
-                    </h2>
-                    <p className="mt-2 leading-relaxed">{idea.verdict}</p>
-                  </section>
-                )}
-
                 {/* Researched detail — each block renders only when the pipeline
                     has filled it, so un-enriched ideas are unaffected. */}
-                <RichSection title="The opportunity" body={idea.marketOpportunity} />
-                <RichSection title="Who actually pays you" body={idea.targetCustomer} />
-                <RichSection title="How the money works" body={idea.howYouMakeMoney} />
+                <div data-anchor="research" data-anchor-label="Research">
+                  <RichSection title="The opportunity" body={idea.marketOpportunity} />
+                  <RichSection title="Who actually pays you" body={idea.targetCustomer} />
+                  <RichSection title="How the money works" body={idea.howYouMakeMoney} />
 
-                {(idea.startupCost || idea.incomePotential) && (
-                  <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                    {idea.startupCost && (
-                      <section className="rounded-lg border border-border bg-card p-5">
-                        <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
-                          What it costs to start
-                        </h2>
-                        <p className="mt-2 text-sm leading-relaxed">{idea.startupCost}</p>
-                      </section>
-                    )}
-                    {idea.incomePotential && (
-                      <section className="rounded-lg border border-border bg-card p-5">
-                        <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
-                          What you can earn
-                        </h2>
-                        <p className="mt-2 text-sm leading-relaxed">{idea.incomePotential}</p>
-                      </section>
-                    )}
-                  </div>
-                )}
+                  {(idea.startupCost || idea.incomePotential) && (
+                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                      {idea.startupCost && (
+                        <section className="rounded-lg border border-border bg-card p-5">
+                          <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
+                            What it costs to start
+                          </h2>
+                          <p className="mt-2 text-sm leading-relaxed">{idea.startupCost}</p>
+                        </section>
+                      )}
+                      {idea.incomePotential && (
+                        <section className="rounded-lg border border-border bg-card p-5">
+                          <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
+                            What you can earn
+                          </h2>
+                          <p className="mt-2 text-sm leading-relaxed">{idea.incomePotential}</p>
+                        </section>
+                      )}
+                    </div>
+                  )}
 
-                <RichSection title="Your edge" body={idea.competitionEdge} />
+                  <RichSection title="Your edge" body={idea.competitionEdge} />
+                </div>
 
                 {idea.gettingStartedSteps.length > 0 && (
-                  <section className="mt-10">
+                  <section className="mt-10" data-anchor="steps" data-anchor-label="Steps">
                     <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                       How to start
                     </h2>
@@ -488,18 +549,17 @@ function IdeaPage() {
 
             <DemandBlock score={idea.trendScore} />
 
-            <div id="validate">
-              <ValidateButton slug={idea.slug} />
-            </div>
-
             {faqBelow.length > 0 && (
-              <section className="mt-10">
+              <section className="mt-10" data-anchor="faq" data-anchor-label="FAQ">
                 <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                   More questions
                 </h2>
                 <div className="mt-4 space-y-3">
                   {faqBelow.map((item) => (
-                    <details key={item.q} className="rounded-lg border border-border bg-card p-4 text-sm">
+                    <details
+                      key={item.q}
+                      className="rounded-lg border border-border bg-card p-4 text-sm"
+                    >
                       <summary className="cursor-pointer font-semibold">{item.q}</summary>
                       <p className="mt-2 leading-relaxed text-muted-foreground">{item.a}</p>
                     </details>
@@ -571,7 +631,7 @@ function IdeaPage() {
             </div>
 
             {bottomRelated.length > 0 && (
-              <section className="mt-16">
+              <section className="mt-16" data-anchor="related" data-anchor-label="Related">
                 <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                   More in {idea.categoryName}
                 </h2>
@@ -631,28 +691,32 @@ function IdeaPage() {
               </section>
             )}
 
-            <section className="mt-16 rounded-2xl border border-border bg-card p-6 text-center sm:p-9">
-              <h2 className="text-xl font-bold tracking-tight sm:text-2xl">
-                Think this one is yours?
+            {/* The page's actual close, per the Live Surface grammar: an actual
+                input the visitor puts a cursor in, not a button pointing back
+                at one. ValidateButton already opens Claude/Perplexity with a
+                real prompt and an optional free-text context field — this IS
+                the ending, not a decoration in front of it. */}
+            <section
+              id="validate"
+              data-anchor="validate"
+              data-anchor-label="Validate"
+              className="mt-16 rounded-2xl border border-border bg-card p-6 sm:p-9"
+            >
+              <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                Run it before you commit
               </h2>
-              <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-                Run it through validation before you spend a rupee or a weekend. Free, on your own
-                account, as many times as you want.
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                Free, on your own account, as many times as you want.
               </p>
-              <div className="mt-6 flex flex-wrap justify-center gap-3">
-                <a
-                  href="#validate"
-                  className="sheen rounded-full bg-gradient-to-r from-primary to-ember px-6 py-3 text-xs font-semibold uppercase tracking-widest text-primary-foreground"
-                >
-                  Validate this idea
-                </a>
-                <Link
-                  to="/browse"
-                  className="glass-pill rounded-full px-6 py-3 text-xs font-semibold uppercase tracking-widest"
-                >
-                  Browse more blueprints
-                </Link>
+              <div className="mt-6">
+                <ValidateButton slug={idea.slug} />
               </div>
+              <Link
+                to="/browse"
+                className="mt-6 inline-block text-xs font-semibold uppercase tracking-widest text-primary underline decoration-border underline-offset-4 hover:text-accent"
+              >
+                Browse more blueprints
+              </Link>
             </section>
             {/* EDITABLE SECTION END */}
           </article>
