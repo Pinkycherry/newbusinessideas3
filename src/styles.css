@@ -1905,3 +1905,68 @@ html.light .idea-shell::before { opacity: 0.42; }
     transform: none;
   }
 }
+
+/* ------------------------------------------------------------------
+   ARC OVERLAY OPT-OUT (2026-08-24)
+
+   styles.css:299 applies the glass-pill button treatment to EVERY
+   `a[href*="/category/"]` sitewide, with !important on background,
+   backdrop-filter, border and box-shadow. The arc overlays are category
+   links, so they inherited a second set of frames painted directly on
+   top of the ones already in the founder's artwork — a visible
+   double-frame.
+
+   These rules opt the arc out. !important is required to beat an
+   !important rule; specificity (0,2,0) beats the global's (0,1,1) so
+   these win. Scoped to .bbi-arc only — the global pill treatment is
+   untouched everywhere else on the site.
+   ------------------------------------------------------------------ */
+.bbi-arc .bbi-arc-panel,
+.bbi-arc .bbi-arc-pill {
+  background: none !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  animation: none !important;
+  color: var(--foreground) !important;
+}
+
+/* Chapter 3: the artwork's painted panel is the ONLY frame. The overlay
+   carries no border of its own at all — drawing even a 1px edge over a
+   panel that is already painted in the image reads as a doubled frame,
+   which is exactly the defect this block exists to remove. */
+.bbi-arc--three .bbi-arc-panel {
+  border: 0 !important;
+  border-radius: 0.9rem;
+  padding: 0.4rem 0.55rem;
+}
+.bbi-arc--three .bbi-arc-panel:hover {
+  background: color-mix(in oklab, var(--primary) 10%, transparent) !important;
+}
+
+/* Chapter 2: a quiet outline, not the heavy glowing button. */
+.bbi-arc .bbi-arc-pill {
+  border: 1px solid color-mix(in oklab, var(--foreground) 18%, transparent) !important;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--background) 70%, transparent) !important;
+  backdrop-filter: blur(6px) !important;
+}
+.bbi-arc .bbi-arc-pill:hover {
+  border-color: var(--primary) !important;
+}
+
+/* Type was oversized: the chapter-3 heading measured 37.6px and wrapped
+   to SIX lines across the subjects' faces. These bring it back to a
+   readable editorial scale that leaves the artwork visible. */
+.bbi-arc-h {
+  font-size: clamp(1.35rem, 2.4vw, 2.1rem);
+  line-height: 1.12;
+}
+.bbi-arc-h--sm {
+  font-size: clamp(1.1rem, 1.7vw, 1.45rem);
+}
+.bbi-arc--three .bbi-arc-h--corner {
+  max-width: 15rem;
+}
+.bbi-arc-body {
+  font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+}
