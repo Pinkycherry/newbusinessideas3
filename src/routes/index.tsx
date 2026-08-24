@@ -368,7 +368,7 @@ function HomePage() {
 
       {/* BRAND ARC — the four founder-generated frames. Every category name
           rendered over them is live DOM from the catalog, never baked pixels. */}
-      <BrandArc categories={catalog.categories} totalIdeas={catalog.totalIdeas} />
+      <BrandArc totalIdeas={catalog.totalIdeas} />
 
       {/* MOVING CATEGORY TICKER — each pill now rotates through the brand's
           multi-color set by default (see .glass-pill in globals.css), and
