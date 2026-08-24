@@ -48,7 +48,7 @@ function ChapterOne({ totalIdeas, categoryCount }: { totalIdeas: number; categor
       <div className="bbi-arc-copy bbi-arc-copy--lead">
         <p className="bbi-arc-eyebrow">Every business starts the same way</p>
         <h2 id="arc-one-heading" ref={headingRef} className="bbi-arc-h">
-          It begins as a thought you cannot put down.
+          It starts as a thought you cannot put down.
         </h2>
         <p className="bbi-arc-body">
           The hard part was never having the idea. It was finding out whether the idea is worth your
@@ -153,7 +153,7 @@ function ChapterThree({ categories }: { categories: CategoryNode[] }) {
       />
       <div className="bbi-arc-scrim bbi-arc-scrim--right" aria-hidden />
       <h2 id="arc-three-heading" className="bbi-arc-h bbi-arc-h--sm bbi-arc-h--corner">
-        Sorted, scored, and honest about the downside.
+        Sorted, scored, honest.
       </h2>
       <div ref={gridRef} className="bbi-arc-panels">
         {shown.map((c) => (
