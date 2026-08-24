@@ -128,6 +128,23 @@ export const getSubcategoryPage = createServerFn({ method: "GET" })
     };
   });
 
+export type RelatedCategory = { categoryName: string; categorySlug: string; ideaCount: number };
+
+/**
+ * PROJECT_BRIEF.md Section 6.1 — 3-4 visual layout variants plus a gradient
+ * treatment, chosen per render so refreshing an idea page visibly changes it
+ * ("nothing static"). Section 12.2 constrains the colour side to gradient
+ * shifts within the brand family, never an unrelated palette.
+ *
+ * The pick happens on the server and travels with the loader data, so the
+ * SSR markup and the client agree — picking it during render would cause a
+ * hydration mismatch.
+ */
+export const IDEA_VARIANTS = ["hero-left", "hero-banner", "stat-forward", "editorial"] as const;
+export type IdeaVariant = (typeof IDEA_VARIANTS)[number];
+export const IDEA_GRADIENTS = ["dawn", "dusk", "ember", "deep"] as const;
+export type IdeaGradient = (typeof IDEA_GRADIENTS)[number];
+
 export const getIdeaBySlug = createServerFn({ method: "GET" })
   .inputValidator((input: unknown) => z.object({ slug: z.string() }).parse(input))
   .handler(async ({ data: input }) => {
@@ -140,15 +157,37 @@ export const getIdeaBySlug = createServerFn({ method: "GET" })
     if (!data) return null;
     const detail = toIdeaDetail(data as IdeaRow);
 
-    const { data: related } = await db()
-      .from("ideas")
-      .select(IDEA_CARD_COLUMNS)
-      .eq("status", "completed")
-      .eq("category_slug", detail.categorySlug)
-      .neq("slug", detail.slug)
-      .limit(3);
+    /* Section 9 — every one of these is ORDER BY random() LIMIT n at the query
+       level (via Postgres functions), recomputed on every page load. */
+    const [relatedRes, categoriesRes, trendingRes] = await Promise.all([
+      // pull one extra so we can drop the current idea and still show 3
+      db().rpc("get_random_ideas", { cat_slug: detail.categorySlug, lim: 4 }),
+      db().rpc("get_random_categories", { exclude_slug: detail.categorySlug, lim: 5 }),
+      db().rpc("get_random_ideas", { cat_slug: null, lim: 8 }),
+    ]);
 
-    return { idea: detail, related: ((related ?? []) as unknown as IdeaRow[]).map(toIdeaCard) };
+    const related = ((relatedRes.data ?? []) as unknown as IdeaRow[])
+      .filter((r) => r.slug !== detail.slug)
+      .slice(0, 3)
+      .map(toIdeaCard);
+
+    const relatedCategories: RelatedCategory[] = (
+      (categoriesRes.data ?? []) as { category_name: string; category_slug: string; idea_count: number }[]
+    ).map((c) => ({
+      categoryName: c.category_name,
+      categorySlug: c.category_slug,
+      ideaCount: Number(c.idea_count) || 0,
+    }));
+
+    const trending = ((trendingRes.data ?? []) as unknown as IdeaRow[])
+      .filter((r) => r.slug !== detail.slug)
+      .slice(0, 6)
+      .map(toIdeaCard);
+
+    const variant = IDEA_VARIANTS[Math.floor(Math.random() * IDEA_VARIANTS.length)]!;
+    const gradient = IDEA_GRADIENTS[Math.floor(Math.random() * IDEA_GRADIENTS.length)]!;
+
+    return { idea: detail, related, relatedCategories, trending, variant, gradient };
   });
 
 export const searchIdeas = createServerFn({ method: "GET" })
