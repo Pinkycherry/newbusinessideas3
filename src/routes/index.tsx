@@ -26,6 +26,7 @@ import { hideImgIfBroken } from "@/lib/utils";
 import { AccordionItem } from "@/components/accordion-item";
 import { CountUp } from "@/components/count-up";
 import { loadGsap, prefersReducedMotion } from "@/lib/motion";
+import { BrandArc } from "@/components/home/brand-arc";
 
 /** Hero's primary CTA — spotlight glow behind a pill with GSAP hover/press motion. */
 function HeroCta() {
@@ -365,6 +366,10 @@ function HomePage() {
       {/* SURPRISE ME — Section 8.1, directly below the hero, before any other content */}
       <SurpriseMeSection categories={catalog.categories} />
 
+      {/* BRAND ARC — the four founder-generated frames. Every category name
+          rendered over them is live DOM from the catalog, never baked pixels. */}
+      <BrandArc categories={catalog.categories} totalIdeas={catalog.totalIdeas} />
+
       {/* MOVING CATEGORY TICKER — each pill now rotates through the brand's
           multi-color set by default (see .glass-pill in globals.css), and
           resolves to a light fill + midnight-blue glow + black text on hover. */}
@@ -410,12 +415,7 @@ function HomePage() {
       </section>
 
       {/* SECTION 1: INTERACTIVE GOLDEN TREE */}
-      <GoldenTreeSection />
-
-      {/* SECTION 2: LIVE CATEGORY SEARCH DEMAND TRACKER */}
-      <Reveal variant="rv-lift">
-        <LiveDemandTrackerSection />
-      </Reveal>
+      <GoldenTreeSection categories={catalog.categories} />
 
       <div className="px-3 pt-8 sm:px-4">
         <AdSlot position="homepage-hero-below" size="banner" />
@@ -671,9 +671,6 @@ function HomePage() {
       <div className="px-3 pb-10 sm:px-4">
         <AdSlot position="homepage-above-footer" size="banner" />
       </div>
-
-      {/* DYNAMIC ROTATING DISCOVERY TOAST */}
-      <DynamicActivityToast />
     </SiteShell>
   );
 }
@@ -688,24 +685,16 @@ const DESKTOP_TREE_SRC =
 const MOBILE_TREE_SRC =
   "https://ethicalfounder.com/wp-content/uploads/2026/08/new-business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg";
 
-function GoldenTreeSection() {
-  // Weekly web-search demand estimates (Google-style search volume for the
-  // keyword, NOT our own traffic). Drifts week to week from a seeded base so
-  // the figures move like real keyword-tool data instead of sitting frozen.
-  const [week, setWeek] = useState<number | null>(null);
-  useEffect(() => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 1);
-    setWeek(Math.floor((now.getTime() - start.getTime()) / 604800000));
-  }, []);
+function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
+  // Real blueprint counts, straight from the live catalog. This block used to
+  // render a sine wave over hardcoded bases, labelled "weekly web searches" —
+  // figures that were never sourced from anything. A node whose category is
+  // not in the catalog renders no number at all rather than inventing one.
+  const countBySlug = new Map(categories.map((c) => [c.categorySlug, c.ideaCount]));
+  const countFor = (slug: string) => countBySlug.get(slug) ?? null;
 
-  const volume = (base: number, seed: number) => {
-    if (week === null) return null;
-    const wave = Math.sin((week + seed) * 1.7) * 0.14 + Math.cos((week + seed) * 0.9) * 0.08;
-    return Math.round((base * (1 + wave)) / 100) * 100;
-  };
   const fmt = (n: number | null) =>
-    n === null ? "—" : `${n.toLocaleString()}+ weekly web searches`;
+    n === null ? "" : `${n} researched blueprint${n === 1 ? "" : "s"}`;
 
   const desktopNodes = [
     {
@@ -714,7 +703,7 @@ function GoldenTreeSection() {
       x: 28,
       y: 18,
       d: 0,
-      count: volume(24000, 1),
+      count: countFor("zero-investment-business-ideas"),
     },
     {
       label: "Work From Home Ideas",
@@ -722,7 +711,7 @@ function GoldenTreeSection() {
       x: 50,
       y: 12,
       d: 0.6,
-      count: volume(31000, 2),
+      count: countFor("work-from-home-business-ideas"),
     },
     {
       label: "Low Investment Ideas",
@@ -730,7 +719,7 @@ function GoldenTreeSection() {
       x: 72,
       y: 20,
       d: 1.2,
-      count: volume(27000, 3),
+      count: countFor("low-investment-business-ideas"),
     },
     {
       label: "Side Hustle Ideas",
@@ -738,20 +727,41 @@ function GoldenTreeSection() {
       x: 20,
       y: 38,
       d: 1.8,
-      count: volume(18000, 4),
+      count: countFor("side-hustle-ideas"),
     },
-    { label: "SaaS & AI Startups", query: "SaaS", x: 42, y: 32, d: 2.4, count: volume(14000, 5) },
-    { label: "FinTech & Finance", slug: "fintech", x: 60, y: 34, d: 3.0, count: volume(9800, 6) },
-    { label: "E-Commerce", slug: "e-commerce", x: 80, y: 40, d: 3.6, count: volume(21000, 7) },
+    { label: "Tech & SaaS", slug: "tech-saas", x: 42, y: 32, d: 2.4, count: countFor("tech-saas") },
+    {
+      label: "FinTech & Finance",
+      slug: "fintech-finance",
+      x: 60,
+      y: 34,
+      d: 3.0,
+      count: countFor("fintech-finance"),
+    },
+    {
+      label: "E-Commerce & Retail",
+      slug: "ecommerce-retail",
+      x: 80,
+      y: 40,
+      d: 3.6,
+      count: countFor("ecommerce-retail"),
+    },
     {
       label: "Creator & Media",
       slug: "creator-media",
       x: 30,
       y: 55,
       d: 4.2,
-      count: volume(7600, 8),
+      count: countFor("creator-media"),
     },
-    { label: "Healthcare", slug: "healthcare", x: 70, y: 56, d: 4.8, count: volume(6400, 9) },
+    {
+      label: "Health & Fitness",
+      slug: "health-fitness",
+      x: 70,
+      y: 56,
+      d: 4.8,
+      count: countFor("health-fitness"),
+    },
     {
       label: "Validation Center",
       path: "/browse",
@@ -759,7 +769,7 @@ function GoldenTreeSection() {
       y: 52,
       isCenter: true,
       d: 5.4,
-      count: volume(38000, 10),
+      count: null,
     },
   ];
 
@@ -814,17 +824,10 @@ function GoldenTreeSection() {
               className="bbi-tree-node-d absolute group/node z-20"
               style={{ left: `${node.x}%`, top: `${node.y}%`, animationDelay: `${node.d}s` }}
             >
-              {node.path ? (
-                <CategoryBadge to={node.path} label={node.label} dot />
-              ) : node.slug ? (
+              {node.slug ? (
                 <CategoryBadge slug={node.slug} label={node.label} dot />
               ) : (
-                <CategoryBadge
-                  to="/search"
-                  search={{ q: node.query ?? "" }}
-                  label={node.label}
-                  dot
-                />
+                <CategoryBadge to={node.path ?? "/browse"} label={node.label} dot />
               )}
 
               <div className="absolute left-1/2 -bottom-8 -translate-x-1/2 opacity-0 group-hover/node:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap glass rounded-md px-2.5 py-1 text-[10px] font-semibold shadow-xl">
@@ -906,117 +909,6 @@ function GoldenTreeSection() {
 /* ================================================================
    SECTION 2: LIVE CATEGORY SEARCH DEMAND TRACKER
    ================================================================ */
-
-function LiveDemandTrackerSection() {
-  // Estimated weekly web-search volume for each keyword (keyword-tool style
-  // figures for the whole internet — deliberately NOT our own site traffic).
-  const [counts, setCounts] = useState<{
-    lowInv: number | null;
-    wfh: number | null;
-    zeroInv: number | null;
-    sideHustle: number | null;
-  }>({ lowInv: null, wfh: null, zeroInv: null, sideHustle: null });
-
-  const [currentTime, setCurrentTime] = useState("");
-
-  useEffect(() => {
-    const now = new Date();
-
-    const start = new Date(now.getFullYear(), 0, 1);
-    const week = Math.floor((now.getTime() - start.getTime()) / 604800000);
-    const vol = (base: number, seed: number) => {
-      const wave = Math.sin((week + seed) * 1.7) * 0.14 + Math.cos((week + seed) * 0.9) * 0.08;
-      return Math.round((base * (1 + wave)) / 100) * 100;
-    };
-    setCounts({
-      lowInv: vol(27000, 3),
-      wfh: vol(31000, 2),
-      zeroInv: vol(24000, 1),
-      sideHustle: vol(18000, 4),
-    });
-
-    const timeString = now.toLocaleTimeString("en-US", {
-      timeZone: "Asia/Kolkata",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    });
-    setCurrentTime(`${timeString} IST`);
-  }, []);
-
-  const coreCategories = [
-    {
-      label: "Low Investment Business Ideas",
-      slug: "low-investment-business-ideas",
-      count: counts.lowInv,
-    },
-    {
-      label: "Work From Home Business Ideas",
-      slug: "work-from-home-business-ideas",
-      count: counts.wfh,
-    },
-    {
-      label: "Zero Investment Business Ideas",
-      slug: "zero-investment-business-ideas",
-      count: counts.zeroInv,
-    },
-    { label: "Side Hustle & Side Job Ideas", slug: "side-hustle-ideas", count: counts.sideHustle },
-  ];
-
-  return (
-    <section
-      id="demand"
-      data-anchor="demand"
-      data-anchor-label="Demand tracker"
-      className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4"
-    >
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
-            <span className="h-2 w-2 rounded-full bg-primary" />
-            <span>Weekly Search Demand</span>
-            {currentTime && <span className="opacity-60">• Updated {currentTime}</span>}
-          </div>
-          <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-4xl">
-            Weekly Web-Search Demand Across Categories
-          </h2>
-        </div>
-        <Link
-          to="/browse"
-          className="text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
-        >
-          Explore All Categories →
-        </Link>
-      </div>
-
-      <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-        Estimated weekly search volume for these keywords across the web — sourced from public
-        keyword demand trends, not our own site traffic.
-      </p>
-
-      <div className="mt-6 grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-        {coreCategories.map((cat) => (
-          <Link
-            key={cat.slug}
-            to="/category/$categorySlug"
-            params={{ categorySlug: cat.slug }}
-            className="glass glass-hover flex flex-col justify-between p-5 rounded-2xl border border-white/10"
-          >
-            <div>
-              <p className="text-xs font-bold text-foreground transition-colors">{cat.label}</p>
-            </div>
-            <div className="mt-4 flex items-center justify-between">
-              <span className="text-xs font-extrabold text-accent">
-                {cat.count === null ? "—" : `${cat.count.toLocaleString()}+ / week`}
-              </span>
-              <span className="text-xs text-primary">→</span>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 /* ================================================================
    SECTION 3: THE BBI 4-PILLAR BLUEPRINT STANDARD
@@ -1105,56 +997,6 @@ function FourPillarStandardSection() {
 /* ================================================================
    DYNAMIC ROTATING DISCOVERY TOAST
    ================================================================ */
-
-function DynamicActivityToast() {
-  const [visible, setVisible] = useState(true);
-  const [index, setIndex] = useState(0);
-
-  const activities = [
-    { city: "Austin, US", action: "checked out Lifetime Access pricing", time: "Just now" },
-    { city: "London, UK", action: "explored Work From Home Ideas", time: "2m ago" },
-    { city: "Mumbai, IN", action: "searched Low Investment Ideas", time: "4m ago" },
-    { city: "Berlin, DE", action: "reviewed AI Customer Support Blueprint", time: "6m ago" },
-    { city: "Toronto, CA", action: "checked out Lifetime Access pricing", time: "8m ago" },
-    { city: "Tokyo, JP", action: "explored Zero Investment Ideas", time: "11m ago" },
-    { city: "Sydney, AU", action: "inspected Side Hustle Mechanics", time: "14m ago" },
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % activities.length);
-    }, 7000);
-
-    return () => clearInterval(timer);
-  }, [activities.length]);
-
-  if (!visible) return null;
-
-  const current = activities[index];
-  if (!current) return null;
-
-  return (
-    <div
-      key={index}
-      className="fixed bottom-4 left-4 z-50 hidden glass rounded-xl border border-white/15 p-3.5 shadow-2xl sm:flex items-center gap-3 max-w-xs sm:max-w-sm animate-toast-slide"
-    >
-      <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-primary" />
-      <div className="text-xs">
-        <p className="font-medium text-foreground">
-          Founder from {current.city} {current.action}
-        </p>
-        <p className="text-[10px] text-muted-foreground">{current.time} • businessidea.io</p>
-      </div>
-      <button
-        onClick={() => setVisible(false)}
-        className="text-muted-foreground hover:text-foreground text-xs ml-auto p-1"
-        aria-label="Close notification"
-      >
-        ✕
-      </button>
-    </div>
-  );
-}
 
 /* ================================================================
    SHARED SUBCOMPONENTS — NO NOISY CENTER BALLS

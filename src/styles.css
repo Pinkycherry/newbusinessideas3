@@ -1581,3 +1581,327 @@ html.light .idea-shell::before { opacity: 0.42; }
   .sc-flow-item { transition: opacity 300ms ease; transform: none; }
   .sc-grain::after { display: none; }
 }
+
+/* ==================================================================
+   BRAND ARC — the four founder-generated frames (2026-08-24)
+
+   Scoped .bbi-arc-* only, appended, no existing rule touched and no
+   token block modified. Every colour derives from the real html.light
+   tokens via color-mix(). Pairs with src/components/home/brand-arc.tsx.
+
+   Core idea: the frames were generated with their holographic
+   containers left EMPTY, so all text here is real DOM layered over the
+   image. That keeps it selectable, indexable and re-flowable, which a
+   baked-in caption can never be.
+   ================================================================== */
+
+.bbi-arc {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  overflow: hidden;
+  background: var(--background);
+}
+
+/* The frame itself. object-position is set per chapter so the mobile
+   crop keeps the subjects instead of slicing them off — these are 16:9
+   plates being shown in a much taller box on a phone. */
+.bbi-arc-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Density only where the type sits, never a full-frame wash — a flat
+   overlay would throw away the photograph to fix one corner. */
+.bbi-arc-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    color-mix(in oklab, var(--background) 92%, transparent) 0%,
+    color-mix(in oklab, var(--background) 78%, transparent) 34%,
+    transparent 62%
+  );
+}
+.bbi-arc-scrim--top {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--background) 90%, transparent) 0%,
+    color-mix(in oklab, var(--background) 60%, transparent) 38%,
+    transparent 70%
+  );
+}
+.bbi-arc-scrim--right {
+  background: linear-gradient(
+    260deg,
+    color-mix(in oklab, var(--background) 88%, transparent) 0%,
+    color-mix(in oklab, var(--background) 55%, transparent) 30%,
+    transparent 58%
+  );
+}
+
+.bbi-arc-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 34rem;
+  padding: clamp(1.75rem, 5vw, 4.5rem);
+}
+.bbi-arc-copy--center {
+  margin-inline: auto;
+  text-align: center;
+  max-width: 40rem;
+}
+
+.bbi-arc-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.bbi-arc-h {
+  margin-top: 0.75rem;
+  font-family: var(--font-display, inherit);
+  font-size: clamp(1.9rem, 4.6vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+  color: var(--foreground);
+}
+.bbi-arc-h--sm {
+  font-size: clamp(1.4rem, 3vw, 2.35rem);
+}
+.bbi-arc-h--corner {
+  position: relative;
+  z-index: 2;
+  max-width: 22rem;
+  padding: clamp(1.75rem, 4vw, 3.5rem) clamp(1.5rem, 4vw, 3rem) 0;
+}
+
+.bbi-arc-body {
+  margin-top: 1rem;
+  max-width: 32rem;
+  font-size: clamp(0.9rem, 1.5vw, 1.02rem);
+  line-height: 1.65;
+  color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+.bbi-arc-copy--center .bbi-arc-body {
+  margin-inline: auto;
+}
+
+.bbi-arc-stats {
+  margin-top: 1.75rem;
+  gap: 0.4rem 1.4rem;
+}
+
+/* ---- Chapter 2: real category names inside the blank painted pills -- */
+.bbi-arc-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+.bbi-arc-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--primary) 32%, var(--border));
+  background: color-mix(in oklab, var(--background) 82%, transparent);
+  backdrop-filter: blur(8px);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--foreground);
+  transition:
+    transform 240ms var(--sc-ease-out),
+    border-color 240ms ease;
+}
+.bbi-arc-pill:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+.bbi-arc-pill-n {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.66rem;
+  color: var(--muted-foreground);
+}
+
+/* ---- Chapter 3: real grid sitting inside the painted 3x3 panels ----- */
+.bbi-arc-panels {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+}
+.bbi-arc-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
+  min-height: 4.5rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in oklab, var(--primary) 26%, var(--border));
+  background: color-mix(in oklab, var(--background) 76%, transparent);
+  backdrop-filter: blur(10px);
+  transition:
+    transform 260ms var(--sc-ease-out),
+    border-color 260ms ease;
+}
+.bbi-arc-panel:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+}
+.bbi-arc-panel-name {
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--foreground);
+}
+.bbi-arc-panel-n {
+  font-size: 0.64rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-foreground);
+}
+
+.bbi-arc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+.bbi-arc-copy--center .bbi-arc-actions {
+  justify-content: center;
+}
+.bbi-arc-cta {
+  padding: 0.85rem 1.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.bbi-arc-link {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.bbi-arc-link:hover {
+  color: var(--accent);
+}
+
+/* ---- Mobile first, then the wide layout -------------------------- */
+/* Phones: the plate becomes a shorter banner and the copy sits BELOW it
+   on solid ground, because 16:9 art in a tall box either crops the
+   subjects out or shrinks the type past readable. */
+.bbi-arc {
+  display: flex;
+  flex-direction: column;
+}
+.bbi-arc-img {
+  position: relative;
+  height: clamp(13rem, 46vw, 20rem);
+}
+.bbi-arc-scrim {
+  height: clamp(13rem, 46vw, 20rem);
+  inset: 0 0 auto 0;
+}
+.bbi-arc--one .bbi-arc-img { object-position: 72% center; }
+.bbi-arc--two .bbi-arc-img { object-position: center 42%; }
+.bbi-arc--three .bbi-arc-img { object-position: 32% center; }
+.bbi-arc--four .bbi-arc-img { object-position: center 62%; }
+
+@media (min-width: 900px) {
+  .bbi-arc {
+    display: block;
+    min-height: 40rem;
+    aspect-ratio: 16 / 9;
+  }
+  .bbi-arc-img,
+  .bbi-arc-scrim {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+  }
+  .bbi-arc--one .bbi-arc-img,
+  .bbi-arc--two .bbi-arc-img,
+  .bbi-arc--three .bbi-arc-img,
+  .bbi-arc--four .bbi-arc-img {
+    object-position: center;
+  }
+  .bbi-arc--one .bbi-arc-copy {
+    position: absolute;
+    inset: 0 auto 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: min(38%, 30rem);
+  }
+  .bbi-arc--two .bbi-arc-copy,
+  .bbi-arc--four .bbi-arc-copy {
+    position: absolute;
+    inset: 0 0 auto 0;
+    max-width: none;
+    width: 100%;
+  }
+  .bbi-arc--two .bbi-arc-pills {
+    max-width: 62rem;
+  }
+  /* Sit the live grid inside the painted panels on the frame's right. The
+     painted panel IS the frame at this width, so the overlay drops its own
+     border and fill — carrying both produces a visible double-frame. */
+  .bbi-arc--three .bbi-arc-panels {
+    position: absolute;
+    top: 12.5%;
+    right: 2.5%;
+    width: 45%;
+    height: 63%;
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    padding: 0;
+    gap: 1.15rem;
+  }
+  .bbi-arc--three .bbi-arc-panel {
+    border-color: transparent;
+    background: transparent;
+    backdrop-filter: none;
+    align-items: center;
+    text-align: center;
+  }
+  .bbi-arc--three .bbi-arc-panel:hover {
+    border-color: color-mix(in oklab, var(--primary) 45%, transparent);
+    background: color-mix(in oklab, var(--background) 40%, transparent);
+  }
+  .bbi-arc--three .bbi-arc-h--corner {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bbi-arc-pill,
+  .bbi-arc-panel {
+    transition: none;
+  }
+  .bbi-arc-pill:hover,
+  .bbi-arc-panel:hover {
+    transform: none;
+  }
+}
