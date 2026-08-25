@@ -2208,6 +2208,10 @@ html.light .idea-shell::before { opacity: 0.42; }
     gap: 1rem;
     place-items: stretch;
   }
+  /* All four visible, in a grid, with a plain opacity transition rather than
+     nothing at all. The pin and the depth stack are correctly gone - those
+     are the vestibular parts - but a section that simply appears with no
+     transition reads as a page that failed to load its styles. */
   .bbi-chapter-card,
   .bbi-chapter-card[data-state="past"],
   .bbi-chapter-card[data-state="next"],
@@ -2217,7 +2221,7 @@ html.light .idea-shell::before { opacity: 0.42; }
     opacity: 1;
     transform: none;
     filter: none;
-    transition: none;
+    transition: opacity var(--mo-dur-3, 420ms) ease;
     pointer-events: auto;
   }
   .bbi-chapter-rail {

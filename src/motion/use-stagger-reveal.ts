@@ -67,7 +67,27 @@ export function useStaggerReveal<T extends HTMLElement = HTMLElement>(
     if (items.length === 0) return;
 
     if (prefersReducedMotion()) {
-      items.forEach((i) => i.setAttribute("data-revealed", ""));
+      // `reduce` means reduce, not eliminate. The setting exists for people
+      // who get motion sickness from large or parallax movement; a short
+      // opacity fade is not that, and it is explicitly the fallback the WCAG
+      // guidance suggests.
+      //
+      // The previous behaviour marked everything revealed instantly, so a
+      // visitor with the setting on saw a site with no motion whatsoever.
+      // Android's battery saver turns that setting on by itself, as does
+      // Windows' "Animation effects: off" - which is a large share of the
+      // India-first audience this is built for.
+      items.forEach((i, idx) => {
+        i.style.opacity = "0";
+        i.style.transition = `opacity 260ms ease ${Math.min(idx * 30, 240)}ms`;
+        i.setAttribute("data-revealed", "");
+      });
+      // Next frame, so the transition has a start value to animate from.
+      requestAnimationFrame(() => {
+        items.forEach((i) => {
+          i.style.opacity = "1";
+        });
+      });
       return;
     }
 

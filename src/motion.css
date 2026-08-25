@@ -273,10 +273,15 @@
     transition: none;
   }
 
+  /* Colour, background and border still transition. Only the MOVEMENT is
+     removed above. Cutting every transition to 1ms made hover states snap,
+     which reads as a broken site rather than a calm one - and `reduce` is
+     about vestibular motion, not about removing all feedback. */
   :where(a, button, [role="button"], summary, label[for]),
   .mo-card,
   .mo-row,
   .mo-lift {
-    transition-duration: 1ms;
+    transition-property: color, background-color, border-color, opacity;
+    transition-duration: var(--mo-dur-2);
   }
 }
