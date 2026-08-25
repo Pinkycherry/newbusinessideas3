@@ -39,13 +39,7 @@ export function useScrollProgress<T extends HTMLElement = HTMLElement>(
   options: ScrollProgressOptions = {},
 ): RefObject<T | null> {
   const ref = useRef<T | null>(null);
-  const {
-    mode = "unpinned",
-    spanVh = 2,
-    scrub = 0.6,
-    reducedValue = 1,
-    onProgress,
-  } = options;
+  const { mode = "unpinned", spanVh = 2, scrub = 0.6, reducedValue = 1, onProgress } = options;
   const cbRef = useRef(onProgress);
   cbRef.current = onProgress;
 

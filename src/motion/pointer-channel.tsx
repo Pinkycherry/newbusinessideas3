@@ -144,7 +144,14 @@ export function PointerChannelProvider({
 }: PointerChannelOptions & { children?: ReactNode }) {
   const { pointerVelocityScale, scrollVelocityScale } = options;
   useEffect(
-    () => startPointerChannel({ pointerVelocityScale, scrollVelocityScale }),
+    () =>
+      // Built conditionally rather than spread wholesale: the repo runs
+      // `exactOptionalPropertyTypes`, so an explicit `undefined` is not the
+      // same as an absent optional property.
+      startPointerChannel({
+        ...(pointerVelocityScale === undefined ? {} : { pointerVelocityScale }),
+        ...(scrollVelocityScale === undefined ? {} : { scrollVelocityScale }),
+      }),
     [pointerVelocityScale, scrollVelocityScale],
   );
   return <>{children}</>;

@@ -40,7 +40,9 @@ export function useTextReveal<T extends HTMLElement = HTMLElement>(
     if (!el.textContent?.trim()) return;
 
     let cancelled = false;
-    let split: InstanceType<import("gsap/SplitText").SplitText> | null = null;
+    // `SplitText` is declared as a class, so the bare type is already the
+    // instance type — wrapping it in InstanceType<> does not typecheck.
+    let split: import("gsap/SplitText").SplitText | null = null;
 
     loadGsap().then(({ gsap, SplitText }) => {
       if (cancelled || !ref.current) return;

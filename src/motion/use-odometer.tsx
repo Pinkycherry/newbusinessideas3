@@ -48,8 +48,7 @@ export function useOdometer<T extends HTMLElement = HTMLElement>(
     if (!el) return;
     if (!Number.isFinite(value)) return;
 
-    const render = (n: number) =>
-      formatRef.current ? formatRef.current(n) : n.toFixed(decimals);
+    const render = (n: number) => (formatRef.current ? formatRef.current(n) : n.toFixed(decimals));
 
     if (prefersReducedMotion()) {
       el.textContent = render(value);
