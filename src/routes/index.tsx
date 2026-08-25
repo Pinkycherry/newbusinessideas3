@@ -909,23 +909,28 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
                 {mNode.path ? (
                   <CategoryBadge to={mNode.path} label={mNode.label} size="sm" dot />
                 ) : (
-                  <CategoryBadge slug={mNode.slug ?? ""} label={mNode.label} size="sm" dot />
+                  <CategoryBadge
+                    slug={mNode.slug ?? ""}
+                    // The count rides inside the pill. It used to live in a
+                    // second grid of cards below the artwork that repeated all
+                    // four of these labels verbatim — the same topics printed
+                    // twice, on the screen with the least room for it.
+                    // Desktop shows the count in a hover tooltip; a phone has
+                    // no hover, so it belongs here.
+                    label={
+                      countFor(mNode.slug ?? "") === null
+                        ? mNode.label
+                        : `${mNode.label} · ${countFor(mNode.slug ?? "")}`
+                    }
+                    size="sm"
+                    dot
+                  />
                 )}
               </div>
             ))}
           </div>
         </div>
       </Reveal>
-
-      {/* Mobile demand read-out — keeps the artwork clean, keeps the data visible. */}
-      <div className="mt-4 grid grid-cols-2 gap-2 sm:hidden">
-        {desktopNodes.slice(0, 4).map((node) => (
-          <div key={node.label} className="glass rounded-xl border border-white/10 px-3 py-2">
-            <p className="truncate text-[10px] font-bold text-foreground">{node.label}</p>
-            <p className="mt-0.5 text-[10px] font-semibold text-accent">{fmt(node.count)}</p>
-          </div>
-        ))}
-      </div>
     </section>
   );
 }

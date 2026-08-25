@@ -817,14 +817,21 @@ export function SiteShell({ children }: { children: ReactNode }) {
           What this replaced was a dark full-bleed band with display type and
           a statistics row. That was my idea, not the brief's, and it was
           wrong. This is the reference. */}
-      <footer className="px-3 pb-10 pt-24 sm:px-4">
-        <div className="bbi-footer mx-auto max-w-7xl rounded-3xl px-7 py-12 sm:px-12 sm:py-14">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.1fr_1fr_1fr_1.4fr]">
+      {/* pb-24 on mobile: the floating back-to-top / compass dock is fixed to
+          the bottom-right and was sitting on top of the legal links. */}
+      <footer className="px-3 pb-24 pt-20 sm:px-4 sm:pb-10 sm:pt-24">
+        <div className="bbi-footer mx-auto max-w-7xl rounded-3xl px-5 py-9 sm:px-12 sm:py-14">
+          {/* Two columns on a phone, not one. Below sm: this was a single
+              column with a 2.5rem gap, which stacked the four blocks into a
+              1,249px ribbon on an 844px screen. These are short lists of
+              short labels; two columns halve the height and give it a shape.
+              Everything from sm: up is the approved desktop layout, untouched. */}
+          <div className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-2 sm:gap-10 lg:grid-cols-[1.1fr_1fr_1fr_1.4fr]">
             {/* Categories, capped. The cap is what keeps this footer one
                 height whether the catalogue holds 14 categories or 1,400. */}
-            <div>
+            <div className="col-span-2 sm:col-span-1">
               <h3 className="bbi-footer-heading">Browse</h3>
-              <ul className="mt-4 grid gap-2.5">
+              <ul className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 sm:mt-4 sm:grid-cols-1 sm:gap-2.5">
                 {footerCategories.shown.map((c) => (
                   <li key={c.categorySlug}>
                     <Link
@@ -851,7 +858,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
               .map((col) => (
                 <div key={col.title}>
                   <h3 className="bbi-footer-heading">{col.title}</h3>
-                  <ul className="mt-4 grid gap-2.5">
+                  <ul className="mt-3 grid gap-2 sm:mt-4 sm:gap-2.5">
                     {col.links.map((link) => (
                       <li key={`${col.title}-${link.to}-${link.label}`}>
                         <Link to={link.to} className="bbi-footer-link">
@@ -863,28 +870,35 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 </div>
               ))}
 
-            <NewsletterSignup />
+            {/* Full width on a phone — the input and Subscribe need it. */}
+            <div className="col-span-2 sm:col-span-1">
+              <NewsletterSignup />
+            </div>
           </div>
 
-          <div className="mt-12 flex flex-col gap-3 border-t border-border pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-9 flex flex-col gap-4 border-t border-border pt-6 text-xs sm:mt-12 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
             {/* Legal lives here rather than as a fifth column — that is where
                 the reference puts it, and four columns plus a fifth is what
                 pushed the newsletter onto its own row. */}
-            <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            {/* A two-column list on a phone. As an inline dotted row these
+                five wrapped into a ragged paragraph at 390px. */}
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-2 sm:flex sm:flex-wrap sm:items-center sm:gap-x-2 sm:gap-y-1">
               {(footerColumns.find((c) => c.title === "Legal")?.links ?? []).map((link, i) => (
-                <Fragment key={link.to}>
+                <li key={link.to} className="flex items-center gap-2">
                   {i > 0 && (
-                    <span aria-hidden className="text-border">
+                    <span aria-hidden className="hidden text-border sm:inline">
                       ·
                     </span>
                   )}
                   <Link to={link.to} className="bbi-footer-link">
                     {link.label}
                   </Link>
-                </Fragment>
+                </li>
               ))}
-            </p>
-            <p className="text-muted-foreground">
+            </ul>
+            {/* pr-24 on mobile keeps this clear of the fixed back-to-top /
+                compass dock, which was printing over the end of the line. */}
+            <p className="pr-24 text-muted-foreground sm:pr-0">
               © {new Date().getFullYear()} BBI · {totalIdeas} blueprints across {totalCategories}{" "}
               categories
             </p>
