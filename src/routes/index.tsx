@@ -21,26 +21,31 @@ import {
 import { FEATURED_IDEA_IDS } from "@/config/featured";
 import { catalogQuery, getFeaturedIdeas, getSurpriseIdeas } from "@/lib/ideas.functions";
 import type { CategoryNode } from "@/lib/ideas.functions";
-import { usePillInteraction } from "@/hooks/use-pill-interaction";
 import { hideImgIfBroken } from "@/lib/utils";
 import { AccordionItem } from "@/components/accordion-item";
-import { CountUp } from "@/components/count-up";
 import { loadGsap, prefersReducedMotion } from "@/lib/motion";
 import { BrandArc } from "@/components/home/brand-arc";
+import { Odometer, useMagnet, useScrollProgress, useStaggerReveal, useTextReveal } from "@/motion";
 
-/** Hero's primary CTA — spotlight glow behind a pill with GSAP hover/press motion. */
+/**
+ * Hero's primary CTA — spotlight glow behind a pill, plus the page's single
+ * magnet (MOTION_SPEC §2.4: one per page, on the most important CTA).
+ *
+ * The pill hover/press tween that used to sit on this element was removed
+ * rather than left in place: `useMagnet` writes `transform` directly on every
+ * pointer frame and the pill tween writes `transform` through gsap, so the two
+ * would overwrite each other and the CTA would lose its hover scale the moment
+ * the cursor moved. One writer per transform is the rule the motion system
+ * exists to enforce; every other pill on the page keeps its tween untouched.
+ */
 function HeroCta() {
-  const pill = usePillInteraction<HTMLAnchorElement>();
+  const magnetRef = useMagnet<HTMLAnchorElement>();
   return (
     <Spotlight className="inline-block justify-self-start rounded-full">
       <Link
         to="/browse"
         className="glass-pill inline-flex items-center justify-center rounded-full px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
-        ref={pill.ref}
-        onMouseEnter={pill.onMouseEnter}
-        onMouseLeave={pill.onMouseLeave}
-        onPointerDown={pill.onPointerDown}
-        onPointerUp={pill.onPointerUp}
+        ref={magnetRef}
       >
         Browse the library
       </Link>
@@ -184,7 +189,7 @@ const SCROLL_PANELS = [
     body: "Organized across categories from Tech and SaaS to Creator and Media, FinTech, E-Commerce and more. Every new category added to the database appears here automatically.",
   },
   {
-    title: "Validation is free, on your own AI account.",
+    title: "Validation is free, and there is no limit on it.",
     body: "Every blueprint has a Validate button. Tap it, and get real research on your idea — market size, your ideal buyer, the money model, and the risks — free, using AI tools you already pay for. No extra cost. No limit.",
   },
 ];
@@ -275,6 +280,18 @@ function HomePage() {
   const { data: highlights } = useSuspenseQuery(featuredQuery);
   const featured = highlights.slice(0, 6);
 
+  // MOTION_SPEC §2.3 — exactly one headline reveal per page, and it is the H1.
+  const h1Ref = useTextReveal<HTMLHeadingElement>();
+  // Card rows that previously arrived as one block now arrive in sequence.
+  const heroPanelsRef = useStaggerReveal<HTMLDivElement>();
+  const featuredRef = useStaggerReveal<HTMLDivElement>({ stagger: 0.05 });
+  const entryRowsRef = useStaggerReveal<HTMLDListElement>({ stagger: 0.05, distance: 12 });
+  const editorialRef = useStaggerReveal<HTMLDivElement>({ stagger: 0.08 });
+  const scrollPanelsRef = useStaggerReveal<HTMLElement>({ stagger: 0.08 });
+  // Publishes --sc-p across the editorial section so its ambient wash layers
+  // (and only those — never the type) can drift via .mo-drift.
+  const editorialSectionRef = useScrollProgress<HTMLElement>();
+
   return (
     <SiteShell>
       {/* AMBIENT TWIN RINGS — midnight-blue + rotating palette, hollow bands */}
@@ -304,8 +321,8 @@ function HomePage() {
             <div className="mt-8 grid items-center gap-8 lg:grid-cols-[1.15fr_1fr]">
               <div>
                 <h1
-                  className="iv-fade-up max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl"
-                  style={{ animationDelay: "260ms" }}
+                  ref={h1Ref}
+                  className="max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl"
                 >
                   Tired of paying just to check if your{" "}
                   <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
@@ -346,7 +363,7 @@ function HomePage() {
               </div>
             </div>
 
-            <div className="mt-10 grid gap-4 sm:grid-cols-2">
+            <div ref={heroPanelsRef} className="mt-10 grid gap-4 sm:grid-cols-2">
               {HERO_PANELS.map((panel, i) => (
                 <div
                   key={panel.label}
@@ -460,7 +477,7 @@ function HomePage() {
             Browse the full library →
           </Link>
         </div>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div ref={featuredRef} className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((idea) => (
             <IdeaCard key={idea.ideaId} idea={idea} />
           ))}
@@ -513,7 +530,7 @@ function HomePage() {
             <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
               What every entry has to contain
             </h3>
-            <dl className="mt-6 divide-y divide-border">
+            <dl ref={entryRowsRef} className="mt-6 divide-y divide-border">
               {[
                 {
                   t: "A named buyer",
@@ -542,13 +559,16 @@ function HomePage() {
         </div>
       </section>
 
-      {/* EDITORIAL IMAGE TRIO */}
-      <section className="mx-auto max-w-6xl px-3 pb-16 sm:px-4">
-        <div className="grid gap-6 sm:grid-cols-3 sm:items-start">
+      {/* EDITORIAL IMAGE TRIO — image slots (.mo-media), and the only ambient
+          layers on this page that .mo-drift can actually reach: the twin rings
+          and the orbit rings both run keyframe animations that own `transform`
+          outright, so a class-level drift can never apply to them. */}
+      <section ref={editorialSectionRef} className="mx-auto max-w-6xl px-3 pb-16 sm:px-4">
+        <div ref={editorialRef} className="grid gap-6 sm:grid-cols-3 sm:items-start">
           {EDITORIAL_IMAGES.map((img) => (
             <figure
               key={img.src}
-              className={`glass relative overflow-hidden ${img.blob} ${img.offset} aspect-[3/4]`}
+              className={`mo-media glass relative ${img.blob} ${img.offset} aspect-[3/4]`}
               style={{ transform: `rotate(${img.tilt}deg)` }}
             >
               <img
@@ -559,9 +579,11 @@ function HomePage() {
                 className="h-full w-full object-cover"
                 onError={(e) => (e.currentTarget.style.display = "none")}
               />
+              {/* Inset past the frame by more than the drift travel so the
+                  wash never exposes an untinted strip at either edge. */}
               <span
                 aria-hidden
-                className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary to-ember opacity-15"
+                className="mo-drift pointer-events-none absolute -inset-6 bg-gradient-to-br from-primary to-ember opacity-15"
               />
             </figure>
           ))}
@@ -578,26 +600,26 @@ function HomePage() {
         <WhoForSection />
       </Reveal>
 
-      {/* SCROLL-STACK */}
-      <section className="mx-auto mt-16 grid max-w-6xl gap-4 px-3 pb-16 sm:grid-cols-2 sm:px-4">
+      {/* SCROLL-STACK — one stagger on the row, replacing four different
+          per-card reveal variants (the "four dialects" MOTION_SPEC exists to
+          collapse). The panel divs are now the grid items directly, which is
+          the same box the Reveal wrapper used to occupy. */}
+      <section
+        ref={scrollPanelsRef}
+        className="mx-auto mt-16 grid max-w-6xl gap-4 px-3 pb-16 sm:grid-cols-2 sm:px-4"
+      >
         {SCROLL_PANELS.map((panel, i) => (
-          <Reveal
+          <div
             key={panel.title}
-            className="h-full"
-            delay={i * 90}
-            variant={(["rv-lift", "rv-slide", "rv-zoom", "rv-wipe"] as const)[i % 4] ?? "rv-lift"}
+            className={`mo-card glass glass-hover h-full p-6 sm:p-9 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
           >
-            <div
-              className={`glass glass-hover h-full p-6 sm:p-9 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
-            >
-              <h2 className="text-xl font-bold leading-tight tracking-tight sm:text-2xl">
-                {panel.title}
-              </h2>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                {panel.body}
-              </p>
-            </div>
-          </Reveal>
+            <h2 className="text-xl font-bold leading-tight tracking-tight sm:text-2xl">
+              {panel.title}
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+              {panel.body}
+            </p>
+          </div>
         ))}
       </section>
 
@@ -788,8 +810,8 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
           The Golden Tree of Business Growth
         </h2>
         <p className="mt-3 text-sm text-muted-foreground sm:text-base leading-relaxed">
-          Tap or hover any leaf node to see estimated weekly web-search demand for that keyword,
-          then open the category blueprints behind it.
+          Tap or hover any leaf node to see how many researched blueprints that category holds right
+          now, then open the ones behind it.
         </p>
       </div>
 
@@ -915,6 +937,7 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
    ================================================================ */
 
 function FourPillarStandardSection() {
+  const tilesRef = useStaggerReveal<HTMLDivElement>();
   const pillars = [
     {
       num: "01",
@@ -954,11 +977,11 @@ function FourPillarStandardSection() {
 
       {/* Mobile: plain stacked grid — a fanned arc needs room neighbors don't
           have on narrow viewports, so it only renders at sm: and up. */}
-      <div className="mt-10 grid gap-4 grid-cols-1 sm:hidden">
+      <div ref={tilesRef} className="mt-10 grid gap-4 grid-cols-1 sm:hidden">
         {pillars.map((p) => (
           <div
             key={p.num}
-            className="glass glass-hover flex flex-col p-6 rounded-2xl border border-white/10"
+            className="mo-card glass glass-hover flex flex-col p-6 rounded-2xl border border-white/10"
           >
             <span className="text-xs font-extrabold text-accent tracking-widest">{p.num}</span>
             <h3 className="mt-2 text-base font-bold text-foreground">{p.title}</h3>
@@ -1088,9 +1111,9 @@ function BrandStatementBanner() {
           got a few generic lines back, spent our money, and got nothing real in return. When we
           asked for help, no one answered. That hurt. So we built the thing we needed back then — a
           free, honest library of small business ideas and side hustles, with real research, not
-          empty hype. Browse for free, always. Validate as many times as you want, on your own
-          account, at no extra cost. Pay once — ₹199 for 3 months or ₹399 for life — only if you
-          want full access. Never a monthly bill.
+          empty hype. Browse for free, always. Validate as many times as you want, at no extra cost.
+          Pay once — ₹199 for 3 months or ₹399 for life — only if you want full access. Never a
+          monthly bill.
         </p>
       </div>
     </section>
@@ -1104,38 +1127,47 @@ function TrustStatsBar({
   totalIdeas: number;
   categoryCount: number;
 }) {
+  const statsRef = useStaggerReveal<HTMLDivElement>();
+  // MOTION_SPEC §4 — the odometer runs on the ONE figure with a real source
+  // behind it (catalog.totalIdeas, straight from loader data). The other two
+  // tiles are not loader values, so they are plain text: a number with no live
+  // source gets no counter and no animation.
   const stats = [
     {
       value: totalIdeas,
-      suffix: "+",
+      live: true,
       label: "Researched blueprints",
       note: `Across ${categoryCount} live categories, growing every week`,
       shape: "bbi-shape-stat-1",
     },
     {
       value: 967,
-      suffix: "",
+      live: false,
       label: "Founders reviewed us",
       note: "Reviewed BBI's structure and functionality before we shipped it",
       shape: "bbi-shape-stat-2",
     },
     {
       value: 2,
-      suffix: "",
+      live: false,
       label: "Simple pricing plans",
       note: "₹199 for 3 months, ₹399 for life. Pay once. No surprise bills, ever.",
       shape: "bbi-shape-stat-3",
     },
   ];
   return (
-    <div className="mx-auto mt-8 grid max-w-6xl gap-4 px-3 sm:grid-cols-3 sm:px-4">
+    <div ref={statsRef} className="mx-auto mt-8 grid max-w-6xl gap-4 px-3 sm:grid-cols-3 sm:px-4">
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className={`glass glass-hover ${stat.shape} px-6 py-7 text-center transition-transform duration-300 hover:scale-[1.02] sm:text-left`}
+          className={`mo-card glass glass-hover ${stat.shape} px-6 py-7 text-center sm:text-left`}
         >
           <p className="text-3xl font-extrabold tracking-tight text-accent sm:text-4xl">
-            <CountUp value={stat.value} suffix={stat.suffix} />
+            {stat.live ? (
+              <Odometer value={stat.value} format={(n) => `${Math.round(n)}+`} />
+            ) : (
+              stat.value
+            )}
           </p>
           <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
             {stat.label}
@@ -1163,9 +1195,8 @@ function MarketGapSection() {
               <p>
                 Before we built BBI, we went looking for a place to check our own business ideas.
                 Every place we found charged at least $20 for three or four &quot;validations.&quot;
-                It sounded like deep research. It wasn&apos;t. It was really just one AI call — the
-                same kind of call you could run yourself, a hundred times over, for the price of one
-                month of Claude or Perplexity.
+                It sounded like deep research. It wasn&apos;t. It was research you could run
+                yourself, a hundred times over, with AI tools you already pay for.
               </p>
               <p>
                 We are regular people. Most of us have full-time jobs and build BBI at night and on
@@ -1213,8 +1244,8 @@ const BBI_FAQ_1 = [
     a: "No. Browsing the library is free. Lifetime access is a one-time optional unlock, not a requirement to see ideas.",
   },
   {
-    q: "Which AI does the Validate button use?",
-    a: "Claude or Perplexity, your choice — free, on your own account. We deliberately don't support ChatGPT or Grok.",
+    q: "Is there a limit on how many ideas I can validate?",
+    a: "No. Validation is free and unlimited — it costs you nothing extra, using AI tools you already pay for.",
   },
   {
     q: "How is this different from an AI idea generator?",
@@ -1223,6 +1254,7 @@ const BBI_FAQ_1 = [
 ];
 
 function HowItWorksSection() {
+  const stepsRef = useStaggerReveal<HTMLDivElement>();
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
@@ -1238,9 +1270,9 @@ function HowItWorksSection() {
           <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
             Grab the idea. Validate it however you want. Keep the money.
           </h2>
-          <div className="mt-6 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+          <div ref={stepsRef} className="mt-6 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
             {BBI_HOW_STEPS.map((step) => (
-              <div key={step.n} className="glass glass-hover bbi-shape-step flex gap-4 p-6">
+              <div key={step.n} className="mo-card glass glass-hover bbi-shape-step flex gap-4 p-6">
                 <span className="bbi-shape-step-badge glass flex h-11 w-11 shrink-0 items-center justify-center text-sm font-extrabold text-accent">
                   {step.n}
                 </span>
@@ -1366,7 +1398,7 @@ function PricingPhilosophySection() {
 function TeamSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-shape-card-a grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+      <div className="mo-card glass bbi-shape-card-a grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
             Who&apos;s behind this
@@ -1427,11 +1459,16 @@ function InspiredBySection() {
 }
 
 /**
- * The two comparison cards slide in from opposite sides and converge, with
- * a brief glow pulse on arrival — built locally with gsap + ScrollTrigger
- * (same loadGsap(true)/once:true pattern as Reveal) rather than through
- * Reveal itself, since the "glow on arrival" step is specific to this
- * section's own visual language, not something every Reveal caller wants.
+ * The two comparison cards slide in from opposite sides and converge — the one
+ * bespoke beat kept on this page, because "two things meeting in the middle"
+ * is the section's actual argument and no shared primitive expresses it.
+ *
+ * The glow pulse that used to fire on arrival animated `box-shadow`, which
+ * MOTION_SPEC §2.8 forbids outright (it re-rasterises a blurred shadow every
+ * frame and is the single most expensive thing you can tween). It is gone; the
+ * cards now take their hover response from `.mo-card` like every other card on
+ * the site. `clearProps` drops gsap's residual inline transform once the
+ * converge lands, so the shared hover lift has an unclaimed transform to use.
  */
 function ComparisonSection() {
   const leftRef = useRef<HTMLDivElement | null>(null);
@@ -1442,9 +1479,6 @@ function ComparisonSection() {
     const left = leftRef.current;
     const right = rightRef.current;
     if (!left || !right) return;
-
-    const restShadow = getComputedStyle(left).boxShadow;
-    const glowShadow = `0 0 0 1px color-mix(in oklab, var(--primary) 55%, transparent), 0 0 34px -6px color-mix(in oklab, var(--primary) 60%, transparent), ${restShadow}`;
 
     let cancelled = false;
     let tl: gsap.core.Timeline | null = null;
@@ -1459,11 +1493,13 @@ function ComparisonSection() {
       gsap.set(right, { x: 60, opacity: 0 });
       tl = gsap.timeline({
         scrollTrigger: { trigger: left, start: "top 85%", once: true },
+        onComplete: () => gsap.set([left, right], { clearProps: "transform" }),
       });
-      tl.to(left, { x: 0, opacity: 0.8, duration: 0.7, ease: "power3.out" }, 0)
-        .to(right, { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0)
-        .to([left, right], { boxShadow: glowShadow, duration: 0.25, ease: "power1.out" })
-        .to([left, right], { boxShadow: restShadow, duration: 0.7, ease: "power1.out" });
+      tl.to(left, { x: 0, opacity: 0.8, duration: 0.7, ease: "power3.out" }, 0).to(
+        right,
+        { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
+        0,
+      );
     });
 
     return () => {
@@ -1484,7 +1520,7 @@ function ComparisonSection() {
       <div className="mt-8 grid gap-5 sm:grid-cols-2">
         <div
           ref={leftRef}
-          className="glass bbi-shape-compare-sharp border border-border/60 p-7 opacity-80"
+          className="mo-card glass bbi-shape-compare-sharp border border-border/60 p-7 opacity-80"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
             Typical validator platform
@@ -1498,10 +1534,10 @@ function ComparisonSection() {
         </div>
         <div
           ref={rightRef}
-          className="glass glass-hover bbi-shape-compare-round border border-primary/40 p-7"
+          className="mo-card glass glass-hover bbi-shape-compare-round border border-primary/40 p-7"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-            BBI + your own AI tool
+            BBI + AI tools you already pay for
           </p>
           <ul className="mt-4 space-y-2.5 text-sm text-foreground">
             <li>Browse researched ideas free</li>
@@ -1598,6 +1634,7 @@ const BBI_KEYWORD_GROUPS: KeywordGroup[] = [
 ];
 
 function KeywordMosaic() {
+  const groupsRef = useStaggerReveal<HTMLDivElement>();
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4" aria-label="Browse ideas by keyword">
       <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
@@ -1606,27 +1643,28 @@ function KeywordMosaic() {
       <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
         Business ideas by industry, founder, and model
       </h2>
-      <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div ref={groupsRef} className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {BBI_KEYWORD_GROUPS.map((group) => (
-          <Reveal key={group.heading} className="h-full">
-            <div className="glass glass-hover bbi-shape-card-a h-full p-4 sm:p-6">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
-                {group.heading}
-              </h3>
-              <div className="mt-4 grid grid-cols-2 content-start gap-2 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] lg:grid-cols-1 xl:grid-cols-2">
-                {group.terms.map((term) => (
-                  <Link
-                    key={term.label}
-                    to="/search"
-                    search={{ q: term.query }}
-                    className="glass-pill min-w-0 rounded-full px-2.5 py-2 text-center text-[11px] font-medium leading-tight"
-                  >
-                    {term.label}
-                  </Link>
-                ))}
-              </div>
+          <div
+            key={group.heading}
+            className="mo-card glass glass-hover bbi-shape-card-a h-full p-4 sm:p-6"
+          >
+            <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
+              {group.heading}
+            </h3>
+            <div className="mt-4 grid grid-cols-2 content-start gap-2 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] lg:grid-cols-1 xl:grid-cols-2">
+              {group.terms.map((term) => (
+                <Link
+                  key={term.label}
+                  to="/search"
+                  search={{ q: term.query }}
+                  className="glass-pill min-w-0 rounded-full px-2.5 py-2 text-center text-[11px] font-medium leading-tight"
+                >
+                  {term.label}
+                </Link>
+              ))}
             </div>
-          </Reveal>
+          </div>
         ))}
       </div>
     </section>

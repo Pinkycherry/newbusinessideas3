@@ -1,7 +1,6 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { queryOptions } from "@tanstack/react-query";
 import { Lock } from "lucide-react";
-import { useRef } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { ValidateButton } from "@/components/validate-button";
@@ -16,7 +15,7 @@ import {
 import { type IdeaCard as IdeaCardType, type IdeaDetail } from "@/lib/ideas-shared";
 import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { useAuth } from "@/hooks/use-auth";
-import { usePinProgress } from "@/lib/scroll-devices";
+import { useElementPointerGroup, useScrollProgress, useTextReveal } from "@/motion";
 
 type IdeaDetailData = {
   idea: IdeaDetail;
@@ -141,35 +140,55 @@ export const Route = createFileRoute("/idea/$slug")({
 });
 
 /**
- * Section 6.1 item 3 — demand/trend indicator. Deliberately simple: a gauge
- * plus a sparkline-ish bar row derived from the idea's own trend score, so it
- * reads as alive without pretending to be real time-series data.
+ * Section 6.1 item 3 — the demand/trend indicator.
+ *
+ * It has exactly one input: `ideas.trend_score`, the idea's own real column.
+ * The gauge fills to that value and no further, and scroll is what moves it —
+ * `useScrollProgress` publishes `--sc-p` on this section and the fill's
+ * `scaleX` is the product of the real score and that playhead. So it is alive
+ * because the reader is moving, not because a timer is running.
+ *
+ * What used to be here, and is deliberately not coming back: a twelve-bar
+ * "sparkline" whose heights were `Math.sin(i * 0.9) + Math.cos(i * 0.5)`
+ * layered over the score. That is a fabricated time series — this site has had
+ * to strip invented figures three times and a sine-wave demand tracker was one
+ * of them. There is no per-period demand history in the schema, so there is no
+ * chart. One real number, honestly drawn.
+ *
+ * Transform only: the fill scales, its box never changes size. The old
+ * `.demand-gauge-fill` rule animated `width` instead, which MOTION_SPEC rule
+ * 8 forbids; it has been deleted from styles.css along with the bar chart.
  */
 function DemandBlock({ score }: { score: number | null }) {
+  const sectionRef = useScrollProgress<HTMLElement>();
   if (score === null) return null;
   const pct = Math.max(0, Math.min(100, score));
-  const bars = Array.from({ length: 12 }, (_, i) => {
-    const wave = Math.sin(i * 0.9) * 12 + Math.cos(i * 0.5) * 8;
-    return Math.max(14, Math.min(100, pct + wave - 6));
-  });
   const band = pct >= 85 ? "Strong momentum" : pct >= 70 ? "Steady demand" : "Niche, but real";
   return (
-    <section className="mt-10 rounded-lg border border-border bg-card p-5">
+    <section ref={sectionRef} className="mt-10 rounded-lg border border-border bg-card p-5">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
           Demand signal
         </h2>
         <span className="text-xs font-semibold uppercase tracking-widest text-accent">{band}</span>
       </div>
-      <div className="mt-4 demand-gauge" style={{ ["--pct" as string]: pct }}>
-        <div className="demand-gauge-track">
-          <div className="demand-gauge-fill" />
-        </div>
-      </div>
-      <div className="mt-4 demand-bars" aria-hidden>
-        {bars.map((h, i) => (
-          <span key={i} style={{ height: `${h}%`, animationDelay: `${i * 45}ms` }} />
-        ))}
+      <div
+        className="demand-gauge-track mt-4"
+        role="meter"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={pct}
+        aria-label="Trend score"
+      >
+        {/* Resting state with no JavaScript, and under reduced motion, is the
+            settled one: --sc-p falls back to 1 and the fill sits at the real
+            score rather than at zero. */}
+        <div
+          className="h-full w-full origin-left rounded-full bg-gradient-to-r from-primary to-accent"
+          style={{
+            transform: `scaleX(calc(${(pct / 100).toFixed(4)} * clamp(0, calc(var(--sc-p, 1) * 1.6), 1)))`,
+          }}
+        />
       </div>
       <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
         Trend score {pct} of 100, based on current demand signals for this specific micro-niche
@@ -186,10 +205,17 @@ function DemandBlock({ score }: { score: number | null }) {
  * and cons are both visible from the start (nothing here is hidden to force
  * a reveal), the verdict crossfades in as `--sc-p` passes its threshold. No
  * invented copy — every word is the idea's own `pros`/`cons`/`verdict` data.
+ *
+ * Migrated from `lib/scroll-devices`' `usePinProgress` to `@/motion`'s
+ * `useScrollProgress({ mode: "pinned" })` — the same device, same `--sc-p`
+ * contract, so the calc()-driven verdict cue below is untouched. One real
+ * behaviour change came with it: the old hook parked `--sc-p` at 0 under
+ * reduced motion, which drove this panel's own `clamp()` to zero opacity and
+ * hid the verdict outright for those readers. The shared hook parks at its
+ * settled value instead, so the verdict is simply there.
  */
 function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
-  const stageRef = useRef<HTMLDivElement | null>(null);
-  usePinProgress(stageRef, { spanVh: 1.6 });
+  const stageRef = useScrollProgress<HTMLElement>({ mode: "pinned", spanVh: 1.6 });
 
   return (
     <section
@@ -278,6 +304,11 @@ function IdeaPage() {
   // returns null, so this component never renders without data.
   const data = Route.useLoaderData() as NonNullable<IdeaDetailData>;
   const auth = useAuth();
+  // MOTION_SPEC §2.3 — the page's single headline reveal, on the idea title.
+  const titleRef = useTextReveal<HTMLHeadingElement>();
+  // One delegated pointer listener per rail rather than one per card.
+  const relatedRailRef = useElementPointerGroup<HTMLDivElement>("a");
+  const trendingRailRef = useElementPointerGroup<HTMLDivElement>("a");
   if (!data) return null;
   const { idea, related, relatedCategories, trending, variant, gradient } = data;
   // PROJECT_BRIEF.md Section 3.2 — full blueprint content is blurred behind
@@ -362,7 +393,7 @@ function IdeaPage() {
                   <span className="text-muted-foreground">{idea.subcategoryName}</span>
                 </div>
 
-                <h1 className="mt-3 text-4xl font-bold leading-tight tracking-tight">
+                <h1 ref={titleRef} className="mt-3 text-4xl font-bold leading-tight tracking-tight">
                   {idea.title}
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">{idea.businessDescription}</p>
@@ -635,7 +666,10 @@ function IdeaPage() {
                 <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                   More in {idea.categoryName}
                 </h2>
-                <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {/* `.mo-card` for these cells lives on IdeaCard itself, which
+                    is the listing agent's file — this rail supplies the single
+                    delegated pointer listener the sheen reads from. */}
+                <div ref={relatedRailRef} className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {bottomRelated.map((r) => (
                     <IdeaCard key={r.ideaId} idea={r} />
                   ))}
@@ -653,7 +687,7 @@ function IdeaPage() {
                       key={c.categorySlug}
                       to="/category/$categorySlug"
                       params={{ categorySlug: c.categorySlug }}
-                      className="glass-pill inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold"
+                      className="mo-row glass-pill inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold"
                     >
                       <span>{c.categoryName}</span>
                       <span className="text-[10px] opacity-70">{c.ideaCount}</span>
@@ -668,13 +702,16 @@ function IdeaPage() {
                 <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                   Trending across the library
                 </h2>
-                <div className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3">
+                <div
+                  ref={trendingRailRef}
+                  className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3"
+                >
                   {trending.map((t) => (
                     <Link
                       key={t.ideaId}
                       to="/idea/$slug"
                       params={{ slug: t.slug }}
-                      className="glass glass-hover w-64 shrink-0 snap-start rounded-2xl p-4"
+                      className="mo-card glass glass-hover w-64 shrink-0 snap-start rounded-2xl p-4"
                     >
                       <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
                         {t.categoryName}

@@ -349,7 +349,12 @@
     0 1px 0 0 rgba(255, 255, 255, 0.35) inset,
     0 0 18px -8px rgba(136, 134, 219, 0.5) inset,
     0 10px 22px -12px rgba(0, 0, 0, 0.8) !important;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease, color 0.2s ease, background 0.25s ease !important;
+  /* `transform` belongs in this list. Without it, a `.mo-row` or `.mo-lift`
+     sitting on a pill snaps to its offset in a single frame instead of
+     easing — and because this declaration is `!important`, the page cannot
+     add it back. The GSAP pill-interaction hook writes transform directly
+     rather than through a transition, so it is unaffected either way. */
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, color 0.2s ease, background 0.25s ease, transform 0.24s cubic-bezier(0.16, 1, 0.3, 1) !important;
   animation: none !important;
 }
 .glass-pill:hover {
@@ -909,18 +914,6 @@ a.mo-link {
 .glass-pill,
 .sheen,
 a[class*="from-primary"],
-/* A disabled button has to look disabled. The pill treatment below is forced
-   with `!important`, so without this the `disabled` checkout CTA on /pricing
-   renders as a fully live primary capsule — the page says "Checkout not live
-   yet" while the button says "press me". */
-button[class*="from-primary"]:disabled,
-button[class*="from-primary"][aria-disabled="true"] {
-  cursor: not-allowed;
-  opacity: 0.45;
-  filter: saturate(0.35);
-  box-shadow: none !important;
-}
-
 button[class*="from-primary"],
 .iv-ticker-track a {
   color: #FCFBFE !important;
@@ -956,6 +949,25 @@ button[class*="from-primary"]::before,
   opacity: 0.5;
   pointer-events: none;
   z-index: -1;
+}
+
+/* A disabled control has to look disabled. The pill treatment above is forced
+   with `!important`, so without this the `disabled` checkout CTA on /pricing
+   renders as a fully live primary capsule — the page says "Checkout not live
+   yet" while the button says "press me".
+
+   This rule sits AFTER the block it overrides on purpose. An earlier version
+   was spliced into the middle of that block's selector list, which silently
+   cut `.glass-btn`, `.glass-pill` and `.sheen` out of the pill styling and
+   dropped every primary control on the site to 45% opacity. */
+:where(button, a, [role="button"])[class*="from-primary"]:disabled,
+:where(button, a, [role="button"])[class*="from-primary"][aria-disabled="true"],
+.glass-btn:disabled,
+.glass-pill[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.45;
+  filter: saturate(0.35);
+  box-shadow: none !important;
 }
 
 .glass-btn:hover,
@@ -1403,25 +1415,21 @@ html.light .idea-shell::before { opacity: 0.42; }
 .idea-shell[data-variant="editorial"] .idea-hero { grid-template-columns: 1fr; max-width: 46rem; }
 .idea-shell[data-variant="editorial"] .idea-hero-aside { max-width: none; }
 
-/* Demand gauge (Section 6.1 item 3) — simple, just needs to look alive. */
-.demand-gauge { --pct: 0; }
-.demand-gauge-track { height: 0.5rem; border-radius: 9999px; background: color-mix(in oklab, var(--foreground) 10%, transparent); overflow: hidden; }
-.demand-gauge-fill {
-  height: 100%; border-radius: 9999px; width: 0;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-  animation: demand-fill 1.4s var(--ease-glass, cubic-bezier(0.16, 1, 0.3, 1)) forwards;
-}
-@keyframes demand-fill { to { width: calc(var(--pct) * 1%); } }
-.demand-bars { display: flex; align-items: flex-end; gap: 3px; height: 2.5rem; }
-.demand-bars span {
-  flex: 1; border-radius: 2px; background: color-mix(in oklab, var(--primary) 55%, transparent);
-  transform-origin: bottom; animation: demand-bar 1.1s var(--ease-glass, cubic-bezier(0.16, 1, 0.3, 1)) both;
-}
-@keyframes demand-bar { from { transform: scaleY(0.05); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+/* Demand gauge (Section 6.1 item 3). The fill is a composited scaleX driven
+   from the idea's real `trend_score` by useScrollProgress — see
+   idea.$slug.tsx — so the only rule needed here is the track it runs in.
 
-@media (prefers-reduced-motion: reduce) {
-  .demand-gauge-fill { animation: none; width: calc(var(--pct) * 1%); }
-  .demand-bars span { animation: none; }
+   What used to live here and is deliberately gone: `.demand-bars`, a
+   twelve-bar chart whose heights came from `Math.sin(i*0.9)*12 +
+   Math.cos(i*0.5)*8` and represented nothing, and `.demand-gauge-fill`,
+   which animated `width` — not compositable, and forbidden by MOTION_SPEC
+   rule 8. There is no per-period demand history in the schema, so there is
+   no chart; there is one real score, so there is one gauge. */
+.demand-gauge-track {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: color-mix(in oklab, var(--foreground) 10%, transparent);
+  overflow: hidden;
 }
 
 /* ==================================================================
