@@ -34,6 +34,7 @@ function SignInPage() {
 
   return (
     <ContentPage
+      tone="focus"
       eyebrow="Sign in"
       title="One tap,"
       highlight="with Google"

@@ -1,5 +1,4 @@
-import { Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { Link, useLoaderData } from "@tanstack/react-router";
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User } from "lucide-react";
@@ -33,6 +32,7 @@ import { FloatingDock } from "@/components/floating-dock";
 import { CategoryBadge } from "@/components/category-badge";
 import { Spotlight } from "@/components/spotlight";
 import { catalogQuery } from "@/lib/ideas.functions";
+import { usePageScrollProgress } from "@/motion";
 import { prefersReducedMotion } from "@/lib/motion";
 
 import { useAuth } from "@/hooks/use-auth";
@@ -198,8 +198,26 @@ const STATIC_GROUPS: { title: string; items: string[] }[] = [
 const isDesktop = () =>
   typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
 
+/**
+ * The catalog, read from the ROOT ROUTE'S LOADER rather than from the query
+ * cache.
+ *
+ * This used to be `useQuery(catalogQuery)`. The root loader does call
+ * `ensureQueryData(catalogQuery)`, so the server had the data — but
+ * `src/router.tsx` builds a fresh, empty `QueryClient` on both the server and
+ * the client with no dehydration between them, so the client's first render
+ * found an empty cache. Server markup rendered six category pills; client
+ * markup rendered "Loading…". React saw the mismatch and threw away the whole
+ * tree on nearly every page of the site.
+ *
+ * Router loader data, unlike the query cache, IS dehydrated and rehydrated by
+ * TanStack Router automatically, so reading it here makes both renders
+ * identical. It also means the header dropdown and the footer no longer issue
+ * a client-side fetch per page visit.
+ */
 function useCatalog() {
-  return useQuery(catalogQuery);
+  const data = useLoaderData({ from: "__root__" });
+  return { data };
 }
 
 function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boolean }) {
@@ -551,7 +569,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
                   key={item}
                   to="/browse"
                   onClick={onClose}
-                  className="rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                  className="mo-row rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground"
                 >
                   {item}
                 </Link>
@@ -565,7 +583,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
               key={item.to}
               to={item.to}
               onClick={onClose}
-              className="rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+              className="mo-row rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground"
             >
               {item.label}
             </Link>
@@ -577,7 +595,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
               key={item.to}
               to={item.to}
               onClick={onClose}
-              className="rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+              className="mo-row rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground"
             >
               {item.label}
             </Link>
@@ -624,13 +642,23 @@ const footerColumns: { title: string; links: { to: string; label: string }[] }[]
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  // Publishes --page-p on :root; the rail under the header is the only thing
+  // that reads it here, and it does so with a composited scaleX.
+  usePageScrollProgress();
   const { data: catalog } = useCatalog();
-  const popularCategories = (catalog?.categories ?? []).slice(0, 6);
+  const allCategories = catalog?.categories ?? [];
+  const totalIdeas = catalog?.totalIdeas ?? 0;
+  const totalSubcategories = catalog?.totalSubcategories ?? 0;
   return (
     <div className="relative flex min-h-screen flex-col text-foreground">
       <AmbientScene />
       <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">
-        <div className="glass-nav mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full px-4 py-2.5 sm:px-6 sm:py-3">
+        {/* Reading position for the whole document. One composited transform
+            per frame, driven from --page-p — no layout, no repaint. */}
+        <div aria-hidden className="mx-auto h-px max-w-6xl overflow-hidden rounded-full bg-border">
+          <div className="mo-page-rail h-full w-full bg-accent" />
+        </div>
+        <div className="glass-nav mx-auto mt-2 flex max-w-6xl items-center justify-between gap-4 rounded-full px-4 py-2.5 sm:px-6 sm:py-3">
           <Link
             to="/"
             onClick={() => setMobileOpen(false)}
@@ -682,8 +710,8 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <FloatingDock />
       <BuiltWithSection />
       <footer className="px-3 pb-8 pt-20 sm:px-4">
-        <div className="glass mx-auto max-w-7xl rounded-3xl px-6 py-10 sm:px-10">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_repeat(4,1fr)]">
+        <div className="glass mx-auto max-w-7xl rounded-3xl px-6 py-12 sm:px-10">
+          <div className="grid gap-12 lg:grid-cols-[1.15fr_2.6fr]">
             <div>
               <Link to="/" className="flex items-baseline gap-2">
                 <span className="rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-0.5 text-base font-black uppercase tracking-[0.18em] text-primary-foreground">
@@ -696,53 +724,98 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 for.
               </p>
               <FooterCta />
-            </div>
-            {footerColumns.map((col) => (
-              <div key={col.title}>
-                <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
-                  {col.title}
-                </h3>
-                <div className="iv-tag-cloud mt-4">
-                  {col.links.map((link) => (
-                    <CategoryBadge
-                      key={`${col.title}-${link.to}-${link.label}`}
-                      to={link.to}
-                      label={link.label}
-                      size="sm"
-                      className="iv-tag"
-                    />
-                  ))}
+
+              {/* Real figures, straight from the catalog the page already
+                  loaded. The line this replaced claimed every idea was
+                  "updated in real time, never stale" — nothing on this site
+                  updates in real time, so that was a fabricated claim sitting
+                  on every single page. */}
+              <dl className="mt-8 flex gap-8 border-t border-border pt-6">
+                <div>
+                  <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Blueprints
+                  </dt>
+                  <dd className="mt-1 font-display text-2xl font-bold text-foreground">
+                    {totalIdeas}
+                  </dd>
                 </div>
+                <div>
+                  <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Categories
+                  </dt>
+                  <dd className="mt-1 font-display text-2xl font-bold text-foreground">
+                    {allCategories.length}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Subcategories
+                  </dt>
+                  <dd className="mt-1 font-display text-2xl font-bold text-foreground">
+                    {totalSubcategories}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+
+            <div className="grid gap-10 sm:grid-cols-3">
+              {/* Every category, not a truncated six. This block is the
+                  reason to have a wide footer at all — it is the site's
+                  densest block of internal links, so it gets two thirds of
+                  the width and the names are not clipped. */}
+              <div className="sm:col-span-2">
+                <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
+                  Browse by category
+                </h3>
+                <ul className="mt-4 grid gap-x-6 gap-y-1 sm:grid-cols-2">
+                  {allCategories.map((c) => (
+                    <li key={c.categorySlug}>
+                      <Link
+                        to="/category/$categorySlug"
+                        params={{ categorySlug: c.categorySlug }}
+                        className="mo-row flex items-baseline justify-between gap-3 rounded-lg py-1.5 pl-2 pr-2 text-sm text-muted-foreground"
+                      >
+                        <span className="min-w-0 leading-snug">{c.categoryName}</span>
+                        <span className="shrink-0 text-[11px] tabular-nums opacity-70">
+                          {c.ideaCount}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            ))}
-            <div>
-              <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
-                Popular categories
-              </h3>
-              <div className="iv-tag-cloud mt-4">
-                {popularCategories.length === 0 ? (
-                  <span className="text-xs text-muted-foreground">Loading…</span>
-                ) : (
-                  popularCategories.map((c) => (
-                    <CategoryBadge
-                      key={c.categorySlug}
-                      slug={c.categorySlug}
-                      label={c.categoryName}
-                      size="sm"
-                      className="iv-tag"
-                    />
-                  ))
-                )}
+
+              <div className="grid gap-8">
+                {footerColumns.map((col) => (
+                  <div key={col.title}>
+                    <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
+                      {col.title}
+                    </h3>
+                    <ul className="mt-4 grid gap-1">
+                      {col.links.map((link) => (
+                        <li key={`${col.title}-${link.to}-${link.label}`}>
+                          <Link
+                            to={link.to}
+                            className="mo-row block rounded-lg px-2 py-1.5 text-sm text-muted-foreground"
+                          >
+                            {link.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-          <div className="mt-10 border-t border-border pt-6 text-xs text-muted-foreground">
+
+          <div className="mt-12 border-t border-border pt-6 text-xs text-muted-foreground">
             <p className="font-medium text-foreground">
               Bro Business Ideas — built by people who&apos;ve been where you are. Businessidea.io
             </p>
             <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <p>© {new Date().getFullYear()} BBI. All rights reserved.</p>
-              <p>Every idea here is live — updated in real time, never stale.</p>
+              <p>Every blueprint is free to read, start to finish.</p>
             </div>
           </div>
         </div>

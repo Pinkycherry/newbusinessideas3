@@ -1,10 +1,12 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getSubcategoryPage } from "@/lib/ideas.functions";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
 
 const subQuery = (categorySlug: string, subcategorySlug: string) =>
   queryOptions({
@@ -60,6 +62,26 @@ function SubcategoryPage() {
   const categoryName = data.categoryName ?? categorySlug;
   const subcategoryName = data.subcategoryName ?? subcategorySlug;
   const subcategoryPath = `/category/${categorySlug}/${subcategorySlug}`;
+
+  const headingRef = useTextReveal<HTMLHeadingElement>();
+  // MOTION_SPEC section 3 — same gallery grammar as the category grid: one
+  // delegated pointer listener for the whole grid, one short-stagger reveal,
+  // both on the same container element via a single callback ref.
+  const pointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
+  const revealRef = useStaggerReveal<HTMLDivElement>({ selector: ".mo-card", stagger: 0.03 });
+  const gridRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      pointerRef.current = node;
+      revealRef.current = node;
+    },
+    [pointerRef, revealRef],
+  );
+
+  // Brief section 12.7 — one earned emphasis per grid. The loader orders by
+  // trend_score DESC, so `ideas[0]` is the highest-trending idea here.
+  const lead = data.ideas.length >= 4 ? data.ideas[0] : undefined;
+  const leadIdeaId = lead && lead.trendScore !== null ? lead.ideaId : null;
+
   return (
     <>
       <JsonLd
@@ -92,11 +114,13 @@ function SubcategoryPage() {
               { label: data.subcategoryName ?? subcategorySlug },
             ]}
           />
-          <h1 className="mt-4 text-3xl font-bold tracking-tight">{data.subcategoryName}</h1>
+          <h1 ref={headingRef} className="mt-4 text-3xl font-bold tracking-tight">
+            {data.subcategoryName}
+          </h1>
           <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {data.ideas.map((idea, i) => (
-              <IdeaCard key={idea.ideaId} idea={idea} featured={i % 7 === 0} />
+          <div ref={gridRef} className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {data.ideas.map((idea) => (
+              <IdeaCard key={idea.ideaId} idea={idea} featured={idea.ideaId === leadIdeaId} />
             ))}
           </div>
         </div>

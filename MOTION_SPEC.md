@@ -125,8 +125,9 @@ Editorial.
 - `useStaggerReveal` on the post grid
 - `.mo-media` on every thumbnail and the detail hero
 - `.mo-card` on post cards, `.mo-link` on inline links in post bodies
-- `usePageScrollProgress` + `.mo-page-rail` on the post page only — a reading
-  progress bar belongs on long-form and nowhere else
+- no reading-progress rail here. The shell owns one rail on every page (see
+  "Header" below); a second one on the post page renders two bars ten pixels
+  apart. One rail, site-wide, in the shell.
 
 ### Static and legal — the 10 sharing `ContentPage`
 

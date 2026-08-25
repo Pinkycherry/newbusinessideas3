@@ -269,18 +269,41 @@
     pointer-events: none;
   }
 }
+/* Two things were wrong here and both are fixed below.
+   1. `transition: all` swept box-shadow into the transition, so the browser
+      recomputed and repainted a six-layer blurred shadow bitmap every frame,
+      on every card, for the length of every hover. That is the exact
+      regression the CATEGORY HEADING GLOW block further down documents having
+      already been caught and fixed once. The transition is now limited to
+      transform and border-color, which composite; the shadow still changes on
+      hover, it just swaps rather than animating, which is imperceptible
+      underneath a 350ms lift.
+   2. Every declaration carried `!important`, which beat `.mo-card:hover` from
+      motion.css on every card on the site — the motion system was running at
+      partial strength wherever the two met. The specificity here (0,2,0 on
+      `.glass-hover:hover`) already wins against `.glass` (0,1,0) on its own,
+      so none of it was needed. */
 @utility glass-hover {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   &:hover {
-    transform: translateY(-4px) scale(1.01) !important;
-    border-color: rgba(182, 181, 227, 0.62) !important;
+    transform: translateY(-4px) scale(1.01);
+    border-color: rgba(182, 181, 227, 0.62);
     box-shadow:
       0 0 0 1px rgba(182, 181, 227, 0.2),
       0 0 28px -6px rgba(255, 255, 255, 0.38),
       0 0 54px -14px rgba(136, 134, 219, 0.32),
       0 26px 60px -10px rgba(0, 0, 0, 0.7),
       inset 0 1px 2px 0 rgba(255, 255, 255, 0.5),
-      inset 0 -1px 1px 0 rgba(0, 0, 0, 0.5) !important;
+      inset 0 -1px 1px 0 rgba(0, 0, 0, 0.5);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass-hover,
+  .glass-hover:hover {
+    transition: none;
+    transform: none;
   }
 }
 @utility glass-nav {
@@ -448,6 +471,15 @@ html.light .tree-asset-container::before {
 @utility bbi-shape-stat-1 { border-radius: 1.25rem; }
 @utility bbi-shape-stat-2 { border-radius: 1.25rem; }
 @utility bbi-shape-stat-3 { border-radius: 1.25rem; }
+/* A `.mo-link` draws its own underline as a scaled pseudo-element. Anywhere a
+   more specific rule also sets `text-decoration: underline` — `.wp-prose a`
+   below is the live case — the element ends up with two lines about 2px
+   apart on hover. The class opts out of the static one wherever it appears. */
+:where(.wp-prose) a.mo-link,
+a.mo-link {
+  text-decoration: none;
+}
+
 /* WordPress article content */
 .wp-prose {
   font-size: 1rem;
@@ -877,6 +909,18 @@ html.light .tree-asset-container::before {
 .glass-pill,
 .sheen,
 a[class*="from-primary"],
+/* A disabled button has to look disabled. The pill treatment below is forced
+   with `!important`, so without this the `disabled` checkout CTA on /pricing
+   renders as a fully live primary capsule — the page says "Checkout not live
+   yet" while the button says "press me". */
+button[class*="from-primary"]:disabled,
+button[class*="from-primary"][aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.45;
+  filter: saturate(0.35);
+  box-shadow: none !important;
+}
+
 button[class*="from-primary"],
 .iv-ticker-track a {
   color: #FCFBFE !important;
@@ -1155,12 +1199,6 @@ html.light .iv-skeleton {
     color: #2B2871 !important;
   }
 }
-
-/* `.iv-plainlinks` used to live here as a pile of `!important` overrides
-   whose only job was to undo the global `a[href*="/category/"]` pill rule
-   for footer and list links. That rule is gone, so plain links are plain by
-   default and the workaround is no longer needed. The class is left in the
-   markup as an inert hook; it carries no rules. */
 
 /* ============================================================
    CATEGORY HEADING GLOW — breathing brand-color halo behind
