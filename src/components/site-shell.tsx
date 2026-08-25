@@ -33,6 +33,7 @@ import { CategoryBadge } from "@/components/category-badge";
 import { Spotlight } from "@/components/spotlight";
 import { catalogQuery } from "@/lib/ideas.functions";
 import { usePageScrollProgress } from "@/motion";
+import { topCategories, typeGroups } from "@/lib/catalog-display";
 import { prefersReducedMotion } from "@/lib/motion";
 
 import { useAuth } from "@/hooks/use-auth";
@@ -172,52 +173,6 @@ const COMPANY_ITEMS = [
 ];
 
 /** Curated static groupings — link through to /browse (no dedicated filtered route yet). */
-/**
- * How the "Browse by type" menu groups the real catalogue.
- *
- * What was here before was ten hand-written labels — "Business Ideas for
- * Women", "High Margin Business Ideas", "Quick Cash Business Ideas" and so on
- * — where every single one linked to `/browse`. Four of them happened to name
- * real categories; the other six named nothing that exists. A menu of ten
- * items that all go to the same page, half of them promising a filter the
- * site cannot apply, is worse than no menu.
- *
- * These groups reference real `category_slug` values instead. A slug that is
- * not in the live catalogue is skipped at render time rather than rendering a
- * link to a 404, so this list can never drift ahead of the database.
- */
-const TYPE_GROUPS: { title: string; slugs: string[] }[] = [
-  {
-    title: "By investment",
-    slugs: [
-      "zero-investment-business-ideas",
-      "low-investment-business-ideas",
-      "passive-income-business-ideas",
-    ],
-  },
-  {
-    title: "By how you work",
-    slugs: [
-      "side-hustle-ideas",
-      "work-from-home-business-ideas",
-      "business-ideas-that-never-go-out-of-style",
-    ],
-  },
-  {
-    title: "By industry",
-    slugs: [
-      "ai-automation",
-      "tech-saas",
-      "e-commerce-retail",
-      "creator-media",
-      "fintech-finance",
-      "health-fitness",
-      "education-edtech",
-      "productivity-workflow",
-    ],
-  },
-];
-
 const isDesktop = () =>
   typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
 
@@ -389,23 +344,22 @@ function NavDropdown({
  */
 function CategoryMega() {
   const { data } = useCatalog();
-  const categories = data?.categories ?? [];
+  // Capped, and with a scroll container as a second line of defence. A stress
+  // run at 1,200 categories measured this panel at 14,978px tall against a
+  // 1,000px viewport — a menu fifteen screens deep with no way to scroll it.
+  const all = data?.categories ?? [];
+  const { shown: categories, hasMore } = topCategories(all, 12);
 
   return (
     <NavDropdown
       label="Categories"
-      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 w-[min(52rem,94vw)] rounded-3xl p-6"
+      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 max-h-[70vh] w-[min(52rem,94vw)] overflow-y-auto rounded-3xl p-6"
     >
       {(close) => (
         <div>
-          <div className="flex items-baseline justify-between gap-4">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
-              Browse by category
-            </p>
-            <p className="text-[11px] normal-case tracking-normal text-muted-foreground">
-              {data?.totalIdeas ?? 0} blueprints in {categories.length} categories
-            </p>
-          </div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
+            Browse by category
+          </p>
 
           <ul className="mt-4 grid gap-x-6 gap-y-0.5 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((c) => (
@@ -431,7 +385,7 @@ function CategoryMega() {
               onClick={close}
               className="mo-link text-[11px] font-semibold uppercase tracking-[0.2em] text-accent"
             >
-              The full library
+              {hasMore ? `All ${all.length} categories` : "The full library"}
             </Link>
             <Link
               to="/search"
@@ -449,25 +403,25 @@ function CategoryMega() {
 }
 
 /**
- * "Browse by type" — the same real categories, grouped by the question a
- * reader is actually asking. Any slug in TYPE_GROUPS that the live catalogue
- * does not contain is dropped here rather than rendered as a dead link.
+ * "Browse by type" — the same real categories, grouped by the question a reader
+ * is actually asking.
+ *
+ * Groups are DERIVED from live data (see `typeGroups`). The previous version
+ * matched against fourteen hand-typed slugs, two of which were wrong, so two
+ * columns silently rendered short on every page of the site. Deriving them
+ * means a new category joins a group on its own and a wrong slug is not
+ * possible to type.
  */
 function BrowseByTypeDropdown() {
   const { data } = useCatalog();
-  const bySlug = new Map((data?.categories ?? []).map((c) => [c.categorySlug, c]));
-
-  const groups = TYPE_GROUPS.map((g) => ({
-    title: g.title,
-    entries: g.slugs.map((slug) => bySlug.get(slug)).filter((c) => c !== undefined),
-  })).filter((g) => g.entries.length > 0);
+  const groups = typeGroups(data?.categories ?? []);
 
   if (groups.length === 0) return null;
 
   return (
     <NavDropdown
       label="Browse by type"
-      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 w-[min(46rem,92vw)] rounded-3xl p-6"
+      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 max-h-[70vh] w-[min(46rem,92vw)] overflow-y-auto rounded-3xl p-6"
     >
       {(close) => (
         <div className="grid gap-6 sm:grid-cols-3">
@@ -477,7 +431,7 @@ function BrowseByTypeDropdown() {
                 {group.title}
               </p>
               <ul className="mt-3 grid gap-0.5">
-                {group.entries.map((c) => (
+                {group.categories.map((c) => (
                   <li key={c.categorySlug}>
                     <Link
                       to="/category/$categorySlug"
@@ -501,10 +455,6 @@ function BrowseByTypeDropdown() {
   );
 }
 
-/**
- * Explore and Company. Rows, not capsules — these are navigation, and a list
- * of pills reads as a tag cloud rather than as a menu.
- */
 function LinkListDropdown({
   label,
   items,
@@ -632,26 +582,23 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
           <p className="mt-4 px-3 text-[10px] normal-case tracking-normal text-accent">
             Browse by type
           </p>
-          {TYPE_GROUPS.map((group) => (
+          {typeGroups(categories).map((group) => (
             <Fragment key={group.title}>
               <p className="mt-2 px-3 text-[10px] normal-case tracking-normal text-muted-foreground/70">
                 {group.title}
               </p>
-              {group.slugs
-                .map((slug) => categories.find((c) => c.categorySlug === slug))
-                .filter((c) => c !== undefined)
-                .map((c) => (
-                  <Link
-                    key={c.categorySlug}
-                    to="/category/$categorySlug"
-                    params={{ categorySlug: c.categorySlug }}
-                    onClick={onClose}
-                    className="mo-row flex items-baseline justify-between gap-3 rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground"
-                  >
-                    <span className="min-w-0 leading-snug">{c.categoryName}</span>
-                    <span className="shrink-0 tabular-nums opacity-70">{c.ideaCount}</span>
-                  </Link>
-                ))}
+              {group.categories.map((c) => (
+                <Link
+                  key={c.categorySlug}
+                  to="/category/$categorySlug"
+                  params={{ categorySlug: c.categorySlug }}
+                  onClick={onClose}
+                  className="mo-row flex items-baseline justify-between gap-3 rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground"
+                >
+                  <span className="min-w-0 leading-snug">{c.categoryName}</span>
+                  <span className="shrink-0 tabular-nums opacity-70">{c.ideaCount}</span>
+                </Link>
+              ))}
             </Fragment>
           ))}
 
@@ -726,7 +673,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
   const { data: catalog } = useCatalog();
   const allCategories = catalog?.categories ?? [];
   const totalIdeas = catalog?.totalIdeas ?? 0;
-  const totalSubcategories = catalog?.totalSubcategories ?? 0;
+  const totalCategories = catalog?.totalCategories ?? allCategories.length;
+  // Capped by design. See src/lib/catalog-display.ts for the measurements —
+  // uncapped, this block was 3,300px of footer per page at 200 categories.
+  const footerCategories = topCategories(allCategories, 8);
   return (
     <div className="relative flex min-h-screen flex-col text-foreground">
       <AmbientScene />
@@ -788,112 +738,87 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <FloatingDock />
       <BuiltWithSection />
       {/* Brief 12.4 — "wide and comprehensive... a full rebuild, not a tweak".
-          Three bands rather than side-by-side columns. The previous version
-          put the brand, the CTA and the stats in one narrow left column and
-          the links in a taller right column, so the left ran out of content
-          two thirds of the way down and left a visibly empty bottom-left
-          quadrant. Bands fill their own width, so nothing can run short
-          against something taller. */}
-      <footer className="px-3 pb-8 pt-20 sm:px-4">
-        <div className="glass mx-auto max-w-7xl overflow-hidden rounded-3xl">
-          {/* Band 1 — who this is, and what it actually holds. */}
-          <div className="grid gap-8 px-6 py-10 sm:px-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
-            <div>
-              <Link to="/" className="flex items-baseline gap-2">
-                <span className="rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-0.5 text-base font-black uppercase tracking-[0.18em] text-primary-foreground">
-                  BBI
-                </span>
-              </Link>
-              <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground">
-                Researched business idea blueprints with real market context, trend scoring and a
-                blunt founder-fit verdict. Validate any idea free, using AI tools you already pay
-                for.
-              </p>
-              <FooterCta />
-            </div>
+          The version before this was three bands of link lists and a row of
+          three big numbers. It was a link dump, and it did not scale: rows were
+          uncapped with no max-height, so at 200 categories it became 3,300px of
+          footer on every page of the site.
 
-            {/* Real figures, straight from the catalog the page already loaded.
-                The line these replaced claimed every idea was "updated in real
-                time, never stale" — nothing on this site updates in real time,
-                so that sat on every page as a false claim. */}
-            <dl className="grid grid-cols-3 gap-4 lg:justify-items-end">
-              {[
-                { label: "Blueprints", value: totalIdeas },
-                { label: "Categories", value: allCategories.length },
-                { label: "Subcategories", value: totalSubcategories },
-              ].map((stat) => (
-                <div key={stat.label} className="lg:text-right">
-                  <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    {stat.label}
-                  </dt>
-                  <dd className="mt-1 font-display text-3xl font-bold tabular-nums text-foreground">
-                    {stat.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
+          This one is built around a statement rather than a directory, caps the
+          catalogue at eight with the remainder as a link, and collapses the
+          other three columns into one rail so they stop competing with the
+          categories for weight. Its height is the same at 14 categories as at
+          1,400. */}
+      <footer className="mt-24 px-3 pb-8 sm:px-4">
+        <div className="bbi-footer mx-auto max-w-7xl overflow-hidden rounded-[2rem]">
+          {/* The statement. Display type, brand voice, no description copy. */}
+          <div className="border-b border-[color-mix(in_oklab,var(--background)_16%,transparent)] px-7 py-14 sm:px-12 sm:py-20">
+            <p className="bbi-footer-eyebrow">Bro Business Ideas</p>
+            <p className="bbi-footer-statement">
+              Research you can act on,
+              <br />
+              free to read, start to finish.
+            </p>
+            <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4">
+              <Link to="/browse" className="bbi-footer-cta">
+                Browse the library
+              </Link>
+              {/* The one place a count is stated. It used to appear here three
+                  times over, and again in the header dropdown on the same page. */}
+              <p className="bbi-footer-count">
+                {totalIdeas} researched blueprints across {totalCategories} categories
+              </p>
+            </div>
           </div>
 
-          {/* Band 2 — the link grid. Every category, with its real count, is
-              the densest block of internal links on the site, so it gets half
-              the width and the names are never clipped. */}
-          <div className="grid gap-10 border-t border-border px-6 py-10 sm:px-10 sm:grid-cols-3 lg:grid-cols-5">
-            {/* Five columns, not four: the category block spans two, and
-                Platform / Company / Legal take one each, so the row fills
-                exactly. At four, Legal wrapped onto a second row on its own
-                and left the right two thirds of the footer empty. */}
-            <div className="sm:col-span-3 lg:col-span-2">
-              <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
-                Browse by category
-              </h3>
-              <ul className="mt-4 grid gap-x-8 gap-y-0.5 sm:grid-cols-2">
-                {allCategories.map((c) => (
+          <div className="grid gap-10 px-7 py-12 sm:px-12 lg:grid-cols-[1.6fr_1fr]">
+            {/* Eight deepest categories, then a link. Never the full list. */}
+            <div>
+              <h3 className="bbi-footer-heading">Where people start</h3>
+              <ul className="mt-5 grid gap-x-10 gap-y-0.5 sm:grid-cols-2">
+                {footerCategories.shown.map((c) => (
                   <li key={c.categorySlug}>
                     <Link
                       to="/category/$categorySlug"
                       params={{ categorySlug: c.categorySlug }}
-                      className="mo-row flex items-baseline justify-between gap-3 rounded-lg py-1.5 pl-2 pr-2 text-sm text-muted-foreground"
+                      className="bbi-footer-row"
                     >
                       <span className="min-w-0 leading-snug">{c.categoryName}</span>
-                      <span className="shrink-0 text-[11px] tabular-nums opacity-70">
+                      <span className="shrink-0 text-[11px] tabular-nums opacity-55">
                         {c.ideaCount}
                       </span>
                     </Link>
                   </li>
                 ))}
               </ul>
+              {footerCategories.hasMore && (
+                <Link to="/browse" className="bbi-footer-more">
+                  and {footerCategories.hiddenCount} more
+                </Link>
+              )}
             </div>
 
-            {footerColumns.map((col) => (
-              <div key={col.title}>
-                <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
-                  {col.title}
-                </h3>
-                <ul className="mt-4 grid gap-1">
-                  {col.links.map((link) => (
-                    <li key={`${col.title}-${link.to}-${link.label}`}>
-                      <Link
-                        to={link.to}
-                        className="mo-row block rounded-lg px-2 py-1.5 text-sm text-muted-foreground"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {/* Everything else, as one rail rather than three equal columns. */}
+            <div className="grid gap-8 sm:grid-cols-3 lg:grid-cols-1 lg:gap-7">
+              {footerColumns.map((col) => (
+                <div key={col.title}>
+                  <h3 className="bbi-footer-heading">{col.title}</h3>
+                  <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-1">
+                    {col.links.map((link) => (
+                      <li key={`${col.title}-${link.to}-${link.label}`}>
+                        <Link to={link.to} className="bbi-footer-link">
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Band 3 — the legal line. */}
-          <div className="border-t border-border px-6 py-6 text-xs text-muted-foreground sm:px-10">
-            <p className="font-medium text-foreground">
-              Bro Business Ideas — built by people who&apos;ve been where you are. Businessidea.io
-            </p>
-            <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <p>© {new Date().getFullYear()} BBI. All rights reserved.</p>
-              <p>Every blueprint is free to read, start to finish.</p>
-            </div>
+          <div className="flex flex-col gap-2 border-t border-[color-mix(in_oklab,var(--background)_16%,transparent)] px-7 py-6 text-xs sm:flex-row sm:items-center sm:justify-between sm:px-12">
+            <p className="bbi-footer-fine">© {new Date().getFullYear()} BBI · Businessidea.io</p>
+            <p className="bbi-footer-fine">Built by people who&apos;ve been where you are.</p>
           </div>
         </div>
       </footer>

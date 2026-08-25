@@ -107,9 +107,12 @@ function BrowsePage() {
           <h1 ref={headingRef} className="mt-4 text-3xl font-bold tracking-tight">
             The full idea library
           </h1>
+          {/* One line, two figures. The third used to be "N subcategories",
+              which was the idea count wearing a different label —
+              subcategory_name is byte-identical to title, so there are exactly
+              as many subcategories as ideas and the number said nothing. */}
           <p className="mt-2 text-sm text-muted-foreground">
-            {data.totalIdeas} ideas · {data.totalSubcategories} subcategories ·{" "}
-            {data.categories.length} categories
+            {data.totalIdeas} researched blueprints across {data.totalCategories} categories
           </p>
           <div ref={listRef} className="mt-10 space-y-6">
             {data.categories.map((category) => (
@@ -129,17 +132,15 @@ function BrowsePage() {
                     {category.ideaCount} ideas
                   </span>
                 </div>
-                {/* Fluid tag cloud — width is driven by label length, never a rigid grid. */}
-                <div className="iv-tag-cloud mt-5">
-                  {category.subcategories.map((sub) => (
-                    <SubcategoryPill
-                      key={sub.slug}
-                      categorySlug={category.categorySlug}
-                      subcategorySlug={sub.slug}
-                      label={sub.name}
-                    />
-                  ))}
-                </div>
+                {/* This block used to render one pill per SUBCATEGORY, and
+                    since every idea carries its own unique subcategory that
+                    meant one pill per idea — 290 of them on this page today,
+                    each labelled with an idea's own title and linking to a
+                    one-card page duplicating it. At the 10,000-page target it
+                    would have been 10,000 pills in a single tag cloud.
+
+                    The category link and its count above are the navigation.
+                    The card stays a card at any catalogue size. */}
               </section>
             ))}
           </div>

@@ -1753,28 +1753,10 @@ html.light .idea-shell::before { opacity: 0.42; }
 
 /* The library size, sitting quietly in the corner and drifting with
    the scroll so the frame never feels locked. */
-.bbi-arc-count {
-  position: absolute;
-  z-index: 2;
-  right: clamp(1.5rem, 5vw, 4rem);
-  bottom: clamp(1.5rem, 6vh, 3.5rem);
-  margin: 0;
-  font-variant-numeric: tabular-nums;
-  font-size: clamp(2.5rem, 8vw, 6rem);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: color-mix(in oklab, var(--primary) 16%, transparent);
-  transform: translateY(calc((0.5 - var(--sc-p, 0)) * 2rem));
-  pointer-events: none;
-}
 
 @media (max-width: 640px) {
   .bbi-arc-stage {
     height: 88vh;
-  }
-  .bbi-arc-count {
-    display: none;
   }
 }
 
@@ -1787,7 +1769,262 @@ html.light .idea-shell::before { opacity: 0.42; }
     transform: none !important;
     filter: none !important;
   }
-  .bbi-arc-count {
+}
+
+/* ==================================================================
+   POINTER RESPONSE — what actually reads the channel
+
+   `PointerChannelProvider` has been publishing --ptr-x, --ptr-y, --ptr-v
+   and --scroll-v on :root every frame since the motion system landed, and
+   until this block NOTHING on the site read any of them. The plumbing was
+   there and no page drank from it, which is exactly why the site felt dead
+   to the cursor everywhere except the small sheen inside `.mo-card`.
+
+   Everything below is deliberately DIFFERENT per surface rather than one
+   effect repeated. A single shared response applied everywhere is the
+   "template animation" problem in another costume.
+
+   All of it uses `translate` and `rotate` as INDEPENDENT properties, not
+   `transform`. That matters: the twin rings and the orbit rotor are driven
+   by CSS keyframe animations that own `transform` at animation priority,
+   so a `transform` here would simply lose. `translate` composes with them
+   instead of fighting them.
+
+   Guarded to fine pointers, because on touch --ptr-* never leaves its
+   neutral 0.5 and these would all sit frozen at centre.
+   ================================================================== */
+
+@media (hover: hover) and (pointer: fine) {
+  /* -- Hero, section 12.1's mandatory two rings -------------------
+     The rings are the personal brand element and must stay exactly two.
+     They now drift AGAINST the cursor, at two different depths, so the
+     hero has parallax the moment the mouse moves — before any scrolling
+     happens at all. The larger ring moves less, which is what reads as
+     depth rather than as two things sliding.                        */
+  .bbi-twin-ring.ring-1 {
+    translate: calc((var(--ptr-x, 0.5) - 0.5) * -26px) calc((var(--ptr-y, 0.5) - 0.5) * -18px);
+    transition: translate 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .bbi-twin-ring.ring-2 {
+    translate: calc((var(--ptr-x, 0.5) - 0.5) * 42px) calc((var(--ptr-y, 0.5) - 0.5) * 30px);
+    transition: translate 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* -- Ambient background orbs ------------------------------------
+     A third depth, moving WITH the cursor rather than against it, so the
+     background and the rings separate instead of moving as one plane. */
+  .orb {
+    translate: calc((var(--ptr-x, 0.5) - 0.5) * 16px) calc((var(--ptr-y, 0.5) - 0.5) * 12px);
+    transition: translate 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* -- Orbit diagram ---------------------------------------------
+     Its own grammar: a slight tilt toward the cursor rather than a
+     slide. `rotate` is an independent property too, so the rotor's
+     keyframe spin is untouched.                                    */
+  .bbi-orbit-rotor {
+    rotate: calc((var(--ptr-x, 0.5) - 0.5) * 4deg);
+    transition: rotate 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* -- Scroll velocity, everywhere, touch included -------------------
+   --scroll-v runs on phones too (the pointer half does not), so this is
+   the one response that is genuinely sitewide.
+
+   The rings ease apart slightly while the page is moving fast and settle
+   when it stops. It is not a decoration you notice on its own; it is what
+   makes fast scrolling feel like it has weight instead of teleporting.  */
+.bbi-twin-ring.ring-1 {
+  scale: calc(1 + var(--scroll-v, 0) * 0.05);
+  transition: scale 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.bbi-twin-ring.ring-2 {
+  scale: calc(1 - var(--scroll-v, 0) * 0.04);
+  transition: scale 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bbi-twin-ring.ring-1,
+  .bbi-twin-ring.ring-2,
+  .orb,
+  .bbi-orbit-rotor {
+    translate: none;
+    rotate: none;
+    scale: none;
+    transition: none;
+  }
+}
+
+/* ==================================================================
+   FOOTER — brief 12.4, "wide and comprehensive... a full rebuild".
+
+   A dark full-bleed band that ENDS the page, instead of a pale panel of
+   link lists that trails off. The site runs light everywhere else, so the
+   inversion is what gives the page a bottom edge.
+
+   Every colour is an existing token. `--foreground` (#0C0C25) becomes the
+   ground and `--background` (#FCFBFE) becomes the type, which is the same
+   palette read the other way round, not a new one.
+
+   This is also the first surface on the site that answers the cursor:
+   `--el-ptr-x` is published per row by `useElementPointerGroup`, and the
+   row's accent bar tracks it.
+   ================================================================== */
+
+.bbi-footer {
+  background: linear-gradient(
+    165deg,
+    var(--foreground) 0%,
+    color-mix(in oklab, var(--foreground) 88%, var(--primary)) 55%,
+    color-mix(in oklab, var(--foreground) 78%, var(--primary)) 100%
+  );
+  color: color-mix(in oklab, var(--background) 82%, transparent);
+  box-shadow: 0 -1px 0 0 color-mix(in oklab, var(--violet-soft) 22%, transparent) inset;
+}
+
+.bbi-footer-eyebrow {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--violet-soft) 92%, transparent);
+}
+
+/* The statement is the point of the band. Display face, tight leading,
+   sized off the viewport so it holds its proportion on a phone. */
+.bbi-footer-statement {
+  margin-top: 1.25rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4.4vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--background);
+  text-wrap: balance;
+}
+
+.bbi-footer-cta {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.7rem 1.5rem;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--foreground);
+  background: var(--background);
+  transition:
+    transform var(--mo-dur-2, 240ms) var(--mo-ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    background-color var(--mo-dur-2, 240ms) ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .bbi-footer-cta:hover {
+    transform: translate3d(0, -2px, 0);
+    background: var(--violet-soft);
+  }
+}
+
+.bbi-footer-count {
+  font-size: 0.8125rem;
+  color: color-mix(in oklab, var(--background) 62%, transparent);
+}
+
+.bbi-footer-heading {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--violet-soft) 88%, transparent);
+}
+
+/* A category row. The ::before is a bar that grows from the left on hover and
+   sits where the cursor is vertically, so the response is positional rather
+   than a uniform highlight. Both animate on transform only. */
+.bbi-footer-row {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.45rem 0 0.45rem 0.9rem;
+  font-size: 0.875rem;
+  color: color-mix(in oklab, var(--background) 72%, transparent);
+  transition:
+    color var(--mo-dur-2, 240ms) ease,
+    transform var(--mo-dur-2, 240ms) var(--mo-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+.bbi-footer-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55rem;
+  bottom: 0.55rem;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--violet-soft);
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform var(--mo-dur-2, 240ms) var(--mo-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+@media (hover: hover) and (pointer: fine) {
+  .bbi-footer-row:hover {
+    color: var(--background);
+    transform: translate3d(3px, 0, 0);
+  }
+  .bbi-footer-row:hover::before {
+    transform: scaleY(1);
+  }
+}
+.bbi-footer-row:focus-visible {
+  color: var(--background);
+  outline: 2px solid var(--violet-soft);
+  outline-offset: 3px;
+  border-radius: 0.35rem;
+}
+
+.bbi-footer-more {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--violet-soft);
+  transition: color var(--mo-dur-2, 240ms) ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .bbi-footer-more:hover {
+    color: var(--background);
+  }
+}
+
+.bbi-footer-link {
+  font-size: 0.8125rem;
+  color: color-mix(in oklab, var(--background) 66%, transparent);
+  transition: color var(--mo-dur-2, 240ms) ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .bbi-footer-link:hover {
+    color: var(--background);
+  }
+}
+
+.bbi-footer-fine {
+  color: color-mix(in oklab, var(--background) 48%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bbi-footer-cta,
+  .bbi-footer-cta:hover,
+  .bbi-footer-row,
+  .bbi-footer-row:hover {
     transform: none;
+  }
+  .bbi-footer-row::before,
+  .bbi-footer-row:hover::before {
+    transform: scaleY(1);
+    transition: none;
   }
 }

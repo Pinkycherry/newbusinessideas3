@@ -24,49 +24,94 @@ export type CategoryNode = {
   categoryName: string;
   categorySlug: string;
   ideaCount: number;
-  subcategories: { name: string; slug: string; ideaCount: number }[];
 };
 
-export const getCatalog = createServerFn({ method: "GET" }).handler(async () => {
-  const { data, error } = await db()
-    .from("ideas")
-    .select("category_name,category_slug,subcategory_name,subcategory_slug")
-    .eq("status", "completed");
-  if (error) throw new Error(error.message);
+export type Catalog = {
+  categories: CategoryNode[];
+  totalIdeas: number;
+  totalCategories: number;
+};
 
-  const map = new Map<string, CategoryNode>();
-  for (const row of (data ?? []) as Pick<
-    IdeaRow,
-    "category_name" | "category_slug" | "subcategory_name" | "subcategory_slug"
-  >[]) {
-    let node = map.get(row.category_slug);
-    if (!node) {
-      node = {
-        categoryName: row.category_name,
-        categorySlug: row.category_slug,
-        ideaCount: 0,
-        subcategories: [],
-      };
-      map.set(row.category_slug, node);
-    }
-    node.ideaCount += 1;
-    const sub = node.subcategories.find((s) => s.slug === row.subcategory_slug);
-    if (sub) sub.ideaCount += 1;
-    else
-      node.subcategories.push({
-        name: row.subcategory_name,
-        slug: row.subcategory_slug,
-        ideaCount: 1,
-      });
-  }
-  const categories = [...map.values()].sort((a, b) => b.ideaCount - a.ideaCount);
-  for (const c of categories) c.subcategories.sort((a, b) => a.name.localeCompare(b.name));
+/**
+ * The catalogue, aggregated by Postgres.
+ *
+ * This used to select every completed row with no LIMIT and count them in
+ * JavaScript. Because it is prefetched by the ROOT route loader it ran on every
+ * page of the site, and because `getRouter()` builds a fresh QueryClient per
+ * request there was no server-side cache, so every request refetched the whole
+ * table.
+ *
+ * That was merely wasteful at 290 rows. What made it dangerous is that
+ * PostgREST caps responses at 1000 rows and does NOT error when it truncates:
+ * at 1,001 completed ideas the site would have quietly begun under-reporting
+ * its own size on every page, with nothing failing and no way to notice except
+ * by counting by hand. Against a stated target of 10,000+ pages that was a
+ * matter of time, not of risk.
+ *
+ * Now two aggregate RPCs return one row per category and one row of totals, so
+ * the response is bounded by the number of CATEGORIES rather than by the number
+ * of IDEAS.
+ *
+ * `subcategories` is deliberately no longer part of the catalogue.
+ * `subcategory_name` is byte-identical to `title` in this table — 290 ideas,
+ * 290 distinct subcategory slugs, at most one idea in any of them — so it is
+ * not a grouping level, and shipping every idea's subcategory to every page
+ * bought nothing. The one page that wants them fetches them scoped, through
+ * `getSubcategoriesForCategory` below.
+ *
+ * `totalSubcategories` is gone rather than recomputed, for the same reason: it
+ * was the idea count under a different label, presented as a separate figure.
+ */
+export const getCatalog = createServerFn({ method: "GET" }).handler(async (): Promise<Catalog> => {
+  const [summaryRes, totalsRes] = await Promise.all([
+    db().rpc("get_category_summary"),
+    db().rpc("get_catalog_totals"),
+  ]);
+  if (summaryRes.error) throw new Error(summaryRes.error.message);
+  if (totalsRes.error) throw new Error(totalsRes.error.message);
+
+  const categories: CategoryNode[] = (
+    (summaryRes.data ?? []) as {
+      category_name: string;
+      category_slug: string;
+      idea_count: number;
+    }[]
+  ).map((r) => ({
+    categoryName: r.category_name,
+    categorySlug: r.category_slug,
+    ideaCount: Number(r.idea_count) || 0,
+  }));
+
+  const totals = ((totalsRes.data ?? []) as { total_ideas: number; total_categories: number }[])[0];
+
   return {
     categories,
-    totalIdeas: categories.reduce((sum, c) => sum + c.ideaCount, 0),
-    totalSubcategories: categories.reduce((sum, c) => sum + c.subcategories.length, 0),
+    totalIdeas: Number(totals?.total_ideas) || 0,
+    totalCategories: Number(totals?.total_categories) || categories.length,
   };
 });
+
+export type SubcategoryNode = { name: string; slug: string; ideaCount: number };
+
+/**
+ * Subcategories for ONE category. Scoped on purpose — see the note above about
+ * why these are not part of the global catalogue.
+ */
+export const getSubcategoriesForCategory = createServerFn({ method: "GET" })
+  .inputValidator((input: unknown) => z.object({ categorySlug: z.string() }).parse(input))
+  .handler(async ({ data: input }): Promise<SubcategoryNode[]> => {
+    const { data, error } = await db().rpc("get_subcategories_for_category", {
+      cat_slug: input.categorySlug,
+    });
+    if (error) throw new Error(error.message);
+    return (
+      (data ?? []) as { subcategory_name: string; subcategory_slug: string; idea_count: number }[]
+    ).map((r) => ({
+      name: r.subcategory_name,
+      slug: r.subcategory_slug,
+      ideaCount: Number(r.idea_count) || 0,
+    }));
+  });
 
 /**
  * SINGLE SOURCE OF TRUTH for the catalog query. Prefetched once in the root
@@ -172,7 +217,11 @@ export const getIdeaBySlug = createServerFn({ method: "GET" })
       .map(toIdeaCard);
 
     const relatedCategories: RelatedCategory[] = (
-      (categoriesRes.data ?? []) as { category_name: string; category_slug: string; idea_count: number }[]
+      (categoriesRes.data ?? []) as {
+        category_name: string;
+        category_slug: string;
+        idea_count: number;
+      }[]
     ).map((c) => ({
       categoryName: c.category_name,
       categorySlug: c.category_slug,

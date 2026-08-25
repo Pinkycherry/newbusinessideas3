@@ -18,6 +18,12 @@ import { usePinProgress } from "@/lib/scroll-devices";
  * and read as UI dumped on a photograph. Category navigation lives in its own
  * plain section further down the page, not on top of the images.
  *
+ * Nothing is drawn on top of the artwork. An earlier version stamped the
+ * library's total idea count over the frames as a large numeral, purely
+ * because the number happened to be in scope. It said nothing the frames were
+ * saying, and it was the founder's generated artwork with a statistic pasted
+ * across it. The frames carry the section on their own.
+ *
  * All motion is driven from `--sc-p` (0 to 1) published by `usePinProgress`,
  * so every frame of it corresponds to a real scroll position rather than
  * firing once on entry.
@@ -48,7 +54,7 @@ const FRAMES: Frame[] = [
   },
 ];
 
-export function BrandArc({ totalIdeas }: { totalIdeas: number }) {
+export function BrandArc() {
   const stageRef = useRef<HTMLElement | null>(null);
   const [p, setP] = useState(0);
 
@@ -100,10 +106,6 @@ export function BrandArc({ totalIdeas }: { totalIdeas: number }) {
             <span key={f.src} className="bbi-arc-tick" data-state={i <= active ? "on" : "off"} />
           ))}
         </div>
-
-        <p className="bbi-arc-count" aria-hidden>
-          {totalIdeas}
-        </p>
       </div>
     </section>
   );
