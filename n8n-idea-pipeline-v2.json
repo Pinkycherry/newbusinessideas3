@@ -102,7 +102,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=You are a senior business writer and an honest founder-mentor. A researcher has ALREADY chosen this micro-niche, written its final title, slug, SEO fields and keywords, attached real reference links, and gathered VALIDATED FACTS with real numbers and sources. Your only job: write the NARRATIVE sections of the idea page — the story and the practical detail — using ONLY those validated facts. You never invent a number, never contradict the research, and never rewrite the title, slug, keywords, or links (those are final and not yours to touch).\n\n=== GROUND TRUTH (never contradict) ===\nCategory: {{ $json.category_name }} > {{ $json.subcategory_name }}\nFocus keyword: {{ $json.focus_keyword }} | also: {{ $json.additional_keyword_1 }}, {{ $json.additional_keyword_2 }}\nFinal idea title: {{ $json.title }}\nSeed brief (the real business model): {{ $json.business_description }}\nVALIDATED RESEARCH FACTS — your ONLY source for any number, cost, income, market size, percentage, or hard claim:\n{{ $json.research_facts }}\nReference links already attached to this page (you MAY reflect their facts in prose; do NOT output them, do NOT invent new ones):\n{{ $json.external_links }}\n\n=== ABSOLUTE RULES ===\n1. NUMBERS ONLY FROM research_facts. Every figure — startup cost, income, market size, percentage, timeline — must trace to the research facts above. If a number is not in the facts, describe it qualitatively or say it varies; NEVER fabricate one.\n2. STAY ON THIS BUSINESS. Consistent with the title, keywords, and seed brief. Do not drift to a similar-sounding different business.\n3. HUMAN, HONEST, SPECIFIC VOICE. Warm founder-mentor real-talk, dry humour where it fits. Honesty over hype — it is fine to say a business is hard or slow. Confidence from specificity, not superlatives.\n4. MICRO-NICHE DEPTH + USP. Explain the specific angle and what makes it different from the obvious saturated version. Never generic, never what a one-line AI answer would already say.\n5. GLOBAL / UNIVERSAL. Works anywhere. NO YEAR anywhere. NO real brand/company names (refer generically: \"a popular booking platform\", \"standard payment processing\"). NO emojis.\n6. NO TEMPLATE VOICE. Banned words: game changer, revolutionize, revolutionary, in today's fast-paced world, unlock, seamless, robust, cutting-edge, disrupt, disruptive, leverage (verb), synergy, holistic, ecosystem (unless ecological), empower, elevate, next-generation, paradigm, dive in, look no further. Vary every opening; no two ideas share a structure.\n7. Weave the focus + additional keywords in naturally, never stuffed (each once or twice at most).\n8. VARIATION — NO TWO IDEAS MAY READ ALIKE. The research_facts may include a \"voice_angle\" (the emotional stance for THIS idea) and an \"open_with\" hint (how to start). If present, follow them exactly. If absent, silently pick a DISTINCT combination for this idea — openings: {a blunt number, a customer's specific frustration, a small real scene, a myth to bust, a direct challenge to the reader, a contrarian claim}; structures: {problem then angle then proof, a day in the operator's life, who-wins vs who-loses, the-math-first, the-story-first}. Never fall back on the same opening or structure you would default to. Uniqueness comes from the specific facts and this idea's real details — lean on them, not on a house template.\n9. OUTPUT ONLY a raw JSON object with EXACTLY the fields below — nothing else. Do NOT output title, slug, seo_title, meta_description, tags, external_links, or internal_link_anchors (those are already final and owned by the researcher). No markdown fences, no commentary.\n\n=== REQUIRED JSON OUTPUT (narrative fields only; each specific to THIS idea) ===\n{\n  \"summary\": \"5-7 sentence real-talk overview: what this micro-niche actually is, its USP, who exactly it is for and what they're sick of, how it works day to day. Real personality, varied rhythm.\",\n  \"market_opportunity\": \"3-4 sentences: why this under-served niche has genuine demand now — grounded in the research facts, not hype.\",\n  \"target_customer\": \"3-4 sentences: the exact person who pays, what they do instead today, and the frustration that makes them hire you.\",\n  \"how_you_make_money\": \"3-4 sentences in this sector's real terms: pricing model, realistic numbers FROM THE FACTS, what one sale looks like, repeat/margin. No SaaS tiers unless it is software.\",\n  \"startup_cost\": \"2-3 sentences: realistic money and gear to start, numbers from the facts. If near-zero, say why.\",\n  \"income_potential\": \"2-3 sentences: realistic early vs traction income and the ceiling, numbers from the facts. No fantasy figures.\",\n  \"competition_edge\": \"3-4 sentences: the USP spelled out — what the obvious version gets wrong and the structural edge that wins here.\",\n  \"getting_started_steps\": [\"5-7 concrete ordered first steps, each a short actionable sentence specific to this idea\"],\n  \"tools_needed\": [\"4-6 concrete tools/gear/resources actually required, generic (no brand names)\"],\n  \"time_to_first_customer\": \"1-2 sentences: realistic honest timeline to the first paying customer.\",\n  \"faq_json\": [\n    {\"q\":\"A real beginner question about this micro-niche\",\"a\":\"Honest, specific 2-3 sentence answer using the facts\"},\n    {\"q\":\"A money/legal/risk question\",\"a\":\"Honest, specific answer\"},\n    {\"q\":\"A scaling/time question\",\"a\":\"Honest, specific answer\"}\n  ],\n  \"pros_json\": [\"Specific real advantage of this exact micro-niche\",\"A second, different-angle advantage\",\"A third tied to timing or a structural edge\"],\n  \"cons_json\": [\"A real sector-accurate obstacle\",\"A second from a different risk category (operational/financial/regulatory/trust)\",\"A third honest limit on scale or speed\"],\n  \"verdict\": \"Direct honest 2-3 sentence read: who this genuinely fits and who should skip it.\",\n  \"trend_score\": 78,\n  \"tier\": \"free\"\n}\n\nSCORING: trend_score = honest integer 55-98 based on the demand signal in the research facts (spread the range, don't cluster near 90). tier = \"premium\" only if trend_score >= 88, else \"free\".\n\nSilent check before output: is EVERY number traceable to research_facts, is this a specific micro-niche in a genuine human voice with no year/brand/emoji/template words, and did you output ONLY the narrative fields? If not, fix it before returning."
+        "text": "=You are a senior business writer and an honest founder-mentor. A researcher has ALREADY chosen this micro-niche, written its final title, slug, SEO fields and keywords, attached real reference links, and gathered VALIDATED FACTS with real numbers and sources. Your only job: write the NARRATIVE sections of the idea page \u2014 the story and the practical detail \u2014 using ONLY those validated facts. You never invent a number, never contradict the research, and never rewrite the title, slug, keywords, or links (those are final and not yours to touch).\n\n=== GROUND TRUTH (never contradict) ===\nCategory: {{ $json.category_name }} > {{ $json.subcategory_name }}\nFocus keyword: {{ $json.focus_keyword }} | also: {{ $json.additional_keyword_1 }}, {{ $json.additional_keyword_2 }}\nFinal idea title: {{ $json.title }}\nSeed brief (the real business model): {{ $json.business_description }}\nVALIDATED RESEARCH FACTS \u2014 your ONLY source for any number, cost, income, market size, percentage, or hard claim:\n{{ $json.research_facts }}\nReference links already attached to this page (you MAY reflect their facts in prose; do NOT output them, do NOT invent new ones):\n{{ $json.external_links }}\n\n=== ABSOLUTE RULES ===\n1. NUMBERS ONLY FROM research_facts. Every figure \u2014 startup cost, income, market size, percentage, timeline \u2014 must trace to the research facts above. If a number is not in the facts, describe it qualitatively or say it varies; NEVER fabricate one.\n2. STAY ON THIS BUSINESS. Consistent with the title, keywords, and seed brief. Do not drift to a similar-sounding different business.\n3. HUMAN, HONEST, SPECIFIC VOICE. Warm founder-mentor real-talk, dry humour where it fits. Honesty over hype \u2014 it is fine to say a business is hard or slow. Confidence from specificity, not superlatives.\n4. MICRO-NICHE DEPTH + USP. Explain the specific angle and what makes it different from the obvious saturated version. Never generic, never what a one-line AI answer would already say.\n5. GLOBAL / UNIVERSAL. Works anywhere. NO YEAR anywhere. NO real brand/company names (refer generically: \"a popular booking platform\", \"standard payment processing\"). NO emojis.\n6. NO TEMPLATE VOICE. Banned words: game changer, revolutionize, revolutionary, in today's fast-paced world, unlock, seamless, robust, cutting-edge, disrupt, disruptive, leverage (verb), synergy, holistic, ecosystem (unless ecological), empower, elevate, next-generation, paradigm, dive in, look no further. Vary every opening; no two ideas share a structure.\n7. Weave the focus + additional keywords in naturally, never stuffed (each once or twice at most).\n8. VARIATION \u2014 NO TWO IDEAS MAY READ ALIKE. The research_facts may include a \"voice_angle\" (the emotional stance for THIS idea) and an \"open_with\" hint (how to start). If present, follow them exactly. If absent, silently pick a DISTINCT combination for this idea \u2014 openings: {a blunt number, a customer's specific frustration, a small real scene, a myth to bust, a direct challenge to the reader, a contrarian claim}; structures: {problem then angle then proof, a day in the operator's life, who-wins vs who-loses, the-math-first, the-story-first}. Never fall back on the same opening or structure you would default to. Uniqueness comes from the specific facts and this idea's real details \u2014 lean on them, not on a house template.\n9. OUTPUT ONLY a raw JSON object with EXACTLY the fields below \u2014 nothing else. Do NOT output title, slug, seo_title, meta_description, tags, external_links, or internal_link_anchors (those are already final and owned by the researcher). No markdown fences, no commentary.\n\n=== REQUIRED JSON OUTPUT (narrative fields only; each specific to THIS idea) ===\n{\n  \"summary\": \"5-7 sentence real-talk overview: what this micro-niche actually is, its USP, who exactly it is for and what they're sick of, how it works day to day. Real personality, varied rhythm.\",\n  \"market_opportunity\": \"3-4 sentences: why this under-served niche has genuine demand now \u2014 grounded in the research facts, not hype.\",\n  \"target_customer\": \"3-4 sentences: the exact person who pays, what they do instead today, and the frustration that makes them hire you.\",\n  \"how_you_make_money\": \"3-4 sentences in this sector's real terms: pricing model, realistic numbers FROM THE FACTS, what one sale looks like, repeat/margin. No SaaS tiers unless it is software.\",\n  \"startup_cost\": \"2-3 sentences: realistic money and gear to start, numbers from the facts. If near-zero, say why.\",\n  \"income_potential\": \"2-3 sentences: realistic early vs traction income and the ceiling, numbers from the facts. No fantasy figures.\",\n  \"competition_edge\": \"3-4 sentences: the USP spelled out \u2014 what the obvious version gets wrong and the structural edge that wins here.\",\n  \"getting_started_steps\": [\"5-7 concrete ordered first steps, each a short actionable sentence specific to this idea\"],\n  \"tools_needed\": [\"4-6 concrete tools/gear/resources actually required, generic (no brand names)\"],\n  \"time_to_first_customer\": \"1-2 sentences: realistic honest timeline to the first paying customer.\",\n  \"faq_json\": [\n    {\"q\":\"A real beginner question about this micro-niche\",\"a\":\"Honest, specific 2-3 sentence answer using the facts\"},\n    {\"q\":\"A money/legal/risk question\",\"a\":\"Honest, specific answer\"},\n    {\"q\":\"A scaling/time question\",\"a\":\"Honest, specific answer\"}\n  ],\n  \"pros_json\": [\"Specific real advantage of this exact micro-niche\",\"A second, different-angle advantage\",\"A third tied to timing or a structural edge\"],\n  \"cons_json\": [\"A real sector-accurate obstacle\",\"A second from a different risk category (operational/financial/regulatory/trust)\",\"A third honest limit on scale or speed\"],\n  \"verdict\": \"Direct honest 2-3 sentence read: who this genuinely fits and who should skip it.\",\n  \"trend_score\": 78,\n  \"tier\": \"free\"\n}\n\nSCORING: trend_score = honest integer 55-98 based on the demand signal in the research facts (spread the range, don't cluster near 90). tier = \"premium\" only if trend_score >= 88, else \"free\".\n\nSilent check before output: is EVERY number traceable to research_facts, is this a specific micro-niche in a genuine human voice with no year/brand/emoji/template words, and did you output ONLY the narrative fields? If not, fix it before returning."
       },
       "id": "llm-0001",
       "name": "Basic LLM Chain",
@@ -575,6 +575,188 @@
         }
       },
       "notes": "Inserts full row: Claude's SEO/seed/research columns (passed through) + Gemini's narrative fields."
+    },
+    {
+      "parameters": {},
+      "id": "faq-trigger",
+      "name": "FAQ Pool - Run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "ideas",
+        "returnAll": true,
+        "filterType": "manual",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "status",
+              "condition": "eq",
+              "keyValue": "completed"
+            }
+          ]
+        }
+      },
+      "id": "faq-read-cats",
+      "name": "Read Completed Ideas",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        760
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "REPLACE_WITH_SUPABASE_CRED_ID",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Turn the raw ideas rows into one item per category.\n//\n// Deliberately derived from the live table rather than from a hardcoded list\n// of 14 slugs: categories will be added, and a pipeline that has to be edited\n// every time one appears is a pipeline that silently goes stale.\nconst rows = $input.all().map((i) => i.json);\nif (rows.length === 0) {\n  throw new Error('No completed ideas came back from Supabase. Check the filter and the credential.');\n}\n\nconst byCat = new Map();\nfor (const r of rows) {\n  if (!r.category_slug) continue;\n  let c = byCat.get(r.category_slug);\n  if (!c) {\n    c = { category_slug: r.category_slug, category_name: r.category_name, idea_count: 0, titles: [] };\n    byCat.set(r.category_slug, c);\n  }\n  c.idea_count += 1;\n  if (c.titles.length < 12 && r.title) c.titles.push(r.title);\n}\n\n// Optional narrowing: set ONLY_CATEGORY in the n8n environment to run a\n// single category first and read the output before spending keys on all 14.\nconst only = $env.ONLY_CATEGORY;\n\nreturn [...byCat.values()]\n  .filter((c) => !only || c.category_slug === only)\n  .map((c) => ({\n    json: {\n      category_slug: c.category_slug,\n      category_name: c.category_name,\n      idea_count: c.idea_count,\n      sample_titles: c.titles.map((t) => `- ${t}`).join('\\n'),\n    },\n  }));\n"
+      },
+      "id": "faq-distinct",
+      "name": "Distinct Categories",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        128,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "id": "faq-loop",
+      "name": "Loop Categories",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        352,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Gemini API key rotation.\n//\n// N8N_PIPELINE_PLAN.md lists this as a hard constraint and it was never\n// built: a single exhausted key stalled an entire batch. Keys live in the\n// n8n environment as GEMINI_API_KEY_1 ... GEMINI_API_KEY_7 so none of them\n// is ever written into this file or into the repository.\n//\n// The index advances on every call and is carried in workflow static data,\n// so it survives between runs. A 429 or 5xx on the HTTP node retries, and\n// because this node re-runs it, the retry lands on the NEXT key rather than\n// hammering the exhausted one.\nconst keys = [];\nfor (let i = 1; i <= 7; i++) {\n  const k = $env[`GEMINI_API_KEY_${i}`];\n  if (k) keys.push(k);\n}\nif (keys.length === 0) {\n  throw new Error(\n    'No Gemini keys found. Set GEMINI_API_KEY_1..7 in the n8n environment. ' +\n    'Never paste a key into a node parameter -- it would end up in the exported JSON.'\n  );\n}\n\nconst store = $getWorkflowStaticData('global');\nstore.geminiKeyIndex = (store.geminiKeyIndex ?? 0) % keys.length;\n\nconst out = [];\nfor (const item of $input.all()) {\n  const key = keys[store.geminiKeyIndex];\n  store.geminiKeyIndex = (store.geminiKeyIndex + 1) % keys.length;\n  out.push({\n    json: {\n      ...item.json,\n      geminiKey: key,\n      geminiKeyNumber: keys.indexOf(key) + 1,\n      geminiKeyCount: keys.length,\n    },\n  });\n}\nreturn out;\n"
+      },
+      "id": "faq-rotate",
+      "name": "Rotate Gemini Key",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        576,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={{ $json.geminiKey }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ contents: [{ parts: [{ text: $json.faqPrompt }] }], generationConfig: { temperature: 1, responseMimeType: 'application/json' } }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "faq-gemini",
+      "name": "Gemini - Generate FAQs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1024,
+        760
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 30000
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "faq-prompt-a",
+              "name": "faqPrompt",
+              "value": "=You are a business writer for BBI, a researched business-idea library for an India-first audience. You are writing the FAQ pool for ONE category. These questions appear on the category's FAQ hub page and are also drawn at random onto individual idea pages, so each one must stand on its own without knowing which idea it sits beside.\n\n=== THE CATEGORY ===\nCategory name: {{ $json.category_name }}\nCategory slug: {{ $json.category_slug }}\nBlueprints currently in it: {{ $json.idea_count }}\nA sample of real idea titles from inside it, so you know what this category actually contains:\n{{ $json.sample_titles }}\n\n=== WRITE 12 QUESTIONS AND ANSWERS ===\n\nQuestions must be ones a real person would type into a search box before starting a business in this category. Not questions a brochure would ask. Think: what does someone actually worry about at 11pm before they commit money or weekends to this?\n\nCover a spread across these concerns, roughly one or two each:\n- money to start, and where it actually goes\n- how long before the first rupee arrives\n- what skills are genuinely required versus what people assume\n- legal, tax and registration reality in India\n- finding the first customer\n- the honest downside, and who should not do this\n- how this differs from the saturated obvious version\n- time commitment alongside a job\n\n=== ABSOLUTE RULES ===\n\n1. NEVER INVENT A NUMBER. No market sizes, no average earnings, no growth percentages, no \"most founders make X\", no survey results, no headcounts. If a question cannot be answered without a figure nobody has measured, write a different question. You may describe ranges qualitatively (\"it varies a lot with your city\" is fine; \"typically Rs 40,000 a month\" is not, unless it is arithmetic the reader can check themselves).\n2. NEVER NAME AN AI TOOL OR VENDOR. Do not mention Claude, Perplexity, ChatGPT, Grok, Gemini, or any AI product. Do not describe how validation works on this site, do not mention accounts, prompts, or handoffs. This rule has no exceptions.\n3. NEVER NAME A REAL COMPANY OR BRAND. Say \"a large marketplace\", \"a standard payment gateway\", \"a popular short-video platform\".\n4. ZERO EMOJIS. In questions and in answers.\n5. NO YEAR ANYWHERE. Not in a question, not in an answer. These pages must not date.\n6. INDIA FIRST. Rupees, Indian registration and GST reality, Indian platforms and Indian market conditions. Not a US framing translated.\n7. VOICE: plain, direct, sixth-to-seventh-grade English. A straight-talking older brother, not a brochure. Short sentences. It is fine, and better, to say something is hard, slow, or a bad fit for most people.\n8. BANNED WORDS: game changer, revolutionize, revolutionary, in today's fast-paced world, unlock, seamless, robust, cutting-edge, disrupt, leverage as a verb, synergy, holistic, empower, elevate, next-generation, paradigm, dive in, look no further, journey, landscape.\n9. Every answer is 40 to 90 words. Long enough to be useful, short enough to read. No answer may begin the same way as another.\n10. No two questions may be rephrasings of each other.\n\n=== OUTPUT ===\n\nReturn ONLY a raw JSON array. No markdown fences, no commentary, no preamble.\n\n[\n  {\"question\": \"...\", \"answer\": \"...\"},\n  ... exactly 12 objects ...\n]\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "faq-prompt",
+      "name": "Build FAQ Prompt",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        800,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Gemini's JSON array into one n8n item per FAQ, so the Supabase node\n// inserts twelve rows rather than one row holding an array.\n//\n// Every check below rejects the whole batch for that category rather than\n// writing partial or malformed content. A bad row in this table shows up on\n// a public page, and the site has already had to strip invented content four\n// separate times.\nconst BANNED_VENDORS = /\\b(claude|perplexity|chatgpt|openai|grok|gemini|copilot)\\b/i;\nconst YEAR = /\\b(19|20)\\d{2}\\b/;\nconst EMOJI = /[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{FE0F}]/u;\n\nconst out = [];\n\nfor (const item of $input.all()) {\n  const cat = $('Distinct Categories').item.json;\n\n  let raw = item.json.candidates?.[0]?.content?.parts?.[0]?.text;\n  if (typeof raw !== 'string') {\n    throw new Error(`No text back from Gemini for ${cat.category_slug}. Full response: ${JSON.stringify(item.json).slice(0, 500)}`);\n  }\n\n  // Strip fences if the model added them despite being told not to.\n  raw = raw.trim().replace(/^```(?:json)?/i, '').replace(/```$/, '').trim();\n\n  let parsed;\n  try {\n    parsed = JSON.parse(raw);\n  } catch (e) {\n    throw new Error(`Gemini returned non-JSON for ${cat.category_slug}: ${raw.slice(0, 300)}`);\n  }\n\n  if (!Array.isArray(parsed)) throw new Error(`Expected an array for ${cat.category_slug}, got ${typeof parsed}`);\n  if (parsed.length < 8) throw new Error(`Only ${parsed.length} FAQs for ${cat.category_slug}; expected 12. Not writing a thin pool.`);\n\n  const seen = new Set();\n\n  for (const row of parsed) {\n    const q = String(row.question ?? '').trim();\n    const a = String(row.answer ?? '').trim();\n\n    if (!q || !a) throw new Error(`Empty question or answer in ${cat.category_slug}`);\n    if (BANNED_VENDORS.test(q) || BANNED_VENDORS.test(a)) {\n      throw new Error(`Named an AI vendor in ${cat.category_slug}: ${q.slice(0, 80)}`);\n    }\n    if (YEAR.test(q) || YEAR.test(a)) {\n      throw new Error(`Contains a year in ${cat.category_slug}: ${q.slice(0, 80)}`);\n    }\n    if (EMOJI.test(q) || EMOJI.test(a)) {\n      throw new Error(`Contains an emoji in ${cat.category_slug}: ${q.slice(0, 80)}`);\n    }\n    const wordCount = a.split(/\\s+/).length;\n    if (wordCount < 25 || wordCount > 130) {\n      throw new Error(`Answer is ${wordCount} words in ${cat.category_slug}; wanted 40-90. Q: ${q.slice(0, 60)}`);\n    }\n    const key = q.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();\n    if (seen.has(key)) throw new Error(`Duplicate question inside ${cat.category_slug}: ${q.slice(0, 80)}`);\n    seen.add(key);\n\n    out.push({ json: { category_slug: cat.category_slug, question: q, answer: a, is_active: true } });\n  }\n}\n\nreturn out;\n"
+      },
+      "id": "faq-parse",
+      "name": "Parse and Guard FAQs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1248,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "category_faqs",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "category_slug",
+              "fieldValue": "={{ $json.category_slug }}"
+            },
+            {
+              "fieldId": "question",
+              "fieldValue": "={{ $json.question }}"
+            },
+            {
+              "fieldId": "answer",
+              "fieldValue": "={{ $json.answer }}"
+            },
+            {
+              "fieldId": "is_active",
+              "fieldValue": "={{ $json.is_active }}"
+            }
+          ]
+        }
+      },
+      "id": "faq-write",
+      "name": "Write FAQ Pool",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1472,
+        760
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "REPLACE_WITH_SUPABASE_CRED_ID",
+          "name": "Supabase account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -680,6 +862,105 @@
         [
           {
             "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FAQ Pool - Run": {
+      "main": [
+        [
+          {
+            "node": "Read Completed Ideas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Completed Ideas": {
+      "main": [
+        [
+          {
+            "node": "Distinct Categories",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Distinct Categories": {
+      "main": [
+        [
+          {
+            "node": "Loop Categories",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Categories": {
+      "main": [
+        [
+          {
+            "node": "Rotate Gemini Key",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rotate Gemini Key": {
+      "main": [
+        [
+          {
+            "node": "Build FAQ Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build FAQ Prompt": {
+      "main": [
+        [
+          {
+            "node": "Gemini - Generate FAQs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini - Generate FAQs": {
+      "main": [
+        [
+          {
+            "node": "Parse and Guard FAQs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse and Guard FAQs": {
+      "main": [
+        [
+          {
+            "node": "Write FAQ Pool",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write FAQ Pool": {
+      "main": [
+        [
+          {
+            "node": "Loop Categories",
             "type": "main",
             "index": 0
           }
