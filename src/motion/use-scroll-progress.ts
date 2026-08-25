@@ -35,6 +35,21 @@ export type ScrollProgressOptions = {
   onProgress?: (p: number) => void;
 };
 
+/**
+ * One refresh for however many triggers were created in the same tick.
+ *
+ * Module-scoped so every hook on the page shares the same timer: mounting a
+ * route with eight scroll-driven sections schedules one refresh, not eight.
+ */
+let refreshTimer: ReturnType<typeof setTimeout> | undefined;
+function scheduleRefresh(ScrollTrigger: { refresh: () => void }) {
+  if (refreshTimer) clearTimeout(refreshTimer);
+  refreshTimer = setTimeout(() => {
+    refreshTimer = undefined;
+    ScrollTrigger.refresh();
+  }, 120);
+}
+
 export function useScrollProgress<T extends HTMLElement = HTMLElement>(
   options: ScrollProgressOptions = {},
 ): RefObject<T | null> {
@@ -59,6 +74,23 @@ export function useScrollProgress<T extends HTMLElement = HTMLElement>(
     loadGsap().then(({ ScrollTrigger }) => {
       if (cancelled || !ref.current) return;
       const pinned = mode === "pinned";
+
+      // Every trigger on the page has to be re-measured once they all exist.
+      //
+      // These hooks create their triggers asynchronously, after `loadGsap()`
+      // resolves, so the creation order across a page is not deterministic. A
+      // PINNED trigger inserts pin spacing into the document — the chapter on
+      // the homepage adds roughly 2,700px — and any trigger created before
+      // that spacing existed has cached start/end positions that are now off
+      // by exactly that much.
+      //
+      // Measured symptom before this: the sticky-aside section's progress
+      // read 1.0 the moment the element appeared on screen, because its
+      // trigger still believed the page was 2,700px shorter. A single
+      // debounced refresh after the last trigger is created fixes all of them
+      // at once, and debouncing means N hooks cause one refresh, not N.
+      scheduleRefresh(ScrollTrigger);
+
       trigger = ScrollTrigger.create({
         trigger: el,
         start: pinned ? "top top" : "top bottom",

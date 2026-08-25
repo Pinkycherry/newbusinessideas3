@@ -2185,3 +2185,73 @@ html.light .idea-shell::before { opacity: 0.42; }
     display: none;
   }
 }
+
+/* ==================================================================
+   STICKY-ASIDE EDITORIAL — the "Why this exists" section.
+
+   A third grammar, deliberately unlike the other two on this page: not the
+   stagger reveal, and not the pinned chapter above. The sidebar holds its
+   position while the long-form prose beside it scrolls past.
+
+   WHAT IS DELIBERATELY NOT HERE, and why it was removed rather than left
+   half-working: the four aside rows were meant to illuminate in turn as the
+   reader moved down. Three implementations were tried and measured, and all
+   three failed for the same reason.
+
+     1. ScrollTrigger on the containing section — progress reached 1.0 while
+        the section was still 3,582px below the fold, so the sequence was
+        over before any of it was visible.
+     2. ScrollTrigger moved onto the aside itself — progress read 1.0 the
+        instant the aside appeared. A debounced ScrollTrigger.refresh() did
+        not help.
+     3. Native `animation-timeline: view()` on the rows — supported in this
+        browser, confirmed, and still every row sat at full opacity from the
+        moment the aside entered.
+
+   The cause is the same each time and it is not fixable from this end: the
+   aside is `position: sticky`. Once it sticks, it and everything inside it
+   stop moving relative to the scrollport. A stuck element has no meaningful
+   scroll progress, so any timeline derived from its position completes
+   immediately and stays complete.
+
+   The sticky behaviour IS the distinct grammar here, and it works. The
+   illumination was fighting it from the start, so it is gone rather than
+   shipped as a effect that silently does nothing.
+   ================================================================== */
+
+@media (min-width: 1024px) {
+  .bbi-editorial-aside {
+    position: sticky;
+    /* Clears the sticky header plus the progress rail above it. */
+    top: 6.5rem;
+  }
+}
+
+/* A hairline down the left of each row, so the list reads as a sequence
+   rather than as four loose paragraphs. Static — see the note above. */
+.bbi-editorial-row {
+  position: relative;
+  padding-left: 0.9rem;
+}
+.bbi-editorial-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  bottom: 1rem;
+  width: 2px;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--accent) 55%, transparent);
+}
+.bbi-editorial-row:first-child::before {
+  top: 0;
+}
+.bbi-editorial-row:last-child::before {
+  bottom: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bbi-editorial-aside {
+    position: static;
+  }
+}

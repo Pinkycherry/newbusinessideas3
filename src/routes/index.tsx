@@ -285,7 +285,6 @@ function HomePage() {
   // Card rows that previously arrived as one block now arrive in sequence.
   const heroPanelsRef = useStaggerReveal<HTMLDivElement>();
   const featuredRef = useStaggerReveal<HTMLDivElement>({ stagger: 0.05 });
-  const entryRowsRef = useStaggerReveal<HTMLDListElement>({ stagger: 0.05, distance: 12 });
   const editorialRef = useStaggerReveal<HTMLDivElement>({ stagger: 0.08 });
   const scrollPanelsRef = useStaggerReveal<HTMLElement>({ stagger: 0.08 });
   // Publishes --sc-p across the editorial section so its ambient wash layers
@@ -488,8 +487,13 @@ function HomePage() {
         <AdSlot position="homepage-featured-below" size="banner" />
       </div>
 
-      {/* WHY THIS EXISTS */}
-      <section className="mx-auto max-w-6xl px-3 pb-10 sm:px-4">
+      {/* WHY THIS EXISTS — sticky-aside editorial grammar.
+          A third device, not the stagger and not the pin: the sidebar holds
+          position while the prose scrolls past it, and its four rows
+          illuminate in turn as the reader moves down. Driven entirely from
+          --sc-p in CSS, so there is no extra React state and every frame maps
+          to a real scroll position. */}
+      <section className="bbi-editorial mx-auto max-w-6xl px-3 pb-10 sm:px-4">
         <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
@@ -526,11 +530,11 @@ function HomePage() {
             </Link>
           </div>
 
-          <aside className="glass blob-3 p-8 lg:mt-16 lg:self-start sm:p-10">
+          <aside className="bbi-editorial-aside glass blob-3 p-8 sm:p-10 lg:mt-16 lg:self-start">
             <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
               What every entry has to contain
             </h3>
-            <dl ref={entryRowsRef} className="mt-6 divide-y divide-border">
+            <dl className="mt-6 divide-y divide-border">
               {[
                 {
                   t: "A named buyer",
@@ -549,7 +553,7 @@ function HomePage() {
                   d: "Who should build this — and who should walk away.",
                 },
               ].map((row) => (
-                <div key={row.t} className="py-4 first:pt-0 last:pb-0">
+                <div key={row.t} className="bbi-editorial-row py-4 first:pt-0 last:pb-0">
                   <dt className="text-sm font-semibold text-foreground">{row.t}</dt>
                   <dd className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{row.d}</dd>
                 </div>
@@ -981,10 +985,13 @@ function FourPillarStandardSection() {
 
   const tilesRef = useStaggerReveal<HTMLDivElement>();
   const [p, setP] = useState(0);
-  // One viewport-height per pillar, plus one to land on.
+  // Roughly three-quarters of a viewport per pillar. A full viewport each
+  // measured at ~1,200px of scroll per card, which reads as sluggish — the
+  // reader is waiting for the section rather than moving through it. This
+  // still gives each card its own beat without holding the page hostage.
   const stageRef = useScrollProgress<HTMLElement>({
     mode: "pinned",
-    spanVh: pillars.length + 1,
+    spanVh: pillars.length * 0.75,
     onProgress: setP,
   });
   const active = Math.min(pillars.length - 1, Math.floor(p * pillars.length));
