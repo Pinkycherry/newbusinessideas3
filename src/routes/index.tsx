@@ -936,8 +936,26 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
    SECTION 3: THE BBI 4-PILLAR BLUEPRINT STANDARD
    ================================================================ */
 
+/**
+ * The Research Standard — a PINNED CHAPTER, not another stagger.
+ *
+ * Eight of this page's motion hooks were `useStaggerReveal`. Applying the same
+ * device to every section is the "template animation" problem: consistent, and
+ * completely forgettable. This section earns a grammar of its own because its
+ * content is genuinely sequential — four checks, in order, each one a separate
+ * claim. So the section holds the viewport and the scroll wheel advances
+ * through the four rather than fading all of them in at once.
+ *
+ * Everything is driven from `--sc-p`, published by the pin, so each frame
+ * corresponds to a real scroll position and the reader can scrub back and
+ * forth through it. All four pillars stay in the DOM the whole time — they are
+ * styled by state, never mounted and unmounted, so nothing is hidden from a
+ * crawler or a screen reader.
+ *
+ * Mobile keeps the plain stacked grid. A pin that eats four viewport-heights
+ * on a phone is a hostage situation, not a design.
+ */
 function FourPillarStandardSection() {
-  const tilesRef = useStaggerReveal<HTMLDivElement>();
   const pillars = [
     {
       num: "01",
@@ -961,59 +979,95 @@ function FourPillarStandardSection() {
     },
   ];
 
-  return (
-    <section className="mx-auto mt-16 sm:mt-24 max-w-6xl px-3 sm:px-4">
-      <div className="text-center max-w-2xl mx-auto">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          The Research Standard
-        </p>
-        <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-4xl">
-          Not just a list. Real research you can trust.
-        </h2>
-        <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-          Before you spend a rupee or a weekend, check these 4 things on every idea.
-        </p>
-      </div>
+  const tilesRef = useStaggerReveal<HTMLDivElement>();
+  const [p, setP] = useState(0);
+  // One viewport-height per pillar, plus one to land on.
+  const stageRef = useScrollProgress<HTMLElement>({
+    mode: "pinned",
+    spanVh: pillars.length + 1,
+    onProgress: setP,
+  });
+  const active = Math.min(pillars.length - 1, Math.floor(p * pillars.length));
 
-      {/* Mobile: plain stacked grid — a fanned arc needs room neighbors don't
-          have on narrow viewports, so it only renders at sm: and up. */}
-      <div ref={tilesRef} className="mt-10 grid gap-4 grid-cols-1 sm:hidden">
-        {pillars.map((p) => (
-          <div
-            key={p.num}
-            className="mo-card glass glass-hover flex flex-col p-6 rounded-2xl border border-white/10"
-          >
-            <span className="text-xs font-extrabold text-accent tracking-widest">{p.num}</span>
-            <h3 className="mt-2 text-base font-bold text-foreground">{p.title}</h3>
-            <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
-          </div>
-        ))}
-      </div>
-      <div className="mt-10 hidden sm:block">
-        <CardFan
-          overlap="-1.75rem"
-          cardClassName="glass glass-hover flex w-56 flex-col p-6 rounded-2xl border border-white/10 bg-background"
-        >
-          {pillars.map((p) => (
-            <div key={p.num}>
-              <span className="text-xs font-extrabold text-accent tracking-widest">{p.num}</span>
-              <h3 className="mt-2 text-base font-bold text-foreground">{p.title}</h3>
-              <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
+  const header = (
+    <div className="mx-auto max-w-2xl text-center">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+        The Research Standard
+      </p>
+      <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-4xl">
+        Not just a list. Real research you can trust.
+      </h2>
+      <p className="mt-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+        Before you spend a rupee or a weekend, check these 4 things on every idea.
+      </p>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Mobile — stacked, no pin. */}
+      <section className="mx-auto mt-16 max-w-6xl px-3 sm:hidden">
+        {header}
+        <div ref={tilesRef} className="mt-10 grid grid-cols-1 gap-4">
+          {pillars.map((pillar) => (
+            <div
+              key={pillar.num}
+              className="mo-card glass glass-hover flex flex-col rounded-2xl border border-white/10 p-6"
+            >
+              <span className="text-xs font-extrabold tracking-widest text-accent">
+                {pillar.num}
+              </span>
+              <h3 className="mt-2 text-base font-bold text-foreground">{pillar.title}</h3>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{pillar.desc}</p>
             </div>
           ))}
-        </CardFan>
-      </div>
+        </div>
+        <div className="mt-8 text-center">
+          <Link
+            to="/browse"
+            className="glass-pill inline-flex items-center gap-2 rounded-full px-6 py-3 text-xs font-extrabold uppercase tracking-[0.18em]"
+          >
+            <span>Explore All Categories</span>
+          </Link>
+        </div>
+      </section>
 
-      <div className="mt-8 text-center">
-        <Link
-          to="/browse"
-          className="glass-pill inline-flex items-center gap-2 rounded-full px-6 py-3 text-xs font-extrabold uppercase tracking-[0.18em]"
-        >
-          <span>Explore All Categories</span>
-          <span>→</span>
-        </Link>
-      </div>
-    </section>
+      {/* Desktop — the pinned chapter. */}
+      <section
+        ref={stageRef}
+        className="bbi-chapter hidden sm:flex"
+        aria-label="The four checks on every BBI idea"
+      >
+        <div className="mx-auto w-full max-w-6xl px-4">
+          {header}
+
+          <div className="bbi-chapter-stage mt-14">
+            {pillars.map((pillar, i) => (
+              <article
+                key={pillar.num}
+                className="bbi-chapter-card"
+                data-state={i === active ? "on" : i < active ? "past" : "next"}
+              >
+                <span className="bbi-chapter-num">{pillar.num}</span>
+                <h3 className="bbi-chapter-title">{pillar.title}</h3>
+                <p className="bbi-chapter-desc">{pillar.desc}</p>
+              </article>
+            ))}
+          </div>
+
+          {/* Progress through the four, drawn straight from scroll position. */}
+          <div className="bbi-chapter-rail" aria-hidden>
+            {pillars.map((pillar, i) => (
+              <span
+                key={pillar.num}
+                className="bbi-chapter-tick"
+                data-state={i <= active ? "on" : "off"}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
 

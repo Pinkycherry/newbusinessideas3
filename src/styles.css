@@ -2028,3 +2028,160 @@ html.light .idea-shell::before { opacity: 0.42; }
     transition: none;
   }
 }
+
+/* ==================================================================
+   PINNED CHAPTER — the Research Standard section.
+
+   Its own grammar, deliberately not the site's stagger reveal. Eight of
+   the homepage's motion hooks were the same `useStaggerReveal`; repeating
+   one device across every section is consistent and forgettable, which is
+   the "template animation" problem. This content is genuinely sequential —
+   four checks, in order — so the section holds the viewport and the wheel
+   advances through them.
+
+   All four cards are always in the DOM. They are styled by `data-state`,
+   never mounted and unmounted, so a crawler and a screen reader see the
+   full set regardless of scroll position.
+
+   Every property animated here is transform or opacity.
+   ================================================================== */
+
+.bbi-chapter {
+  min-height: 100svh;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  /* A pinned element is lifted out of flow and sits OVER whatever follows it.
+     Without its own ground the next section reads straight through the cards,
+     which is what the first screenshot of this caught. The gradient is the two
+     existing surface tokens, so it still reads as the same page. */
+  background: linear-gradient(
+    180deg,
+    var(--background) 0%,
+    var(--background-2) 50%,
+    var(--background) 100%
+  );
+}
+
+.bbi-chapter-stage {
+  position: relative;
+  display: grid;
+  min-height: 15rem;
+  place-items: center;
+}
+
+/* Cards stack in one grid cell and are separated by depth, not by position. */
+.bbi-chapter-card {
+  grid-area: 1 / 1;
+  width: min(34rem, 100%);
+  padding: 2.5rem 2.75rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--card);
+  backdrop-filter: blur(18px) saturate(140%);
+  text-align: center;
+  will-change: transform, opacity;
+  transition:
+    opacity 620ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 620ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 620ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* The one being read. */
+.bbi-chapter-card[data-state="on"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+  z-index: 3;
+}
+
+/* Already read — settles back and down, so the stack reads as a deck the
+   reader is moving through rather than as cards appearing from nowhere. */
+.bbi-chapter-card[data-state="past"] {
+  opacity: 0;
+  transform: translate3d(0, -2.5rem, 0) scale(0.94);
+  filter: blur(4px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Not yet reached — waiting below, slightly small. */
+.bbi-chapter-card[data-state="next"] {
+  opacity: 0;
+  transform: translate3d(0, 2.5rem, 0) scale(0.94);
+  filter: blur(4px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.bbi-chapter-num {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  color: var(--accent);
+}
+
+.bbi-chapter-title {
+  margin-top: 0.75rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.bbi-chapter-desc {
+  margin-top: 0.9rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--muted-foreground);
+}
+
+.bbi-chapter-rail {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2.75rem;
+}
+
+.bbi-chapter-tick {
+  height: 2px;
+  width: 2.5rem;
+  border-radius: 2px;
+  background: var(--border);
+  transform-origin: left center;
+  transition: background-color 420ms ease;
+}
+.bbi-chapter-tick[data-state="on"] {
+  background: var(--accent);
+}
+
+/* Reduced motion: the pin does not run (useScrollProgress bails), so no card
+   would ever leave its "next" state. Show them all, stacked and readable. */
+@media (prefers-reduced-motion: reduce) {
+  .bbi-chapter {
+    min-height: 0;
+  }
+  .bbi-chapter-stage {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    place-items: stretch;
+  }
+  .bbi-chapter-card,
+  .bbi-chapter-card[data-state="past"],
+  .bbi-chapter-card[data-state="next"],
+  .bbi-chapter-card[data-state="on"] {
+    grid-area: auto;
+    width: auto;
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+    pointer-events: auto;
+  }
+  .bbi-chapter-rail {
+    display: none;
+  }
+}
