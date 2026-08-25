@@ -787,107 +787,106 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
       <FloatingDock />
       <BuiltWithSection />
+      {/* Brief 12.4 — "wide and comprehensive... a full rebuild, not a tweak".
+          Three bands rather than side-by-side columns. The previous version
+          put the brand, the CTA and the stats in one narrow left column and
+          the links in a taller right column, so the left ran out of content
+          two thirds of the way down and left a visibly empty bottom-left
+          quadrant. Bands fill their own width, so nothing can run short
+          against something taller. */}
       <footer className="px-3 pb-8 pt-20 sm:px-4">
-        <div className="glass mx-auto max-w-7xl rounded-3xl px-6 py-12 sm:px-10">
-          <div className="grid gap-12 lg:grid-cols-[1.15fr_2.6fr]">
+        <div className="glass mx-auto max-w-7xl overflow-hidden rounded-3xl">
+          {/* Band 1 — who this is, and what it actually holds. */}
+          <div className="grid gap-8 px-6 py-10 sm:px-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
             <div>
               <Link to="/" className="flex items-baseline gap-2">
                 <span className="rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-0.5 text-base font-black uppercase tracking-[0.18em] text-primary-foreground">
                   BBI
                 </span>
               </Link>
-              <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground">
                 Researched business idea blueprints with real market context, trend scoring and a
                 blunt founder-fit verdict. Validate any idea free, using AI tools you already pay
                 for.
               </p>
               <FooterCta />
-
-              {/* Real figures, straight from the catalog the page already
-                  loaded. The line this replaced claimed every idea was
-                  "updated in real time, never stale" — nothing on this site
-                  updates in real time, so that was a fabricated claim sitting
-                  on every single page. */}
-              <dl className="mt-8 flex gap-8 border-t border-border pt-6">
-                <div>
-                  <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Blueprints
-                  </dt>
-                  <dd className="mt-1 font-display text-2xl font-bold text-foreground">
-                    {totalIdeas}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Categories
-                  </dt>
-                  <dd className="mt-1 font-display text-2xl font-bold text-foreground">
-                    {allCategories.length}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                    Subcategories
-                  </dt>
-                  <dd className="mt-1 font-display text-2xl font-bold text-foreground">
-                    {totalSubcategories}
-                  </dd>
-                </div>
-              </dl>
             </div>
 
-            <div className="grid gap-10 sm:grid-cols-3">
-              {/* Every category, not a truncated six. This block is the
-                  reason to have a wide footer at all — it is the site's
-                  densest block of internal links, so it gets two thirds of
-                  the width and the names are not clipped. */}
-              <div className="sm:col-span-2">
+            {/* Real figures, straight from the catalog the page already loaded.
+                The line these replaced claimed every idea was "updated in real
+                time, never stale" — nothing on this site updates in real time,
+                so that sat on every page as a false claim. */}
+            <dl className="grid grid-cols-3 gap-4 lg:justify-items-end">
+              {[
+                { label: "Blueprints", value: totalIdeas },
+                { label: "Categories", value: allCategories.length },
+                { label: "Subcategories", value: totalSubcategories },
+              ].map((stat) => (
+                <div key={stat.label} className="lg:text-right">
+                  <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    {stat.label}
+                  </dt>
+                  <dd className="mt-1 font-display text-3xl font-bold tabular-nums text-foreground">
+                    {stat.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          {/* Band 2 — the link grid. Every category, with its real count, is
+              the densest block of internal links on the site, so it gets half
+              the width and the names are never clipped. */}
+          <div className="grid gap-10 border-t border-border px-6 py-10 sm:px-10 sm:grid-cols-3 lg:grid-cols-5">
+            {/* Five columns, not four: the category block spans two, and
+                Platform / Company / Legal take one each, so the row fills
+                exactly. At four, Legal wrapped onto a second row on its own
+                and left the right two thirds of the footer empty. */}
+            <div className="sm:col-span-3 lg:col-span-2">
+              <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
+                Browse by category
+              </h3>
+              <ul className="mt-4 grid gap-x-8 gap-y-0.5 sm:grid-cols-2">
+                {allCategories.map((c) => (
+                  <li key={c.categorySlug}>
+                    <Link
+                      to="/category/$categorySlug"
+                      params={{ categorySlug: c.categorySlug }}
+                      className="mo-row flex items-baseline justify-between gap-3 rounded-lg py-1.5 pl-2 pr-2 text-sm text-muted-foreground"
+                    >
+                      <span className="min-w-0 leading-snug">{c.categoryName}</span>
+                      <span className="shrink-0 text-[11px] tabular-nums opacity-70">
+                        {c.ideaCount}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {footerColumns.map((col) => (
+              <div key={col.title}>
                 <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
-                  Browse by category
+                  {col.title}
                 </h3>
-                <ul className="mt-4 grid gap-x-6 gap-y-1 sm:grid-cols-2">
-                  {allCategories.map((c) => (
-                    <li key={c.categorySlug}>
+                <ul className="mt-4 grid gap-1">
+                  {col.links.map((link) => (
+                    <li key={`${col.title}-${link.to}-${link.label}`}>
                       <Link
-                        to="/category/$categorySlug"
-                        params={{ categorySlug: c.categorySlug }}
-                        className="mo-row flex items-baseline justify-between gap-3 rounded-lg py-1.5 pl-2 pr-2 text-sm text-muted-foreground"
+                        to={link.to}
+                        className="mo-row block rounded-lg px-2 py-1.5 text-sm text-muted-foreground"
                       >
-                        <span className="min-w-0 leading-snug">{c.categoryName}</span>
-                        <span className="shrink-0 text-[11px] tabular-nums opacity-70">
-                          {c.ideaCount}
-                        </span>
+                        {link.label}
                       </Link>
                     </li>
                   ))}
                 </ul>
               </div>
-
-              <div className="grid gap-8">
-                {footerColumns.map((col) => (
-                  <div key={col.title}>
-                    <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
-                      {col.title}
-                    </h3>
-                    <ul className="mt-4 grid gap-1">
-                      {col.links.map((link) => (
-                        <li key={`${col.title}-${link.to}-${link.label}`}>
-                          <Link
-                            to={link.to}
-                            className="mo-row block rounded-lg px-2 py-1.5 text-sm text-muted-foreground"
-                          >
-                            {link.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
 
-          <div className="mt-12 border-t border-border pt-6 text-xs text-muted-foreground">
+          {/* Band 3 — the legal line. */}
+          <div className="border-t border-border px-6 py-6 text-xs text-muted-foreground sm:px-10">
             <p className="font-medium text-foreground">
               Bro Business Ideas — built by people who&apos;ve been where you are. Businessidea.io
             </p>
