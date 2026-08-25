@@ -52,10 +52,14 @@ export function startPointerChannel(options: PointerChannelOptions = {}): () => 
   const root = document.documentElement;
   setNeutral(root);
 
-  // Scroll velocity is useful on touch too, but pointer velocity is not, and
-  // reduced motion opts out of both. Keep it simple and predictable: the whole
-  // channel is a fine-pointer, full-motion feature.
-  if (!hasFinePointer() || prefersReducedMotion()) return () => {};
+  // Reduced motion opts out of everything — nothing is published, the neutral
+  // values above stand, and no listeners are attached.
+  if (prefersReducedMotion()) return () => {};
+
+  // Touch devices have no cursor, so --ptr-x/y/v stay at their neutral values
+  // and the pointermove listener is never attached. Scroll velocity is just as
+  // meaningful on a phone as on a desktop, so --scroll-v keeps running.
+  const pointerEnabled = hasFinePointer();
 
   const pScale = options.pointerVelocityScale ?? 1;
   const sScale = options.scrollVelocityScale ?? 1;
@@ -93,17 +97,19 @@ export function startPointerChannel(options: PointerChannelOptions = {}): () => 
     const dt = Math.max((now - lastT) / 1000, 1 / 240);
     lastT = now;
 
-    // Pointer position: written every frame, cheap and exact.
-    root.style.setProperty("--ptr-x", targetX.toFixed(4));
-    root.style.setProperty("--ptr-y", targetY.toFixed(4));
+    if (pointerEnabled) {
+      // Pointer position: written every frame, cheap and exact.
+      root.style.setProperty("--ptr-x", targetX.toFixed(4));
+      root.style.setProperty("--ptr-y", targetY.toFixed(4));
 
-    // Pointer velocity, px/s -> 0..1, exponentially smoothed then decayed.
-    const ptrTarget = moved ? Math.min((rawPtrV / dt / PTR_V_MAX) * pScale, 1) : 0;
-    ptrV += (ptrTarget - ptrV) * SMOOTH;
-    if (ptrV < 0.001) ptrV = 0;
-    root.style.setProperty("--ptr-v", ptrV.toFixed(4));
-    rawPtrV = 0;
-    moved = false;
+      // Pointer velocity, px/s -> 0..1, exponentially smoothed then decayed.
+      const ptrTarget = moved ? Math.min((rawPtrV / dt / PTR_V_MAX) * pScale, 1) : 0;
+      ptrV += (ptrTarget - ptrV) * SMOOTH;
+      if (ptrV < 0.001) ptrV = 0;
+      root.style.setProperty("--ptr-v", ptrV.toFixed(4));
+      rawPtrV = 0;
+      moved = false;
+    }
 
     // Scroll velocity, direction-agnostic, same normalization.
     if (scrolled) {
@@ -122,13 +128,13 @@ export function startPointerChannel(options: PointerChannelOptions = {}): () => 
     raf = requestAnimationFrame(frame);
   };
 
-  window.addEventListener("pointermove", onPointerMove, { passive: true });
+  if (pointerEnabled) window.addEventListener("pointermove", onPointerMove, { passive: true });
   window.addEventListener("scroll", onScroll, { passive: true });
   raf = requestAnimationFrame(frame);
 
   return () => {
     cancelAnimationFrame(raf);
-    window.removeEventListener("pointermove", onPointerMove);
+    if (pointerEnabled) window.removeEventListener("pointermove", onPointerMove);
     window.removeEventListener("scroll", onScroll);
     setNeutral(root);
   };

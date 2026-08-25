@@ -1,0 +1,282 @@
+/* ============================================================
+   MOTION — the taste floor.
+
+   One import gives every interactive element on the site a baseline
+   response. It is written deliberately at the lowest specificity that
+   still works, and it uses no `!important` anywhere, so any existing
+   rule in styles.css wins a conflict rather than silently losing one.
+
+   Colours come only from the tokens already defined in styles.css. No
+   hex value appears in this file.
+
+   Everything animates transform, opacity, colour or clip-path — never
+   width, height, top, left or box-shadow geometry — so it composites
+   off the main thread and holds frame rate on a low-end phone.
+
+   Pointer-driven rules live inside `@media (hover: hover) and
+   (pointer: fine)`, so a touch device never pays for them and never
+   gets a hover state stuck on after a tap.
+   ============================================================ */
+
+:root {
+  /* One duration scale and one easing pair for the whole site. */
+  --mo-dur-1: 140ms;
+  --mo-dur-2: 240ms;
+  --mo-dur-3: 420ms;
+  --mo-dur-4: 700ms;
+  --mo-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --mo-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --mo-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Displacement scale — every lift/slide in the system is a multiple. */
+  --mo-lift-1: 1px;
+  --mo-lift-2: 2px;
+  --mo-lift-3: 4px;
+
+  /* Neutral fallbacks. The pointer channel overwrites these at runtime;
+     defining them here means CSS that reads them still renders correctly
+     when JavaScript has not run, has failed, or is switched off. */
+  --ptr-x: 0.5;
+  --ptr-y: 0.5;
+  --ptr-v: 0;
+  --scroll-v: 0;
+  --page-p: 0;
+  --route-pending: 0;
+}
+
+/* ------------------------------------------------------------
+   Route transition (see src/motion/page-transition.tsx).
+   Enter-only, on top of a paint that has already happened.
+   ------------------------------------------------------------ */
+
+@keyframes mo-route-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.mo-route[data-route-enter] {
+  animation: mo-route-enter var(--mo-dur-3) var(--mo-ease-out) both;
+}
+
+/* ------------------------------------------------------------
+   Focus. Applies on every device, never suppressed — this is an
+   accessibility floor, not decoration.
+   ------------------------------------------------------------ */
+
+:where(a, button, [role="button"], input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: calc(var(--radius) * 0.35);
+}
+
+/* ------------------------------------------------------------
+   Baseline transitions. `:where()` keeps specificity at zero, so
+   these lose every conflict against existing rules by design —
+   they only fill in where nothing was defined.
+   ------------------------------------------------------------ */
+
+:where(a, button, [role="button"], summary, label[for]) {
+  transition:
+    color var(--mo-dur-2) var(--mo-ease),
+    background-color var(--mo-dur-2) var(--mo-ease),
+    border-color var(--mo-dur-2) var(--mo-ease),
+    opacity var(--mo-dur-2) var(--mo-ease),
+    transform var(--mo-dur-2) var(--mo-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* A link that carries no other treatment still acknowledges the cursor. */
+  :where(a:not([class])):hover {
+    color: var(--accent);
+  }
+
+  :where(button, [role="button"]):hover {
+    transform: translate3d(0, calc(var(--mo-lift-2) * -1), 0);
+  }
+
+  :where(button, [role="button"]):active {
+    transform: translate3d(0, 0, 0) scale(0.985);
+    transition-duration: var(--mo-dur-1);
+  }
+}
+
+/* ------------------------------------------------------------
+   Opt-in classes. These are the retrofit surface: add one class to
+   an element that already exists and it joins the system. Nothing
+   below changes layout, so adding a class can never reflow a page.
+   ------------------------------------------------------------ */
+
+/* A card, tile, panel or grid cell. Pair with useElementPointer or
+   useElementPointerGroup to get the cursor-tracking half. */
+.mo-card {
+  position: relative;
+  transition:
+    transform var(--mo-dur-3) var(--mo-ease-out),
+    border-color var(--mo-dur-3) var(--mo-ease);
+  will-change: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mo-card:hover {
+    transform: translate3d(0, calc(var(--mo-lift-3) * -1), 0);
+    border-color: var(--accent);
+  }
+
+  /* Cursor-following sheen. Reads --el-ptr-* published per element by
+     useElementPointer; with no JS the gradient sits centred and the
+     opacity is zero, so it is invisible rather than wrong. */
+  .mo-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: calc(var(--el-ptr-in, 0) * 0.5);
+    transition: opacity var(--mo-dur-3) var(--mo-ease);
+    background: radial-gradient(
+      42% 42% at calc(50% + var(--el-ptr-x, 0) * 50%) calc(50% + var(--el-ptr-y, 0) * 50%),
+      var(--muted) 0%,
+      transparent 70%
+    );
+  }
+}
+
+/* A row in a list, table, nav dropdown or footer column. */
+.mo-row {
+  transition:
+    color var(--mo-dur-2) var(--mo-ease),
+    background-color var(--mo-dur-2) var(--mo-ease),
+    transform var(--mo-dur-2) var(--mo-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mo-row:hover {
+    color: var(--accent);
+    background-color: var(--muted);
+    transform: translate3d(var(--mo-lift-3), 0, 0);
+  }
+}
+
+/* A text link that should grow an underline rather than change colour.
+   The underline is a scaled pseudo-element, so no layout is touched. */
+.mo-link {
+  position: relative;
+  text-decoration: none;
+}
+
+.mo-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--mo-dur-2) var(--mo-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mo-link:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.mo-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Plain lift, for anything that is neither a card nor a row. */
+@media (hover: hover) and (pointer: fine) {
+  .mo-lift {
+    transition: transform var(--mo-dur-2) var(--mo-ease-out);
+  }
+
+  .mo-lift:hover {
+    transform: translate3d(0, calc(var(--mo-lift-3) * -1), 0);
+  }
+}
+
+/* Image treatment — brief section 12.8. A slot, not a raw drop-in:
+   the image is clipped by its container and scales slightly under the
+   cursor while the container itself stays exactly the same size. */
+.mo-media {
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.mo-media > :where(img, video, picture) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate3d(0, 0, 0) scale(1);
+  transition: transform var(--mo-dur-4) var(--mo-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mo-media:hover > :where(img, video, picture) {
+    transform: translate3d(0, 0, 0) scale(1.035);
+  }
+}
+
+/* Reads --sc-p published by useScrollProgress on the same element or an
+   ancestor. Gives a section a slow parallax drift without any per-page JS. */
+.mo-drift {
+  transform: translate3d(0, calc((var(--sc-p, 0) - 0.5) * -24px), 0);
+  will-change: transform;
+}
+
+/* A progress rail that fills with whole-page scroll. Uses scaleX, so it
+   costs one composited transform per frame and never triggers layout. */
+.mo-page-rail {
+  transform: scaleX(var(--page-p, 0));
+  transform-origin: left center;
+}
+
+/* ------------------------------------------------------------
+   Reduced motion. Everything above collapses to its resting state;
+   colour and focus responses survive, because those are information,
+   not decoration.
+   ------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .mo-route[data-route-enter] {
+    animation: none;
+  }
+
+  :where(button, [role="button"]):hover,
+  :where(button, [role="button"]):active,
+  .mo-card:hover,
+  .mo-row:hover,
+  .mo-lift:hover {
+    transform: none;
+  }
+
+  .mo-media > :where(img, video, picture),
+  .mo-media:hover > :where(img, video, picture) {
+    transform: none;
+  }
+
+  .mo-drift {
+    transform: none;
+  }
+
+  .mo-link::after {
+    transition: none;
+  }
+
+  :where(a, button, [role="button"], summary, label[for]),
+  .mo-card,
+  .mo-row,
+  .mo-lift {
+    transition-duration: 1ms;
+  }
+}

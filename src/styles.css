@@ -296,9 +296,15 @@
 /* ================================================================
    GLOW PILL BUTTONS — neon cyan glass (Image 2 style)
    ================================================================ */
-.glass-pill,
-a[href*="/category/"],
-a[href*="/search"] {
+/* Opt-in only. This block used to also match `a[href*="/category/"]` and
+   `a[href*="/search"]`, which forced pill styling — with `!important` — onto
+   EVERY link to a category or the search page anywhere on the site, including
+   the browse-page category headings, the mobile menu rows, the homepage
+   search field, and an inline "keyword search" link sitting mid-sentence on
+   /services. Those four all carry their own intended styling and were losing
+   to this rule. Anything that genuinely wants a pill carries `.glass-pill`
+   explicitly, `CategoryBadge` included. */
+.glass-pill {
   color: #FCFBFE !important;
   display: inline-flex;
   align-items: center;
@@ -323,9 +329,7 @@ a[href*="/search"] {
   transition: box-shadow 0.3s ease, border-color 0.3s ease, color 0.2s ease, background 0.25s ease !important;
   animation: none !important;
 }
-.glass-pill:hover,
-a[href*="/category/"]:hover,
-a[href*="/search"]:hover {
+.glass-pill:hover {
   color: #FFFFFF !important;
   /* transform is owned by the GSAP pill-interaction hook, not this rule. */
   background: linear-gradient(
@@ -1136,9 +1140,7 @@ html.light .iv-skeleton {
   }
   html.light .glass,
   html.light .glass-btn,
-  html.light .glass-pill,
-  html.light a[href*="/category/"],
-  html.light a[href*="/search"] {
+  html.light .glass-pill {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(238, 236, 248, 0.9) 100%) !important;
     border: 1px solid rgba(43, 40, 113, 0.16) !important;
     color: #0C0C25 !important;
@@ -1147,43 +1149,18 @@ html.light .iv-skeleton {
       0 18px 40px -26px rgba(12, 12, 37, 0.45) !important;
   }
   html.light .glass-btn:hover,
-  html.light .glass-pill:hover,
-  html.light a[href*="/category/"]:hover,
-  html.light a[href*="/search"]:hover {
+  html.light .glass-pill:hover {
     background: linear-gradient(180deg, rgba(238, 236, 248, 0.98) 0%, rgba(218, 217, 242, 0.95) 100%) !important;
     border-color: rgba(70, 67, 186, 0.42) !important;
     color: #2B2871 !important;
   }
 }
 
-/* Footer + plain list links must stay text, not capsules.
-   Lives inside @layer utilities, not unlayered, and repeats the selector
-   with an html.light prefix: cascade layers rank ABOVE specificity for
-   `!important` declarations, and `html.light a[href*="/category/"]`
-   (also `!important`, also inside @layer utilities, ~30 lines up) was
-   silently winning over this rule's plain form every time — the category
-   heading kept rendering as a pill because that light-mode rule matches
-   any link whose href contains "/category/", heading included. Matching
-   both the layer and the specificity is what actually beats it. */
-@layer utilities {
-  .iv-plainlinks a[href*="/category/"],
-  html.light .iv-plainlinks a[href*="/category/"] {
-    display: inline !important;
-    padding: 0 !important;
-    background: none !important;
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    color: inherit !important;
-    font-weight: 500;
-    transition: color 0.25s ease !important;
-  }
-  .iv-plainlinks a[href*="/category/"]:hover,
-  html.light .iv-plainlinks a[href*="/category/"]:hover {
-    color: var(--primary) !important;
-    transform: none !important;
-  }
-}
+/* `.iv-plainlinks` used to live here as a pile of `!important` overrides
+   whose only job was to undo the global `a[href*="/category/"]` pill rule
+   for footer and list links. That rule is gone, so plain links are plain by
+   default and the workaround is no longer needed. The class is left in the
+   markup as an inert hook; it carries no rules. */
 
 /* ============================================================
    CATEGORY HEADING GLOW — breathing brand-color halo behind
@@ -1205,21 +1182,15 @@ html.light .iv-skeleton {
   0%, 100% { opacity: 0.7; }
   50%      { opacity: 1; }
 }
-/* The category-card heading is also an `a[href*="/category/"]`, which
-   earlier in this file sets `animation: none !important` (a broad pill
-   reset). Repeating the selector with that attribute clause is what
-   actually out-specifies it — plain `.bbi-heading-glow` alone loses. */
-.bbi-heading-glow,
-a[href*="/category/"].bbi-heading-glow {
+.bbi-heading-glow {
   text-shadow:
     0 0 12px rgba(136, 134, 219, 0.4),
     0 0 26px rgba(70, 67, 186, 0.26);
-  animation: bbi-heading-glow-pulse 3.4s ease-in-out infinite !important;
+  animation: bbi-heading-glow-pulse 3.4s ease-in-out infinite;
 }
 @media (prefers-reduced-motion: reduce) {
-  .bbi-heading-glow,
-  a[href*="/category/"].bbi-heading-glow {
-    animation: none !important;
+  .bbi-heading-glow {
+    animation: none;
     opacity: 1;
   }
 }

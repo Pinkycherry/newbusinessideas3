@@ -10,6 +10,8 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import "../styles.css";
+import "../motion.css";
+import { PointerChannelProvider, PageTransition } from "../motion";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { catalogQuery } from "../lib/ideas.functions";
 
@@ -129,8 +131,13 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      {/* Publishes --ptr-x/y/v and --scroll-v on :root for the whole site.
+          Renders no DOM of its own and holds no React state. */}
+      <PointerChannelProvider />
+      <PageTransition>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </PageTransition>
     </QueryClientProvider>
   );
 }
