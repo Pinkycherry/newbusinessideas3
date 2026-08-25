@@ -172,25 +172,48 @@ const COMPANY_ITEMS = [
 ];
 
 /** Curated static groupings — link through to /browse (no dedicated filtered route yet). */
-const STATIC_GROUPS: { title: string; items: string[] }[] = [
+/**
+ * How the "Browse by type" menu groups the real catalogue.
+ *
+ * What was here before was ten hand-written labels — "Business Ideas for
+ * Women", "High Margin Business Ideas", "Quick Cash Business Ideas" and so on
+ * — where every single one linked to `/browse`. Four of them happened to name
+ * real categories; the other six named nothing that exists. A menu of ten
+ * items that all go to the same page, half of them promising a filter the
+ * site cannot apply, is worse than no menu.
+ *
+ * These groups reference real `category_slug` values instead. A slug that is
+ * not in the live catalogue is skipped at render time rather than rendering a
+ * link to a 404, so this list can never drift ahead of the database.
+ */
+const TYPE_GROUPS: { title: string; slugs: string[] }[] = [
   {
-    title: "By Who You Are",
-    items: [
-      "Business Ideas for Women",
-      "Student Business Ideas",
-      "Side Hustle Ideas",
-      "One Person Business Ideas",
-      "Business Ideas for Retirees",
+    title: "By investment",
+    slugs: [
+      "zero-investment-business-ideas",
+      "low-investment-business-ideas",
+      "passive-income-business-ideas",
     ],
   },
   {
-    title: "By Investment",
-    items: [
-      "Zero Investment Business Ideas",
-      "Low Investment Business Ideas",
-      "Work From Home Business Ideas",
-      "High Margin Business Ideas",
-      "Quick Cash Business Ideas",
+    title: "By how you work",
+    slugs: [
+      "side-hustle-ideas",
+      "work-from-home-business-ideas",
+      "business-ideas-that-never-go-out-of-style",
+    ],
+  },
+  {
+    title: "By industry",
+    slugs: [
+      "ai-automation",
+      "tech-saas",
+      "e-commerce-retail",
+      "creator-media",
+      "fintech-finance",
+      "health-fitness",
+      "education-edtech",
+      "productivity-workflow",
     ],
   },
 ];
@@ -356,75 +379,120 @@ function NavDropdown({
   );
 }
 
+/**
+ * Desktop mega-menu. Categories are never hardcoded — live from the `ideas`
+ * table, every one of them, with its real blueprint count.
+ *
+ * This used to render the categories as a cloud of capsules with no counts and
+ * a hard cap of 20. Rows carry more information in less space, and the count
+ * is the single most useful thing a reader can know before clicking.
+ */
 function CategoryMega() {
   const { data } = useCatalog();
-  const categories = (data?.categories ?? []).slice(0, 20);
+  const categories = data?.categories ?? [];
 
   return (
     <NavDropdown
       label="Categories"
-      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 w-[min(48rem,94vw)] rounded-3xl p-5"
+      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 w-[min(52rem,94vw)] rounded-3xl p-6"
     >
       {(close) => (
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
-            Browse by category
-          </p>
-          <div className="iv-tag-cloud mt-3">
-            {categories.length === 0 ? (
-              <p className="text-xs normal-case tracking-normal text-muted-foreground">
-                Loading categories…
-              </p>
-            ) : (
-              categories.map((c) => (
-                <CategoryBadge
-                  key={c.categorySlug}
-                  slug={c.categorySlug}
-                  label={c.categoryName}
-                  onClick={close}
-                  className="iv-tag"
-                />
-              ))
-            )}
+          <div className="flex items-baseline justify-between gap-4">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
+              Browse by category
+            </p>
+            <p className="text-[11px] normal-case tracking-normal text-muted-foreground">
+              {data?.totalIdeas ?? 0} blueprints in {categories.length} categories
+            </p>
           </div>
-          <Link
-            to="/browse"
-            onClick={close}
-            className="mt-3 inline-block rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em]"
-          >
-            View all categories →
-          </Link>
+
+          <ul className="mt-4 grid gap-x-6 gap-y-0.5 sm:grid-cols-2 lg:grid-cols-3">
+            {categories.map((c) => (
+              <li key={c.categorySlug}>
+                <Link
+                  to="/category/$categorySlug"
+                  params={{ categorySlug: c.categorySlug }}
+                  onClick={close}
+                  className="mo-row flex items-baseline justify-between gap-3 rounded-lg px-2 py-2 text-sm normal-case tracking-normal text-muted-foreground"
+                >
+                  <span className="min-w-0 leading-snug">{c.categoryName}</span>
+                  <span className="shrink-0 text-[11px] tabular-nums opacity-70">
+                    {c.ideaCount}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 border-t border-border pt-3">
+            <Link
+              to="/browse"
+              onClick={close}
+              className="mo-link text-[11px] font-semibold uppercase tracking-[0.2em] text-accent"
+            >
+              The full library
+            </Link>
+            <Link
+              to="/search"
+              search={{ q: "" }}
+              onClick={close}
+              className="mo-link text-[11px] font-semibold uppercase tracking-[0.2em] text-accent"
+            >
+              Search every field
+            </Link>
+          </div>
         </div>
       )}
     </NavDropdown>
   );
 }
 
+/**
+ * "Browse by type" — the same real categories, grouped by the question a
+ * reader is actually asking. Any slug in TYPE_GROUPS that the live catalogue
+ * does not contain is dropped here rather than rendered as a dead link.
+ */
 function BrowseByTypeDropdown() {
+  const { data } = useCatalog();
+  const bySlug = new Map((data?.categories ?? []).map((c) => [c.categorySlug, c]));
+
+  const groups = TYPE_GROUPS.map((g) => ({
+    title: g.title,
+    entries: g.slugs.map((slug) => bySlug.get(slug)).filter((c) => c !== undefined),
+  })).filter((g) => g.entries.length > 0);
+
+  if (groups.length === 0) return null;
+
   return (
     <NavDropdown
       label="Browse by type"
-      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 w-[min(32rem,90vw)] rounded-2xl p-4"
+      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 w-[min(46rem,92vw)] rounded-3xl p-6"
     >
       {(close) => (
-        <div className="grid gap-5 sm:grid-cols-2">
-          {STATIC_GROUPS.map((group) => (
+        <div className="grid gap-6 sm:grid-cols-3">
+          {groups.map((group) => (
             <div key={group.title}>
               <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
                 {group.title}
               </p>
-              <div className="iv-tag-cloud mt-2.5">
-                {group.items.map((item) => (
-                  <CategoryBadge
-                    key={item}
-                    to="/browse"
-                    label={item}
-                    size="sm"
-                    className="iv-tag"
-                    onClick={close}
-                  />
+              <ul className="mt-3 grid gap-0.5">
+                {group.entries.map((c) => (
+                  <li key={c.categorySlug}>
+                    <Link
+                      to="/category/$categorySlug"
+                      params={{ categorySlug: c.categorySlug }}
+                      onClick={close}
+                      className="mo-row flex items-baseline justify-between gap-3 rounded-lg px-2 py-2 text-sm normal-case tracking-normal text-muted-foreground"
+                    >
+                      <span className="min-w-0 leading-snug">{c.categoryName}</span>
+                      <span className="shrink-0 text-[11px] tabular-nums opacity-70">
+                        {c.ideaCount}
+                      </span>
+                    </Link>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           ))}
         </div>
@@ -433,6 +501,10 @@ function BrowseByTypeDropdown() {
   );
 }
 
+/**
+ * Explore and Company. Rows, not capsules — these are navigation, and a list
+ * of pills reads as a tag cloud rather than as a menu.
+ */
 function LinkListDropdown({
   label,
   items,
@@ -443,18 +515,19 @@ function LinkListDropdown({
   return (
     <NavDropdown label={label}>
       {(close) => (
-        <div className="iv-tag-cloud">
+        <ul className="grid min-w-[13rem] gap-0.5">
           {items.map((item) => (
-            <CategoryBadge
-              key={item.to}
-              to={item.to}
-              label={item.label}
-              size="sm"
-              className="iv-tag"
-              onClick={close}
-            />
+            <li key={item.to}>
+              <Link
+                to={item.to}
+                onClick={close}
+                className="mo-row block rounded-lg px-2 py-2 text-sm normal-case tracking-normal text-muted-foreground"
+              >
+                {item.label}
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </NavDropdown>
   );
@@ -559,21 +632,26 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
           <p className="mt-4 px-3 text-[10px] normal-case tracking-normal text-accent">
             Browse by type
           </p>
-          {STATIC_GROUPS.map((group) => (
+          {TYPE_GROUPS.map((group) => (
             <Fragment key={group.title}>
               <p className="mt-2 px-3 text-[10px] normal-case tracking-normal text-muted-foreground/70">
                 {group.title}
               </p>
-              {group.items.map((item) => (
-                <Link
-                  key={item}
-                  to="/browse"
-                  onClick={onClose}
-                  className="mo-row rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground"
-                >
-                  {item}
-                </Link>
-              ))}
+              {group.slugs
+                .map((slug) => categories.find((c) => c.categorySlug === slug))
+                .filter((c) => c !== undefined)
+                .map((c) => (
+                  <Link
+                    key={c.categorySlug}
+                    to="/category/$categorySlug"
+                    params={{ categorySlug: c.categorySlug }}
+                    onClick={onClose}
+                    className="mo-row flex items-baseline justify-between gap-3 rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground"
+                  >
+                    <span className="min-w-0 leading-snug">{c.categoryName}</span>
+                    <span className="shrink-0 tabular-nums opacity-70">{c.ideaCount}</span>
+                  </Link>
+                ))}
             </Fragment>
           ))}
 

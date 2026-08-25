@@ -28,8 +28,12 @@ import { Route as SitemapPagesDotxmlRouteImport } from './routes/sitemap-pages[.
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as CalculatorIndexRouteImport } from './routes/calculator.index'
+import { Route as CalculatorSlugRouteImport } from './routes/calculator.$slug'
 import { Route as CategoryCategorySlugRouteImport } from './routes/category.$categorySlug'
 import { Route as IdeaSlugRouteImport } from './routes/idea.$slug'
+import { Route as ListIndexRouteImport } from './routes/list.index'
+import { Route as ListSlugRouteImport } from './routes/list.$slug'
 import { Route as CategoryCategorySlugIndexRouteImport } from './routes/category.$categorySlug.index'
 import { Route as CategoryCategorySlugSubcategorySlugRouteImport } from './routes/category.$categorySlug.$subcategorySlug'
 
@@ -128,6 +132,16 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CalculatorIndexRoute = CalculatorIndexRouteImport.update({
+  id: '/calculator/',
+  path: '/calculator/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalculatorSlugRoute = CalculatorSlugRouteImport.update({
+  id: '/calculator/$slug',
+  path: '/calculator/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategoryCategorySlugRoute = CategoryCategorySlugRouteImport.update({
   id: '/category/$categorySlug',
   path: '/category/$categorySlug',
@@ -136,6 +150,16 @@ const CategoryCategorySlugRoute = CategoryCategorySlugRouteImport.update({
 const IdeaSlugRoute = IdeaSlugRouteImport.update({
   id: '/idea/$slug',
   path: '/idea/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ListIndexRoute = ListIndexRouteImport.update({
+  id: '/list/',
+  path: '/list/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ListSlugRoute = ListSlugRouteImport.update({
+  id: '/list/$slug',
+  path: '/list/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoryCategorySlugIndexRoute =
@@ -170,9 +194,13 @@ export interface FileRoutesByFullPath {
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
   '/idea/$slug': typeof IdeaSlugRoute
+  '/list/$slug': typeof ListSlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/calculator/': typeof CalculatorIndexRoute
+  '/list/': typeof ListIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
   '/category/$categorySlug/': typeof CategoryCategorySlugIndexRoute
 }
@@ -195,8 +223,12 @@ export interface FileRoutesByTo {
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/calculator/$slug': typeof CalculatorSlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
+  '/list/$slug': typeof ListSlugRoute
   '/blog': typeof BlogIndexRoute
+  '/calculator': typeof CalculatorIndexRoute
+  '/list': typeof ListIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugIndexRoute
 }
@@ -220,9 +252,13 @@ export interface FileRoutesById {
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
   '/idea/$slug': typeof IdeaSlugRoute
+  '/list/$slug': typeof ListSlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/calculator/': typeof CalculatorIndexRoute
+  '/list/': typeof ListIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
   '/category/$categorySlug/': typeof CategoryCategorySlugIndexRoute
 }
@@ -247,9 +283,13 @@ export interface FileRouteTypes {
     | '/sitemap-pages.xml'
     | '/terms'
     | '/blog/$slug'
+    | '/calculator/$slug'
     | '/category/$categorySlug'
     | '/idea/$slug'
+    | '/list/$slug'
     | '/blog/'
+    | '/calculator/'
+    | '/list/'
     | '/category/$categorySlug/$subcategorySlug'
     | '/category/$categorySlug/'
   fileRoutesByTo: FileRoutesByTo
@@ -272,8 +312,12 @@ export interface FileRouteTypes {
     | '/sitemap-pages.xml'
     | '/terms'
     | '/blog/$slug'
+    | '/calculator/$slug'
     | '/idea/$slug'
+    | '/list/$slug'
     | '/blog'
+    | '/calculator'
+    | '/list'
     | '/category/$categorySlug/$subcategorySlug'
     | '/category/$categorySlug'
   id:
@@ -296,9 +340,13 @@ export interface FileRouteTypes {
     | '/sitemap-pages.xml'
     | '/terms'
     | '/blog/$slug'
+    | '/calculator/$slug'
     | '/category/$categorySlug'
     | '/idea/$slug'
+    | '/list/$slug'
     | '/blog/'
+    | '/calculator/'
+    | '/list/'
     | '/category/$categorySlug/$subcategorySlug'
     | '/category/$categorySlug/'
   fileRoutesById: FileRoutesById
@@ -322,9 +370,13 @@ export interface RootRouteChildren {
   SitemapPagesDotxmlRoute: typeof SitemapPagesDotxmlRoute
   TermsRoute: typeof TermsRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  CalculatorSlugRoute: typeof CalculatorSlugRoute
   CategoryCategorySlugRoute: typeof CategoryCategorySlugRouteWithChildren
   IdeaSlugRoute: typeof IdeaSlugRoute
+  ListSlugRoute: typeof ListSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  CalculatorIndexRoute: typeof CalculatorIndexRoute
+  ListIndexRoute: typeof ListIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -462,6 +514,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/calculator/': {
+      id: '/calculator/'
+      path: '/calculator'
+      fullPath: '/calculator/'
+      preLoaderRoute: typeof CalculatorIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calculator/$slug': {
+      id: '/calculator/$slug'
+      path: '/calculator/$slug'
+      fullPath: '/calculator/$slug'
+      preLoaderRoute: typeof CalculatorSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/category/$categorySlug': {
       id: '/category/$categorySlug'
       path: '/category/$categorySlug'
@@ -474,6 +540,20 @@ declare module '@tanstack/react-router' {
       path: '/idea/$slug'
       fullPath: '/idea/$slug'
       preLoaderRoute: typeof IdeaSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/list/': {
+      id: '/list/'
+      path: '/list'
+      fullPath: '/list/'
+      preLoaderRoute: typeof ListIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/list/$slug': {
+      id: '/list/$slug'
+      path: '/list/$slug'
+      fullPath: '/list/$slug'
+      preLoaderRoute: typeof ListSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/category/$categorySlug/': {
@@ -526,9 +606,13 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapPagesDotxmlRoute: SitemapPagesDotxmlRoute,
   TermsRoute: TermsRoute,
   BlogSlugRoute: BlogSlugRoute,
+  CalculatorSlugRoute: CalculatorSlugRoute,
   CategoryCategorySlugRoute: CategoryCategorySlugRouteWithChildren,
   IdeaSlugRoute: IdeaSlugRoute,
+  ListSlugRoute: ListSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
+  CalculatorIndexRoute: CalculatorIndexRoute,
+  ListIndexRoute: ListIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
