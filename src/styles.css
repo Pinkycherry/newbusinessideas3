@@ -1626,9 +1626,37 @@ html.light .idea-shell::before { opacity: 0.42; }
 .bbi-arc-stage {
   position: relative;
   width: 100%;
+  /* Full-viewport on landscape screens, where a 16:9 frame fills it with only
+     the intended cinematic crop. */
   height: 100vh;
   overflow: hidden;
   isolation: isolate;
+}
+
+/* The frames are 1280x720. `object-fit: cover` on a full-height stage crops
+   whatever does not fit, and on a portrait screen that is most of the image.
+   Measured, counting the frame's own 1.02-1.08 scale push:
+
+     desktop 1440x900   83% of the frame visible   (the intended crop)
+     laptop  1280x800   83%
+     tablet   834x1112  39%
+     phone    390x844   24%
+
+   A quarter of a composed image is not a crop, it is a different picture —
+   on a phone a visitor was seeing a narrow vertical slice of artwork that was
+   drawn as a wide scene. Below the landscape breakpoint the stage takes the
+   frame's own aspect ratio instead of the viewport's, so the whole image is
+   shown and nothing is cut. */
+@media (max-aspect-ratio: 1/1) {
+  .bbi-arc-stage {
+    /* A portrait stage sized to the frame, not to the viewport, so the whole
+       16:9 image is shown instead of a vertical slice of it. The floor keeps
+       enough height for the copy, which is positioned over the lower part of
+       the frame exactly as it is on desktop. */
+    height: auto;
+    aspect-ratio: 16 / 9;
+    min-height: 60svh;
+  }
 }
 
 /* ---- The frames themselves ---------------------------------------
@@ -1649,25 +1677,40 @@ html.light .idea-shell::before { opacity: 0.42; }
   will-change: transform, opacity;
   transition:
     opacity 900ms cubic-bezier(0.4, 0, 0.2, 1),
-    transform 1400ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 900ms ease;
+    transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .bbi-arc-frame[data-state="next"] {
   opacity: 0;
   transform: scale(1.08);
-  filter: blur(6px);
 }
 .bbi-arc-frame[data-state="on"] {
   opacity: 1;
   /* Continuous slow push across the frame's own span, straight off
      scroll position — this is what makes the still feel like footage. */
   transform: scale(calc(1.02 + (var(--sc-p, 0) * 0.06)));
-  filter: blur(0);
+}
+
+/* On a portrait stage the frame now fits exactly, so any scale at all starts
+   cutting the edges off again. `contain` keeps the whole image inside the box
+   and the push is halved — enough to still read as movement, not enough to
+   crop. */
+@media (max-aspect-ratio: 1/1) {
+  .bbi-arc-frame {
+    object-fit: contain;
+  }
+  .bbi-arc-frame[data-state="on"] {
+    transform: scale(calc(1 + (var(--sc-p, 0) * 0.03)));
+  }
+  .bbi-arc-frame[data-state="next"] {
+    transform: scale(1.04);
+  }
+  .bbi-arc-frame[data-state="past"] {
+    transform: scale(1.08);
+  }
 }
 .bbi-arc-frame[data-state="past"] {
   opacity: 0;
   transform: scale(1.16);
-  filter: blur(4px);
 }
 
 /* Density under the copy only, keyed to the corner the text occupies. */
@@ -2083,15 +2126,13 @@ html.light .idea-shell::before { opacity: 0.42; }
   will-change: transform, opacity;
   transition:
     opacity 620ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 620ms cubic-bezier(0.16, 1, 0.3, 1),
-    filter 620ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* The one being read. */
 .bbi-chapter-card[data-state="on"] {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
-  filter: blur(0);
   z-index: 3;
 }
 
@@ -2100,7 +2141,6 @@ html.light .idea-shell::before { opacity: 0.42; }
 .bbi-chapter-card[data-state="past"] {
   opacity: 0;
   transform: translate3d(0, -2.5rem, 0) scale(0.94);
-  filter: blur(4px);
   z-index: 1;
   pointer-events: none;
 }
@@ -2109,7 +2149,6 @@ html.light .idea-shell::before { opacity: 0.42; }
 .bbi-chapter-card[data-state="next"] {
   opacity: 0;
   transform: translate3d(0, 2.5rem, 0) scale(0.94);
-  filter: blur(4px);
   z-index: 2;
   pointer-events: none;
 }

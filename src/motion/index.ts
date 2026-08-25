@@ -28,7 +28,6 @@ export { PointerChannelProvider, startPointerChannel } from "./pointer-channel";
 export type { PointerChannelOptions } from "./pointer-channel";
 
 export { PageTransition } from "./page-transition";
-export { SmoothScroll } from "./smooth-scroll";
 
 export { useElementPointer, useElementPointerGroup } from "./use-element-pointer";
 export type { ElementPointerOptions } from "./use-element-pointer";

@@ -11,7 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import "../styles.css";
 import "../motion.css";
-import { PointerChannelProvider, PageTransition, SmoothScroll } from "../motion";
+import { PointerChannelProvider, PageTransition } from "../motion";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { catalogQuery } from "../lib/ideas.functions";
 
@@ -134,9 +134,6 @@ function RootComponent() {
       {/* Publishes --ptr-x/y/v and --scroll-v on :root for the whole site.
           Renders no DOM of its own and holds no React state. */}
       <PointerChannelProvider />
-      {/* Inertial scrolling, driven from GSAP's ticker so there is one rAF
-          loop on the page. Off on touch and under reduced motion. */}
-      <SmoothScroll />
       <PageTransition>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
