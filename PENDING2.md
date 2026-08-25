@@ -192,3 +192,43 @@ Build-order steps 8, 10 and 12 cover these. None are started.
 - Never generate duplicate n8n workflows — edit the existing workflow and update the same file.
 - India-first audience.
 - Scale target is 10,000+ pages: motion must be systemic and data-driven, never hand-made per page.
+
+---
+
+## N. Found after this register was first written (2026-08-25)
+
+These were not in the original list. Every one was live in production.
+
+| # | Drawback | Status |
+|---|---|---|
+| N1 | **The FAQ block on every idea page renders empty.** `ideas.faq_json` is NULL on 283 of 290 rows and holds a bare string, not an array, on the other 7. Zero ideas have usable FAQ data. Brief §6.5 exists specifically to solve this and was never built. | Pool table + RPCs created 2026-08-25; content generation is a Gemini/n8n job, still to run |
+| N2 | **74 of 290 ideas have a `business_description` under 200 characters** — thin or effectively empty bodies on a quarter of the library. | Open — content pipeline |
+| N3 | **A fourth fabricated data source was still live**: the idea page's demand chart generated twelve bar heights from `Math.sin(i*0.9)*12 + Math.cos(i*0.5)*8` and animated them as market data. | Fixed — replaced by a gauge driven by real `trend_score` |
+| N4 | **The verdict panel was invisible to reduced-motion readers.** The old pin hook parked `--sc-p` at 0, driving that panel's own `clamp()` to zero opacity. Anyone browsing with reduced motion saw no verdict at all. | Fixed |
+| N5 | **The footer claimed "Every idea here is live — updated in real time, never stale" on every page.** Nothing on this site updates in real time. | Fixed — replaced with real catalog counts |
+| N6 | **The Golden Tree claimed its nodes showed "estimated weekly web-search demand"** — leftover from the invented-search-volume removal. They show blueprint counts. | Fixed |
+| N7 | **`@utility glass-hover` set `transition: all !important`**, sweeping box-shadow into the transition — a six-layer blurred shadow repainted every frame of every card hover. Its `!important` also beat `.mo-card` sitewide. | Fixed |
+| N8 | **`button[class*="from-primary"]` forced the live pill treatment onto disabled buttons**, so /pricing rendered "Checkout not live yet" on a control that looked fully pressable. | Fixed |
+| N9 | **`.glass-pill` omitted `transform` from its transition, with `!important`** — any `.mo-row` or `.mo-lift` on a pill snapped to its offset in one frame and no page could add it back. | Fixed |
+| N10 | **`.wp-prose a` out-specified `.mo-link`**, giving blog body links two underlines two pixels apart on hover. | Fixed |
+| N11 | **The card-wall rule fired on `i % 7 === 0`** — eight enlarged tiles scattered through a 50-idea grid by position alone, breaking comparison and signalling nothing. | Fixed — one tile, the real top-trending idea |
+| N12 | **The mechanism leak was in 12 files, not 1.** Beyond the disclaimer: terms, privacy, refund-policy, about, contact, services, pricing, index.tsx and validate-button.tsx. The worst sat on every idea page and named both vendors plus the account model. | Fixed |
+| N13 | **`src/components/ui/` is 44 files of dead code** — 36 are imported by nothing at all, including `sidebar.tsx` (744 lines) and `chart.tsx` (331). The shared `Button` component is used by nothing outside `ui/`; the site uses raw `<button className="glass-pill">` everywhere. | Open — hygiene only, Vite tree-shakes it so nothing ships |
+| N14 | **"967 Founders reviewed us" is hardcoded with no table behind it.** `PROJECT_BRIEF.md` records this as a real figure, so it was not removed — but its counter and animation were stripped, since a number with no live source gets neither. | Needs a founder decision |
+
+## O. Templates still missing, and why
+
+Brief §6.3-6.11 declared nine template families in scope. Status after 2026-08-25:
+
+| Template | Brief | Status |
+|---|---|---|
+| `/list/[slug]` listicle | §6.3 | Building — fills entirely from real `ideas` columns |
+| `/faq/[category]` hub | §6.4 | Building — infrastructure only; pool is empty |
+| FAQ pool system | §6.5 | Table + RPCs live; **content generation still to run** |
+| `/calculator/[slug]` | §6.8 | Building — pure client-side math, no content risk |
+| `/guide/[slug]` | §6.7 | **Blocked on content.** Long-form pillar writing. No data source exists; writing it here would be inventing editorial. |
+| `/tools` directory | §6.9 | **Blocked on content.** A curated directory of real tools is an editorial judgement, not something to invent. |
+| `/compare/[slug]` | §6.11 | **Blocked on content.** Needs a real position to compare, decided by the founder. |
+| `/validate/[vertical]` | §6.10 | **Blocked on content.** Vertical landing pages need real vertical-specific positioning. |
+
+The four blocked ones are blocked for the same reason: they are content templates with no data behind them. Building empty shells would add four dead pages. They need either a founder decision on what goes in them, or a Gemini pipeline run — the same lever that fills the FAQ pool.
