@@ -31,6 +31,8 @@ import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CalculatorIndexRouteImport } from './routes/calculator.index'
 import { Route as CalculatorSlugRouteImport } from './routes/calculator.$slug'
 import { Route as CategoryCategorySlugRouteImport } from './routes/category.$categorySlug'
+import { Route as FaqIndexRouteImport } from './routes/faq.index'
+import { Route as FaqCategorySlugRouteImport } from './routes/faq.$categorySlug'
 import { Route as IdeaSlugRouteImport } from './routes/idea.$slug'
 import { Route as ListIndexRouteImport } from './routes/list.index'
 import { Route as ListSlugRouteImport } from './routes/list.$slug'
@@ -147,6 +149,16 @@ const CategoryCategorySlugRoute = CategoryCategorySlugRouteImport.update({
   path: '/category/$categorySlug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FaqIndexRoute = FaqIndexRouteImport.update({
+  id: '/faq/',
+  path: '/faq/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqCategorySlugRoute = FaqCategorySlugRouteImport.update({
+  id: '/faq/$categorySlug',
+  path: '/faq/$categorySlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IdeaSlugRoute = IdeaSlugRouteImport.update({
   id: '/idea/$slug',
   path: '/idea/$slug',
@@ -196,10 +208,12 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
+  '/faq/$categorySlug': typeof FaqCategorySlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
   '/list/$slug': typeof ListSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/calculator/': typeof CalculatorIndexRoute
+  '/faq/': typeof FaqIndexRoute
   '/list/': typeof ListIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
   '/category/$categorySlug/': typeof CategoryCategorySlugIndexRoute
@@ -224,10 +238,12 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
+  '/faq/$categorySlug': typeof FaqCategorySlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
   '/list/$slug': typeof ListSlugRoute
   '/blog': typeof BlogIndexRoute
   '/calculator': typeof CalculatorIndexRoute
+  '/faq': typeof FaqIndexRoute
   '/list': typeof ListIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugIndexRoute
@@ -254,10 +270,12 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
+  '/faq/$categorySlug': typeof FaqCategorySlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
   '/list/$slug': typeof ListSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/calculator/': typeof CalculatorIndexRoute
+  '/faq/': typeof FaqIndexRoute
   '/list/': typeof ListIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
   '/category/$categorySlug/': typeof CategoryCategorySlugIndexRoute
@@ -285,10 +303,12 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/calculator/$slug'
     | '/category/$categorySlug'
+    | '/faq/$categorySlug'
     | '/idea/$slug'
     | '/list/$slug'
     | '/blog/'
     | '/calculator/'
+    | '/faq/'
     | '/list/'
     | '/category/$categorySlug/$subcategorySlug'
     | '/category/$categorySlug/'
@@ -313,10 +333,12 @@ export interface FileRouteTypes {
     | '/terms'
     | '/blog/$slug'
     | '/calculator/$slug'
+    | '/faq/$categorySlug'
     | '/idea/$slug'
     | '/list/$slug'
     | '/blog'
     | '/calculator'
+    | '/faq'
     | '/list'
     | '/category/$categorySlug/$subcategorySlug'
     | '/category/$categorySlug'
@@ -342,10 +364,12 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/calculator/$slug'
     | '/category/$categorySlug'
+    | '/faq/$categorySlug'
     | '/idea/$slug'
     | '/list/$slug'
     | '/blog/'
     | '/calculator/'
+    | '/faq/'
     | '/list/'
     | '/category/$categorySlug/$subcategorySlug'
     | '/category/$categorySlug/'
@@ -372,10 +396,12 @@ export interface RootRouteChildren {
   BlogSlugRoute: typeof BlogSlugRoute
   CalculatorSlugRoute: typeof CalculatorSlugRoute
   CategoryCategorySlugRoute: typeof CategoryCategorySlugRouteWithChildren
+  FaqCategorySlugRoute: typeof FaqCategorySlugRoute
   IdeaSlugRoute: typeof IdeaSlugRoute
   ListSlugRoute: typeof ListSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   CalculatorIndexRoute: typeof CalculatorIndexRoute
+  FaqIndexRoute: typeof FaqIndexRoute
   ListIndexRoute: typeof ListIndexRoute
 }
 
@@ -535,6 +561,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategoryCategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/faq/': {
+      id: '/faq/'
+      path: '/faq'
+      fullPath: '/faq/'
+      preLoaderRoute: typeof FaqIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq/$categorySlug': {
+      id: '/faq/$categorySlug'
+      path: '/faq/$categorySlug'
+      fullPath: '/faq/$categorySlug'
+      preLoaderRoute: typeof FaqCategorySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/idea/$slug': {
       id: '/idea/$slug'
       path: '/idea/$slug'
@@ -608,10 +648,12 @@ const rootRouteChildren: RootRouteChildren = {
   BlogSlugRoute: BlogSlugRoute,
   CalculatorSlugRoute: CalculatorSlugRoute,
   CategoryCategorySlugRoute: CategoryCategorySlugRouteWithChildren,
+  FaqCategorySlugRoute: FaqCategorySlugRoute,
   IdeaSlugRoute: IdeaSlugRoute,
   ListSlugRoute: ListSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   CalculatorIndexRoute: CalculatorIndexRoute,
+  FaqIndexRoute: FaqIndexRoute,
   ListIndexRoute: ListIndexRoute,
 }
 export const routeTree = rootRouteImport
