@@ -1,6 +1,8 @@
 # PENDING2 — Complete drawback register
 
-Created 2026-08-25. Fresh file, replaces nothing. `PENDING.md` stays as the
+Created 2026-08-25, last updated 2026-08-25 after 22 commits.
+Section P at the end is the current status; the sections above it are the
+original register and are kept as written so the record stays honest. `PENDING.md` stays as the
 historical log; this file is the single list of what is wrong and what is
 not done, as of commit `a220aff` on branch `claude/bbi-continuation-sj6nbr`.
 
@@ -232,3 +234,64 @@ Brief §6.3-6.11 declared nine template families in scope. Status after 2026-08-
 | `/validate/[vertical]` | §6.10 | **Blocked on content.** Vertical landing pages need real vertical-specific positioning. |
 
 The four blocked ones are blocked for the same reason: they are content templates with no data behind them. Building empty shells would add four dead pages. They need either a founder decision on what goes in them, or a Gemini pipeline run — the same lever that fills the FAQ pool.
+
+---
+
+## P. Status after 22 commits (2026-08-25)
+
+### Fixed, each verified by measurement rather than by eye
+
+| Was | Evidence it is fixed |
+|---|---|
+| **Reduced motion killed ALL motion.** Every hook bailed and every transition was cut to 1ms, so anyone with Android battery saver or Windows "Animation effects: off" saw a completely static site. This is the most likely reason the founder reported seeing no effects. | 25 of 25 revealed elements now carry an opacity transition where 0 did; links report `color, background-color, border-color, opacity / 0.24s` where they previously reported 1ms |
+| **A fourth fabricated data source was live** — the idea page's demand chart drew twelve bars from `Math.sin(i*0.9)*12 + Math.cos(i*0.5)*8` and presented them as market data | deleted; replaced by a gauge driven by the real `trend_score` |
+| **The verdict panel was invisible to reduced-motion readers** — the old pin parked `--sc-p` at 0, driving that panel's own `clamp()` to zero opacity | migrated hook parks at the settled value |
+| **`getCatalog()` fetched every row with no LIMIT**, from the root loader, on every page, with no cache. PostgREST caps at 1000 rows *and does not error*, so at 1,001 ideas the site would have silently under-reported itself everywhere | two aggregate RPCs; returns 14 rows instead of 290; totals verified identical |
+| **The footer rendered every category uncapped** — 230px at 14, ~3,300px at 200, on every page | measured 825px at 14 categories and **825px at 1,200** |
+| **The Categories dropdown had no cap and no scroll container** | measured 14,978px against a 1,000px viewport at 1,200 categories; now 12 rows with a 70vh guard |
+| **"290 subcategories" was never a real figure** — `subcategory_name` is byte-identical to `title`, so it was the idea count relabelled | deleted, not recomputed; `/browse` no longer renders one pill per idea |
+| **A number was stamped over the founder's artwork** | removed, with its CSS and its prop |
+| **The artwork was being cropped away on portrait screens** | measured 83% visible on desktop, **39% on tablet, 24% on phone**; now 100% on both, desktop unchanged |
+| **The mechanism leak was in 12 files, not 1** — the worst sat on every idea page and named both vendors plus the account model | all rewritten; functional picker kept per the brief |
+| **Two `!important` traps** — a global category-link pill rule causing 4 live bugs, and `glass-hover` transitioning box-shadow blur every frame | both removed; `styles.css` 1.1KB smaller |
+| **`TYPE_GROUPS` had two slugs I typed wrong**, so two dropdown columns rendered short on every page | groups now derived from live data; a wrong slug is not typeable |
+| **44 dead `ui/` components** | 35 deleted (3,785 lines) plus **25 npm dependencies**; 57 deps → 32 |
+| Sitewide footer hydration mismatch | root cause was a fresh QueryClient per request with no dehydration; now reads router loader data |
+
+### Built
+
+Four templates that did not exist: `/list`, `/calculator` (4 working tools, INR
+grouping, formulas shown), `/faq` hub with an honest empty state, and the FAQ
+pool infrastructure. The n8n workflow gained a FAQ branch with real API-key
+rotation — the plan listed rotation as a hard constraint and it had never been
+built.
+
+Motion: hover and focus on every route, cursor parallax at three depths
+(measured, opposite directions), a pinned chapter (measured, 4 cards over
+2,700px), a sticky-aside grammar, and page transitions.
+
+### Removed again, deliberately
+
+- **Smooth scrolling (Lenis)** and **every animated blur** — the founder
+  reported lag, and these were the heaviest things added. Honest caveat: this
+  sandbox cannot profile frame timing. The same 2-second scroll on identical
+  code measured 272ms/frame then 127ms, and disabling each suspect made the
+  number worse. That is noise. The removal is reasoning, not diagnosis.
+- **The aside row illumination.** Three implementations, all measured, all
+  failed the same way: the aside is `position: sticky`, and once it sticks it
+  and its children stop moving relative to the scrollport, so any timeline
+  built on their position completes instantly. Not fixable from this end.
+
+### Still open, and honestly why
+
+| Item | Blocked on |
+|---|---|
+| **The animation is still not what the founder wants.** They want motion from type, shape and layout — not built around the four photos. | A direction. Six attempts have been rejected; guessing a seventh is not respectful of their time. Needs one reference or one named section. |
+| **Lag** | Cannot be measured here. Needs the founder on a real device against the deploy. |
+| **8 hotlinked `ethicalfounder.com` images** | The sandbox blocks that host at the network layer — `curl` returns nothing. Needs the founder to download and commit them. |
+| **FAQ pool is empty** (all 14 categories) | One Gemini/n8n run. Infrastructure and guards are live; `docs/FAQ_POOL_PIPELINE.md` has the exact insert shape. |
+| **74 of 290 ideas have a body under 200 characters** | Same pipeline lever. |
+| **"967 Founders reviewed us"** | A founder decision: keep, wire to something real, or drop. Its counter and animation were stripped; the number was not. |
+| **`/guide`, `/tools`, `/compare`, `/validate`** | Content decisions, not engineering. Building empty shells would add four dead pages. |
+| Listicle entries are shorter than brief §6.3's 200–300 words | The database does not hold that much per idea. Same pipeline lever. |
+| `/blog` depends on an external WordPress API | Pre-existing. It 500s if that API is down. |
