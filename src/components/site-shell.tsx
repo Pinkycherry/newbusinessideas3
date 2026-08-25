@@ -34,6 +34,7 @@ import { Spotlight } from "@/components/spotlight";
 import { catalogQuery } from "@/lib/ideas.functions";
 import { usePageScrollProgress } from "@/motion";
 import { topCategories, typeGroups } from "@/lib/catalog-display";
+import { subscribeToNewsletter } from "@/lib/newsletter.functions";
 import { prefersReducedMotion } from "@/lib/motion";
 
 import { useAuth } from "@/hooks/use-auth";
@@ -665,6 +666,78 @@ const footerColumns: { title: string; links: { to: string; label: string }[] }[]
   },
 ];
 
+/**
+ * The newsletter column from the reference footer.
+ *
+ * It writes a real row into `newsletter_signups` rather than being a shape
+ * that looks like a form. A Subscribe button that does nothing is worse than
+ * no Subscribe button, and this site has already had to remove four things
+ * that were pretending.
+ */
+function NewsletterSignup() {
+  const [email, setEmail] = useState("");
+  const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
+  const [message, setMessage] = useState("");
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (state === "sending") return;
+    setState("sending");
+    try {
+      await subscribeToNewsletter({ data: { email, source: "footer" } });
+      setState("done");
+      setEmail("");
+    } catch (err) {
+      setState("error");
+      setMessage(err instanceof Error ? err.message : "Something went wrong.");
+    }
+  };
+
+  return (
+    <div>
+      <h3 className="bbi-footer-heading">Newsletter</h3>
+      <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+        New blueprints, and the occasional honest note about what is and is not working. No spam,
+        and one click to leave.
+      </p>
+
+      {state === "done" ? (
+        <p className="mt-5 text-sm font-medium text-accent" role="status">
+          You are on the list.
+        </p>
+      ) : (
+        <form onSubmit={onSubmit} className="mt-5 grid gap-2.5">
+          <label htmlFor="bbi-newsletter-email" className="sr-only">
+            Email address
+          </label>
+          <input
+            id="bbi-newsletter-email"
+            type="email"
+            required
+            autoComplete="email"
+            inputMode="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (state === "error") setState("idle");
+            }}
+            placeholder="Enter your email address"
+            className="bbi-footer-input"
+          />
+          <button type="submit" disabled={state === "sending"} className="bbi-footer-subscribe">
+            {state === "sending" ? "Signing you up…" : "Subscribe"}
+          </button>
+          {state === "error" && (
+            <p className="text-xs text-destructive" role="alert">
+              {message}
+            </p>
+          )}
+        </form>
+      )}
+    </div>
+  );
+}
+
 export function SiteShell({ children }: { children: ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   // Publishes --page-p on :root; the rail under the header is the only thing
@@ -676,7 +749,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
   const totalCategories = catalog?.totalCategories ?? allCategories.length;
   // Capped by design. See src/lib/catalog-display.ts for the measurements —
   // uncapped, this block was 3,300px of footer per page at 200 categories.
-  const footerCategories = topCategories(allCategories, 8);
+  const footerCategories = topCategories(allCategories, 5);
   return (
     <div className="relative flex min-h-screen flex-col text-foreground">
       <AmbientScene />
@@ -737,72 +810,48 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
       <FloatingDock />
       <BuiltWithSection />
-      {/* Brief 12.4 — "wide and comprehensive... a full rebuild, not a tweak".
-          The version before this was three bands of link lists and a row of
-          three big numbers. It was a link dump, and it did not scale: rows were
-          uncapped with no max-height, so at 200 categories it became 3,300px of
-          footer on every page of the site.
+      {/* Footer, built to the reference the founder supplied: a light card,
+          four columns of plain link lists with a newsletter block, then a
+          hairline and a thin bottom bar.
 
-          This one is built around a statement rather than a directory, caps the
-          catalogue at eight with the remainder as a link, and collapses the
-          other three columns into one rail so they stop competing with the
-          categories for weight. Its height is the same at 14 categories as at
-          1,400. */}
-      <footer className="mt-24 px-3 pb-8 sm:px-4">
-        <div className="bbi-footer mx-auto max-w-7xl overflow-hidden rounded-[2rem]">
-          {/* The statement. Display type, brand voice, no description copy. */}
-          <div className="border-b border-[color-mix(in_oklab,var(--background)_16%,transparent)] px-7 py-14 sm:px-12 sm:py-20">
-            <p className="bbi-footer-eyebrow">Bro Business Ideas</p>
-            <p className="bbi-footer-statement">
-              Research you can act on,
-              <br />
-              free to read, start to finish.
-            </p>
-            <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4">
-              <Link to="/browse" className="bbi-footer-cta">
-                Browse the library
-              </Link>
-              {/* The one place a count is stated. It used to appear here three
-                  times over, and again in the header dropdown on the same page. */}
-              <p className="bbi-footer-count">
-                {totalIdeas} researched blueprints across {totalCategories} categories
-              </p>
-            </div>
-          </div>
-
-          <div className="grid gap-10 px-7 py-12 sm:px-12 lg:grid-cols-[1.6fr_1fr]">
-            {/* Eight deepest categories, then a link. Never the full list. */}
+          What this replaced was a dark full-bleed band with display type and
+          a statistics row. That was my idea, not the brief's, and it was
+          wrong. This is the reference. */}
+      <footer className="px-3 pb-10 pt-24 sm:px-4">
+        <div className="bbi-footer mx-auto max-w-7xl rounded-3xl px-7 py-12 sm:px-12 sm:py-14">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.1fr_1fr_1fr_1.4fr]">
+            {/* Categories, capped. The cap is what keeps this footer one
+                height whether the catalogue holds 14 categories or 1,400. */}
             <div>
-              <h3 className="bbi-footer-heading">Where people start</h3>
-              <ul className="mt-5 grid gap-x-10 gap-y-0.5 sm:grid-cols-2">
+              <h3 className="bbi-footer-heading">Browse</h3>
+              <ul className="mt-4 grid gap-2.5">
                 {footerCategories.shown.map((c) => (
                   <li key={c.categorySlug}>
                     <Link
                       to="/category/$categorySlug"
                       params={{ categorySlug: c.categorySlug }}
-                      className="bbi-footer-row"
+                      className="bbi-footer-link"
                     >
-                      <span className="min-w-0 leading-snug">{c.categoryName}</span>
-                      <span className="shrink-0 text-[11px] tabular-nums opacity-55">
-                        {c.ideaCount}
-                      </span>
+                      {c.categoryName}
                     </Link>
                   </li>
                 ))}
+                {footerCategories.hasMore && (
+                  <li>
+                    <Link to="/browse" className="bbi-footer-link bbi-footer-more">
+                      and {footerCategories.hiddenCount} more
+                    </Link>
+                  </li>
+                )}
               </ul>
-              {footerCategories.hasMore && (
-                <Link to="/browse" className="bbi-footer-more">
-                  and {footerCategories.hiddenCount} more
-                </Link>
-              )}
             </div>
 
-            {/* Everything else, as one rail rather than three equal columns. */}
-            <div className="grid gap-8 sm:grid-cols-3 lg:grid-cols-1 lg:gap-7">
-              {footerColumns.map((col) => (
+            {footerColumns
+              .filter((col) => col.title !== "Legal")
+              .map((col) => (
                 <div key={col.title}>
                   <h3 className="bbi-footer-heading">{col.title}</h3>
-                  <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-1">
+                  <ul className="mt-4 grid gap-2.5">
                     {col.links.map((link) => (
                       <li key={`${col.title}-${link.to}-${link.label}`}>
                         <Link to={link.to} className="bbi-footer-link">
@@ -813,12 +862,32 @@ export function SiteShell({ children }: { children: ReactNode }) {
                   </ul>
                 </div>
               ))}
-            </div>
+
+            <NewsletterSignup />
           </div>
 
-          <div className="flex flex-col gap-2 border-t border-[color-mix(in_oklab,var(--background)_16%,transparent)] px-7 py-6 text-xs sm:flex-row sm:items-center sm:justify-between sm:px-12">
-            <p className="bbi-footer-fine">© {new Date().getFullYear()} BBI · Businessidea.io</p>
-            <p className="bbi-footer-fine">Built by people who&apos;ve been where you are.</p>
+          <div className="mt-12 flex flex-col gap-3 border-t border-border pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
+            {/* Legal lives here rather than as a fifth column — that is where
+                the reference puts it, and four columns plus a fifth is what
+                pushed the newsletter onto its own row. */}
+            <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              {(footerColumns.find((c) => c.title === "Legal")?.links ?? []).map((link, i) => (
+                <Fragment key={link.to}>
+                  {i > 0 && (
+                    <span aria-hidden className="text-border">
+                      ·
+                    </span>
+                  )}
+                  <Link to={link.to} className="bbi-footer-link">
+                    {link.label}
+                  </Link>
+                </Fragment>
+              ))}
+            </p>
+            <p className="text-muted-foreground">
+              © {new Date().getFullYear()} BBI · {totalIdeas} blueprints across {totalCategories}{" "}
+              categories
+            </p>
           </div>
         </div>
       </footer>

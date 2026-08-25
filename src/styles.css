@@ -1600,221 +1600,6 @@ html.light .idea-shell::before { opacity: 0.42; }
 }
 
 /* ==================================================================
-   BRAND ARC — four frames, one pinned stage, scroll is the playhead
-   (rewritten 2026-08-24)
-
-   Every value below is driven from --sc-p, the 0-to-1 scroll progress
-   published by usePinProgress. That is the whole point: the previous
-   build pinned the stage and animated nothing during the hold, which
-   is a motionless screen wearing a scroll effect.
-
-   Nothing is layered on the artwork. The capsules in frame 2 and the
-   panels in frame 3 are painted into the images; overlaying our own
-   pills and cards on them doubled the artwork's own elements. Category
-   navigation lives in its own section elsewhere on the page.
-
-   Scoped .bbi-arc-* only, appended, no token block touched. Colours
-   derive from the real html.light tokens.
-   ================================================================== */
-
-.bbi-arc {
-  position: relative;
-  width: 100%;
-  background: var(--background);
-}
-
-.bbi-arc-stage {
-  position: relative;
-  width: 100%;
-  /* Full-viewport on landscape screens, where a 16:9 frame fills it with only
-     the intended cinematic crop. */
-  height: 100vh;
-  overflow: hidden;
-  isolation: isolate;
-}
-
-/* The frames are 1280x720. `object-fit: cover` on a full-height stage crops
-   whatever does not fit, and on a portrait screen that is most of the image.
-   Measured, counting the frame's own 1.02-1.08 scale push:
-
-     desktop 1440x900   83% of the frame visible   (the intended crop)
-     laptop  1280x800   83%
-     tablet   834x1112  39%
-     phone    390x844   24%
-
-   A quarter of a composed image is not a crop, it is a different picture —
-   on a phone a visitor was seeing a narrow vertical slice of artwork that was
-   drawn as a wide scene. Below the landscape breakpoint the stage takes the
-   frame's own aspect ratio instead of the viewport's, so the whole image is
-   shown and nothing is cut. */
-@media (max-aspect-ratio: 1/1) {
-  .bbi-arc-stage {
-    /* A portrait stage sized to the frame, not to the viewport, so the whole
-       16:9 image is shown instead of a vertical slice of it. The floor keeps
-       enough height for the copy, which is positioned over the lower part of
-       the frame exactly as it is on desktop. */
-    height: auto;
-    aspect-ratio: 16 / 9;
-    min-height: 60svh;
-  }
-}
-
-/* ---- The frames themselves ---------------------------------------
-   Three states drive a cross-dissolve with a slow push, so the cut
-   between two frames reads as a camera move rather than a slide swap:
-     next  waiting, slightly wide and soft
-     on    the live frame
-     past  pushed in and faded out
-   Transitions are long and eased because they are scrubbed by the
-   hand, not played on a timer.                                      */
-.bbi-arc-frame {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  will-change: transform, opacity;
-  transition:
-    opacity 900ms cubic-bezier(0.4, 0, 0.2, 1),
-    transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.bbi-arc-frame[data-state="next"] {
-  opacity: 0;
-  transform: scale(1.08);
-}
-.bbi-arc-frame[data-state="on"] {
-  opacity: 1;
-  /* Continuous slow push across the frame's own span, straight off
-     scroll position — this is what makes the still feel like footage. */
-  transform: scale(calc(1.02 + (var(--sc-p, 0) * 0.06)));
-}
-
-/* On a portrait stage the frame now fits exactly, so any scale at all starts
-   cutting the edges off again. `contain` keeps the whole image inside the box
-   and the push is halved — enough to still read as movement, not enough to
-   crop. */
-@media (max-aspect-ratio: 1/1) {
-  .bbi-arc-frame {
-    object-fit: contain;
-  }
-  .bbi-arc-frame[data-state="on"] {
-    transform: scale(calc(1 + (var(--sc-p, 0) * 0.03)));
-  }
-  .bbi-arc-frame[data-state="next"] {
-    transform: scale(1.04);
-  }
-  .bbi-arc-frame[data-state="past"] {
-    transform: scale(1.08);
-  }
-}
-.bbi-arc-frame[data-state="past"] {
-  opacity: 0;
-  transform: scale(1.16);
-}
-
-/* Density under the copy only, keyed to the corner the text occupies. */
-.bbi-arc-veil {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    to top,
-    color-mix(in oklab, var(--background) 88%, transparent) 0%,
-    color-mix(in oklab, var(--background) 55%, transparent) 26%,
-    transparent 55%
-  );
-}
-
-/* ---- The line of copy for the live frame -------------------------- */
-.bbi-arc-copy {
-  position: absolute;
-  z-index: 2;
-  left: 0;
-  right: 0;
-  bottom: clamp(3rem, 12vh, 8rem);
-  padding-inline: clamp(1.5rem, 6vw, 6rem);
-  display: grid;
-}
-.bbi-arc-line {
-  grid-area: 1 / 1;
-  max-width: 34rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  transition:
-    opacity 620ms cubic-bezier(0.4, 0, 0.2, 1),
-    transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.bbi-arc-line[data-state="off"] {
-  opacity: 0;
-  transform: translateY(14px);
-  pointer-events: none;
-}
-.bbi-arc-line[data-state="on"] {
-  opacity: 1;
-  transform: translateY(0);
-}
-.bbi-arc-eyebrow {
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
-}
-.bbi-arc-text {
-  font-family: var(--font-display, inherit);
-  font-size: clamp(1.35rem, 3vw, 2.6rem);
-  font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  color: var(--foreground);
-  text-wrap: balance;
-}
-
-/* ---- Where you are in the sequence -------------------------------- */
-.bbi-arc-rail {
-  position: absolute;
-  z-index: 2;
-  left: clamp(1.5rem, 6vw, 6rem);
-  bottom: clamp(1.75rem, 7vh, 4rem);
-  display: flex;
-  gap: 0.4rem;
-}
-.bbi-arc-tick {
-  display: block;
-  width: 2.25rem;
-  height: 2px;
-  border-radius: 2px;
-  background: color-mix(in oklab, var(--foreground) 18%, transparent);
-  transition: background-color 500ms ease;
-}
-.bbi-arc-tick[data-state="on"] {
-  background: var(--primary);
-}
-
-/* The library size, sitting quietly in the corner and drifting with
-   the scroll so the frame never feels locked. */
-
-@media (max-width: 640px) {
-  .bbi-arc-stage {
-    height: 88vh;
-  }
-}
-
-/* Reduced motion: the sequence still advances and stays readable, it
-   just stops moving. Fewer and gentler, never zero. */
-@media (prefers-reduced-motion: reduce) {
-  .bbi-arc-frame,
-  .bbi-arc-line {
-    transition-duration: 200ms;
-    transform: none !important;
-    filter: none !important;
-  }
-}
-
-/* ==================================================================
    POINTER RESPONSE — what actually reads the channel
 
    `PointerChannelProvider` has been publishing --ptr-x, --ptr-y, --ptr-v
@@ -1900,332 +1685,102 @@ html.light .idea-shell::before { opacity: 0.42; }
 }
 
 /* ==================================================================
-   FOOTER — brief 12.4, "wide and comprehensive... a full rebuild".
+   FOOTER — built to the reference the founder supplied.
 
-   A dark full-bleed band that ENDS the page, instead of a pale panel of
-   link lists that trails off. The site runs light everywhere else, so the
-   inversion is what gives the page a bottom edge.
+   A light card, four columns of plain link lists with a newsletter
+   block, a hairline, then a thin bottom bar. Quiet.
 
-   Every colour is an existing token. `--foreground` (#0C0C25) becomes the
-   ground and `--background` (#FCFBFE) becomes the type, which is the same
-   palette read the other way round, not a new one.
+   What this replaced was a dark full-bleed band with display type and a
+   row of large statistics. That was my invention, not the brief's.
 
-   This is also the first surface on the site that answers the cursor:
-   `--el-ptr-x` is published per row by `useElementPointerGroup`, and the
-   row's accent bar tracks it.
+   Every colour is an existing token. The only motion is a colour change
+   on hover and a 1px lift on the Subscribe button.
    ================================================================== */
 
 .bbi-footer {
-  background: linear-gradient(
-    165deg,
-    var(--foreground) 0%,
-    color-mix(in oklab, var(--foreground) 88%, var(--primary)) 55%,
-    color-mix(in oklab, var(--foreground) 78%, var(--primary)) 100%
-  );
-  color: color-mix(in oklab, var(--background) 82%, transparent);
-  box-shadow: 0 -1px 0 0 color-mix(in oklab, var(--violet-soft) 22%, transparent) inset;
-}
-
-.bbi-footer-eyebrow {
-  font-size: 0.625rem;
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: color-mix(in oklab, var(--violet-soft) 92%, transparent);
-}
-
-/* The statement is the point of the band. Display face, tight leading,
-   sized off the viewport so it holds its proportion on a phone. */
-.bbi-footer-statement {
-  margin-top: 1.25rem;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(1.75rem, 4.4vw, 3.25rem);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  color: var(--background);
-  text-wrap: balance;
-}
-
-.bbi-footer-cta {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 9999px;
-  padding: 0.7rem 1.5rem;
-  font-size: 0.6875rem;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--foreground);
-  background: var(--background);
-  transition:
-    transform var(--mo-dur-2, 240ms) var(--mo-ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
-    background-color var(--mo-dur-2, 240ms) ease;
-}
-@media (hover: hover) and (pointer: fine) {
-  .bbi-footer-cta:hover {
-    transform: translate3d(0, -2px, 0);
-    background: var(--violet-soft);
-  }
-}
-
-.bbi-footer-count {
-  font-size: 0.8125rem;
-  color: color-mix(in oklab, var(--background) 62%, transparent);
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 24px 60px -40px color-mix(in oklab, var(--foreground) 40%, transparent);
 }
 
 .bbi-footer-heading {
-  font-size: 0.625rem;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
   font-weight: 700;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: color-mix(in oklab, var(--violet-soft) 88%, transparent);
-}
-
-/* A category row. The ::before is a bar that grows from the left on hover and
-   sits where the cursor is vertically, so the response is positional rather
-   than a uniform highlight. Both animate on transform only. */
-.bbi-footer-row {
-  position: relative;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.45rem 0 0.45rem 0.9rem;
-  font-size: 0.875rem;
-  color: color-mix(in oklab, var(--background) 72%, transparent);
-  transition:
-    color var(--mo-dur-2, 240ms) ease,
-    transform var(--mo-dur-2, 240ms) var(--mo-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
-}
-.bbi-footer-row::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.55rem;
-  bottom: 0.55rem;
-  width: 2px;
-  border-radius: 2px;
-  background: var(--violet-soft);
-  transform: scaleY(0);
-  transform-origin: center;
-  transition: transform var(--mo-dur-2, 240ms) var(--mo-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
-}
-@media (hover: hover) and (pointer: fine) {
-  .bbi-footer-row:hover {
-    color: var(--background);
-    transform: translate3d(3px, 0, 0);
-  }
-  .bbi-footer-row:hover::before {
-    transform: scaleY(1);
-  }
-}
-.bbi-footer-row:focus-visible {
-  color: var(--background);
-  outline: 2px solid var(--violet-soft);
-  outline-offset: 3px;
-  border-radius: 0.35rem;
-}
-
-.bbi-footer-more {
-  display: inline-block;
-  margin-top: 1rem;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--violet-soft);
-  transition: color var(--mo-dur-2, 240ms) ease;
-}
-@media (hover: hover) and (pointer: fine) {
-  .bbi-footer-more:hover {
-    color: var(--background);
-  }
+  letter-spacing: -0.01em;
+  color: var(--foreground);
 }
 
 .bbi-footer-link {
-  font-size: 0.8125rem;
-  color: color-mix(in oklab, var(--background) 66%, transparent);
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
   transition: color var(--mo-dur-2, 240ms) ease;
 }
 @media (hover: hover) and (pointer: fine) {
   .bbi-footer-link:hover {
-    color: var(--background);
+    color: var(--accent);
   }
 }
-
-.bbi-footer-fine {
-  color: color-mix(in oklab, var(--background) 48%, transparent);
+.bbi-footer-link:focus-visible {
+  color: var(--accent);
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  border-radius: 0.25rem;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .bbi-footer-cta,
-  .bbi-footer-cta:hover,
-  .bbi-footer-row,
-  .bbi-footer-row:hover {
-    transform: none;
-  }
-  .bbi-footer-row::before,
-  .bbi-footer-row:hover::before {
-    transform: scaleY(1);
-    transition: none;
-  }
-}
-
-/* ==================================================================
-   PINNED CHAPTER — the Research Standard section.
-
-   Its own grammar, deliberately not the site's stagger reveal. Eight of
-   the homepage's motion hooks were the same `useStaggerReveal`; repeating
-   one device across every section is consistent and forgettable, which is
-   the "template animation" problem. This content is genuinely sequential —
-   four checks, in order — so the section holds the viewport and the wheel
-   advances through them.
-
-   All four cards are always in the DOM. They are styled by `data-state`,
-   never mounted and unmounted, so a crawler and a screen reader see the
-   full set regardless of scroll position.
-
-   Every property animated here is transform or opacity.
-   ================================================================== */
-
-.bbi-chapter {
-  min-height: 100svh;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  /* A pinned element is lifted out of flow and sits OVER whatever follows it.
-     Without its own ground the next section reads straight through the cards,
-     which is what the first screenshot of this caught. The gradient is the two
-     existing surface tokens, so it still reads as the same page. */
-  background: linear-gradient(
-    180deg,
-    var(--background) 0%,
-    var(--background-2) 50%,
-    var(--background) 100%
-  );
-}
-
-.bbi-chapter-stage {
-  position: relative;
-  display: grid;
-  min-height: 15rem;
-  place-items: center;
-}
-
-/* Cards stack in one grid cell and are separated by depth, not by position. */
-.bbi-chapter-card {
-  grid-area: 1 / 1;
-  width: min(34rem, 100%);
-  padding: 2.5rem 2.75rem;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--card);
-  backdrop-filter: blur(18px) saturate(140%);
-  text-align: center;
-  will-change: transform, opacity;
-  transition:
-    opacity 620ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* The one being read. */
-.bbi-chapter-card[data-state="on"] {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-  z-index: 3;
-}
-
-/* Already read — settles back and down, so the stack reads as a deck the
-   reader is moving through rather than as cards appearing from nowhere. */
-.bbi-chapter-card[data-state="past"] {
-  opacity: 0;
-  transform: translate3d(0, -2.5rem, 0) scale(0.94);
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Not yet reached — waiting below, slightly small. */
-.bbi-chapter-card[data-state="next"] {
-  opacity: 0;
-  transform: translate3d(0, 2.5rem, 0) scale(0.94);
-  z-index: 2;
-  pointer-events: none;
-}
-
-.bbi-chapter-num {
-  display: block;
-  font-size: 0.6875rem;
-  font-weight: 800;
-  letter-spacing: 0.28em;
+.bbi-footer-more {
+  font-weight: 600;
   color: var(--accent);
 }
 
-.bbi-chapter-title {
-  margin-top: 0.75rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+.bbi-footer-input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--input);
+  background: var(--popover);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.875rem;
   color: var(--foreground);
+  transition:
+    border-color var(--mo-dur-2, 240ms) ease,
+    box-shadow var(--mo-dur-2, 240ms) ease;
+}
+.bbi-footer-input::placeholder {
+  color: color-mix(in oklab, var(--muted-foreground) 70%, transparent);
+}
+.bbi-footer-input:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 18%, transparent);
 }
 
-.bbi-chapter-desc {
-  margin-top: 0.9rem;
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: var(--muted-foreground);
+.bbi-footer-subscribe {
+  width: 100%;
+  border-radius: 0.75rem;
+  padding: 0.7rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary-foreground);
+  background: linear-gradient(90deg, var(--primary), var(--ember));
+  transition:
+    transform var(--mo-dur-2, 240ms) cubic-bezier(0.16, 1, 0.3, 1),
+    filter var(--mo-dur-2, 240ms) ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .bbi-footer-subscribe:hover:not(:disabled) {
+    transform: translate3d(0, -1px, 0);
+    filter: brightness(1.06);
+  }
+}
+.bbi-footer-subscribe:disabled {
+  cursor: progress;
+  opacity: 0.6;
 }
 
-.bbi-chapter-rail {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 2.75rem;
-}
-
-.bbi-chapter-tick {
-  height: 2px;
-  width: 2.5rem;
-  border-radius: 2px;
-  background: var(--border);
-  transform-origin: left center;
-  transition: background-color 420ms ease;
-}
-.bbi-chapter-tick[data-state="on"] {
-  background: var(--accent);
-}
-
-/* Reduced motion: the pin does not run (useScrollProgress bails), so no card
-   would ever leave its "next" state. Show them all, stacked and readable. */
 @media (prefers-reduced-motion: reduce) {
-  .bbi-chapter {
-    min-height: 0;
-  }
-  .bbi-chapter-stage {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-    place-items: stretch;
-  }
-  /* All four visible, in a grid, with a plain opacity transition rather than
-     nothing at all. The pin and the depth stack are correctly gone - those
-     are the vestibular parts - but a section that simply appears with no
-     transition reads as a page that failed to load its styles. */
-  .bbi-chapter-card,
-  .bbi-chapter-card[data-state="past"],
-  .bbi-chapter-card[data-state="next"],
-  .bbi-chapter-card[data-state="on"] {
-    grid-area: auto;
-    width: auto;
-    opacity: 1;
+  .bbi-footer-subscribe,
+  .bbi-footer-subscribe:hover:not(:disabled) {
     transform: none;
-    filter: none;
-    transition: opacity var(--mo-dur-3, 420ms) ease;
-    pointer-events: auto;
-  }
-  .bbi-chapter-rail {
-    display: none;
   }
 }
 
