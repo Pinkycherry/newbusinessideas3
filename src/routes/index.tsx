@@ -528,7 +528,7 @@ function HomePage() {
             </Link>
           </div>
 
-          <aside className="bbi-editorial-aside glass blob-3 p-8 sm:p-10 lg:mt-16 lg:self-start">
+          <aside className="bbi-editorial-aside glass blob-3 p-6 sm:p-8 lg:mt-16 lg:self-start">
             <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
               What every entry has to contain
             </h3>
@@ -613,7 +613,7 @@ function HomePage() {
         {SCROLL_PANELS.map((panel, i) => (
           <div
             key={panel.title}
-            className={`mo-card glass glass-hover h-full p-6 sm:p-9 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
+            className={`mo-card glass glass-hover h-full p-5 sm:p-7 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
           >
             <h2 className="text-xl font-bold leading-tight tracking-tight sm:text-2xl">
               {panel.title}
@@ -1178,7 +1178,7 @@ function MarketGapSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <Reveal>
-        <div className="glass glass-hover bbi-shape-diamond grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div className="glass glass-hover bbi-shape-diamond grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
               The problem we found
@@ -1286,7 +1286,7 @@ function HowItWorksSection() {
         </div>
       </div>
 
-      <div className="glass bbi-shape-faq1 mt-10 p-6 sm:p-9">
+      <div className="glass bbi-shape-faq1 mt-10 p-5 sm:p-7">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Validating & using BBI
         </p>
@@ -1362,7 +1362,7 @@ const BBI_BUILT_FOR: {
 function WhoForSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-shape-soft-deep grid gap-8 p-6 sm:p-12 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="glass bbi-shape-soft-deep grid gap-6 p-5 sm:p-9 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
             Who we built this for
@@ -1442,7 +1442,7 @@ const BBI_FAQ_2 = [
 function PricingPhilosophySection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass glass-hover bbi-shape-ticket p-8 text-center sm:p-12">
+      <div className="glass glass-hover bbi-shape-ticket p-6 text-center sm:p-9">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Pricing, honestly
         </p>
@@ -1457,7 +1457,7 @@ function PricingPhilosophySection() {
         </p>
       </div>
 
-      <div className="glass bbi-shape-faq2 mt-6 p-6 sm:p-9">
+      <div className="glass bbi-shape-faq2 mt-6 p-5 sm:p-7">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Pricing & the market gap
         </p>
@@ -1474,7 +1474,7 @@ function PricingPhilosophySection() {
 function TeamSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="mo-card glass bbi-shape-card-a grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+      <div className="mo-card glass bbi-shape-card-a grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
             Who&apos;s behind this
@@ -1514,7 +1514,7 @@ function TeamSection() {
 function InspiredBySection() {
   return (
     <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
-      <div className="glass bbi-shape-card-a p-8 sm:p-10">
+      <div className="glass bbi-shape-card-a p-6 sm:p-8">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Where this came from
         </p>
@@ -1678,7 +1678,7 @@ const BBI_FUTURE_TERMS = [
 function FutureProofSpotlight() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-shape-diamond p-8 sm:p-12">
+      <div className="glass bbi-shape-diamond p-6 sm:p-9">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Where the market is headed
         </p>
@@ -1821,7 +1821,7 @@ function PromiseSection() {
       data-anchor-label="Our promise"
       className="mx-auto mt-16 max-w-4xl px-3 sm:px-4"
     >
-      <div className="glass glass-hover bbi-shape-shield p-8 text-center sm:p-12">
+      <div className="glass glass-hover bbi-shape-shield p-6 text-center sm:p-9">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Our promise
         </p>
@@ -1836,7 +1836,7 @@ function PromiseSection() {
         </p>
       </div>
 
-      <div className="glass bbi-shape-faq3 mt-6 p-6 sm:p-9">
+      <div className="glass bbi-shape-faq3 mt-6 p-5 sm:p-7">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Common searches, answered
         </p>
