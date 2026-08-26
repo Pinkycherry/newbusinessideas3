@@ -1539,6 +1539,11 @@ function InspiredBySection() {
 function ComparisonSection() {
   const leftRef = useRef<HTMLDivElement | null>(null);
   const rightRef = useRef<HTMLDivElement | null>(null);
+  // Publishes --sc-p on the section as it crosses the viewport. The depth
+  // classes below read it. It is deliberately NOT on the cards: `.mo-card`
+  // already owns their `transform` for the hover lift, and two rules writing
+  // one property means whichever loses the cascade is silently dropped.
+  const depthRef = useScrollProgress<HTMLElement>();
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -1578,20 +1583,22 @@ function ComparisonSection() {
   }, []);
 
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-        The comparison
-      </p>
-      <h2 className="mt-2 max-w-3xl text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
-        Validating a business idea should not cost you the money you were going to start it with.
-      </h2>
-      <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-        Twenty dollars buys you three or four checks on most idea validation platforms. If the
-        answer comes back no, that money is gone and you are back where you started — except poorer.
-        We think that is the wrong way round. Read the research first, for free, and decide with
-        your own eyes whether an idea is worth your time.
-      </p>
-      <div className="mt-8 grid items-stretch gap-4 sm:grid-cols-2 sm:gap-5">
+    <section ref={depthRef} className="bbi-depth mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <div className="bbi-depth-back">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+          The comparison
+        </p>
+        <h2 className="mt-2 max-w-3xl text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
+          Validating a business idea should not cost you the money you were going to start it with.
+        </h2>
+        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+          Twenty dollars buys you three or four checks on most idea validation platforms. If the
+          answer comes back no, that money is gone and you are back where you started — except
+          poorer. We think that is the wrong way round. Read the research first, for free, and
+          decide with your own eyes whether an idea is worth your time.
+        </p>
+      </div>
+      <div className="bbi-depth-front mt-8 grid items-stretch gap-4 sm:grid-cols-2 sm:gap-5">
         <div
           ref={leftRef}
           className="mo-card glass bbi-shape-compare-sharp border border-border/60 p-5 sm:p-7"
@@ -1745,7 +1752,7 @@ function KeywordMosaic() {
         {BBI_KEYWORD_GROUPS.map((group) => (
           <div
             key={group.heading}
-            className="mo-card glass glass-hover bbi-card-3d bbi-shape-card-a h-full p-4 sm:p-6"
+            className="mo-card glass glass-hover bbi-shape-card-a h-full p-4 sm:p-6"
           >
             <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
               {group.heading}

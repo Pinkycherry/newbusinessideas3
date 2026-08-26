@@ -118,7 +118,7 @@ function BrowsePage() {
             {data.categories.map((category) => (
               <section
                 key={category.categorySlug}
-                className="glass glass-hover mo-card bbi-card-3d rounded-3xl px-5 py-6 sm:px-8 sm:py-7"
+                className="glass glass-hover mo-card rounded-3xl px-5 py-6 sm:px-8 sm:py-7"
               >
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
                   <Link

@@ -1855,20 +1855,46 @@ html.light .idea-shell::before { opacity: 0.42; }
 }
 
 /* ============================================================
-   PREMIUM ANIMATION LAYER — 3D transforms + parallax depth
-   GPU-accelerated, reduced-motion aware.
+   CINEMATIC LAYER — scroll-driven parallax depth
+   Transform/opacity only, GPU-composited, reduced-motion aware.
+   Nothing here is hover-driven: motion belongs to the scroll position,
+   so a section reads as one moving thing rather than as parts that
+   react when the cursor touches them.
    ============================================================ */
 
-.bbi-card-3d {
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  will-change: transform, box-shadow;
-  transition: box-shadow 300ms var(--ease-glass);
+/* ---- Parallax depth layers -------------------------------------------
+   Scroll-driven, not pointer-driven. Nothing here reacts to hover: the
+   choreography belongs to the scroll position, so the page reads as one
+   moving thing rather than as a grid of cards that wobble when touched.
+
+   All three read `--sc-p` (0 -> 1), published on the section by
+   `useScrollProgress` as it crosses the viewport. With no JS `--sc-p`
+   falls back to 0.5 — the mid-point — so every layer sits at its resting
+   offset and the section is simply static, never mis-stacked.
+
+   The offsets are deliberately unequal. Equal offsets are not parallax;
+   the depth cue is entirely in the *difference* in rate between planes. */
+.bbi-depth {
+  --sc-depth: calc((var(--sc-p, 0.5) - 0.5) * 2); /* -1 .. 1, 0 at centre */
 }
 
-.bbi-parallax-layer {
+.bbi-depth-back,
+.bbi-depth-mid,
+.bbi-depth-front {
   will-change: transform;
   backface-visibility: hidden;
+}
+
+.bbi-depth-back {
+  transform: translate3d(0, calc(var(--sc-depth, 0) * -28px), 0);
+}
+
+.bbi-depth-mid {
+  transform: translate3d(0, calc(var(--sc-depth, 0) * -14px), 0);
+}
+
+.bbi-depth-front {
+  transform: translate3d(0, calc(var(--sc-depth, 0) * 10px), 0);
 }
 
 .bbi-nav-morph {
@@ -1899,14 +1925,17 @@ html.light .idea-shell::before { opacity: 0.42; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bbi-card-3d,
-  .bbi-parallax-layer,
-  .bbi-nav-morph {
+  .bbi-depth-back,
+  .bbi-depth-mid,
+  .bbi-depth-front {
+    transform: none;
     will-change: auto;
-    transform: none !important;
   }
 
+  /* The pill still appears on hover — it is the affordance, not the motion.
+     Only the scale-in and the fade are dropped. */
   .bbi-nav-morph::before {
     transition: none;
+    transform: none;
   }
 }
