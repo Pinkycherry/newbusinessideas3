@@ -6,7 +6,12 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getCatalog } from "@/lib/ideas.functions";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { usePillInteraction } from "@/hooks/use-pill-interaction";
-import { useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
+import {
+  useElementPointerGroup,
+  useScrollProgress,
+  useStaggerReveal,
+  useTextReveal,
+} from "@/motion";
 
 const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
 
@@ -78,6 +83,7 @@ function BrowsePage() {
   // on the same container element, so they share a single callback ref.
   const pointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
   const revealRef = useStaggerReveal<HTMLDivElement>({ stagger: 0.03 });
+  const depthRef = useScrollProgress<HTMLDivElement>();
   const listRef = useCallback(
     (node: HTMLDivElement | null) => {
       pointerRef.current = node;
@@ -102,23 +108,28 @@ function BrowsePage() {
         ]}
       />
       <SiteShell>
-        <div className="mx-auto max-w-6xl px-4 py-12">
+        <div ref={depthRef} className="bbi-depth mx-auto max-w-6xl px-4 py-12">
           <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Browse" }]} />
-          <h1 ref={headingRef} className="mt-4 text-3xl font-bold tracking-tight">
-            The full idea library
-          </h1>
-          {/* One line, two figures. The third used to be "N subcategories",
+          <div className="bbi-depth-back">
+            <h1 ref={headingRef} className="mt-4 text-3xl font-bold tracking-tight">
+              The full idea library
+            </h1>
+            {/* One line, two figures. The third used to be "N subcategories",
               which was the idea count wearing a different label —
               subcategory_name is byte-identical to title, so there are exactly
               as many subcategories as ideas and the number said nothing. */}
-          <p className="mt-2 text-sm text-muted-foreground">
-            {data.totalIdeas} researched blueprints across {data.totalCategories} categories
-          </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {data.totalIdeas} researched blueprints across {data.totalCategories} categories
+            </p>
+          </div>
           {/* Was `space-y-6`: fourteen full-width bars, each holding a single
               line of text and a count, roughly 1,600px of page to say what a
               grid says in 400. Compact three-up grid instead — the card is
               sized to its content rather than to the container. */}
-          <div ref={listRef} className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            ref={listRef}
+            className="bbi-depth-front mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {data.categories.map((category) => (
               <section
                 key={category.categorySlug}

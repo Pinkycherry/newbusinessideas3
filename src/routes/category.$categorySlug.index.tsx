@@ -7,7 +7,12 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
 import { getCategoryPage } from "@/lib/ideas.functions";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
-import { useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
+import {
+  useElementPointerGroup,
+  useScrollProgress,
+  useStaggerReveal,
+  useTextReveal,
+} from "@/motion";
 
 const categoryQuery = (categorySlug: string) =>
   queryOptions({
@@ -69,6 +74,9 @@ function CategoryPage() {
   // grid are not cards and must never be hidden or staggered.
   const pointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
   const revealRef = useStaggerReveal<HTMLDivElement>({ selector: ".mo-card", stagger: 0.03 });
+  // Publishes --sc-p for the depth planes below. Breadcrumbs stay off the
+  // planes: navigation should not drift while you are trying to click it.
+  const depthRef = useScrollProgress<HTMLDivElement>();
   const gridRef = useCallback(
     (node: HTMLDivElement | null) => {
       pointerRef.current = node;
@@ -103,7 +111,7 @@ function CategoryPage() {
         ]}
       />
       <SiteShell>
-        <div className="mx-auto max-w-6xl px-4 py-12">
+        <div ref={depthRef} className="bbi-depth mx-auto max-w-6xl px-4 py-12">
           {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
           <Breadcrumbs
             items={[
@@ -112,16 +120,27 @@ function CategoryPage() {
               { label: data.categoryName ?? categorySlug },
             ]}
           />
-          <h1 ref={headingRef} className="bbi-heading-glow mt-4 text-3xl font-bold tracking-tight">
-            {data.categoryName}
-          </h1>
-          <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
+          <div className="bbi-depth-back">
+            <h1
+              ref={headingRef}
+              className="bbi-heading-glow mt-4 text-3xl font-bold tracking-tight"
+            >
+              {data.categoryName}
+            </h1>
+            <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
+          </div>
 
-          <div className="mt-8">
+          {/* Ad and grid share the FRONT plane so they travel together. Split
+              across planes they would converge on each other, and the ad-to-grid
+              gap is only 32px. */}
+          <div className="bbi-depth-front mt-8">
             <AdSlot position="category-above-grid" size="banner" />
           </div>
 
-          <div ref={gridRef} className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            ref={gridRef}
+            className="bbi-depth-front mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {data.ideas.map((idea, i) => (
               <Fragment key={idea.ideaId}>
                 <IdeaCard idea={idea} featured={idea.ideaId === leadIdeaId} />

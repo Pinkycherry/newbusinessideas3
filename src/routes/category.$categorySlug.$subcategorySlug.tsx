@@ -6,7 +6,12 @@ import { IdeaCard } from "@/components/idea-card";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getSubcategoryPage } from "@/lib/ideas.functions";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
-import { useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
+import {
+  useElementPointerGroup,
+  useScrollProgress,
+  useStaggerReveal,
+  useTextReveal,
+} from "@/motion";
 
 const subQuery = (categorySlug: string, subcategorySlug: string) =>
   queryOptions({
@@ -69,6 +74,7 @@ function SubcategoryPage() {
   // both on the same container element via a single callback ref.
   const pointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
   const revealRef = useStaggerReveal<HTMLDivElement>({ selector: ".mo-card", stagger: 0.03 });
+  const depthRef = useScrollProgress<HTMLDivElement>();
   const gridRef = useCallback(
     (node: HTMLDivElement | null) => {
       pointerRef.current = node;
@@ -101,7 +107,7 @@ function SubcategoryPage() {
         ]}
       />
       <SiteShell>
-        <div className="mx-auto max-w-6xl px-4 py-12">
+        <div ref={depthRef} className="bbi-depth mx-auto max-w-6xl px-4 py-12">
           <Breadcrumbs
             items={[
               { label: "Home", to: "/" },
@@ -114,11 +120,16 @@ function SubcategoryPage() {
               { label: data.subcategoryName ?? subcategorySlug },
             ]}
           />
-          <h1 ref={headingRef} className="mt-4 text-3xl font-bold tracking-tight">
-            {data.subcategoryName}
-          </h1>
-          <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
-          <div ref={gridRef} className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="bbi-depth-back">
+            <h1 ref={headingRef} className="mt-4 text-3xl font-bold tracking-tight">
+              {data.subcategoryName}
+            </h1>
+            <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
+          </div>
+          <div
+            ref={gridRef}
+            className="bbi-depth-front mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {data.ideas.map((idea) => (
               <IdeaCard key={idea.ideaId} idea={idea} featured={idea.ideaId === leadIdeaId} />
             ))}
