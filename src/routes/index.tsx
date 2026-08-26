@@ -1245,15 +1245,20 @@ const BBI_FAQ_1 = [
 
 function HowItWorksSection() {
   const stepsRef = useStaggerReveal<HTMLDivElement>();
+  // Second depth beat on the page, far enough below ComparisonSection that the
+  // two read as rhythm rather than as the whole page drifting.
+  const depthRef = useScrollProgress<HTMLElement>();
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+    <section ref={depthRef} className="bbi-depth mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-        <OrbitDiagram
-          centerLabel="Your idea"
-          centerSub="Start here"
-          nodes={["Browse", "Take it anywhere", "Go lifetime"]}
-        />
-        <div>
+        <div className="bbi-depth-back">
+          <OrbitDiagram
+            centerLabel="Your idea"
+            centerSub="Start here"
+            nodes={["Browse", "Take it anywhere", "Go lifetime"]}
+          />
+        </div>
+        <div className="bbi-depth-front">
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
             How it works
           </p>
