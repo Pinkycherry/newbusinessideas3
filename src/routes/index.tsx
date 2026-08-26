@@ -1680,14 +1680,22 @@ function FutureProofSpotlight() {
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <div className="glass bbi-shape-diamond p-6 sm:p-9">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Where the market is headed
+          Ways into the library
         </p>
         <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
-          The ideas that don&apos;t age out.
+          Start from a theme instead of a blank search box.
         </h2>
+        {/* The previous lead said these were "pulled straight from the live
+            library, not a marketing list". BBI_FUTURE_TERMS is six hand-typed
+            strings in this file, so that sentence was false on a live page —
+            it claimed data provenance for a hardcoded constant, under a
+            heading ("where the market is headed") the pills never supported.
+            The terms stay verbatim because they carry the search value; the
+            copy around them now describes what they actually do. */}
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          These categories hold up regardless of what the economy does next — pulled straight from
-          the live library, not a marketing list.
+          Each one runs a live search across every blueprint. They are shortcuts, not a ranking
+          &mdash; and if one comes back thin, that is the library being honest with you rather than
+          a page pretending to be fuller than it is.
         </p>
         <div className="mt-6 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
           {BBI_FUTURE_TERMS.map((term) => (
