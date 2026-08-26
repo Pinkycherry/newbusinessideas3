@@ -305,7 +305,7 @@ function NavDropdown({
         aria-haspopup="menu"
         onFocus={() => isDesktop() && openNow()}
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-1.5 uppercase tracking-[0.18em] transition-colors duration-300 hover:text-foreground"
+        className="bbi-nav-morph flex items-center gap-1.5 uppercase tracking-[0.18em] transition-colors duration-300 hover:text-foreground"
       >
         {label}
         <span

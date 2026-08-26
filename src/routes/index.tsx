@@ -1745,7 +1745,7 @@ function KeywordMosaic() {
         {BBI_KEYWORD_GROUPS.map((group) => (
           <div
             key={group.heading}
-            className="mo-card glass glass-hover bbi-shape-card-a h-full p-4 sm:p-6"
+            className="mo-card glass glass-hover bbi-card-3d bbi-shape-card-a h-full p-4 sm:p-6"
           >
             <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
               {group.heading}

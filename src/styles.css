@@ -1853,3 +1853,60 @@ html.light .idea-shell::before { opacity: 0.42; }
     position: static;
   }
 }
+
+/* ============================================================
+   PREMIUM ANIMATION LAYER — 3D transforms + parallax depth
+   GPU-accelerated, reduced-motion aware.
+   ============================================================ */
+
+.bbi-card-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  will-change: transform, box-shadow;
+  transition: box-shadow 300ms var(--ease-glass);
+}
+
+.bbi-parallax-layer {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.bbi-nav-morph {
+  position: relative;
+  will-change: transform;
+}
+
+.bbi-nav-morph::before {
+  content: "";
+  position: absolute;
+  inset: -0.25rem -0.5rem;
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  opacity: 0;
+  transform: scaleX(0.85);
+  transform-origin: center;
+  transition:
+    opacity 200ms var(--ease-glass),
+    transform 200ms var(--ease-glass);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.bbi-nav-morph:hover::before,
+.bbi-nav-morph:focus-visible::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bbi-card-3d,
+  .bbi-parallax-layer,
+  .bbi-nav-morph {
+    will-change: auto;
+    transform: none !important;
+  }
+
+  .bbi-nav-morph::before {
+    transition: none;
+  }
+}
