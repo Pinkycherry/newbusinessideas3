@@ -9,8 +9,8 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -157,7 +157,15 @@
     to { opacity: 0.6; }
   }
   h1, h2, h3, h4 {
+    /* Clean geometric sans by default; the elegant serif is opted into with
+       .cine-display on the headlines that carry the cinematic weight. */
+    font-family: var(--font-sans);
+    letter-spacing: -0.018em;
+  }
+  .cine-display {
     font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
   }
   /* Neon-lit accent words inside headings, like the reference title treatment */
   h1 .text-accent,
@@ -270,19 +278,20 @@
   }
 }
 @utility glass-hover {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition:
+    border-color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.5s cubic-bezier(0.22, 1, 0.36, 1) !important;
   &:hover {
-    transform: translateY(-4px) scale(1.01) !important;
     border-color: rgba(182, 181, 227, 0.62) !important;
     box-shadow:
-      0 0 0 1px rgba(182, 181, 227, 0.2),
-      0 0 28px -6px rgba(255, 255, 255, 0.38),
-      0 0 54px -14px rgba(136, 134, 219, 0.32),
-      0 26px 60px -10px rgba(0, 0, 0, 0.7),
-      inset 0 1px 2px 0 rgba(255, 255, 255, 0.5),
-      inset 0 -1px 1px 0 rgba(0, 0, 0, 0.5) !important;
+      0 0 0 1px rgba(182, 181, 227, 0.24),
+      0 0 34px -8px rgba(136, 134, 219, 0.5),
+      0 0 90px -30px rgba(70, 67, 186, 0.45),
+      inset 0 1px 2px 0 rgba(255, 255, 255, 0.5) !important;
   }
 }
+
 @utility glass-nav {
   position: relative;
   z-index: 50;
@@ -648,7 +657,7 @@ html.light .tree-asset-container::before {
 
 /* --- TICKER PILLS: lift on hover without colliding with the row above --- */
 .iv-ticker-track { padding-top: 0.45rem; padding-bottom: 0.45rem; }
-.iv-ticker-track .glass-pill:hover { transform: scale(1.06) !important; z-index: 5; position: relative; }
+.iv-ticker-track .glass-pill:hover { z-index: 5; position: relative; box-shadow: 0 0 0 1px rgba(136,134,219,0.45), 0 0 26px -6px rgba(70,67,186,0.55); }
 
 /* ============================================================
    BUILT WITH — horizontal auto-scrolling marquee of real outbound
@@ -1728,8 +1737,8 @@ html.light .idea-shell::before { opacity: 0.42; }
     border-color 240ms ease;
 }
 .bbi-arc-pill:hover {
-  transform: translateY(-2px);
   border-color: var(--primary);
+  box-shadow: 0 0 22px -6px color-mix(in oklab, var(--primary) 55%, transparent);
 }
 .bbi-arc-pill-n {
   font-variant-numeric: tabular-nums;
@@ -1762,8 +1771,8 @@ html.light .idea-shell::before { opacity: 0.42; }
     border-color 260ms ease;
 }
 .bbi-arc-panel:hover {
-  transform: translateY(-3px);
   border-color: var(--primary);
+  box-shadow: 0 0 26px -8px color-mix(in oklab, var(--primary) 55%, transparent);
 }
 .bbi-arc-panel-name {
   font-size: 0.76rem;
@@ -1969,4 +1978,111 @@ html.light .idea-shell::before { opacity: 0.42; }
 }
 .bbi-arc-body {
   font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+}
+
+/* ============================================================
+   CINEMATIC LAYER — BBI homepage
+   Camera-move reveals, ambient float, magnetic/luminous hover.
+   transform + opacity + filter only. No lift, no tilt, no scale-up hover.
+   ============================================================ */
+:root {
+  --cine-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --cine-ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --cine-fast: 420ms;
+  --cine-base: 900ms;
+  --cine-slow: 1400ms;
+}
+
+/* --- Headline word reveal: blur-to-sharp, staggered --------------- */
+@keyframes cine-word-in {
+  from { opacity: 0; transform: translate3d(0, 0.42em, 0); filter: blur(10px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+.cine-word {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+  animation: cine-word-in 1s var(--cine-ease) both;
+}
+
+/* --- Ambient float: continuous, never static --------------------- */
+@keyframes cine-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(0, -6px, 0); }
+}
+.cine-float { animation: cine-float 9s var(--cine-ease-soft) infinite; }
+.cine-float-slow { animation: cine-float 14s var(--cine-ease-soft) infinite; }
+
+/* --- Magnetic / luminous interactive response -------------------- */
+.cine-magnet {
+  transition:
+    transform 520ms var(--cine-ease),
+    box-shadow 520ms var(--cine-ease),
+    border-color 520ms var(--cine-ease);
+}
+.cine-magnet:hover,
+.cine-magnet:focus-visible {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--primary) 42%, transparent),
+    0 0 30px -6px color-mix(in oklab, var(--primary) 55%, transparent);
+}
+.cine-magnet:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+
+/* --- Hero canvas / atmosphere ------------------------------------ */
+.cine-hero-atmos {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 40% at 22% 28%, color-mix(in oklab, var(--primary) 16%, transparent), transparent 70%),
+    radial-gradient(34% 36% at 78% 66%, color-mix(in oklab, var(--ember) 22%, transparent), transparent 72%);
+  filter: blur(28px);
+  animation: cine-atmos 22s ease-in-out infinite alternate;
+}
+@keyframes cine-atmos {
+  from { transform: translate3d(-2%, -1%, 0) scale(1); opacity: 0.75; }
+  to   { transform: translate3d(3%, 2%, 0) scale(1.08); opacity: 1; }
+}
+
+/* --- Section reveal grammar: one language per section type -------- */
+[data-cine] { will-change: transform, opacity, filter; }
+[data-cine="depth"]   { opacity: 0; transform: translate3d(0, 34px, 0) scale(0.985); filter: blur(8px); }
+[data-cine="sweep"]   { opacity: 0; clip-path: inset(0 0 100% 0); }
+[data-cine="assemble"]{ opacity: 0; transform: translate3d(0, 18px, 0) scale(0.94); filter: blur(6px); }
+[data-cine="drift"]   { opacity: 0; transform: translate3d(-40px, 0, 0); filter: blur(7px); }
+[data-cine="focus"]   { opacity: 0; filter: blur(14px); transform: scale(1.02); }
+
+[data-cine].cine-in {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+  clip-path: inset(0 0 0 0);
+  transition:
+    opacity var(--cine-base) var(--cine-ease),
+    transform var(--cine-base) var(--cine-ease),
+    filter var(--cine-base) var(--cine-ease),
+    clip-path var(--cine-slow) var(--cine-ease);
+}
+[data-cine="assemble"].cine-in {
+  transition:
+    opacity 620ms var(--cine-ease),
+    transform 720ms cubic-bezier(0.2, 1.25, 0.3, 1),
+    filter 620ms var(--cine-ease);
+}
+
+/* --- Vignette for the tense problem section ---------------------- */
+.cine-vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(120% 90% at 50% 40%, transparent 40%, rgba(12, 12, 37, 0.16) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cine-word,
+  .cine-float,
+  .cine-float-slow,
+  .cine-hero-atmos { animation: none; }
+  [data-cine] { opacity: 1; transform: none; filter: none; clip-path: none; }
 }
