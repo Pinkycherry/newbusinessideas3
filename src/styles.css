@@ -1729,8 +1729,8 @@ html.light .idea-shell::before { opacity: 0.42; }
     border-color 240ms ease;
 }
 .bbi-arc-pill:hover {
-  transform: translateY(-2px);
   border-color: var(--primary);
+  box-shadow: 0 0 22px -6px color-mix(in oklab, var(--primary) 55%, transparent);
 }
 .bbi-arc-pill-n {
   font-variant-numeric: tabular-nums;
