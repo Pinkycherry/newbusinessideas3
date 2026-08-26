@@ -116,15 +116,15 @@
    useElementPointerGroup to get the cursor-tracking half. */
 .mo-card {
   position: relative;
-  transition:
-    transform var(--mo-dur-3) var(--mo-ease-out),
-    border-color var(--mo-dur-3) var(--mo-ease);
+  transition: border-color var(--mo-dur-3) var(--mo-ease);
   will-change: auto;
 }
 
 @media (hover: hover) and (pointer: fine) {
+  /* No transform. A card that slides toward the cursor and back is a
+     manipulation effect, not a design one — the border and the sheen below
+     already say "this is live" without moving the thing you are reading. */
   .mo-card:hover {
-    transform: translate3d(0, calc(var(--mo-lift-3) * -1), 0);
     border-color: var(--accent);
   }
 

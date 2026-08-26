@@ -9,8 +9,15 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  /* Display: Space Grotesk — a geometric grotesque with real character in
+     the a, g and single-storey details. Reads as designed rather than as a
+     default. Body: Plus Jakarta Sans — modern, warm, wide apertures, holds
+     up at 14px where a display face would not.
+     Both are already on the Google Fonts link in __root.tsx. To swap either,
+     change the family here and the family in that link — nothing else reads
+     these names. */
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -285,10 +292,11 @@
       so none of it was needed. */
 @utility glass-hover {
   transition:
-    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
     border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  /* No transform. The panel does not move toward the cursor — the rim and
+     the glow carry the hover, so the copy you are reading stays still. */
   &:hover {
-    transform: translateY(-4px) scale(1.01);
     border-color: rgba(182, 181, 227, 0.62);
     box-shadow:
       0 0 0 1px rgba(182, 181, 227, 0.2),
@@ -792,8 +800,10 @@ a.mo-link {
 .bbi-orbit-node-label {
   transition: transform 0.3s ease;
 }
+/* Was a perspective rotateX/rotateY tilt. Removed: it is the exact effect
+   the brief rules out. The label brightens instead. */
 .bbi-orbit-node:hover .bbi-orbit-node-label {
-  transform: perspective(300px) rotateX(8deg) rotateY(-8deg) scale(1.08);
+  color: var(--accent);
 }
 .bbi-orbit-wrap.is-live .bbi-orbit-node {
   animation: bbi-node-in 0.5s cubic-bezier(0.16, 1.15, 0.3, 1) both;
