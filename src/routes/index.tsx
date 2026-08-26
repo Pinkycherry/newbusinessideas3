@@ -1290,10 +1290,69 @@ function HowItWorksSection() {
   );
 }
 
+/**
+ * The six phrases in the right-hand card are real search queries, and they are
+ * kept word-for-word on purpose — that is the whole point of them being here.
+ *
+ * What was wrong with them was everything around them. They were a bare <ul>:
+ * no sentence, no punctuation, nothing to click. Six phrases sitting next to a
+ * library that has a page for every one of them, going nowhere.
+ *
+ * Each one now (a) links to the place in the library that actually answers it,
+ * so the block does a job instead of holding keywords, and (b) carries one line
+ * underneath in the same voice as the prose beside it. The destinations are
+ * real: every slug below was read off the live table, not typed from memory,
+ * and every /search query was counted against it first.
+ */
+const BBI_BUILT_FOR: {
+  phrase: string;
+  line: string;
+  to: string;
+  params?: { categorySlug: string };
+  search?: { q: string };
+}[] = [
+  {
+    phrase: "Any business idea without investment",
+    line: "\u201cSave up first\u201d is not advice when there is nothing to save.",
+    to: "/category/$categorySlug",
+    params: { categorySlug: "zero-investment-business-ideas" },
+  },
+  {
+    phrase: "Work from home business opportunity",
+    line: "Start from the room you are already paying rent for.",
+    to: "/category/$categorySlug",
+    params: { categorySlug: "work-from-home-business-ideas" },
+  },
+  {
+    phrase: "Best business to start with little money",
+    line: "Small capital is a constraint. It is not a verdict.",
+    to: "/category/$categorySlug",
+    params: { categorySlug: "low-investment-business-ideas" },
+  },
+  {
+    phrase: "Side hustle and best side job ideas",
+    line: "Keep the salary. Build the second thing quietly.",
+    to: "/category/$categorySlug",
+    params: { categorySlug: "side-hustle-ideas" },
+  },
+  {
+    phrase: "Business ideas for teenagers",
+    line: "Too young is something people say. It is not a rule.",
+    to: "/search",
+    search: { q: "teen" },
+  },
+  {
+    phrase: "Stay-at-home-mom business ideas",
+    line: "Work that fits around a day you do not get to control.",
+    to: "/search",
+    search: { q: "mom" },
+  },
+];
+
 function WhoForSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-shape-soft-deep grid gap-8 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="glass bbi-shape-soft-deep grid gap-8 p-6 sm:p-12 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
             Who we built this for
@@ -1316,17 +1375,34 @@ function WhoForSection() {
             </p>
           </div>
         </div>
-        <div className="glass bbi-shape-hex self-start p-6">
+        <div className="glass bbi-shape-hex self-start p-5 sm:p-6">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
             Built with you in mind
           </p>
-          <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
-            <li>Any business idea without investment</li>
-            <li>Work from home business opportunity</li>
-            <li>Best business to start with little money</li>
-            <li>Side hustle & best side job ideas</li>
-            <li>Business ideas for teenagers & veterans</li>
-            <li>Stay-at-home-mom business ideas</li>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            These are the things people actually type at 1am. Every one of them goes somewhere real.
+          </p>
+          {/* One column on a phone, two across on a tablet — where this used to
+              render as a single thin list under two paragraphs of prose — and
+              back to one in the narrow right rail on desktop. */}
+          <ul className="mt-5 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
+            {BBI_BUILT_FOR.map((item) => (
+              <li key={item.phrase}>
+                <Link
+                  to={item.to}
+                  {...(item.params ? { params: item.params } : {})}
+                  {...(item.search ? { search: item.search } : {})}
+                  className="mo-card glass-hover block h-full rounded-xl border border-border/60 px-4 py-3"
+                >
+                  <span className="block text-sm font-semibold leading-snug text-foreground">
+                    {item.phrase}
+                  </span>
+                  <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
+                    {item.line}
+                  </span>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
@@ -1475,17 +1551,19 @@ function ComparisonSection() {
 
     loadGsap(true).then((gsap) => {
       if (cancelled) return;
-      // The left card keeps its resting opacity-80 (Tailwind class) — it's
-      // deliberately dimmed relative to the highlighted right card, so the
-      // reveal must animate each card TO its own resting opacity, not both
-      // to fully opaque.
+      // Both cards now resolve to full opacity. The left one used to rest at
+      // opacity-80 to read as the lesser option, which worked side by side on a
+      // desktop and read as a half-loaded card once the columns stacked on a
+      // phone. It separates itself by surface and border now, not by fading.
+      // If that Tailwind class ever comes back, this tween has to come back
+      // with it — a dimmed class and a tween to 1 fight each other.
       gsap.set(left, { x: -60, opacity: 0 });
       gsap.set(right, { x: 60, opacity: 0 });
       tl = gsap.timeline({
         scrollTrigger: { trigger: left, start: "top 85%", once: true },
         onComplete: () => gsap.set([left, right], { clearProps: "transform" }),
       });
-      tl.to(left, { x: 0, opacity: 0.8, duration: 0.7, ease: "power3.out" }, 0).to(
+      tl.to(left, { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0).to(
         right,
         { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
         0,
@@ -1504,36 +1582,66 @@ function ComparisonSection() {
       <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
         The comparison
       </p>
-      <h2 className="mt-2 max-w-2xl text-2xl font-bold tracking-tight sm:text-3xl">
-        $20 for four validations. Or one AI subscription that does a thousand.
+      <h2 className="mt-2 max-w-3xl text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
+        Validating a business idea should not cost you the money you were going to start it with.
       </h2>
-      <div className="mt-8 grid gap-5 sm:grid-cols-2">
+      <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+        Twenty dollars buys you three or four checks on most idea validation platforms. If the
+        answer comes back no, that money is gone and you are back where you started — except poorer.
+        We think that is the wrong way round. Read the research first, for free, and decide with
+        your own eyes whether an idea is worth your time.
+      </p>
+      <div className="mt-8 grid items-stretch gap-4 sm:grid-cols-2 sm:gap-5">
         <div
           ref={leftRef}
-          className="mo-card glass bbi-shape-compare-sharp border border-border/60 p-7 opacity-80"
+          className="mo-card glass bbi-shape-compare-sharp border border-border/60 p-5 sm:p-7"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            Typical validator platform
+            What most idea validation tools ask of you
           </p>
-          <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
-            <li>Monthly or per-use fee</li>
-            <li>3–5 validations per $20</li>
-            <li>Generic, boilerplate output</li>
-            <li>Paywall before you see anything real</li>
+          <ul className="mt-4 divide-y divide-border/60 text-sm leading-relaxed text-muted-foreground">
+            <li className="py-3 first:pt-0 last:pb-0">
+              You pay every month, whether you use it that month or not.
+            </li>
+            <li className="py-3 first:pt-0 last:pb-0">
+              Twenty dollars gets you a handful of checks, then it asks for more.
+            </li>
+            <li className="py-3 first:pt-0 last:pb-0">
+              What comes back is the same generic paragraph anyone else would get.
+            </li>
+            <li className="py-3 first:pt-0 last:pb-0">
+              You pay before you are allowed to see whether it was worth paying for.
+            </li>
           </ul>
+        </div>
+        {/* The stacked order on a phone put two cards on top of each other with
+            nothing saying they were being compared. This marker sits between
+            them on mobile and rides the column gutter from sm: up. */}
+        <div aria-hidden className="pointer-events-none -my-1 flex justify-center sm:hidden">
+          <span className="glass rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            versus
+          </span>
         </div>
         <div
           ref={rightRef}
-          className="mo-card glass glass-hover bbi-shape-compare-round border border-primary/40 p-7"
+          className="mo-card glass glass-hover bbi-shape-compare-round border border-primary/40 p-5 sm:p-7"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-            BBI + AI tools you already pay for
+            What BBI asks of you
           </p>
-          <ul className="mt-4 space-y-2.5 text-sm text-foreground">
-            <li>Browse researched ideas free</li>
-            <li>Pay once for lifetime access, if you want it</li>
-            <li>Validate as many times as you want, no artificial limit</li>
-            <li>Use an AI subscription you may already have</li>
+          <ul className="mt-4 divide-y divide-border/60 text-sm leading-relaxed text-foreground">
+            <li className="py-3 first:pt-0 last:pb-0">
+              Read every researched idea in the library without paying anything.
+            </li>
+            <li className="py-3 first:pt-0 last:pb-0">
+              If you want the full thing, you pay once. There is no second bill.
+            </li>
+            <li className="py-3 first:pt-0 last:pb-0">
+              Validate as many ideas as you like. We do not ration it.
+            </li>
+            <li className="py-3 first:pt-0 last:pb-0">
+              Change your mind, come back in a year, and it is all still yours.
+            </li>
           </ul>
         </div>
       </div>

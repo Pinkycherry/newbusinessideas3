@@ -745,8 +745,6 @@ export function SiteShell({ children }: { children: ReactNode }) {
   usePageScrollProgress();
   const { data: catalog } = useCatalog();
   const allCategories = catalog?.categories ?? [];
-  const totalIdeas = catalog?.totalIdeas ?? 0;
-  const totalCategories = catalog?.totalCategories ?? allCategories.length;
   // Capped by design. See src/lib/catalog-display.ts for the measurements —
   // uncapped, this block was 3,300px of footer per page at 200 categories.
   const footerCategories = topCategories(allCategories, 5);
@@ -897,11 +895,20 @@ export function SiteShell({ children }: { children: ReactNode }) {
               ))}
             </ul>
             {/* pr-24 on mobile keeps this clear of the fixed back-to-top /
-                compass dock, which was printing over the end of the line. */}
-            <p className="pr-24 text-muted-foreground sm:pr-0">
-              © {new Date().getFullYear()} BBI · {totalIdeas} blueprints across {totalCategories}{" "}
-              categories
-            </p>
+                compass dock, which was printing over the end of the line.
+
+                This used to read "N blueprints across N categories". A sign-off
+                is the last line anyone reads on the page; it should say who we
+                are and who this is for, not how many rows are in the table. The
+                count is on /browse, where someone is actually looking for it. */}
+            <div className="pr-24 sm:pr-0 sm:text-right">
+              <p className="text-muted-foreground">
+                © {new Date().getFullYear()} Bro Business Ideas · businessidea.io
+              </p>
+              <p className="mt-1 text-muted-foreground/80">
+                Made in India, for everyone starting from zero. We were there too.
+              </p>
+            </div>
           </div>
         </div>
       </footer>
