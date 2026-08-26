@@ -649,7 +649,7 @@ html.light .tree-asset-container::before {
 
 /* --- TICKER PILLS: lift on hover without colliding with the row above --- */
 .iv-ticker-track { padding-top: 0.45rem; padding-bottom: 0.45rem; }
-.iv-ticker-track .glass-pill:hover { transform: scale(1.06) !important; z-index: 5; position: relative; }
+.iv-ticker-track .glass-pill:hover { z-index: 5; position: relative; box-shadow: 0 0 0 1px rgba(136,134,219,0.45), 0 0 26px -6px rgba(70,67,186,0.55); }
 
 /* ============================================================
    BUILT WITH — horizontal auto-scrolling marquee of real outbound
