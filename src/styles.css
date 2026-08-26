@@ -1917,22 +1917,32 @@ html.light .idea-shell::before { opacity: 0.42; }
   pointer-events: none;
   z-index: 0;
   background: radial-gradient(
-    60% 60% at 40% 35%,
-    color-mix(in oklab, var(--primary) 26%, transparent) 0%,
-    transparent 72%
+    62% 62% at 38% 34%,
+    color-mix(in oklab, var(--primary) 34%, transparent) 0%,
+    transparent 74%
   );
   clip-path: polygon(
-    calc(8% + var(--sc-morph) * 16%) 0%,
-    calc(90% - var(--sc-morph) * 12%) calc(4% + var(--sc-morph) * 10%),
-    100% calc(78% + var(--sc-morph) * 8%),
-    calc(26% + var(--sc-morph) * 20%) 100%,
-    0% calc(66% - var(--sc-morph) * 18%)
+    calc(6% + var(--sc-morph) * 24%) 0%,
+    calc(94% - var(--sc-morph) * 18%) calc(2% + var(--sc-morph) * 16%),
+    100% calc(72% + var(--sc-morph) * 14%),
+    calc(20% + var(--sc-morph) * 30%) 100%,
+    0% calc(72% - var(--sc-morph) * 28%)
   );
 }
 
 .bbi-morph-host > *:not(.bbi-morph-shape) {
   position: relative;
   z-index: 1;
+}
+
+/* `glass::before` is the 1px neon rim-light on the panel edge. It is a
+   pseudo-element, so the `> *` rule above cannot reach it, and at z-index auto
+   it paints BEFORE the shape — which reaches the border, and would cover the
+   rim wherever a polygon vertex touches an edge. Lifting it above both layers
+   restores the edge. It is pointer-events:none and 1px wide, so nothing else
+   is affected by it being on top. */
+.bbi-morph-host::before {
+  z-index: 2;
 }
 
 .bbi-nav-morph {
