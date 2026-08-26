@@ -1885,8 +1885,20 @@ html.light .idea-shell::before { opacity: 0.42; }
   backface-visibility: hidden;
 }
 
+/* All three travel the SAME direction, at different magnitudes. That is what
+   parallax is — depth comes from the difference in rate, not from planes
+   moving against each other.
+
+   An earlier version had `front` travelling the opposite way. It looked like
+   more motion and it was a bug: back +28px against front -10px closes 38px,
+   and the stacked heading/grid gap in ComparisonSection is `mt-8` = 32px, so
+   the cards drove straight through the second line of the headline at the
+   scroll-in extreme. Same-sign travel cannot collide, however far it runs.
+
+   Worst-case convergence is now back minus front = 16px against that 32px
+   gap, which leaves 16px of air at the tightest point. */
 .bbi-depth-back {
-  transform: translate3d(0, calc(var(--sc-depth, 0) * -28px), 0);
+  transform: translate3d(0, calc(var(--sc-depth, 0) * -22px), 0);
 }
 
 .bbi-depth-mid {
@@ -1894,7 +1906,7 @@ html.light .idea-shell::before { opacity: 0.42; }
 }
 
 .bbi-depth-front {
-  transform: translate3d(0, calc(var(--sc-depth, 0) * 10px), 0);
+  transform: translate3d(0, calc(var(--sc-depth, 0) * -6px), 0);
 }
 
 /* ---- Morphing silhouette ---------------------------------------------
