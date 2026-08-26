@@ -157,7 +157,15 @@
     to { opacity: 0.6; }
   }
   h1, h2, h3, h4 {
+    /* Clean geometric sans by default; the elegant serif is opted into with
+       .cine-display on the headlines that carry the cinematic weight. */
+    font-family: var(--font-sans);
+    letter-spacing: -0.018em;
+  }
+  .cine-display {
     font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
   }
   /* Neon-lit accent words inside headings, like the reference title treatment */
   h1 .text-accent,
