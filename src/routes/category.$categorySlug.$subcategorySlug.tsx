@@ -118,7 +118,7 @@ function SubcategoryPage() {
             {data.subcategoryName}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
-          <div ref={gridRef} className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div ref={gridRef} className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {data.ideas.map((idea) => (
               <IdeaCard key={idea.ideaId} idea={idea} featured={idea.ideaId === leadIdeaId} />
             ))}

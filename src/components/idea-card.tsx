@@ -41,12 +41,12 @@ export function IdeaCard({
     <Link
       to="/idea/$slug"
       params={{ slug: idea.slug }}
-      className={`glass glass-hover mo-card group relative flex h-full min-w-0 flex-col overflow-hidden ${blob} p-5 sm:p-7 ${
+      className={`glass glass-hover mo-card group relative flex h-full min-w-0 flex-col overflow-hidden ${blob} p-4 sm:p-5 ${
         featured ? "sm:col-span-2" : ""
       }`}
     >
       <div
-        className={`flex h-full flex-col gap-3 ${locked ? "pointer-events-none select-none blur-sm" : ""}`}
+        className={`flex h-full flex-col gap-2.5 ${locked ? "pointer-events-none select-none blur-sm" : ""}`}
       >
         <div className="flex items-center justify-between gap-3 text-[11px] uppercase tracking-widest text-muted-foreground">
           <span className="truncate">{idea.subcategoryName}</span>

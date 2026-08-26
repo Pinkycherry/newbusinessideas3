@@ -121,7 +121,7 @@ function CategoryPage() {
             <AdSlot position="category-above-grid" size="banner" />
           </div>
 
-          <div ref={gridRef} className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div ref={gridRef} className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {data.ideas.map((idea, i) => (
               <Fragment key={idea.ideaId}>
                 <IdeaCard idea={idea} featured={idea.ideaId === leadIdeaId} />
