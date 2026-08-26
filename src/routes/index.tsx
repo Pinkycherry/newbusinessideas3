@@ -1087,9 +1087,14 @@ function OrbitDiagram({
 }
 
 function BrandStatementBanner() {
+  // Publishes --sc-p, which the morphing silhouette below reads. The shape is
+  // the only thing that moves here — the copy itself never shifts, because
+  // this is the one block on the page people actually stop and read.
+  const morphRef = useScrollProgress<HTMLElement>();
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass glass-hover bbi-shape-banner px-6 py-12 sm:px-14 sm:py-16">
+    <section ref={morphRef} className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <div className="glass glass-hover bbi-shape-banner bbi-morph-host relative overflow-hidden px-6 py-12 sm:px-14 sm:py-16">
+        <span className="bbi-morph-shape" aria-hidden />
         <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
           Who we are
         </p>

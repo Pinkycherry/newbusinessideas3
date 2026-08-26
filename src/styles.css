@@ -1897,6 +1897,44 @@ html.light .idea-shell::before { opacity: 0.42; }
   transform: translate3d(0, calc(var(--sc-depth, 0) * 10px), 0);
 }
 
+/* ---- Morphing silhouette ---------------------------------------------
+   A real shape morph, not a border-radius tween: five polygon vertices
+   each travel a different distance as `--sc-p` runs 0 -> 1, so the
+   outline itself changes rather than the same outline being scaled or
+   rotated.
+
+   It rides on a decorative layer behind the copy — never on a text
+   container — because clip-path forces a repaint of what it clips, and
+   repainting a gradient is cheap where repainting a paragraph is not.
+
+   With no JS `--sc-p` resolves to its 0.5 fallback, which is a valid
+   mid-morph silhouette, so the shape is simply static rather than
+   collapsed. */
+.bbi-morph-shape {
+  --sc-morph: var(--sc-p, 0.5);
+  position: absolute;
+  inset: -10%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    60% 60% at 40% 35%,
+    color-mix(in oklab, var(--primary) 26%, transparent) 0%,
+    transparent 72%
+  );
+  clip-path: polygon(
+    calc(8% + var(--sc-morph) * 16%) 0%,
+    calc(90% - var(--sc-morph) * 12%) calc(4% + var(--sc-morph) * 10%),
+    100% calc(78% + var(--sc-morph) * 8%),
+    calc(26% + var(--sc-morph) * 20%) 100%,
+    0% calc(66% - var(--sc-morph) * 18%)
+  );
+}
+
+.bbi-morph-host > *:not(.bbi-morph-shape) {
+  position: relative;
+  z-index: 1;
+}
+
 .bbi-nav-morph {
   position: relative;
   will-change: transform;
