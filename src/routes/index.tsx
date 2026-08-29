@@ -8,6 +8,7 @@ import { SiteShell } from "@/components/site-shell";
 import { CategoryBadge } from "@/components/category-badge";
 import { AdSlot } from "@/components/AdSlot";
 import { HeroSlider, Typewriter } from "@/components/hero-slider";
+import { HeroField } from "@/components/hero-field";
 import { Reveal } from "@/components/reveal";
 import { CardFan } from "@/components/card-fan";
 import { Spotlight } from "@/components/spotlight";
@@ -309,8 +310,11 @@ function HomePage() {
         id="hero"
         data-anchor="hero"
         data-anchor-label="Top"
-        className="px-3 pt-10 sm:px-4 sm:pt-16"
+        className="bbi-field-host px-3 pt-10 pb-6 sm:px-4 sm:pt-16"
       >
+        {/* Full-bleed particle field behind the glass card. The card is
+            translucent, so the field reads through it. */}
+        <HeroField className="bbi-field" />
         <div className="mx-auto max-w-6xl">
           <div className="glass blob-1 px-6 py-14 sm:px-12 sm:py-20">
             <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent sm:text-xs">

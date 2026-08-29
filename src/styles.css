@@ -2130,3 +2130,91 @@ html.light .idea-shell::before { opacity: 0.42; }
   .cine-hero-atmos { animation: none; }
   [data-cine] { opacity: 1; transform: none; filter: none; clip-path: none; }
 }
+
+/* ============================================================================
+   HERO FIELD, POINTER, AND THE SERIF HEADING SCALE
+   These rules are deliberately UNLAYERED. Tailwind v4 puts its utilities in
+   @layer utilities, and an unlayered rule outranks every layer — which is the
+   only way `font-extrabold` on 70 existing headings stops synthesising a fake
+   bold out of Instrument Serif, without editing all 70 call sites.
+   ========================================================================= */
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+/* The field sits behind the hero's glass card, clipped to the section. */
+.bbi-field-host {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.bbi-field-host > .bbi-field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ---- custom pointer ---- */
+.bbi-ptr-dot,
+.bbi-ptr-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.bbi-ptr-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--primary);
+}
+.bbi-ptr-ring {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1.5px solid color-mix(in oklab, var(--primary) 55%, transparent);
+  background: color-mix(in oklab, var(--primary) 7%, transparent);
+  backdrop-filter: blur(1px);
+}
+/* Hide the native cursor only while the custom one is live, and never over
+   anything you type into — losing the I-beam in a form is a real usability
+   cost, not a style choice. */
+html.has-ptr,
+html.has-ptr a,
+html.has-ptr button,
+html.has-ptr [role="button"],
+html.has-ptr summary {
+  cursor: none;
+}
+html.has-ptr input,
+html.has-ptr textarea,
+html.has-ptr select,
+html.has-ptr [contenteditable="true"] {
+  cursor: auto;
+}
+@media (pointer: coarse) {
+  .bbi-ptr-dot,
+  .bbi-ptr-ring {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-ptr-dot,
+  .bbi-ptr-ring {
+    display: none;
+  }
+  html.has-ptr {
+    cursor: auto;
+  }
+}
