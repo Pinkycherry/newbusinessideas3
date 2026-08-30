@@ -1341,6 +1341,10 @@ const BBI_BUILT_FOR: {
 ];
 
 function WhoForSection() {
+  // The six keyword links were the last cards on the page with no motion
+  // owner at all -- measured, not guessed: they carried no inline opacity and
+  // no `data-revealed`, which is the signature of a card no hook has claimed.
+  const listRef = useStaggerReveal<HTMLUListElement>({ selector: ".mo-card", stagger: 0.045 });
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <div className="glass bbi-shape-soft-deep grid gap-6 p-5 sm:p-9 lg:grid-cols-[1.1fr_0.9fr]">
@@ -1374,7 +1378,7 @@ function WhoForSection() {
           {/* One column on a phone, two across on a tablet — where this used to
               render as a single thin list under two paragraphs of prose — and
               back to one in the narrow right rail on desktop. */}
-          <ul className="mt-5 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
+          <ul ref={listRef} className="mt-5 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
             {BBI_BUILT_FOR.map((item) => (
               <li key={item.phrase}>
                 <Link
@@ -1447,8 +1451,15 @@ function PricingPhilosophySection() {
 }
 
 function TeamSection() {
+  // The section is one big card, so the stagger runs on its two columns
+  // rather than on the card itself -- staggering a single child is just a
+  // fade with extra steps.
+  // The ref goes on the SECTION, not the card. With it on the card, the card
+  // is the container rather than a child, so the thing you actually see never
+  // animates -- only its two columns do.
+  const ref = useStaggerReveal<HTMLElement>({ selector: ".mo-card", distance: 22 });
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+    <section ref={ref} className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <div className="mo-card glass bbi-shape-card-a grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
         <div>
           <p className="t-eyebrow">Who&apos;s behind this</p>
