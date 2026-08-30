@@ -22,7 +22,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { FEATURED_IDEA_IDS } from "@/config/featured";
-import { catalogQuery, getFeaturedIdeas, getSurpriseIdeas } from "@/lib/ideas.functions";
+import {
+  catalogQuery,
+  getFeaturedIdeas,
+  getSurpriseIdeas,
+  getTrendingIdeas,
+} from "@/lib/ideas.functions";
+import { DemandBoard } from "@/components/demand-board";
 import type { CategoryNode } from "@/lib/ideas.functions";
 import { hideImgIfBroken } from "@/lib/utils";
 import { AccordionItem } from "@/components/accordion-item";
@@ -237,11 +243,20 @@ const featuredQuery = queryOptions({
   queryFn: () => getFeaturedIdeas({ data: { ideaIds: FEATURED_IDEA_IDS } }),
 });
 
+// Ordered by the live `trend_score` column, so unlike `featuredQuery` above --
+// which reads a hand-maintained list of ids -- this moves on its own as the
+// data moves.
+const trendingQuery = queryOptions({
+  queryKey: ["trending"],
+  queryFn: () => getTrendingIdeas(),
+});
+
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
     await Promise.all([
       context.queryClient.ensureQueryData(catalogQuery),
       context.queryClient.ensureQueryData(featuredQuery),
+      context.queryClient.ensureQueryData(trendingQuery),
     ]);
   },
   head: () => ({
@@ -276,6 +291,7 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const { data: catalog } = useSuspenseQuery(catalogQuery);
   const { data: highlights } = useSuspenseQuery(featuredQuery);
+  const { data: trending } = useSuspenseQuery(trendingQuery);
   const featured = highlights.slice(0, 6);
 
   // MOTION_SPEC §2.3 — exactly one headline reveal per page, and it is the H1.
@@ -380,6 +396,10 @@ function HomePage() {
 
       {/* SURPRISE ME — Section 8.1, directly below the hero, before any other content */}
       <SurpriseMeSection categories={catalog.categories} />
+
+      {/* Live demand board. Renders nothing at all if no idea in the set
+          carries a trend score, rather than showing an empty frame. */}
+      <DemandBoard ideas={trending} />
 
       {/* BRAND ARC — the four founder-generated frames. Every category name
           rendered over them is live DOM from the catalog, never baked pixels. */}
