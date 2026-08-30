@@ -2162,6 +2162,97 @@ h1 {
 }
 h2 {
   font-size: clamp(1.9rem, 5.4vw, 3rem);
+  line-height: 1.06;
+}
+
+/* ============================================================================
+   THE TYPE SCALE — seven roles, not two
+   ----------------------------------------------------------------------------
+   The site had exactly two type roles below h2: one eyebrow
+   (`text-[11px] uppercase tracking-[0.3em]`) and one body
+   (`text-sm text-muted-foreground`). So a CARD TITLE and a SECTION LABEL were
+   rendered as the same object -- which is why "What you get" came out as 11px
+   all-caps Inter while every other title on the page is sentence-case
+   Instrument Serif at 2xl. Same slot, different font, different case. And
+   every paragraph under every heading was byte-identical to every other
+   paragraph on the site, so nothing had a first line that read as a first line.
+
+   Seven roles now, each with one job:
+
+     h1        display        Instrument Serif   the page's one big statement
+     h2        section        Instrument Serif   a section opener
+     h3/.t-card card title    Inter 600          sentence case, never all-caps
+     .t-eyebrow eyebrow       Inter 700          ONLY above an h2, never a title
+     .t-lead   lead paragraph Inter 400          the first line after a heading
+     p         body           Inter 400          everything else
+     .t-meta   meta           Inter 500          small print, captions, counts
+
+   `h3` deliberately sets family/weight/tracking/leading but NOT font-size.
+   These rules are unlayered, so a size here would outrank the `text-base` /
+   `text-lg` utilities on every h3 in the codebase and resize the whole site.
+   Size stays where the call site put it; only the treatment is unified.
+   ========================================================================= */
+h3,
+h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.011em;
+  line-height: 1.32;
+}
+
+/* A card's own title. Sentence case, sans, sized between body and h2 -- the
+   thing the eyebrow style was wrongly standing in for. */
+.t-card {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.3;
+  color: var(--foreground);
+}
+@media (min-width: 640px) {
+  .t-card {
+    font-size: 1.1875rem;
+  }
+}
+
+/* An eyebrow labels the section BELOW it. It is never the title itself, and
+   it never carries the sentence's punctuation -- an eyebrow ending in a
+   question mark directly above a heading reads as two stacked questions. */
+.t-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* The first paragraph after a heading. Larger, darker and looser than body,
+   so a section opens instead of just continuing. */
+.t-lead {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.62;
+  letter-spacing: -0.003em;
+  color: color-mix(in oklab, var(--foreground) 86%, transparent);
+}
+@media (min-width: 640px) {
+  .t-lead {
+    font-size: 1.125rem;
+  }
+}
+
+/* Small print: captions, counts, timestamps, source lines. */
+.t-meta {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+  color: var(--muted-foreground);
 }
 
 /* ---- the hero field is the BACKGROUND, not decoration around a card ----
@@ -2201,7 +2292,11 @@ html.bbi-motion .rv {
   filter: blur(5px);
   translate: 0 var(--rv-y, 0.22em);
 }
-.revealed .rv {
+/* MUST carry `html.bbi-motion` too. Without it this scores (0,2,0) while the
+   hidden rule above scores (0,2,1), so the hidden state wins and the text
+   stays invisible even with `.revealed` applied. Gating a hidden state raises
+   its specificity; the visible state has to be raised with it. */
+html.bbi-motion .revealed .rv {
   opacity: 1;
   filter: blur(0);
   translate: 0 0;
@@ -2232,10 +2327,14 @@ h3:not(:has(.rv)),
     filter 0.52s cubic-bezier(0.165, 0.84, 0.44, 1),
     translate 0.58s cubic-bezier(0.2, 1.25, 0.3, 1);
 }
-h1.revealed:not(:has(.rv)),
-h2.revealed:not(:has(.rv)),
-h3.revealed:not(:has(.rv)),
-[data-wave].revealed:not(:has(.rv)) {
+/* Same specificity trap as above: the hidden rule is
+   `html.bbi-motion h2:not(:has(.rv))` at (0,2,2), so an unprefixed
+   `h2.revealed:not(:has(.rv))` at (0,2,1) loses and the heading never
+   appears. */
+html.bbi-motion h1.revealed:not(:has(.rv)),
+html.bbi-motion h2.revealed:not(:has(.rv)),
+html.bbi-motion h3.revealed:not(:has(.rv)),
+html.bbi-motion [data-wave].revealed:not(:has(.rv)) {
   opacity: 1;
   filter: blur(0);
   translate: 0 0;

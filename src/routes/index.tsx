@@ -94,12 +94,8 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
       className="mx-auto mt-10 max-w-6xl px-3 sm:px-4"
     >
       <div className="glass glass-hover bbi-card-motion rounded-3xl px-6 py-8 sm:px-10 sm:py-10">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Not sure where to start?
-        </p>
-        <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-          Pick a category, or don&apos;t. We&apos;ll surprise you.
-        </h2>
+        <p className="t-eyebrow">Surprise me</p>
+        <h2 className="mt-3">Pick a category, or don&apos;t. We&apos;ll surprise you.</h2>
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <Select
             value={categorySlug || "any"}
@@ -320,7 +316,7 @@ function HomePage() {
         <HeroField className="bbi-field" />
         <div className="mx-auto max-w-6xl">
           <div className="glass bbi-hero-open blob-1 px-6 py-14 sm:px-12 sm:py-20">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent sm:text-xs">
+            <p className="t-eyebrow sm:text-xs">
               <Typewriter text="The Truth About Business Ideas" />
             </p>
             <div className="mt-8 grid items-center gap-8 lg:grid-cols-[1.15fr_1fr]">
@@ -373,10 +369,8 @@ function HomePage() {
                   key={panel.label}
                   className={`glass glass-hover ${i === 0 ? "blob-sm-1" : "blob-sm-2"} px-6 py-7`}
                 >
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
-                    {panel.label}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{panel.body}</p>
+                  <h3 className="t-card">{panel.label}</h3>
+                  <p className="t-lead mt-2.5">{panel.body}</p>
                 </div>
               ))}
             </div>
@@ -401,9 +395,7 @@ function HomePage() {
         aria-label="Browse by category"
       >
         <style>{`@keyframes iv-ticker-l{from{transform:translateX(0)}to{transform:translateX(-50%)}}@keyframes iv-ticker-r{from{transform:translateX(-50%)}to{transform:translateX(0)}}.iv-ticker-track{width:max-content;animation:iv-ticker-l 70s linear infinite}.iv-ticker-track.rev{animation-name:iv-ticker-r}.iv-ticker:hover .iv-ticker-track,.iv-ticker:active .iv-ticker-track{animation-play-state:paused}`}</style>
-        <p className="mx-auto max-w-6xl px-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent sm:px-4">
-          Browse by category
-        </p>
+        <p className="mx-auto max-w-6xl px-3 t-eyebrow sm:px-4">Browse by category</p>
         {/* Business-model icons, bobbing on staggered offsets — the movement
             from the approved design. Full-bleed, masked at both edges. */}
         <BusinessIcons />
@@ -469,9 +461,7 @@ function HomePage() {
       <section className="mx-auto max-w-6xl px-3 py-16 sm:px-4">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-              Featured blueprints
-            </p>
+            <p className="t-eyebrow">Featured blueprints</p>
             <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
               Blueprints worth your afternoon
             </h2>
@@ -503,9 +493,7 @@ function HomePage() {
       <section className="bbi-editorial mx-auto max-w-6xl px-3 pb-10 sm:px-4">
         <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-              Why this exists
-            </p>
+            <p className="t-eyebrow">Why this exists</p>
             <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
               A list of ideas is not research. And it can cost you money.
             </h2>
@@ -691,9 +679,7 @@ function HomePage() {
 
       {/* GENERAL CLOSING FAQ */}
       <section className="mx-auto mt-20 max-w-4xl border-t border-border/60 px-3 pt-16 pb-24 sm:mt-28 sm:px-4 sm:pt-20">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Common questions
-        </p>
+        <p className="t-eyebrow">Common questions</p>
         <div className="mt-6 divide-y divide-border">
           {FAQS.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="base" />
@@ -814,9 +800,7 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
       className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4"
     >
       <div className="text-center max-w-3xl mx-auto">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
-          Interactive Canopy Map
-        </p>
+        <p className="t-eyebrow">Interactive Canopy Map</p>
         <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-5xl">
           The Golden Tree of Business Growth
         </h2>
@@ -980,9 +964,7 @@ function FourPillarStandardSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:mt-24 sm:px-4">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          The Research Standard
-        </p>
+        <p className="t-eyebrow">The Research Standard</p>
         <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-4xl">
           Not just a list. Real research you can trust.
         </h2>
@@ -1104,9 +1086,7 @@ function BrandStatementBanner() {
     <section ref={morphRef} className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <div className="glass glass-hover bbi-card-motion bbi-shape-banner bbi-morph-host relative overflow-hidden px-6 py-12 sm:px-14 sm:py-16">
         <span className="bbi-morph-shape" aria-hidden />
-        <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
-          Who we are
-        </p>
+        <p className="t-eyebrow">Who we are</p>
         <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
           BBI — Bro Business Ideas.
         </h2>
@@ -1189,9 +1169,7 @@ function MarketGapSection() {
       <Reveal>
         <div className="glass glass-hover bbi-shape-diamond grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-              The problem we found
-            </p>
+            <p className="t-eyebrow">The problem we found</p>
             <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
               Why is everyone still charging you $20 to check one idea?
             </h2>
@@ -1273,12 +1251,8 @@ function HowItWorksSection() {
           />
         </div>
         <div className="bbi-depth-front">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-            How it works
-          </p>
-          <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-            Grab the idea. Validate it however you want. Keep the money.
-          </h2>
+          <p className="t-eyebrow">Step by step</p>
+          <h2 className="mt-3">Grab the idea. Validate it however you want. Keep the money.</h2>
           <div ref={stepsRef} className="mt-6 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
             {BBI_HOW_STEPS.map((step) => (
               <div key={step.n} className="mo-card glass glass-hover bbi-shape-step flex gap-4 p-6">
@@ -1296,9 +1270,7 @@ function HowItWorksSection() {
       </div>
 
       <div className="glass bbi-shape-faq1 mt-10 p-5 sm:p-7">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Validating & using BBI
-        </p>
+        <p className="t-eyebrow">Validating & using BBI</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_1.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
@@ -1373,9 +1345,7 @@ function WhoForSection() {
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <div className="glass bbi-shape-soft-deep grid gap-6 p-5 sm:p-9 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-            Who we built this for
-          </p>
+          <p className="t-eyebrow">Who we built this for</p>
           <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
             For the person with an idea and nothing else.
           </h2>
@@ -1452,9 +1422,7 @@ function PricingPhilosophySection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <div className="glass glass-hover bbi-shape-ticket p-6 text-center sm:p-9">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Pricing, honestly
-        </p>
+        <p className="t-eyebrow">Pricing, honestly</p>
         <h2 className="mx-auto mt-3 max-w-2xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
           One fee. Once. For life. That&apos;s the whole pricing page.
         </h2>
@@ -1467,9 +1435,7 @@ function PricingPhilosophySection() {
       </div>
 
       <div className="glass bbi-shape-faq2 mt-6 p-5 sm:p-7">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Pricing & the market gap
-        </p>
+        <p className="t-eyebrow">Pricing & the market gap</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_2.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
@@ -1485,9 +1451,7 @@ function TeamSection() {
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <div className="mo-card glass bbi-shape-card-a grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-            Who&apos;s behind this
-          </p>
+          <p className="t-eyebrow">Who&apos;s behind this</p>
           <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
             Built by hand, not by a headcount.
           </h2>
@@ -1524,9 +1488,7 @@ function InspiredBySection() {
   return (
     <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
       <div className="glass bbi-shape-card-a p-6 sm:p-8">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Where this came from
-        </p>
+        <p className="t-eyebrow">Where this came from</p>
         <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
           We didn&apos;t invent this model. We learned it.
         </h2>
@@ -1604,9 +1566,7 @@ function ComparisonSection() {
   return (
     <section ref={depthRef} className="bbi-depth mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <div className="bbi-depth-back">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          The comparison
-        </p>
+        <p className="t-eyebrow">The comparison</p>
         <h2 className="mt-2 max-w-3xl text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
           Validating a business idea should not cost you the money you were going to start it with.
         </h2>
@@ -1688,9 +1648,7 @@ function FutureProofSpotlight() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <div className="glass bbi-shape-diamond p-6 sm:p-9">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Ways into the library
-        </p>
+        <p className="t-eyebrow">Ways into the library</p>
         <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
           Start from a theme instead of a blank search box.
         </h2>
@@ -1769,9 +1727,7 @@ function KeywordMosaic() {
   const groupsRef = useStaggerReveal<HTMLDivElement>();
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4" aria-label="Browse ideas by keyword">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-        Every angle covered
-      </p>
+      <p className="t-eyebrow">Every angle covered</p>
       <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
         Business ideas by industry, founder, and model
       </h2>
@@ -1839,9 +1795,7 @@ function PromiseSection() {
       className="mx-auto mt-16 max-w-4xl px-3 sm:px-4"
     >
       <div className="glass glass-hover bbi-shape-shield p-6 text-center sm:p-9">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Our promise
-        </p>
+        <p className="t-eyebrow">Our promise</p>
         <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
           We&apos;re not here to sell you a dream. We&apos;re here to hand you the research.
         </h2>
@@ -1854,9 +1808,7 @@ function PromiseSection() {
       </div>
 
       <div className="glass bbi-shape-faq3 mt-6 p-5 sm:p-7">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Common searches, answered
-        </p>
+        <p className="t-eyebrow">Common searches, answered</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_3.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
