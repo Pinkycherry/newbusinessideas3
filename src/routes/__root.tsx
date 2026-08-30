@@ -12,7 +12,6 @@ import { useEffect, type ReactNode } from "react";
 import "../styles.css";
 import "../motion.css";
 import { PointerChannelProvider, PageTransition } from "../motion";
-import { PointerCursor } from "@/components/pointer-cursor";
 import { SiteTextMotion } from "@/components/site-text-motion";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { catalogQuery } from "../lib/ideas.functions";
@@ -137,7 +136,6 @@ function RootComponent() {
           Renders no DOM of its own and holds no React state. */}
       <PointerChannelProvider />
       {/* Desktop-only custom pointer; refuses to run on touch or reduced motion. */}
-      <PointerCursor />
       {/* Wave word-reveal on every heading, and anything with data-wave. */}
       <SiteTextMotion />
       <PageTransition>
