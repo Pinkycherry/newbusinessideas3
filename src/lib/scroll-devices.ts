@@ -174,12 +174,13 @@ export function useStaggerReveal(
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
           const item = entry.target as HTMLElement;
           const index = items.indexOf(item);
           item.style.transitionDelay = `${Math.max(0, index) * staggerMs}ms`;
-          item.classList.add("sc-in");
-          io.unobserve(item);
+          // Toggled, not latched. This used to `unobserve` on first entry, so
+          // the reveal happened once per page load and never again however
+          // much you scrolled back over it.
+          item.classList.toggle("sc-in", entry.isIntersecting);
         });
       },
       { rootMargin: "0px 0px -10% 0px", threshold: 0.15 },

@@ -2187,13 +2187,19 @@ h2 {
 /* ---- wave text reveal: words arrive on a rolling rhythm, not a flat ramp -- */
 .rv {
   display: inline-block;
-  opacity: 0;
-  filter: blur(5px);
-  translate: 0 var(--rv-y, 0.22em);
   transition:
     opacity 0.52s cubic-bezier(0.165, 0.84, 0.44, 1),
     filter 0.52s cubic-bezier(0.165, 0.84, 0.44, 1),
     translate 0.58s cubic-bezier(0.2, 1.25, 0.3, 1);
+}
+/* The hidden state is gated on `html.bbi-motion`, which only SiteTextMotion
+   sets. Before this it was unconditional, so a failed hydration or a bundle
+   that never arrived left every heading on the site at opacity 0 forever.
+   No JS now means everything is simply visible. */
+html.bbi-motion .rv {
+  opacity: 0;
+  filter: blur(5px);
+  translate: 0 var(--rv-y, 0.22em);
 }
 .revealed .rv {
   opacity: 1;
@@ -2209,13 +2215,18 @@ li .rv {
 /* Headings that are not word-split still get an entry reveal — same easing, one
    unit instead of many. `:not(:has(.rv))` keeps it off anything WaveText owns,
    so the two never double up. */
+html.bbi-motion h1:not(:has(.rv)),
+html.bbi-motion h2:not(:has(.rv)),
+html.bbi-motion h3:not(:has(.rv)),
+html.bbi-motion [data-wave]:not(:has(.rv)) {
+  opacity: 0;
+  filter: blur(5px);
+  translate: 0 0.22em;
+}
 h1:not(:has(.rv)),
 h2:not(:has(.rv)),
 h3:not(:has(.rv)),
 [data-wave]:not(:has(.rv)) {
-  opacity: 0;
-  filter: blur(5px);
-  translate: 0 0.22em;
   transition:
     opacity 0.52s cubic-bezier(0.165, 0.84, 0.44, 1),
     filter 0.52s cubic-bezier(0.165, 0.84, 0.44, 1),
@@ -2229,6 +2240,15 @@ h3.revealed:not(:has(.rv)),
   filter: blur(0);
   translate: 0 0;
 }
+
+/* `.mo-card` deliberately has NO opacity/translate rule here.
+
+   GSAP's `useStaggerReveal` writes `opacity` and `transform` INLINE on every
+   one of these cards, and an inline style beats any stylesheet rule. A CSS
+   reveal on `.mo-card` therefore cannot ever win -- it would be two owners
+   for one property, with the loser silently dropped, which is the exact trap
+   BUTTERFLY_EFFECT.md warns about. The two-way behaviour lives in the hook
+   instead, where the single owner already is. */
 
 /* ---- card motion, two-way ------------------------------------------------
    A view() timeline is scrubbed by scroll position, so it un-plays on the way

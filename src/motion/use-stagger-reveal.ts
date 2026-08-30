@@ -1,7 +1,13 @@
 /**
- * Stagger reveal — reveals the children of a container in sequence as it
- * enters the viewport, once. Content that re-hides on scrolling back up is a
- * defect, not an effect, so this never reverses.
+ * Stagger reveal — reveals the children of a container in sequence as the
+ * container crosses the viewport, in BOTH directions and on every pass.
+ *
+ * This used to run once and never reverse, on the reasoning that content
+ * which re-hides on the way back up is a defect. The founder overruled that
+ * directly: a reveal that fires once per page load is invisible to anyone who
+ * scrolls the way people actually scroll, up and down through a page, and the
+ * site read as static because of it. It now restarts on every entry from
+ * either direction and reverses on every exit.
  *
  * Takes a child selector, so it retrofits onto markup that already exists: a
  * grid of cards, a footer column of links, the rows of a pricing table. No
@@ -117,7 +123,11 @@ export function useStaggerReveal<T extends HTMLElement = HTMLElement>(
           ease: "power3.out",
           clearProps: "willChange",
           onComplete: () => items.forEach((i) => i.setAttribute("data-revealed", "")),
-          scrollTrigger: { trigger: el, start, once: true },
+          // [onEnter, onLeave, onEnterBack, onLeaveBack]. Restart whenever
+          // the container comes into view from either direction, reverse
+          // whenever it leaves in either direction — so the motion is there
+          // on the second pass and the twentieth, not just the first.
+          scrollTrigger: { trigger: el, start, toggleActions: "restart reverse restart reverse" },
         },
       );
     });
