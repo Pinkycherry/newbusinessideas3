@@ -36,6 +36,7 @@ import { Route as FaqCategorySlugRouteImport } from './routes/faq.$categorySlug'
 import { Route as IdeaSlugRouteImport } from './routes/idea.$slug'
 import { Route as ListIndexRouteImport } from './routes/list.index'
 import { Route as ListSlugRouteImport } from './routes/list.$slug'
+import { Route as ValidateIndustrySlugRouteImport } from './routes/validate.$industrySlug'
 import { Route as CategoryCategorySlugIndexRouteImport } from './routes/category.$categorySlug.index'
 import { Route as CategoryCategorySlugSubcategorySlugRouteImport } from './routes/category.$categorySlug.$subcategorySlug'
 
@@ -174,6 +175,11 @@ const ListSlugRoute = ListSlugRouteImport.update({
   path: '/list/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ValidateIndustrySlugRoute = ValidateIndustrySlugRouteImport.update({
+  id: '/validate/$industrySlug',
+  path: '/validate/$industrySlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategoryCategorySlugIndexRoute =
   CategoryCategorySlugIndexRouteImport.update({
     id: '/',
@@ -211,6 +217,7 @@ export interface FileRoutesByFullPath {
   '/faq/$categorySlug': typeof FaqCategorySlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
   '/list/$slug': typeof ListSlugRoute
+  '/validate/$industrySlug': typeof ValidateIndustrySlugRoute
   '/blog/': typeof BlogIndexRoute
   '/calculator/': typeof CalculatorIndexRoute
   '/faq/': typeof FaqIndexRoute
@@ -241,6 +248,7 @@ export interface FileRoutesByTo {
   '/faq/$categorySlug': typeof FaqCategorySlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
   '/list/$slug': typeof ListSlugRoute
+  '/validate/$industrySlug': typeof ValidateIndustrySlugRoute
   '/blog': typeof BlogIndexRoute
   '/calculator': typeof CalculatorIndexRoute
   '/faq': typeof FaqIndexRoute
@@ -273,6 +281,7 @@ export interface FileRoutesById {
   '/faq/$categorySlug': typeof FaqCategorySlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
   '/list/$slug': typeof ListSlugRoute
+  '/validate/$industrySlug': typeof ValidateIndustrySlugRoute
   '/blog/': typeof BlogIndexRoute
   '/calculator/': typeof CalculatorIndexRoute
   '/faq/': typeof FaqIndexRoute
@@ -306,6 +315,7 @@ export interface FileRouteTypes {
     | '/faq/$categorySlug'
     | '/idea/$slug'
     | '/list/$slug'
+    | '/validate/$industrySlug'
     | '/blog/'
     | '/calculator/'
     | '/faq/'
@@ -336,6 +346,7 @@ export interface FileRouteTypes {
     | '/faq/$categorySlug'
     | '/idea/$slug'
     | '/list/$slug'
+    | '/validate/$industrySlug'
     | '/blog'
     | '/calculator'
     | '/faq'
@@ -367,6 +378,7 @@ export interface FileRouteTypes {
     | '/faq/$categorySlug'
     | '/idea/$slug'
     | '/list/$slug'
+    | '/validate/$industrySlug'
     | '/blog/'
     | '/calculator/'
     | '/faq/'
@@ -399,6 +411,7 @@ export interface RootRouteChildren {
   FaqCategorySlugRoute: typeof FaqCategorySlugRoute
   IdeaSlugRoute: typeof IdeaSlugRoute
   ListSlugRoute: typeof ListSlugRoute
+  ValidateIndustrySlugRoute: typeof ValidateIndustrySlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   CalculatorIndexRoute: typeof CalculatorIndexRoute
   FaqIndexRoute: typeof FaqIndexRoute
@@ -596,6 +609,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ListSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/validate/$industrySlug': {
+      id: '/validate/$industrySlug'
+      path: '/validate/$industrySlug'
+      fullPath: '/validate/$industrySlug'
+      preLoaderRoute: typeof ValidateIndustrySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/category/$categorySlug/': {
       id: '/category/$categorySlug/'
       path: '/'
@@ -651,6 +671,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqCategorySlugRoute: FaqCategorySlugRoute,
   IdeaSlugRoute: IdeaSlugRoute,
   ListSlugRoute: ListSlugRoute,
+  ValidateIndustrySlugRoute: ValidateIndustrySlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   CalculatorIndexRoute: CalculatorIndexRoute,
   FaqIndexRoute: FaqIndexRoute,
