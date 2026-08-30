@@ -128,9 +128,7 @@ export function ValidateButton({ slug }: { slug: string }) {
 
   return (
     <section className="glass mt-10 rounded-3xl px-5 py-7 sm:px-8">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-        Free · no extra cost, no limit
-      </p>
+      <p className="t-eyebrow">Free · no extra cost, no limit</p>
       <h2 className="mt-2 font-display text-xl font-bold tracking-tight">Validate this idea</h2>
       <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
         We do not charge for validation. You get a fully researched write-up on this idea — free,

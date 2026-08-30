@@ -1546,8 +1546,15 @@ function ComparisonSection() {
       gsap.set(left, { x: -60, opacity: 0 });
       gsap.set(right, { x: 60, opacity: 0 });
       tl = gsap.timeline({
-        scrollTrigger: { trigger: left, start: "top 85%", once: true },
-        onComplete: () => gsap.set([left, right], { clearProps: "transform" }),
+        // Was `once: true` — a third one-shot latch, missed in the two-way
+        // pass because it is a bespoke timeline in this file rather than a
+        // call into `useStaggerReveal`. The two cards now slide in from
+        // their own sides on every pass, in both directions.
+        scrollTrigger: {
+          trigger: left,
+          start: "top 85%",
+          toggleActions: "restart reverse restart reverse",
+        },
       });
       tl.to(left, { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0).to(
         right,
@@ -1582,10 +1589,8 @@ function ComparisonSection() {
           ref={leftRef}
           className="mo-card glass bbi-shape-compare-sharp border border-border/60 p-5 sm:p-7"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            What most idea validation tools ask of you
-          </p>
-          <ul className="mt-4 divide-y divide-border/60 text-sm leading-relaxed text-muted-foreground">
+          <p className="t-eyebrow hl-coral">What most idea validation tools ask of you</p>
+          <ul className="mt-4 divide-y divide-hl-coral/20 text-sm leading-relaxed text-muted-foreground">
             <li className="py-3 first:pt-0 last:pb-0">
               You pay every month, whether you use it that month or not.
             </li>
@@ -1612,10 +1617,8 @@ function ComparisonSection() {
           ref={rightRef}
           className="mo-card glass glass-hover bbi-shape-compare-round border border-primary/40 p-5 sm:p-7"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-            What BBI asks of you
-          </p>
-          <ul className="mt-4 divide-y divide-border/60 text-sm leading-relaxed text-foreground">
+          <p className="t-eyebrow hl-green">What BBI asks of you</p>
+          <ul className="mt-4 divide-y divide-hl-green/25 text-sm leading-relaxed text-foreground">
             <li className="py-3 first:pt-0 last:pb-0">
               Read every researched idea in the library without paying anything.
             </li>

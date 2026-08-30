@@ -63,7 +63,11 @@ export function useTextReveal<T extends HTMLElement = HTMLElement>(
               delay,
               stagger,
               ease: "power3.out",
-              scrollTrigger: { trigger: el, start, once: true },
+              scrollTrigger: {
+                trigger: el,
+                start,
+                toggleActions: "restart reverse restart reverse",
+              },
             },
           );
         },

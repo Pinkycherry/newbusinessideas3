@@ -53,7 +53,7 @@ function PricingPage() {
                 : ""
             }`}
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+            <p className="t-eyebrow">
               {plan.name}
             </p>
             <p className="mt-4 flex items-baseline gap-2">

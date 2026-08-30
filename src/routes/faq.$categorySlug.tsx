@@ -89,7 +89,7 @@ function FaqCategoryPage() {
           ]}
         />
 
-        <p className="mt-8 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent">
+        <p className="mt-8 t-eyebrow">
           Questions
         </p>
         <h1
@@ -111,13 +111,13 @@ function FaqCategoryPage() {
             <Link
               to="/category/$categorySlug"
               params={{ categorySlug: category.categorySlug }}
-              className="mo-link text-[11px] font-semibold uppercase tracking-[0.2em] text-accent"
+              className="mo-link t-eyebrow"
             >
               Read the {category.ideaCount} blueprints instead
             </Link>
             <Link
               to="/browse"
-              className="mo-link text-[11px] font-semibold uppercase tracking-[0.2em] text-accent"
+              className="mo-link t-eyebrow"
             >
               The full library
             </Link>

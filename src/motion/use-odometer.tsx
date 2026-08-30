@@ -74,7 +74,7 @@ export function useOdometer<T extends HTMLElement = HTMLElement>(
         onComplete: () => {
           if (ref.current) ref.current.textContent = render(value);
         },
-        scrollTrigger: { trigger: el, start, once: true },
+        scrollTrigger: { trigger: el, start, toggleActions: "restart reverse restart reverse" },
       });
     });
 

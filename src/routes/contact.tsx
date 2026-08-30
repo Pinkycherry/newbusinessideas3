@@ -47,7 +47,7 @@ function ContactPage() {
       <div className="grid gap-4 sm:grid-cols-2">
         {channels.map((c) => (
           <div key={c.value} className="glass glass-hover rounded-2xl px-5 py-6">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
+            <p className="t-eyebrow">
               {c.label}
             </p>
             <a

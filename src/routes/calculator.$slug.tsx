@@ -120,7 +120,7 @@ function CalculatorPage({ calculator }: { calculator: Calculator }) {
               { label: pageName },
             ]}
           />
-          <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
+          <p className="mt-6 t-eyebrow">
             Calculator
           </p>
           <h1 ref={titleRef} className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
@@ -154,7 +154,7 @@ function CalculatorPage({ calculator }: { calculator: Calculator }) {
               <div ref={fieldsRef} className="mt-6 space-y-7">
                 {fieldGroups(calculator).map(({ group, fields }) => (
                   <fieldset key={group} className="border-0 p-0">
-                    <legend className="text-[11px] font-semibold uppercase tracking-[0.28em] text-accent">
+                    <legend className="t-eyebrow">
                       {group}
                     </legend>
                     <div className="mt-4 grid gap-5 sm:grid-cols-2">

@@ -133,10 +133,7 @@ function BuiltWithSection() {
   return (
     <section className="px-3 pb-12 pt-6 sm:px-4" aria-labelledby="built-with-heading">
       <div className="mx-auto max-w-7xl">
-        <p
-          id="built-with-heading"
-          className="text-center text-[11px] font-semibold uppercase tracking-[0.3em] text-accent"
-        >
+        <p id="built-with-heading" className="text-center t-eyebrow">
           Built with
         </p>
         <div className="bbi-built-ticker mt-6">
@@ -381,19 +378,10 @@ function CategoryMega() {
           </ul>
 
           <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 border-t border-border pt-3">
-            <Link
-              to="/browse"
-              onClick={close}
-              className="mo-link text-[11px] font-semibold uppercase tracking-[0.2em] text-accent"
-            >
+            <Link to="/browse" onClick={close} className="mo-link t-eyebrow">
               {hasMore ? `All ${all.length} categories` : "The full library"}
             </Link>
-            <Link
-              to="/search"
-              search={{ q: "" }}
-              onClick={close}
-              className="mo-link text-[11px] font-semibold uppercase tracking-[0.2em] text-accent"
-            >
+            <Link to="/search" search={{ q: "" }} onClick={close} className="mo-link t-eyebrow">
               Search every field
             </Link>
           </div>

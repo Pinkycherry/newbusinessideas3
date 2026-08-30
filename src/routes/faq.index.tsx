@@ -71,7 +71,7 @@ function FaqIndexPage() {
       <main className="mx-auto w-full max-w-6xl px-3 pb-24 pt-6 sm:px-4">
         <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Questions" }]} />
 
-        <p className="mt-8 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent">
+        <p className="mt-8 t-eyebrow">
           Questions
         </p>
         <h1

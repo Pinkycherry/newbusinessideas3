@@ -331,7 +331,11 @@ export function useKineticLines(ref: RefObject<HTMLElement | null>) {
           duration: 0.7,
           ease: "power3.out",
           stagger: 0.07,
-          scrollTrigger: { trigger: el, start: "top 85%", once: true },
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            toggleActions: "restart reverse restart reverse",
+          },
         });
       });
     };
@@ -395,7 +399,11 @@ export function useRevealWipe(
         clipPath: CLIP_TO[direction],
         duration: 0.9,
         ease: "power3.inOut",
-        scrollTrigger: { trigger: el, start: "top 80%", once: true },
+        scrollTrigger: {
+          trigger: el,
+          start: "top 80%",
+          toggleActions: "restart reverse restart reverse",
+        },
       });
     });
     return () => {

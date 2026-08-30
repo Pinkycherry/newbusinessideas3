@@ -50,7 +50,7 @@ function CalculatorIndex() {
         <div className="mx-auto max-w-6xl px-3 py-12 sm:px-4">
           {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
           <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Calculators" }]} />
-          <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
+          <p className="mt-6 t-eyebrow">
             Calculators
           </p>
           <h1 ref={titleRef} className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">

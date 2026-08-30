@@ -105,7 +105,7 @@ const SECTION_TONES: Record<ContentTone, SectionTone> = {
 const ToneContext = createContext<ContentTone>("default");
 
 function Eyebrow({ tone, label }: { tone: ContentTone; label: string }) {
-  const base = "text-[11px] font-semibold uppercase tracking-[0.35em] text-accent";
+  const base = "t-eyebrow";
   if (tone === "brief") {
     return (
       <p className={`mt-6 flex items-center gap-3 ${base}`}>
