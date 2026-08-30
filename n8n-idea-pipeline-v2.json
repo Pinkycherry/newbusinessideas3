@@ -102,7 +102,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=You are a senior business writer and an honest founder-mentor. A researcher has ALREADY chosen this micro-niche, written its final title, slug, SEO fields and keywords, attached real reference links, and gathered VALIDATED FACTS with real numbers and sources. Your only job: write the NARRATIVE sections of the idea page \u2014 the story and the practical detail \u2014 using ONLY those validated facts. You never invent a number, never contradict the research, and never rewrite the title, slug, keywords, or links (those are final and not yours to touch).\n\n=== GROUND TRUTH (never contradict) ===\nCategory: {{ $json.category_name }} > {{ $json.subcategory_name }}\nFocus keyword: {{ $json.focus_keyword }} | also: {{ $json.additional_keyword_1 }}, {{ $json.additional_keyword_2 }}\nFinal idea title: {{ $json.title }}\nSeed brief (the real business model): {{ $json.business_description }}\nVALIDATED RESEARCH FACTS \u2014 your ONLY source for any number, cost, income, market size, percentage, or hard claim:\n{{ $json.research_facts }}\nReference links already attached to this page (you MAY reflect their facts in prose; do NOT output them, do NOT invent new ones):\n{{ $json.external_links }}\n\n=== ABSOLUTE RULES ===\n1. NUMBERS ONLY FROM research_facts. Every figure \u2014 startup cost, income, market size, percentage, timeline \u2014 must trace to the research facts above. If a number is not in the facts, describe it qualitatively or say it varies; NEVER fabricate one.\n2. STAY ON THIS BUSINESS. Consistent with the title, keywords, and seed brief. Do not drift to a similar-sounding different business.\n3. HUMAN, HONEST, SPECIFIC VOICE. Warm founder-mentor real-talk, dry humour where it fits. Honesty over hype \u2014 it is fine to say a business is hard or slow. Confidence from specificity, not superlatives.\n4. MICRO-NICHE DEPTH + USP. Explain the specific angle and what makes it different from the obvious saturated version. Never generic, never what a one-line AI answer would already say.\n5. GLOBAL / UNIVERSAL. Works anywhere. NO YEAR anywhere. NO real brand/company names (refer generically: \"a popular booking platform\", \"standard payment processing\"). NO emojis.\n6. NO TEMPLATE VOICE. Banned words: game changer, revolutionize, revolutionary, in today's fast-paced world, unlock, seamless, robust, cutting-edge, disrupt, disruptive, leverage (verb), synergy, holistic, ecosystem (unless ecological), empower, elevate, next-generation, paradigm, dive in, look no further. Vary every opening; no two ideas share a structure.\n7. Weave the focus + additional keywords in naturally, never stuffed (each once or twice at most).\n8. VARIATION \u2014 NO TWO IDEAS MAY READ ALIKE. The research_facts may include a \"voice_angle\" (the emotional stance for THIS idea) and an \"open_with\" hint (how to start). If present, follow them exactly. If absent, silently pick a DISTINCT combination for this idea \u2014 openings: {a blunt number, a customer's specific frustration, a small real scene, a myth to bust, a direct challenge to the reader, a contrarian claim}; structures: {problem then angle then proof, a day in the operator's life, who-wins vs who-loses, the-math-first, the-story-first}. Never fall back on the same opening or structure you would default to. Uniqueness comes from the specific facts and this idea's real details \u2014 lean on them, not on a house template.\n9. OUTPUT ONLY a raw JSON object with EXACTLY the fields below \u2014 nothing else. Do NOT output title, slug, seo_title, meta_description, tags, external_links, or internal_link_anchors (those are already final and owned by the researcher). No markdown fences, no commentary.\n\n=== REQUIRED JSON OUTPUT (narrative fields only; each specific to THIS idea) ===\n{\n  \"summary\": \"5-7 sentence real-talk overview: what this micro-niche actually is, its USP, who exactly it is for and what they're sick of, how it works day to day. Real personality, varied rhythm.\",\n  \"market_opportunity\": \"3-4 sentences: why this under-served niche has genuine demand now \u2014 grounded in the research facts, not hype.\",\n  \"target_customer\": \"3-4 sentences: the exact person who pays, what they do instead today, and the frustration that makes them hire you.\",\n  \"how_you_make_money\": \"3-4 sentences in this sector's real terms: pricing model, realistic numbers FROM THE FACTS, what one sale looks like, repeat/margin. No SaaS tiers unless it is software.\",\n  \"startup_cost\": \"2-3 sentences: realistic money and gear to start, numbers from the facts. If near-zero, say why.\",\n  \"income_potential\": \"2-3 sentences: realistic early vs traction income and the ceiling, numbers from the facts. No fantasy figures.\",\n  \"competition_edge\": \"3-4 sentences: the USP spelled out \u2014 what the obvious version gets wrong and the structural edge that wins here.\",\n  \"getting_started_steps\": [\"5-7 concrete ordered first steps, each a short actionable sentence specific to this idea\"],\n  \"tools_needed\": [\"4-6 concrete tools/gear/resources actually required, generic (no brand names)\"],\n  \"time_to_first_customer\": \"1-2 sentences: realistic honest timeline to the first paying customer.\",\n  \"faq_json\": [\n    {\"q\":\"A real beginner question about this micro-niche\",\"a\":\"Honest, specific 2-3 sentence answer using the facts\"},\n    {\"q\":\"A money/legal/risk question\",\"a\":\"Honest, specific answer\"},\n    {\"q\":\"A scaling/time question\",\"a\":\"Honest, specific answer\"}\n  ],\n  \"pros_json\": [\"Specific real advantage of this exact micro-niche\",\"A second, different-angle advantage\",\"A third tied to timing or a structural edge\"],\n  \"cons_json\": [\"A real sector-accurate obstacle\",\"A second from a different risk category (operational/financial/regulatory/trust)\",\"A third honest limit on scale or speed\"],\n  \"verdict\": \"Direct honest 2-3 sentence read: who this genuinely fits and who should skip it.\",\n  \"trend_score\": 78,\n  \"tier\": \"free\"\n}\n\nSCORING: trend_score = honest integer 55-98 based on the demand signal in the research facts (spread the range, don't cluster near 90). tier = \"premium\" only if trend_score >= 88, else \"free\".\n\nSilent check before output: is EVERY number traceable to research_facts, is this a specific micro-niche in a genuine human voice with no year/brand/emoji/template words, and did you output ONLY the narrative fields? If not, fix it before returning."
+        "text": "=You are a senior business writer and an honest founder-mentor. A researcher has ALREADY chosen this micro-niche, written its final title, slug, SEO fields and keywords, attached real reference links, and gathered VALIDATED FACTS with real numbers and sources. Your only job: write the NARRATIVE sections of the idea page — the story and the practical detail — using ONLY those validated facts. You never invent a number, never contradict the research, and never rewrite the title, slug, keywords, or links (those are final and not yours to touch).\n\n=== GROUND TRUTH (never contradict) ===\nCategory: {{ $json.category_name }} > {{ $json.subcategory_name }}\nFocus keyword: {{ $json.focus_keyword }} | also: {{ $json.additional_keyword_1 }}, {{ $json.additional_keyword_2 }}\nFinal idea title: {{ $json.title }}\nSeed brief (the real business model): {{ $json.business_description }}\nVALIDATED RESEARCH FACTS — your ONLY source for any number, cost, income, market size, percentage, or hard claim:\n{{ $json.research_facts }}\nReference links already attached to this page (you MAY reflect their facts in prose; do NOT output them, do NOT invent new ones):\n{{ $json.external_links }}\n\n=== ABSOLUTE RULES ===\n1. NUMBERS ONLY FROM research_facts. Every figure — startup cost, income, market size, percentage, timeline — must trace to the research facts above. If a number is not in the facts, describe it qualitatively or say it varies; NEVER fabricate one.\n2. STAY ON THIS BUSINESS. Consistent with the title, keywords, and seed brief. Do not drift to a similar-sounding different business.\n3. HUMAN, HONEST, SPECIFIC VOICE. Warm founder-mentor real-talk, dry humour where it fits. Honesty over hype — it is fine to say a business is hard or slow. Confidence from specificity, not superlatives.\n4. MICRO-NICHE DEPTH + USP. Explain the specific angle and what makes it different from the obvious saturated version. Never generic, never what a one-line AI answer would already say.\n5. GLOBAL / UNIVERSAL. Works anywhere. NO YEAR anywhere. NO real brand/company names (refer generically: \"a popular booking platform\", \"standard payment processing\"). NO emojis.\n6. NO TEMPLATE VOICE. Banned words: game changer, revolutionize, revolutionary, in today's fast-paced world, unlock, seamless, robust, cutting-edge, disrupt, disruptive, leverage (verb), synergy, holistic, ecosystem (unless ecological), empower, elevate, next-generation, paradigm, dive in, look no further. Vary every opening; no two ideas share a structure.\n7. Weave the focus + additional keywords in naturally, never stuffed (each once or twice at most).\n8. VARIATION — NO TWO IDEAS MAY READ ALIKE. The research_facts may include a \"voice_angle\" (the emotional stance for THIS idea) and an \"open_with\" hint (how to start). If present, follow them exactly. If absent, silently pick a DISTINCT combination for this idea — openings: {a blunt number, a customer's specific frustration, a small real scene, a myth to bust, a direct challenge to the reader, a contrarian claim}; structures: {problem then angle then proof, a day in the operator's life, who-wins vs who-loses, the-math-first, the-story-first}. Never fall back on the same opening or structure you would default to. Uniqueness comes from the specific facts and this idea's real details — lean on them, not on a house template.\n9. OUTPUT ONLY a raw JSON object with EXACTLY the fields below — nothing else. Do NOT output title, slug, seo_title, meta_description, tags, external_links, or internal_link_anchors (those are already final and owned by the researcher). No markdown fences, no commentary.\n\n=== REQUIRED JSON OUTPUT (narrative fields only; each specific to THIS idea) ===\n{\n  \"summary\": \"5-7 sentence real-talk overview: what this micro-niche actually is, its USP, who exactly it is for and what they're sick of, how it works day to day. Real personality, varied rhythm.\",\n  \"market_opportunity\": \"3-4 sentences: why this under-served niche has genuine demand now — grounded in the research facts, not hype.\",\n  \"target_customer\": \"3-4 sentences: the exact person who pays, what they do instead today, and the frustration that makes them hire you.\",\n  \"how_you_make_money\": \"3-4 sentences in this sector's real terms: pricing model, realistic numbers FROM THE FACTS, what one sale looks like, repeat/margin. No SaaS tiers unless it is software.\",\n  \"startup_cost\": \"2-3 sentences: realistic money and gear to start, numbers from the facts. If near-zero, say why.\",\n  \"income_potential\": \"2-3 sentences: realistic early vs traction income and the ceiling, numbers from the facts. No fantasy figures.\",\n  \"competition_edge\": \"3-4 sentences: the USP spelled out — what the obvious version gets wrong and the structural edge that wins here.\",\n  \"getting_started_steps\": [\"5-7 concrete ordered first steps, each a short actionable sentence specific to this idea\"],\n  \"tools_needed\": [\"4-6 concrete tools/gear/resources actually required, generic (no brand names)\"],\n  \"time_to_first_customer\": \"1-2 sentences: realistic honest timeline to the first paying customer.\",\n  \"faq_json\": [\n    {\"q\":\"A real beginner question about this micro-niche\",\"a\":\"Honest, specific 2-3 sentence answer using the facts\"},\n    {\"q\":\"A money/legal/risk question\",\"a\":\"Honest, specific answer\"},\n    {\"q\":\"A scaling/time question\",\"a\":\"Honest, specific answer\"}\n  ],\n  \"pros_json\": [\"Specific real advantage of this exact micro-niche\",\"A second, different-angle advantage\",\"A third tied to timing or a structural edge\"],\n  \"cons_json\": [\"A real sector-accurate obstacle\",\"A second from a different risk category (operational/financial/regulatory/trust)\",\"A third honest limit on scale or speed\"],\n  \"verdict\": \"Direct honest 2-3 sentence read: who this genuinely fits and who should skip it.\",\n  \"trend_score\": 78,\n  \"tier\": \"free\"\n}\n\nSCORING: trend_score = honest integer 55-98 based on the demand signal in the research facts (spread the range, don't cluster near 90). tier = \"premium\" only if trend_score >= 88, else \"free\".\n\nSilent check before output: is EVERY number traceable to research_facts, is this a specific micro-niche in a genuine human voice with no year/brand/emoji/template words, and did you output ONLY the narrative fields? If not, fix it before returning."
       },
       "id": "llm-0001",
       "name": "Basic LLM Chain",
@@ -757,6 +757,266 @@
           "name": "Supabase account"
         }
       }
+    },
+    {
+      "id": "blog-trigger",
+      "name": "Blog - Run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        160,
+        1180
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "blog-read",
+      "name": "Read Blog Queue",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        384,
+        1180
+      ],
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Blog Queue",
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "status",
+              "lookupValue": "pending"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "blog-loop",
+      "name": "Loop Blog Rows",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        608,
+        1180
+      ],
+      "parameters": {
+        "options": {}
+      }
+    },
+    {
+      "id": "blog-key",
+      "name": "Rotate Gemini Key (Blog)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        832,
+        1180
+      ],
+      "parameters": {
+        "jsCode": "// Gemini API key rotation.\n//\n// N8N_PIPELINE_PLAN.md lists this as a hard constraint and it was never\n// built: a single exhausted key stalled an entire batch. Keys live in the\n// n8n environment as GEMINI_API_KEY_1 ... GEMINI_API_KEY_7 so none of them\n// is ever written into this file or into the repository.\n//\n// The index advances on every call and is carried in workflow static data,\n// so it survives between runs. A 429 or 5xx on the HTTP node retries, and\n// because this node re-runs it, the retry lands on the NEXT key rather than\n// hammering the exhausted one.\nconst keys = [];\nfor (let i = 1; i <= 7; i++) {\n  const k = $env[`GEMINI_API_KEY_${i}`];\n  if (k) keys.push(k);\n}\nif (keys.length === 0) {\n  throw new Error(\n    'No Gemini keys found. Set GEMINI_API_KEY_1..7 in the n8n environment. ' +\n    'Never paste a key into a node parameter -- it would end up in the exported JSON.'\n  );\n}\n\nconst store = $getWorkflowStaticData('global');\nstore.geminiKeyIndex = (store.geminiKeyIndex ?? 0) % keys.length;\n\nconst out = [];\nfor (const item of $input.all()) {\n  const key = keys[store.geminiKeyIndex];\n  store.geminiKeyIndex = (store.geminiKeyIndex + 1) % keys.length;\n  out.push({\n    json: {\n      ...item.json,\n      geminiKey: key,\n      geminiKeyNumber: keys.indexOf(key) + 1,\n      geminiKeyCount: keys.length,\n    },\n  });\n}\nreturn out;\n"
+      }
+    },
+    {
+      "id": "blog-prompt",
+      "name": "Build Blog Prompt",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1056,
+        1180
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "blog-prompt-a",
+              "name": "blogPrompt",
+              "value": "=You are the staff writer for BBI (Bro Business Ideas), a free, researched business-idea library at businessidea.io, written India-first for people starting from zero: no investment, no team, no connections.\n\nWrite ONE complete blog post from the brief below.\n\n=== THE BRIEF (from the sheet row) ===\nWorking title: {{ $json.title }}\nPrimary keyword: {{ $json.primary_keyword }}\nSecondary keywords: {{ $json.secondary_keywords }}\nCategory: {{ $json.category }}\nSearch intent: {{ $json.search_intent }}\nAngle the writer must take: {{ $json.angle }}\nInternal link to include: {{ $json.internal_link }}\nTarget word count: {{ $json.word_count }}\n\n=== VOICE — THIS IS NOT OPTIONAL ===\nBBI's reader is often jobless, often broke, often on a phone at 1am. Write to that person as an equal, never down to them.\n- Short sentences. Plain words. No corporate register, no hype, no \"unlock\", \"leverage\", \"game-changer\", \"dive in\", \"in today's fast-paced world\".\n- No em-dash-heavy rhythm. No rhetorical question openers.\n- Concrete over abstract: rupees, hours, a real weekly routine, an actual first customer.\n- Say the hard part out loud. If an idea needs capital the reader may not have, say so in the same paragraph you recommend it.\n- Never invent statistics, studies, funding figures or named sources. If you do not know a number, describe the shape of it in words instead. A made-up figure is worse than no figure.\n- Never name or describe the AI tools BBI hands off to.\n\n=== STRUCTURE ===\n- Open with the reader's actual situation in 2-3 sentences. No throat-clearing.\n- 4 to 7 H2 sections. Sentence case headings, never Title Case, never a question mark on a label.\n- Where a list genuinely helps, use one. Otherwise write prose.\n- Close with what to do this week, in three concrete steps.\n\n=== OUTPUT ===\nReturn ONLY valid JSON, no markdown fence, matching exactly:\n{\n  \"title\": \"final post title, sentence case, under 65 characters\",\n  \"slug\": \"url-safe-lowercase-hyphenated\",\n  \"excerpt\": \"one sentence under 155 characters, no ellipsis\",\n  \"content_html\": \"the full post as clean semantic HTML using only <h2> <h3> <p> <ul> <li> <ol> <strong> <em> <a>. No inline styles, no <div>, no <script>, no <h1> (the theme renders the title).\",\n  \"image_prompt\": \"a photographic scene description for the cover image: a real workspace or setting relevant to this post, natural light, no text, no logos, no people's faces, no charts\",\n  \"meta_description\": \"under 158 characters, includes the primary keyword naturally\"\n}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "blog-write",
+      "name": "Gemini - Write Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1280,
+        1180
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={{ $json.geminiKey }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ contents: [{ parts: [{ text: $json.blogPrompt }] }], generationConfig: { temperature: 0.9, responseMimeType: 'application/json' } }) }}",
+        "options": {
+          "timeout": 180000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 30000
+    },
+    {
+      "id": "blog-guard",
+      "name": "Parse and Guard Post",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1504,
+        1180
+      ],
+      "parameters": {
+        "jsCode": "// Parse Gemini's JSON and refuse anything that would publish badly.\n//\n// The model is asked for raw JSON, but it still occasionally wraps the object\n// in a markdown fence, so strip that before parsing rather than failing the\n// whole batch on a formatting quirk.\nconst out = [];\n\nfor (const item of $input.all()) {\n  const raw = item.json?.candidates?.[0]?.content?.parts?.[0]?.text ?? '';\n  const cleaned = String(raw).replace(/^\\s*```(?:json)?/i, '').replace(/```\\s*$/, '').trim();\n\n  let post;\n  try {\n    post = JSON.parse(cleaned);\n  } catch (e) {\n    throw new Error('Gemini did not return valid JSON for \"' + (item.json.title ?? 'unknown row') + '\": ' + e.message);\n  }\n\n  const need = ['title', 'slug', 'excerpt', 'content_html', 'image_prompt', 'meta_description'];\n  const missing = need.filter((k) => !post[k] || String(post[k]).trim() === '');\n  if (missing.length) throw new Error('Post is missing required fields: ' + missing.join(', '));\n\n  // Guards. Each of these has shipped as a real defect on this project before.\n  if (/<h1[\\s>]/i.test(post.content_html)) throw new Error('content_html contains an <h1>; the theme renders the title.');\n  if (/<script|<style|onerror=|onclick=/i.test(post.content_html)) throw new Error('content_html contains script/style/handlers.');\n  if (String(post.title).length > 80) throw new Error('Title too long: ' + post.title.length);\n  if (String(post.meta_description).length > 165) throw new Error('meta_description too long: ' + post.meta_description.length);\n\n  const words = String(post.content_html).replace(/<[^>]+>/g, ' ').split(/\\s+/).filter(Boolean).length;\n  if (words < 350) throw new Error('Post is only ' + words + ' words; too thin to publish.');\n\n  post.slug = String(post.slug).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');\n\n  out.push({ json: { ...item.json, post, wordCount: words } });\n}\n\nreturn out;"
+      }
+    },
+    {
+      "id": "blog-img",
+      "name": "Gemini - Cover Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1728,
+        1180
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key={{ $json.geminiKey }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ contents: [{ parts: [{ text: $json.post.image_prompt + ' Photographic, natural light, no text, no logos, no readable charts. 16:9.' }] }] }) }}",
+        "options": {
+          "timeout": 180000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 20000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "blog-imgbin",
+      "name": "Cover to Binary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1952,
+        1180
+      ],
+      "parameters": {
+        "jsCode": "// Gemini returns the image as base64 inside inlineData. n8n's WordPress media\n// endpoint needs real binary, so convert it here.\nconst out = [];\nfor (const item of $input.all()) {\n  const parts = item.json?.candidates?.[0]?.content?.parts ?? [];\n  const img = parts.find((p) => p.inlineData?.data);\n  if (!img) {\n    // No image is not a reason to lose the post. Publish without a cover and\n    // say so on the sheet row instead of throwing the whole run away.\n    out.push({ json: { ...item.json, coverMissing: true } });\n    continue;\n  }\n  out.push({\n    json: { ...item.json, coverMissing: false },\n    binary: {\n      cover: await this.helpers.prepareBinaryData(\n        Buffer.from(img.inlineData.data, 'base64'),\n        (item.json.post?.slug ?? 'cover') + '.png',\n        img.inlineData.mimeType || 'image/png',\n      ),\n    },\n  });\n}\nreturn out;"
+      }
+    },
+    {
+      "id": "blog-media",
+      "name": "Upload Cover to WordPress",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2176,
+        1180
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.WORDPRESS_API_BASE }}/media",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Disposition",
+              "value": "=attachment; filename=\"{{ $json.post.slug }}.png\""
+            }
+          ]
+        },
+        "contentType": "binaryData",
+        "inputDataFieldName": "cover",
+        "sendBody": true,
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "blog-post",
+      "name": "Create WordPress Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2400,
+        1180
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.WORDPRESS_API_BASE }}/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ title: $('Parse and Guard Post').item.json.post.title, slug: $('Parse and Guard Post').item.json.post.slug, excerpt: $('Parse and Guard Post').item.json.post.excerpt, content: $('Parse and Guard Post').item.json.post.content_html, status: 'draft', featured_media: $json.id ?? 0, meta: { description: $('Parse and Guard Post').item.json.post.meta_description } }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 15000
+    },
+    {
+      "id": "blog-done",
+      "name": "Mark Blog Row Done",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2624,
+        1180
+      ],
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Blog Queue",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "row_id"
+          ],
+          "value": {
+            "row_id": "={{ $('Parse and Guard Post').item.json.row_id }}",
+            "status": "done",
+            "published_slug": "={{ $('Parse and Guard Post').item.json.post.slug }}",
+            "wp_post_id": "={{ $json.id }}",
+            "wp_edit_url": "={{ $json.link }}",
+            "word_count": "={{ $('Parse and Guard Post').item.json.wordCount }}"
+          }
+        },
+        "options": {}
+      }
     }
   ],
   "pinData": {},
@@ -961,6 +1221,138 @@
         [
           {
             "node": "Loop Categories",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Blog - Run": {
+      "main": [
+        [
+          {
+            "node": "Read Blog Queue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Blog Queue": {
+      "main": [
+        [
+          {
+            "node": "Loop Blog Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Blog Rows": {
+      "main": [
+        [
+          {
+            "node": "Rotate Gemini Key (Blog)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rotate Gemini Key (Blog)": {
+      "main": [
+        [
+          {
+            "node": "Build Blog Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Blog Prompt": {
+      "main": [
+        [
+          {
+            "node": "Gemini - Write Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini - Write Post": {
+      "main": [
+        [
+          {
+            "node": "Parse and Guard Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse and Guard Post": {
+      "main": [
+        [
+          {
+            "node": "Gemini - Cover Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini - Cover Image": {
+      "main": [
+        [
+          {
+            "node": "Cover to Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cover to Binary": {
+      "main": [
+        [
+          {
+            "node": "Upload Cover to WordPress",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Cover to WordPress": {
+      "main": [
+        [
+          {
+            "node": "Create WordPress Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create WordPress Post": {
+      "main": [
+        [
+          {
+            "node": "Mark Blog Row Done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Blog Row Done": {
+      "main": [
+        [
+          {
+            "node": "Loop Blog Rows",
             "type": "main",
             "index": 0
           }

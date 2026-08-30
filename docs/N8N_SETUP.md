@@ -163,3 +163,125 @@ content, not on engineering. Each needs the same shape as the FAQ branch:
 
 Add them as further branches in **this same file**. Do not create a second
 workflow.
+
+---
+
+## 4. The blog branch (added 2026-08-30)
+
+A third branch in the same file, `n8n-idea-pipeline-v2.json`. Per the standing
+rule this is the same workflow edited, never a second file — import it once and
+you get all three branches.
+
+| Branch | Trigger node | Writes to |
+|---|---|---|
+| Idea blueprints | `When clicking "Test workflow"` | Supabase `ideas` |
+| FAQ pool | `FAQ Pool - Run` | Supabase `category_faqs` |
+| **Blog posts** | **`Blog - Run`** | **WordPress** |
+
+### Why WordPress and not Supabase
+
+This is the thing worth knowing before you wire anything up. `/blog` on the
+site does **not** read from Supabase. `src/lib/blog.server.ts` fetches from the
+WordPress REST API at `{site}/wp-json/wp/v2`. So the pipeline posts to
+WordPress and the site picks the post up on its own — **no site code changes at
+all**. That is also why posts land in the right place automatically: the blog
+cards read WordPress categories and the featured image straight from the API.
+
+Posts are created as **`status: 'draft'`** on purpose. Nothing this pipeline
+writes goes live until you open WordPress and publish it. Change `status` to
+`'publish'` in `Create WordPress Post` only when you trust the output.
+
+### The chain
+
+```
+Blog - Run
+  -> Read Blog Queue          (Google Sheets, status = pending)
+  -> Loop Blog Rows           (one row at a time)
+  -> Rotate Gemini Key (Blog) (GEMINI_API_KEY_1..7, round-robin)
+  -> Build Blog Prompt        (the writer prompt, with BBI's voice rules)
+  -> Gemini - Write Post      (JSON out: title, slug, excerpt, HTML, image prompt, meta)
+  -> Parse and Guard Post     (refuses thin, unsafe or malformed output)
+  -> Gemini - Cover Image     (image generated from the model's own scene brief)
+  -> Cover to Binary          (base64 -> binary for the media endpoint)
+  -> Upload Cover to WordPress
+  -> Create WordPress Post    (draft, with the cover as featured_media)
+  -> Mark Blog Row Done       (writes slug, post id and link back to the sheet)
+  -> back to Loop Blog Rows
+```
+
+### What you have to set
+
+**One thing, if the sheet is the only change you want:** replace
+`REPLACE_WITH_YOUR_SHEET_ID` in `Read Blog Queue` and `Mark Blog Row Done`, and
+change the tab name from `Blog Queue` if yours differs.
+
+Two environment variables, set once in n8n:
+
+- `WORDPRESS_API_BASE` — e.g. `https://yoursite.com/wp-json/wp/v2`
+- `GEMINI_API_KEY_1` … `GEMINI_API_KEY_7` — already used by the FAQ branch
+
+One credential: an **HTTP Header Auth** credential holding a WordPress
+Application Password, selected on `Upload Cover to WordPress` and
+`Create WordPress Post`. Create it in WordPress under Users -> Profile ->
+Application Passwords, then set the header to
+`Authorization: Basic <base64 of user:app-password>`.
+
+No key is ever written into the workflow file. `Rotate Gemini Key (Blog)` reads
+them from `$env` for exactly that reason — an exported workflow that carries a
+live key is a leaked key.
+
+### The sheet
+
+`blog-queue-template.csv` in the repository root has the exact columns, with
+three worked example rows. Paste it into a new tab, name the tab `Blog Queue`,
+and the branch reads it as-is.
+
+| Column | You fill in | Written back by the pipeline |
+|---|---|---|
+| `row_id` | yes — any unique value | matched on |
+| `status` | `pending` | set to `done` |
+| `title` | working title (the model may improve it) | |
+| `primary_keyword` | the one phrase this post targets | |
+| `secondary_keywords` | comma-separated, in one quoted cell | |
+| `category` | the BBI category it belongs to | |
+| `search_intent` | informational / commercial / transactional | |
+| `angle` | **the most important column.** A sentence telling the writer what to actually do. Generic rows produce generic posts. | |
+| `internal_link` | a real URL on the site to link to | |
+| `word_count` | target length | |
+| `published_slug` | leave empty | filled |
+| `wp_post_id` | leave empty | filled |
+| `wp_edit_url` | leave empty | filled |
+
+### Guards, and why each one exists
+
+`Parse and Guard Post` throws rather than publishing when the model returns an
+`<h1>` (the theme already renders the title, so a second one breaks the
+document outline and the page's SEO), when the HTML carries `<script>`,
+`<style>` or an inline event handler, when the post is under 350 words, when
+the title exceeds 80 characters or the meta description exceeds 165, or when
+any required field is missing.
+
+The image step is the one deliberate exception: it is set to
+`continueRegularOutput`, so a failed or refused image does **not** throw away a
+good post. It publishes without a cover and the row still gets marked done.
+
+### How many workflows the site needs, end to end
+
+Three branches cover the content lifecycle, and they are all in this one file:
+
+1. **Idea blueprints** — the library itself. Sheet to Supabase `ideas`.
+2. **FAQ pool** — 10-15 FAQs per category, drawn onto category hubs and idea
+   pages. Supabase `category_faqs`. Infrastructure is live; the pool is still
+   empty and needs one run.
+3. **Blog posts** — top-of-funnel search traffic. WordPress.
+
+Two more are worth building later, and neither exists yet:
+
+4. **Listicle refresh** — regenerate `/list/[slug]` entries as the library
+   grows, so a "15 best X" page does not go stale the moment idea 16 lands.
+5. **Internal link maintenance** — re-scan published posts for phrases that now
+   have a matching idea or category page and add the link.
+
+They are listed here rather than built because both edit content that already
+exists, which is a different risk class from appending new rows, and
+`BUTTERFLY_EFFECT.md` says that kind of change gets its own deliberate round.
