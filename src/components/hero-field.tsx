@@ -37,13 +37,13 @@ function particleBudget(w: number, h: number) {
   const small = Math.min(w, h) < 620;
   // Measured 1,392 fillRect calls per frame at 1440x900 on the first pass;
   // this brings it to roughly half that, which is still a dense field.
-  let n = 105;
-  if (small) n = 70;
-  if (cores <= 4) n = Math.round(n * 0.7);
+  let n = 74;
+  if (small) n = 52;
+  if (cores <= 4) n = Math.round(n * 0.72);
   return n;
 }
 const P_COUNT = 175;
-const P_ROWS = 28;
+const P_ROWS = 22;
 const P_SIZE = 2;
 const SEED = 200;
 const R_IN = 26;
@@ -59,6 +59,11 @@ const PUSH_R = 150;
 const PUSH_K = 34;
 const GLOW_R = 340;
 const GLOW_K = 2.4;
+// `--particle-color: navy`. The brand violet at full chroma read as coloured
+// confetti; this is the site's deep navy-violet, which on white behaves like
+// the reference's navy dust.
+const PARTICLE = "rgba(43,40,113,";
+const ALPHA_CAP = 0.62;
 
 type Row = {
   t: number;
@@ -153,12 +158,18 @@ export function HeroField({ className }: { className?: string }) {
       build();
     };
 
+    const litX: number[] = [];
+    const litY: number[] = [];
+
     const draw = (now: number) => {
       const g = ctx;
       if (!g) return;
       g.clearRect(0, 0, W, H);
       const tick = (now % RIPPLE_MS) / RIPPLE_MS;
-      const sz = Math.max(1.8, P_SIZE * sc * 1.35);
+      // `--particle-size: 2`, literally. This was `P_SIZE * sc * 1.35`, which
+      // at a 1440x1187 hero meant 3.6px, and up to 6.2px under the cursor
+      // glow -- chunky squares instead of the reference's fine dust.
+      const sz = P_SIZE;
       const pr2 = PUSH_R * PUSH_R * sc * sc;
       const gr2 = GLOW_R * GLOW_R * sc * sc;
 
@@ -172,10 +183,10 @@ export function HeroField({ className }: { className?: string }) {
         u = u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u);
         const core = CORE_FLOOR + (1 - CORE_FLOOR) * u;
         const outer = 1 - Math.max(0, (row.t - 0.86) / 0.14);
-        const a = (A_MIN + (A_MAX - A_MIN) * wave) * core * outer * 0.95;
+        const a = (A_MIN + (A_MAX - A_MIN) * wave) * core * outer * ALPHA_CAP;
         if (a < 0.008) continue;
 
-        const base = "rgba(70,67,186,";
+        const base = PARTICLE;
         g.fillStyle = base + a.toFixed(3) + ")";
         const spin = now * 0.00004 * (1 + row.drift * 6);
 
@@ -203,14 +214,28 @@ export function HeroField({ className }: { className?: string }) {
           }
 
           if (x < -4 || x > W + 4 || y < -4 || y > H + 4) continue;
-          if (lit > 0.02) {
-            g.fillStyle = base + Math.min(0.95, a * (1 + lit * GLOW_K)).toFixed(3) + ")";
-            g.fillRect(x, y, sz * (1 + lit * 0.75), sz * (1 + lit * 0.75));
-            g.fillStyle = base + a.toFixed(3) + ")";
+          if (lit > 0.05) {
+            // Deferred: setting fillStyle per particle forced a canvas state
+            // change thousands of times a frame, which is what starved the
+            // rAF budget and made the custom pointer lag.
+            litX.push(x);
+            litY.push(y);
           } else {
             g.fillRect(x, y, sz, sz);
           }
         }
+      }
+
+      // one state change for every lit particle on the frame, and NO size
+      // growth -- a bigger square under the cursor is what made it look like
+      // blocks rather than a field lighting up
+      if (litX.length) {
+        g.fillStyle = PARTICLE + Math.min(0.9, A_MAX * ALPHA_CAP * 1.35).toFixed(3) + ")";
+        for (let i = 0; i < litX.length; i++) {
+          g.fillRect(litX[i] as number, litY[i] as number, sz, sz);
+        }
+        litX.length = 0;
+        litY.length = 0;
       }
     };
 

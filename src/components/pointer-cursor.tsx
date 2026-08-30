@@ -66,15 +66,17 @@ export function PointerCursor() {
       const dt = last ? Math.min((now - last) / 1000, 0.05) : 0.016;
       last = now;
 
-      // The dot is near-instant, the ring trails. Exponential smoothing keeps
-      // both frame-rate independent.
-      const kd = 1 - Math.exp(-dt / 0.018);
-      const kr = 1 - Math.exp(-dt / 0.085);
+      // Exponential smoothing keeps both frame-rate independent.
+      // The dot is effectively instant and the ring trails just enough to read
+      // as a follow. Both were slower before, which on top of a starved frame
+      // budget made the pointer feel like it was dragging behind the mouse.
+      const kd = 1 - Math.exp(-dt / 0.006);
+      const kr = 1 - Math.exp(-dt / 0.045);
       dx += (tx - dx) * kd;
       dy += (ty - dy) * kd;
       rx += (tx - rx) * kr;
       ry += (ty - ry) * kr;
-      rs += (rsT - rs) * (1 - Math.exp(-dt / 0.09));
+      rs += (rsT - rs) * (1 - Math.exp(-dt / 0.06));
       vis += (visT - vis) * (1 - Math.exp(-dt / 0.12));
 
       dot.style.transform = `translate3d(${dx}px, ${dy}px, 0) translate(-50%, -50%)`;
