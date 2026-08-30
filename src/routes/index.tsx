@@ -9,6 +9,8 @@ import { CategoryBadge } from "@/components/category-badge";
 import { AdSlot } from "@/components/AdSlot";
 import { HeroSlider, Typewriter } from "@/components/hero-slider";
 import { HeroField } from "@/components/hero-field";
+import { BusinessIcons } from "@/components/business-icons";
+import { WaveText } from "@/components/wave-text";
 import { Reveal } from "@/components/reveal";
 import { CardFan } from "@/components/card-fan";
 import { Spotlight } from "@/components/spotlight";
@@ -91,7 +93,7 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
       data-anchor-label="Surprise Me"
       className="mx-auto mt-10 max-w-6xl px-3 sm:px-4"
     >
-      <div className="glass glass-hover rounded-3xl px-6 py-8 sm:px-10 sm:py-10">
+      <div className="glass glass-hover bbi-card-motion rounded-3xl px-6 py-8 sm:px-10 sm:py-10">
         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Not sure where to start?
         </p>
@@ -312,11 +314,12 @@ function HomePage() {
         data-anchor-label="Top"
         className="bbi-field-host px-3 pt-10 pb-6 sm:px-4 sm:pt-16"
       >
-        {/* Full-bleed particle field behind the glass card. The card is
-            translucent, so the field reads through it. */}
+        {/* The field IS the hero background. `.bbi-hero-open` drops the panel's
+            backdrop-blur, which was blurring the 2px particles into nothing and
+            leaving the field visible only in a thin strip around the card. */}
         <HeroField className="bbi-field" />
         <div className="mx-auto max-w-6xl">
-          <div className="glass blob-1 px-6 py-14 sm:px-12 sm:py-20">
+          <div className="glass bbi-hero-open blob-1 px-6 py-14 sm:px-12 sm:py-20">
             <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent sm:text-xs">
               <Typewriter text="The Truth About Business Ideas" />
             </p>
@@ -326,16 +329,15 @@ function HomePage() {
                   ref={h1Ref}
                   className="max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl"
                 >
-                  Tired of paying just to check if your{" "}
-                  <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
-                    idea will work
-                  </span>
-                  ?
+                  <WaveText>
+                    Tired of paying just to check if your{" "}
+                    <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
+                      idea will work
+                    </span>
+                    ?
+                  </WaveText>
                 </h1>
-                <p
-                  className="iv-fade-up mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg"
-                  style={{ animationDelay: "420ms" }}
-                >
+                <p data-wave className="mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
                   We built a free home for real business ideas — side hustles, zero investment
                   ideas, work from home ideas, and low investment ideas. Every idea is researched,
                   not guessed. We tell you who will actually pay you, how the money works, and what
@@ -402,6 +404,9 @@ function HomePage() {
         <p className="mx-auto max-w-6xl px-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent sm:px-4">
           Browse by category
         </p>
+        {/* Business-model icons, bobbing on staggered offsets — the movement
+            from the approved design. Full-bleed, masked at both edges. */}
+        <BusinessIcons />
         <div className="iv-ticker mt-4 grid gap-3">
           {tickerRows(catalog.categories).map((row, rowIndex) => {
             const repeats = Math.max(2, Math.ceil(14 / Math.max(row.length, 1))) * 2;
@@ -990,7 +995,7 @@ function FourPillarStandardSection() {
         {pillars.map((pillar) => (
           <div
             key={pillar.num}
-            className="glass flex flex-col rounded-2xl border border-border p-6"
+            className="glass bbi-card-motion flex flex-col rounded-2xl border border-border p-6"
           >
             <span className="text-xs font-extrabold tracking-widest text-accent">{pillar.num}</span>
             <h3 className="mt-2 text-base font-bold text-foreground">{pillar.title}</h3>
@@ -1097,7 +1102,7 @@ function BrandStatementBanner() {
   const morphRef = useScrollProgress<HTMLElement>();
   return (
     <section ref={morphRef} className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass glass-hover bbi-shape-banner bbi-morph-host relative overflow-hidden px-6 py-12 sm:px-14 sm:py-16">
+      <div className="glass glass-hover bbi-card-motion bbi-shape-banner bbi-morph-host relative overflow-hidden px-6 py-12 sm:px-14 sm:py-16">
         <span className="bbi-morph-shape" aria-hidden />
         <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
           Who we are

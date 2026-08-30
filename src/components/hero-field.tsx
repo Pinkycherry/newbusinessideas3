@@ -27,6 +27,21 @@ import { useEffect, useRef } from "react";
  * `position: relative` and clip its overflow.
  */
 
+// Particle budget. The previous fixed 175 built ~4,600 particles and redrew
+// every one each frame with per-particle distance maths — measured at 61fps in
+// a HEADLESS DESKTOP browser, which says nothing about a phone. This scales the
+// budget to the device and halves it on a small screen or a low-core CPU.
+function particleBudget(w: number, h: number) {
+  const cores =
+    (navigator as Navigator & { hardwareConcurrency?: number }).hardwareConcurrency ?? 4;
+  const small = Math.min(w, h) < 620;
+  // Measured 1,392 fillRect calls per frame at 1440x900 on the first pass;
+  // this brings it to roughly half that, which is still a dense field.
+  let n = 105;
+  if (small) n = 70;
+  if (cores <= 4) n = Math.round(n * 0.7);
+  return n;
+}
 const P_COUNT = 175;
 const P_ROWS = 28;
 const P_SIZE = 2;
@@ -58,19 +73,27 @@ export function HeroField({ className }: { className?: string }) {
   const ref = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    const cv = ref.current;
-    const host = cv?.parentElement;
-    if (!cv || !host) return;
+    if (!ref.current) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const ctx = cv.getContext("2d", { alpha: true });
+    // Do NOT capture the canvas node. React can replace this subtree (a
+    // hydration mismatch anywhere on the page regenerates the tree), and a
+    // captured node is then detached — the field goes on drawing into an
+    // element that is no longer in the document, which is exactly why mobile
+    // showed a 300x150 default canvas and zero particles. Re-acquire instead,
+    // and re-size whenever the node changes underneath us.
+    let cv = ref.current;
+    let ctx = cv.getContext("2d", { alpha: true });
     if (!ctx) return;
+    let host = cv.parentElement;
+    if (!host) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let W = 0;
     let H = 0;
     let sc = 1;
     let rows: Row[] = [];
+    let budget = P_COUNT;
     let mx = 0;
     let my = 0;
     let mrx = 0;
@@ -78,7 +101,7 @@ export function HeroField({ className }: { className?: string }) {
     let cx = 0;
     let cy = 0;
     let hasPointer = false;
-    let running = true;
+    let running = false;
     let last = 0;
     let raf = 0;
 
@@ -95,7 +118,7 @@ export function HeroField({ className }: { className?: string }) {
         const rad = (R_IN + Math.pow(t, 0.86) * R_SPAN) * sc;
         // Count scales with radius so areal density stays constant. A fixed 80
         // per row piles the inner rows into a bright knot behind the headline.
-        const n = Math.max(8, Math.round((P_COUNT * rad) / (430 * sc)));
+        const n = Math.max(6, Math.round((budget * rad) / (430 * sc)));
         const ang = new Float32Array(n);
         const jit = new Float32Array(n);
         for (let i = 0; i < n; i++) {
@@ -106,19 +129,34 @@ export function HeroField({ className }: { className?: string }) {
       }
     };
 
+    const reacquire = () => {
+      const live = ref.current;
+      if (!live || live === cv) return false;
+      cv = live;
+      const c2 = live.getContext("2d", { alpha: true });
+      if (!c2) return false;
+      ctx = c2;
+      host = live.parentElement ?? host;
+      return true;
+    };
+
     const sized = () => {
+      if (!host) return;
       W = host.clientWidth;
       H = host.clientHeight;
       if (W === 0 || H === 0) return;
       cv.width = Math.round(W * dpr);
       cv.height = Math.round(H * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
       sc = Math.max(0.62, Math.min(W, H) / 900);
+      budget = particleBudget(W, H);
       build();
     };
 
     const draw = (now: number) => {
-      ctx.clearRect(0, 0, W, H);
+      const g = ctx;
+      if (!g) return;
+      g.clearRect(0, 0, W, H);
       const tick = (now % RIPPLE_MS) / RIPPLE_MS;
       const sz = Math.max(1.8, P_SIZE * sc * 1.35);
       const pr2 = PUSH_R * PUSH_R * sc * sc;
@@ -138,7 +176,7 @@ export function HeroField({ className }: { className?: string }) {
         if (a < 0.008) continue;
 
         const base = "rgba(70,67,186,";
-        ctx.fillStyle = base + a.toFixed(3) + ")";
+        g.fillStyle = base + a.toFixed(3) + ")";
         const spin = now * 0.00004 * (1 + row.drift * 6);
 
         for (let i = 0; i < row.n; i++) {
@@ -166,11 +204,11 @@ export function HeroField({ className }: { className?: string }) {
 
           if (x < -4 || x > W + 4 || y < -4 || y > H + 4) continue;
           if (lit > 0.02) {
-            ctx.fillStyle = base + Math.min(0.95, a * (1 + lit * GLOW_K)).toFixed(3) + ")";
-            ctx.fillRect(x, y, sz * (1 + lit * 0.75), sz * (1 + lit * 0.75));
-            ctx.fillStyle = base + a.toFixed(3) + ")";
+            g.fillStyle = base + Math.min(0.95, a * (1 + lit * GLOW_K)).toFixed(3) + ")";
+            g.fillRect(x, y, sz * (1 + lit * 0.75), sz * (1 + lit * 0.75));
+            g.fillStyle = base + a.toFixed(3) + ")";
           } else {
-            ctx.fillRect(x, y, sz, sz);
+            g.fillRect(x, y, sz, sz);
           }
         }
       }
@@ -178,7 +216,14 @@ export function HeroField({ className }: { className?: string }) {
 
     const frame = (now: number) => {
       raf = requestAnimationFrame(frame);
-      if (!running) return;
+      // Size recovery has to happen BEFORE the visibility gate. If the hero
+      // measures 0 at mount (it can under load) and this sat after the gate,
+      // the canvas stayed at its 300x150 default forever and drew nothing —
+      // which is the intermittent blank field on mobile. Reading clientWidth
+      // forces layout, so only while genuinely unsized.
+      if (reacquire()) sized();
+      if (W === 0 || H === 0) sized();
+      if (!running || W === 0 || H === 0) return;
       const dt = last ? Math.min((now - last) / 1000, 0.05) : 0.016;
       last = now;
       const k = 1 - Math.exp(-dt / FOLLOW_TAU);
@@ -190,6 +235,7 @@ export function HeroField({ className }: { className?: string }) {
     };
 
     const point = (vx: number, vy: number) => {
+      if (!host) return;
       const box = host.getBoundingClientRect();
       mrx = vx - box.left;
       mry = vy - box.top;
@@ -212,7 +258,7 @@ export function HeroField({ className }: { className?: string }) {
       restTimer = window.setTimeout(rest, 5000);
     };
     const onVis = () => {
-      running = !document.hidden;
+      if (document.hidden) running = false;
       last = 0;
     };
 
@@ -220,8 +266,20 @@ export function HeroField({ className }: { className?: string }) {
     cx = mx = mrx = W * 0.5;
     cy = my = mry = H * 0.46;
 
+    // Nothing runs until the hero is actually on screen, and it stops again
+    // when you scroll past — no frames burned during page load or further down.
+    const io = new IntersectionObserver(
+      (entries) => {
+        const on = entries.some((e) => e.isIntersecting);
+        if (on && !running) last = 0;
+        running = on;
+      },
+      { rootMargin: "120px" },
+    );
+    if (host) io.observe(host);
+
     const ro = new ResizeObserver(sized);
-    ro.observe(host);
+    if (host) ro.observe(host);
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("pointerleave", rest, { passive: true });
     window.addEventListener("touchstart", onTouch, { passive: true });
@@ -233,6 +291,7 @@ export function HeroField({ className }: { className?: string }) {
     return () => {
       cancelAnimationFrame(raf);
       window.clearTimeout(restTimer);
+      io.disconnect();
       ro.disconnect();
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerleave", rest);

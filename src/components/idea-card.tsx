@@ -41,7 +41,7 @@ export function IdeaCard({
     <Link
       to="/idea/$slug"
       params={{ slug: idea.slug }}
-      className={`glass glass-hover mo-card group relative flex h-full min-w-0 flex-col overflow-hidden ${blob} p-4 sm:p-5 ${
+      className={`glass glass-hover mo-card bbi-card-motion group relative flex h-full min-w-0 flex-col overflow-hidden ${blob} p-4 sm:p-5 ${
         featured ? "sm:col-span-2" : ""
       }`}
     >

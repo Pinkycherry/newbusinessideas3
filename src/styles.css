@@ -2139,12 +2139,179 @@ html.light .idea-shell::before { opacity: 0.42; }
    bold out of Instrument Serif, without editing all 70 call sites.
    ========================================================================= */
 
+/* Instrument Serif ships ONE weight (400). Hierarchy therefore has to come
+   from SIZE, not weight — the previous version dropped every heading from
+   800/700/600 to 400 with no size compensation, which is why the hero read
+   thin and weak on a phone. h3 stays sans: most h3s here are small card
+   titles, and a 400-weight serif at 16-18px is genuinely hard to read. */
 h1,
-h2,
-h3 {
+h2 {
   font-family: var(--font-display);
   font-weight: 400;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.018em;
+  line-height: 1.02;
+}
+/* Restore the presence the weight drop cost, at every breakpoint. */
+h1 {
+  font-size: clamp(2.6rem, 9.2vw, 4.5rem);
+}
+@media (min-width: 640px) {
+  h1 {
+    font-size: clamp(3.4rem, 5.6vw, 5rem);
+  }
+}
+h2 {
+  font-size: clamp(1.9rem, 5.4vw, 3rem);
+}
+
+/* ---- the hero field is the BACKGROUND, not decoration around a card ----
+   `.glass` carries `backdrop-filter: blur(24px)`, which blurs whatever is
+   behind it into mush — that is what made 2px particles vanish and left the
+   field visible only in a thin strip. The hero panel keeps its rounded frame
+   and loses the blur, so the copy sits on the field the way it does in the
+   approved design. */
+/* This MUST live in @layer base, not unlayered. For `!important` declarations
+   the cascade reverses layer order and unlayered is the WEAKEST — so an
+   unlayered `!important` loses to `@utility glass`'s important, which is what
+   left backdrop-filter: blur(24px) in place and the field invisible. base is
+   earlier than utilities, so it wins for important. */
+@layer base {
+  #hero .glass.bbi-hero-open {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border-color: color-mix(in oklab, var(--primary) 16%, transparent) !important;
+    box-shadow: none !important;
+  }
+}
+
+/* ---- wave text reveal: words arrive on a rolling rhythm, not a flat ramp -- */
+.rv {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(5px);
+  translate: 0 var(--rv-y, 0.22em);
+  transition:
+    opacity 0.52s cubic-bezier(0.165, 0.84, 0.44, 1),
+    filter 0.52s cubic-bezier(0.165, 0.84, 0.44, 1),
+    translate 0.58s cubic-bezier(0.2, 1.25, 0.3, 1);
+}
+.revealed .rv {
+  opacity: 1;
+  filter: blur(0);
+  translate: 0 0;
+}
+p .rv,
+li .rv {
+  filter: blur(3px);
+  transition-duration: 0.44s, 0.44s, 0.5s;
+}
+
+/* Headings that are not word-split still get an entry reveal — same easing, one
+   unit instead of many. `:not(:has(.rv))` keeps it off anything WaveText owns,
+   so the two never double up. */
+h1:not(:has(.rv)),
+h2:not(:has(.rv)),
+h3:not(:has(.rv)),
+[data-wave]:not(:has(.rv)) {
+  opacity: 0;
+  filter: blur(5px);
+  translate: 0 0.22em;
+  transition:
+    opacity 0.52s cubic-bezier(0.165, 0.84, 0.44, 1),
+    filter 0.52s cubic-bezier(0.165, 0.84, 0.44, 1),
+    translate 0.58s cubic-bezier(0.2, 1.25, 0.3, 1);
+}
+h1.revealed:not(:has(.rv)),
+h2.revealed:not(:has(.rv)),
+h3.revealed:not(:has(.rv)),
+[data-wave].revealed:not(:has(.rv)) {
+  opacity: 1;
+  filter: blur(0);
+  translate: 0 0;
+}
+
+/* ---- card motion, two-way ------------------------------------------------
+   A view() timeline is scrubbed by scroll position, so it un-plays on the way
+   back up as well as playing on the way down. */
+@supports (animation-timeline: view()) {
+  @keyframes bbi-card-rise {
+    from {
+      scale: 0.93;
+      translate: 0 26px;
+      opacity: 0.42;
+    }
+    to {
+      scale: 1;
+      translate: 0 0;
+      opacity: 1;
+    }
+  }
+  .bbi-card-motion {
+    animation: bbi-card-rise linear both;
+    animation-timeline: view();
+    animation-range: entry 6% cover 36%;
+  }
+}
+@keyframes bbi-card-float {
+  from {
+    translate: 0 -6px;
+  }
+  to {
+    translate: 0 6px;
+  }
+}
+.bbi-card-float {
+  animation: bbi-card-float 6s ease-in-out infinite alternate;
+}
+
+/* ---- business icon row --------------------------------------------------- */
+.bbi-icons {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  overflow-x: clip;
+  height: max(10em, 19vh);
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+.bbi-icons .bbi-icon {
+  flex: 0 0 clamp(3.4rem, 8.5vw, 5rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--card) 90%, transparent);
+  border: 1px solid var(--border);
+  display: grid;
+  place-content: center;
+  color: var(--primary);
+  animation: bbi-icon-wobble 4s ease infinite alternate;
+}
+.bbi-icons .bbi-icon svg {
+  width: clamp(20px, 3vw, 26px);
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.bbi-icons .bbi-icon:nth-child(5n + 1) { animation-delay: 0s; }
+.bbi-icons .bbi-icon:nth-child(5n + 2) { animation-delay: -1s; }
+.bbi-icons .bbi-icon:nth-child(5n + 3) { animation-delay: -2s; }
+.bbi-icons .bbi-icon:nth-child(5n + 4) { animation-delay: -3s; }
+.bbi-icons .bbi-icon:nth-child(5n + 5) { animation-delay: -4s; }
+@keyframes bbi-icon-wobble {
+  from { translate: 0 52%; }
+  to { translate: 0 -52%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv,
+  h1:not(:has(.rv)),
+  h2:not(:has(.rv)),
+  h3:not(:has(.rv)),
+  [data-wave]:not(:has(.rv)) { opacity: 1; filter: none; translate: none; }
+  .bbi-card-motion,
+  .bbi-card-float,
+  .bbi-icons .bbi-icon { animation: none; }
 }
 
 /* The field sits behind the hero's glass card, clipped to the section. */
