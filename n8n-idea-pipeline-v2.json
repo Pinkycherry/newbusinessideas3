@@ -78,11 +78,11 @@
           "conditions": [
             {
               "id": "rf-check",
-              "leftValue": "={{ String($json.research_facts || '') }}",
-              "rightValue": "facts",
+              "leftValue": "={{ String($json.research_facts || '').trim().length }}",
+              "rightValue": 50,
               "operator": {
-                "type": "string",
-                "operation": "contains"
+                "type": "number",
+                "operation": "gt"
               }
             }
           ],
@@ -1017,6 +1017,20 @@
         },
         "options": {}
       }
+    },
+    {
+      "id": "idea-guard",
+      "name": "Quality Guard",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        80
+      ],
+      "parameters": {
+        "jsCode": "// Quality gate for generated idea narratives.\n//\n// Runs between the JSON parser and the sheet write, so nothing reaches the\n// sheet or Supabase without passing. It REJECTS the unambiguous and FLAGS the\n// arguable, deliberately: an over-eager guard throws away good work.\n//\n// That distinction was learned from real data. A crude banned-word scan over\n// the 290 live rows flagged 11 problems; on reading them, only 5 were real:\n//   \"you unlock the lower steel cabinet\"  -- a key in a lock, not marketing\n//   \"a seamless loop\"                     -- the standard audio term\n//   \"seamless reweaving\"                  -- literally no visible seam\n//   \"post-1960 premium pens\"              -- a product category, not a date\n// Rejecting those would have destroyed correct copy. So context-dependent\n// words are flagged for review, never used to fail a row.\nconst CURRENT_YEAR = new Date().getFullYear();\n\n// Words that have no legitimate use in this voice, in any context.\nconst HARD_BANNED = /\\b(game.?changer|revolutionis|revolutioniz|in today'?s fast.?paced|dive in|look no further|synergy|paradigm|cutting.?edge|best.?in.?class|world.?class)\\b/i;\n\n// Words with real literal uses. Flagged, never fatal.\nconst SOFT_BANNED = /\\b(unlock|seamless|leverage|empower|elevate|holistic|robust|ecosystem)\\b/i;\n\n// Naming the validation vendors is never acceptable. This has shipped as a\n// live defect before and is the one rule with no exceptions.\nconst VENDORS = /\\b(claude|perplexity|chatgpt|openai|grok|gemini|copilot|anthropic)\\b/i;\n\nconst NARRATIVE = ['summary','market_opportunity','target_customer','how_you_make_money',\n                   'startup_cost','income_potential','competition_edge','time_to_first_customer','verdict'];\n\nconst out = [];\n\nfor (const item of $input.all()) {\n  const j = item.json;\n\n  // Rows the parser already marked for retry pass through untouched -- they\n  // carry the researcher's work and must not be lost to a guard.\n  if (j.status === 'needs_retry') { out.push(item); continue; }\n\n  const flags = [];\n\n  for (const field of NARRATIVE) {\n    const val = String(j[field] ?? '');\n    if (!val) continue;\n\n    if (VENDORS.test(val)) {\n      throw new Error(`${j.slug || j.idea_id}: ${field} names an AI vendor -- \"${val.match(VENDORS)[0]}\". This is never allowed in public copy.`);\n    }\n    if (HARD_BANNED.test(val)) {\n      throw new Error(`${j.slug || j.idea_id}: ${field} uses banned filler -- \"${val.match(HARD_BANNED)[0]}\".`);\n    }\n\n    // A RECENT year dates the page and is fatal. An older year is usually a\n    // historical reference (\"post-1960 pens\") and is only flagged.\n    const years = [...val.matchAll(/\\b(19|20)\\d{2}\\b/g)].map((m) => parseInt(m[0], 10));\n    const recent = years.filter((y) => y >= CURRENT_YEAR - 2);\n    if (recent.length) {\n      throw new Error(`${j.slug || j.idea_id}: ${field} contains ${recent[0]}, which dates the page. Describe the timeframe in words instead.`);\n    }\n    if (years.length) flags.push(`${field}: historical year ${years[0]}`);\n    if (SOFT_BANNED.test(val)) flags.push(`${field}: \"${val.match(SOFT_BANNED)[0]}\" -- check it is literal, not marketing`);\n  }\n\n  const summaryLen = String(j.summary ?? '').length;\n  if (summaryLen < 200) {\n    throw new Error(`${j.slug || j.idea_id}: summary is only ${summaryLen} characters. Too thin to publish.`);\n  }\n\n  const trend = parseInt(j.trend_score, 10);\n  if (!Number.isFinite(trend) || trend < 40 || trend > 100) {\n    throw new Error(`${j.slug || j.idea_id}: trend_score is \"${j.trend_score}\", outside the honest 55-98 band.`);\n  }\n\n  out.push({ json: { ...j, quality_flags: flags.join(' | ') } });\n}\n\nreturn out;\n"
+      },
+      "notes": "Rejects vendor names, hard-banned filler, page-dating years and thin copy. Flags arguable cases instead of failing them."
     }
   ],
   "pinData": {},
@@ -1099,7 +1113,7 @@
       "main": [
         [
           {
-            "node": "Update Row in Sheet",
+            "node": "Quality Guard",
             "type": "main",
             "index": 0
           }
@@ -1353,6 +1367,17 @@
         [
           {
             "node": "Loop Blog Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quality Guard": {
+      "main": [
+        [
+          {
+            "node": "Update Row in Sheet",
             "type": "main",
             "index": 0
           }
