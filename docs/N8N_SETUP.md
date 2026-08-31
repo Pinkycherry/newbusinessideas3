@@ -285,3 +285,73 @@ Two more are worth building later, and neither exists yet:
 They are listed here rather than built because both edit content that already
 exists, which is a different risk class from appending new rows, and
 `BUTTERFLY_EFFECT.md` says that kind of change gets its own deliberate round.
+
+
+---
+
+## 5. n8n Cloud specifics (verified against the live instance, 2026-08-31)
+
+Working directly inside the live instance turned up three defects that were
+invisible from the exported file. All three are fixed; the notes stay because
+each will bite again if the workflow is ever rebuilt from scratch.
+
+### $env does not exist on n8n Cloud
+
+The key-rotation nodes originally read `$env.GEMINI_API_KEY_1..7`. **n8n Cloud
+does not let users set environment variables at all**, so on Cloud that lookup
+always returns nothing and the node throws "No Gemini keys found" however many
+keys you own. It looked like a missing-key problem; it was a wrong-store
+problem.
+
+Both rotation nodes now read **n8n Variables** (`$vars`) first and fall back to
+`$env`, so the same workflow runs on Cloud today and on a self-hosted instance
+later without an edit.
+
+**Where the keys go:** n8n -> Settings -> Variables, named exactly
+`GEMINI_API_KEY_1` through `GEMINI_API_KEY_7`. One is enough to start; the
+rotation simply cycles through however many exist.
+
+Keys are still never written into a node parameter. A parameter travels inside
+every export of the workflow, and a Google API key that reaches a repository is
+scraped and abused within minutes.
+
+### Two trigger nodes did not survive the import
+
+The FAQ Pool and Blog branches arrived with **no trigger at all** — both were
+orphaned chains starting at `Read Completed Ideas` and `Read Blog Queue`, so
+neither could be run from the editor. `FAQ Pool - Run` and `Blog - Run` were
+re-added and wired to the head of each branch.
+
+Worth checking after any import: the workflow should show **30 nodes and three
+manual triggers**.
+
+### The WordPress nodes used an auth type credential setup rejects
+
+Both WordPress HTTP nodes specified the plain `httpHeaderAuth` generic type.
+n8n only accepts that when you are **reusing** an existing credential — trying
+to create a new one against it is rejected outright. They now use
+`httpTemplatedCustomAuth`.
+
+WordPress application passwords authenticate as HTTP Basic, so the credential
+template is:
+
+```json
+{"headers": {"Authorization": "Basic {{api_key}}"}}
+```
+
+where `api_key` is the base64 encoding of `username:application-password`.
+
+### What still needs a human, and why
+
+Credentials hold secrets, and no agent can create them through the MCP
+connection — only list them. As of 2026-08-31 the instance holds exactly one
+credential, Google Sheets. These are still missing:
+
+| Needed by | Credential | Nodes |
+|---|---|---|
+| Branch 1 | Google Gemini (PaLM) API | `Google Gemini Chat Model` |
+| Branches 1 and 2 | Supabase (service role key) | `Sync to Supabase`, `Read Completed Ideas`, `Write FAQ Pool` |
+| Branch 3 | Header Auth for WordPress | `Upload Cover to WordPress`, `Create WordPress Post` |
+
+Plus two node parameters: `Read Blog Queue` and `Mark Blog Row Done` still
+carry `REPLACE_WITH_YOUR_SHEET_ID`.
