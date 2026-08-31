@@ -192,6 +192,9 @@ Build-order steps 8, 10 and 12 cover these. None are started.
 - The Google Sheet is the source of truth; Supabase is built from it.
 - Gemini for bulk content generation only.
 - Never generate duplicate n8n workflows — edit the existing workflow and update the same file.
+- **Free tiers only for every third-party tool, until full-scale launch.** The single
+  exception is the Claude Pro subscription. Anything that would require a paid plan
+  gets raised as a decision rather than assumed (stated by the founder 2026-08-31).
 - India-first audience.
 - Scale target is 10,000+ pages: motion must be systemic and data-driven, never hand-made per page.
 
