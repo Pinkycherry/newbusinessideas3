@@ -1,0 +1,31 @@
+/* ============================================================
+   THEME BUILD ENTRY — do not edit design tokens here.
+
+   The theme ships a static compiled stylesheet so a WordPress host needs no
+   build step. This file exists only to tell Tailwind what to compile.
+
+   Two things it fixes, both of which produced silently broken pages when the
+   theme was first compiled straight from `src/styles.css`:
+
+   1. `src/styles.css` declares `@source "../src"`, so a build run against it
+      scans ONLY the original TypeScript. Every utility used in a PHP template
+      but not in a `.tsx` file was therefore absent from the output — the idea
+      grid had no `lg:grid-cols-3`, so it rendered as one column. The
+      `@source` below adds the theme's own templates.
+
+   2. `src/motion.css` is a SEPARATE import in `src/routes/__root.tsx` and was
+      not part of the original compile at all, so `.mo-card` — the class every
+      card in this theme carries — had no rules behind it. It is imported here
+      AFTER styles.css, matching the order in `__root.tsx`. That order is not
+      cosmetic: motion.css is unlayered, so it beats every `@layer` rule in
+      styles.css regardless of position, and its own comment relies on that.
+
+   Rebuild with:
+     npx @tailwindcss/cli -i wp-theme/bbi/build/theme.css \
+       -o wp-theme/bbi/assets/css/bbi.css --minify
+   ============================================================ */
+
+@import "../../../src/styles.css";
+@import "../../../src/motion.css";
+
+@source "../**/*.php";
