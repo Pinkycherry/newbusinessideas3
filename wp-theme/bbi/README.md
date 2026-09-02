@@ -30,7 +30,7 @@ Requires WordPress 6.4+ and PHP 8.0+.
 
 ## Seeing your real data straight away
 
-**Settings → BBI Data.** Paste the Supabase project URL and the **anon** key,
+**BBI → Data** in the admin menu. Paste the Supabase project URL and the **anon** key,
 tick *Enabled*, and press *Test connection*. The site then renders the live
 library at the real URLs — `/idea/<slug>/`, `/category/<slug>/` — before
 anything has been imported.
@@ -60,6 +60,97 @@ A service role key pasted into the settings screen is **detected and refused** �
 the connection stays inactive and a warning appears on every admin screen until
 it is replaced. If you pasted one, revoke it in the Supabase dashboard; it is
 compromised the moment it lands in a database.
+
+## n8n
+
+**BBI → Automation.** Store the instance URL and an n8n API key (Settings → n8n
+API inside n8n) and WordPress can list the workflows, show which are active,
+read recent executions, and activate or deactivate one.
+
+**An API key, never your account password.** A key can be revoked on its own,
+regenerated if this site is ever compromised, and does not unlock the login.
+There is deliberately no password field.
+
+Activating and deactivating is all it can do — it cannot edit or delete a
+workflow. Editing workflow JSON through a second system is how two sources of
+truth start, and `n8n-idea-pipeline-v2.json` in the repo is already the source
+of truth for the pipeline's shape.
+
+## The assistant
+
+**BBI → Assistant.** Claude, running inside wp-admin, briefed on this project
+and this site's live state, with its conversation stored here so it persists
+across logins.
+
+Two things it is important to be straight about, both stated on the screen
+itself:
+
+**It is not a continuation of a conversation held elsewhere.** There is no
+mechanism that moves a Claude Code session into a WordPress install. This
+starts a *new* assistant that begins already knowing the project — the house
+rules, the live counts, the data source, the n8n workflow states — and then
+keeps its own history here. It will not remember a decision it was not part of.
+The **Project notes** field is sent before every message and is how context
+from elsewhere gets carried across.
+
+**It bills separately.** The Anthropic API is pay-as-you-go and is **not**
+included in a Claude Pro or Max subscription — a subscription covers claude.ai
+and Claude Code, not API calls. It needs an API key from console.anthropic.com
+with billing set up. This is the only screen in the theme that can spend money,
+so it ships switched off, and the effort control (which sets how hard it thinks
+per message) is the main cost dial.
+
+Implementation notes worth keeping:
+
+- Raw `wp_remote_post()`, not the official PHP SDK. In an ordinary PHP project
+  the SDK would be right; a WordPress theme is not one — shipping a Composer
+  vendor tree inside `wp-content/themes` collides with whatever else on the
+  site already loaded a different version of the same package, and WordPress
+  has no autoloader arbitration to resolve it.
+- The system prompt is built **live on every message**, never from a stored
+  snapshot. An assistant briefed from a snapshot confidently describes a
+  configuration you changed last week and has no way to notice.
+- A refusal arrives as HTTP 200 with `stop_reason: "refusal"`, not as an error.
+  Reading `content` without checking that shows an empty reply and no
+  explanation for it.
+- `content` is an array of blocks and the first is often a *thinking* block, so
+  the text is assembled from every `type: "text"` block rather than
+  `content[0]`.
+- The user turn is recorded only after the call succeeds. Appending it first
+  would leave a dangling question in the transcript on every failure, and the
+  next request would resend it.
+- History is capped at 40 turns, trimmed from the front, and the trim can leave
+  an assistant message first — which the API rejects — so leading non-user
+  turns are dropped before sending.
+
+## SEO
+
+The four researched SEO fields the pipeline writes are wired up in
+`inc/seo.php`. The rule it is built around: **never output a tag an SEO plugin
+is also outputting.** Two descriptions or two canonicals is worse than none —
+search engines pick one, not necessarily yours, and it is invisible in a
+browser.
+
+So it detects Rank Math, Yoast, SEOPress and All in One SEO. With one present
+it stops emitting tags and instead feeds the researched values through that
+plugin's own filters, and copies them into the plugin's meta on save so its
+editor sidebar agrees with the page — only ever filling an *empty* field, so a
+hand-written override survives a re-import. With no plugin active it emits a
+minimal correct set itself: description, canonical, Open Graph, Twitter.
+
+The canonical is deliberately **not** emitted on paginated or search views. A
+canonical pointing every page of an archive at page one tells search engines
+the later pages do not exist, which is how a paginated library loses most of
+itself from the index.
+
+`Article` and `BreadcrumbList` JSON-LD are emitted on idea pages even when a
+plugin is present — plugins output WebPage and Organization graphs, so an
+Article node for the specific post is additive rather than duplicated.
+
+The ideas list in wp-admin gains **SEO** and **Trend** columns, so which of 290
+pages still lack a description is visible at a glance instead of one post at a
+time. The trend column prints an em dash for an unscored idea, never `0` —
+zero is a real score and showing it for a missing one makes the column lie.
 
 ## Import the library from Supabase
 
@@ -112,7 +203,10 @@ bbi/
   inc/gutenberg.php     editor styles, block styles, block patterns
   inc/sidebars.php      seven widget areas + the sidebar layout
   inc/supabase.php      live PostgREST reads, cached
-  inc/settings.php      Settings → BBI Data
+  inc/settings.php      BBI → Data (Supabase)
+  inc/n8n.php           BBI → Automation (n8n credentials + workflow control)
+  inc/assistant.php     BBI → Assistant (Claude, via the Anthropic API)
+  inc/seo.php           SEO plugin integration, meta tags, schema, admin columns
   inc/data.php          the ONE accessor templates use, either source
   inc/routing.php       serves live rows at the real URLs before any import
   inc/home-content.php  every word of the homepage, filterable

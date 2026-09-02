@@ -13,18 +13,52 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Add the menu entry.
+ * The BBI menu.
+ *
+ * A top-level menu rather than three entries buried under Settings, because
+ * these are the screens this site is actually operated from — the data source,
+ * the automation, and the assistant. Burying them under Settings is how they
+ * stop being found.
  */
 function bbi_settings_menu() {
-	add_options_page(
-		__( 'BBI Data', 'bbi' ),
-		__( 'BBI Data', 'bbi' ),
+	add_menu_page(
+		__( 'BBI', 'bbi' ),
+		__( 'BBI', 'bbi' ),
 		'manage_options',
 		'bbi-data',
-		'bbi_settings_page'
+		'bbi_settings_page',
+		'dashicons-lightbulb',
+		4
 	);
+
+	add_submenu_page( 'bbi-data', __( 'Data — Supabase', 'bbi' ), __( 'Data', 'bbi' ), 'manage_options', 'bbi-data', 'bbi_settings_page' );
+	add_submenu_page( 'bbi-data', __( 'Automation — n8n', 'bbi' ), __( 'Automation', 'bbi' ), 'manage_options', 'bbi-n8n', 'bbi_n8n_page' );
+	add_submenu_page( 'bbi-data', __( 'Assistant — Claude', 'bbi' ), __( 'Assistant', 'bbi' ), 'manage_options', 'bbi-assistant', 'bbi_assistant_page' );
 }
 add_action( 'admin_menu', 'bbi_settings_menu' );
+
+/**
+ * The shared tab strip.
+ *
+ * @param string $current Current page slug.
+ */
+function bbi_admin_tabs( $current ) {
+	$tabs = array(
+		'bbi-data'      => __( 'Data — Supabase', 'bbi' ),
+		'bbi-n8n'       => __( 'Automation — n8n', 'bbi' ),
+		'bbi-assistant' => __( 'Assistant — Claude', 'bbi' ),
+	);
+	echo '<h2 class="nav-tab-wrapper">';
+	foreach ( $tabs as $slug => $label ) {
+		printf(
+			'<a href="%1$s" class="nav-tab%2$s">%3$s</a>',
+			esc_url( admin_url( 'admin.php?page=' . $slug ) ),
+			$slug === $current ? ' nav-tab-active' : '',
+			esc_html( $label )
+		);
+	}
+	echo '</h2>';
+}
 
 /**
  * Handle a submission.
@@ -117,6 +151,7 @@ function bbi_settings_page() {
 	?>
 	<div class="wrap">
 		<h1><?php esc_html_e( 'BBI Data', 'bbi' ); ?></h1>
+		<?php bbi_admin_tabs( 'bbi-data' ); ?>
 
 		<?php if ( $notice ) : ?>
 			<div class="notice notice-info"><p><?php echo esc_html( $notice ); ?></p></div>
