@@ -217,6 +217,32 @@ bbi/
   build/custom.css      the rules that make the Customizer variables do something
 ```
 
+## The blocks
+
+Six, all with sidebar controls, all in the inserter:
+
+| Block | What it does |
+|---|---|
+| **Animate** | Wrap anything and give it a scroll animation — direction (up/down/left/right/fade/scale/none), travel distance, duration, delay, child stagger, and replay-every-pass on or off. |
+| **Idea Grid** | A grid of blueprints from WordPress or live Supabase. Category, order, count, columns, and which parts each card shows. |
+| **Idea Part** | One piece of a blueprint behind a dropdown — breadcrumb, category, summary, trend bar, narrative sections, pros and cons, steps, tools, verdict, FAQ. |
+| **Business Icon Band** | The eighteen outlined icons, bobbing on staggered offsets. |
+| **Marquee** | Your categories or your own list, scrolling. Direction, duration, pause-on-hover, linked or not. |
+| **Scroll Dock** | Fixed bottom-right: back to top, and a jump list built at runtime from the page's own sections. |
+
+All six are **dynamic** — PHP owns the markup and nothing is baked into post
+content. Changing how a card or an animation renders lands on every existing
+page at once, instead of leaving them with stale markup and an "unexpected or
+invalid content" warning.
+
+Written in plain JS with `wp.element.createElement`, not JSX. JSX needs a build
+step, and a theme that requires `npm run build` before anyone can change a
+block is a theme that stops being edited. Each block ships a hand-written
+`index.asset.php` declaring its script dependencies — without it WordPress
+registers the script with none, `wp.blockEditor` and `wp.serverSideRender` are
+undefined at runtime, and the block never appears in the inserter with nothing
+in the PHP log to explain why.
+
 ## Customising it
 
 **Appearance → Customize → BBI — Design system**
