@@ -475,3 +475,101 @@ html.bbi-motion .bbi-anim-stagger:not(.bbi-in) > * {
 /* In the editor the dock is a placeholder card, never fixed — a fixed element
    would float over the editing surface and cover the content it accompanies. */
 .bbi-dock-placeholder { position: static; }
+
+/* ============================================================
+   HEADER SIZING — the fix for a search field that ate the bar.
+
+   The search block was set to width:100%, so in a nowrap flex row it claimed
+   98% of the bar (measured), squeezed the navigation into a wrapping stack,
+   and pushed the header to 223px tall. Core's block has no sensible intrinsic
+   width, so the cap has to be stated here.
+
+   The three children are given explicit flex behaviour instead of being left
+   to fight: the title never shrinks, the nav takes the slack and scrolls if it
+   still cannot fit, and the search has a fixed comfortable width that shrinks
+   before anything else does.
+   ============================================================ */
+
+.bbi-header-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: nowrap;
+}
+
+.bbi-header-bar > .wp-block-site-title {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.bbi-header-bar > .bbi-header-nav {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* A nav that cannot fit scrolls sideways rather than wrapping onto a second
+   row and doubling the header's height. */
+.bbi-header-bar .wp-block-navigation__container {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.bbi-header-bar .wp-block-navigation__container::-webkit-scrollbar { display: none; }
+
+.bbi-header-bar .wp-block-navigation-item__content { white-space: nowrap; }
+
+.bbi-header-search {
+  flex: 0 1 15rem;
+  min-width: 0;
+  margin: 0;
+}
+
+.bbi-header-search .wp-block-search__inside-wrapper {
+  border: 0;
+  padding: 0;
+}
+
+.bbi-header-search .wp-block-search__input {
+  background: transparent;
+  border: 0;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8125rem;
+  min-width: 0;
+}
+
+.bbi-header-search .wp-block-search__button {
+  background: transparent;
+  border: 0;
+  padding: 0.35rem 0.6rem;
+  color: var(--muted-foreground);
+}
+
+/* Below the nav's overlay breakpoint the search is hidden entirely, matching
+   the original site. Measured: at 390px it collapsed to 1% of the bar — a
+   field too narrow to type into is worse than no field, and the 404 page and
+   the archives all carry a full-size search anyway. */
+@media (max-width: 640px) {
+  .bbi-header-search { display: none; }
+}
+
+/* ============================================================
+   ICON BAND — height.
+
+   `src/styles.css` sizes the band at `max(10em, 19vh)`, which is right where
+   it sits on the original site. Dropped full-bleed near the top of the block
+   homepage it measured 171px and dominated everything above the fold. The
+   theme scopes a shorter band rather than editing the shared stylesheet.
+   ============================================================ */
+
+.bbi-icons {
+  height: max(5.5rem, 11vh);
+}
+
+@media (min-width: 1024px) {
+  .bbi-icons { height: max(6.5rem, 12vh); }
+}
+
+.bbi-icons .bbi-icon {
+  flex: 0 0 clamp(2.6rem, 5.5vw, 3.6rem);
+}

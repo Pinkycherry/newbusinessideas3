@@ -1,8 +1,8 @@
 {
-  "version": "0.5.1",
+  "version": "0.6.0",
   "download": "https://raw.githubusercontent.com/Pinkycherry/newbusinessideas3/claude/bbi-continuation-sj6nbr/bbi-theme.zip",
   "tested": "6.9",
   "requires": "6.4",
   "requires_php": "8.0",
-  "changelog": "Documentation: the six blocks are now listed in the theme README. No code changes."
+  "changelog": "Restores all 20 homepage sections lost in 0.4.0, and fixes the header search that was claiming 98% of the nav bar."
 }

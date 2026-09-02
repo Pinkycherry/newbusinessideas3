@@ -19,5 +19,5 @@ return array(
 		'wp-i18n',
 		'wp-server-side-render',
 	),
-	'version'      => '0.5.1',
+	'version'      => '0.6.0',
 );
