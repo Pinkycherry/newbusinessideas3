@@ -1,7 +1,13 @@
 /**
- * Stagger reveal — reveals the children of a container in sequence as it
- * enters the viewport, once. Content that re-hides on scrolling back up is a
- * defect, not an effect, so this never reverses.
+ * Stagger reveal — reveals the children of a container in sequence as the
+ * container crosses the viewport, in BOTH directions and on every pass.
+ *
+ * This used to run once and never reverse, on the reasoning that content
+ * which re-hides on the way back up is a defect. The founder overruled that
+ * directly: a reveal that fires once per page load is invisible to anyone who
+ * scrolls the way people actually scroll, up and down through a page, and the
+ * site read as static because of it. It now restarts on every entry from
+ * either direction and reverses on every exit.
  *
  * Takes a child selector, so it retrofits onto markup that already exists: a
  * grid of cards, a footer column of links, the rows of a pricing table. No
@@ -67,7 +73,27 @@ export function useStaggerReveal<T extends HTMLElement = HTMLElement>(
     if (items.length === 0) return;
 
     if (prefersReducedMotion()) {
-      items.forEach((i) => i.setAttribute("data-revealed", ""));
+      // `reduce` means reduce, not eliminate. The setting exists for people
+      // who get motion sickness from large or parallax movement; a short
+      // opacity fade is not that, and it is explicitly the fallback the WCAG
+      // guidance suggests.
+      //
+      // The previous behaviour marked everything revealed instantly, so a
+      // visitor with the setting on saw a site with no motion whatsoever.
+      // Android's battery saver turns that setting on by itself, as does
+      // Windows' "Animation effects: off" - which is a large share of the
+      // India-first audience this is built for.
+      items.forEach((i, idx) => {
+        i.style.opacity = "0";
+        i.style.transition = `opacity 260ms ease ${Math.min(idx * 30, 240)}ms`;
+        i.setAttribute("data-revealed", "");
+      });
+      // Next frame, so the transition has a start value to animate from.
+      requestAnimationFrame(() => {
+        items.forEach((i) => {
+          i.style.opacity = "1";
+        });
+      });
       return;
     }
 
@@ -97,7 +123,11 @@ export function useStaggerReveal<T extends HTMLElement = HTMLElement>(
           ease: "power3.out",
           clearProps: "willChange",
           onComplete: () => items.forEach((i) => i.setAttribute("data-revealed", "")),
-          scrollTrigger: { trigger: el, start, once: true },
+          // [onEnter, onLeave, onEnterBack, onLeaveBack]. Restart whenever
+          // the container comes into view from either direction, reverse
+          // whenever it leaves in either direction — so the motion is there
+          // on the second pass and the twentieth, not just the first.
+          scrollTrigger: { trigger: el, start, toggleActions: "restart reverse restart reverse" },
         },
       );
     });

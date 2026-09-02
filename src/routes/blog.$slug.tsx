@@ -5,6 +5,16 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPost } from "@/lib/blog.functions";
+import { useStaggerReveal, useTextReveal } from "@/motion";
+
+/**
+ * The sanitizer strips every class attribute off the stored article, so the
+ * inline links arrive bare. Tagging them here is how they join the motion
+ * system without the markup being restructured or the sanitizer relaxed.
+ */
+function withLinkMotion(html: string): string {
+  return html.replace(/<a(?=[\s>])/gi, '<a class="mo-link"');
+}
 
 const postQuery = (slug: string) =>
   queryOptions({
@@ -64,11 +74,13 @@ export const Route = createFileRoute("/blog/$slug")({
 function BlogPostPage() {
   const { slug } = Route.useParams();
   const { data } = useSuspenseQuery(postQuery(slug));
+  const titleRef = useTextReveal<HTMLHeadingElement>();
+  const relatedRef = useStaggerReveal<HTMLDivElement>({ direction: "up", stagger: 0.05 });
   if (!data) return null;
   const { post, related } = data;
   // Split the sanitized article so ad slots can sit after the first
   // paragraph and at the mid-article point.
-  const blocks = post.html.split(/(?<=<\/p>)/);
+  const blocks = withLinkMotion(post.html).split(/(?<=<\/p>)/);
   const firstBlock = blocks.slice(0, 1).join("");
   const midIndex = Math.max(1, Math.ceil(blocks.length / 2));
   const secondBlock = blocks.slice(1, midIndex).join("");
@@ -78,6 +90,12 @@ function BlogPostPage() {
     <SiteShell>
       <article className="mx-auto max-w-3xl px-3 py-12 sm:px-4">
         {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
+        {/* Reading progress lives in SiteShell (site-shell.tsx — the rail
+            under the header, driven by the same --page-p). A second rail
+            here would render two bars a few pixels apart at the top of the
+            article, so this page reads the shell's rather than shipping its
+            own. If the rail is ever made exclusive to long-form, it moves
+            out of the shell and back in here. */}
         <Breadcrumbs
           items={[
             { label: "Home", to: "/" },
@@ -96,12 +114,20 @@ function BlogPostPage() {
           ))}
         </div>
 
-        <h1 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+        <h1
+          ref={titleRef}
+          className="mt-4 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl"
+        >
           {post.title}
         </h1>
 
         {post.image && (
-          <div className="relative mt-8 aspect-video w-full overflow-hidden rounded-3xl border border-border">
+          // Keeps the page's own corner radius — the media slot supplies the
+          // clip and the scale, not a new shape.
+          <div
+            style={{ borderRadius: "var(--radius-3xl)" }}
+            className="mo-media relative mt-8 aspect-video w-full border border-border"
+          >
             <img src={post.image} alt={post.title} className="h-full w-full object-cover" />
             {/* Subtle corner wash so the photo reads as art-directed, not a
                 raw drop-in (brief 12.8). */}
@@ -126,13 +152,13 @@ function BlogPostPage() {
             <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
               More reading
             </h2>
-            <div className="mt-4 grid gap-4 sm:grid-cols-3">
+            <div ref={relatedRef} className="mt-4 grid gap-4 sm:grid-cols-3">
               {related.map((r) => (
                 <Link
                   key={r.id}
                   to="/blog/$slug"
                   params={{ slug: r.slug }}
-                  className="glass glass-hover rounded-2xl p-4"
+                  className="glass mo-card rounded-2xl p-4"
                 >
                   <p className="text-sm font-semibold leading-snug">{r.title}</p>
                   <p className="mt-2 text-xs text-muted-foreground">{formatDate(r.date)}</p>

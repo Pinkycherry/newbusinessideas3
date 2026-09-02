@@ -1,0 +1,8 @@
+{
+  "version": "0.8.1",
+  "download": "https://raw.githubusercontent.com/Pinkycherry/newbusinessideas3/claude/bbi-continuation-sj6nbr/bbi-theme.zip",
+  "tested": "6.9",
+  "requires": "6.4",
+  "requires_php": "8.0",
+  "changelog": "Fixes the shattered layout \u2014 a column was laying its children out side by side instead of stacked, putting every paragraph in its own narrow strip."
+}

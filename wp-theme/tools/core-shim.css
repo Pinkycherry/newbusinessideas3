@@ -1,0 +1,17 @@
+/* A minimal stand-in for wp-block-library's layout rules.
+   WordPress loads these on every page; the harness did not, which made columns
+   look stacked and the navigation look wrapped when neither is true on a real
+   install. Without this the harness reports failures that do not exist — and,
+   worse, could hide ones that do. */
+.wp-block-columns { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: normal; }
+@media (min-width: 782px) { .wp-block-columns { flex-wrap: nowrap; } }
+.wp-block-column { flex-grow: 1; min-width: 0; word-break: break-word; }
+.wp-block-navigation__container { display: flex; flex-wrap: wrap; gap: 1.1rem; list-style: none; margin: 0; padding: 0; }
+.wp-block-navigation { display: flex; }
+.wp-block-buttons { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.wp-block-group { box-sizing: border-box; }
+.wp-block-search__inside-wrapper { display: flex; flex: auto; flex-wrap: nowrap; max-width: 100%; }
+.wp-block-search__input { flex-grow: 1; min-width: 3rem; border: 1px solid #949494; }
+.wp-block-details > summary { cursor: pointer; }
+.wp-site-blocks > * { margin-block-start: 0; }
+.alignfull { max-width: none; width: 100%; }

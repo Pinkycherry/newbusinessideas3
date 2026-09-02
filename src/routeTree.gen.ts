@@ -28,8 +28,15 @@ import { Route as SitemapPagesDotxmlRouteImport } from './routes/sitemap-pages[.
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as CalculatorIndexRouteImport } from './routes/calculator.index'
+import { Route as CalculatorSlugRouteImport } from './routes/calculator.$slug'
 import { Route as CategoryCategorySlugRouteImport } from './routes/category.$categorySlug'
+import { Route as FaqIndexRouteImport } from './routes/faq.index'
+import { Route as FaqCategorySlugRouteImport } from './routes/faq.$categorySlug'
 import { Route as IdeaSlugRouteImport } from './routes/idea.$slug'
+import { Route as ListIndexRouteImport } from './routes/list.index'
+import { Route as ListSlugRouteImport } from './routes/list.$slug'
+import { Route as ValidateIndustrySlugRouteImport } from './routes/validate.$industrySlug'
 import { Route as CategoryCategorySlugIndexRouteImport } from './routes/category.$categorySlug.index'
 import { Route as CategoryCategorySlugSubcategorySlugRouteImport } from './routes/category.$categorySlug.$subcategorySlug'
 
@@ -128,14 +135,49 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CalculatorIndexRoute = CalculatorIndexRouteImport.update({
+  id: '/calculator/',
+  path: '/calculator/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalculatorSlugRoute = CalculatorSlugRouteImport.update({
+  id: '/calculator/$slug',
+  path: '/calculator/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategoryCategorySlugRoute = CategoryCategorySlugRouteImport.update({
   id: '/category/$categorySlug',
   path: '/category/$categorySlug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FaqIndexRoute = FaqIndexRouteImport.update({
+  id: '/faq/',
+  path: '/faq/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqCategorySlugRoute = FaqCategorySlugRouteImport.update({
+  id: '/faq/$categorySlug',
+  path: '/faq/$categorySlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IdeaSlugRoute = IdeaSlugRouteImport.update({
   id: '/idea/$slug',
   path: '/idea/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ListIndexRoute = ListIndexRouteImport.update({
+  id: '/list/',
+  path: '/list/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ListSlugRoute = ListSlugRouteImport.update({
+  id: '/list/$slug',
+  path: '/list/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ValidateIndustrySlugRoute = ValidateIndustrySlugRouteImport.update({
+  id: '/validate/$industrySlug',
+  path: '/validate/$industrySlug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoryCategorySlugIndexRoute =
@@ -170,9 +212,16 @@ export interface FileRoutesByFullPath {
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
+  '/faq/$categorySlug': typeof FaqCategorySlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
+  '/list/$slug': typeof ListSlugRoute
+  '/validate/$industrySlug': typeof ValidateIndustrySlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/calculator/': typeof CalculatorIndexRoute
+  '/faq/': typeof FaqIndexRoute
+  '/list/': typeof ListIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
   '/category/$categorySlug/': typeof CategoryCategorySlugIndexRoute
 }
@@ -195,8 +244,15 @@ export interface FileRoutesByTo {
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/calculator/$slug': typeof CalculatorSlugRoute
+  '/faq/$categorySlug': typeof FaqCategorySlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
+  '/list/$slug': typeof ListSlugRoute
+  '/validate/$industrySlug': typeof ValidateIndustrySlugRoute
   '/blog': typeof BlogIndexRoute
+  '/calculator': typeof CalculatorIndexRoute
+  '/faq': typeof FaqIndexRoute
+  '/list': typeof ListIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugIndexRoute
 }
@@ -220,9 +276,16 @@ export interface FileRoutesById {
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
+  '/faq/$categorySlug': typeof FaqCategorySlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
+  '/list/$slug': typeof ListSlugRoute
+  '/validate/$industrySlug': typeof ValidateIndustrySlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/calculator/': typeof CalculatorIndexRoute
+  '/faq/': typeof FaqIndexRoute
+  '/list/': typeof ListIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
   '/category/$categorySlug/': typeof CategoryCategorySlugIndexRoute
 }
@@ -247,9 +310,16 @@ export interface FileRouteTypes {
     | '/sitemap-pages.xml'
     | '/terms'
     | '/blog/$slug'
+    | '/calculator/$slug'
     | '/category/$categorySlug'
+    | '/faq/$categorySlug'
     | '/idea/$slug'
+    | '/list/$slug'
+    | '/validate/$industrySlug'
     | '/blog/'
+    | '/calculator/'
+    | '/faq/'
+    | '/list/'
     | '/category/$categorySlug/$subcategorySlug'
     | '/category/$categorySlug/'
   fileRoutesByTo: FileRoutesByTo
@@ -272,8 +342,15 @@ export interface FileRouteTypes {
     | '/sitemap-pages.xml'
     | '/terms'
     | '/blog/$slug'
+    | '/calculator/$slug'
+    | '/faq/$categorySlug'
     | '/idea/$slug'
+    | '/list/$slug'
+    | '/validate/$industrySlug'
     | '/blog'
+    | '/calculator'
+    | '/faq'
+    | '/list'
     | '/category/$categorySlug/$subcategorySlug'
     | '/category/$categorySlug'
   id:
@@ -296,9 +373,16 @@ export interface FileRouteTypes {
     | '/sitemap-pages.xml'
     | '/terms'
     | '/blog/$slug'
+    | '/calculator/$slug'
     | '/category/$categorySlug'
+    | '/faq/$categorySlug'
     | '/idea/$slug'
+    | '/list/$slug'
+    | '/validate/$industrySlug'
     | '/blog/'
+    | '/calculator/'
+    | '/faq/'
+    | '/list/'
     | '/category/$categorySlug/$subcategorySlug'
     | '/category/$categorySlug/'
   fileRoutesById: FileRoutesById
@@ -322,9 +406,16 @@ export interface RootRouteChildren {
   SitemapPagesDotxmlRoute: typeof SitemapPagesDotxmlRoute
   TermsRoute: typeof TermsRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  CalculatorSlugRoute: typeof CalculatorSlugRoute
   CategoryCategorySlugRoute: typeof CategoryCategorySlugRouteWithChildren
+  FaqCategorySlugRoute: typeof FaqCategorySlugRoute
   IdeaSlugRoute: typeof IdeaSlugRoute
+  ListSlugRoute: typeof ListSlugRoute
+  ValidateIndustrySlugRoute: typeof ValidateIndustrySlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  CalculatorIndexRoute: typeof CalculatorIndexRoute
+  FaqIndexRoute: typeof FaqIndexRoute
+  ListIndexRoute: typeof ListIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -462,6 +553,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/calculator/': {
+      id: '/calculator/'
+      path: '/calculator'
+      fullPath: '/calculator/'
+      preLoaderRoute: typeof CalculatorIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calculator/$slug': {
+      id: '/calculator/$slug'
+      path: '/calculator/$slug'
+      fullPath: '/calculator/$slug'
+      preLoaderRoute: typeof CalculatorSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/category/$categorySlug': {
       id: '/category/$categorySlug'
       path: '/category/$categorySlug'
@@ -469,11 +574,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategoryCategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/faq/': {
+      id: '/faq/'
+      path: '/faq'
+      fullPath: '/faq/'
+      preLoaderRoute: typeof FaqIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq/$categorySlug': {
+      id: '/faq/$categorySlug'
+      path: '/faq/$categorySlug'
+      fullPath: '/faq/$categorySlug'
+      preLoaderRoute: typeof FaqCategorySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/idea/$slug': {
       id: '/idea/$slug'
       path: '/idea/$slug'
       fullPath: '/idea/$slug'
       preLoaderRoute: typeof IdeaSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/list/': {
+      id: '/list/'
+      path: '/list'
+      fullPath: '/list/'
+      preLoaderRoute: typeof ListIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/list/$slug': {
+      id: '/list/$slug'
+      path: '/list/$slug'
+      fullPath: '/list/$slug'
+      preLoaderRoute: typeof ListSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/validate/$industrySlug': {
+      id: '/validate/$industrySlug'
+      path: '/validate/$industrySlug'
+      fullPath: '/validate/$industrySlug'
+      preLoaderRoute: typeof ValidateIndustrySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/category/$categorySlug/': {
@@ -526,9 +666,16 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapPagesDotxmlRoute: SitemapPagesDotxmlRoute,
   TermsRoute: TermsRoute,
   BlogSlugRoute: BlogSlugRoute,
+  CalculatorSlugRoute: CalculatorSlugRoute,
   CategoryCategorySlugRoute: CategoryCategorySlugRouteWithChildren,
+  FaqCategorySlugRoute: FaqCategorySlugRoute,
   IdeaSlugRoute: IdeaSlugRoute,
+  ListSlugRoute: ListSlugRoute,
+  ValidateIndustrySlugRoute: ValidateIndustrySlugRoute,
   BlogIndexRoute: BlogIndexRoute,
+  CalculatorIndexRoute: CalculatorIndexRoute,
+  FaqIndexRoute: FaqIndexRoute,
+  ListIndexRoute: ListIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bbi/orbit",
+  "title": "Orbit Diagram",
+  "category": "design",
+  "icon": "marker",
+  "description": "The rotating orbit diagram — a labelled centre with nodes circling it.",
+  "keywords": [ "orbit", "diagram", "ring", "rotate" ],
+  "supports": { "html": false, "spacing": { "margin": true } },
+  "attributes": {
+    "centerLabel": { "type": "string", "default": "BBI" },
+    "centerSub": { "type": "string", "default": "Free library" },
+    "nodes": { "type": "string", "default": "Named buyer\nMoney mechanics\nReal risks\nFounder verdict" }
+  },
+  "editorScript": "file:./index.js",
+  "style": "bbi"
+}

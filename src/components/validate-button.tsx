@@ -12,6 +12,7 @@ import { PaywallPopup } from "@/components/paywall-popup";
 import { Spotlight } from "@/components/spotlight";
 import { usePillInteraction } from "@/hooks/use-pill-interaction";
 import { ValidateContextInput } from "@/components/validate-context-input";
+import { useMagnet } from "@/motion";
 
 /**
  * PROJECT_BRIEF.md Section 8 — Validate for Free, with Section 3.2's Step 0
@@ -35,19 +36,42 @@ const PLATFORM_ICONS: Record<ValidatePlatform, IconType> = {
   perplexity: SiPerplexity,
 };
 
+/**
+ * `primary` marks the one button on the idea page that carries the page's
+ * single magnet (MOTION_SPEC §2.4). A magnet writes `transform` on the element
+ * every pointer frame, and the pill hover/press tween writes `transform`
+ * through gsap, so the two cannot share an element — whichever ran last would
+ * win and the button would visibly drop its hover state. The primary button
+ * therefore takes the magnet and leaves the transform to it; the secondary
+ * keeps the pill tween exactly as it was. Both still get the site-wide button
+ * response from motion.css.
+ */
 function PlatformButton({
   platform,
   isOpening,
   disabled,
+  primary = false,
   onSelect,
 }: {
   platform: (typeof VALIDATE_PLATFORMS)[number];
   isOpening: boolean;
   disabled: boolean;
+  primary?: boolean;
   onSelect: (id: ValidatePlatform) => void;
 }) {
   const pill = usePillInteraction<HTMLButtonElement>();
+  const magnetRef = useMagnet<HTMLButtonElement>();
   const Icon = PLATFORM_ICONS[platform.id];
+
+  const motionProps = primary
+    ? { ref: magnetRef }
+    : {
+        ref: pill.ref,
+        onMouseEnter: pill.onMouseEnter,
+        onMouseLeave: pill.onMouseLeave,
+        onPointerDown: pill.onPointerDown,
+        onPointerUp: pill.onPointerUp,
+      };
 
   return (
     <Spotlight className="inline-block rounded-full">
@@ -55,11 +79,7 @@ function PlatformButton({
         type="button"
         disabled={disabled}
         onClick={() => onSelect(platform.id)}
-        ref={pill.ref}
-        onMouseEnter={pill.onMouseEnter}
-        onMouseLeave={pill.onMouseLeave}
-        onPointerDown={pill.onPointerDown}
-        onPointerUp={pill.onPointerUp}
+        {...motionProps}
         className="glass-pill inline-flex items-center gap-2.5 rounded-full px-6 py-3 text-sm font-semibold disabled:cursor-wait disabled:opacity-70"
       >
         <Icon aria-hidden className="h-5 w-5 shrink-0" />
@@ -108,22 +128,21 @@ export function ValidateButton({ slug }: { slug: string }) {
 
   return (
     <section className="glass mt-10 rounded-3xl px-5 py-7 sm:px-8">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-        Free · runs on your own AI account
-      </p>
+      <p className="t-eyebrow">Free · no extra cost, no limit</p>
       <h2 className="mt-2 font-display text-xl font-bold tracking-tight">Validate this idea</h2>
       <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
-        We do not charge for validation. Pick Claude or Perplexity and we hand you a fully
-        researched, ready-to-run prompt on your own account — free.
+        We do not charge for validation. You get a fully researched write-up on this idea — free,
+        using AI tools you already pay for, as many times as you want.
       </p>
 
       <div className="mt-6 flex flex-wrap gap-3">
-        {VALIDATE_PLATFORMS.map((platform) => (
+        {VALIDATE_PLATFORMS.map((platform, i) => (
           <PlatformButton
             key={platform.id}
             platform={platform}
             isOpening={go.isPending && activePlatform === platform.id}
             disabled={buttonsDisabled}
+            primary={i === 0}
             onSelect={handleSelect}
           />
         ))}
@@ -140,8 +159,8 @@ export function ValidateButton({ slug }: { slug: string }) {
       )}
 
       <p className="mt-5 text-xs leading-relaxed text-muted-foreground">
-        You&apos;ll be taken to Claude or Perplexity with your prompt ready — just hit enter. Not
-        signed in yet? Sign in there, then tap Validate again.
+        Pick one above and your research opens in a new tab with everything filled in — just hit
+        enter. Not signed in there yet? Sign in, then tap Validate again.
       </p>
 
       <PaywallPopup open={paywallOpen} onOpenChange={setPaywallOpen} />

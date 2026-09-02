@@ -37,7 +37,12 @@ export function HeroSlider() {
 
   return (
     <div className="relative">
-      <div className="iv-hero-frame glass relative aspect-[16/10] w-full overflow-hidden rounded-[2rem]">
+      {/* The homepage hero's image slot. `.mo-media` is the site-wide slot
+          treatment (MOTION_SPEC §3, homepage): the frame stays exactly the size
+          it is and the image scales inside it. It supplies the clip and the
+          radius, so the local `rounded-[2rem]` it would have overridden is
+          gone rather than left in place looking authoritative. */}
+      <div className="mo-media iv-hero-frame glass relative aspect-[16/10] w-full">
         <AnimatePresence mode="sync">
           <motion.img
             key={slide.src}

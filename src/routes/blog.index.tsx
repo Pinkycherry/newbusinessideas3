@@ -4,6 +4,7 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPosts } from "@/lib/blog.functions";
+import { useStaggerReveal, useTextReveal } from "@/motion";
 
 const postsQuery = queryOptions({
   queryKey: ["blog", "posts", 1],
@@ -45,13 +46,16 @@ export const Route = createFileRoute("/blog/")({
 
 function BlogIndex() {
   const { data } = useSuspenseQuery(postsQuery);
+  // One headline reveal per page, on the H1, and one stagger on the post grid.
+  const titleRef = useTextReveal<HTMLHeadingElement>();
+  const gridRef = useStaggerReveal<HTMLDivElement>({ direction: "up", stagger: 0.05 });
 
   return (
     <SiteShell>
       <div className="mx-auto max-w-6xl px-3 py-12 sm:px-4">
         {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
         <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Blog" }]} />
-        <h1 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">
+        <h1 ref={titleRef} className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">
           Founder{" "}
           <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
             playbooks
@@ -65,7 +69,7 @@ function BlogIndex() {
         {data.posts.length === 0 ? (
           <p className="mt-12 text-muted-foreground">No posts published yet.</p>
         ) : (
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div ref={gridRef} className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {data.posts.map((post, i) => {
               // The most recent post reads as a genuine feature, not just the
               // first tile in an identical grid (brief 12.7 — no repetitive
@@ -76,19 +80,23 @@ function BlogIndex() {
                   key={post.id}
                   to="/blog/$slug"
                   params={{ slug: post.slug }}
-                  className={`glass glass-hover group flex h-full flex-col overflow-hidden rounded-2xl ${
+                  className={`glass mo-card flex h-full flex-col overflow-hidden rounded-2xl ${
                     featured ? "sm:col-span-2 lg:col-span-2" : ""
                   }`}
                 >
                   {post.image && (
+                    // The card already clips its own corners, so the media slot
+                    // is square-cornered on purpose — a second radius here
+                    // would notch the image away from the card edge.
                     <div
-                      className={`relative w-full overflow-hidden ${featured ? "aspect-[21/9]" : "aspect-video"}`}
+                      style={{ borderRadius: 0 }}
+                      className={`mo-media relative w-full ${featured ? "aspect-[21/9]" : "aspect-video"}`}
                     >
                       <img
                         src={post.image}
                         alt={post.title}
                         loading="lazy"
-                        className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-glass group-hover:scale-105"
+                        className="h-full w-full object-cover opacity-90"
                       />
                       {/* Gradient scrim so text over/near the image always stays
                           legible and the photo never looks like a raw drop-in

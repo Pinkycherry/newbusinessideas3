@@ -23,6 +23,11 @@ export const Route = createFileRoute("/sitemap-categories.xml")({
         const urls: SitemapUrl[] = [
           ...[...categorySlugs].map((slug) => ({ path: `/category/${slug}` })),
           ...[...subcategoryPaths].map((path) => ({ path: `/category/${path}` })),
+          // The vertical validation pages. Derived from the SAME set of live
+          // category slugs, so a page can never appear in the sitemap unless
+          // there are completed ideas behind it — which is exactly the
+          // condition the route itself 404s on.
+          ...[...categorySlugs].map((slug) => ({ path: `/validate/${slug}` })),
         ];
 
         return xmlResponse(urlsetXml(urls));

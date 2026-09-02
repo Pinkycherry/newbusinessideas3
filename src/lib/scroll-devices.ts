@@ -174,12 +174,13 @@ export function useStaggerReveal(
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
           const item = entry.target as HTMLElement;
           const index = items.indexOf(item);
           item.style.transitionDelay = `${Math.max(0, index) * staggerMs}ms`;
-          item.classList.add("sc-in");
-          io.unobserve(item);
+          // Toggled, not latched. This used to `unobserve` on first entry, so
+          // the reveal happened once per page load and never again however
+          // much you scrolled back over it.
+          item.classList.toggle("sc-in", entry.isIntersecting);
         });
       },
       { rootMargin: "0px 0px -10% 0px", threshold: 0.15 },
@@ -330,7 +331,11 @@ export function useKineticLines(ref: RefObject<HTMLElement | null>) {
           duration: 0.7,
           ease: "power3.out",
           stagger: 0.07,
-          scrollTrigger: { trigger: el, start: "top 85%", once: true },
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            toggleActions: "restart reverse restart reverse",
+          },
         });
       });
     };
@@ -394,7 +399,11 @@ export function useRevealWipe(
         clipPath: CLIP_TO[direction],
         duration: 0.9,
         ease: "power3.inOut",
-        scrollTrigger: { trigger: el, start: "top 80%", once: true },
+        scrollTrigger: {
+          trigger: el,
+          start: "top 80%",
+          toggleActions: "restart reverse restart reverse",
+        },
       });
     });
     return () => {

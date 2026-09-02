@@ -1,5 +1,4 @@
-import { Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { Link, useLoaderData } from "@tanstack/react-router";
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User } from "lucide-react";
@@ -33,6 +32,9 @@ import { FloatingDock } from "@/components/floating-dock";
 import { CategoryBadge } from "@/components/category-badge";
 import { Spotlight } from "@/components/spotlight";
 import { catalogQuery } from "@/lib/ideas.functions";
+import { usePageScrollProgress } from "@/motion";
+import { topCategories, typeGroups } from "@/lib/catalog-display";
+import { subscribeToNewsletter } from "@/lib/newsletter.functions";
 import { prefersReducedMotion } from "@/lib/motion";
 
 import { useAuth } from "@/hooks/use-auth";
@@ -131,10 +133,7 @@ function BuiltWithSection() {
   return (
     <section className="px-3 pb-12 pt-6 sm:px-4" aria-labelledby="built-with-heading">
       <div className="mx-auto max-w-7xl">
-        <p
-          id="built-with-heading"
-          className="text-center text-[11px] font-semibold uppercase tracking-[0.3em] text-accent"
-        >
+        <p id="built-with-heading" className="text-center t-eyebrow">
           Built with
         </p>
         <div className="bbi-built-ticker mt-6">
@@ -172,34 +171,29 @@ const COMPANY_ITEMS = [
 ];
 
 /** Curated static groupings — link through to /browse (no dedicated filtered route yet). */
-const STATIC_GROUPS: { title: string; items: string[] }[] = [
-  {
-    title: "By Who You Are",
-    items: [
-      "Business Ideas for Women",
-      "Student Business Ideas",
-      "Side Hustle Ideas",
-      "One Person Business Ideas",
-      "Business Ideas for Retirees",
-    ],
-  },
-  {
-    title: "By Investment",
-    items: [
-      "Zero Investment Business Ideas",
-      "Low Investment Business Ideas",
-      "Work From Home Business Ideas",
-      "High Margin Business Ideas",
-      "Quick Cash Business Ideas",
-    ],
-  },
-];
-
 const isDesktop = () =>
   typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
 
+/**
+ * The catalog, read from the ROOT ROUTE'S LOADER rather than from the query
+ * cache.
+ *
+ * This used to be `useQuery(catalogQuery)`. The root loader does call
+ * `ensureQueryData(catalogQuery)`, so the server had the data — but
+ * `src/router.tsx` builds a fresh, empty `QueryClient` on both the server and
+ * the client with no dehydration between them, so the client's first render
+ * found an empty cache. Server markup rendered six category pills; client
+ * markup rendered "Loading…". React saw the mismatch and threw away the whole
+ * tree on nearly every page of the site.
+ *
+ * Router loader data, unlike the query cache, IS dehydrated and rehydrated by
+ * TanStack Router automatically, so reading it here makes both renders
+ * identical. It also means the header dropdown and the footer no longer issue
+ * a client-side fetch per page visit.
+ */
 function useCatalog() {
-  return useQuery(catalogQuery);
+  const data = useLoaderData({ from: "__root__" });
+  return { data };
 }
 
 function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boolean }) {
@@ -308,7 +302,7 @@ function NavDropdown({
         aria-haspopup="menu"
         onFocus={() => isDesktop() && openNow()}
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-1.5 uppercase tracking-[0.18em] transition-colors duration-300 hover:text-foreground"
+        className="bbi-nav-morph flex items-center gap-1.5 uppercase tracking-[0.18em] transition-colors duration-300 hover:text-foreground"
       >
         {label}
         <span
@@ -338,75 +332,110 @@ function NavDropdown({
   );
 }
 
+/**
+ * Desktop mega-menu. Categories are never hardcoded — live from the `ideas`
+ * table, every one of them, with its real blueprint count.
+ *
+ * This used to render the categories as a cloud of capsules with no counts and
+ * a hard cap of 20. Rows carry more information in less space, and the count
+ * is the single most useful thing a reader can know before clicking.
+ */
 function CategoryMega() {
   const { data } = useCatalog();
-  const categories = (data?.categories ?? []).slice(0, 20);
+  // Capped, and with a scroll container as a second line of defence. A stress
+  // run at 1,200 categories measured this panel at 14,978px tall against a
+  // 1,000px viewport — a menu fifteen screens deep with no way to scroll it.
+  const all = data?.categories ?? [];
+  const { shown: categories, hasMore } = topCategories(all, 12);
 
   return (
     <NavDropdown
       label="Categories"
-      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 w-[min(48rem,94vw)] rounded-3xl p-5"
+      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 max-h-[70vh] w-[min(52rem,94vw)] overflow-y-auto rounded-3xl p-6"
     >
       {(close) => (
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
             Browse by category
           </p>
-          <div className="iv-tag-cloud mt-3">
-            {categories.length === 0 ? (
-              <p className="text-xs normal-case tracking-normal text-muted-foreground">
-                Loading categories…
-              </p>
-            ) : (
-              categories.map((c) => (
-                <CategoryBadge
-                  key={c.categorySlug}
-                  slug={c.categorySlug}
-                  label={c.categoryName}
+
+          <ul className="mt-4 grid gap-x-6 gap-y-0.5 sm:grid-cols-2 lg:grid-cols-3">
+            {categories.map((c) => (
+              <li key={c.categorySlug}>
+                <Link
+                  to="/category/$categorySlug"
+                  params={{ categorySlug: c.categorySlug }}
                   onClick={close}
-                  className="iv-tag"
-                />
-              ))
-            )}
+                  className="mo-row flex items-baseline justify-between gap-3 rounded-lg px-2 py-2 text-sm normal-case tracking-normal text-muted-foreground"
+                >
+                  <span className="min-w-0 leading-snug">{c.categoryName}</span>
+                  <span className="shrink-0 text-[11px] tabular-nums opacity-70">
+                    {c.ideaCount}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 border-t border-border pt-3">
+            <Link to="/browse" onClick={close} className="mo-link t-eyebrow">
+              {hasMore ? `All ${all.length} categories` : "The full library"}
+            </Link>
+            <Link to="/search" search={{ q: "" }} onClick={close} className="mo-link t-eyebrow">
+              Search every field
+            </Link>
           </div>
-          <Link
-            to="/browse"
-            onClick={close}
-            className="mt-3 inline-block rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em]"
-          >
-            View all categories →
-          </Link>
         </div>
       )}
     </NavDropdown>
   );
 }
 
+/**
+ * "Browse by type" — the same real categories, grouped by the question a reader
+ * is actually asking.
+ *
+ * Groups are DERIVED from live data (see `typeGroups`). The previous version
+ * matched against fourteen hand-typed slugs, two of which were wrong, so two
+ * columns silently rendered short on every page of the site. Deriving them
+ * means a new category joins a group on its own and a wrong slug is not
+ * possible to type.
+ */
 function BrowseByTypeDropdown() {
+  const { data } = useCatalog();
+  const groups = typeGroups(data?.categories ?? []);
+
+  if (groups.length === 0) return null;
+
   return (
     <NavDropdown
       label="Browse by type"
-      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 w-[min(32rem,90vw)] rounded-2xl p-4"
+      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 max-h-[70vh] w-[min(46rem,92vw)] overflow-y-auto rounded-3xl p-6"
     >
       {(close) => (
-        <div className="grid gap-5 sm:grid-cols-2">
-          {STATIC_GROUPS.map((group) => (
+        <div className="grid gap-6 sm:grid-cols-3">
+          {groups.map((group) => (
             <div key={group.title}>
               <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
                 {group.title}
               </p>
-              <div className="iv-tag-cloud mt-2.5">
-                {group.items.map((item) => (
-                  <CategoryBadge
-                    key={item}
-                    to="/browse"
-                    label={item}
-                    size="sm"
-                    className="iv-tag"
-                    onClick={close}
-                  />
+              <ul className="mt-3 grid gap-0.5">
+                {group.categories.map((c) => (
+                  <li key={c.categorySlug}>
+                    <Link
+                      to="/category/$categorySlug"
+                      params={{ categorySlug: c.categorySlug }}
+                      onClick={close}
+                      className="mo-row flex items-baseline justify-between gap-3 rounded-lg px-2 py-2 text-sm normal-case tracking-normal text-muted-foreground"
+                    >
+                      <span className="min-w-0 leading-snug">{c.categoryName}</span>
+                      <span className="shrink-0 text-[11px] tabular-nums opacity-70">
+                        {c.ideaCount}
+                      </span>
+                    </Link>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           ))}
         </div>
@@ -425,18 +454,19 @@ function LinkListDropdown({
   return (
     <NavDropdown label={label}>
       {(close) => (
-        <div className="iv-tag-cloud">
+        <ul className="grid min-w-[13rem] gap-0.5">
           {items.map((item) => (
-            <CategoryBadge
-              key={item.to}
-              to={item.to}
-              label={item.label}
-              size="sm"
-              className="iv-tag"
-              onClick={close}
-            />
+            <li key={item.to}>
+              <Link
+                to={item.to}
+                onClick={close}
+                className="mo-row block rounded-lg px-2 py-2 text-sm normal-case tracking-normal text-muted-foreground"
+              >
+                {item.label}
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </NavDropdown>
   );
@@ -541,19 +571,21 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
           <p className="mt-4 px-3 text-[10px] normal-case tracking-normal text-accent">
             Browse by type
           </p>
-          {STATIC_GROUPS.map((group) => (
+          {typeGroups(categories).map((group) => (
             <Fragment key={group.title}>
               <p className="mt-2 px-3 text-[10px] normal-case tracking-normal text-muted-foreground/70">
                 {group.title}
               </p>
-              {group.items.map((item) => (
+              {group.categories.map((c) => (
                 <Link
-                  key={item}
-                  to="/browse"
+                  key={c.categorySlug}
+                  to="/category/$categorySlug"
+                  params={{ categorySlug: c.categorySlug }}
                   onClick={onClose}
-                  className="rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                  className="mo-row flex items-baseline justify-between gap-3 rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground"
                 >
-                  {item}
+                  <span className="min-w-0 leading-snug">{c.categoryName}</span>
+                  <span className="shrink-0 tabular-nums opacity-70">{c.ideaCount}</span>
                 </Link>
               ))}
             </Fragment>
@@ -565,7 +597,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
               key={item.to}
               to={item.to}
               onClick={onClose}
-              className="rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+              className="mo-row rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground"
             >
               {item.label}
             </Link>
@@ -577,7 +609,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
               key={item.to}
               to={item.to}
               onClick={onClose}
-              className="rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+              className="mo-row rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground"
             >
               {item.label}
             </Link>
@@ -622,15 +654,98 @@ const footerColumns: { title: string; links: { to: string; label: string }[] }[]
   },
 ];
 
+/**
+ * The newsletter column from the reference footer.
+ *
+ * It writes a real row into `newsletter_signups` rather than being a shape
+ * that looks like a form. A Subscribe button that does nothing is worse than
+ * no Subscribe button, and this site has already had to remove four things
+ * that were pretending.
+ */
+function NewsletterSignup() {
+  const [email, setEmail] = useState("");
+  const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
+  const [message, setMessage] = useState("");
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (state === "sending") return;
+    setState("sending");
+    try {
+      await subscribeToNewsletter({ data: { email, source: "footer" } });
+      setState("done");
+      setEmail("");
+    } catch (err) {
+      setState("error");
+      setMessage(err instanceof Error ? err.message : "Something went wrong.");
+    }
+  };
+
+  return (
+    <div>
+      <h3 className="bbi-footer-heading">Newsletter</h3>
+      <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+        New blueprints, and the occasional honest note about what is and is not working. No spam,
+        and one click to leave.
+      </p>
+
+      {state === "done" ? (
+        <p className="mt-5 text-sm font-medium text-accent" role="status">
+          You are on the list.
+        </p>
+      ) : (
+        <form onSubmit={onSubmit} className="mt-5 grid gap-2.5">
+          <label htmlFor="bbi-newsletter-email" className="sr-only">
+            Email address
+          </label>
+          <input
+            id="bbi-newsletter-email"
+            type="email"
+            required
+            autoComplete="email"
+            inputMode="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (state === "error") setState("idle");
+            }}
+            placeholder="Enter your email address"
+            className="bbi-footer-input"
+          />
+          <button type="submit" disabled={state === "sending"} className="bbi-footer-subscribe">
+            {state === "sending" ? "Signing you up…" : "Subscribe"}
+          </button>
+          {state === "error" && (
+            <p className="text-xs text-destructive" role="alert">
+              {message}
+            </p>
+          )}
+        </form>
+      )}
+    </div>
+  );
+}
+
 export function SiteShell({ children }: { children: ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  // Publishes --page-p on :root; the rail under the header is the only thing
+  // that reads it here, and it does so with a composited scaleX.
+  usePageScrollProgress();
   const { data: catalog } = useCatalog();
-  const popularCategories = (catalog?.categories ?? []).slice(0, 6);
+  const allCategories = catalog?.categories ?? [];
+  // Capped by design. See src/lib/catalog-display.ts for the measurements —
+  // uncapped, this block was 3,300px of footer per page at 200 categories.
+  const footerCategories = topCategories(allCategories, 5);
   return (
     <div className="relative flex min-h-screen flex-col text-foreground">
       <AmbientScene />
       <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">
-        <div className="glass-nav mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full px-4 py-2.5 sm:px-6 sm:py-3">
+        {/* Reading position for the whole document. One composited transform
+            per frame, driven from --page-p — no layout, no repaint. */}
+        <div aria-hidden className="mx-auto h-px max-w-6xl overflow-hidden rounded-full bg-border">
+          <div className="mo-page-rail h-full w-full bg-accent" />
+        </div>
+        <div className="glass-nav mx-auto mt-2 flex max-w-6xl items-center justify-between gap-4 rounded-full px-4 py-2.5 sm:px-6 sm:py-3">
           <Link
             to="/"
             onClick={() => setMobileOpen(false)}
@@ -681,68 +796,106 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
       <FloatingDock />
       <BuiltWithSection />
-      <footer className="px-3 pb-8 pt-20 sm:px-4">
-        <div className="glass mx-auto max-w-7xl rounded-3xl px-6 py-10 sm:px-10">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_repeat(4,1fr)]">
-            <div>
-              <Link to="/" className="flex items-baseline gap-2">
-                <span className="rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-0.5 text-base font-black uppercase tracking-[0.18em] text-primary-foreground">
-                  BBI
-                </span>
-              </Link>
-              <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-                Researched business idea blueprints with real market context, trend scoring and a
-                blunt founder-fit verdict. Validate any idea free, using AI tools you already pay
-                for.
-              </p>
-              <FooterCta />
-            </div>
-            {footerColumns.map((col) => (
-              <div key={col.title}>
-                <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
-                  {col.title}
-                </h3>
-                <div className="iv-tag-cloud mt-4">
-                  {col.links.map((link) => (
-                    <CategoryBadge
-                      key={`${col.title}-${link.to}-${link.label}`}
-                      to={link.to}
-                      label={link.label}
-                      size="sm"
-                      className="iv-tag"
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
-            <div>
-              <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
-                Popular categories
-              </h3>
-              <div className="iv-tag-cloud mt-4">
-                {popularCategories.length === 0 ? (
-                  <span className="text-xs text-muted-foreground">Loading…</span>
-                ) : (
-                  popularCategories.map((c) => (
-                    <CategoryBadge
-                      key={c.categorySlug}
-                      slug={c.categorySlug}
-                      label={c.categoryName}
-                      size="sm"
-                      className="iv-tag"
-                    />
-                  ))
+      {/* Footer, built to the reference the founder supplied: a light card,
+          four columns of plain link lists with a newsletter block, then a
+          hairline and a thin bottom bar.
+
+          What this replaced was a dark full-bleed band with display type and
+          a statistics row. That was my idea, not the brief's, and it was
+          wrong. This is the reference. */}
+      {/* pb-24 on mobile: the floating back-to-top / compass dock is fixed to
+          the bottom-right and was sitting on top of the legal links. */}
+      <footer className="px-3 pb-24 pt-20 sm:px-4 sm:pb-10 sm:pt-24">
+        <div className="bbi-footer mx-auto max-w-7xl rounded-3xl px-5 py-9 sm:px-12 sm:py-14">
+          {/* Two columns on a phone, not one. Below sm: this was a single
+              column with a 2.5rem gap, which stacked the four blocks into a
+              1,249px ribbon on an 844px screen. These are short lists of
+              short labels; two columns halve the height and give it a shape.
+              Everything from sm: up is the approved desktop layout, untouched. */}
+          <div className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-2 sm:gap-10 lg:grid-cols-[1.1fr_1fr_1fr_1.4fr]">
+            {/* Categories, capped. The cap is what keeps this footer one
+                height whether the catalogue holds 14 categories or 1,400. */}
+            <div className="col-span-2 sm:col-span-1">
+              <h3 className="bbi-footer-heading">Browse</h3>
+              <ul className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 sm:mt-4 sm:grid-cols-1 sm:gap-2.5">
+                {footerCategories.shown.map((c) => (
+                  <li key={c.categorySlug}>
+                    <Link
+                      to="/category/$categorySlug"
+                      params={{ categorySlug: c.categorySlug }}
+                      className="bbi-footer-link"
+                    >
+                      {c.categoryName}
+                    </Link>
+                  </li>
+                ))}
+                {footerCategories.hasMore && (
+                  <li>
+                    <Link to="/browse" className="bbi-footer-link bbi-footer-more">
+                      and {footerCategories.hiddenCount} more
+                    </Link>
+                  </li>
                 )}
-              </div>
+              </ul>
+            </div>
+
+            {footerColumns
+              .filter((col) => col.title !== "Legal")
+              .map((col) => (
+                <div key={col.title}>
+                  <h3 className="bbi-footer-heading">{col.title}</h3>
+                  <ul className="mt-3 grid gap-2 sm:mt-4 sm:gap-2.5">
+                    {col.links.map((link) => (
+                      <li key={`${col.title}-${link.to}-${link.label}`}>
+                        <Link to={link.to} className="bbi-footer-link">
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+
+            {/* Full width on a phone — the input and Subscribe need it. */}
+            <div className="col-span-2 sm:col-span-1">
+              <NewsletterSignup />
             </div>
           </div>
-          <div className="mt-10 border-t border-border pt-6 text-xs text-muted-foreground">
-            <p className="font-medium text-foreground">
-              Bro Business Ideas — built by people who&apos;ve been where you are. Businessidea.io
-            </p>
-            <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <p>© {new Date().getFullYear()} BBI. All rights reserved.</p>
-              <p>Every idea here is live — updated in real time, never stale.</p>
+
+          <div className="mt-9 flex flex-col gap-4 border-t border-border pt-6 text-xs sm:mt-12 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+            {/* Legal lives here rather than as a fifth column — that is where
+                the reference puts it, and four columns plus a fifth is what
+                pushed the newsletter onto its own row. */}
+            {/* A two-column list on a phone. As an inline dotted row these
+                five wrapped into a ragged paragraph at 390px. */}
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-2 sm:flex sm:flex-wrap sm:items-center sm:gap-x-2 sm:gap-y-1">
+              {(footerColumns.find((c) => c.title === "Legal")?.links ?? []).map((link, i) => (
+                <li key={link.to} className="flex items-center gap-2">
+                  {i > 0 && (
+                    <span aria-hidden className="hidden text-border sm:inline">
+                      ·
+                    </span>
+                  )}
+                  <Link to={link.to} className="bbi-footer-link">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            {/* pr-24 on mobile keeps this clear of the fixed back-to-top /
+                compass dock, which was printing over the end of the line.
+
+                This used to read "N blueprints across N categories". A sign-off
+                is the last line anyone reads on the page; it should say who we
+                are and who this is for, not how many rows are in the table. The
+                count is on /browse, where someone is actually looking for it. */}
+            <div className="pr-24 sm:pr-0 sm:text-right">
+              <p className="text-muted-foreground">
+                © {new Date().getFullYear()} Bro Business Ideas · businessidea.io
+              </p>
+              <p className="mt-1 text-muted-foreground/80">
+                Made in India, for everyone starting from zero. We were there too.
+              </p>
             </div>
           </div>
         </div>

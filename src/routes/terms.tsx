@@ -6,7 +6,7 @@ export const Route = createFileRoute("/terms")({
   head: () =>
     metaFor(
       "Terms of Service | BBI",
-      "The terms governing your use of the BBI idea library and the free validation handoff.",
+      "The terms that govern your use of the BBI idea library, in plain language.",
     ),
   component: TermsPage,
 });
@@ -14,86 +14,81 @@ export const Route = createFileRoute("/terms")({
 function TermsPage() {
   return (
     <ContentPage
+      tone="document"
       eyebrow="Terms of service"
       title="Terms of"
       highlight="service"
-      intro="These terms govern your use of BBI. By using the site you accept them. If you do not accept them, please do not use the service."
+      intro="These terms cover how you use BBI. Using the site means you accept them. If any of it does not sit right with you, please do not use the service."
     >
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
-      <Section heading="1. The service">
+      <Section heading="What this service is">
         <p>
-          BBI provides researched business idea blueprints, search and browsing tools, an editorial
-          blog, and a free handoff that lets you validate any idea using your own Claude or
-          Perplexity account. The service is informational. It is not investment, legal, tax or
-          professional advice.
+          BBI publishes researched business idea blueprints, with search and browsing tools and an
+          editorial blog. It is information. It is not investment, legal, tax or professional
+          advice, and reading it does not put us in a professional relationship with you.
         </p>
       </Section>
-      <Section heading="2. Accounts">
+      <Section heading="Your access">
         <p>
-          The library is free to browse and every idea's validation handoff is free to use. Where an
-          account exists, access is personal to you — you may not share credentials, resell access,
-          or provide bulk access to third parties. We may suspend access where we reasonably believe
-          these terms have been breached.
+          The library is free to browse. Where an account exists, it is yours alone — do not share
+          your login, resell access, or hand bulk access to anyone else. If we have good reason to
+          believe these terms are being broken, we can suspend access.
         </p>
       </Section>
-      <Section heading="3. Acceptable use">
+      <Section heading="What you must not do">
         <Bullets
           items={[
-            "Do not scrape, mirror or bulk-extract the idea library.",
-            "Do not republish blueprints as your own work or resell them.",
-            "Do not use the service to build a competing idea database.",
-            "Do not probe, disrupt or overload the service or its infrastructure.",
+            "Do not scrape, mirror or bulk-download the idea library.",
+            "Do not republish blueprints as your own work, and do not resell them.",
+            "Do not use what you find here to build a competing idea database.",
+            "Do not probe, disrupt or overload the site or the systems behind it.",
           ]}
         />
       </Section>
-      <Section heading="4. Intellectual property">
+      <Section heading="Who owns what">
         <p>
-          All blueprints, editorial content, scoring, branding and interface design remain the
-          property of BBI or its licensors. You get a personal, non-exclusive, non-transferable
-          licence to read and use the content for your own business planning. The business ideas
-          themselves are not proprietary — you are free to build them.
+          The blueprints, the writing, the scoring, the brand and the interface belong to BBI or to
+          the people who licensed them to us. You get a personal, non-transferable licence to read
+          them and use them for your own planning. The business ideas themselves are not ours to own
+          — go and build one.
         </p>
       </Section>
-      <Section heading="5. Validation handoff to third-party AI platforms">
+      <Section heading="Research produced outside BBI">
         <p>
-          The Validate button opens Claude or Perplexity in a new tab with a research prompt
-          pre-filled, on your own account. We do not generate, store or see the response — it runs
-          entirely on the third-party platform you choose, under that platform's own terms. The
-          pre-fill mechanism is best-effort and can change without notice on the platform's side.
-          Treat any output as a structured second opinion, never as verified fact. See our{" "}
-          <Link to="/disclaimer" className="text-accent underline underline-offset-4">
+          Some of the research you can pull up from an idea page is produced by a third party, not
+          by us. We do not write it, store it or check it, and it is governed by that third
+          party&apos;s own terms rather than ours. Treat it as a second opinion you still have to
+          test, never as verified fact. Our{" "}
+          <Link to="/disclaimer" className="mo-link font-semibold text-accent">
             disclaimer
-          </Link>
-          .
+          </Link>{" "}
+          says the same thing in more detail.
         </p>
       </Section>
-      <Section heading="6. Availability and changes">
+      <Section heading="Changes and uptime">
         <p>
-          We may change, suspend or remove features, entries or pricing at any time. We aim for
-          continuous availability but do not guarantee uninterrupted service.
+          We can change, pause or remove features, entries and pricing at any time. We aim to keep
+          the site up and working. We cannot promise it never goes down.
         </p>
       </Section>
-      <Section heading="7. Limitation of liability">
+      <Section heading="Limits on our liability">
         <p>
-          To the maximum extent permitted by law, BBI is not liable for lost profits, lost business,
-          lost data or any indirect or consequential loss arising from your use of the service or
-          decisions made on the basis of its content. Nothing in these terms limits liability that
-          cannot lawfully be limited.
+          As far as the law allows, BBI is not liable for lost profits, lost business, lost data, or
+          any indirect or knock-on loss that follows from using this site or from decisions you make
+          based on what you read here. Nothing in these terms limits liability that cannot lawfully
+          be limited.
         </p>
       </Section>
-      <Section heading="8. Termination">
+      <Section heading="Ending it">
         <p>
-          You may stop using the service at any time. We may terminate access for breach of these
-          terms. Sections on intellectual property, disclaimers and liability survive termination.
+          You can stop using the service whenever you like. We can end your access if these terms
+          are broken. The parts about ownership, disclaimers and liability keep applying afterwards.
         </p>
       </Section>
-      <Section heading="9. Contact">
+      <Section heading="Questions">
         <p>
-          Questions about these terms:{" "}
-          <a
-            href="mailto:hello@businessidea.io"
-            className="text-accent underline underline-offset-4"
-          >
+          Anything about these terms, write to{" "}
+          <a href="mailto:hello@businessidea.io" className="mo-link font-semibold text-accent">
             hello@businessidea.io
           </a>
           .

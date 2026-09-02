@@ -78,11 +78,11 @@
           "conditions": [
             {
               "id": "rf-check",
-              "leftValue": "={{ String($json.research_facts || '') }}",
-              "rightValue": "facts",
+              "leftValue": "={{ String($json.research_facts || '').trim().length }}",
+              "rightValue": 50,
               "operator": {
-                "type": "string",
-                "operation": "contains"
+                "type": "number",
+                "operation": "gt"
               }
             }
           ],
@@ -575,6 +575,462 @@
         }
       },
       "notes": "Inserts full row: Claude's SEO/seed/research columns (passed through) + Gemini's narrative fields."
+    },
+    {
+      "parameters": {},
+      "id": "faq-trigger",
+      "name": "FAQ Pool - Run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "ideas",
+        "returnAll": true,
+        "filterType": "manual",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "status",
+              "condition": "eq",
+              "keyValue": "completed"
+            }
+          ]
+        }
+      },
+      "id": "faq-read-cats",
+      "name": "Read Completed Ideas",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        760
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "REPLACE_WITH_SUPABASE_CRED_ID",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Turn the raw ideas rows into one item per category.\n//\n// Deliberately derived from the live table rather than from a hardcoded list\n// of 14 slugs: categories will be added, and a pipeline that has to be edited\n// every time one appears is a pipeline that silently goes stale.\nconst rows = $input.all().map((i) => i.json);\nif (rows.length === 0) {\n  throw new Error('No completed ideas came back from Supabase. Check the filter and the credential.');\n}\n\nconst byCat = new Map();\nfor (const r of rows) {\n  if (!r.category_slug) continue;\n  let c = byCat.get(r.category_slug);\n  if (!c) {\n    c = { category_slug: r.category_slug, category_name: r.category_name, idea_count: 0, titles: [] };\n    byCat.set(r.category_slug, c);\n  }\n  c.idea_count += 1;\n  if (c.titles.length < 12 && r.title) c.titles.push(r.title);\n}\n\n// Optional narrowing: set ONLY_CATEGORY in the n8n environment to run a\n// single category first and read the output before spending keys on all 14.\nconst only = $env.ONLY_CATEGORY;\n\nreturn [...byCat.values()]\n  .filter((c) => !only || c.category_slug === only)\n  .map((c) => ({\n    json: {\n      category_slug: c.category_slug,\n      category_name: c.category_name,\n      idea_count: c.idea_count,\n      sample_titles: c.titles.map((t) => `- ${t}`).join('\\n'),\n    },\n  }));\n"
+      },
+      "id": "faq-distinct",
+      "name": "Distinct Categories",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        128,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "id": "faq-loop",
+      "name": "Loop Categories",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        352,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Gemini API key rotation.\n//\n// Reads from n8n VARIABLES first, then environment variables.\n//\n// That order matters: this instance is n8n Cloud, where environment variables\n// cannot be set by the user at all. The original version read only $env, so on\n// Cloud it would always throw \"No Gemini keys found\" no matter how many keys\n// existed. $vars is the Cloud-native store; $env is kept as the fallback so the\n// same workflow still runs unchanged on a self-hosted instance later.\n//\n// Keys are NEVER written into a node parameter. A key pasted into a parameter\n// travels inside every export of this workflow, and a Google API key that\n// reaches a repository is scraped and abused within minutes.\n//\n// The index advances on every call and is carried in workflow static data, so\n// it survives between runs. A 429 or 5xx on the HTTP node retries, and because\n// this node re-runs, the retry lands on the NEXT key rather than hammering the\n// exhausted one.\nconst read = (name) => {\n  try {\n    if (typeof $vars !== 'undefined' && $vars && $vars[name]) return $vars[name];\n  } catch (e) { /* $vars not available on this instance */ }\n  try {\n    if (typeof $env !== 'undefined' && $env && $env[name]) return $env[name];\n  } catch (e) { /* $env blocked, which is the normal case on Cloud */ }\n  return null;\n};\n\nconst keys = [];\nfor (let i = 1; i <= 7; i++) {\n  const k = read(`GEMINI_API_KEY_${i}`);\n  if (k) keys.push(String(k).trim());\n}\n\nif (keys.length === 0) {\n  throw new Error(\n    'No Gemini keys found. On n8n Cloud add them under Settings -> Variables as ' +\n    'GEMINI_API_KEY_1 ... GEMINI_API_KEY_7 (at least GEMINI_API_KEY_1). ' +\n    'Self-hosted instances may use environment variables of the same names. ' +\n    'Never paste a key into a node parameter -- it would end up in every export.'\n  );\n}\n\nconst store = $getWorkflowStaticData('global');\nstore.geminiKeyIndex = (store.geminiKeyIndex ?? 0) % keys.length;\n\nconst out = [];\nfor (const item of $input.all()) {\n  const key = keys[store.geminiKeyIndex];\n  store.geminiKeyIndex = (store.geminiKeyIndex + 1) % keys.length;\n  out.push({\n    json: {\n      ...item.json,\n      geminiKey: key,\n      geminiKeyNumber: store.geminiKeyIndex === 0 ? keys.length : store.geminiKeyIndex,\n      geminiKeyCount: keys.length,\n    },\n  });\n}\nreturn out;\n"
+      },
+      "id": "faq-rotate",
+      "name": "Rotate Gemini Key",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        576,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={{ $json.geminiKey }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ contents: [{ parts: [{ text: $json.faqPrompt }] }], generationConfig: { temperature: 1, responseMimeType: 'application/json' } }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "faq-gemini",
+      "name": "Gemini - Generate FAQs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1024,
+        760
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 30000
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "faq-prompt-a",
+              "name": "faqPrompt",
+              "value": "=You are a business writer for BBI, a researched business-idea library for an India-first audience. You are writing the FAQ pool for ONE category. These questions appear on the category's FAQ hub page and are also drawn at random onto individual idea pages, so each one must stand on its own without knowing which idea it sits beside.\n\n=== THE CATEGORY ===\nCategory name: {{ $json.category_name }}\nCategory slug: {{ $json.category_slug }}\nBlueprints currently in it: {{ $json.idea_count }}\nA sample of real idea titles from inside it, so you know what this category actually contains:\n{{ $json.sample_titles }}\n\n=== WRITE 12 QUESTIONS AND ANSWERS ===\n\nQuestions must be ones a real person would type into a search box before starting a business in this category. Not questions a brochure would ask. Think: what does someone actually worry about at 11pm before they commit money or weekends to this?\n\nCover a spread across these concerns, roughly one or two each:\n- money to start, and where it actually goes\n- how long before the first rupee arrives\n- what skills are genuinely required versus what people assume\n- legal, tax and registration reality in India\n- finding the first customer\n- the honest downside, and who should not do this\n- how this differs from the saturated obvious version\n- time commitment alongside a job\n\n=== ABSOLUTE RULES ===\n\n1. NEVER INVENT A NUMBER. No market sizes, no average earnings, no growth percentages, no \"most founders make X\", no survey results, no headcounts. If a question cannot be answered without a figure nobody has measured, write a different question. You may describe ranges qualitatively (\"it varies a lot with your city\" is fine; \"typically Rs 40,000 a month\" is not, unless it is arithmetic the reader can check themselves).\n2. NEVER NAME AN AI TOOL OR VENDOR. Do not mention Claude, Perplexity, ChatGPT, Grok, Gemini, or any AI product. Do not describe how validation works on this site, do not mention accounts, prompts, or handoffs. This rule has no exceptions.\n3. NEVER NAME A REAL COMPANY OR BRAND. Say \"a large marketplace\", \"a standard payment gateway\", \"a popular short-video platform\".\n4. ZERO EMOJIS. In questions and in answers.\n5. NO YEAR ANYWHERE. Not in a question, not in an answer. These pages must not date.\n6. INDIA FIRST. Rupees, Indian registration and GST reality, Indian platforms and Indian market conditions. Not a US framing translated.\n7. VOICE: plain, direct, sixth-to-seventh-grade English. A straight-talking older brother, not a brochure. Short sentences. It is fine, and better, to say something is hard, slow, or a bad fit for most people.\n8. BANNED WORDS: game changer, revolutionize, revolutionary, in today's fast-paced world, unlock, seamless, robust, cutting-edge, disrupt, leverage as a verb, synergy, holistic, empower, elevate, next-generation, paradigm, dive in, look no further, journey, landscape.\n9. Every answer is 40 to 90 words. Long enough to be useful, short enough to read. No answer may begin the same way as another.\n10. No two questions may be rephrasings of each other.\n\n=== OUTPUT ===\n\nReturn ONLY a raw JSON array. No markdown fences, no commentary, no preamble.\n\n[\n  {\"question\": \"...\", \"answer\": \"...\"},\n  ... exactly 12 objects ...\n]\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "faq-prompt",
+      "name": "Build FAQ Prompt",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        800,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Gemini's JSON array into one n8n item per FAQ, so the Supabase node\n// inserts twelve rows rather than one row holding an array.\n//\n// Every check below rejects the whole batch for that category rather than\n// writing partial or malformed content. A bad row in this table shows up on\n// a public page, and the site has already had to strip invented content four\n// separate times.\nconst BANNED_VENDORS = /\\b(claude|perplexity|chatgpt|openai|grok|gemini|copilot)\\b/i;\nconst YEAR = /\\b(19|20)\\d{2}\\b/;\nconst EMOJI = /[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{FE0F}]/u;\n\nconst out = [];\n\nfor (const item of $input.all()) {\n  const cat = $('Distinct Categories').item.json;\n\n  let raw = item.json.candidates?.[0]?.content?.parts?.[0]?.text;\n  if (typeof raw !== 'string') {\n    throw new Error(`No text back from Gemini for ${cat.category_slug}. Full response: ${JSON.stringify(item.json).slice(0, 500)}`);\n  }\n\n  // Strip fences if the model added them despite being told not to.\n  raw = raw.trim().replace(/^```(?:json)?/i, '').replace(/```$/, '').trim();\n\n  let parsed;\n  try {\n    parsed = JSON.parse(raw);\n  } catch (e) {\n    throw new Error(`Gemini returned non-JSON for ${cat.category_slug}: ${raw.slice(0, 300)}`);\n  }\n\n  if (!Array.isArray(parsed)) throw new Error(`Expected an array for ${cat.category_slug}, got ${typeof parsed}`);\n  if (parsed.length < 8) throw new Error(`Only ${parsed.length} FAQs for ${cat.category_slug}; expected 12. Not writing a thin pool.`);\n\n  const seen = new Set();\n\n  for (const row of parsed) {\n    const q = String(row.question ?? '').trim();\n    const a = String(row.answer ?? '').trim();\n\n    if (!q || !a) throw new Error(`Empty question or answer in ${cat.category_slug}`);\n    if (BANNED_VENDORS.test(q) || BANNED_VENDORS.test(a)) {\n      throw new Error(`Named an AI vendor in ${cat.category_slug}: ${q.slice(0, 80)}`);\n    }\n    if (YEAR.test(q) || YEAR.test(a)) {\n      throw new Error(`Contains a year in ${cat.category_slug}: ${q.slice(0, 80)}`);\n    }\n    if (EMOJI.test(q) || EMOJI.test(a)) {\n      throw new Error(`Contains an emoji in ${cat.category_slug}: ${q.slice(0, 80)}`);\n    }\n    const wordCount = a.split(/\\s+/).length;\n    if (wordCount < 25 || wordCount > 130) {\n      throw new Error(`Answer is ${wordCount} words in ${cat.category_slug}; wanted 40-90. Q: ${q.slice(0, 60)}`);\n    }\n    const key = q.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();\n    if (seen.has(key)) throw new Error(`Duplicate question inside ${cat.category_slug}: ${q.slice(0, 80)}`);\n    seen.add(key);\n\n    out.push({ json: { category_slug: cat.category_slug, question: q, answer: a, is_active: true } });\n  }\n}\n\nreturn out;\n"
+      },
+      "id": "faq-parse",
+      "name": "Parse and Guard FAQs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1248,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "category_faqs",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "category_slug",
+              "fieldValue": "={{ $json.category_slug }}"
+            },
+            {
+              "fieldId": "question",
+              "fieldValue": "={{ $json.question }}"
+            },
+            {
+              "fieldId": "answer",
+              "fieldValue": "={{ $json.answer }}"
+            },
+            {
+              "fieldId": "is_active",
+              "fieldValue": "={{ $json.is_active }}"
+            }
+          ]
+        }
+      },
+      "id": "faq-write",
+      "name": "Write FAQ Pool",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1472,
+        760
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "REPLACE_WITH_SUPABASE_CRED_ID",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "id": "blog-trigger",
+      "name": "Blog - Run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        160,
+        1180
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "blog-read",
+      "name": "Read Blog Queue",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        384,
+        1180
+      ],
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Blog Queue",
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "status",
+              "lookupValue": "pending"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "blog-loop",
+      "name": "Loop Blog Rows",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        608,
+        1180
+      ],
+      "parameters": {
+        "options": {}
+      }
+    },
+    {
+      "id": "blog-key",
+      "name": "Rotate Gemini Key (Blog)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        832,
+        1180
+      ],
+      "parameters": {
+        "jsCode": "// Gemini API key rotation.\n//\n// Reads from n8n VARIABLES first, then environment variables.\n//\n// That order matters: this instance is n8n Cloud, where environment variables\n// cannot be set by the user at all. The original version read only $env, so on\n// Cloud it would always throw \"No Gemini keys found\" no matter how many keys\n// existed. $vars is the Cloud-native store; $env is kept as the fallback so the\n// same workflow still runs unchanged on a self-hosted instance later.\n//\n// Keys are NEVER written into a node parameter. A key pasted into a parameter\n// travels inside every export of this workflow, and a Google API key that\n// reaches a repository is scraped and abused within minutes.\n//\n// The index advances on every call and is carried in workflow static data, so\n// it survives between runs. A 429 or 5xx on the HTTP node retries, and because\n// this node re-runs, the retry lands on the NEXT key rather than hammering the\n// exhausted one.\nconst read = (name) => {\n  try {\n    if (typeof $vars !== 'undefined' && $vars && $vars[name]) return $vars[name];\n  } catch (e) { /* $vars not available on this instance */ }\n  try {\n    if (typeof $env !== 'undefined' && $env && $env[name]) return $env[name];\n  } catch (e) { /* $env blocked, which is the normal case on Cloud */ }\n  return null;\n};\n\nconst keys = [];\nfor (let i = 1; i <= 7; i++) {\n  const k = read(`GEMINI_API_KEY_${i}`);\n  if (k) keys.push(String(k).trim());\n}\n\nif (keys.length === 0) {\n  throw new Error(\n    'No Gemini keys found. On n8n Cloud add them under Settings -> Variables as ' +\n    'GEMINI_API_KEY_1 ... GEMINI_API_KEY_7 (at least GEMINI_API_KEY_1). ' +\n    'Self-hosted instances may use environment variables of the same names. ' +\n    'Never paste a key into a node parameter -- it would end up in every export.'\n  );\n}\n\nconst store = $getWorkflowStaticData('global');\nstore.geminiKeyIndex = (store.geminiKeyIndex ?? 0) % keys.length;\n\nconst out = [];\nfor (const item of $input.all()) {\n  const key = keys[store.geminiKeyIndex];\n  store.geminiKeyIndex = (store.geminiKeyIndex + 1) % keys.length;\n  out.push({\n    json: {\n      ...item.json,\n      geminiKey: key,\n      geminiKeyNumber: store.geminiKeyIndex === 0 ? keys.length : store.geminiKeyIndex,\n      geminiKeyCount: keys.length,\n    },\n  });\n}\nreturn out;\n"
+      }
+    },
+    {
+      "id": "blog-prompt",
+      "name": "Build Blog Prompt",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1056,
+        1180
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "blog-prompt-a",
+              "name": "blogPrompt",
+              "value": "=You are the staff writer for BBI (Bro Business Ideas), a free, researched business-idea library at businessidea.io, written India-first for people starting from zero: no investment, no team, no connections.\n\nWrite ONE complete blog post from the brief below.\n\n=== THE BRIEF (from the sheet row) ===\nWorking title: {{ $json.title }}\nPrimary keyword: {{ $json.primary_keyword }}\nSecondary keywords: {{ $json.secondary_keywords }}\nCategory: {{ $json.category }}\nSearch intent: {{ $json.search_intent }}\nAngle the writer must take: {{ $json.angle }}\nInternal link to include: {{ $json.internal_link }}\nTarget word count: {{ $json.word_count }}\n\n=== VOICE — THIS IS NOT OPTIONAL ===\nBBI's reader is often jobless, often broke, often on a phone at 1am. Write to that person as an equal, never down to them.\n- Short sentences. Plain words. No corporate register, no hype, no \"unlock\", \"leverage\", \"game-changer\", \"dive in\", \"in today's fast-paced world\".\n- No em-dash-heavy rhythm. No rhetorical question openers.\n- Concrete over abstract: rupees, hours, a real weekly routine, an actual first customer.\n- Say the hard part out loud. If an idea needs capital the reader may not have, say so in the same paragraph you recommend it.\n- Never invent statistics, studies, funding figures or named sources. If you do not know a number, describe the shape of it in words instead. A made-up figure is worse than no figure.\n- Never name or describe the AI tools BBI hands off to.\n\n=== STRUCTURE ===\n- Open with the reader's actual situation in 2-3 sentences. No throat-clearing.\n- 4 to 7 H2 sections. Sentence case headings, never Title Case, never a question mark on a label.\n- Where a list genuinely helps, use one. Otherwise write prose.\n- Close with what to do this week, in three concrete steps.\n\n=== OUTPUT ===\nReturn ONLY valid JSON, no markdown fence, matching exactly:\n{\n  \"title\": \"final post title, sentence case, under 65 characters\",\n  \"slug\": \"url-safe-lowercase-hyphenated\",\n  \"excerpt\": \"one sentence under 155 characters, no ellipsis\",\n  \"content_html\": \"the full post as clean semantic HTML using only <h2> <h3> <p> <ul> <li> <ol> <strong> <em> <a>. No inline styles, no <div>, no <script>, no <h1> (the theme renders the title).\",\n  \"image_prompt\": \"a photographic scene description for the cover image: a real workspace or setting relevant to this post, natural light, no text, no logos, no people's faces, no charts\",\n  \"meta_description\": \"under 158 characters, includes the primary keyword naturally\"\n}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "blog-write",
+      "name": "Gemini - Write Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1280,
+        1180
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={{ $json.geminiKey }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ contents: [{ parts: [{ text: $json.blogPrompt }] }], generationConfig: { temperature: 0.9, responseMimeType: 'application/json' } }) }}",
+        "options": {
+          "timeout": 180000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 30000
+    },
+    {
+      "id": "blog-guard",
+      "name": "Parse and Guard Post",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1504,
+        1180
+      ],
+      "parameters": {
+        "jsCode": "// Parse Gemini's JSON and refuse anything that would publish badly.\n//\n// The model is asked for raw JSON, but it still occasionally wraps the object\n// in a markdown fence, so strip that before parsing rather than failing the\n// whole batch on a formatting quirk.\nconst out = [];\n\nfor (const item of $input.all()) {\n  const raw = item.json?.candidates?.[0]?.content?.parts?.[0]?.text ?? '';\n  const cleaned = String(raw).replace(/^\\s*```(?:json)?/i, '').replace(/```\\s*$/, '').trim();\n\n  let post;\n  try {\n    post = JSON.parse(cleaned);\n  } catch (e) {\n    throw new Error('Gemini did not return valid JSON for \"' + (item.json.title ?? 'unknown row') + '\": ' + e.message);\n  }\n\n  const need = ['title', 'slug', 'excerpt', 'content_html', 'image_prompt', 'meta_description'];\n  const missing = need.filter((k) => !post[k] || String(post[k]).trim() === '');\n  if (missing.length) throw new Error('Post is missing required fields: ' + missing.join(', '));\n\n  // Guards. Each of these has shipped as a real defect on this project before.\n  if (/<h1[\\s>]/i.test(post.content_html)) throw new Error('content_html contains an <h1>; the theme renders the title.');\n  if (/<script|<style|onerror=|onclick=/i.test(post.content_html)) throw new Error('content_html contains script/style/handlers.');\n  if (String(post.title).length > 80) throw new Error('Title too long: ' + post.title.length);\n  if (String(post.meta_description).length > 165) throw new Error('meta_description too long: ' + post.meta_description.length);\n\n  const words = String(post.content_html).replace(/<[^>]+>/g, ' ').split(/\\s+/).filter(Boolean).length;\n  if (words < 350) throw new Error('Post is only ' + words + ' words; too thin to publish.');\n\n  post.slug = String(post.slug).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');\n\n  out.push({ json: { ...item.json, post, wordCount: words } });\n}\n\nreturn out;"
+      }
+    },
+    {
+      "id": "blog-img",
+      "name": "Gemini - Cover Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1728,
+        1180
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key={{ $json.geminiKey }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ contents: [{ parts: [{ text: $json.post.image_prompt + ' Photographic, natural light, no text, no logos, no readable charts. 16:9.' }] }] }) }}",
+        "options": {
+          "timeout": 180000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 20000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "blog-imgbin",
+      "name": "Cover to Binary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1952,
+        1180
+      ],
+      "parameters": {
+        "jsCode": "// Gemini returns the image as base64 inside inlineData. n8n's WordPress media\n// endpoint needs real binary, so convert it here.\nconst out = [];\nfor (const item of $input.all()) {\n  const parts = item.json?.candidates?.[0]?.content?.parts ?? [];\n  const img = parts.find((p) => p.inlineData?.data);\n  if (!img) {\n    // No image is not a reason to lose the post. Publish without a cover and\n    // say so on the sheet row instead of throwing the whole run away.\n    out.push({ json: { ...item.json, coverMissing: true } });\n    continue;\n  }\n  out.push({\n    json: { ...item.json, coverMissing: false },\n    binary: {\n      cover: await this.helpers.prepareBinaryData(\n        Buffer.from(img.inlineData.data, 'base64'),\n        (item.json.post?.slug ?? 'cover') + '.png',\n        img.inlineData.mimeType || 'image/png',\n      ),\n    },\n  });\n}\nreturn out;"
+      }
+    },
+    {
+      "id": "blog-media",
+      "name": "Upload Cover to WordPress",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2176,
+        1180
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.WORDPRESS_API_BASE }}/media",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpTemplatedCustomAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Disposition",
+              "value": "=attachment; filename=\"{{ $json.post.slug }}.png\""
+            }
+          ]
+        },
+        "contentType": "binaryData",
+        "inputDataFieldName": "cover",
+        "sendBody": true,
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "blog-post",
+      "name": "Create WordPress Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2400,
+        1180
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.WORDPRESS_API_BASE }}/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpTemplatedCustomAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ title: $('Parse and Guard Post').item.json.post.title, slug: $('Parse and Guard Post').item.json.post.slug, excerpt: $('Parse and Guard Post').item.json.post.excerpt, content: $('Parse and Guard Post').item.json.post.content_html, status: 'draft', featured_media: $json.id ?? 0, meta: { description: $('Parse and Guard Post').item.json.post.meta_description } }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 15000
+    },
+    {
+      "id": "blog-done",
+      "name": "Mark Blog Row Done",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2624,
+        1180
+      ],
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Blog Queue",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "row_id"
+          ],
+          "value": {
+            "row_id": "={{ $('Parse and Guard Post').item.json.row_id }}",
+            "status": "done",
+            "published_slug": "={{ $('Parse and Guard Post').item.json.post.slug }}",
+            "wp_post_id": "={{ $json.id }}",
+            "wp_edit_url": "={{ $json.link }}",
+            "word_count": "={{ $('Parse and Guard Post').item.json.wordCount }}"
+          }
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "idea-guard",
+      "name": "Quality Guard",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        80
+      ],
+      "parameters": {
+        "jsCode": "// Quality gate for generated idea narratives.\n//\n// Runs between the JSON parser and the sheet write, so nothing reaches the\n// sheet or Supabase without passing. It REJECTS the unambiguous and FLAGS the\n// arguable, deliberately: an over-eager guard throws away good work.\n//\n// That distinction was learned from real data. A crude banned-word scan over\n// the 290 live rows flagged 11 problems; on reading them, only 5 were real:\n//   \"you unlock the lower steel cabinet\"  -- a key in a lock, not marketing\n//   \"a seamless loop\"                     -- the standard audio term\n//   \"seamless reweaving\"                  -- literally no visible seam\n//   \"post-1960 premium pens\"              -- a product category, not a date\n// Rejecting those would have destroyed correct copy. So context-dependent\n// words are flagged for review, never used to fail a row.\nconst CURRENT_YEAR = new Date().getFullYear();\n\n// Words that have no legitimate use in this voice, in any context.\nconst HARD_BANNED = /\\b(game.?changer|revolutionis|revolutioniz|in today'?s fast.?paced|dive in|look no further|synergy|paradigm|cutting.?edge|best.?in.?class|world.?class)\\b/i;\n\n// Words with real literal uses. Flagged, never fatal.\nconst SOFT_BANNED = /\\b(unlock|seamless|leverage|empower|elevate|holistic|robust|ecosystem)\\b/i;\n\n// Naming the validation vendors is never acceptable. This has shipped as a\n// live defect before and is the one rule with no exceptions.\nconst VENDORS = /\\b(claude|perplexity|chatgpt|openai|grok|gemini|copilot|anthropic)\\b/i;\n\nconst NARRATIVE = ['summary','market_opportunity','target_customer','how_you_make_money',\n                   'startup_cost','income_potential','competition_edge','time_to_first_customer','verdict'];\n\nconst out = [];\n\nfor (const item of $input.all()) {\n  const j = item.json;\n\n  // Rows the parser already marked for retry pass through untouched -- they\n  // carry the researcher's work and must not be lost to a guard.\n  if (j.status === 'needs_retry') { out.push(item); continue; }\n\n  const flags = [];\n\n  for (const field of NARRATIVE) {\n    const val = String(j[field] ?? '');\n    if (!val) continue;\n\n    if (VENDORS.test(val)) {\n      throw new Error(`${j.slug || j.idea_id}: ${field} names an AI vendor -- \"${val.match(VENDORS)[0]}\". This is never allowed in public copy.`);\n    }\n    if (HARD_BANNED.test(val)) {\n      throw new Error(`${j.slug || j.idea_id}: ${field} uses banned filler -- \"${val.match(HARD_BANNED)[0]}\".`);\n    }\n\n    // A RECENT year dates the page and is fatal. An older year is usually a\n    // historical reference (\"post-1960 pens\") and is only flagged.\n    const years = [...val.matchAll(/\\b(19|20)\\d{2}\\b/g)].map((m) => parseInt(m[0], 10));\n    const recent = years.filter((y) => y >= CURRENT_YEAR - 2);\n    if (recent.length) {\n      throw new Error(`${j.slug || j.idea_id}: ${field} contains ${recent[0]}, which dates the page. Describe the timeframe in words instead.`);\n    }\n    if (years.length) flags.push(`${field}: historical year ${years[0]}`);\n    if (SOFT_BANNED.test(val)) flags.push(`${field}: \"${val.match(SOFT_BANNED)[0]}\" -- check it is literal, not marketing`);\n  }\n\n  const summaryLen = String(j.summary ?? '').length;\n  if (summaryLen < 200) {\n    throw new Error(`${j.slug || j.idea_id}: summary is only ${summaryLen} characters. Too thin to publish.`);\n  }\n\n  const trend = parseInt(j.trend_score, 10);\n  if (!Number.isFinite(trend) || trend < 40 || trend > 100) {\n    throw new Error(`${j.slug || j.idea_id}: trend_score is \"${j.trend_score}\", outside the honest 55-98 band.`);\n  }\n\n  out.push({ json: { ...j, quality_flags: flags.join(' | ') } });\n}\n\nreturn out;\n"
+      },
+      "notes": "Rejects vendor names, hard-banned filler, page-dating years and thin copy. Flags arguable cases instead of failing them."
     }
   ],
   "pinData": {},
@@ -657,7 +1113,7 @@
       "main": [
         [
           {
-            "node": "Update Row in Sheet",
+            "node": "Quality Guard",
             "type": "main",
             "index": 0
           }
@@ -680,6 +1136,248 @@
         [
           {
             "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FAQ Pool - Run": {
+      "main": [
+        [
+          {
+            "node": "Read Completed Ideas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Completed Ideas": {
+      "main": [
+        [
+          {
+            "node": "Distinct Categories",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Distinct Categories": {
+      "main": [
+        [
+          {
+            "node": "Loop Categories",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Categories": {
+      "main": [
+        [
+          {
+            "node": "Rotate Gemini Key",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rotate Gemini Key": {
+      "main": [
+        [
+          {
+            "node": "Build FAQ Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build FAQ Prompt": {
+      "main": [
+        [
+          {
+            "node": "Gemini - Generate FAQs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini - Generate FAQs": {
+      "main": [
+        [
+          {
+            "node": "Parse and Guard FAQs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse and Guard FAQs": {
+      "main": [
+        [
+          {
+            "node": "Write FAQ Pool",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write FAQ Pool": {
+      "main": [
+        [
+          {
+            "node": "Loop Categories",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Blog - Run": {
+      "main": [
+        [
+          {
+            "node": "Read Blog Queue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Blog Queue": {
+      "main": [
+        [
+          {
+            "node": "Loop Blog Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Blog Rows": {
+      "main": [
+        [
+          {
+            "node": "Rotate Gemini Key (Blog)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rotate Gemini Key (Blog)": {
+      "main": [
+        [
+          {
+            "node": "Build Blog Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Blog Prompt": {
+      "main": [
+        [
+          {
+            "node": "Gemini - Write Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini - Write Post": {
+      "main": [
+        [
+          {
+            "node": "Parse and Guard Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse and Guard Post": {
+      "main": [
+        [
+          {
+            "node": "Gemini - Cover Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini - Cover Image": {
+      "main": [
+        [
+          {
+            "node": "Cover to Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cover to Binary": {
+      "main": [
+        [
+          {
+            "node": "Upload Cover to WordPress",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Cover to WordPress": {
+      "main": [
+        [
+          {
+            "node": "Create WordPress Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create WordPress Post": {
+      "main": [
+        [
+          {
+            "node": "Mark Blog Row Done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Blog Row Done": {
+      "main": [
+        [
+          {
+            "node": "Loop Blog Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quality Guard": {
+      "main": [
+        [
+          {
+            "node": "Update Row in Sheet",
             "type": "main",
             "index": 0
           }

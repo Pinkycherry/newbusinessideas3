@@ -6,7 +6,7 @@ export const Route = createFileRoute("/privacy")({
   head: () =>
     metaFor(
       "Privacy Policy | BBI",
-      "What data BBI collects, why we collect it, who processes it and how you exercise your privacy rights.",
+      "What data BBI collects, why we collect it, who else touches it and how you exercise your privacy rights.",
     ),
   component: PrivacyPage,
 });
@@ -14,76 +14,73 @@ export const Route = createFileRoute("/privacy")({
 function PrivacyPage() {
   return (
     <ContentPage
+      tone="document"
       eyebrow="Privacy policy"
       title="Privacy"
       highlight="policy"
-      intro="This page is maintained by BBI and describes how we handle personal data. It reflects current practice and is updated when that practice changes."
+      intro="This page is written and kept up to date by BBI. It says what personal data we handle, why we handle it, and what you can do about it. When our practice changes, this page changes with it."
     >
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
       <Section heading="What we collect">
         <Bullets
           items={[
-            "Information you send us directly, such as your email address and message content when you contact us.",
-            "Technical request data such as IP address, browser type and pages requested, used to operate and secure the service.",
+            "What you send us yourself — your email address, and whatever you write when you contact us.",
+            "Ordinary request data such as IP address, browser type and the pages you asked for, used to run the site and keep it secure.",
           ]}
         />
         <p>
-          The Validate button does not send your data to an AI provider on our servers — it opens
-          Claude or Perplexity in a new tab, pre-filled, on your own account. That exchange happens
-          directly between you and the platform you chose, governed by that platform's own privacy
-          policy, not ours.
+          Research you run on an idea does not pass through our servers. That exchange happens
+          directly between you and the third party providing it, under their privacy policy, not
+          ours.
         </p>
       </Section>
-      <Section heading="What we do not collect">
+      <Section heading="What we do not do">
         <p>
-          We do not sell personal data, we do not run advertising trackers, and we do not build
-          advertising profiles of visitors.
+          We do not sell personal data. We do not run advertising trackers. We do not build
+          advertising profiles of the people who visit.
         </p>
       </Section>
-      <Section heading="Why we process it">
+      <Section heading="Why we handle it">
         <p>
-          To deliver the service you requested (contract), to keep the service secure and working
-          (legitimate interests), and to comply with legal and accounting obligations. Where we rely
-          on consent — for example optional email updates — you can withdraw it at any time.
+          To give you the service you asked for, to keep that service secure and working, and to
+          meet legal and accounting duties. Where we rely on your consent — optional email updates,
+          for example — you can take that consent back whenever you want.
         </p>
       </Section>
-      <Section heading="Processors we rely on">
+      <Section heading="Who else touches it">
         <Bullets
           items={[
-            "Hosting and application delivery infrastructure.",
-            "A managed database provider that stores the idea library.",
-            "A content management system that serves blog articles.",
+            "Hosting and delivery infrastructure that serves the site.",
+            "A managed database that stores the idea library.",
+            "A content system that serves the blog articles.",
           ]}
         />
         <p>
-          These providers process data on our instructions only. We can supply the current provider
-          list on request.
+          They act on our instructions and nothing else. Ask us and we will tell you who they
+          currently are.
         </p>
       </Section>
-      <Section heading="Retention">
+      <Section heading="How long we keep it">
         <p>
-          Contact correspondence is retained while the enquiry is open and for a reasonable period
-          afterwards. Technical logs are short-lived.
+          Messages you send stay with us while the enquiry is open and for a reasonable time after
+          it closes. Technical logs are short-lived.
         </p>
       </Section>
       <Section heading="Cookies">
         <p>
-          We use only the cookies and local storage required to operate the site and remember your
-          session. We do not use third-party advertising cookies.
+          Only what the site needs to work and to remember your session. No third-party advertising
+          cookies.
         </p>
       </Section>
       <Section heading="Your rights">
         <p>
-          You can request access, correction, deletion, restriction, portability, or object to
-          processing. See the{" "}
-          <Link to="/gdpr" className="text-accent underline underline-offset-4">
+          You can ask for a copy of your data, ask us to correct it, delete it, limit what we do
+          with it, hand it over in a portable form, or object to us processing it at all. The{" "}
+          <Link to="/gdpr" className="mo-link font-semibold text-accent">
             GDPR page
           </Link>{" "}
-          for how to exercise these rights, or email{" "}
-          <a
-            href="mailto:privacy@businessidea.io"
-            className="text-accent underline underline-offset-4"
-          >
+          explains how to do each one, or write straight to{" "}
+          <a href="mailto:privacy@businessidea.io" className="mo-link font-semibold text-accent">
             privacy@businessidea.io
           </a>
           .

@@ -11,9 +11,14 @@ export function IdeaCard({
   featured = false,
 }: {
   idea: IdeaCardData;
-  /** Section 12.7 — no repetitive same-size card walls. Pass true for roughly
-   * one card in seven (see callers) so a long grid reads as curated rather
-   * than a uniform tile wall; spans 2 grid columns and gets larger type. */
+  /** Section 12.7 — no repetitive same-size card walls. Pass true for exactly
+   * ONE card per grid: the highest trend-scored idea in the set, which the
+   * listing loaders already sort to the front. It spans 2 grid columns and
+   * gets larger type, a longer summary and more tags, so a long grid reads as
+   * ranked rather than as a uniform tile wall. This used to fire on every
+   * seventh index, which scattered wide tiles through the grid at random —
+   * that broke left-to-right comparison without telling the reader anything,
+   * so the emphasis is now earned by real data or not given at all. */
   featured?: boolean;
 }) {
   const auth = useAuth();
@@ -36,12 +41,12 @@ export function IdeaCard({
     <Link
       to="/idea/$slug"
       params={{ slug: idea.slug }}
-      className={`glass glass-hover group relative flex h-full min-w-0 flex-col overflow-hidden ${blob} p-5 sm:p-7 ${
+      className={`glass glass-hover mo-card bbi-card-motion group relative flex h-full min-w-0 flex-col overflow-hidden ${blob} p-4 sm:p-5 ${
         featured ? "sm:col-span-2" : ""
       }`}
     >
       <div
-        className={`flex h-full flex-col gap-3 ${locked ? "pointer-events-none select-none blur-sm" : ""}`}
+        className={`flex h-full flex-col gap-2.5 ${locked ? "pointer-events-none select-none blur-sm" : ""}`}
       >
         <div className="flex items-center justify-between gap-3 text-[11px] uppercase tracking-widest text-muted-foreground">
           <span className="truncate">{idea.subcategoryName}</span>

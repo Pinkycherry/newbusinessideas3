@@ -6,7 +6,7 @@ export const Route = createFileRoute("/contact")({
   head: () =>
     metaFor(
       "Contact BBI — Research, Support & Partnerships",
-      "Reach the BBI team about library access, the validation handoff, custom blueprint research, data corrections or partnerships.",
+      "Reach the BBI team about library access, custom blueprint research, data corrections or partnerships.",
     ),
   component: ContactPage,
 });
@@ -15,7 +15,7 @@ const channels = [
   {
     label: "General & support",
     value: "hello@businessidea.io",
-    note: "Access questions, the validation handoff, anything about the library.",
+    note: "Access questions, corrections, anything at all about the library.",
   },
   {
     label: "Custom research",
@@ -37,6 +37,7 @@ const channels = [
 function ContactPage() {
   return (
     <ContentPage
+      tone="brief"
       eyebrow="Contact"
       title="Talk to a"
       highlight="real person"
@@ -46,12 +47,12 @@ function ContactPage() {
       <div className="grid gap-4 sm:grid-cols-2">
         {channels.map((c) => (
           <div key={c.value} className="glass glass-hover rounded-2xl px-5 py-6">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
+            <p className="t-eyebrow">
               {c.label}
             </p>
             <a
               href={`mailto:${c.value}`}
-              className="mt-2 block text-base font-semibold underline underline-offset-4 transition-colors hover:text-primary"
+              className="mo-link mt-2 inline-block text-base font-semibold text-accent"
             >
               {c.value}
             </a>

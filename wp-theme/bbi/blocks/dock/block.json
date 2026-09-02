@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bbi/dock",
+  "title": "Scroll Dock",
+  "category": "design",
+  "icon": "arrow-up-alt",
+  "description": "The fixed bottom-right control: back to top, and a jump list of the sections on the page.",
+  "keywords": [ "scroll", "back to top", "dock", "anchors" ],
+  "supports": { "html": false, "inserter": true },
+  "attributes": {
+    "showTop": { "type": "boolean", "default": true },
+    "showSections": { "type": "boolean", "default": true },
+    "threshold": { "type": "number", "default": 400 }
+  },
+  "editorScript": "file:./index.js",
+  "style": "bbi"
+}

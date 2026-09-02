@@ -1,0 +1,726 @@
+/* ============================================================
+   THEME-ONLY LAYER — the rules that make the Customizer's variables do
+   something.
+
+   A variable nobody reads is a control that appears to work and changes
+   nothing. `--bbi-card-pad` and friends are introduced BY this theme, so the
+   compiled design system has no rule consuming them; these are those rules.
+
+   Everything here is deliberately UNLAYERED. Tailwind's utilities live in
+   `@layer utilities`, and an unlayered rule beats every layer regardless of
+   specificity. That is exactly what is wanted: when someone sets a card
+   padding in the Customizer it has to override the `p-4 sm:p-6` already on the
+   markup, or the control silently loses to the class next to it.
+
+   The flip side is that these selectors must stay narrow. They are all
+   `.bbi-`-prefixed and apply to nothing the theme did not opt in.
+   ============================================================ */
+
+/* Type scale. Multiplies the root size, so everything expressed in rem moves
+   together and anything in px deliberately does not. */
+html {
+  font-size: calc(100% * var(--bbi-font-scale, 1));
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: var(--bbi-heading-tracking, -0.02em);
+}
+
+/* Containers. */
+.bbi-container {
+  width: 100%;
+  max-width: var(--bbi-content-w, 72rem);
+  margin-inline: auto;
+}
+
+.bbi-prose-w,
+.wp-prose {
+  max-width: var(--bbi-prose-w, 48rem);
+}
+
+/* Card density. Two custom properties rather than one, because a padding that
+   reads well at 1440px is a third of the screen width on a 390px phone. */
+.bbi-card-pad {
+  padding: var(--bbi-card-pad-sm, 1rem);
+}
+
+@media (min-width: 640px) {
+  .bbi-card-pad {
+    padding: var(--bbi-card-pad, 1.5rem);
+  }
+}
+
+/* Zero means "size to content", which is the default and the better one. A
+   non-zero value forces an even grid and buys that evenness with white space
+   inside the shorter cards. */
+.bbi-card-pad {
+  min-height: var(--bbi-card-min-h, 0);
+}
+
+.bbi-grid {
+  display: grid;
+  gap: var(--bbi-card-gap, 1rem);
+}
+
+/* Section rhythm. Applied between siblings rather than as a bottom margin on
+   each, so the last section does not push the footer down. */
+.bbi-section + .bbi-section {
+  margin-top: var(--bbi-section-gap, 5rem);
+}
+
+/* Widget areas. Widgets are third-party markup and arrive with their own
+   assumptions, so they get a container with the theme's surface and spacing
+   rather than being styled item by item. */
+.bbi-widget-area .widget + .widget {
+  margin-top: 1.5rem;
+}
+
+.bbi-widget-area .widget-title,
+.bbi-widget-area h2 {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.bbi-widget-area ul {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+}
+
+.bbi-widget-area li + li {
+  margin-top: 0.5rem;
+}
+
+.bbi-widget-area a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.bbi-widget-area a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   BLOCK STYLES.
+
+   `register_block_style( 'core/group', 'bbi-glass' )` puts the class
+   `is-style-bbi-glass` on the block — WordPress owns that naming and there is
+   no way to make it emit `.glass` instead. So these map the generated names
+   onto the design system's real classes.
+
+   They are written as `@extend`-by-hand rather than by duplicating the glass
+   recipe, because there is exactly one definition of what a glass panel looks
+   like and a second copy here would drift from it within a week.
+   ============================================================ */
+
+.is-style-bbi-glass {
+  background: var(--card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-2xl, 1.75rem);
+  backdrop-filter: blur(var(--bbi-glass-blur, 14px)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--bbi-glass-blur, 14px)) saturate(160%);
+}
+
+.is-style-bbi-glass-hover {
+  transition: border-color var(--mo-dur-2, 240ms) var(--mo-ease, ease);
+}
+
+.is-style-bbi-glass-hover:hover {
+  border-color: var(--primary);
+}
+
+/* The is-style-* names are REWRITTEN to the real design-system classes in
+   inc/blocks.php, so there are no duplicate declarations here to drift.
+
+   There were. `.is-style-t-lead` set `color: var(--muted-foreground)` where the
+   real `.t-lead` is 86% of `--foreground`, and `.is-style-t-eyebrow` was purple
+   where the real one is gold (#8A5D00). Every paragraph and every eyebrow on
+   the homepage rendered the wrong colour. Two copies of a token is two things
+   to keep in step, and they were not kept in step. */
+
+.is-style-bbi-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.is-style-bbi-grid {
+  gap: var(--bbi-card-gap, 1rem);
+}
+
+.is-style-bbi-hairline {
+  border: 0;
+  border-top: 1px solid var(--border);
+  opacity: 1;
+}
+
+/* A checklist without list-style images: the marker is drawn from a token so
+   it follows the palette, and `::marker` is avoided because it cannot be
+   coloured independently of the text in every browser this ships to. */
+.is-style-bbi-checks {
+  list-style: none;
+  padding-left: 0;
+}
+
+.is-style-bbi-checks > li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.is-style-bbi-checks > li::before {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  top: 0.62em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--hl-green);
+}
+
+/* ============================================================
+   SIDEBAR LAYOUT.
+
+   One grid, two orderings. The content column is always FIRST in the markup,
+   including when the sidebar is drawn on the left, and the visual order is set
+   with `order` on the aside instead.
+
+   That is the opposite of the usual advice, and it is the right way round
+   here: a left sidebar placed first in the DOM makes a keyboard user tab
+   through every widget before reaching the page they came for. Reversing the
+   two on one axis only — visual — keeps reading order and focus order the
+   same for the person who needs them to match.
+   ============================================================ */
+
+.bbi-with-sidebar {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .bbi-with-sidebar-right {
+    grid-template-columns: minmax(0, 1fr) 18rem;
+  }
+
+  .bbi-with-sidebar-left {
+    grid-template-columns: 18rem minmax(0, 1fr);
+  }
+
+  .bbi-with-sidebar-left > .bbi-widget-area {
+    order: -1;
+  }
+}
+
+/* ============================================================
+   THE ANIMATE BLOCK.
+
+   Every setting arrives as a custom property on the element itself, so one
+   stylesheet drives any number of animated sections. The alternative — a
+   <style> tag per block — means a page with forty animated sections carries
+   forty stylesheets the browser must parse before it can paint.
+
+   The hidden state is gated behind `html.bbi-motion`, a class only motion.js
+   sets. If the script fails to load, every animated section is simply visible,
+   which is the correct failure. Ungated, a failed script leaves the whole page
+   at opacity 0 permanently — a bug this project has already shipped once.
+   ============================================================ */
+
+.bbi-anim {
+  transition:
+    opacity var(--bbi-anim-t, 600ms) var(--mo-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) var(--bbi-anim-delay, 0ms),
+    transform var(--bbi-anim-t, 600ms) var(--mo-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) var(--bbi-anim-delay, 0ms);
+}
+
+html.bbi-motion .bbi-anim:not(.bbi-in) {
+  opacity: 0;
+}
+
+html.bbi-motion .bbi-anim-up:not(.bbi-in)    { transform: translateY(var(--bbi-anim-d, 24px)); }
+html.bbi-motion .bbi-anim-down:not(.bbi-in)  { transform: translateY(calc(var(--bbi-anim-d, 24px) * -1)); }
+html.bbi-motion .bbi-anim-left:not(.bbi-in)  { transform: translateX(calc(var(--bbi-anim-d, 24px) * -1)); }
+html.bbi-motion .bbi-anim-right:not(.bbi-in) { transform: translateX(var(--bbi-anim-d, 24px)); }
+html.bbi-motion .bbi-anim-scale:not(.bbi-in) { transform: scale(var(--bbi-anim-scale, 1)); }
+/* `fade` deliberately sets no transform — it is the one direction that must
+   not create a compositor layer it never uses. */
+
+.bbi-anim.bbi-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger. The delay is applied to the DIRECT CHILDREN, incrementally, via a
+   custom property motion.js writes per child. Doing it with :nth-child() in
+   CSS would cap at however many rules were written; this has no ceiling. */
+html.bbi-motion .bbi-anim-stagger > * {
+  transition:
+    opacity var(--bbi-anim-t, 600ms) var(--mo-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) var(--bbi-child-delay, 0ms),
+    transform var(--bbi-anim-t, 600ms) var(--mo-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) var(--bbi-child-delay, 0ms);
+}
+
+html.bbi-motion .bbi-anim-stagger:not(.bbi-in) > * {
+  opacity: 0;
+  transform: translateY(var(--bbi-anim-d, 24px));
+}
+
+.bbi-anim-stagger.bbi-in > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* In the editor the block shows its RESTING state. A canvas that keeps
+   replaying a reveal makes the text underneath impossible to edit. */
+.bbi-anim-preview {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bbi-anim,
+  .bbi-anim-stagger > * {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================================
+   BLOCK-THEME HEADER AND FOOTER.
+
+   The classic header.php carried `sticky top-0 z-40` as Tailwind utilities.
+   A block template part cannot hold arbitrary utility classes the same way —
+   the Site Editor owns its markup and would strip or fight them — so the
+   behaviour moves here, onto a stable class the part can keep.
+   ============================================================ */
+
+.bbi-site-header {
+  position: sticky;
+  top: 0;
+  /* Above the page content, below WordPress's own admin bar (z-index 99999)
+     and below any modal. 40 matches what the classic header used. */
+  z-index: 40;
+}
+
+/* Opt out per site without editing the theme: add the class in the Site
+   Editor's Advanced panel, or unset the position in Additional CSS. */
+.bbi-header-static .bbi-site-header {
+  position: relative;
+}
+
+.bbi-header-bar {
+  /* The nav is one row. Anything tall dropped into it should scroll rather
+     than push the row out of shape. */
+  min-height: 3rem;
+}
+
+.bbi-site-footer {
+  margin-top: var(--bbi-section-gap, 5rem);
+}
+
+/* The search field inside the nav bar. Core's block ships its own borders and
+   background; these strip them back so it reads as part of the glass bar
+   rather than a control sitting on top of it. */
+.bbi-header-search .wp-block-search__input {
+  background: transparent;
+  border: 0;
+  font-size: 0.875rem;
+}
+
+.bbi-header-search .wp-block-search__button {
+  background: transparent;
+  border: 0;
+  color: var(--muted-foreground);
+}
+
+/* ============================================================
+   MARQUEE.
+
+   The track holds TWO copies of the list and travels exactly -50%, so the
+   second copy lands where the first began and the seam never shows. Animating
+   a single copy to -100% leaves visible empty space on every pass.
+
+   `width: max-content` is what lets the track be wider than its container;
+   without it the flex row wraps and the animation slides a stack rather than
+   a line.
+   ============================================================ */
+
+.bbi-marquee {
+  overflow: hidden;
+  /* Fades both edges rather than cutting the pills off square. */
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.bbi-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 0.5rem;
+  animation: bbi-marquee-l var(--bbi-marquee-time, 70s) linear infinite;
+}
+
+.bbi-marquee-right .bbi-marquee-track {
+  animation-name: bbi-marquee-r;
+}
+
+.bbi-marquee-pause:hover .bbi-marquee-track,
+.bbi-marquee-pause:focus-within .bbi-marquee-track {
+  animation-play-state: paused;
+}
+
+.bbi-marquee-item {
+  white-space: nowrap;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+
+@keyframes bbi-marquee-l {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes bbi-marquee-r {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* A marquee is pure decoration and it never stops, which is exactly the kind
+   of movement that triggers vestibular symptoms. Under reduced motion it
+   holds still and simply wraps instead. */
+@media (prefers-reduced-motion: reduce) {
+  .bbi-marquee { mask-image: none; -webkit-mask-image: none; }
+  .bbi-marquee-track { animation: none; width: 100%; flex-wrap: wrap; }
+  /* The second copy would be a duplicate list once it stops scrolling. */
+  .bbi-marquee-track > *:nth-child(n + 100) { display: none; }
+}
+
+.bbi-icons-still .bbi-icon { animation: none; }
+
+/* ============================================================
+   SCROLL DOCK.
+   ============================================================ */
+
+.bbi-dock {
+  position: fixed;
+  right: 1rem;
+  bottom: 1.25rem;
+  z-index: 45;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .bbi-dock { right: 1.5rem; bottom: 1.75rem; }
+}
+
+.bbi-dock-btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--foreground);
+}
+
+.bbi-dock-panel {
+  position: absolute;
+  right: 0;
+  bottom: 3.5rem;
+  width: 14rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+
+.bbi-dock-link {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--muted-foreground);
+  text-decoration: none;
+}
+
+.bbi-dock-link:hover,
+.bbi-dock-link:focus-visible {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+/* In the editor the dock is a placeholder card, never fixed — a fixed element
+   would float over the editing surface and cover the content it accompanies. */
+.bbi-dock-placeholder { position: static; }
+
+/* ============================================================
+   HEADER SIZING — the fix for a search field that ate the bar.
+
+   The search block was set to width:100%, so in a nowrap flex row it claimed
+   98% of the bar (measured), squeezed the navigation into a wrapping stack,
+   and pushed the header to 223px tall. Core's block has no sensible intrinsic
+   width, so the cap has to be stated here.
+
+   The three children are given explicit flex behaviour instead of being left
+   to fight: the title never shrinks, the nav takes the slack and scrolls if it
+   still cannot fit, and the search has a fixed comfortable width that shrinks
+   before anything else does.
+   ============================================================ */
+
+.bbi-header-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: nowrap;
+}
+
+.bbi-header-bar > .wp-block-site-title {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.bbi-header-bar > .bbi-header-nav {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* A nav that cannot fit scrolls sideways rather than wrapping onto a second
+   row and doubling the header's height. */
+.bbi-header-bar .wp-block-navigation__container {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.bbi-header-bar .wp-block-navigation__container::-webkit-scrollbar { display: none; }
+
+.bbi-header-bar .wp-block-navigation-item__content { white-space: nowrap; }
+
+.bbi-header-search {
+  flex: 0 1 15rem;
+  min-width: 0;
+  margin: 0;
+}
+
+.bbi-header-search .wp-block-search__inside-wrapper {
+  border: 0;
+  padding: 0;
+}
+
+.bbi-header-search .wp-block-search__input {
+  background: transparent;
+  border: 0;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8125rem;
+  min-width: 0;
+}
+
+.bbi-header-search .wp-block-search__button {
+  background: transparent;
+  border: 0;
+  padding: 0.35rem 0.6rem;
+  color: var(--muted-foreground);
+}
+
+/* Below the nav's overlay breakpoint the search is hidden entirely, matching
+   the original site. Measured: at 390px it collapsed to 1% of the bar — a
+   field too narrow to type into is worse than no field, and the 404 page and
+   the archives all carry a full-size search anyway. */
+@media (max-width: 640px) {
+  .bbi-header-search { display: none; }
+}
+
+/* ============================================================
+   ICON BAND — height.
+
+   `src/styles.css` sizes the band at `max(10em, 19vh)`, which is right where
+   it sits on the original site. Dropped full-bleed near the top of the block
+   homepage it measured 171px and dominated everything above the fold. The
+   theme scopes a shorter band rather than editing the shared stylesheet.
+   ============================================================ */
+
+.bbi-icons {
+  height: max(5.5rem, 11vh);
+}
+
+@media (min-width: 1024px) {
+  .bbi-icons { height: max(6.5rem, 12vh); }
+}
+
+.bbi-icons .bbi-icon {
+  flex: 0 0 clamp(2.6rem, 5.5vw, 3.6rem);
+}
+
+/* ============================================================
+   CARDS IN A ROW.
+
+   `wp:columns` stretches its columns, but a card inside one only fills that
+   column if it is told to. Without this a row of four pillars renders four
+   cards of four different heights, each hugging its own text — which is what
+   made the research-standard row look ragged.
+   ============================================================ */
+
+.wp-block-column > .bbi-card-fill,
+.bbi-card-fill {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* A column is a flex COLUMN, never a flex row.
+
+   This existed as `display: flex` alone, to let a single card stretch to the
+   row height. With one child it worked. With a column holding an eyebrow, a
+   heading and three paragraphs it laid all five out SIDE BY SIDE — every
+   paragraph became a narrow strip and the heading broke to one word per line.
+   The missing `flex-direction` is the whole bug. */
+.wp-block-columns .wp-block-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* No blanket `width: 100%` on the children.
+
+   A flex column already stretches children to full width by default, AND that
+   default politely stands aside for anything that sets its own width. The
+   blanket rule did not: it forced the orbit diagram — capped at 21rem by the
+   design system — to fill a 600px column instead. */
+
+/* The "what every entry has to contain" list: term and definition were running
+   together with no separation, so four pairs read as one paragraph. */
+.bbi-rule-row + .bbi-rule-row {
+  margin-top: 1.15rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ============================================================
+   SECTION LAYOUTS.
+
+   The real site uses eleven distinct grids, several asymmetric. An earlier
+   build emitted one full-width panel shape twenty times, which is exactly why
+   it read as a stack of identical cards rather than as a designed page. These
+   are the supporting rules for the splits.
+   ============================================================ */
+
+/* A centred intro block — heading and lead constrained, not full bleed. */
+.bbi-center-measure {
+  max-width: 40rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* The aside in "why this exists" holds position while the prose scrolls past
+   it. Sticky only from lg up: on a phone the two are stacked, and a sticky
+   element in a single column just covers the content below it. */
+@media (min-width: 1024px) {
+  .bbi-sticky-aside {
+    position: sticky;
+    top: 6rem;
+  }
+}
+
+/* Four pillars across at lg, two at sm. `wp:columns` alone goes to four at
+   782px, which is far too tight for four cards of prose. */
+@media (max-width: 1023px) {
+  .bbi-cols-4 { flex-wrap: wrap; }
+  .bbi-cols-4 > .wp-block-column { flex-basis: calc(50% - 0.75rem) !important; }
+}
+
+@media (max-width: 599px) {
+  .bbi-cols-4 > .wp-block-column { flex-basis: 100% !important; }
+}
+
+/* The trust tiles read as figures, so the number carries the weight. */
+.bbi-stat-value {
+  font-size: clamp(1.9rem, 4vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--accent);
+}
+
+/* The six search phrases stack inside the right-hand card rather than sitting
+   in a columns grid — they are a list, and a two-column grid inside a 45%
+   column gives each one about eleven characters per line. */
+.bbi-built-stack { display: grid; gap: 0.5rem; }
+.bbi-built-row { padding: 0.75rem 0.9rem !important; }
+.bbi-built-row .t-card { font-size: 0.9rem; }
+
+/* Keyword pills wrap inside their card. */
+.bbi-kw-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.bbi-kw {
+  margin: 0;
+  border-radius: 999px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.6875rem;
+  line-height: 1.2;
+}
+
+.bbi-kw a { color: inherit; text-decoration: none; }
+
+/* The comparison lists: coral for the cost side, green for ours. The dot is a
+   pseudo-element so the marker colour is independent of the text colour. */
+.bbi-list-coral, .bbi-list-green { list-style: none; padding-left: 0; margin: 1rem 0 0; }
+.bbi-list-coral > li, .bbi-list-green > li {
+  position: relative;
+  padding: 0.7rem 0 0.7rem 1.4rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+.bbi-list-coral > li + li { border-top: 1px solid color-mix(in oklab, var(--hl-coral) 20%, transparent); }
+.bbi-list-green > li + li { border-top: 1px solid color-mix(in oklab, var(--hl-green) 25%, transparent); }
+.bbi-list-coral > li::before, .bbi-list-green > li::before {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  top: 1.15em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+}
+.bbi-list-coral > li::before { background: var(--hl-coral); }
+.bbi-list-green > li::before { background: var(--hl-green); }
+
+/* The winning side is separated by border and surface, never by dimming the
+   other one — at 80% opacity the losing card reads as half-loaded once the
+   columns stack on a phone. */
+.bbi-compare-win { border: 1px solid color-mix(in oklab, var(--primary) 40%, transparent) !important; }
+
+/* ============================================================
+   FOOTER.
+
+   The site title was breaking mid-word — "ideas.infopink / y.com" — because a
+   long single token sat in a narrow auto-sized column. The columns are given
+   explicit widths and the title is allowed to shrink its own type rather than
+   hyphenate a domain name.
+   ============================================================ */
+
+.bbi-site-footer .wp-block-columns { gap: 2.5rem; }
+
+.bbi-site-footer .wp-block-site-title {
+  font-size: clamp(0.8rem, 1.4vw, 0.95rem);
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+@media (max-width: 781px) {
+  .bbi-site-footer .wp-block-columns { gap: 1.5rem; }
+}

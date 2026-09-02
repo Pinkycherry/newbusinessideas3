@@ -1,12 +1,14 @@
+import { useCallback } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout";
+import { useElementPointerGroup, useStaggerReveal } from "@/motion";
 
 export const Route = createFileRoute("/services")({
   head: () =>
     metaFor(
       "Services — Idea Research, Free Validation & Custom Blueprints | BBI",
-      "Idea library access, a free AI validation handoff, custom blueprint research and market validation sprints for founders and operators.",
+      "Idea library access, free idea validation, custom blueprint research and market validation sprints for founders and operators.",
     ),
   component: ServicesPage,
 });
@@ -22,13 +24,13 @@ const services = [
     ],
   },
   {
-    name: "Free validation handoff",
-    body: "On every idea page, a one-click handoff gets you a fully researched validation report — free, using AI tools you already pay for.",
+    name: "Free idea validation",
+    body: "On every idea page, one tap turns a blueprint into a full validation report — what the market looks like, who buys, and what could kill it. Free, no add-on.",
     points: [
       "Market analysis and target buyer",
       "Revenue model and key risks",
       "A concrete launch roadmap",
-      "Runs on your own AI account, not ours",
+      "Free every time, on any idea",
     ],
   },
   {
@@ -52,6 +54,19 @@ const services = [
 ];
 
 function ServicesPage() {
+  // One grid element, two behaviours: the cards reveal in sequence on entry,
+  // and a single delegated pointer listener feeds the cursor sheen on
+  // whichever card is under the cursor — four cards, one listener.
+  const revealRef = useStaggerReveal<HTMLDivElement>({ direction: "up" });
+  const pointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
+  const gridRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      revealRef.current = node;
+      pointerRef.current = node;
+    },
+    [revealRef, pointerRef],
+  );
+
   return (
     <ContentPage
       eyebrow="Services"
@@ -61,11 +76,11 @@ function ServicesPage() {
       wide
     >
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
-      <div className="grid gap-5 md:grid-cols-2">
+      <div ref={gridRef} className="grid gap-5 md:grid-cols-2">
         {services.map((service) => (
           <div
             key={service.name}
-            className="glass glass-hover flex h-full flex-col rounded-2xl px-6 py-7"
+            className="glass mo-card flex h-full flex-col rounded-2xl px-6 py-7"
           >
             <h2 className="font-display text-xl font-bold tracking-tight">{service.name}</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{service.body}</p>
@@ -78,15 +93,15 @@ function ServicesPage() {
       <Section heading="Where to start">
         <p>
           If you are exploring, start with{" "}
-          <Link to="/browse" className="text-accent underline underline-offset-4">
+          <Link to="/browse" className="mo-link text-accent underline underline-offset-4">
             the library
           </Link>
           . If you already know your market, run a{" "}
-          <Link to="/search" className="text-accent underline underline-offset-4">
+          <Link to="/search" className="mo-link text-accent underline underline-offset-4">
             keyword search
           </Link>{" "}
           first. For custom research or a validation sprint,{" "}
-          <Link to="/contact" className="text-accent underline underline-offset-4">
+          <Link to="/contact" className="mo-link text-accent underline underline-offset-4">
             get in touch
           </Link>
           .

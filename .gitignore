@@ -39,3 +39,8 @@ LOGIN_CREDENTIALS_AND_API_KEYS.md
 
 # scrollcraft local workspace (tool-generated, not app source)
 /scrollcraft/
+
+# Temporary screenshot fixtures (never committed)
+src/lib/ideas.json
+src/lib/catalog.json
+shot.mjs
