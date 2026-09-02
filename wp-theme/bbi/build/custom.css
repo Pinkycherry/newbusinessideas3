@@ -579,8 +579,24 @@ html.bbi-motion .bbi-anim-stagger:not(.bbi-in) > * {
   flex-direction: column;
 }
 
-.wp-block-columns .wp-block-column { display: flex; }
-.wp-block-columns .wp-block-column > * { width: 100%; }
+/* A column is a flex COLUMN, never a flex row.
+
+   This existed as `display: flex` alone, to let a single card stretch to the
+   row height. With one child it worked. With a column holding an eyebrow, a
+   heading and three paragraphs it laid all five out SIDE BY SIDE — every
+   paragraph became a narrow strip and the heading broke to one word per line.
+   The missing `flex-direction` is the whole bug. */
+.wp-block-columns .wp-block-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* No blanket `width: 100%` on the children.
+
+   A flex column already stretches children to full width by default, AND that
+   default politely stands aside for anything that sets its own width. The
+   blanket rule did not: it forced the orbit diagram — capped at 21rem by the
+   design system — to fill a 600px column instead. */
 
 /* The "what every entry has to contain" list: term and definition were running
    together with no separation, so four pairs read as one paragraph. */

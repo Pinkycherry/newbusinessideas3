@@ -1,8 +1,8 @@
 {
-  "version": "0.8.0",
+  "version": "0.8.1",
   "download": "https://raw.githubusercontent.com/Pinkycherry/newbusinessideas3/claude/bbi-continuation-sj6nbr/bbi-theme.zip",
   "tested": "6.9",
   "requires": "6.4",
   "requires_php": "8.0",
-  "changelog": "Blocks are editable again (every animate block was invalid), real per-section layouts instead of one repeated shape, and the missing sections restored."
+  "changelog": "Fixes the shattered layout \u2014 a column was laying its children out side by side instead of stacked, putting every paragraph in its own narrow strip."
 }

@@ -48,6 +48,23 @@ for (const [w,h,tag] of [[1440,900,'desktop'],[390,844,'mobile']]) {
         sections: document.querySelectorAll('h1,h2').length,
         cards: document.querySelectorAll('h3').length,
       },
+      // Text squeezed into a narrow flex item. A column laid out as a flex
+      // ROW instead of a flex COLUMN put every paragraph in its own strip and
+      // broke headings to one word per line — the whole page, and the numbers
+      // above all still read as healthy. Width is the only thing that shows it.
+      squeezedText: (() => {
+        const longP = [...document.querySelectorAll('.wp-block-columns p')]
+          .filter(e => e.textContent.trim().length > 60);
+        const heads = [...document.querySelectorAll('.wp-block-columns h1, .wp-block-columns h2')];
+        return {
+          paragraphsUnder220px: longP.filter(e => e.getBoundingClientRect().width < 220).length,
+          headingsUnder260px: heads.filter(e => e.getBoundingClientRect().width < 260).length,
+        };
+      })(),
+      // The design system caps the orbit at 21rem. A blanket width:100% on
+      // column children overrode it and let one fill a 600px column.
+      orbitWidths: [...document.querySelectorAll('.bbi-orbit-wrap')]
+        .map(e => Math.round(e.getBoundingClientRect().width)),
       // The ambient layers the original site carries. Zero means they were
       // dropped from the template, which is exactly what happened in 0.4.0.
       ambient: {
