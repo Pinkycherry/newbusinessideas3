@@ -57,17 +57,35 @@ function bbi_customize_register( $wp_customize ) {
 		array(
 			'title'       => __( 'BBI — Layout', 'bbi' ),
 			'priority'    => 11,
-			'description' => __( 'Header, footer, sidebars and card grids.', 'bbi' ),
+			'description' => __( 'Card grids, and — on a classic theme — the header, footer and sidebars. In a block theme the header and footer are edited in Appearance → Editor instead.', 'bbi' ),
 		)
 	);
 
+	// The design system always applies — every one of these writes a CSS
+	// variable the whole site reads, block theme or not.
 	bbi_customize_colors( $wp_customize );
 	bbi_customize_typography( $wp_customize );
 	bbi_customize_sizes( $wp_customize );
+	bbi_customize_cards( $wp_customize );
+
+	/*
+	 * The LAYOUT panel is classic-theme only.
+	 *
+	 * In a block theme the header and footer come from `parts/header.html` and
+	 * `parts/footer.html`, edited in the Site Editor — `header.php` and
+	 * `footer.php` are never loaded, so a "sticky header" toggle here would
+	 * change nothing at all. Registering a control that silently does nothing
+	 * is worse than not registering it: someone flips it, sees no change, and
+	 * reasonably concludes the theme is broken.
+	 */
+	if ( function_exists( 'wp_is_block_theme' ) && wp_is_block_theme() ) {
+		$wp_customize->remove_panel( 'bbi_layout' );
+		return;
+	}
+
 	bbi_customize_header( $wp_customize );
 	bbi_customize_footer( $wp_customize );
 	bbi_customize_sidebar( $wp_customize );
-	bbi_customize_cards( $wp_customize );
 }
 add_action( 'customize_register', 'bbi_customize_register' );
 
@@ -415,8 +433,11 @@ function bbi_customize_cards( $wp_customize ) {
 		'bbi_cards',
 		array(
 			'title'    => __( 'Idea cards', 'bbi' ),
-			'panel'    => 'bbi_layout',
-			'priority' => 40,
+			// Design panel, not layout: these are card defaults and they apply
+			// in both theme modes. The layout panel is removed on a block
+			// theme, and this section must not go with it.
+			'panel'    => 'bbi_design',
+			'priority' => 50,
 		)
 	);
 

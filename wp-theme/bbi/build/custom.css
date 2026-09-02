@@ -295,3 +295,51 @@ html.bbi-motion .bbi-anim-stagger:not(.bbi-in) > * {
     transform: none;
   }
 }
+
+/* ============================================================
+   BLOCK-THEME HEADER AND FOOTER.
+
+   The classic header.php carried `sticky top-0 z-40` as Tailwind utilities.
+   A block template part cannot hold arbitrary utility classes the same way —
+   the Site Editor owns its markup and would strip or fight them — so the
+   behaviour moves here, onto a stable class the part can keep.
+   ============================================================ */
+
+.bbi-site-header {
+  position: sticky;
+  top: 0;
+  /* Above the page content, below WordPress's own admin bar (z-index 99999)
+     and below any modal. 40 matches what the classic header used. */
+  z-index: 40;
+}
+
+/* Opt out per site without editing the theme: add the class in the Site
+   Editor's Advanced panel, or unset the position in Additional CSS. */
+.bbi-header-static .bbi-site-header {
+  position: relative;
+}
+
+.bbi-header-bar {
+  /* The nav is one row. Anything tall dropped into it should scroll rather
+     than push the row out of shape. */
+  min-height: 3rem;
+}
+
+.bbi-site-footer {
+  margin-top: var(--bbi-section-gap, 5rem);
+}
+
+/* The search field inside the nav bar. Core's block ships its own borders and
+   background; these strip them back so it reads as part of the glass bar
+   rather than a control sitting on top of it. */
+.bbi-header-search .wp-block-search__input {
+  background: transparent;
+  border: 0;
+  font-size: 0.875rem;
+}
+
+.bbi-header-search .wp-block-search__button {
+  background: transparent;
+  border: 0;
+  color: var(--muted-foreground);
+}

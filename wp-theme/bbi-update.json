@@ -1,8 +1,8 @@
 {
-  "version": "0.3.0",
+  "version": "0.4.0",
   "download": "https://raw.githubusercontent.com/Pinkycherry/newbusinessideas3/claude/bbi-continuation-sj6nbr/bbi-theme.zip",
   "tested": "6.9",
   "requires": "6.4",
   "requires_php": "8.0",
-  "changelog": "Animate block (direction, distance, speed, stagger, replay) and Idea Grid block, both editable from the Gutenberg sidebar."
+  "changelog": "Block theme. Templates and header/footer are now editable in Appearance -> Editor. Adds the Idea Part block."
 }

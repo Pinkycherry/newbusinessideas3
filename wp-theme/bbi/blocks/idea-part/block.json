@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bbi/idea-part",
+  "title": "Idea Part",
+  "category": "theme",
+  "icon": "media-text",
+  "description": "One piece of an idea blueprint — breadcrumb, category, summary, trend bar, the narrative sections, pros and cons, or the FAQ. Use inside the Idea template.",
+  "keywords": [ "idea", "blueprint", "trend", "verdict" ],
+  "supports": {
+    "html": false,
+    "align": [ "wide" ],
+    "spacing": { "margin": true, "padding": true }
+  },
+  "attributes": {
+    "part": { "type": "string", "default": "summary" },
+    "heading": { "type": "string", "default": "" }
+  },
+  "editorScript": "file:./index.js",
+  "style": "bbi"
+}

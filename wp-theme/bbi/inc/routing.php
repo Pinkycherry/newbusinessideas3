@@ -123,7 +123,7 @@ function bbi_live_template( $template ) {
 	global $wp_query;
 	$wp_query->is_404 = false;
 
-	$found = locate_template( 'templates/live-' . $route['kind'] . '.php' );
+	$found = locate_template( 'views/live-' . $route['kind'] . '.php' );
 	return $found ? $found : $template;
 }
 add_filter( 'template_include', 'bbi_live_template', 99 );

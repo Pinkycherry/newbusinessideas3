@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'BBI_VERSION', '0.3.0' );
+define( 'BBI_VERSION', '0.4.0' );
 define( 'BBI_DIR', get_template_directory() );
 define( 'BBI_URI', get_template_directory_uri() );
 
@@ -19,6 +19,7 @@ require_once BBI_DIR . '/inc/dynamic-css.php';
 require_once BBI_DIR . '/inc/customizer.php';
 require_once BBI_DIR . '/inc/gutenberg.php';
 require_once BBI_DIR . '/inc/blocks.php';
+require_once BBI_DIR . '/inc/blocks-idea.php';
 require_once BBI_DIR . '/inc/sidebars.php';
 require_once BBI_DIR . '/inc/post-types.php';
 require_once BBI_DIR . '/inc/meta.php';

@@ -20,6 +20,19 @@ defined( 'ABSPATH' ) || exit;
  */
 function bbi_register_sidebars() {
 
+	/*
+	 * Widget areas are a CLASSIC-theme concept and this theme now ships block
+	 * templates, so WordPress hides the Widgets screen entirely. Registering
+	 * them anyway leaves seven areas that can never be filled and never
+	 * render — the block-theme equivalent is placing blocks directly into
+	 * `parts/header.html` and `parts/footer.html` in Appearance → Editor.
+	 *
+	 * They stay registered on a classic theme so nothing is lost by reverting.
+	 */
+	if ( function_exists( 'wp_is_block_theme' ) && wp_is_block_theme() ) {
+		return;
+	}
+
 	$common = array(
 		'before_widget' => '<section id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</section>',
@@ -100,7 +113,7 @@ function bbi_current_sidebar() {
 
 	// A page can opt out individually, which is what the "Full width" custom
 	// template is for.
-	if ( is_page_template( 'templates/full-width.php' ) ) {
+	if ( is_page_template( 'views/full-width.php' ) ) {
 		return null;
 	}
 
