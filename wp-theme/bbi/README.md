@@ -5,11 +5,11 @@ categories and the FAQ pool become Custom Post Types and taxonomies, so the
 library is editable in wp-admin instead of only through the Sheet-and-pipeline
 route.
 
-**Status: Phase 2.** The theme installs, reads Supabase live, imports the
-library, and renders idea pages, category archives, search, static pages and a
-404. Colours, fonts, sizes, header, footer, sidebars and card grids are all
-editable in the Customizer, and the block editor gets a matching palette. The
-homepage template is the remaining piece — see *What is not built yet*.
+**Status: complete for the core site.** The theme installs, reads Supabase
+live, imports the library, and renders the homepage, idea pages, category
+archives, search, static pages and a 404. Colours, fonts, sizes, header,
+footer, sidebars and card grids are all editable in the Customizer, and the
+block editor gets a matching palette.
 
 ---
 
@@ -115,6 +115,8 @@ bbi/
   inc/settings.php      Settings → BBI Data
   inc/data.php          the ONE accessor templates use, either source
   inc/routing.php       serves live rows at the real URLs before any import
+  inc/home-content.php  every word of the homepage, filterable
+  front-page.php        the homepage, unless a static front page is set
   assets/css/bbi.css    compiled — do not edit
   assets/js/*.js        motion, hero field, Customizer live preview
   build/theme.css       the Tailwind entry that produces assets/css/bbi.css
@@ -208,12 +210,41 @@ Stated plainly, because "a full port" is easy to claim and these are real gaps:
   into the content and `business_description` into the excerpt, which recovers
   most of it — but `focus_keyword` and the taxonomy names are not searched.
 
+## The homepage
+
+`front-page.php` renders the coded homepage — hero, category ticker, brand
+statement, keyword mosaic, trust bar, market gap, the four-pillar research
+standard, featured blueprints, "why this exists", how it works, who it is for,
+the scroll stack, pricing philosophy, "why we built this", team, inspired by,
+the comparison, ways into the library, the promise, and four FAQ blocks.
+
+Every word lives in `inc/home-content.php`, and every block of copy runs
+through `apply_filters()`, so a child theme or a one-file plugin can replace
+any section without forking the template.
+
+**Editing it in Gutenberg instead:** set Settings → Reading → *A static page*
+and pick a page. WordPress normally picks `front-page.php` ahead of `page.php`
+even then, which would leave you editing a page that never appears — so this
+template detects that case and steps aside. The BBI block patterns are in the
+inserter under **BBI sections**.
+
+Four things from the original are deliberately absent rather than
+approximated: the GSAP converge on the comparison cards, the orbit diagrams and
+the category marquee (React components driving bespoke timelines — the shared
+reveal in `motion.js` covers the rest of the page, and a half-imitation of a
+bespoke animation reads worse than none); the "Surprise me" picker, which needs
+a random-idea endpoint; the three editorial photographs, which are hotlinked
+from another domain and belong in the media library; and the ad slots.
+
+The FAQ blocks use `<details>` rather than a scripted accordion — it works with
+no JavaScript, is keyboard-operable and correctly announced for free, and keeps
+the answer text in the DOM whether open or closed, so it is readable by search
+engines and by find-in-page. A `FAQPage` JSON-LD block is emitted from the same
+arrays the page renders, so the structured data cannot drift from the visible
+content.
+
 ## What is not built yet
 
-- `front-page.php` — the homepage. Roughly two dozen distinct sections on the
-  original, several driven by live aggregate queries. It is the largest single
-  piece of the port and is deliberately not stubbed, because a half-built
-  homepage is worse than the fallback archive.
 - The `/validate`, `/pricing`, `/guides`, `/tools` and `/compare` routes.
 - SEO field mapping onto Rank Math or Yoast (`inc/seo.php`). The fields are
   registered and editable; nothing yet feeds them to an SEO plugin.

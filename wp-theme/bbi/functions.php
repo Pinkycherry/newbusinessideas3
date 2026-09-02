@@ -25,6 +25,7 @@ require_once BBI_DIR . '/inc/supabase.php';
 require_once BBI_DIR . '/inc/settings.php';
 require_once BBI_DIR . '/inc/data.php';
 require_once BBI_DIR . '/inc/routing.php';
+require_once BBI_DIR . '/inc/home-content.php';
 require_once BBI_DIR . '/inc/template-tags.php';
 require_once BBI_DIR . '/inc/import.php';
 

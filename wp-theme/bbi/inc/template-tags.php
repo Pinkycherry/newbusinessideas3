@@ -181,3 +181,80 @@ function bbi_section( $post_id, $key, $heading, $eyebrow = '' ) {
 	printf( '<p class="t-lead mt-4 max-w-3xl">%s</p>', esc_html( (string) $value ) );
 	echo '</section>';
 }
+
+/**
+ * Render one of the inline FAQ blocks.
+ *
+ * `<details>` rather than a JavaScript accordion, on purpose. It opens and
+ * closes with no script, it is keyboard-operable and announced correctly by
+ * screen readers for free, and — the reason that matters most here — the
+ * answer text is in the DOM whether or not it is open, so it is readable by
+ * search engines and by anyone using find-in-page.
+ *
+ * @param string $which   FAQ set key.
+ * @param string $eyebrow Section eyebrow.
+ */
+function bbi_render_faq( $which, $eyebrow ) {
+	$items = bbi_home_faq( $which );
+	if ( empty( $items ) ) {
+		return;
+	}
+	?>
+	<div class="glass bbi-card-pad mt-10">
+		<p class="t-eyebrow"><?php echo esc_html( $eyebrow ); ?></p>
+		<div class="mt-5 divide-y divide-border">
+			<?php foreach ( $items as $item ) : ?>
+				<details class="py-3">
+					<summary class="cursor-pointer text-sm font-semibold text-foreground"><?php echo esc_html( $item['q'] ); ?></summary>
+					<p class="mt-2 text-sm leading-relaxed text-muted-foreground"><?php echo esc_html( $item['a'] ); ?></p>
+				</details>
+			<?php endforeach; ?>
+		</div>
+	</div>
+	<?php
+}
+
+/**
+ * FAQPage structured data for the homepage.
+ *
+ * Emitted once, covering every question on the page. Google's guidance is that
+ * FAQPage markup must correspond to visible content, so this is built from the
+ * SAME arrays the templates render rather than from a separate list — a schema
+ * block that has drifted from the page is worse than no schema block, because
+ * it is a claim about content that is not there.
+ */
+function bbi_faq_schema() {
+	if ( ! is_front_page() || is_paged() ) {
+		return;
+	}
+
+	$questions = array();
+	foreach ( array( 'using', 'pricing', 'searches', 'closing' ) as $set ) {
+		foreach ( bbi_home_faq( $set ) as $item ) {
+			$questions[] = array(
+				'@type'          => 'Question',
+				'name'           => wp_strip_all_tags( $item['q'] ),
+				'acceptedAnswer' => array(
+					'@type' => 'Answer',
+					'text'  => wp_strip_all_tags( $item['a'] ),
+				),
+			);
+		}
+	}
+
+	if ( empty( $questions ) ) {
+		return;
+	}
+
+	$schema = array(
+		'@context'   => 'https://schema.org',
+		'@type'      => 'FAQPage',
+		'mainEntity' => $questions,
+	);
+
+	printf(
+		'<script type="application/ld+json">%s</script>',
+		wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE )
+	);
+}
+add_action( 'wp_footer', 'bbi_faq_schema' );
