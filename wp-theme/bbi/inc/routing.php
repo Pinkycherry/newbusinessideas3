@@ -102,11 +102,21 @@ function bbi_live_template( $template ) {
 		}
 		$GLOBALS['bbi_live_row'] = $idea['row'];
 	} else {
-		$rows = bbi_sb_category( $route['slug'], 60 );
+		// Paged, not capped. A flat 60 made a 90-idea category render 60 and
+		// say nothing about the rest — a page that looks complete while hiding
+		// a third of itself.
+		$paged  = max( 1, (int) get_query_var( 'paged' ) ?: (int) get_query_var( 'page' ) );
+		$per    = 24;
+		$rows   = bbi_sb_category( $route['slug'], $per, ( $paged - 1 ) * $per );
+
 		if ( empty( $rows['rows'] ) ) {
 			return $template;
 		}
-		$GLOBALS['bbi_live_rows'] = $rows['rows'];
+
+		$GLOBALS['bbi_live_rows']  = $rows['rows'];
+		$GLOBALS['bbi_live_total'] = isset( $rows['total'] ) ? (int) $rows['total'] : 0;
+		$GLOBALS['bbi_live_paged'] = $paged;
+		$GLOBALS['bbi_live_more']  = count( $rows['rows'] ) >= $per;
 	}
 
 	status_header( 200 );

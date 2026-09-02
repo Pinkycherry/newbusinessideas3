@@ -461,17 +461,26 @@ function bbi_sb_catalog() {
 }
 
 /**
- * Ideas in one category.
+ * One page of ideas in a category.
  *
- * @param string $slug  Category slug.
- * @param int    $limit Ceiling.
- * @return array{rows:array, error:string, cached:bool}
+ * Takes an explicit offset rather than a ceiling. The previous signature took
+ * a `$limit` and the caller passed 60, so a category with 90 ideas rendered 60
+ * of them and said nothing about the rest — a page that looks complete while
+ * hiding a third of itself.
+ *
+ * @param string $slug   Category slug.
+ * @param int    $limit  Rows per page.
+ * @param int    $offset Row offset.
+ * @return array{rows:array, error:string, cached:bool, total:int}
  */
-function bbi_sb_category( $slug, $limit = 100 ) {
-	$slug = sanitize_title( $slug );
-	return bbi_supabase_cached(
-		'cat:' . $slug . ':' . (int) $limit,
-		function () use ( $slug, $limit ) {
+function bbi_sb_category( $slug, $limit = 24, $offset = 0 ) {
+	$slug   = sanitize_title( $slug );
+	$limit  = max( 1, min( BBI_PAGE_SIZE, (int) $limit ) );
+	$offset = max( 0, (int) $offset );
+
+	$result = bbi_supabase_cached(
+		'cat:' . $slug . ':' . $limit . ':' . $offset,
+		function () use ( $slug, $limit, $offset ) {
 			return bbi_supabase_get(
 				'ideas',
 				array(
@@ -480,11 +489,163 @@ function bbi_sb_category( $slug, $limit = 100 ) {
 					'category_slug' => 'eq.' . $slug,
 					'order'         => 'trend_score.desc.nullslast',
 				),
-				0,
-				max( 1, min( BBI_PAGE_SIZE, (int) $limit ) )
+				$offset,
+				$limit
 			);
 		}
 	);
+
+	$result['total'] = bbi_sb_count( array( 'category_slug' => 'eq.' . $slug ) );
+	return $result;
+}
+
+/**
+ * One page of the whole library.
+ *
+ * @param int $limit  Rows per page.
+ * @param int $offset Row offset.
+ * @return array{rows:array, error:string, cached:bool, total:int}
+ */
+function bbi_sb_page( $limit = 24, $offset = 0 ) {
+	$limit  = max( 1, min( BBI_PAGE_SIZE, (int) $limit ) );
+	$offset = max( 0, (int) $offset );
+
+	$result = bbi_supabase_cached(
+		'page:' . $limit . ':' . $offset,
+		function () use ( $limit, $offset ) {
+			return bbi_supabase_get(
+				'ideas',
+				array(
+					'select' => BBI_CARD_COLUMNS,
+					'status' => 'eq.completed',
+					'order'  => 'trend_score.desc.nullslast',
+				),
+				$offset,
+				$limit
+			);
+		}
+	);
+
+	$result['total'] = bbi_sb_total();
+	return $result;
+}
+
+/**
+ * Search the library.
+ *
+ * Mirrors the live site, which matches SIX columns with `ILIKE`, not one.
+ * PostgREST expresses that as an `or=` filter; a single-column search would
+ * miss an idea whose title does not contain the word but whose summary does,
+ * which is most of them.
+ *
+ * The term is escaped before interpolation. A raw `,` or `)` inside it would
+ * terminate the filter list early and silently change which columns are
+ * searched, and `*` is PostgREST's wildcard so a term containing one would
+ * widen the match rather than narrow it.
+ *
+ * @param string $term   Search phrase.
+ * @param int    $limit  Rows per page.
+ * @param int    $offset Row offset.
+ * @return array{rows:array, error:string, cached:bool, total:int}
+ */
+function bbi_sb_search( $term, $limit = 24, $offset = 0 ) {
+	$term   = trim( (string) $term );
+	$limit  = max( 1, min( BBI_PAGE_SIZE, (int) $limit ) );
+	$offset = max( 0, (int) $offset );
+
+	if ( '' === $term ) {
+		return array( 'rows' => array(), 'error' => '', 'cached' => false, 'total' => 0 );
+	}
+
+	$safe    = str_replace( array( ',', '(', ')', '*', '"' ), ' ', $term );
+	$pattern = '*' . trim( $safe ) . '*';
+
+	$columns = array( 'title', 'summary', 'business_description', 'focus_keyword', 'subcategory_name', 'category_name' );
+	$clauses = array();
+	foreach ( $columns as $column ) {
+		$clauses[] = $column . '.ilike.' . $pattern;
+	}
+
+	$result = bbi_supabase_cached(
+		'search:' . md5( $pattern ) . ':' . $limit . ':' . $offset,
+		function () use ( $clauses, $limit, $offset ) {
+			return bbi_supabase_get(
+				'ideas',
+				array(
+					'select' => BBI_CARD_COLUMNS,
+					'status' => 'eq.completed',
+					'or'     => '(' . implode( ',', $clauses ) . ')',
+					'order'  => 'trend_score.desc.nullslast',
+				),
+				$offset,
+				$limit
+			);
+		}
+	);
+
+	$result['total'] = 0;
+	return $result;
+}
+
+/**
+ * Count rows matching a filter, using PostgREST's count preference.
+ *
+ * The database does the counting; this never fetches rows to call count() on
+ * them. Returns 0 when the count cannot be read, and callers treat 0 as
+ * "unknown" rather than printing it.
+ *
+ * @param array $filters Extra PostgREST filters.
+ * @return int
+ */
+function bbi_sb_count( $filters = array() ) {
+	$url = bbi_supabase_url();
+	$key = bbi_supabase_key();
+	if ( '' === $url || '' === $key ) {
+		return 0;
+	}
+
+	$cache_key = BBI_CACHE_PREFIX . 'count_' . md5( wp_json_encode( $filters ) );
+	$cached    = get_transient( $cache_key );
+	if ( false !== $cached ) {
+		return (int) $cached;
+	}
+
+	$query = array_merge( array( 'select' => 'idea_id', 'status' => 'eq.completed' ), $filters );
+	$pairs = array();
+	foreach ( $query as $arg => $value ) {
+		$pairs[] = rawurlencode( $arg ) . '=' . rawurlencode( $value );
+	}
+
+	$response = wp_remote_get(
+		$url . '/rest/v1/ideas?' . implode( '&', $pairs ),
+		array(
+			'timeout' => BBI_REQUEST_TIMEOUT,
+			'headers' => array(
+				'apikey'        => $key,
+				'Authorization' => 'Bearer ' . $key,
+				'Prefer'        => 'count=exact',
+				'Range-Unit'    => 'items',
+				'Range'         => '0-0',
+			),
+		)
+	);
+
+	if ( is_wp_error( $response ) ) {
+		return 0;
+	}
+
+	$range = wp_remote_retrieve_header( $response, 'content-range' );
+	if ( ! $range || false === strpos( $range, '/' ) ) {
+		return 0;
+	}
+
+	$total = trim( substr( $range, strpos( $range, '/' ) + 1 ) );
+	if ( '*' === $total || ! is_numeric( $total ) ) {
+		return 0;
+	}
+
+	set_transient( $cache_key, (int) $total, max( 60, (int) bbi_supabase_settings()['ttl'] ) );
+	return (int) $total;
 }
 
 /**

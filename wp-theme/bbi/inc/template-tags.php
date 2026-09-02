@@ -258,3 +258,35 @@ function bbi_faq_schema() {
 	);
 }
 add_action( 'wp_footer', 'bbi_faq_schema' );
+
+/**
+ * A URL for a given page of the live listing.
+ *
+ * Built from the CURRENT request rather than from `home_url()`, so a search
+ * term or any other query argument survives paging. Rebuilding the URL from
+ * scratch drops the search and page two silently becomes page two of
+ * everything.
+ *
+ * @param int $page Page number.
+ * @return string
+ */
+function bbi_live_page_url( $page ) {
+	$page = max( 1, (int) $page );
+
+	$request = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
+	$base    = home_url( (string) wp_parse_url( $request, PHP_URL_PATH ) );
+
+	$args = array();
+	$qs   = (string) wp_parse_url( $request, PHP_URL_QUERY );
+	if ( '' !== $qs ) {
+		parse_str( $qs, $args );
+	}
+
+	unset( $args['paged'], $args['page'] );
+
+	if ( $page > 1 ) {
+		$args['paged'] = $page;
+	}
+
+	return empty( $args ) ? $base : add_query_arg( $args, $base );
+}

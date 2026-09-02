@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'BBI_VERSION', '0.1.0' );
+define( 'BBI_VERSION', '0.2.0' );
 define( 'BBI_DIR', get_template_directory() );
 define( 'BBI_URI', get_template_directory_uri() );
 
@@ -23,6 +23,8 @@ require_once BBI_DIR . '/inc/post-types.php';
 require_once BBI_DIR . '/inc/meta.php';
 require_once BBI_DIR . '/inc/supabase.php';
 require_once BBI_DIR . '/inc/settings.php';
+require_once BBI_DIR . '/inc/setup-wizard.php';
+require_once BBI_DIR . '/inc/updater.php';
 require_once BBI_DIR . '/inc/n8n.php';
 require_once BBI_DIR . '/inc/assistant.php';
 require_once BBI_DIR . '/inc/data.php';

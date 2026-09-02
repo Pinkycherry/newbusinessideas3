@@ -139,8 +139,9 @@ function bbi_settings_page() {
 		wp_die( esc_html__( 'You do not have permission to view this page.', 'bbi' ) );
 	}
 
-	$notice   = bbi_settings_handle_post();
-	$settings = bbi_supabase_settings();
+	$setup_log = bbi_setup_maybe_run();
+	$notice    = $setup_log ? null : bbi_settings_handle_post();
+	$settings  = bbi_supabase_settings();
 	$test     = null;
 
 	if ( isset( $_POST['bbi_test'] ) && isset( $_POST['bbi_data_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['bbi_data_nonce'] ) ), 'bbi_save_data' ) ) {
@@ -155,6 +156,30 @@ function bbi_settings_page() {
 
 		<?php if ( $notice ) : ?>
 			<div class="notice notice-info"><p><?php echo esc_html( $notice ); ?></p></div>
+		<?php endif; ?>
+
+		<?php if ( $setup_log ) : ?>
+			<div class="notice notice-success">
+				<p><strong><?php esc_html_e( 'Setup finished.', 'bbi' ); ?></strong></p>
+				<ul style="list-style:disc;margin-left:20px">
+					<?php foreach ( $setup_log as $line ) : ?>
+						<li><?php echo esc_html( $line ); ?></li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+		<?php endif; ?>
+
+		<?php if ( ! get_option( 'bbi_setup_done' ) ) : ?>
+			<div class="notice notice-warning">
+				<p>
+					<strong><?php esc_html_e( 'Set this site up first.', 'bbi' ); ?></strong>
+					<?php esc_html_e( 'Creates the About, Pricing, Contact, Privacy, Terms and Disclaimer pages, builds the header and footer menus, assigns them, and flushes the permalinks. Safe to run twice — it never duplicates anything.', 'bbi' ); ?>
+				</p>
+				<form method="post">
+					<?php wp_nonce_field( 'bbi_save_data', 'bbi_data_nonce' ); ?>
+					<p><button type="submit" name="bbi_run_setup" value="1" class="button button-primary"><?php esc_html_e( 'Run site setup', 'bbi' ); ?></button></p>
+				</form>
+			</div>
 		<?php endif; ?>
 
 		<?php if ( $test ) : ?>

@@ -113,6 +113,12 @@ function bbi_register_post_types() {
 			'taxonomies'    => array( 'bbi_category' ),
 		)
 	);
+	/*
+	 * FAQs share the idea categories so a pool can be keyed to a category, but
+	 * the menu entry belongs to Ideas alone. Attaching the taxonomy after
+	 * registration gives the relationship without the second menu item.
+	 */
+	register_taxonomy_for_object_type( 'bbi_category', 'bbi_faq' );
 }
 add_action( 'init', 'bbi_register_post_types' );
 
