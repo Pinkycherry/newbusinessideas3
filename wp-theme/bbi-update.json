@@ -1,8 +1,8 @@
 {
-  "version": "0.7.0",
+  "version": "0.8.0",
   "download": "https://raw.githubusercontent.com/Pinkycherry/newbusinessideas3/claude/bbi-continuation-sj6nbr/bbi-theme.zip",
   "tested": "6.9",
   "requires": "6.4",
   "requires_php": "8.0",
-  "changelog": "Fixes the purple text and small serif headings, and mounts the animations that were missing: hero particle field, twin rings, three orbit diagrams."
+  "changelog": "Blocks are editable again (every animate block was invalid), real per-section layouts instead of one repeated shape, and the missing sections restored."
 }

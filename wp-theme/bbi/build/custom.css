@@ -589,3 +589,122 @@ html.bbi-motion .bbi-anim-stagger:not(.bbi-in) > * {
   padding-top: 1.15rem;
   border-top: 1px solid var(--border);
 }
+
+/* ============================================================
+   SECTION LAYOUTS.
+
+   The real site uses eleven distinct grids, several asymmetric. An earlier
+   build emitted one full-width panel shape twenty times, which is exactly why
+   it read as a stack of identical cards rather than as a designed page. These
+   are the supporting rules for the splits.
+   ============================================================ */
+
+/* A centred intro block — heading and lead constrained, not full bleed. */
+.bbi-center-measure {
+  max-width: 40rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* The aside in "why this exists" holds position while the prose scrolls past
+   it. Sticky only from lg up: on a phone the two are stacked, and a sticky
+   element in a single column just covers the content below it. */
+@media (min-width: 1024px) {
+  .bbi-sticky-aside {
+    position: sticky;
+    top: 6rem;
+  }
+}
+
+/* Four pillars across at lg, two at sm. `wp:columns` alone goes to four at
+   782px, which is far too tight for four cards of prose. */
+@media (max-width: 1023px) {
+  .bbi-cols-4 { flex-wrap: wrap; }
+  .bbi-cols-4 > .wp-block-column { flex-basis: calc(50% - 0.75rem) !important; }
+}
+
+@media (max-width: 599px) {
+  .bbi-cols-4 > .wp-block-column { flex-basis: 100% !important; }
+}
+
+/* The trust tiles read as figures, so the number carries the weight. */
+.bbi-stat-value {
+  font-size: clamp(1.9rem, 4vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--accent);
+}
+
+/* The six search phrases stack inside the right-hand card rather than sitting
+   in a columns grid — they are a list, and a two-column grid inside a 45%
+   column gives each one about eleven characters per line. */
+.bbi-built-stack { display: grid; gap: 0.5rem; }
+.bbi-built-row { padding: 0.75rem 0.9rem !important; }
+.bbi-built-row .t-card { font-size: 0.9rem; }
+
+/* Keyword pills wrap inside their card. */
+.bbi-kw-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.bbi-kw {
+  margin: 0;
+  border-radius: 999px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.6875rem;
+  line-height: 1.2;
+}
+
+.bbi-kw a { color: inherit; text-decoration: none; }
+
+/* The comparison lists: coral for the cost side, green for ours. The dot is a
+   pseudo-element so the marker colour is independent of the text colour. */
+.bbi-list-coral, .bbi-list-green { list-style: none; padding-left: 0; margin: 1rem 0 0; }
+.bbi-list-coral > li, .bbi-list-green > li {
+  position: relative;
+  padding: 0.7rem 0 0.7rem 1.4rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+.bbi-list-coral > li + li { border-top: 1px solid color-mix(in oklab, var(--hl-coral) 20%, transparent); }
+.bbi-list-green > li + li { border-top: 1px solid color-mix(in oklab, var(--hl-green) 25%, transparent); }
+.bbi-list-coral > li::before, .bbi-list-green > li::before {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  top: 1.15em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+}
+.bbi-list-coral > li::before { background: var(--hl-coral); }
+.bbi-list-green > li::before { background: var(--hl-green); }
+
+/* The winning side is separated by border and surface, never by dimming the
+   other one — at 80% opacity the losing card reads as half-loaded once the
+   columns stack on a phone. */
+.bbi-compare-win { border: 1px solid color-mix(in oklab, var(--primary) 40%, transparent) !important; }
+
+/* ============================================================
+   FOOTER.
+
+   The site title was breaking mid-word — "ideas.infopink / y.com" — because a
+   long single token sat in a narrow auto-sized column. The columns are given
+   explicit widths and the title is allowed to shrink its own type rather than
+   hyphenate a domain name.
+   ============================================================ */
+
+.bbi-site-footer .wp-block-columns { gap: 2.5rem; }
+
+.bbi-site-footer .wp-block-site-title {
+  font-size: clamp(0.8rem, 1.4vw, 0.95rem);
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+@media (max-width: 781px) {
+  .bbi-site-footer .wp-block-columns { gap: 1.5rem; }
+}

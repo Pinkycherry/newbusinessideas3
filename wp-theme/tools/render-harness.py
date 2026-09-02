@@ -49,6 +49,36 @@ STUBS = {
             for _ in range(4)) + '</div></div>',
 }
 
+def wrap_animate(html: str) -> str:
+    """Apply what bbi_render_animate() does at output time.
+
+    The template deliberately carries NO wrapper for this block — save() emits
+    only InnerBlocks.Content, and adding the div there is what made every
+    animate block invalid and uneditable. PHP adds it on render, so the harness
+    has to as well or the ambient count reads zero and looks like a regression.
+    """
+    out, i = [], 0
+    while True:
+        start = html.find('<!-- wp:bbi/animate', i)
+        if start == -1:
+            out.append(html[i:])
+            break
+        out.append(html[i:start])
+        head_end = html.index('-->', start) + 3
+        attrs = html[start:head_end]
+        close = html.index('<!-- /wp:bbi/animate -->', head_end)
+        inner = html[head_end:close]
+
+        direction = re.search(r'"direction":"([a-z]+)"', attrs)
+        stagger = re.search(r'"stagger":(\d+)', attrs)
+        cls = 'bbi-anim bbi-anim-' + (direction.group(1) if direction else 'up')
+        if stagger and int(stagger.group(1)) > 0:
+            cls += ' bbi-anim-stagger'
+        out.append(f'<div class="wp-block-bbi-animate {cls}">{inner}</div>')
+        i = close + len('<!-- /wp:bbi/animate -->')
+    return ''.join(out)
+
+
 def stub_dynamic(html: str) -> str:
     # Replace each self-closing dynamic block with its stand-in.
     for name, markup in STUBS.items():
@@ -76,7 +106,7 @@ def core_stubs(html: str) -> str:
     return html
 
 def render(name, body):
-    body = core_stubs(stub_dynamic(body))
+    body = core_stubs(stub_dynamic(wrap_animate(body)))
     body = strip_block_comments(body)
     page = f'''<!doctype html><html class="light" lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">

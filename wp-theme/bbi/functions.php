@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'BBI_VERSION', '0.7.0' );
+define( 'BBI_VERSION', '0.8.0' );
 define( 'BBI_DIR', get_template_directory() );
 define( 'BBI_URI', get_template_directory_uri() );
 
