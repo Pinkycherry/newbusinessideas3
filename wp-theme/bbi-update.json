@@ -1,8 +1,8 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "download": "https://raw.githubusercontent.com/Pinkycherry/newbusinessideas3/claude/bbi-continuation-sj6nbr/bbi-theme.zip",
   "tested": "6.9",
   "requires": "6.4",
   "requires_php": "8.0",
-  "changelog": "Self-updating from GitHub; live-mode row cap and search fixed; duplicate taxonomy menu fixed; one-click site setup."
+  "changelog": "Animate block (direction, distance, speed, stagger, replay) and Idea Grid block, both editable from the Gutenberg sidebar."
 }

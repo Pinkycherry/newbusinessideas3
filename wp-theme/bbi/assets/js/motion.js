@@ -89,6 +89,58 @@
   }
   scan();
 
+  /* ----------------------------------------------------------
+     The Animate block.
+
+     Each block carries its own settings as data attributes, so one observer
+     drives every animated section on the page regardless of how they are
+     configured. Read here rather than baked into CSS, because the settings
+     come from the block sidebar and can differ per placement.
+     ---------------------------------------------------------- */
+  var animSeen = new WeakSet();
+
+  var animIo = new IntersectionObserver(
+    function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        var e = entries[i];
+        var replay = e.target.getAttribute('data-bbi-replay') !== '0';
+
+        if (e.isIntersecting) {
+          e.target.classList.add('bbi-in');
+          // A one-shot section is unobserved once it has played, so it never
+          // costs another callback for the life of the page.
+          if (!replay) animIo.unobserve(e.target);
+        } else if (replay) {
+          e.target.classList.remove('bbi-in');
+        }
+      }
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+  );
+
+  function scanAnim() {
+    var nodes = document.querySelectorAll('.bbi-anim');
+    for (var i = 0; i < nodes.length; i++) {
+      var node = nodes[i];
+      if (animSeen.has(node)) continue;
+      animSeen.add(node);
+
+      // Stagger is written per child as a custom property. Expressing it in
+      // CSS with :nth-child() would cap at however many rules were written;
+      // this has no ceiling and costs one style write per child, once.
+      var step = parseInt(node.style.getPropertyValue('--bbi-anim-stagger'), 10);
+      if (node.classList.contains('bbi-anim-stagger') && step > 0) {
+        var kids = node.children;
+        for (var k = 0; k < kids.length; k++) {
+          kids[k].style.setProperty('--bbi-child-delay', k * step + 'ms');
+        }
+      }
+
+      animIo.observe(node);
+    }
+  }
+  scanAnim();
+
   // Anything inserted later — a lazy-loaded grid, a plugin — is picked up too.
   // In the original, cards arrived from React Query after the observer had run
   // and were therefore never observed at all, which is why cards specifically
@@ -99,6 +151,7 @@
     pending = requestAnimationFrame(function () {
       pending = 0;
       scan();
+      scanAnim();
     });
   });
   mo.observe(document.body, { childList: true, subtree: true });

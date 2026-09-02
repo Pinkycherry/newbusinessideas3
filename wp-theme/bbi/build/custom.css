@@ -223,3 +223,75 @@ h1, h2, h3, h4 {
     order: -1;
   }
 }
+
+/* ============================================================
+   THE ANIMATE BLOCK.
+
+   Every setting arrives as a custom property on the element itself, so one
+   stylesheet drives any number of animated sections. The alternative — a
+   <style> tag per block — means a page with forty animated sections carries
+   forty stylesheets the browser must parse before it can paint.
+
+   The hidden state is gated behind `html.bbi-motion`, a class only motion.js
+   sets. If the script fails to load, every animated section is simply visible,
+   which is the correct failure. Ungated, a failed script leaves the whole page
+   at opacity 0 permanently — a bug this project has already shipped once.
+   ============================================================ */
+
+.bbi-anim {
+  transition:
+    opacity var(--bbi-anim-t, 600ms) var(--mo-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) var(--bbi-anim-delay, 0ms),
+    transform var(--bbi-anim-t, 600ms) var(--mo-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) var(--bbi-anim-delay, 0ms);
+}
+
+html.bbi-motion .bbi-anim:not(.bbi-in) {
+  opacity: 0;
+}
+
+html.bbi-motion .bbi-anim-up:not(.bbi-in)    { transform: translateY(var(--bbi-anim-d, 24px)); }
+html.bbi-motion .bbi-anim-down:not(.bbi-in)  { transform: translateY(calc(var(--bbi-anim-d, 24px) * -1)); }
+html.bbi-motion .bbi-anim-left:not(.bbi-in)  { transform: translateX(calc(var(--bbi-anim-d, 24px) * -1)); }
+html.bbi-motion .bbi-anim-right:not(.bbi-in) { transform: translateX(var(--bbi-anim-d, 24px)); }
+html.bbi-motion .bbi-anim-scale:not(.bbi-in) { transform: scale(var(--bbi-anim-scale, 1)); }
+/* `fade` deliberately sets no transform — it is the one direction that must
+   not create a compositor layer it never uses. */
+
+.bbi-anim.bbi-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger. The delay is applied to the DIRECT CHILDREN, incrementally, via a
+   custom property motion.js writes per child. Doing it with :nth-child() in
+   CSS would cap at however many rules were written; this has no ceiling. */
+html.bbi-motion .bbi-anim-stagger > * {
+  transition:
+    opacity var(--bbi-anim-t, 600ms) var(--mo-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) var(--bbi-child-delay, 0ms),
+    transform var(--bbi-anim-t, 600ms) var(--mo-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) var(--bbi-child-delay, 0ms);
+}
+
+html.bbi-motion .bbi-anim-stagger:not(.bbi-in) > * {
+  opacity: 0;
+  transform: translateY(var(--bbi-anim-d, 24px));
+}
+
+.bbi-anim-stagger.bbi-in > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* In the editor the block shows its RESTING state. A canvas that keeps
+   replaying a reveal makes the text underneath impossible to edit. */
+.bbi-anim-preview {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bbi-anim,
+  .bbi-anim-stagger > * {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}

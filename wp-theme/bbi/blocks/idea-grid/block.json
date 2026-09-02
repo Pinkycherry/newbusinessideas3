@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bbi/idea-grid",
+  "title": "Idea Grid",
+  "category": "widgets",
+  "icon": "grid-view",
+  "description": "A grid of idea blueprints, read from WordPress or live from Supabase. Choose how many, how many columns, and what each card shows.",
+  "keywords": [ "ideas", "grid", "cards", "blueprints" ],
+  "supports": {
+    "html": false,
+    "align": [ "wide", "full" ],
+    "spacing": { "margin": true, "padding": true }
+  },
+  "attributes": {
+    "count": { "type": "number", "default": 6 },
+    "columns": { "type": "number", "default": 3 },
+    "category": { "type": "string", "default": "" },
+    "order": { "type": "string", "default": "trend" },
+    "showCategory": { "type": "boolean", "default": true },
+    "showSummary": { "type": "boolean", "default": true },
+    "showTrend": { "type": "boolean", "default": true },
+    "summaryWords": { "type": "number", "default": 28 },
+    "heading": { "type": "string", "default": "" }
+  },
+  "editorScript": "file:./index.js",
+  "style": "bbi"
+}

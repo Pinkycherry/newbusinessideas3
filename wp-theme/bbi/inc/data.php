@@ -259,31 +259,54 @@ function bbi_get_total() {
  * @param array $card Normalised card.
  */
 function bbi_render_card( $card ) {
+	bbi_render_card_with(
+		$card,
+		array(
+			'category' => (bool) get_theme_mod( 'bbi_cards_category', true ),
+			'summary'  => (bool) get_theme_mod( 'bbi_cards_excerpt', true ),
+			'trend'    => (bool) get_theme_mod( 'bbi_cards_trend', true ),
+			'words'    => (int) get_theme_mod( 'bbi_cards_excerpt_words', 28 ),
+		)
+	);
+}
+
+/**
+ * Render a card with explicit options.
+ *
+ * Split out from `bbi_render_card()` so the Idea Grid block can override the
+ * site-wide Customizer settings per placement. One card implementation, two
+ * callers — a second copy for the block would drift from this one, and the
+ * drift only shows up on a published page.
+ *
+ * @param array $card    Normalised card.
+ * @param array $options category, summary, trend (bool) and words (int).
+ */
+function bbi_render_card_with( $card, $options ) {
 	if ( empty( $card['title'] ) || empty( $card['url'] ) ) {
 		return;
 	}
 
-	$show_cat     = (bool) get_theme_mod( 'bbi_cards_category', true );
-	$show_excerpt = (bool) get_theme_mod( 'bbi_cards_excerpt', true );
-	$show_trend   = (bool) get_theme_mod( 'bbi_cards_trend', true );
-	$words        = (int) get_theme_mod( 'bbi_cards_excerpt_words', 28 );
+	$options = wp_parse_args(
+		$options,
+		array( 'category' => true, 'summary' => true, 'trend' => true, 'words' => 28 )
+	);
 	?>
 	<a class="mo-card glass glass-hover bbi-shape-card-a bbi-card-pad block h-full rounded-2xl border border-border/60"
 		href="<?php echo esc_url( $card['url'] ); ?>">
 
-		<?php if ( $show_cat && '' !== $card['category'] ) : ?>
+		<?php if ( $options['category'] && '' !== $card['category'] ) : ?>
 			<p class="t-eyebrow"><?php echo esc_html( $card['category'] ); ?></p>
 		<?php endif; ?>
 
 		<h3 class="t-card mt-2"><?php echo esc_html( $card['title'] ); ?></h3>
 
-		<?php if ( $show_excerpt && '' !== $card['summary'] ) : ?>
+		<?php if ( $options['summary'] && '' !== $card['summary'] ) : ?>
 			<p class="mt-2 text-sm leading-relaxed text-muted-foreground">
-				<?php echo esc_html( wp_trim_words( $card['summary'], max( 8, $words ) ) ); ?>
+				<?php echo esc_html( wp_trim_words( $card['summary'], max( 8, (int) $options['words'] ) ) ); ?>
 			</p>
 		<?php endif; ?>
 
-		<?php if ( $show_trend && null !== $card['score'] ) : ?>
+		<?php if ( $options['trend'] && null !== $card['score'] ) : ?>
 			<p class="t-meta mt-3 tabular-nums text-hl-teal">
 				<?php echo absint( $card['score'] ); ?><span class="opacity-55">/100</span>
 			</p>
