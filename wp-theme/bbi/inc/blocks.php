@@ -278,3 +278,35 @@ function bbi_block_query_ideas( $category, $count, $order ) {
 	$query = new WP_Query( $args );
 	return array_map( 'bbi_card_from_post', wp_list_pluck( $query->posts, 'ID' ) );
 }
+
+/**
+ * Rewrite the editor's `is-style-*` names to the design system's real classes.
+ *
+ * WordPress forces an `is-style-` prefix on any class produced by
+ * `register_block_style()`, so the editor cannot emit `.t-lead` directly. The
+ * obvious workaround — declaring `.is-style-t-lead` with the same rules — is
+ * what shipped, and the two copies drifted: the shim coloured lead paragraphs
+ * with `--muted-foreground` where the real token is 86% of `--foreground`, and
+ * made eyebrows purple where the real one is gold. Every paragraph and every
+ * eyebrow on the homepage rendered the wrong colour.
+ *
+ * Swapping the class on output means there is exactly ONE definition of each
+ * type role — the one in the compiled design system — and no way for a second
+ * copy to disagree with it.
+ *
+ * @param string $content Rendered block HTML.
+ * @return string
+ */
+function bbi_map_block_styles( $content ) {
+	if ( '' === $content || false === strpos( $content, 'is-style-t-' ) ) {
+		return $content;
+	}
+
+	// Word-boundary matched, so `is-style-t-lead-something` is left alone.
+	return preg_replace(
+		'/\bis-style-t-(eyebrow|lead|meta|card)\b/',
+		't-$1',
+		$content
+	);
+}
+add_filter( 'render_block', 'bbi_map_block_styles' );

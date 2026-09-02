@@ -37,6 +37,16 @@ STUBS = {
         '<div aria-hidden class="mt-3 h-1.5 overflow-hidden rounded-full bg-muted"><div class="h-full rounded-full bg-hl-teal" style="width:89%"></div></div>'
         '</a>' for _ in range(6)) + '</div></div>',
     'bbi/dock': '',
+    'bbi/orbit': '<div class="bbi-orbit-wrap is-live" role="img" aria-label="BBI">'
+        '<div class="bbi-orbit-ring bbi-orbit-ring-outer"></div>'
+        '<div class="bbi-orbit-ring bbi-orbit-ring-inner"></div>'
+        '<div class="bbi-orbit-center"><span class="bbi-orbit-center-label">BBI</span>'
+        '<span class="bbi-orbit-center-sub">Free library</span></div>'
+        '<div class="bbi-orbit-rotor">' + ''.join(
+            '<div class="bbi-orbit-node" style="left:50%;top:10%"><span class="bbi-orbit-node-bob">'
+            '<span class="bbi-orbit-node-inner"><span class="bbi-orbit-dot"></span>'
+            '<span class="bbi-orbit-node-label">Node</span></span></span></div>'
+            for _ in range(4)) + '</div></div>',
 }
 
 def stub_dynamic(html: str) -> str:

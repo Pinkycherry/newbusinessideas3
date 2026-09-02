@@ -141,6 +141,32 @@
   }
   scanAnim();
 
+  /* ----------------------------------------------------------
+     Orbit diagrams.
+
+     The CSS spins the rings only once the wrapper carries `is-live`, so the
+     animation does not run for a diagram nobody has scrolled to yet. Once
+     live it stays live — an orbit that restarts every time it re-enters the
+     viewport reads as a glitch rather than as motion.
+     ---------------------------------------------------------- */
+  var orbitIo = new IntersectionObserver(
+    function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) {
+          entries[i].target.classList.add('is-live');
+          orbitIo.unobserve(entries[i].target);
+        }
+      }
+    },
+    { threshold: 0.25 }
+  );
+
+  function scanOrbits() {
+    var nodes = document.querySelectorAll('.bbi-orbit-wrap:not(.is-live)');
+    for (var i = 0; i < nodes.length; i++) orbitIo.observe(nodes[i]);
+  }
+  scanOrbits();
+
   // Anything inserted later — a lazy-loaded grid, a plugin — is picked up too.
   // In the original, cards arrived from React Query after the observer had run
   // and were therefore never observed at all, which is why cards specifically
@@ -152,6 +178,32 @@
       pending = 0;
       scan();
       scanAnim();
+
+  /* ----------------------------------------------------------
+     Orbit diagrams.
+
+     The CSS spins the rings only once the wrapper carries `is-live`, so the
+     animation does not run for a diagram nobody has scrolled to yet. Once
+     live it stays live — an orbit that restarts every time it re-enters the
+     viewport reads as a glitch rather than as motion.
+     ---------------------------------------------------------- */
+  var orbitIo = new IntersectionObserver(
+    function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) {
+          entries[i].target.classList.add('is-live');
+          orbitIo.unobserve(entries[i].target);
+        }
+      }
+    },
+    { threshold: 0.25 }
+  );
+
+  function scanOrbits() {
+    var nodes = document.querySelectorAll('.bbi-orbit-wrap:not(.is-live)');
+    for (var i = 0; i < nodes.length; i++) orbitIo.observe(nodes[i]);
+  }
+  scanOrbits();
     });
   });
   mo.observe(document.body, { childList: true, subtree: true });

@@ -1,9 +1,8 @@
 <?php
 /**
- * Script dependencies for the marquee block's editor script.
+ * Script dependencies for the Orbit block's editor script.
  *
- * See ../animate/index.asset.php for why this file has to exist and be
- * maintained by hand.
+ * See ../animate/index.asset.php.
  *
  * @package BBI
  */

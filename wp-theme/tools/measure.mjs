@@ -26,6 +26,36 @@ for (const [w,h,tag] of [[1440,900,'desktop'],[390,844,'mobile']]) {
       headerHeight: bar ? Math.round(r(bar).height) : null,
       iconBandHeight: icons ? Math.round(r(icons).height) : null,
       h2Count: document.querySelectorAll('h1,h2').length,
+      // There must be exactly ONE definition of each type role. The
+      // `is-style-*` names are rewritten to the real classes by a render_block
+      // filter in inc/blocks.php, so any CSS rule for them here means a
+      // duplicate has come back — and a duplicate is what drifted before,
+      // colouring every eyebrow purple where the real token is gold.
+      duplicateTokenRules: (() => {
+        const dupes = [];
+        for (const sheet of document.styleSheets) {
+          let rules;
+          try { rules = sheet.cssRules; } catch { continue; }
+          for (const r of rules) {
+            if (r.selectorText && /\.is-style-t-(lead|eyebrow|meta|card)\b/.test(r.selectorText)) {
+              dupes.push(r.selectorText);
+            }
+          }
+        }
+        return dupes;
+      })(),
+      headings: {
+        sections: document.querySelectorAll('h1,h2').length,
+        cards: document.querySelectorAll('h3').length,
+      },
+      // The ambient layers the original site carries. Zero means they were
+      // dropped from the template, which is exactly what happened in 0.4.0.
+      ambient: {
+        heroField: document.querySelectorAll('canvas.bbi-field').length,
+        twinRings: document.querySelectorAll('.bbi-twin-ring').length,
+        orbits: document.querySelectorAll('.bbi-orbit-wrap').length,
+        animateBlocks: document.querySelectorAll('.bbi-anim').length,
+      },
     };
   });
   console.log(tag, JSON.stringify(m));

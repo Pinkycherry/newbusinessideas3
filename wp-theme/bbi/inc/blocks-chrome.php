@@ -218,3 +218,84 @@ function bbi_dock_assets() {
 	wp_enqueue_script( 'bbi-dock', BBI_URI . '/assets/js/dock.js', array(), BBI_VERSION, true );
 }
 add_action( 'wp_enqueue_scripts', 'bbi_dock_assets' );
+
+/**
+ * Register and render the orbit diagram.
+ */
+function bbi_register_orbit_block() {
+	register_block_type( BBI_DIR . '/blocks/orbit', array( 'render_callback' => 'bbi_render_orbit' ) );
+}
+add_action( 'init', 'bbi_register_orbit_block' );
+
+/**
+ * Render the orbit diagram.
+ *
+ * Markup matches `OrbitDiagram` in `src/routes/index.tsx` element for element,
+ * because the CSS that animates it — 54 rules already compiled into the
+ * stylesheet — selects on that exact structure. An approximation of the markup
+ * is an orbit with no animation.
+ *
+ * Node positions are trigonometry over the node count, computed here rather
+ * than stored, so adding a fifth node re-spaces all five.
+ *
+ * The React version adds `is-live` from an IntersectionObserver so the rings
+ * only spin once seen. `motion.js` does the same job here, and the class is
+ * applied unconditionally when JS is absent — a diagram that never becomes
+ * live would otherwise sit invisible.
+ *
+ * @param array $attributes Block attributes.
+ * @return string
+ */
+function bbi_render_orbit( $attributes ) {
+	$a = wp_parse_args(
+		is_array( $attributes ) ? $attributes : array(),
+		array(
+			'centerLabel' => 'BBI',
+			'centerSub'   => 'Free library',
+			'nodes'       => "Named buyer\nMoney mechanics\nReal risks\nFounder verdict",
+		)
+	);
+
+	$nodes = array_values( array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', (string) $a['nodes'] ) ) ) );
+	if ( empty( $nodes ) ) {
+		return '';
+	}
+
+	$count = count( $nodes );
+	$label = sprintf( '%s: %s', $a['centerLabel'], implode( ', ', $nodes ) );
+
+	$out  = '<div ' . get_block_wrapper_attributes( array( 'class' => 'bbi-orbit-wrap' ) )
+		. ' role="img" aria-label="' . esc_attr( $label ) . '">';
+	$out .= '<div class="bbi-orbit-ring bbi-orbit-ring-outer"></div>';
+	$out .= '<div class="bbi-orbit-ring bbi-orbit-ring-inner"></div>';
+	$out .= '<div class="bbi-orbit-center">'
+		. '<span class="bbi-orbit-center-label">' . esc_html( $a['centerLabel'] ) . '</span>'
+		. '<span class="bbi-orbit-center-sub">' . esc_html( $a['centerSub'] ) . '</span>'
+		. '</div>';
+	$out .= '<div class="bbi-orbit-rotor">';
+
+	foreach ( $nodes as $i => $node ) {
+		// -90° so the first node sits at the top rather than at three o'clock,
+		// and a radius of 40% so a label near the edge is not clipped.
+		$angle = ( 360 / $count ) * $i - 90;
+		$rad   = deg2rad( $angle );
+		$x     = 50 + 40 * cos( $rad );
+		$y     = 50 + 40 * sin( $rad );
+
+		$out .= sprintf(
+			'<div class="bbi-orbit-node" style="left:%1$s%%;top:%2$s%%;animation-delay:%3$dms">'
+			. '<span class="bbi-orbit-node-bob" style="animation-delay:%4$dms">'
+			. '<span class="bbi-orbit-node-inner">'
+			. '<span class="bbi-orbit-dot" aria-hidden="true"></span>'
+			. '<span class="bbi-orbit-node-label">%5$s</span>'
+			. '</span></span></div>',
+			esc_attr( round( $x, 3 ) ),
+			esc_attr( round( $y, 3 ) ),
+			$i * 110,
+			$i * 240,
+			esc_html( $node )
+		);
+	}
+
+	return $out . '</div></div>';
+}

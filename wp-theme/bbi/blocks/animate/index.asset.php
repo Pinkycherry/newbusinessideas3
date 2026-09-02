@@ -24,5 +24,5 @@ return array(
 		'wp-components',
 		'wp-i18n',
 	),
-	'version'      => '0.6.0',
+	'version'      => '0.7.0',
 );

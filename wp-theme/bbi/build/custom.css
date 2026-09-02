@@ -132,25 +132,14 @@ h1, h2, h3, h4 {
   border-color: var(--primary);
 }
 
-.is-style-t-eyebrow {
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
-}
+/* The is-style-* names are REWRITTEN to the real design-system classes in
+   inc/blocks.php, so there are no duplicate declarations here to drift.
 
-.is-style-t-lead {
-  font-size: 1.0625rem;
-  line-height: 1.6;
-  color: var(--muted-foreground);
-}
-
-.is-style-t-meta {
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  color: var(--muted-foreground);
-}
+   There were. `.is-style-t-lead` set `color: var(--muted-foreground)` where the
+   real `.t-lead` is 86% of `--foreground`, and `.is-style-t-eyebrow` was purple
+   where the real one is gold (#8A5D00). Every paragraph and every eyebrow on
+   the homepage rendered the wrong colour. Two copies of a token is two things
+   to keep in step, and they were not kept in step. */
 
 .is-style-bbi-display {
   font-family: var(--font-display);
@@ -572,4 +561,31 @@ html.bbi-motion .bbi-anim-stagger:not(.bbi-in) > * {
 
 .bbi-icons .bbi-icon {
   flex: 0 0 clamp(2.6rem, 5.5vw, 3.6rem);
+}
+
+/* ============================================================
+   CARDS IN A ROW.
+
+   `wp:columns` stretches its columns, but a card inside one only fills that
+   column if it is told to. Without this a row of four pillars renders four
+   cards of four different heights, each hugging its own text — which is what
+   made the research-standard row look ragged.
+   ============================================================ */
+
+.wp-block-column > .bbi-card-fill,
+.bbi-card-fill {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.wp-block-columns .wp-block-column { display: flex; }
+.wp-block-columns .wp-block-column > * { width: 100%; }
+
+/* The "what every entry has to contain" list: term and definition were running
+   together with no separation, so four pairs read as one paragraph. */
+.bbi-rule-row + .bbi-rule-row {
+  margin-top: 1.15rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--border);
 }
