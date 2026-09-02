@@ -343,3 +343,135 @@ html.bbi-motion .bbi-anim-stagger:not(.bbi-in) > * {
   border: 0;
   color: var(--muted-foreground);
 }
+
+/* ============================================================
+   MARQUEE.
+
+   The track holds TWO copies of the list and travels exactly -50%, so the
+   second copy lands where the first began and the seam never shows. Animating
+   a single copy to -100% leaves visible empty space on every pass.
+
+   `width: max-content` is what lets the track be wider than its container;
+   without it the flex row wraps and the animation slides a stack rather than
+   a line.
+   ============================================================ */
+
+.bbi-marquee {
+  overflow: hidden;
+  /* Fades both edges rather than cutting the pills off square. */
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.bbi-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 0.5rem;
+  animation: bbi-marquee-l var(--bbi-marquee-time, 70s) linear infinite;
+}
+
+.bbi-marquee-right .bbi-marquee-track {
+  animation-name: bbi-marquee-r;
+}
+
+.bbi-marquee-pause:hover .bbi-marquee-track,
+.bbi-marquee-pause:focus-within .bbi-marquee-track {
+  animation-play-state: paused;
+}
+
+.bbi-marquee-item {
+  white-space: nowrap;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+
+@keyframes bbi-marquee-l {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes bbi-marquee-r {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* A marquee is pure decoration and it never stops, which is exactly the kind
+   of movement that triggers vestibular symptoms. Under reduced motion it
+   holds still and simply wraps instead. */
+@media (prefers-reduced-motion: reduce) {
+  .bbi-marquee { mask-image: none; -webkit-mask-image: none; }
+  .bbi-marquee-track { animation: none; width: 100%; flex-wrap: wrap; }
+  /* The second copy would be a duplicate list once it stops scrolling. */
+  .bbi-marquee-track > *:nth-child(n + 100) { display: none; }
+}
+
+.bbi-icons-still .bbi-icon { animation: none; }
+
+/* ============================================================
+   SCROLL DOCK.
+   ============================================================ */
+
+.bbi-dock {
+  position: fixed;
+  right: 1rem;
+  bottom: 1.25rem;
+  z-index: 45;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .bbi-dock { right: 1.5rem; bottom: 1.75rem; }
+}
+
+.bbi-dock-btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--foreground);
+}
+
+.bbi-dock-panel {
+  position: absolute;
+  right: 0;
+  bottom: 3.5rem;
+  width: 14rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+
+.bbi-dock-link {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--muted-foreground);
+  text-decoration: none;
+}
+
+.bbi-dock-link:hover,
+.bbi-dock-link:focus-visible {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+/* In the editor the dock is a placeholder card, never fixed — a fixed element
+   would float over the editing surface and cover the content it accompanies. */
+.bbi-dock-placeholder { position: static; }

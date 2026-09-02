@@ -1,0 +1,14 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bbi/icon-band",
+  "title": "Business Icon Band",
+  "category": "design",
+  "icon": "screenoptions",
+  "description": "The full-bleed row of outlined business-model icons, bobbing on staggered offsets.",
+  "keywords": [ "icons", "band", "business", "row" ],
+  "supports": { "html": false, "align": [ "full" ], "spacing": { "margin": true } },
+  "attributes": { "animate": { "type": "boolean", "default": true } },
+  "editorScript": "file:./index.js",
+  "style": "bbi"
+}

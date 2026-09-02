@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bbi/marquee",
+  "title": "Marquee",
+  "category": "design",
+  "icon": "controls-repeat",
+  "description": "A continuously scrolling row of pills — categories, or your own text. Direction and speed are yours.",
+  "keywords": [ "marquee", "ticker", "scroll", "categories", "logos" ],
+  "supports": { "html": false, "align": [ "full", "wide" ], "spacing": { "margin": true } },
+  "attributes": {
+    "source": { "type": "string", "default": "categories" },
+    "items": { "type": "string", "default": "" },
+    "direction": { "type": "string", "default": "left" },
+    "speed": { "type": "number", "default": 70 },
+    "pauseOnHover": { "type": "boolean", "default": true },
+    "linkItems": { "type": "boolean", "default": true }
+  },
+  "editorScript": "file:./index.js",
+  "style": "bbi"
+}

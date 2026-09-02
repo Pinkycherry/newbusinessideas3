@@ -1,8 +1,8 @@
 {
-  "version": "0.4.0",
+  "version": "0.5.0",
   "download": "https://raw.githubusercontent.com/Pinkycherry/newbusinessideas3/claude/bbi-continuation-sj6nbr/bbi-theme.zip",
   "tested": "6.9",
   "requires": "6.4",
   "requires_php": "8.0",
-  "changelog": "Block theme. Templates and header/footer are now editable in Appearance -> Editor. Adds the Idea Part block."
+  "changelog": "Restores the business icon band, the category marquee and the scroll dock \u2014 all three as blocks with their own controls."
 }
