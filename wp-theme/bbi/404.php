@@ -26,7 +26,7 @@ $bbi_terms = get_terms(
 );
 ?>
 
-<div class="mx-auto max-w-3xl px-3 py-16 sm:px-4 sm:py-24">
+<div class="bbi-prose-w mx-auto px-3 py-16 sm:px-4 sm:py-24">
 	<p class="t-eyebrow"><?php esc_html_e( 'Page not found', 'bbi' ); ?></p>
 	<h1 class="mt-3"><?php esc_html_e( 'That page has moved or never existed.', 'bbi' ); ?></h1>
 	<p class="t-lead mt-4">

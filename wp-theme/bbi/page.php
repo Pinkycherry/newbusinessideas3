@@ -15,7 +15,9 @@ defined( 'ABSPATH' ) || exit;
 get_header();
 ?>
 
-<div class="mx-auto max-w-3xl px-3 py-10 sm:px-4 sm:py-14">
+<?php bbi_layout_open(); ?>
+
+<div class="bbi-prose-w py-10 sm:py-14">
 	<?php
 	while ( have_posts() ) :
 		the_post();
@@ -35,6 +37,8 @@ get_header();
 	endwhile;
 	?>
 </div>
+
+<?php bbi_layout_close(); ?>
 
 <?php
 get_footer();

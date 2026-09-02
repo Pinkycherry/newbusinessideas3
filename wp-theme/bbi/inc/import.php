@@ -5,7 +5,8 @@
  * Run once to bring the library across, and again whenever Supabase changes,
  * until the pipeline is repointed at WordPress and Supabase is retired.
  *
- *   wp bbi import --url=https://xxx.supabase.co --key=SERVICE_ROLE_KEY
+ *   wp bbi import                       (uses Settings -> BBI Data)
+ *   wp bbi import --url=https://xxx.supabase.co --key=ANON_KEY
  *   wp bbi import --url=... --key=... --dry-run
  *   wp bbi import --url=... --key=... --only=side-hustle-ideas
  *
@@ -49,11 +50,14 @@ class BBI_Import_Command {
 	 *
 	 * ## OPTIONS
 	 *
-	 * --url=<url>
+	 * [--url=<url>]
 	 * : Supabase project URL, e.g. https://xxxx.supabase.co
+	 * : Defaults to whatever is saved under Settings -> BBI Data.
 	 *
-	 * --key=<key>
-	 * : Service role key. Read-only is enough; this never writes.
+	 * [--key=<key>]
+	 * : Supabase API key. Defaults to the one saved under Settings -> BBI Data.
+	 * : Use the ANON key. This command only ever reads, so a service role key
+	 * : buys nothing and costs a credential in your shell history.
 	 *
 	 * [--only=<category_slug>]
 	 * : Import a single category first, to eyeball the output before committing
@@ -66,8 +70,18 @@ class BBI_Import_Command {
 	 * @param array $assoc_args Flags.
 	 */
 	public function import( $args, $assoc_args ) {
-		$base    = untrailingslashit( $assoc_args['url'] );
-		$key     = $assoc_args['key'];
+		// Falling back to the stored settings means the common case is just
+		// `wp bbi import`, and the key never has to be typed into a shell
+		// where it lands in the history file.
+		$stored = function_exists( 'bbi_supabase_settings' ) ? bbi_supabase_settings() : array( 'url' => '', 'key' => '' );
+
+		$base = untrailingslashit( isset( $assoc_args['url'] ) ? $assoc_args['url'] : $stored['url'] );
+		$key  = isset( $assoc_args['key'] ) ? $assoc_args['key'] : $stored['key'];
+
+		if ( '' === $base || '' === $key ) {
+			WP_CLI::error( 'No Supabase URL or key. Pass --url and --key, or save them under Settings -> BBI Data.' );
+		}
+
 		$only    = isset( $assoc_args['only'] ) ? $assoc_args['only'] : '';
 		$dry_run = isset( $assoc_args['dry-run'] );
 
@@ -116,7 +130,21 @@ class BBI_Import_Command {
 					wp_update_term_count_now( $terms, $tax );
 				}
 			}
-			WP_CLI::log( 'Term counts refreshed. Now visit Settings -> Permalinks once to flush rewrite rules.' );
+			// The read layer caches Supabase responses, and in the default
+			// `fallback` source it also caches "WordPress has no ideas". Both
+			// are wrong the instant this finishes.
+			if ( function_exists( 'bbi_supabase_flush_cache' ) ) {
+				bbi_supabase_flush_cache();
+			}
+			// `bbi_source()` decides "does WordPress have ideas yet" from
+			// `wp_count_posts()`, which is cached in the `counts` group. Left
+			// alone, the site keeps reading Supabase for the rest of the cache
+			// lifetime even though the posts now exist.
+			if ( function_exists( '_count_posts_cache_key' ) ) {
+				wp_cache_delete( _count_posts_cache_key( 'bbi_idea' ), 'counts' );
+			}
+
+			WP_CLI::log( 'Term counts refreshed and the Supabase read cache cleared. Now visit Settings -> Permalinks once to flush rewrite rules.' );
 		}
 	}
 
@@ -124,7 +152,7 @@ class BBI_Import_Command {
 	 * Fetch every completed idea, paging until a short page comes back.
 	 *
 	 * @param string $base Supabase URL.
-	 * @param string $key  Service role key.
+	 * @param string $key  Supabase API key.
 	 * @param string $only Optional category slug filter.
 	 * @return array|WP_Error
 	 */

@@ -28,4 +28,6 @@
 @import "../../../src/styles.css";
 @import "../../../src/motion.css";
 
+@import "./custom.css";
+
 @source "../**/*.php";

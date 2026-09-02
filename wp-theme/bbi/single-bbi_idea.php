@@ -18,6 +18,8 @@ defined( 'ABSPATH' ) || exit;
 
 get_header();
 
+bbi_layout_open();
+
 while ( have_posts() ) :
 	the_post();
 
@@ -26,7 +28,7 @@ while ( have_posts() ) :
 	$bbi_term  = bbi_category_term( $bbi_id );
 	?>
 
-	<article class="mx-auto max-w-6xl px-3 py-10 sm:px-4 sm:py-14">
+	<article class="py-10 sm:py-14">
 
 		<nav class="t-meta" aria-label="<?php esc_attr_e( 'Breadcrumb', 'bbi' ); ?>">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'bbi' ); ?></a>
@@ -174,5 +176,7 @@ while ( have_posts() ) :
 
 	<?php
 endwhile;
+
+bbi_layout_close();
 
 get_footer();

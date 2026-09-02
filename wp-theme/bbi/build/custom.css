@@ -1,0 +1,225 @@
+/* ============================================================
+   THEME-ONLY LAYER — the rules that make the Customizer's variables do
+   something.
+
+   A variable nobody reads is a control that appears to work and changes
+   nothing. `--bbi-card-pad` and friends are introduced BY this theme, so the
+   compiled design system has no rule consuming them; these are those rules.
+
+   Everything here is deliberately UNLAYERED. Tailwind's utilities live in
+   `@layer utilities`, and an unlayered rule beats every layer regardless of
+   specificity. That is exactly what is wanted: when someone sets a card
+   padding in the Customizer it has to override the `p-4 sm:p-6` already on the
+   markup, or the control silently loses to the class next to it.
+
+   The flip side is that these selectors must stay narrow. They are all
+   `.bbi-`-prefixed and apply to nothing the theme did not opt in.
+   ============================================================ */
+
+/* Type scale. Multiplies the root size, so everything expressed in rem moves
+   together and anything in px deliberately does not. */
+html {
+  font-size: calc(100% * var(--bbi-font-scale, 1));
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: var(--bbi-heading-tracking, -0.02em);
+}
+
+/* Containers. */
+.bbi-container {
+  width: 100%;
+  max-width: var(--bbi-content-w, 72rem);
+  margin-inline: auto;
+}
+
+.bbi-prose-w,
+.wp-prose {
+  max-width: var(--bbi-prose-w, 48rem);
+}
+
+/* Card density. Two custom properties rather than one, because a padding that
+   reads well at 1440px is a third of the screen width on a 390px phone. */
+.bbi-card-pad {
+  padding: var(--bbi-card-pad-sm, 1rem);
+}
+
+@media (min-width: 640px) {
+  .bbi-card-pad {
+    padding: var(--bbi-card-pad, 1.5rem);
+  }
+}
+
+/* Zero means "size to content", which is the default and the better one. A
+   non-zero value forces an even grid and buys that evenness with white space
+   inside the shorter cards. */
+.bbi-card-pad {
+  min-height: var(--bbi-card-min-h, 0);
+}
+
+.bbi-grid {
+  display: grid;
+  gap: var(--bbi-card-gap, 1rem);
+}
+
+/* Section rhythm. Applied between siblings rather than as a bottom margin on
+   each, so the last section does not push the footer down. */
+.bbi-section + .bbi-section {
+  margin-top: var(--bbi-section-gap, 5rem);
+}
+
+/* Widget areas. Widgets are third-party markup and arrive with their own
+   assumptions, so they get a container with the theme's surface and spacing
+   rather than being styled item by item. */
+.bbi-widget-area .widget + .widget {
+  margin-top: 1.5rem;
+}
+
+.bbi-widget-area .widget-title,
+.bbi-widget-area h2 {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.bbi-widget-area ul {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+}
+
+.bbi-widget-area li + li {
+  margin-top: 0.5rem;
+}
+
+.bbi-widget-area a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.bbi-widget-area a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   BLOCK STYLES.
+
+   `register_block_style( 'core/group', 'bbi-glass' )` puts the class
+   `is-style-bbi-glass` on the block — WordPress owns that naming and there is
+   no way to make it emit `.glass` instead. So these map the generated names
+   onto the design system's real classes.
+
+   They are written as `@extend`-by-hand rather than by duplicating the glass
+   recipe, because there is exactly one definition of what a glass panel looks
+   like and a second copy here would drift from it within a week.
+   ============================================================ */
+
+.is-style-bbi-glass {
+  background: var(--card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-2xl, 1.75rem);
+  backdrop-filter: blur(var(--bbi-glass-blur, 14px)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--bbi-glass-blur, 14px)) saturate(160%);
+}
+
+.is-style-bbi-glass-hover {
+  transition: border-color var(--mo-dur-2, 240ms) var(--mo-ease, ease);
+}
+
+.is-style-bbi-glass-hover:hover {
+  border-color: var(--primary);
+}
+
+.is-style-t-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.is-style-t-lead {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+.is-style-t-meta {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+}
+
+.is-style-bbi-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.is-style-bbi-grid {
+  gap: var(--bbi-card-gap, 1rem);
+}
+
+.is-style-bbi-hairline {
+  border: 0;
+  border-top: 1px solid var(--border);
+  opacity: 1;
+}
+
+/* A checklist without list-style images: the marker is drawn from a token so
+   it follows the palette, and `::marker` is avoided because it cannot be
+   coloured independently of the text in every browser this ships to. */
+.is-style-bbi-checks {
+  list-style: none;
+  padding-left: 0;
+}
+
+.is-style-bbi-checks > li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.is-style-bbi-checks > li::before {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  top: 0.62em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--hl-green);
+}
+
+/* ============================================================
+   SIDEBAR LAYOUT.
+
+   One grid, two orderings. The content column is always FIRST in the markup,
+   including when the sidebar is drawn on the left, and the visual order is set
+   with `order` on the aside instead.
+
+   That is the opposite of the usual advice, and it is the right way round
+   here: a left sidebar placed first in the DOM makes a keyboard user tab
+   through every widget before reaching the page they came for. Reversing the
+   two on one axis only — visual — keeps reading order and focus order the
+   same for the person who needs them to match.
+   ============================================================ */
+
+.bbi-with-sidebar {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .bbi-with-sidebar-right {
+    grid-template-columns: minmax(0, 1fr) 18rem;
+  }
+
+  .bbi-with-sidebar-left {
+    grid-template-columns: 18rem minmax(0, 1fr);
+  }
+
+  .bbi-with-sidebar-left > .bbi-widget-area {
+    order: -1;
+  }
+}
