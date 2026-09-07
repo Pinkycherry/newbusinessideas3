@@ -322,10 +322,10 @@
    instead of fighting. */
 .cx-layer {
   --z: 0.3;
-  --zs: 0;
+  --zs: 0.55; /* was 0 — that zeroed the whole scroll term site-wide */
   transform: translate3d(
-    calc(var(--dx) * var(--z) * 14px),
-    calc(var(--dy) * var(--z) * 10px + (var(--sc-p) - 0.5) * var(--zs) * -70px),
+    calc(var(--dx) * var(--z) * 46px),
+    calc(var(--dy) * var(--z) * 32px + (var(--sc-p) - 0.5) * var(--zs) * -150px),
     0
   );
   transition: transform var(--mo-dur-4) var(--mo-ease-out);
@@ -456,14 +456,14 @@
   .cx-layer {
     transform: translate3d(
       0,
-      calc((var(--sc-p, 0.5) - 0.5) * (var(--z, 0.3) + var(--zs, 0)) * -38px),
+      calc((var(--sc-p, 0.5) - 0.5) * (var(--z, 0.3) + var(--zs, 0.55)) * -110px),
       0
     );
     transition: none;
   }
 
   .cx-counter {
-    transform: translate3d(0, calc((var(--sc-p, 0.5) - 0.5) * var(--z, 0.3) * 26px), 0);
+    transform: translate3d(0, calc((var(--sc-p, 0.5) - 0.5) * var(--z, 0.3) * 62px), 0);
     transition: none;
   }
 }
