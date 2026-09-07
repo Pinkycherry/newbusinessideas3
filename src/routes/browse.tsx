@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { useCallback } from "react";
+import { useCallback, type CSSProperties } from "react";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getCatalog } from "@/lib/ideas.functions";
@@ -8,6 +8,7 @@ import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { usePillInteraction } from "@/hooks/use-pill-interaction";
 import {
   useElementPointerGroup,
+  useDepthScene,
   useScrollProgress,
   useStaggerReveal,
   useTextReveal,
@@ -84,6 +85,10 @@ function BrowsePage() {
   const pointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
   const revealRef = useStaggerReveal<HTMLDivElement>({ stagger: 0.03 });
   const depthRef = useScrollProgress<HTMLDivElement>();
+  // Masthead depth scene. Listing pages are scanning surfaces, so the cursor
+  // work is confined to the header — the grid below stays still under the eye
+  // (MOTION_SPEC section 3: no tilt, no magnet on listings).
+  const mastheadRef = useDepthScene<HTMLDivElement>({ strength: 0.45, scroll: false });
   const listRef = useCallback(
     (node: HTMLDivElement | null) => {
       pointerRef.current = node;
@@ -110,8 +115,12 @@ function BrowsePage() {
       <SiteShell>
         <div ref={depthRef} className="bbi-depth mx-auto max-w-6xl px-4 py-12">
           <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Browse" }]} />
-          <div className="bbi-depth-back">
-            <h1 ref={headingRef} className="mt-4 text-3xl font-bold tracking-tight">
+          <div ref={mastheadRef} className="bbi-depth-back cx-scene">
+            <h1
+              ref={headingRef}
+              style={{ "--z": 0.5 } as CSSProperties}
+              className="cx-layer mt-4 text-3xl font-bold tracking-tight"
+            >
               The full idea library
             </h1>
             {/* One line, two figures. The third used to be "N subcategories",
@@ -128,7 +137,7 @@ function BrowsePage() {
               sized to its content rather than to the container. */}
           <div
             ref={listRef}
-            className="bbi-depth-front mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+            className="bbi-depth-front mt-8 grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-3"
           >
             {data.categories.map((category) => (
               <section

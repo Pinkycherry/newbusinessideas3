@@ -76,7 +76,7 @@ function ServicesPage() {
       wide
     >
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
-      <div ref={gridRef} className="grid gap-5 md:grid-cols-2">
+      <div ref={gridRef} className="grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-5">
         {services.map((service) => (
           <div
             key={service.name}

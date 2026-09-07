@@ -4,7 +4,7 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPosts } from "@/lib/blog.functions";
-import { useStaggerReveal, useTextReveal } from "@/motion";
+import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
 
 const postsQuery = queryOptions({
   queryKey: ["blog", "posts", 1],
@@ -48,14 +48,22 @@ function BlogIndex() {
   const { data } = useSuspenseQuery(postsQuery);
   // One headline reveal per page, on the H1, and one stagger on the post grid.
   const titleRef = useTextReveal<HTMLHeadingElement>();
+  // Masthead depth scene: one shared observer + one shared frame callback
+  // for the whole header. Cursor depth on fine pointers, scroll depth on touch
+  // (see motion.css, coarse-pointer block).
+  const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
+
   const gridRef = useStaggerReveal<HTMLDivElement>({ direction: "up", stagger: 0.05 });
 
   return (
     <SiteShell>
-      <div className="mx-auto max-w-6xl px-3 py-12 sm:px-4">
+      <div ref={sceneRef} className="cx-scene mx-auto max-w-6xl px-3 py-12 sm:px-4">
         {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
         <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Blog" }]} />
-        <h1 ref={titleRef} className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">
+        <h1
+          ref={titleRef}
+          className="cx-layer cx-z3 mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl"
+        >
           Founder{" "}
           <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
             playbooks

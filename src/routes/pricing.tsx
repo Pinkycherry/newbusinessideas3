@@ -43,7 +43,7 @@ function PricingPage() {
       wide
     >
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
-      <div ref={plansRef} className="grid gap-5 md:grid-cols-2">
+      <div ref={plansRef} className="grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-5">
         {plans.map((plan) => (
           <div
             key={plan.name}

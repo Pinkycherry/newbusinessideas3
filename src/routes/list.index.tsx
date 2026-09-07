@@ -6,7 +6,12 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getListicleIndex, type ListicleSummary } from "@/lib/lists.functions";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { siteUrl } from "@/lib/site-config";
-import { useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
+import {
+  useDepthScene,
+  useElementPointerGroup,
+  useStaggerReveal,
+  useTextReveal,
+} from "@/motion";
 
 /**
  * PROJECT_BRIEF.md Section 6.3 — the index of every listicle. One listicle per
@@ -64,6 +69,11 @@ function ListIndexPage() {
   // whole grid lands quickly. No tilt and no magnet — this is a scanning
   // surface. Both hooks anchor on the same node, so they share one callback ref.
   const headingRef = useTextReveal<HTMLHeadingElement>();
+  // Masthead depth scene: one shared observer + one shared frame callback
+  // for the whole header. Cursor depth on fine pointers, scroll depth on touch
+  // (see motion.css, coarse-pointer block).
+  const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
+
   const pointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
   const revealRef = useStaggerReveal<HTMLDivElement>({ selector: ".mo-card", stagger: 0.03 });
   const gridRef = useCallback(
@@ -103,10 +113,13 @@ function ListIndexPage() {
         ]}
       />
       <SiteShell>
-        <div className="mx-auto max-w-6xl px-4 py-12">
+        <div ref={sceneRef} className="cx-scene mx-auto max-w-6xl px-4 py-12">
           {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
           <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Lists" }]} />
-          <h1 ref={headingRef} className="bbi-heading-glow mt-4 text-3xl font-bold tracking-tight">
+          <h1
+            ref={headingRef}
+            className="cx-layer cx-z3 bbi-heading-glow mt-4 text-3xl font-bold tracking-tight"
+          >
             Every list, ranked
           </h1>
           <p className="mt-3 max-w-2xl text-muted-foreground">

@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery, useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
@@ -33,7 +33,14 @@ import type { CategoryNode } from "@/lib/ideas.functions";
 import { hideImgIfBroken } from "@/lib/utils";
 import { AccordionItem } from "@/components/accordion-item";
 import { loadGsap, prefersReducedMotion } from "@/lib/motion";
-import { Odometer, useMagnet, useScrollProgress, useStaggerReveal, useTextReveal } from "@/motion";
+import {
+  Odometer,
+  useDepthScene,
+  useMagnet,
+  useScrollProgress,
+  useStaggerReveal,
+  useTextReveal,
+} from "@/motion";
 
 /**
  * Hero's primary CTA — spotlight glow behind a pill, plus the page's single
@@ -304,6 +311,10 @@ function HomePage() {
   // Publishes --sc-p across the editorial section so its ambient wash layers
   // (and only those — never the type) can drift via .mo-drift.
   const editorialSectionRef = useScrollProgress<HTMLElement>();
+  // The hero is a depth scene, not a stack of blocks: the particle field
+  // moves against the cursor, the panel barely moves, the slider rides
+  // furthest forward. One pointer listener drives all three.
+  const heroSceneRef = useDepthScene<HTMLElement>({ strength: 1, weight: 0.13 });
 
   return (
     <SiteShell>
@@ -324,14 +335,18 @@ function HomePage() {
         id="hero"
         data-anchor="hero"
         data-anchor-label="Top"
-        className="bbi-field-host px-3 pt-10 pb-6 sm:px-4 sm:pt-16"
+        ref={heroSceneRef}
+        className="bbi-field-host cx-scene px-3 pt-10 pb-6 sm:px-4 sm:pt-16"
       >
         {/* The field IS the hero background. `.bbi-hero-open` drops the panel's
             backdrop-blur, which was blurring the 2px particles into nothing and
             leaving the field visible only in a thin strip around the card. */}
-        <HeroField className="bbi-field" />
+        <HeroField className="bbi-field cx-counter" />
         <div className="mx-auto max-w-6xl">
-          <div className="glass bbi-hero-open blob-1 px-6 py-14 sm:px-12 sm:py-20">
+          <div
+            style={{ "--z": 0.14 } as CSSProperties}
+            className="glass bbi-hero-open blob-1 cx-layer px-6 py-14 sm:px-12 sm:py-20"
+          >
             <p className="t-eyebrow sm:text-xs">
               <Typewriter text="The Truth About Business Ideas" />
             </p>
@@ -374,12 +389,19 @@ function HomePage() {
                   <HeroCta />
                 </div>
               </div>
-              <div className="iv-fade-up" style={{ animationDelay: "540ms" }}>
+              <div
+                className="iv-fade-up cx-layer"
+                style={{ animationDelay: "540ms", "--z": 0.7 } as CSSProperties}
+              >
                 <HeroSlider />
               </div>
             </div>
 
-            <div ref={heroPanelsRef} className="mt-10 grid gap-4 sm:grid-cols-2">
+            <div
+              ref={heroPanelsRef}
+              style={{ "--z": 0.34 } as CSSProperties}
+              className="cx-layer mt-10 grid gap-4 sm:grid-cols-2"
+            >
               {HERO_PANELS.map((panel, i) => (
                 <div
                   key={panel.label}
@@ -583,7 +605,7 @@ function HomePage() {
           and the orbit rings both run keyframe animations that own `transform`
           outright, so a class-level drift can never apply to them. */}
       <section ref={editorialSectionRef} className="mx-auto max-w-6xl px-3 pb-16 sm:px-4">
-        <div ref={editorialRef} className="grid gap-6 sm:grid-cols-3 sm:items-start">
+        <div ref={editorialRef} className="grid gap-6 sm:grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] sm:items-start">
           {EDITORIAL_IMAGES.map((img) => (
             <figure
               key={img.src}
@@ -957,6 +979,7 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
    ================================================================ */
 
 function FourPillarStandardSection() {
+  const pillarSceneRef = useDepthScene<HTMLElement>({ strength: 0.55, weight: 0.15 });
   const tilesRef = useStaggerReveal<HTMLDivElement>();
   const pillars = [
     {
@@ -982,7 +1005,7 @@ function FourPillarStandardSection() {
   ];
 
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:mt-24 sm:px-4">
+    <section ref={pillarSceneRef} className="cx-scene mx-auto mt-16 max-w-6xl px-3 sm:mt-24 sm:px-4">
       <div className="mx-auto max-w-2xl text-center">
         <p className="t-eyebrow">The Research Standard</p>
         <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-4xl">
@@ -993,11 +1016,11 @@ function FourPillarStandardSection() {
         </p>
       </div>
 
-      <div ref={tilesRef} className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div ref={tilesRef} className="mt-10 grid gap-4 sm:grid-cols-[repeat(auto-fit,minmax(17rem,1fr))]">
         {pillars.map((pillar) => (
           <div
             key={pillar.num}
-            className="glass bbi-card-motion flex flex-col rounded-2xl border border-border p-6"
+            className="cx-layer glass bbi-card-motion flex flex-col rounded-2xl border border-border p-6"
           >
             <span className="text-xs font-extrabold tracking-widest text-accent">{pillar.num}</span>
             <h3 className="mt-2 text-base font-bold text-foreground">{pillar.title}</h3>
@@ -1160,7 +1183,7 @@ function TrustStatsBar({
     },
   ];
   return (
-    <div ref={statsRef} className="mx-auto mt-8 grid max-w-6xl gap-4 px-3 sm:grid-cols-3 sm:px-4">
+    <div ref={statsRef} className="mx-auto mt-8 grid max-w-6xl gap-4 px-3 sm:grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] sm:px-4">
       {stats.map((stat) => (
         <div
           key={stat.label}
@@ -1184,10 +1207,11 @@ function TrustStatsBar({
 }
 
 function MarketGapSection() {
+  const marketSceneRef = useDepthScene<HTMLElement>({ strength: 0.7, weight: 0.13 });
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+    <section ref={marketSceneRef} className="cx-scene mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <Reveal>
-        <div className="glass glass-hover bbi-shape-diamond grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div className="cx-layer glass glass-hover bbi-shape-diamond grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <p className="t-eyebrow">The problem we found</p>
             <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
@@ -1273,7 +1297,7 @@ function HowItWorksSection() {
         <div className="bbi-depth-front">
           <p className="t-eyebrow">Step by step</p>
           <h2 className="mt-3">Grab the idea. Validate it however you want. Keep the money.</h2>
-          <div ref={stepsRef} className="mt-6 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+          <div ref={stepsRef} className="mt-6 grid gap-4 lg:grid-cols-1">
             {BBI_HOW_STEPS.map((step) => (
               <div key={step.n} className="mo-card glass glass-hover bbi-shape-step flex gap-4 p-6">
                 <span className="bbi-shape-step-badge glass flex h-11 w-11 shrink-0 items-center justify-center text-sm font-extrabold text-accent">
@@ -1361,13 +1385,14 @@ const BBI_BUILT_FOR: {
 ];
 
 function WhoForSection() {
+  const whoForSceneRef = useDepthScene<HTMLElement>({ strength: 0.7, weight: 0.13 });
   // The six keyword links were the last cards on the page with no motion
   // owner at all -- measured, not guessed: they carried no inline opacity and
   // no `data-revealed`, which is the signature of a card no hook has claimed.
   const listRef = useStaggerReveal<HTMLUListElement>({ selector: ".mo-card", stagger: 0.045 });
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-shape-soft-deep grid gap-6 p-5 sm:p-9 lg:grid-cols-[1.1fr_0.9fr]">
+    <section ref={whoForSceneRef} className="cx-scene mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <div className="cx-layer glass bbi-shape-soft-deep grid gap-6 p-5 sm:p-9 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
           <p className="t-eyebrow">Who we built this for</p>
           <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
@@ -1443,9 +1468,10 @@ const BBI_FAQ_2 = [
 ];
 
 function PricingPhilosophySection() {
+  const pricingSceneRef = useDepthScene<HTMLElement>({ strength: 0.6, weight: 0.14 });
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass glass-hover bbi-shape-ticket p-6 text-center sm:p-9">
+    <section ref={pricingSceneRef} className="cx-scene mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <div className="cx-layer glass glass-hover bbi-shape-ticket p-6 text-center sm:p-9">
         <p className="t-eyebrow">Pricing, honestly</p>
         <h2 className="mx-auto mt-3 max-w-2xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
           One fee. Once. For life. That&apos;s the whole pricing page.
@@ -1516,9 +1542,10 @@ function TeamSection() {
 }
 
 function InspiredBySection() {
+  const inspiredSceneRef = useDepthScene<HTMLElement>({ strength: 0.6, weight: 0.14 });
   return (
-    <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
-      <div className="glass bbi-shape-card-a p-6 sm:p-8">
+    <section ref={inspiredSceneRef} className="cx-scene mx-auto mt-16 max-w-4xl px-3 sm:px-4">
+      <div className="cx-layer glass bbi-shape-card-a p-6 sm:p-8">
         <p className="t-eyebrow">Where this came from</p>
         <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
           We didn&apos;t invent this model. We learned it.
@@ -1679,9 +1706,10 @@ const BBI_FUTURE_TERMS = [
 ];
 
 function FutureProofSpotlight() {
+  const futureSceneRef = useDepthScene<HTMLElement>({ strength: 0.65, weight: 0.14 });
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-shape-diamond p-6 sm:p-9">
+    <section ref={futureSceneRef} className="cx-scene mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <div className="cx-layer glass bbi-shape-diamond p-6 sm:p-9">
         <p className="t-eyebrow">Ways into the library</p>
         <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
           Start from a theme instead of a blank search box.
@@ -1758,9 +1786,10 @@ const BBI_KEYWORD_GROUPS: KeywordGroup[] = [
 ];
 
 function KeywordMosaic() {
+  const mosaicSceneRef = useDepthScene<HTMLElement>({ strength: 0.5, weight: 0.16 });
   const groupsRef = useStaggerReveal<HTMLDivElement>();
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4" aria-label="Browse ideas by keyword">
+    <section ref={mosaicSceneRef} className="cx-scene mx-auto mt-16 max-w-6xl px-3 sm:px-4" aria-label="Browse ideas by keyword">
       <p className="t-eyebrow">Every angle covered</p>
       <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
         Business ideas by industry, founder, and model
@@ -1780,7 +1809,7 @@ function KeywordMosaic() {
                   key={term.label}
                   to="/search"
                   search={{ q: term.query }}
-                  className="glass-pill min-w-0 rounded-full px-2.5 py-2 text-center text-[11px] font-medium leading-tight"
+                  className="cx-layer glass-pill min-w-0 rounded-full px-2.5 py-2 text-center text-[11px] font-medium leading-tight"
                 >
                   {term.label}
                 </Link>

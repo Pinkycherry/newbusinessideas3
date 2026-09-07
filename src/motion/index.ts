@@ -22,6 +22,11 @@
  */
 
 export { loadGsap, prefersReducedMotion, hasFinePointer, pointerMotionEnabled } from "./gsap";
+
+export { onFrame, onVisible, onScroll, approach, clamp01 } from "./engine";
+
+export { useDepthScene } from "./use-depth-scene";
+export type { DepthSceneOptions } from "./use-depth-scene";
 export type { GsapBundle } from "./gsap";
 
 export { PointerChannelProvider, startPointerChannel } from "./pointer-channel";

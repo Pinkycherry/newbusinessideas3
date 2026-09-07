@@ -5,7 +5,7 @@ import { FaqList, FaqSchema, FaqEmptyState } from "@/components/faq-list";
 import { getRandomCategoryFaqs } from "@/lib/faqs.functions";
 import { getCatalog } from "@/lib/ideas.functions";
 import { JsonLd, breadcrumbSchema, webPageSchema } from "@/lib/schema";
-import { useTextReveal } from "@/motion";
+import { useDepthScene, useTextReveal } from "@/motion";
 
 /**
  * PROJECT_BRIEF.md Section 6.4 — one FAQ hub per category.
@@ -59,6 +59,11 @@ export const Route = createFileRoute("/faq/$categorySlug")({
 function FaqCategoryPage() {
   const { category, faqs } = Route.useLoaderData();
   const headingRef = useTextReveal<HTMLHeadingElement>();
+  // Masthead depth scene: one shared observer + one shared frame callback
+  // for the whole header. Cursor depth on fine pointers, scroll depth on touch
+  // (see motion.css, coarse-pointer block).
+  const sceneRef = useDepthScene<HTMLElement>({ strength: 0.5 });
+
   const path = `/faq/${category.categorySlug}`;
 
   return (
@@ -80,7 +85,7 @@ function FaqCategoryPage() {
       {/* Emitted only when there is at least one real question — see FaqSchema. */}
       <FaqSchema faqs={faqs} />
 
-      <main className="mx-auto w-full max-w-4xl px-3 pb-24 pt-6 sm:px-4">
+      <main ref={sceneRef} className="cx-scene mx-auto w-full max-w-4xl px-3 pb-24 pt-6 sm:px-4">
         <Breadcrumbs
           items={[
             { label: "Home", to: "/" },
@@ -94,7 +99,7 @@ function FaqCategoryPage() {
         </p>
         <h1
           ref={headingRef}
-          className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl"
+          className="cx-layer cx-z3 mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl"
         >
           {category.categoryName}
         </h1>

@@ -1,5 +1,12 @@
 import { Link, useLoaderData } from "@tanstack/react-router";
-import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  Fragment,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User } from "lucide-react";
 import type { IconType } from "react-icons";
@@ -32,7 +39,7 @@ import { FloatingDock } from "@/components/floating-dock";
 import { CategoryBadge } from "@/components/category-badge";
 import { Spotlight } from "@/components/spotlight";
 import { catalogQuery } from "@/lib/ideas.functions";
-import { usePageScrollProgress } from "@/motion";
+import { useDepthScene, usePageScrollProgress } from "@/motion";
 import { topCategories, typeGroups } from "@/lib/catalog-display";
 import { subscribeToNewsletter } from "@/lib/newsletter.functions";
 import { prefersReducedMotion } from "@/lib/motion";
@@ -359,7 +366,7 @@ function CategoryMega() {
             Browse by category
           </p>
 
-          <ul className="mt-4 grid gap-x-6 gap-y-0.5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-x-6 gap-y-0.5">
             {categories.map((c) => (
               <li key={c.categorySlug}>
                 <Link
@@ -413,7 +420,7 @@ function BrowseByTypeDropdown() {
       panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 max-h-[70vh] w-[min(46rem,92vw)] overflow-y-auto rounded-3xl p-6"
     >
       {(close) => (
-        <div className="grid gap-6 sm:grid-cols-3">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-6">
           {groups.map((group) => (
             <div key={group.title}>
               <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
@@ -504,7 +511,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
               type="button"
               onClick={onClose}
               aria-label="Close navigation menu"
-              className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
+              className="cx-press rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
             >
               ✕
             </button>
@@ -731,11 +738,19 @@ export function SiteShell({ children }: { children: ReactNode }) {
   // Publishes --page-p on :root; the rail under the header is the only thing
   // that reads it here, and it does so with a composited scaleX.
   usePageScrollProgress();
+  // The bar itself is a depth scene: it lights where the cursor is and its
+  // contents sit at three different depths, so the shell reads as a physical
+  // object the pointer is moving across rather than a strip of links. One
+  // listener for the whole header, on desktop pointers only.
+  const navSceneRef = useDepthScene<HTMLDivElement>({ strength: 0.55, scroll: false });
   const { data: catalog } = useCatalog();
   const allCategories = catalog?.categories ?? [];
   // Capped by design. See src/lib/catalog-display.ts for the measurements —
   // uncapped, this block was 3,300px of footer per page at 200 categories.
   const footerCategories = topCategories(allCategories, 5);
+  // The footer is on all 27 routes, so it gets the same depth grammar as
+  // the header — one scene, one shared frame callback, nothing per link.
+  const footerSceneRef = useDepthScene<HTMLDivElement>({ strength: 0.4 });
   return (
     <div className="relative flex min-h-screen flex-col text-foreground">
       <AmbientScene />
@@ -745,18 +760,25 @@ export function SiteShell({ children }: { children: ReactNode }) {
         <div aria-hidden className="mx-auto h-px max-w-6xl overflow-hidden rounded-full bg-border">
           <div className="mo-page-rail h-full w-full bg-accent" />
         </div>
-        <div className="glass-nav mx-auto mt-2 flex max-w-6xl items-center justify-between gap-4 rounded-full px-4 py-2.5 sm:px-6 sm:py-3">
+        <div
+          ref={navSceneRef}
+          className="glass-nav cx-scene cx-sheen mx-auto mt-2 flex max-w-6xl items-center justify-between gap-4 rounded-full px-4 py-2.5 sm:px-6 sm:py-3"
+        >
           <Link
             to="/"
             onClick={() => setMobileOpen(false)}
-            className="flex min-w-0 items-baseline gap-2"
+            className="cx-layer flex min-w-0 items-baseline gap-2"
+            style={{ "--z": 0.85 } as CSSProperties}
           >
             <span className="shrink-0 rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-0.5 text-sm font-black uppercase tracking-[0.18em] text-primary-foreground shadow-[0_0_24px_color-mix(in_oklab,var(--primary)_45%,transparent)] sm:text-lg">
               BBI
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-5 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground lg:flex">
+          <nav
+            style={{ "--z": 0.35 } as CSSProperties}
+            className="cx-layer hidden items-center gap-5 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground lg:flex"
+          >
             <CategoryMega />
             <BrowseByTypeDropdown />
             <LinkListDropdown label="Explore" items={EXPLORE_ITEMS} />
@@ -772,7 +794,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
             ))}
           </nav>
 
-          <div className="hidden shrink-0 items-center gap-2 lg:flex">
+          <div
+            style={{ "--z": 0.6 } as CSSProperties}
+            className="cx-layer hidden shrink-0 items-center gap-2 lg:flex"
+          >
             <LiveSearch className="w-44 xl:w-56" />
             <AuthButtons />
           </div>
@@ -782,7 +807,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             aria-expanded={mobileOpen}
             aria-label="Open navigation menu"
             onClick={() => setMobileOpen(true)}
-            className="flex shrink-0 flex-col gap-1.5 rounded-full border border-border px-3 py-2.5 lg:hidden"
+            className="cx-press flex shrink-0 flex-col gap-1.5 rounded-full border border-border px-3 py-2.5 lg:hidden"
           >
             <span aria-hidden className="block h-0.5 w-5 bg-foreground" />
             <span aria-hidden className="block h-0.5 w-5 bg-foreground" />
@@ -806,7 +831,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
       {/* pb-24 on mobile: the floating back-to-top / compass dock is fixed to
           the bottom-right and was sitting on top of the legal links. */}
       <footer className="px-3 pb-24 pt-20 sm:px-4 sm:pb-10 sm:pt-24">
-        <div className="bbi-footer mx-auto max-w-7xl rounded-3xl px-5 py-9 sm:px-12 sm:py-14">
+        <div
+          ref={footerSceneRef}
+          className="bbi-footer cx-scene mx-auto max-w-7xl rounded-3xl px-5 py-9 sm:px-12 sm:py-14"
+        >
           {/* Two columns on a phone, not one. Below sm: this was a single
               column with a 2.5rem gap, which stacked the four blocks into a
               1,249px ribbon on an 844px screen. These are short lists of
