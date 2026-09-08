@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
+import { VoidParticles } from "@/components/void-particles";
 import { CategoryBadge } from "@/components/category-badge";
 import { AdSlot } from "@/components/AdSlot";
 import { HeroSlider, Typewriter } from "@/components/hero-slider";
@@ -59,6 +60,10 @@ function HeroCta() {
     <Spotlight className="inline-block justify-self-start rounded-full">
       <Link
         to="/browse"
+        // data-cta="primary" is what the void binds the single filled violet
+        // pill to. The reference reserves that fill for one action per view,
+        // so this attribute appears exactly once on the page.
+        data-cta="primary"
         className="glass-pill inline-flex items-center justify-center rounded-full px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
         ref={magnetRef}
       >
@@ -318,6 +323,10 @@ function HomePage() {
 
   return (
     <SiteShell>
+      {/* The void's ambient triangle field. Sits behind everything, drifting.
+          Renders a single static frame under prefers-reduced-motion so the
+          texture survives when the movement is refused. */}
+      <VoidParticles />
       {/* AMBIENT TWIN RINGS — midnight-blue + rotating palette, hollow bands */}
       <div className="bbi-twin-ring ring-1" aria-hidden />
       <div className="bbi-twin-ring ring-2" aria-hidden />

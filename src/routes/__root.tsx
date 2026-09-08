@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -102,7 +103,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@200;300;400;500;600;700;800&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
@@ -114,8 +115,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  // The homepage runs its own visual world — the void. It is scoped to `/` by
+  // this class rather than by flipping the site's theme, so the other 25
+  // routes keep the light palette they were designed against. `light` stays on
+  // regardless: every token the void does not override still resolves from it.
+  // Written here, on the server-rendered <html>, so the void paints on first
+  // byte instead of flashing light and then repainting.
+  const isVoid = useRouterState({ select: (s) => s.location.pathname === "/" });
+
   return (
-    <html lang="en" className="light">
+    <html lang="en" className={isVoid ? "light bbi-void" : "light"}>
       <head>
         <HeadContent />
       </head>

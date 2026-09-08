@@ -2527,3 +2527,401 @@ html.bbi-motion [data-wave].revealed:not(:has(.rv)) {
 }
 
 
+
+/* ============================================================================
+   THE VOID — homepage visual world
+   ----------------------------------------------------------------------------
+   Scoped to `/` by `html.bbi-void` (set in routes/__root.tsx on the
+   server-rendered <html>, so it paints on first byte instead of flashing
+   light). The other 25 routes never see a byte of this.
+
+   Three cascade facts govern every selector below, all three learned here the
+   hard way and recorded in CLAUDE.md:
+
+   1. Tokens are declared in seven unlayered `:root` blocks and re-declared
+      under `html.light` at (0,1,1). `html.bbi-void` alone is ALSO (0,1,1) —
+      identical, so it would win only on source order. Every token override
+      here is written `html.light.bbi-void` at (0,2,1) so it wins on
+      specificity and does not depend on this block staying last in the file.
+   2. `@theme inline` aliases `--color-primary` to `var(--primary)`. So the
+      BASE variable is what gets written; writing the alias sets a value
+      nothing reads.
+   3. Unlayered rules beat every `@layer`, Tailwind's utilities included,
+      regardless of specificity. Everything here is deliberately unlayered —
+      that is what lets it retone utility-classed markup without touching the
+      markup.
+
+   `html.light` deliberately STAYS on alongside `bbi-void`: every token this
+   block does not override still resolves, so nothing renders unstyled.
+   ========================================================================= */
+
+html.light.bbi-void {
+  /* Dala palette. Measured against #000000:
+       #ffffff  21.0:1    body and headlines
+       #bdbdbd  10.4:1    tertiary copy
+       #9a9a9a   6.6:1    secondary and muted
+       #ffb829  11.9:1    emphasis, eyebrows, links
+       #8052ff   4.1:1    NEVER text — button ground only,
+                          where white on it measures 4.57:1
+     Violet failing as text is exactly why the brief reserves it for the
+     filled pill. It is not used as a foreground anywhere below. */
+  --color-void: #000000;
+  --color-bone-white: #ffffff;
+  --color-ash-gray: #9a9a9a;
+  --color-silver-mist: #bdbdbd;
+  --color-electric-iris: #8052ff;
+  --color-saffron-spark: #ffb829;
+  --color-deep-verdant: #15846e;
+
+  --background: #000000;
+  --background-2: #000000;
+  --foreground: #ffffff;
+  --foreground-hover: #ffffff;
+  --card: transparent;
+  --card-foreground: #ffffff;
+  --popover: #0a0a0a;
+  --popover-foreground: #ffffff;
+  --primary: #8052ff;
+  --primary-foreground: #ffffff;
+  --secondary: transparent;
+  --secondary-foreground: #ffffff;
+  --muted: rgba(255, 255, 255, 0.04);
+  --muted-foreground: #9a9a9a;
+  --accent: #8052ff;
+  --accent-foreground: #ffffff;
+  /* The void has no dividers. Borders resolve to nothing rather than being
+     unset per-element, so the 19 `border` utilities on the homepage go quiet
+     without one markup edit. */
+  --border: transparent;
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #8052ff;
+  --ember: #ffb829;
+  --warm: #ffb829;
+  --glass-border: transparent;
+  --violet: #8052ff;
+  --violet-soft: #a98bff;
+
+  /* The four highlight hues were measured for a near-white page. On pure
+     black every one of them falls under 4.5:1, so they are re-measured
+     against #000000 rather than carried over:
+       gold  #ffb829  11.9:1     green #3ddc97  11.6:1
+       coral #ff7a5c   8.2:1     teal  #4fd1c5  11.4:1 */
+  --hl-gold: #ffb829;
+  --hl-green: #3ddc97;
+  --hl-coral: #ff7a5c;
+  --hl-teal: #4fd1c5;
+
+  --radius: 24px;
+}
+
+/* `html.light body` sets its background with !important, so this needs both
+   the higher specificity AND the !important to land. */
+html.light.bbi-void body {
+  background-color: #000000 !important;
+  color: #ffffff;
+}
+
+/* The light theme paints two ambient washes on body::before/::after. In the
+   void the background is the design — nothing floats on top of it. */
+html.light.bbi-void body::before,
+html.light.bbi-void body::after {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Type. The brief's whole thesis: hierarchy from SCALE and TRACKING, never
+   from weight. Headlines and body are both weight 400 in the reference; body
+   drops to 200. Sizes are clamped so 113px display does not shred a 390px
+   phone — the ratio the reference specifies is preserved, the floor is not.
+   ------------------------------------------------------------------------ */
+html.light.bbi-void {
+  --void-tracking: -0.04em;
+}
+
+html.light.bbi-void h1,
+html.light.bbi-void h2,
+html.light.bbi-void h3,
+html.light.bbi-void h4 {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: #ffffff;
+  text-wrap: balance;
+}
+
+html.light.bbi-void h1 {
+  font-size: clamp(2.75rem, 8.4vw, 7.0625rem); /* → 113px */
+  line-height: 1.05;
+  letter-spacing: var(--void-tracking);
+}
+
+html.light.bbi-void h2 {
+  font-size: clamp(2.125rem, 5.6vw, 4.875rem); /* → 78px */
+  line-height: 1.08;
+  letter-spacing: var(--void-tracking);
+}
+
+html.light.bbi-void h3,
+html.light.bbi-void .t-card {
+  font-size: clamp(1.375rem, 2.4vw, 1.6875rem); /* → 27px */
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+/* Ultra-light body is the reference's signature and the thing most likely to
+   be lost — 200 was not in the font link before this, so it would have
+   silently rendered at 400. */
+html.light.bbi-void p,
+html.light.bbi-void li,
+html.light.bbi-void .t-lead {
+  font-family: var(--font-sans);
+  font-weight: 200;
+  font-size: clamp(1rem, 1.15vw, 1.125rem);
+  line-height: 1.55;
+  letter-spacing: normal;
+  color: #bdbdbd;
+}
+
+html.light.bbi-void .t-lead {
+  color: #ffffff;
+}
+
+html.light.bbi-void .t-meta,
+html.light.bbi-void small {
+  font-weight: 400;
+  color: #9a9a9a;
+}
+
+/* Amber, per the brief. The craft floor bans eyebrows outright; the pinned
+   brief mandates them, and a pinned brief overrides the floor. No NEW ones
+   were added — these are the 24 the page already carried. */
+html.light.bbi-void .t-eyebrow {
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.025em;
+  color: #ffb829;
+}
+
+html.light.bbi-void .t-eyebrow.hl-gold,
+html.light.bbi-void .hl-gold {
+  color: #ffb829;
+}
+html.light.bbi-void .hl-green { color: #3ddc97; }
+html.light.bbi-void .hl-coral { color: #ff7a5c; }
+html.light.bbi-void .hl-teal  { color: #4fd1c5; }
+
+/* ---------------------------------------------------------------------------
+   Surfaces. "The void is the design" — no panels, no cards, no dividers, no
+   shadows. The homepage carries 24 `.glass` and 6 `.mo-card`; rather than
+   editing 30 call sites, the surfaces are dissolved here.
+   ------------------------------------------------------------------------ */
+html.light.bbi-void .glass,
+html.light.bbi-void .glass-nav,
+html.light.bbi-void .glass-btn,
+html.light.bbi-void .glass-pill,
+html.light.bbi-void .mo-card {
+  background: transparent;
+  background-image: none;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Nothing in the void carries elevation. */
+html.light.bbi-void .shadow,
+html.light.bbi-void [class*="shadow-"] {
+  box-shadow: none;
+}
+
+/* The pills in the category ticker are the one place a hairline earns its
+   keep — without it a row of bare words stops reading as a set of controls. */
+html.light.bbi-void .glass-pill {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+  color: #bdbdbd;
+  font-weight: 400;
+}
+html.light.bbi-void .glass-pill:hover {
+  border-color: #8052ff;
+  color: #ffffff;
+}
+
+/* ---------------------------------------------------------------------------
+   The single violet pill. The brief is explicit that it is the only filled
+   action on a view, so it is bound to the primary button and nothing else.
+   ------------------------------------------------------------------------ */
+html.light.bbi-void .bbi-cta,
+html.light.bbi-void a[data-cta="primary"],
+html.light.bbi-void button[data-cta="primary"] {
+  background: #8052ff;
+  color: #ffffff;
+  border: 0;
+  border-radius: 9999px;
+  padding: 0.9rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  transition: background-color 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+html.light.bbi-void .bbi-cta:hover,
+html.light.bbi-void a[data-cta="primary"]:hover,
+html.light.bbi-void button[data-cta="primary"]:hover {
+  background: #9670ff;
+}
+
+/* Links: amber, never the browser default and never the violet, which fails
+   contrast as a foreground on black. */
+html.light.bbi-void a:not(.bbi-cta):not(.glass-pill):not(.t-eyebrow):not([data-cta="primary"]) {
+  color: inherit;
+  text-underline-offset: 0.28em;
+  text-decoration-color: rgba(255, 184, 41, 0.45);
+}
+html.light.bbi-void a:not(.bbi-cta):not(.glass-pill):not(.t-eyebrow):not([data-cta="primary"]):hover {
+  color: #ffb829;
+}
+
+/* ---------------------------------------------------------------------------
+   Browser surfaces — the parts nobody draws. Cheapest signal that a page was
+   built rather than assembled.
+   ------------------------------------------------------------------------ */
+html.light.bbi-void ::selection {
+  background: #8052ff;
+  color: #ffffff;
+}
+html.light.bbi-void {
+  caret-color: #ffb829;
+  scrollbar-color: #2a2a2a #000000;
+  accent-color: #8052ff;
+}
+html.light.bbi-void ::-webkit-scrollbar { width: 10px; height: 10px; }
+html.light.bbi-void ::-webkit-scrollbar-track { background: #000000; }
+html.light.bbi-void ::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 9999px;
+}
+html.light.bbi-void ::-webkit-scrollbar-thumb:hover { background: #8052ff; }
+html.light.bbi-void :focus-visible {
+  outline: 2px solid #ffb829;
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------------------
+   The tree, kept and retoned. It is BBI's own signature, not Dala's, and it
+   stays — its glow just stops being midnight-violet on near-white and becomes
+   a violet-to-amber bloom that reads as light in a void.
+   ------------------------------------------------------------------------ */
+html.light.bbi-void .tree-asset-container::before {
+  background: radial-gradient(
+    ellipse 54% 54% at 50% 48%,
+    rgba(128, 82, 255, 0.42) 0%,
+    rgba(255, 184, 41, 0.13) 32%,
+    rgba(0, 0, 0, 0) 68%
+  );
+}
+
+/* The twin ambient rings become the particle field's carrier: dimmer, and
+   tinted to the two brand hues rather than the site's midnight blue. */
+html.light.bbi-void .bbi-twin-ring.ring-1 { opacity: 0.28; filter: hue-rotate(18deg) saturate(1.5); }
+html.light.bbi-void .bbi-twin-ring.ring-2 { opacity: 0.2; filter: hue-rotate(-32deg) saturate(1.4); }
+
+/* ---------------------------------------------------------------------------
+   Rhythm. The reference is emphatic that density is the enemy: 60–120px
+   between sections, one or two things per viewport.
+   ------------------------------------------------------------------------ */
+html.light.bbi-void section {
+  padding-top: clamp(3.75rem, 7vw, 7.5rem);
+  padding-bottom: clamp(3.75rem, 7vw, 7.5rem);
+}
+
+/* The particle field. Fixed and behind everything, so it is a property of the
+   void itself rather than of any one section, and it never intercepts a
+   click. Only mounted on the homepage. */
+html.light.bbi-void .bbi-void-particles {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+html.light.bbi-void body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------------------------------------------------------------------------
+   The layered-!important trap.
+
+   CLAUDE.md records that unlayered rules beat every `@layer`. That is true for
+   NORMAL declarations and exactly backwards for `!important` ones: an
+   important declaration inside a layer beats an important declaration outside
+   every layer, whatever the specificity.
+
+   `html.light body` and `html.light .glass` both live in `@layer base` and
+   both mark their paint `!important`. So the unlayered void block above — with
+   higher specificity AND !important — still lost, and the page kept rendering
+   on #FCFBFE with white glass panels. Measured, not guessed: the harness read
+   `background-color: rgb(252, 251, 254)` off a page whose `--background` token
+   was already `#000`.
+
+   The fix is to meet them inside their own layer, where specificity decides
+   again and (0,2,2) beats (0,1,2). Only the declarations that actually collide
+   with a layered !important belong here; everything else stays unlayered
+   above, where it is already winning.
+   ------------------------------------------------------------------------ */
+@layer base {
+  html.light.bbi-void body {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  html.light.bbi-void .glass,
+  html.light.bbi-void .glass-nav,
+  html.light.bbi-void .glass-btn,
+  html.light.bbi-void .mo-card {
+    background: transparent !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+  }
+
+  /* The ticker pills keep their hairline — see the note above. */
+  html.light.bbi-void .glass-pill {
+    background: transparent !important;
+    background-image: none !important;
+    color: #bdbdbd !important;
+    box-shadow: none !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
+  }
+}
+
+/* The glass rim and inner wash live on pseudo-elements, not on the element, so
+   clearing the element's own background left them painting a pale violet
+   outline around every card on black. Caught in the render, not in review:
+   `.mo-card::before` computed to
+   `linear-gradient(135deg, rgba(182,181,227,0.68) ...)`.
+
+   `.tree-asset-container::before` is deliberately NOT in this list — it is the
+   tree's glow and is restyled above rather than removed. */
+@layer base {
+  html.light.bbi-void .glass::before,
+  html.light.bbi-void .glass::after,
+  html.light.bbi-void .glass-nav::before,
+  html.light.bbi-void .glass-nav::after,
+  html.light.bbi-void .glass-btn::before,
+  html.light.bbi-void .glass-btn::after,
+  html.light.bbi-void .glass-pill::before,
+  html.light.bbi-void .glass-pill::after,
+  html.light.bbi-void .mo-card::before,
+  html.light.bbi-void .mo-card::after {
+    background: none !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    opacity: 0 !important;
+  }
+}
