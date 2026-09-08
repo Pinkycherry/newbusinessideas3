@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions, useSuspenseQuery, useMutation } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { useState } from "react";
 
 import { VoidParticles } from "@/components/void-particles";
 import { VoidReveal, VoidHeadline } from "@/components/void-reveal";
@@ -10,7 +12,110 @@ import { BorderBeam } from "@/components/ui/border-beam";
 import { NumberTicker } from "@/components/ui/number-ticker";
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { KineticText } from "@/components/ui/kinetic-text";
-import { catalogQuery, getTrendingIdeas } from "@/lib/ideas.functions";
+import { Marquee } from "@/components/ui/marquee";
+import { Highlighter } from "@/components/ui/highlighter";
+import { LightRays } from "@/components/ui/light-rays";
+import { HyperText } from "@/components/ui/hyper-text";
+import { DemandBoard } from "@/components/demand-board";
+import { catalogQuery, getTrendingIdeas, getSurpriseIdeas } from "@/lib/ideas.functions";
+
+/** Restored from the pre-void homepage — the search-intent groups, unchanged. */
+const KEYWORD_GROUPS = [
+  {
+    heading: "By industry",
+    terms: ["fintech", "healthcare", "food and beverage", "fashion", "agriculture", "SaaS"],
+  },
+  {
+    heading: "By who you are",
+    terms: [
+      "retirees",
+      "veterans",
+      "teenagers",
+      "stay at home mom",
+      "solo entrepreneur",
+      "nurses",
+      "couples",
+      "senior care",
+    ],
+  },
+  {
+    heading: "By model",
+    terms: [
+      "dropshipping",
+      "subscription box",
+      "coaching",
+      "passive income",
+      "high profit",
+      "low overhead",
+      "recession proof",
+    ],
+  },
+];
+
+/**
+ * SURPRISE ME — restored. This is a real feature, not copy: it calls
+ * `getSurpriseIdeas`, which does the randomisation in SQL (ORDER BY random()),
+ * not a client-side shuffle of an already-loaded page. Dropping it in the
+ * recomposition removed working functionality, which is a different and worse
+ * mistake than dropping a paragraph.
+ */
+function SurpriseSection({
+  categories,
+}: {
+  categories: { categorySlug: string; categoryName: string }[];
+}) {
+  const [slug, setSlug] = useState("");
+  const run = useServerFn(getSurpriseIdeas);
+  const surprise = useMutation({
+    mutationFn: () => run({ data: { categorySlug: slug || undefined, limit: 3 } }),
+  });
+  const picks = surprise.data ?? [];
+
+  return (
+    <section className="v-surprise">
+      <VoidReveal dir="left" className="v-surprise-head">
+        <p className="t-eyebrow">Surprise me</p>
+        <h2 className="v-h2 v-h2-sm">Pick a category, or don&rsquo;t. We&rsquo;ll surprise you.</h2>
+      </VoidReveal>
+      <VoidReveal dir="up" delay={90} className="v-surprise-controls">
+        <select
+          className="v-select"
+          value={slug}
+          onChange={(e) => setSlug(e.target.value)}
+          aria-label="Category"
+        >
+          <option value="">Any category</option>
+          {categories.map((c) => (
+            <option key={c.categorySlug} value={c.categorySlug}>
+              {c.categoryName}
+            </option>
+          ))}
+        </select>
+        <button
+          type="button"
+          data-cta="primary"
+          onClick={() => surprise.mutate()}
+          disabled={surprise.isPending}
+        >
+          {surprise.isPending ? "Pulling…" : "Deal me three"}
+        </button>
+      </VoidReveal>
+      {picks.length > 0 && (
+        <ul className="v-surprise-out">
+          {picks.map((i) => (
+            <li key={i.ideaId}>
+              <Link to="/idea/$slug" params={{ slug: i.slug }}>
+                <span className="v-surprise-t">{i.title}</span>
+                <span className="v-surprise-c">{i.categoryName}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+      {surprise.isError && <p className="v-surprise-err">That pull failed. Try again.</p>}
+    </section>
+  );
+}
 
 const trendingQuery = queryOptions({
   queryKey: ["trending"],
@@ -104,6 +209,7 @@ function HomePage() {
 
       {/* ── 1. STAGE ─────────────────────────────────────────────────────── */}
       <section className="v-stage">
+        <LightRays />
         <VoidHeadline
           className="v-stage-h"
           lines={["Start from zero.", "Not from a", "blank page."]}
@@ -146,12 +252,29 @@ function HomePage() {
         </ol>
       </section>
 
+      {/* ── TRUST STRIP ──────────────────────────────────────────────────── */}
+      <section className="v-strip">
+        {[
+          [String(catalog.totalIdeas), "researched blueprints"],
+          [String(categories.length), "categories"],
+          ["0", "rupees, forever"],
+        ].map(([n, l], i) => (
+          <VoidReveal key={l} dir="up" delay={i * 90} className="v-strip-cell">
+            <span className="v-strip-n">{n}</span>
+            <span className="v-strip-l">{l}</span>
+          </VoidReveal>
+        ))}
+      </section>
+
       {/* ── 3. TREE — unchanged, by request ──────────────────────────────── */}
       <GoldenTreeSection categories={categories} />
 
       <div className="px-3 sm:px-4">
         <AdSlot position="homepage-hero-below" size="banner" />
       </div>
+
+      {/* ── SURPRISE ME — restored feature ───────────────────────────────── */}
+      <SurpriseSection categories={categories} />
 
       {/* ── 4. STATEMENT ─────────────────────────────────────────────────── */}
       <section className="v-statement">
@@ -164,7 +287,10 @@ function HomePage() {
             />
           </p>
           <p className="v-statement-sub">
-            Behind a paywall, before you see whether any of it was worth paying for.
+            <Highlighter action="underline" color="#ffb829">
+              Behind a paywall
+            </Highlighter>
+            , before you see whether any of it was worth paying for.
           </p>
         </VoidReveal>
       </section>
@@ -196,6 +322,38 @@ function HomePage() {
         </VoidReveal>
       </section>
 
+      {/* ── DEMAND BOARD — restored ──────────────────────────────────────── */}
+      <section className="v-demand">
+        <VoidReveal dir="left">
+          <p className="t-eyebrow">Where the demand is</p>
+          <h2 className="v-h2 v-h2-sm">Ordered by live trend score, not by our opinion.</h2>
+        </VoidReveal>
+        <DemandBoard ideas={trending} />
+      </section>
+
+      {/* ── HOW IT WORKS — restored, as a triptych ───────────────────────── */}
+      <section className="v-triptych">
+        <VoidReveal dir="left" className="v-triptych-head">
+          <p className="t-eyebrow">Step by step</p>
+          <h2 className="v-h2 v-h2-sm">
+            Grab the idea. Validate it however you want. Keep the money.
+          </h2>
+        </VoidReveal>
+        <div className="v-triptych-row">
+          {[
+            ["Grab", "Read the blueprint. Take the market context, the numbers, the warnings."],
+            ["Validate", "Check it with whatever you already use. Nothing here asks for a card."],
+            ["Keep", "The money you would have spent on a validation tool is still yours."],
+          ].map(([t, d], i) => (
+            <VoidReveal key={t} dir="up" delay={i * 110} className="v-tri">
+              <span className="v-tri-n">{i + 1}</span>
+              <span className="v-tri-t">{t}</span>
+              <span className="v-tri-d">{d}</span>
+            </VoidReveal>
+          ))}
+        </div>
+      </section>
+
       {/* ── 6. WALL ──────────────────────────────────────────────────────── */}
       <section className="v-wall">
         <VoidReveal dir="left" className="v-wall-head">
@@ -216,6 +374,61 @@ function HomePage() {
             </VoidReveal>
           ))}
         </ul>
+      </section>
+
+      {/* ── KEYWORD MARQUEE — restored ───────────────────────────────────── */}
+      <section className="v-mq-sec">
+        <VoidReveal dir="left" className="v-mq-head">
+          <p className="t-eyebrow">Every angle covered</p>
+          <h2 className="v-h2 v-h2-sm">Business ideas by industry, founder, and model.</h2>
+        </VoidReveal>
+        {KEYWORD_GROUPS.map((g, gi) => (
+          <div key={g.heading} className="v-mq-group">
+            <p className="v-mq-h">{g.heading}</p>
+            <Marquee reverse={gi % 2 === 1} duration={44 + gi * 8}>
+              {g.terms.map((term) => (
+                <Link key={term} to="/search" search={{ q: term }} className="v-mq-term">
+                  {term}
+                </Link>
+              ))}
+            </Marquee>
+          </div>
+        ))}
+      </section>
+
+      {/* ── BRAND STATEMENT — restored ───────────────────────────────────── */}
+      <section className="v-brand">
+        <VoidReveal dir="up">
+          <p className="t-eyebrow">Who we are</p>
+          <p className="v-brand-mark">
+            <HyperText text="BRO BUSINESS IDEAS" />
+          </p>
+          <p className="v-brand-sub">
+            A library, not a launchpad. The research is the product, and it is open.
+          </p>
+        </VoidReveal>
+      </section>
+
+      {/* ── INSPIRED BY — restored, as a quote ───────────────────────────── */}
+      <section className="v-quote">
+        <VoidReveal dir="up">
+          <blockquote className="v-quote-b">
+            We didn&rsquo;t invent this model. We learned it — from the people who had already
+            started something and were willing to say what it actually cost them.
+          </blockquote>
+          <p className="v-quote-c">Where this came from</p>
+        </VoidReveal>
+      </section>
+
+      {/* ── TEAM — restored, one line ────────────────────────────────────── */}
+      <section className="v-team">
+        <VoidReveal dir="left">
+          <p className="t-eyebrow">Who&rsquo;s behind this</p>
+          <p className="v-team-l">
+            Built by hand, not by a headcount. One person, researching and writing, with the ideas,
+            the model and the architecture their own.
+          </p>
+        </VoidReveal>
       </section>
 
       {/* ── 7. COLUMN ────────────────────────────────────────────────────── */}
