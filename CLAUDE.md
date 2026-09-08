@@ -119,6 +119,29 @@ MarkItDown also offers Azure Document Intelligence, Azure Content
 Understanding, and OpenAI-generated image descriptions. All three are billable
 and all three stay switched off under the free-tiers rule above.
 
+## Designing and building UI
+
+Standing workflow for any request to design, redesign or touch UI. It does not
+need to be restated each time. Full version, including the install commands, is
+in `DESIGN_WORKFLOW.md` — that file is the portable copy for other projects.
+
+- **Lead with Impeccable.** `/impeccable init` for a new page, `audit` to
+  review, `animate` for motion. Init writes `PRODUCT.md` and the skill blocks
+  new-surface work until it exists — this repo does not have one yet.
+- **`frontend-design` loads itself.** Do not invoke it manually.
+- **Refero, Godly, Landbook, Awwwards, Dribbble, Mobbin are inspiration only.**
+  Never reproduce a design as-is, never lift branded UI.
+- **Components, in order:** 21st.dev → Aceternity → Magic UI → React Bits →
+  Cocoon UI → Motion Primitives → Animate UI → Cult UI. Stop at the first real
+  fit rather than surveying all eight.
+- **Scroll choreography → the GSAP skills** (`gsap-scrolltrigger`,
+  `gsap-timeline`, and six more). Pinning, triggers, scrubbing.
+- **3D → Claude Design Skillstack.** Marketplace is configured;
+  `core-3d-animation` is deliberately not installed until 3D is asked for.
+
+The free-tiers rule and the never-name-an-AI-vendor rule above both bind this
+workflow, including anything these skills generate.
+
 ## Where things stand
 
 See `wp-theme/bbi/README.md` for the theme, and PR #22 for the full history.
