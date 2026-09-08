@@ -2587,12 +2587,17 @@ html.light.bbi-void {
   --secondary-foreground: #ffffff;
   --muted: rgba(255, 255, 255, 0.04);
   --muted-foreground: #9a9a9a;
-  --accent: #8052ff;
-  --accent-foreground: #ffffff;
-  /* The void has no dividers. Borders resolve to nothing rather than being
-     unset per-element, so the 19 `border` utilities on the homepage go quiet
-     without one markup edit. */
-  --border: transparent;
+  /* --accent is used as a TEXT colour by the shell (`text-accent`, 7 places
+     in site-shell.tsx). Violet measures 4.1:1 on black and fails, which is
+     why the nav rendered as dark-violet-on-black and was unreadable. Amber
+     reads 11.9:1. --primary keeps the violet, because that one is only ever
+     a button ground. */
+  --accent: #ffb829;
+  --accent-foreground: #000000;
+  /* Faint rather than absent. Fully transparent also erased the footer's
+     column rules and the header's edge, which are structure, not decoration.
+     Content cards get their borders removed individually instead. */
+  --border: rgba(255, 255, 255, 0.10);
   --input: rgba(255, 255, 255, 0.12);
   --ring: #8052ff;
   --ember: #ffb829;
@@ -2716,17 +2721,16 @@ html.light.bbi-void .hl-teal  { color: #4fd1c5; }
    shadows. The homepage carries 24 `.glass` and 6 `.mo-card`; rather than
    editing 30 call sites, the surfaces are dissolved here.
    ------------------------------------------------------------------------ */
-html.light.bbi-void .glass,
-html.light.bbi-void .glass-nav,
-html.light.bbi-void .glass-btn,
-html.light.bbi-void .glass-pill,
+/* The rebuilt homepage contains no `.glass` and no `.mo-card` — every card
+   became an editorial row. So these classes now only ever appear in the SHELL:
+   the header bar, the dropdown panels, the mobile drawer. Dissolving them made
+   the dropdowns transparent, which is why the hero headline read straight
+   through the open mega-menu. They get real surfaces instead. */
 html.light.bbi-void .mo-card {
   background: transparent;
   background-image: none;
   border-color: transparent;
   box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
 }
 
 /* Nothing in the void carries elevation. */
@@ -2878,9 +2882,30 @@ html.light.bbi-void body > * {
     color: #ffffff !important;
   }
 
+  /* Shell surfaces. `html.light .glass*` paints them near-white with
+     !important from inside @layer base, so these have to meet it in the same
+     layer at higher specificity or the header renders as a white slab. */
   html.light.bbi-void .glass,
-  html.light.bbi-void .glass-nav,
-  html.light.bbi-void .glass-btn,
+  html.light.bbi-void .glass-btn {
+    background: rgba(255, 255, 255, 0.045) !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+
+  /* The header bar, every dropdown panel and the mobile drawer. These must be
+     OPAQUE: a dropdown you can read the page through is not a dropdown. */
+  html.light.bbi-void .glass-nav {
+    background: rgba(5, 5, 7, 0.985) !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.9) !important;
+    backdrop-filter: blur(18px) saturate(1.1) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.1) !important;
+  }
+
   html.light.bbi-void .mo-card {
     background: transparent !important;
     background-image: none !important;
@@ -2908,14 +2933,6 @@ html.light.bbi-void body > * {
    `.tree-asset-container::before` is deliberately NOT in this list — it is the
    tree's glow and is restyled above rather than removed. */
 @layer base {
-  html.light.bbi-void .glass::before,
-  html.light.bbi-void .glass::after,
-  html.light.bbi-void .glass-nav::before,
-  html.light.bbi-void .glass-nav::after,
-  html.light.bbi-void .glass-btn::before,
-  html.light.bbi-void .glass-btn::after,
-  html.light.bbi-void .glass-pill::before,
-  html.light.bbi-void .glass-pill::after,
   html.light.bbi-void .mo-card::before,
   html.light.bbi-void .mo-card::after {
     background: none !important;
@@ -3103,5 +3120,237 @@ html.light.bbi-void [data-void-headline][data-revealed="true"] .vh-inner {
     transition: none !important;
     clip-path: none !important;
     transform: none !important;
+  }
+}
+
+/* ============================================================================
+   THE VOID — shell
+   ----------------------------------------------------------------------------
+   The header, its dropdowns, the mobile drawer and the footer are shared
+   components built against the light palette. Recolouring the page body and
+   leaving them alone produced dark-violet nav labels on black and mega-menus
+   you could read the hero through. They get deliberate void treatment here.
+   ========================================================================= */
+
+/* --- Nav ---------------------------------------------------------------- */
+html.light.bbi-void header a,
+html.light.bbi-void header button {
+  color: #bdbdbd;
+}
+html.light.bbi-void header a:hover,
+html.light.bbi-void header button:hover,
+html.light.bbi-void header a[aria-expanded="true"],
+html.light.bbi-void header button[aria-expanded="true"] {
+  color: #ffffff;
+}
+
+/* Section labels inside the mega-menu ("BY INVESTMENT", "BY INDUSTRY"). */
+html.light.bbi-void .text-accent { color: #ffb829; }
+
+/* Dropdown rows: the whole row is the target, and it lights rather than
+   moves — the instruction to strip hover movement from panels still stands. */
+html.light.bbi-void .glass-nav a,
+html.light.bbi-void .glass-nav button {
+  border-radius: 12px;
+  transition:
+    background-color 200ms cubic-bezier(0.33, 1, 0.68, 1),
+    color 200ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+html.light.bbi-void .glass-nav a:hover,
+html.light.bbi-void .glass-nav button:hover {
+  background-color: rgba(128, 82, 255, 0.16);
+  color: #ffffff;
+}
+
+/* The count badges beside each category in the mega-menu. */
+html.light.bbi-void .glass-nav .text-muted-foreground { color: #9a9a9a; }
+
+/* Search field. */
+html.light.bbi-void header input,
+html.light.bbi-void .glass-nav input {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+}
+html.light.bbi-void header input::placeholder,
+html.light.bbi-void .glass-nav input::placeholder { color: #7c7c7c; }
+html.light.bbi-void header input:focus-visible,
+html.light.bbi-void .glass-nav input:focus-visible {
+  outline: none;
+  border-color: #8052ff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* --- Footer ------------------------------------------------------------- */
+html.light.bbi-void footer { border-top: 1px solid rgba(255, 255, 255, 0.10); }
+html.light.bbi-void .bbi-footer-heading {
+  color: #ffffff;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+html.light.bbi-void .bbi-footer-link {
+  color: #9a9a9a;
+  font-weight: 200;
+  transition: color 200ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+html.light.bbi-void .bbi-footer-link:hover { color: #ffb829; }
+
+/* `bg-foreground` resolves to white in the void — correct for the newsletter
+   submit, wrong for anything else, so it is pinned to the one control. */
+html.light.bbi-void footer button[type="submit"] {
+  background: #8052ff;
+  color: #ffffff;
+  border: 0;
+}
+html.light.bbi-void footer button[type="submit"]:hover { background: #9670ff; }
+
+/* --- Mobile drawer ------------------------------------------------------ */
+html.light.bbi-void .glass-nav .hover\:bg-secondary:hover {
+  background-color: rgba(128, 82, 255, 0.16) !important;
+}
+
+/* --- Border Beam (Magic UI) ---------------------------------------------- */
+/* offset-path runs the light around the element's own rounded rectangle, so it
+   follows the pill's radius exactly instead of approximating it with a
+   conic-gradient square. Compositor-only: no main-thread cost. */
+html.light.bbi-void .bbi-beam {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  overflow: hidden;
+}
+html.light.bbi-void .bbi-beam::after {
+  content: "";
+  position: absolute;
+  width: var(--beam-size, 62px);
+  aspect-ratio: 1;
+  offset-path: rect(0 auto auto 0 round var(--beam-size, 62px));
+  background: radial-gradient(
+    circle at center,
+    var(--beam-from, #8052ff) 0%,
+    var(--beam-to, #ffb829) 45%,
+    transparent 72%
+  );
+  opacity: 0.85;
+  animation: bbi-beam-run var(--beam-duration, 7s) linear infinite;
+  animation-delay: var(--beam-delay, 0s);
+}
+@keyframes bbi-beam-run {
+  to { offset-distance: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.light.bbi-void .bbi-beam::after { animation: none; opacity: 0.35; }
+}
+
+/* The primary pill hosts the beam, so it needs to be a positioning context and
+   must clip it to the pill's own shape. */
+html.light.bbi-void a[data-cta="primary"],
+html.light.bbi-void button[data-cta="primary"] {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The shell's light theme paints every link and button inside a nav panel
+   `#0c0c25 !important` from inside @layer base:
+
+     html.light .glass-nav a, html.light .glass-nav button { color:#0c0c25!important }
+     html.light .glass-btn *, html.light .glass-pill *      { color:#0c0c25!important }
+
+   Unlayered rules cannot beat a layered !important, so the void's nav colours
+   lost and the menu rendered near-black text on a near-black panel. Same fix
+   as the body background before it: meet them inside their own layer, where
+   specificity decides. */
+@layer base {
+  html.light.bbi-void .glass-nav a,
+  html.light.bbi-void .glass-nav button,
+  html.light.bbi-void .glass-btn *,
+  html.light.bbi-void .glass-pill * {
+    color: #bdbdbd !important;
+  }
+
+  html.light.bbi-void .glass-nav a:hover,
+  html.light.bbi-void .glass-nav button:hover,
+  html.light.bbi-void .glass-nav a[aria-expanded="true"],
+  html.light.bbi-void .glass-nav button[aria-expanded="true"],
+  html.light.bbi-void .glass-nav a[aria-current="page"] {
+    color: #ffffff !important;
+  }
+
+  /* Section labels in the mega-menu stay amber — they are the one accent in
+     the panel and the only thing giving it structure. */
+  html.light.bbi-void .glass-nav .text-accent,
+  html.light.bbi-void .text-accent {
+    color: #ffb829 !important;
+  }
+
+  /* Counts beside each category stay quiet. */
+  html.light.bbi-void .glass-nav .text-muted-foreground {
+    color: #8a8a8a !important;
+  }
+
+  /* The header's own primary pill keeps the violet ground and white type. */
+  html.light.bbi-void [data-cta="primary"],
+  html.light.bbi-void [data-cta="primary"] * {
+    color: #ffffff !important;
+  }
+}
+
+/* --- Animated Shiny Text (Magic UI) -------------------------------------- */
+/* The text keeps its solid token colour; only a narrow highlight rides over
+   it. Gradient-clipped text would drop the copy below its measured contrast
+   at the sweep's trailing edge, and the craft floor bans gradient text. */
+html.light.bbi-void .bbi-shiny {
+  position: relative;
+  display: inline-block;
+}
+html.light.bbi-void .bbi-shiny::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 100%
+  );
+  background-size: var(--shiny-width, 110px) 100%;
+  background-repeat: no-repeat;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  animation: bbi-shiny-sweep var(--shiny-duration, 5s) cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+@keyframes bbi-shiny-sweep {
+  0%        { background-position: calc(0% - var(--shiny-width, 110px)) 0; }
+  60%, 100% { background-position: calc(100% + var(--shiny-width, 110px)) 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.light.bbi-void .bbi-shiny::after { animation: none; opacity: 0; }
+}
+
+/* --- Animated List (Magic UI) -------------------------------------------- */
+html.light.bbi-void .bbi-alist { list-style: none; margin: 0; padding: 0; }
+html.light.bbi-void .bbi-alist-item {
+  clip-path: inset(0 0 34% 0);
+  transform: translate3d(0, 12px, 0);
+  transition:
+    clip-path 900ms cubic-bezier(0.33, 1, 0.68, 1),
+    transform 900ms cubic-bezier(0.33, 1, 0.68, 1);
+  will-change: clip-path, transform;
+}
+html.light.bbi-void .bbi-alist[data-started="true"] .bbi-alist-item {
+  clip-path: inset(0 0 0 0);
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.light.bbi-void .bbi-alist-item {
+    transition: none;
+    clip-path: none;
+    transform: none;
   }
 }

@@ -7,6 +7,10 @@ import { VoidParticles } from "@/components/void-particles";
 import { VoidReveal, VoidHeadline } from "@/components/void-reveal";
 import { GoldenTreeSection } from "@/components/golden-tree-section";
 import { AdSlot } from "@/components/AdSlot";
+import { BorderBeam } from "@/components/ui/border-beam";
+import { NumberTicker } from "@/components/ui/number-ticker";
+import { AnimatedList } from "@/components/ui/animated-list";
+import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { catalogQuery, getTrendingIdeas } from "@/lib/ideas.functions";
 
 const trendingQuery = queryOptions({
@@ -127,11 +131,16 @@ function HomePage() {
           <div className="bbi-hero-cta">
             <Link to="/browse" data-cta="primary">
               Browse the library
+              <BorderBeam size={70} duration={6} />
             </Link>
           </div>
           <p className="t-meta bbi-hero-meta">
-            {catalog.totalIdeas} researched blueprints across {categories.length} categories. Free,
-            no account.
+            <AnimatedShinyText>
+              <NumberTicker value={catalog.totalIdeas} startValue={0} delay={700} /> researched
+              blueprints across{" "}
+              <NumberTicker value={categories.length} startValue={0} delay={900} /> categories.
+              Free, no account.
+            </AnimatedShinyText>
           </p>
         </VoidReveal>
       </section>
@@ -191,16 +200,19 @@ function HomePage() {
           <p className="t-eyebrow">Moving right now</p>
           <h2 className="bbi-beat-h bbi-beat-h-wide">What the library actually tells you.</h2>
         </VoidReveal>
-        <ul className="bbi-list">
-          {topIdeas.map((idea, i) => (
-            <VoidReveal as="li" key={idea.ideaId} dir="up" delay={i * 70} className="bbi-row">
-              <Link to="/idea/$slug" params={{ slug: idea.slug }} className="bbi-row-link">
-                <span className="bbi-row-title">{idea.title}</span>
-                <span className="bbi-row-cat">{idea.categoryName}</span>
-              </Link>
-            </VoidReveal>
+        <AnimatedList className="bbi-list" delay={90}>
+          {topIdeas.map((idea) => (
+            <Link
+              key={idea.ideaId}
+              to="/idea/$slug"
+              params={{ slug: idea.slug }}
+              className="bbi-row-link"
+            >
+              <span className="bbi-row-title">{idea.title}</span>
+              <span className="bbi-row-cat">{idea.categoryName}</span>
+            </Link>
           ))}
-        </ul>
+        </AnimatedList>
         <VoidReveal dir="up" delay={120}>
           <p className="bbi-list-foot">
             <Link to="/browse">See all {catalog.totalIdeas} blueprints</Link>
