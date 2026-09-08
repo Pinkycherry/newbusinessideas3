@@ -2826,10 +2826,14 @@ html.light.bbi-void .tree-asset-container::before {
   );
 }
 
-/* The twin ambient rings become the particle field's carrier: dimmer, and
-   tinted to the two brand hues rather than the site's midnight blue. */
-html.light.bbi-void .bbi-twin-ring.ring-1 { opacity: 0.28; filter: hue-rotate(18deg) saturate(1.5); }
-html.light.bbi-void .bbi-twin-ring.ring-2 { opacity: 0.2; filter: hue-rotate(-32deg) saturate(1.4); }
+/* The twin rings are deliberately NOT overridden here.
+   They were, and it broke them: `filter` is a single property, so writing
+   `filter: hue-rotate(...)` REPLACED the base rule's `filter: blur(28px)`.
+   The soft blobs became hard bright rings, and with `mix-blend-mode: screen`
+   they added light directly behind the copy — which is what made the text
+   look washed out and unreadable on the deployed page.
+
+   They keep their original CSS, which is what "as it is" meant. */
 
 /* ---------------------------------------------------------------------------
    Rhythm. The reference is emphatic that density is the enemy: 60–120px
@@ -2851,7 +2855,15 @@ html.light.bbi-void .bbi-void-particles {
   pointer-events: none;
   display: block;
 }
-html.light.bbi-void body > * {
+/* Lift page content above the fixed background layers WITHOUT touching them.
+   The previous form of this rule was `body > *`, which also hit
+   `.bbi-twin-ring` — and `position: relative` overrode their `position: fixed`,
+   dropping two large blocks into the document flow. That was the empty band
+   above the header, and it was doing it on the deployed page. */
+/* `header` is excluded too: the blanket rule was flattening the sticky
+   header to z-index 1, so a later section painted over its open dropdown and
+   the headline appeared on top of the menu. */
+html.light.bbi-void body > *:not(.bbi-void-particles):not(.bbi-twin-ring):not(header) {
   position: relative;
   z-index: 1;
 }
@@ -3352,5 +3364,598 @@ html.light.bbi-void .bbi-alist[data-started="true"] .bbi-alist-item {
     transition: none;
     clip-path: none;
     transform: none;
+  }
+}
+
+/* ============================================================================
+   THE VOID — its own header and footer
+   ----------------------------------------------------------------------------
+   These style `void-shell.tsx`, which the homepage renders instead of
+   SiteShell. Nothing here can affect the other 25 routes: they render a
+   different component entirely, and none of these class names exist on them.
+   ========================================================================= */
+
+/* --- Header ------------------------------------------------------------- */
+html.light.bbi-void .vs-header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  /* The reference is explicit: no pill container, no border, no backdrop blur
+     on the bar itself. It sits directly on the canvas. A fade under it stops
+     the headline colliding with the links as the page scrolls beneath. */
+  background: linear-gradient(#000000 42%, rgba(0, 0, 0, 0.82) 78%, transparent 100%);
+}
+html.light.bbi-void .vs-bar {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.125rem clamp(1.25rem, 4vw, 3rem) 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+}
+html.light.bbi-void .vs-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffffff;
+  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+html.light.bbi-void .vs-mark { color: #8052ff; }
+
+html.light.bbi-void .vs-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.75rem);
+  margin-right: auto;
+}
+@media (max-width: 1023px) { html.light.bbi-void .vs-nav { display: none; } }
+
+html.light.bbi-void .vs-navlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: none;
+  border: 0;
+  padding: 0.375rem 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  color: #9a9a9a;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 200ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+html.light.bbi-void .vs-navlink:hover,
+html.light.bbi-void .vs-navlink[aria-expanded="true"] { color: #ffffff; }
+
+html.light.bbi-void .vs-caret {
+  width: 4px; height: 4px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg) translateY(-1px);
+  transition: transform 220ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+html.light.bbi-void .vs-navlink[aria-expanded="true"] .vs-caret {
+  transform: rotate(-135deg) translateY(-1px);
+}
+
+/* --- Dropdown ----------------------------------------------------------- */
+html.light.bbi-void .vs-menu { position: relative; }
+html.light.bbi-void .vs-panel {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 0;
+  z-index: 70;
+  min-width: 16rem;
+  padding: 1rem;
+  border-radius: 20px;
+  /* Solid, not translucent. A dropdown you can read the page through is not a
+     dropdown — that was the defect in the last build. */
+  background: #050507;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 28px 70px -24px rgba(0, 0, 0, 0.95);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition:
+    opacity 200ms cubic-bezier(0.33, 1, 0.68, 1),
+    transform 200ms cubic-bezier(0.33, 1, 0.68, 1),
+    visibility 0s linear 200ms;
+}
+html.light.bbi-void .vs-panel[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+html.light.bbi-void .vs-panel.is-wide { width: min(46rem, calc(100vw - 3rem)); padding: 1.5rem; }
+html.light.bbi-void .vs-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.125rem 1.5rem;
+  margin-top: 0.75rem;
+}
+@media (max-width: 700px) {
+  html.light.bbi-void .vs-panel.is-wide { width: min(22rem, calc(100vw - 2rem)); }
+  html.light.bbi-void .vs-panel-grid { grid-template-columns: 1fr; }
+}
+html.light.bbi-void .vs-panel-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ffb829;
+  margin: 0;
+}
+html.light.bbi-void .vs-panel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.5625rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  font-weight: 200;
+  color: #bdbdbd;
+  text-decoration: none;
+  /* Lights, never moves. Panels do not travel on hover. */
+  transition:
+    background-color 180ms cubic-bezier(0.33, 1, 0.68, 1),
+    color 180ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+html.light.bbi-void .vs-panel-row:hover {
+  background: rgba(128, 82, 255, 0.18);
+  color: #ffffff;
+}
+html.light.bbi-void .vs-count { font-size: 0.75rem; color: #7c7c7c; flex-shrink: 0; }
+html.light.bbi-void .vs-panel-foot {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  padding-top: 0.875rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+html.light.bbi-void .vs-panel-foot a {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9a9a9a;
+  text-decoration: none;
+}
+html.light.bbi-void .vs-panel-foot a:hover { color: #ffb829; }
+
+/* --- Actions ------------------------------------------------------------ */
+html.light.bbi-void .vs-actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.625rem, 1.5vw, 1.25rem);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+html.light.bbi-void .vs-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9375rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #9a9a9a;
+  font-size: 0.8125rem;
+  font-weight: 200;
+  text-decoration: none;
+  transition:
+    border-color 200ms cubic-bezier(0.33, 1, 0.68, 1),
+    color 200ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+html.light.bbi-void .vs-search:hover { border-color: #8052ff; color: #ffffff; }
+@media (max-width: 1150px) { html.light.bbi-void .vs-search span { display: none; } }
+
+html.light.bbi-void .vs-signin {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9a9a9a;
+  text-decoration: none;
+  transition: color 200ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+html.light.bbi-void .vs-signin:hover { color: #ffffff; }
+@media (max-width: 640px) { html.light.bbi-void .vs-signin { display: none; } }
+
+html.light.bbi-void .vs-cta { text-decoration: none; white-space: nowrap; }
+@media (max-width: 480px) { html.light.bbi-void .vs-cta { display: none; } }
+
+html.light.bbi-void .vs-burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: 0;
+  padding: 8px 4px;
+  cursor: pointer;
+}
+html.light.bbi-void .vs-burger span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: #ffffff;
+}
+@media (max-width: 1023px) { html.light.bbi-void .vs-burger { display: flex; } }
+
+/* --- Mobile drawer ------------------------------------------------------ */
+html.light.bbi-void .vs-drawer {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: min(22rem, 92vw);
+  z-index: 80;
+  padding: 1.25rem;
+  overflow-y: auto;
+  background: #050507;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition:
+    transform 380ms cubic-bezier(0.33, 1, 0.68, 1),
+    visibility 0s linear 380ms;
+}
+html.light.bbi-void .vs-drawer[data-open="true"] {
+  transform: translateX(0);
+  visibility: visible;
+  transition-delay: 0s;
+}
+html.light.bbi-void .vs-drawer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+html.light.bbi-void .vs-drawer-top button {
+  background: none;
+  border: 0;
+  color: #9a9a9a;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+html.light.bbi-void .vs-drawer .vs-panel-label { margin: 1.25rem 0 0.5rem; }
+html.light.bbi-void .vs-drawer-cta {
+  display: block;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+/* --- Footer ------------------------------------------------------------- */
+html.light.bbi-void .vs-footer {
+  max-width: 1280px;
+  margin: clamp(4rem, 8vw, 7rem) auto 0;
+  padding: clamp(2.5rem, 5vw, 4rem) clamp(1.25rem, 4vw, 3rem) clamp(3rem, 6vw, 4.5rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+html.light.bbi-void .vs-footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+}
+@media (max-width: 860px) { html.light.bbi-void .vs-footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { html.light.bbi-void .vs-footer-grid { grid-template-columns: 1fr; } }
+
+html.light.bbi-void .vs-footer-h {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ffb829;
+  margin: 0 0 0.875rem;
+}
+html.light.bbi-void .vs-footer-link {
+  display: block;
+  padding: 0.3125rem 0;
+  font-size: 0.9375rem;
+  font-weight: 200;
+  color: #9a9a9a;
+  text-decoration: none;
+  transition: color 200ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+html.light.bbi-void .vs-footer-link:hover { color: #ffb829; }
+html.light.bbi-void .vs-footer-more { color: #bdbdbd; }
+
+html.light.bbi-void .vs-footer-base {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+html.light.bbi-void .vs-footer-base p {
+  font-size: 0.8125rem;
+  color: #7c7c7c;
+  margin: 0;
+}
+html.light.bbi-void .vs-footer-note { margin-top: 0.375rem !important; color: #626262 !important; }
+
+/* ============================================================================
+   THE VOID — seven section forms
+   ----------------------------------------------------------------------------
+   Each of these is a different KIND of block, not the same block respaced.
+   Wide against narrow, dense against spacious, tabular against display.
+   ========================================================================= */
+
+/* Text sits above the ambient rings and the particle field, always. Both are
+   fixed at z-index 0; every readable thing is above them with its own ground
+   where it needs one. */
+html.light.bbi-void .v-stage,
+html.light.bbi-void .v-ledger,
+html.light.bbi-void .v-statement,
+html.light.bbi-void .v-list-sec,
+html.light.bbi-void .v-wall,
+html.light.bbi-void .v-column { position: relative; z-index: 2; }
+
+/* --- 1. STAGE: the headline IS the composition --------------------------- */
+html.light.bbi-void .v-stage {
+  max-width: 1280px;
+  margin: 0 auto;
+  /* Top padding clears the sticky header; without it the header sat on the
+     first line of the headline. */
+  padding: clamp(2.5rem, 7vh, 5rem) clamp(1.25rem, 4vw, 3rem) clamp(3rem, 7vh, 5rem);
+  min-height: min(78vh, 780px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+html.light.bbi-void .v-stage-h {
+  font-size: clamp(2.9rem, 9.2vw, 7.75rem);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  font-weight: 400;
+  margin: 0;
+}
+html.light.bbi-void .v-stage-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  margin-top: clamp(2rem, 5vh, 3.5rem);
+}
+html.light.bbi-void .v-stage-lead { max-width: 34rem; }
+html.light.bbi-void .v-stage-lead p { color: #d0d0d0; margin: 0 0 1.75rem; }
+html.light.bbi-void .v-stage-cta { text-decoration: none; }
+html.light.bbi-void .v-stage-stat { text-align: right; flex-shrink: 0; }
+html.light.bbi-void .v-stat-n {
+  display: block;
+  font-size: clamp(2.5rem, 5.6vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+}
+html.light.bbi-void .v-stat-l {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffb829;
+}
+@media (max-width: 720px) {
+  html.light.bbi-void .v-stage-foot { flex-direction: column; align-items: flex-start; }
+  html.light.bbi-void .v-stage-stat { text-align: left; }
+}
+
+/* --- 2. LEDGER: tabular, no prose --------------------------------------- */
+html.light.bbi-void .v-ledger {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem);
+}
+html.light.bbi-void .v-ledger-rows { list-style: none; margin: 1.75rem 0 0; padding: 0; }
+html.light.bbi-void .v-ledger-row {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(9rem, 15rem) 1fr;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: baseline;
+  padding: clamp(1rem, 2vw, 1.5rem) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+html.light.bbi-void .v-ledger-row:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.09); }
+html.light.bbi-void .v-ledger-n {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: #ffb829;
+  font-variant-numeric: tabular-nums;
+}
+html.light.bbi-void .v-ledger-t {
+  font-size: clamp(1.0625rem, 1.9vw, 1.5rem);
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+html.light.bbi-void .v-ledger-d { color: #b4b4b4; font-weight: 200; }
+@media (max-width: 720px) {
+  html.light.bbi-void .v-ledger-row { grid-template-columns: 2.25rem 1fr; gap: 0.5rem 1rem; }
+  html.light.bbi-void .v-ledger-d { grid-column: 2; }
+}
+
+/* --- 4. STATEMENT: one sentence, alone ---------------------------------- */
+html.light.bbi-void .v-statement {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: clamp(4.5rem, 11vw, 9rem) clamp(1.25rem, 4vw, 3rem);
+  text-align: center;
+}
+html.light.bbi-void .v-statement .t-eyebrow { display: block; margin-bottom: 1.5rem; }
+html.light.bbi-void .v-statement-h {
+  font-size: clamp(1.75rem, 4.6vw, 3.5rem) !important;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  font-weight: 400 !important;
+  color: #ffffff !important;
+  text-wrap: balance;
+  margin: 0;
+}
+html.light.bbi-void .v-hl { color: #ffb829; }
+html.light.bbi-void .v-statement-sub {
+  margin-top: 1.5rem;
+  color: #9a9a9a !important;
+  max-width: 34rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- 5. LIST: numbered large-type index --------------------------------- */
+html.light.bbi-void .v-list-sec {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem);
+}
+html.light.bbi-void .v-h2 {
+  font-size: clamp(2rem, 4.6vw, 3.75rem);
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+  font-weight: 400;
+  margin: 0.875rem 0 0;
+  max-width: 18ch;
+}
+html.light.bbi-void .v-h2-sm { font-size: clamp(1.75rem, 3.4vw, 2.75rem); max-width: 22ch; }
+html.light.bbi-void .v-list { list-style: none; margin: clamp(2rem, 4vw, 3rem) 0 0; padding: 0; }
+html.light.bbi-void .v-list-row {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr auto 2rem;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  align-items: baseline;
+  padding: clamp(0.9rem, 1.8vw, 1.4rem) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  text-decoration: none;
+  transition: border-color 260ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+html.light.bbi-void .v-list li:last-child .v-list-row { border-bottom: 1px solid rgba(255, 255, 255, 0.09); }
+html.light.bbi-void .v-list-n {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: #7c7c7c;
+  font-variant-numeric: tabular-nums;
+}
+html.light.bbi-void .v-list-t {
+  font-size: clamp(1.25rem, 2.6vw, 2.125rem);
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  transition: color 260ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+html.light.bbi-void .v-list-c { font-size: 0.8125rem; color: #9a9a9a; white-space: nowrap; }
+html.light.bbi-void .v-list-arrow {
+  color: #7c7c7c;
+  justify-self: end;
+  transition:
+    color 260ms cubic-bezier(0.33, 1, 0.68, 1),
+    transform 260ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+html.light.bbi-void .v-list-row:hover { border-top-color: #8052ff; }
+html.light.bbi-void .v-list-row:hover .v-list-t { color: #ffb829; }
+html.light.bbi-void .v-list-row:hover .v-list-arrow { color: #ffb829; transform: translateX(5px); }
+html.light.bbi-void .v-list-all {
+  display: inline-block;
+  margin-top: 2rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffb829;
+  text-decoration: none;
+}
+@media (max-width: 640px) {
+  html.light.bbi-void .v-list-row { grid-template-columns: 2.25rem 1fr; }
+  html.light.bbi-void .v-list-c { grid-column: 2; }
+  html.light.bbi-void .v-list-arrow { display: none; }
+}
+
+/* --- 6. WALL: dense, edge to edge --------------------------------------- */
+html.light.bbi-void .v-wall {
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.012);
+}
+html.light.bbi-void .v-wall-head { max-width: 1280px; margin: 0 auto; }
+html.light.bbi-void .v-wall-grid {
+  list-style: none;
+  max-width: 1280px;
+  margin: clamp(1.75rem, 3vw, 2.5rem) auto 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+html.light.bbi-void .v-wall-cell {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 100%;
+  padding: 1.125rem 1.25rem;
+  background: #000000;
+  text-decoration: none;
+  transition: background-color 220ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+html.light.bbi-void .v-wall-cell:hover { background: rgba(128, 82, 255, 0.16); }
+html.light.bbi-void .v-wall-name { color: #d0d0d0; font-size: 0.9375rem; }
+html.light.bbi-void .v-wall-cell:hover .v-wall-name { color: #ffffff; }
+html.light.bbi-void .v-wall-n {
+  color: #7c7c7c;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+/* --- 7. COLUMN: narrow, centred, quiet ---------------------------------- */
+html.light.bbi-void .v-column {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: clamp(4rem, 9vw, 7rem) clamp(1.25rem, 4vw, 3rem);
+}
+html.light.bbi-void .v-column .t-eyebrow { display: block; margin-bottom: 1.5rem; }
+html.light.bbi-void .v-column-p {
+  font-size: clamp(1.0625rem, 1.5vw, 1.25rem) !important;
+  line-height: 1.6;
+  color: #d0d0d0 !important;
+  margin: 0 0 1.375rem;
+}
+html.light.bbi-void .v-column-p-quiet { color: #9a9a9a !important; }
+html.light.bbi-void .v-column-cta { display: inline-block; margin-top: 1rem; text-decoration: none; }
+
+/* --- Kinetic Text (Magic UI) --------------------------------------------- */
+/* Words rise out of their own clip with a slight blur burning off. The blur is
+   the reason this reads as kinetic rather than as another slide-up: the craft
+   floor asks for motion that reaches past transform and opacity, and blur is
+   the cheapest of those that stays composited. */
+html.light.bbi-void .bbi-kinetic { display: inline; }
+html.light.bbi-void .bbi-kinetic-w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.06em;
+}
+html.light.bbi-void .bbi-kinetic-w::after { content: " "; white-space: pre; }
+html.light.bbi-void .bbi-kinetic-i {
+  display: inline-block;
+  transform: translate3d(0, 96%, 0);
+  filter: blur(7px);
+  transition:
+    transform 900ms cubic-bezier(0.33, 1, 0.68, 1),
+    filter 700ms cubic-bezier(0.33, 1, 0.68, 1);
+  will-change: transform, filter;
+}
+html.light.bbi-void .bbi-kinetic[data-on="true"] .bbi-kinetic-i {
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  html.light.bbi-void .bbi-kinetic-i {
+    transition: none;
+    transform: none;
+    filter: none;
   }
 }
