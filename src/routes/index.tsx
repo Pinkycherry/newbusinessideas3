@@ -16,8 +16,31 @@ import { Marquee } from "@/components/ui/marquee";
 import { Highlighter } from "@/components/ui/highlighter";
 import { LightRays } from "@/components/ui/light-rays";
 import { HyperText } from "@/components/ui/hyper-text";
+import { Floating3DParticles } from "@/components/ui/floating-3d-particles";
 import { DemandBoard } from "@/components/demand-board";
-import { catalogQuery, getTrendingIdeas, getSurpriseIdeas } from "@/lib/ideas.functions";
+import { FEATURED_IDEA_IDS } from "@/config/featured";
+import {
+  catalogQuery,
+  getTrendingIdeas,
+  getSurpriseIdeas,
+  getFeaturedIdeas,
+} from "@/lib/ideas.functions";
+
+/** Restored: the three editorial photographs from the pre-void homepage. */
+const EDITORIAL = [
+  {
+    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-17.jpg.webp",
+    alt: "Businesswoman with a coffee and an open notebook in a calm workspace",
+    tilt: 4,
+    lift: "4rem",
+  },
+  {
+    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-37.jpg.webp",
+    alt: "Close-up of hands typing on a laptop keyboard in warm ambient light",
+    tilt: -1.5,
+    lift: "1.5rem",
+  },
+];
 
 /** Restored from the pre-void homepage — the search-intent groups, unchanged. */
 const KEYWORD_GROUPS = [
@@ -122,11 +145,17 @@ const trendingQuery = queryOptions({
   queryFn: () => getTrendingIdeas(),
 });
 
+const featuredQuery = queryOptions({
+  queryKey: ["featured", FEATURED_IDEA_IDS],
+  queryFn: () => getFeaturedIdeas({ data: { ideaIds: FEATURED_IDEA_IDS } }),
+});
+
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
     await Promise.all([
       context.queryClient.ensureQueryData(catalogQuery),
       context.queryClient.ensureQueryData(trendingQuery),
+      context.queryClient.ensureQueryData(featuredQuery),
     ]);
   },
   head: () => ({
@@ -180,6 +209,7 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const { data: catalog } = useSuspenseQuery(catalogQuery);
   const { data: trending } = useSuspenseQuery(trendingQuery);
+  const { data: featured } = useSuspenseQuery(featuredQuery);
 
   const categories = catalog.categories;
   const topIdeas = trending.slice(0, 6);
@@ -322,6 +352,27 @@ function HomePage() {
         </VoidReveal>
       </section>
 
+      {/* ── FEATURED — restored, the curated picks ───────────────────────── */}
+      {featured.length > 0 && (
+        <section className="v-featured">
+          <VoidReveal dir="left">
+            <p className="t-eyebrow">Hand-picked</p>
+            <h2 className="v-h2 v-h2-sm">The ones we would start with.</h2>
+          </VoidReveal>
+          <ul className="v-featured-grid">
+            {featured.slice(0, 4).map((idea, i) => (
+              <VoidReveal as="li" key={idea.ideaId} dir="up" delay={i * 90}>
+                <Link to="/idea/$slug" params={{ slug: idea.slug }} className="v-feat">
+                  <span className="v-feat-c">{idea.categoryName}</span>
+                  <span className="v-feat-t">{idea.title}</span>
+                  <span className="v-feat-s">{idea.summary.slice(0, 150)}…</span>
+                </Link>
+              </VoidReveal>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {/* ── DEMAND BOARD — restored ──────────────────────────────────────── */}
       <section className="v-demand">
         <VoidReveal dir="left">
@@ -351,6 +402,37 @@ function HomePage() {
               <span className="v-tri-d">{d}</span>
             </VoidReveal>
           ))}
+        </div>
+      </section>
+
+      {/* ── COMPARISON — restored, as two facing columns ─────────────────── */}
+      <section className="v-vs">
+        <VoidReveal dir="up" className="v-vs-head">
+          <p className="t-eyebrow">The comparison</p>
+          <h2 className="v-h2 v-h2-sm">Two ways to check whether an idea is worth your year.</h2>
+        </VoidReveal>
+        <div className="v-vs-row">
+          <VoidReveal dir="left" className="v-vs-col is-them">
+            <p className="v-vs-l">A validation tool</p>
+            <ul>
+              <li>You pay every month, whether you use it or not.</li>
+              <li>You pay before you are allowed to see whether it was worth paying for.</li>
+              <li>Generic output, assembled from the same sources you could search yourself.</li>
+              <li>A handful of checks, then an upgrade prompt.</li>
+            </ul>
+          </VoidReveal>
+          <span className="v-vs-mark" aria-hidden>
+            vs
+          </span>
+          <VoidReveal dir="right" delay={90} className="v-vs-col is-us">
+            <p className="v-vs-l">This library</p>
+            <ul>
+              <li>Free. No account, no card, no trial that expires.</li>
+              <li>Every blueprint is readable in full before you decide anything.</li>
+              <li>Written against the same four questions, in the same order, every time.</li>
+              <li>Including the entries that tell you not to build it.</li>
+            </ul>
+          </VoidReveal>
         </div>
       </section>
 
@@ -396,10 +478,43 @@ function HomePage() {
         ))}
       </section>
 
+      {/* ── EDITORIAL — restored, the photographs ────────────────────────── */}
+      <section className="v-editorial">
+        <VoidReveal dir="left" className="v-editorial-head">
+          <p className="t-eyebrow">The room this gets read in</p>
+          <h2 className="v-h2 v-h2-sm">A phone, a kitchen table, and one hour after work.</h2>
+        </VoidReveal>
+        <div className="v-editorial-row">
+          {EDITORIAL.map((img, i) => (
+            <VoidReveal key={img.src} dir={i === 0 ? "left" : "right"} delay={i * 120}>
+              <figure
+                className="v-fig"
+                style={{ transform: `rotate(${img.tilt}deg)`, marginTop: img.lift }}
+              >
+                <img src={img.src} alt={img.alt} loading="lazy" />
+              </figure>
+            </VoidReveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ── PRICING — restored as its own section ────────────────────────── */}
+      <section className="v-pricing">
+        <VoidReveal dir="up">
+          <p className="t-eyebrow">Pricing, honestly</p>
+          <p className="v-price-n">Free</p>
+          <p className="v-price-s">
+            That is the whole pricing page. No tier, no trial that expires, no upgrade prompt
+            sitting on top of the research.
+          </p>
+        </VoidReveal>
+      </section>
+
       {/* ── BRAND STATEMENT — restored ───────────────────────────────────── */}
       <section className="v-brand">
         <VoidReveal dir="up">
           <p className="t-eyebrow">Who we are</p>
+          <Floating3DParticles className="v-brand-p3d" count={110} />
           <p className="v-brand-mark">
             <HyperText text="BRO BUSINESS IDEAS" />
           </p>
@@ -431,6 +546,16 @@ function HomePage() {
         </VoidReveal>
       </section>
 
+      {/* ── PROMISE — restored as its own section ────────────────────────── */}
+      <section className="v-promise">
+        <VoidReveal dir="up">
+          <p className="t-eyebrow">Our promise</p>
+          <p className="v-promise-h">
+            We&rsquo;re not here to sell you a dream. We&rsquo;re here to hand you the research.
+          </p>
+        </VoidReveal>
+      </section>
+
       {/* ── 7. COLUMN ────────────────────────────────────────────────────── */}
       <section className="v-column">
         <VoidReveal dir="up">
@@ -440,8 +565,7 @@ function HomePage() {
             “business ideas” one more time.
           </p>
           <p className="v-column-p">
-            We have been there. That is the entire audience, and the reason none of it costs money:
-            no tier, no trial that expires, no upgrade prompt sitting on top of the research.
+            We have been there. That is the entire audience, and the reason none of it costs money.
           </p>
           <p className="v-column-p v-column-p-quiet">
             Every figure traces to a real source. Where something cannot be verified, the blueprint
