@@ -61,6 +61,58 @@ both 400 in the reference; body drops to 200.
 Sizes are clamped so 113px does not shred a 390px phone: the ratio is
 preserved, the floor is not.
 
+## Composition
+
+The page is a **zigzag of beats**. One message per beat, two asymmetric
+columns (1.15fr / 0.85fr), the heading side alternating down the page. No card
+grids, no feature tables, no panels — the reference is explicit that density is
+the enemy and that content lives in spacious two-column arrangements.
+
+The nineteen dense sections the homepage used to carry were **not deleted**.
+Every message survives as a beat; only the containers around them are gone.
+
+Two lists break the pattern deliberately:
+
+- **The library** is an editorial index — five rows, title left, category
+  right, one hairline per row. Not cards. The hairline is the only divider on
+  the page, and it exists because five titles with nothing between them stop
+  reading as a list.
+- **The categories** are a three-column text index that collapses to one on a
+  phone.
+
+On one column every flipped beat puts its heading back on top; a beat that
+kept its body above its own heading read as two unrelated blocks.
+
+## Motion
+
+The first pass at the void recoloured the old page and left its motion running
+underneath — fourteen GSAP reveals, fourteen orbit rings, twelve ticker
+marquees, eight depth scenes, plus the sitewide wave text grabbing the same
+headings. New paint on old motion. That system is now **gone from this route**,
+not restyled, and `SiteTextMotion` skips `/` so nothing double-animates.
+
+What replaced it is one idea applied twice:
+
+- **The hero is the authored moment.** Three lines rise out of their own clips,
+  each 90ms behind the last, on an exponential ease-out. Nothing else on the
+  page competes with it.
+- **Beats wipe from the side they live on.** A left-hand block wipes from the
+  left, a right-hand block from the right. The layout picks the direction,
+  which is what stops eight sections sharing one canned entrance.
+
+Every reveal resolves from a **clip inset, never `opacity: 0`**. A dead
+observer or failed hydration leaves readable text. An unconditional
+zero-opacity default once left every heading on this site permanently
+invisible, and that is not a mistake worth repeating.
+
+`prefers-reduced-motion` flattens all of it.
+
+## Kept exactly as they were
+
+`.bbi-twin-ring` (both rings) and everything under `.tree-asset-container`.
+These were explicitly exempted. `GoldenTreeSection` was moved to its own file
+during the recomposition without a single line changed — a move, not a rewrite.
+
 ## Surfaces and elevation
 
 None. No cards, no borders, no shadows, no panels — elements float on black
