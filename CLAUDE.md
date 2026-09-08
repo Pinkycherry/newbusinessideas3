@@ -94,6 +94,31 @@ compiled. Always map through a lookup of literal class names.
 - The founder has pasted live credentials into chat more than once. Advise
   revoking, never store them, and never write one into a file.
 
+## Tools worth reaching for
+
+### MarkItDown — turn a document into Markdown before reading it
+
+`https://github.com/microsoft/markitdown`. A Python utility that converts files
+into Markdown for an LLM to read, keeping headings, lists, tables and links
+intact. MIT licensed.
+
+It handles PDF, Word, PowerPoint, Excel, HTML, CSV/JSON/XML, images (EXIF and
+OCR), audio (metadata and transcription), ZIP, EPub and YouTube URLs. It also
+ships an MCP server as a separate `markitdown-mcp` package.
+
+```
+pip install markitdown          # extras: [all] [pdf] [docx] [pptx] [xlsx]
+markitdown file.pdf -o file.md  # also reads piped input
+```
+
+Use it when the founder hands over a PDF, a spreadsheet or a deck. Reading the
+converted Markdown beats guessing at a screenshot.
+
+**Core conversion is local, free and needs no key — keep it that way.**
+MarkItDown also offers Azure Document Intelligence, Azure Content
+Understanding, and OpenAI-generated image descriptions. All three are billable
+and all three stay switched off under the free-tiers rule above.
+
 ## Where things stand
 
 See `wp-theme/bbi/README.md` for the theme, and PR #22 for the full history.
