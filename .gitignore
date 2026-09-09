@@ -44,3 +44,6 @@ LOGIN_CREDENTIALS_AND_API_KEYS.md
 src/lib/ideas.json
 src/lib/catalog.json
 shot.mjs
+
+# Local Supabase stand-in for offline rendering (never committed)
+.localdev/
