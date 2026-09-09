@@ -10,6 +10,9 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import "../styles.css";
+import "../motion.css";
+import { PointerChannelProvider, PageTransition } from "../motion";
+import { SiteTextMotion } from "@/components/site-text-motion";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { catalogQuery } from "../lib/ideas.functions";
 
@@ -99,7 +102,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
@@ -129,8 +132,16 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      {/* Publishes --ptr-x/y/v and --scroll-v on :root for the whole site.
+          Renders no DOM of its own and holds no React state. */}
+      <PointerChannelProvider />
+      {/* Desktop-only custom pointer; refuses to run on touch or reduced motion. */}
+      {/* Wave word-reveal on every heading, and anything with data-wave. */}
+      <SiteTextMotion />
+      <PageTransition>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </PageTransition>
     </QueryClientProvider>
   );
 }

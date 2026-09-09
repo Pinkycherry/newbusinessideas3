@@ -6,7 +6,7 @@ export const Route = createFileRoute("/gdpr")({
   head: () =>
     metaFor(
       "GDPR & Your Data Rights | BBI",
-      "How to exercise your GDPR rights with BBI: access, rectification, erasure, portability, restriction and objection.",
+      "How to use your GDPR rights with BBI: access, correction, deletion, portability, restriction and objection.",
     ),
   component: GdprPage,
 });
@@ -14,60 +14,58 @@ export const Route = createFileRoute("/gdpr")({
 function GdprPage() {
   return (
     <ContentPage
+      tone="document"
       eyebrow="GDPR"
       title="Your data"
       highlight="rights"
-      intro="If you are in the EEA or UK, data protection law gives you specific rights over your personal data. This page explains those rights and exactly how to use them with us."
+      intro="If you are in the EEA or the UK, the law gives you specific rights over your personal data. Here they are in plain words, and here is exactly how to use them with us."
     >
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
-      <Section heading="Your rights">
+      <Section heading="The rights you have">
         <Bullets
           items={[
-            "Access — get a copy of the personal data we hold about you.",
-            "Rectification — have inaccurate data corrected.",
-            "Erasure — have your data deleted where there is no overriding legal reason to keep it.",
-            "Restriction — limit how we process your data while a dispute is resolved.",
-            "Portability — receive your data in a structured, machine-readable format.",
-            "Objection — object to processing based on legitimate interests.",
-            "Withdraw consent — at any time, where processing is based on consent.",
+            "Access — ask for a copy of the personal data we hold about you.",
+            "Correction — have anything inaccurate put right.",
+            "Deletion — have your data removed, unless a law says we have to keep it.",
+            "Restriction — put processing on hold while a dispute is sorted out.",
+            "Portability — get your data in a format you can take somewhere else.",
+            "Objection — object when we are processing on the basis of legitimate interests.",
+            "Withdraw consent — whenever you like, wherever consent is what we relied on.",
           ]}
         />
       </Section>
-      <Section heading="How to make a request">
+      <Section heading="How to ask">
         <p>
-          Email{" "}
-          <a
-            href="mailto:privacy@businessidea.io"
-            className="text-accent underline underline-offset-4"
-          >
+          Write to{" "}
+          <a href="mailto:privacy@businessidea.io" className="mo-link font-semibold text-accent">
             privacy@businessidea.io
           </a>{" "}
-          stating which right you are exercising and the email address you used with us. We respond
-          within 30 days. If a request is complex we may extend that once and will tell you why.
-          There is no fee for a reasonable request.
+          and tell us which right you are using and the email address you used with us. We reply
+          within 30 days. If the request is complicated we can take one extension, and we will tell
+          you why. A reasonable request costs you nothing.
         </p>
       </Section>
-      <Section heading="Legal bases we rely on">
+      <Section heading="What we rely on to process data">
         <p>
-          Performance of a contract (delivering the service you asked for), legitimate interests
-          (operating, securing and improving the service), legal obligation (tax and accounting
-          records) and consent (optional communications).
+          A contract with you (giving you the service you asked for), legitimate interests (running,
+          securing and improving the site), a legal duty (tax and accounting records), and your
+          consent (optional emails).
         </p>
       </Section>
-      <Section heading="International transfers">
+      <Section heading="Data that leaves the EEA">
         <p>
-          Some of our processors operate outside the EEA. Where that happens, transfers are covered
-          by appropriate safeguards such as Standard Contractual Clauses or an adequacy decision.
+          Some of the providers we use operate outside the EEA. Where that happens, the transfer is
+          covered by proper safeguards — Standard Contractual Clauses or an adequacy decision.
         </p>
       </Section>
-      <Section heading="Complaints">
+      <Section heading="If we get it wrong">
         <p>
-          If you are unhappy with how we handled your request, you can complain to your local
-          supervisory authority. We would appreciate the chance to fix it first — see the{" "}
-          <Link to="/privacy" className="text-accent underline underline-offset-4">
+          You can complain to your local supervisory authority. We would rather you gave us the
+          chance to fix it first. The{" "}
+          <Link to="/privacy" className="mo-link font-semibold text-accent">
             privacy policy
           </Link>{" "}
-          for context on what we collect.
+          sets out what we collect, if you want the context before you write.
         </p>
       </Section>
       {/* EDITABLE SECTION END */}
