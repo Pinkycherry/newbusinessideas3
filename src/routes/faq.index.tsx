@@ -4,7 +4,12 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getCategoryFaqCounts } from "@/lib/faqs.functions";
 import { getCatalog } from "@/lib/ideas.functions";
 import { JsonLd, breadcrumbSchema, webPageSchema } from "@/lib/schema";
-import { useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
+import {
+  useDepthScene,
+  useElementPointerGroup,
+  useStaggerReveal,
+  useTextReveal,
+} from "@/motion";
 import { useCallback } from "react";
 
 /**
@@ -39,6 +44,11 @@ export const Route = createFileRoute("/faq/")({
 function FaqIndexPage() {
   const { categories, counts } = Route.useLoaderData();
   const headingRef = useTextReveal<HTMLHeadingElement>();
+  // Masthead depth scene: one shared observer + one shared frame callback
+  // for the whole header. Cursor depth on fine pointers, scroll depth on touch
+  // (see motion.css, coarse-pointer block).
+  const sceneRef = useDepthScene<HTMLElement>({ strength: 0.5 });
+
 
   const pointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
   const revealRef = useStaggerReveal<HTMLDivElement>({ selector: ".mo-card", stagger: 0.03 });
@@ -68,7 +78,7 @@ function FaqIndexPage() {
         ]}
       />
 
-      <main className="mx-auto w-full max-w-6xl px-3 pb-24 pt-6 sm:px-4">
+      <main ref={sceneRef} className="cx-scene mx-auto w-full max-w-6xl px-3 pb-24 pt-6 sm:px-4">
         <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Questions" }]} />
 
         <p className="mt-8 t-eyebrow">
@@ -76,7 +86,7 @@ function FaqIndexPage() {
         </p>
         <h1
           ref={headingRef}
-          className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl"
+          className="cx-layer cx-z3 mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl"
         >
           The things people ask first
         </h1>

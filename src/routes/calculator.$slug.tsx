@@ -13,7 +13,7 @@ import {
   type Reading,
 } from "@/lib/calculators";
 import { JsonLd, breadcrumbSchema, webPageSchema } from "@/lib/schema";
-import { useStaggerReveal, useTextReveal } from "@/motion";
+import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
 
 /**
  * One route for every calculator. It renders whatever `src/lib/calculators.ts`
@@ -88,6 +88,11 @@ function CalculatorPage({ calculator }: { calculator: Calculator }) {
   const issueFor = (key: string): FieldIssue | undefined => issues.find((i) => i.key === key);
 
   const titleRef = useTextReveal<HTMLHeadingElement>();
+  // Masthead depth scene: one shared observer + one shared frame callback
+  // for the whole header. Cursor depth on fine pointers, scroll depth on touch
+  // (see motion.css, coarse-pointer block).
+  const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
+
   const fieldsRef = useStaggerReveal<HTMLDivElement>({
     selector: "[data-field]",
     distance: 12,
@@ -111,7 +116,7 @@ function CalculatorPage({ calculator }: { calculator: Calculator }) {
         ]}
       />
       <SiteShell>
-        <div className="mx-auto max-w-6xl px-3 py-12 sm:px-4">
+        <div ref={sceneRef} className="cx-scene mx-auto max-w-6xl px-3 py-12 sm:px-4">
           {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
           <Breadcrumbs
             items={[
@@ -123,7 +128,10 @@ function CalculatorPage({ calculator }: { calculator: Calculator }) {
           <p className="mt-6 t-eyebrow">
             Calculator
           </p>
-          <h1 ref={titleRef} className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
+          <h1
+            ref={titleRef}
+            className="cx-layer cx-z3 mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl"
+          >
             {calculator.title}{" "}
             <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
               {calculator.highlight}
@@ -157,7 +165,7 @@ function CalculatorPage({ calculator }: { calculator: Calculator }) {
                     <legend className="t-eyebrow">
                       {group}
                     </legend>
-                    <div className="mt-4 grid gap-5 sm:grid-cols-2">
+                    <div className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-5">
                       {fields.map((field) => (
                         <FieldInput
                           key={field.key}

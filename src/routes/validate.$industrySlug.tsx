@@ -5,7 +5,7 @@ import { IdeaCard } from "@/components/idea-card";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getCategoryPage } from "@/lib/ideas.functions";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
-import { useStaggerReveal, useTextReveal } from "@/motion";
+import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
 
 /**
  * Vertical validation pages — /validate/[industry].
@@ -136,6 +136,11 @@ function ValidateIndustryPage() {
   const name = subject(data.categoryName ?? "Business");
 
   const headRef = useTextReveal<HTMLHeadingElement>();
+  // Masthead depth scene: one shared observer + one shared frame callback
+  // for the whole header. Cursor depth on fine pointers, scroll depth on touch
+  // (see motion.css, coarse-pointer block).
+  const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
+
   const stepsRef = useStaggerReveal<HTMLDivElement>({ stagger: 0.07 });
   const gridRef = useStaggerReveal<HTMLDivElement>({ selector: ".mo-card", stagger: 0.04 });
 
@@ -154,7 +159,7 @@ function ValidateIndustryPage() {
           { name: `Validate a ${name} idea`, path: `/validate/${industrySlug}` },
         ])}
       />
-      <div className="mx-auto max-w-6xl px-3 py-10 sm:px-4 sm:py-14">
+      <div ref={sceneRef} className="cx-scene mx-auto max-w-6xl px-3 py-10 sm:px-4 sm:py-14">
         <Breadcrumbs
           items={[
             { label: "Home", to: "/" },
@@ -165,7 +170,7 @@ function ValidateIndustryPage() {
 
         <section className="mt-8">
           <p className="t-eyebrow">Validate before you spend</p>
-          <h1 ref={headRef} className="mt-3">
+          <h1 ref={headRef} className="cx-layer cx-z3 mt-3">
             How to validate a {name} business idea.
           </h1>
           <p className="t-lead mt-5 max-w-3xl">
@@ -176,7 +181,7 @@ function ValidateIndustryPage() {
           </p>
 
           {/* Live figures, not claims. */}
-          <dl className="mt-7 grid gap-3 sm:grid-cols-3">
+          <dl className="mt-7 grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-3">
             <div className="glass rounded-2xl p-4">
               <dt className="t-meta">Researched blueprints</dt>
               <dd className="mt-1 text-2xl font-semibold text-hl-teal">{data.ideas.length}</dd>
@@ -201,7 +206,7 @@ function ValidateIndustryPage() {
         <section className="mt-14">
           <p className="t-eyebrow">The four checks</p>
           <h2 className="mt-3">What validating one of these actually involves.</h2>
-          <div ref={stepsRef} className="mt-7 grid gap-4 sm:grid-cols-2">
+          <div ref={stepsRef} className="mt-7 grid grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-4">
             {STEPS.map((s) => (
               <div key={s.n} className="mo-card glass flex gap-4 rounded-2xl p-5 sm:p-6">
                 <span className="t-meta shrink-0 text-hl-gold">{s.n}</span>
@@ -217,7 +222,10 @@ function ValidateIndustryPage() {
         <section className="mt-14">
           <p className="t-eyebrow">Start with these</p>
           <h2 className="mt-3">{name} blueprints, strongest demand signal first.</h2>
-          <div ref={gridRef} className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            ref={gridRef}
+            className="mt-7 grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-4"
+          >
             {top.map((idea) => (
               <IdeaCard key={idea.ideaId} idea={idea} />
             ))}

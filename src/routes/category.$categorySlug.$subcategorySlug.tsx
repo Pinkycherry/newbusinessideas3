@@ -1,6 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { useCallback } from "react";
+import { useCallback, type CSSProperties } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
@@ -8,6 +8,7 @@ import { getSubcategoryPage } from "@/lib/ideas.functions";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import {
   useElementPointerGroup,
+  useDepthScene,
   useScrollProgress,
   useStaggerReveal,
   useTextReveal,
@@ -75,6 +76,10 @@ function SubcategoryPage() {
   const pointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
   const revealRef = useStaggerReveal<HTMLDivElement>({ selector: ".mo-card", stagger: 0.03 });
   const depthRef = useScrollProgress<HTMLDivElement>();
+  // Masthead depth scene. Listing pages are scanning surfaces, so the cursor
+  // work is confined to the header — the grid below stays still under the eye
+  // (MOTION_SPEC section 3: no tilt, no magnet on listings).
+  const mastheadRef = useDepthScene<HTMLDivElement>({ strength: 0.45, scroll: false });
   const gridRef = useCallback(
     (node: HTMLDivElement | null) => {
       pointerRef.current = node;
@@ -120,15 +125,19 @@ function SubcategoryPage() {
               { label: data.subcategoryName ?? subcategorySlug },
             ]}
           />
-          <div className="bbi-depth-back">
-            <h1 ref={headingRef} className="mt-4 text-3xl font-bold tracking-tight">
+          <div ref={mastheadRef} className="bbi-depth-back cx-scene">
+            <h1
+              ref={headingRef}
+              style={{ "--z": 0.5 } as CSSProperties}
+              className="cx-layer mt-4 text-3xl font-bold tracking-tight"
+            >
               {data.subcategoryName}
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
           </div>
           <div
             ref={gridRef}
-            className="bbi-depth-front mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+            className="bbi-depth-front mt-8 grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-3"
           >
             {data.ideas.map((idea) => (
               <IdeaCard key={idea.ideaId} idea={idea} featured={idea.ideaId === leadIdeaId} />

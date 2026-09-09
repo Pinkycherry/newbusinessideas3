@@ -5,7 +5,7 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPost } from "@/lib/blog.functions";
-import { useStaggerReveal, useTextReveal } from "@/motion";
+import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
 
 /**
  * The sanitizer strips every class attribute off the stored article, so the
@@ -75,6 +75,11 @@ function BlogPostPage() {
   const { slug } = Route.useParams();
   const { data } = useSuspenseQuery(postQuery(slug));
   const titleRef = useTextReveal<HTMLHeadingElement>();
+  // Masthead depth scene: one shared observer + one shared frame callback
+  // for the whole header. Cursor depth on fine pointers, scroll depth on touch
+  // (see motion.css, coarse-pointer block).
+  const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
+
   const relatedRef = useStaggerReveal<HTMLDivElement>({ direction: "up", stagger: 0.05 });
   if (!data) return null;
   const { post, related } = data;
@@ -88,7 +93,7 @@ function BlogPostPage() {
 
   return (
     <SiteShell>
-      <article className="mx-auto max-w-3xl px-3 py-12 sm:px-4">
+      <article ref={sceneRef} className="cx-scene mx-auto max-w-3xl px-3 py-12 sm:px-4">
         {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
         {/* Reading progress lives in SiteShell (site-shell.tsx — the rail
             under the header, driven by the same --page-p). A second rail
@@ -116,7 +121,7 @@ function BlogPostPage() {
 
         <h1
           ref={titleRef}
-          className="mt-4 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl"
+          className="cx-layer cx-z3 mt-4 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl"
         >
           {post.title}
         </h1>
@@ -152,7 +157,10 @@ function BlogPostPage() {
             <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
               More reading
             </h2>
-            <div ref={relatedRef} className="mt-4 grid gap-4 sm:grid-cols-3">
+            <div
+              ref={relatedRef}
+              className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-4"
+            >
               {related.map((r) => (
                 <Link
                   key={r.id}

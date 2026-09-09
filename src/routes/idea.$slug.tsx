@@ -4,6 +4,7 @@ import StickyScroll from "@/components/aceternity/sticky-scroll";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
 import { queryOptions } from "@tanstack/react-query";
 import { Lock } from "lucide-react";
+import type { CSSProperties } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { ValidateButton } from "@/components/validate-button";
@@ -18,7 +19,7 @@ import {
 import { type IdeaCard as IdeaCardType, type IdeaDetail } from "@/lib/ideas-shared";
 import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { useAuth } from "@/hooks/use-auth";
-import { useElementPointerGroup, useScrollProgress, useTextReveal } from "@/motion";
+import { useDepthScene, useElementPointerGroup, useScrollProgress, useTextReveal } from "@/motion";
 
 type IdeaDetailData = {
   idea: IdeaDetail;
@@ -227,7 +228,7 @@ function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
       data-anchor-label="Verdict"
       className="mt-10 flex min-h-[1px] flex-col justify-center rounded-lg border border-border bg-card p-5 sm:p-7"
     >
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-4">
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-green">
             Why it works
@@ -312,6 +313,10 @@ function IdeaPage() {
   // One delegated pointer listener per rail rather than one per card.
   const relatedRailRef = useElementPointerGroup<HTMLDivElement>("a");
   const trendingRailRef = useElementPointerGroup<HTMLDivElement>("a");
+  // The blueprint masthead is a depth scene: the title plane and the sidebar
+  // plane sit at different depths, so the page has somewhere to stand rather
+  // than reading as one flat column of panels.
+  const mastheadRef = useDepthScene<HTMLDivElement>({ strength: 0.5, weight: 0.14 });
   if (!data) return null;
   const { idea, related, relatedCategories, trending, variant, gradient } = data;
   // PROJECT_BRIEF.md Section 3.2 — full blueprint content is blurred behind
@@ -355,8 +360,16 @@ function IdeaPage() {
         ]}
       />
       <SiteShell>
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 lg:grid-cols-[minmax(0,1fr)_20rem]">
-          <article className="idea-shell min-w-0" data-variant={variant} data-gradient={gradient}>
+        <div
+          ref={mastheadRef}
+          className="cx-scene mx-auto grid max-w-6xl gap-10 px-4 py-12 lg:grid-cols-[minmax(0,1fr)_20rem]"
+        >
+          <article
+            className="idea-shell cx-layer min-w-0"
+            style={{ "--z": 0.12 } as CSSProperties}
+            data-variant={variant}
+            data-gradient={gradient}
+          >
             {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
             <Breadcrumbs
               items={[
@@ -482,7 +495,7 @@ function IdeaPage() {
                   />
 
                   {(idea.startupCost || idea.incomePotential) && (
-                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                    <div className="mt-6 grid grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-4">
                       {idea.startupCost && (
                         <CardSpotlight className="p-5">
                           <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-coral">
@@ -693,7 +706,10 @@ function IdeaPage() {
                 {/* `.mo-card` for these cells lives on IdeaCard itself, which
                     is the listing agent's file — this rail supplies the single
                     delegated pointer listener the sheen reads from. */}
-                <div ref={relatedRailRef} className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div
+                  ref={relatedRailRef}
+                  className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-4"
+                >
                   {bottomRelated.map((r) => (
                     <IdeaCard key={r.ideaId} idea={r} />
                   ))}
@@ -783,7 +799,7 @@ function IdeaPage() {
           </article>
 
           {/* Sticky right column — desktop only. Add or reorder blocks freely. */}
-          <aside className="hidden lg:block">
+          <aside className="cx-layer hidden lg:block" style={{ "--z": 0.42 } as CSSProperties}>
             <div className="sticky top-28 space-y-5">
               <AdSlot position="idea-detail-right-affiliate" size="rectangle" />
 

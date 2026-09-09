@@ -8,7 +8,12 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
 import { searchIdeas } from "@/lib/ideas.functions";
 import type { IdeaCard as IdeaCardData } from "@/lib/ideas-shared";
-import { useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
+import {
+  useDepthScene,
+  useElementPointerGroup,
+  useStaggerReveal,
+  useTextReveal,
+} from "@/motion";
 
 export const Route = createFileRoute("/search")({
   validateSearch: z.object({ q: z.string().optional() }),
@@ -59,12 +64,12 @@ function SearchResults({ ideas, term }: { ideas: IdeaCardData[]; term: string })
       <p className="text-sm text-muted-foreground">
         {ideas.length} result{ideas.length === 1 ? "" : "s"} for “{term}”
       </p>
-      <div ref={gridRef} className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div ref={gridRef} className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-4">
         {ideas.map((idea, i) => (
           <Fragment key={idea.ideaId}>
             <IdeaCard idea={idea} />
             {(i + 1) % 5 === 0 && i + 1 < ideas.length && (
-              <div className="sm:col-span-2 lg:col-span-3">
+              <div className="[grid-column:1/-1]">
                 <AdSlot position={`search-in-results-${(i + 1) / 5}`} size="banner" />
               </div>
             )}
@@ -80,6 +85,11 @@ function SearchPage() {
   const navigate = useNavigate({ from: "/search" });
   const [term, setTerm] = useState(q ?? "");
   const headingRef = useTextReveal<HTMLHeadingElement>();
+  // Masthead depth scene: one shared observer + one shared frame callback
+  // for the whole header. Cursor depth on fine pointers, scroll depth on touch
+  // (see motion.css, coarse-pointer block).
+  const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
+
 
   const query = useQuery({
     queryKey: ["search", q ?? ""],
@@ -89,10 +99,10 @@ function SearchPage() {
 
   return (
     <SiteShell>
-      <div className="mx-auto max-w-6xl px-4 py-12">
+      <div ref={sceneRef} className="cx-scene mx-auto max-w-6xl px-4 py-12">
         {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
         <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Search" }]} />
-        <h1 ref={headingRef} className="mt-4 text-3xl font-bold tracking-tight">
+        <h1 ref={headingRef} className="cx-layer cx-z3 mt-4 text-3xl font-bold tracking-tight">
           Search the vault
         </h1>
         <form

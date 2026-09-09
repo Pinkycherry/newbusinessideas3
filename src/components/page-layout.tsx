@@ -11,7 +11,7 @@ import { useRouterState } from "@tanstack/react-router";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { JsonLd, breadcrumbSchema, webPageSchema } from "@/lib/schema";
-import { useStaggerReveal, useTextReveal } from "@/motion";
+import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
 
 /**
  * Ten pages used to render through this component with nothing but the text
@@ -176,6 +176,10 @@ export function ContentPage({
   const t = PAGE_TONES[tone];
   const titleRef = useTextReveal<HTMLHeadingElement>();
   const sectionsRef = useStaggerReveal<HTMLDivElement>({ distance: 14, stagger: 0.05 });
+  // One depth scene per content page — the masthead. Ten templates render
+  // through here, so this is the single place the grammar is applied to all
+  // of them. Cursor depth on fine pointers, scroll depth on touch.
+  const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
 
   return (
     <>
@@ -193,10 +197,13 @@ export function ContentPage({
         ]}
       />
       <SiteShell>
-        <div className={`mx-auto ${wide ? "max-w-6xl" : "max-w-3xl"} px-3 py-12 sm:px-4`}>
+        <div
+          ref={sceneRef}
+          className={`cx-scene mx-auto ${wide ? "max-w-6xl" : "max-w-3xl"} px-3 py-12 sm:px-4`}
+        >
           <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: eyebrow }]} />
           <Eyebrow tone={tone} label={eyebrow} />
-          <h1 ref={titleRef} className={t.title}>
+          <h1 ref={titleRef} className={`cx-layer cx-z3 ${t.title}`}>
             {title}
             {highlight && (
               <>
@@ -207,7 +214,7 @@ export function ContentPage({
               </>
             )}
           </h1>
-          <p className={t.intro}>{intro}</p>
+          <p className={`cx-layer cx-z1 ${t.intro}`}>{intro}</p>
           <ToneContext.Provider value={tone}>
             <div ref={sectionsRef} className={t.stack}>
               {t.numbered ? numberSections(children) : children}

@@ -8,7 +8,12 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getListicle, type ListicleEntry, type ListiclePage } from "@/lib/lists.functions";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { siteUrl } from "@/lib/site-config";
-import { useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
+import {
+  useDepthScene,
+  useElementPointerGroup,
+  useStaggerReveal,
+  useTextReveal,
+} from "@/motion";
 
 /**
  * PROJECT_BRIEF.md Section 6.3 — the listicle template. One page per category,
@@ -125,7 +130,7 @@ function Entry({ entry, categorySlug }: { entry: ListicleEntry; categorySlug: st
       ))}
 
       {entry.facts.length > 0 && (
-        <dl className="mt-6 grid gap-4 sm:grid-cols-3">
+        <dl className="mt-6 grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-4">
           {entry.facts.map((fact) => (
             <div key={fact.label} className="rounded-2xl border border-border bg-card/60 p-4">
               <dt className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -138,7 +143,7 @@ function Entry({ entry, categorySlug }: { entry: ListicleEntry; categorySlug: st
       )}
 
       {(entry.pros.length > 0 || entry.cons.length > 0) && (
-        <div className="mt-6 grid gap-5 sm:grid-cols-2">
+        <div className="mt-6 grid grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-5">
           {entry.pros.length > 0 && (
             <div>
               <h3 className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -206,6 +211,11 @@ function ListiclePageRoute() {
   // 0.03s stagger — never a listener per cell — and neither gets tilt or a
   // magnet, because the cursor here is scanning rather than aiming.
   const headingRef = useTextReveal<HTMLHeadingElement>();
+  // Masthead depth scene: one shared observer + one shared frame callback
+  // for the whole header. Cursor depth on fine pointers, scroll depth on touch
+  // (see motion.css, coarse-pointer block).
+  const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
+
 
   const entriesPointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
   const entriesRevealRef = useStaggerReveal<HTMLDivElement>({
@@ -272,7 +282,7 @@ function ListiclePageRoute() {
         ]}
       />
       <SiteShell>
-        <div className="mx-auto max-w-6xl px-4 py-12">
+        <div ref={sceneRef} className="cx-scene mx-auto max-w-6xl px-4 py-12">
           {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
           <Breadcrumbs
             items={[
@@ -283,7 +293,7 @@ function ListiclePageRoute() {
           />
           <h1
             ref={headingRef}
-            className="bbi-heading-glow mt-4 text-3xl font-bold tracking-tight sm:text-4xl"
+            className="cx-layer cx-z3 bbi-heading-glow mt-4 text-3xl font-bold tracking-tight sm:text-4xl"
           >
             {data.title}
           </h1>
@@ -331,7 +341,10 @@ function ListiclePageRoute() {
               <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                 The other {data.rest.length} in {data.categoryName}
               </h2>
-              <div ref={restRef} className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div
+                ref={restRef}
+                className="mt-6 grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-4"
+              >
                 {data.rest.map((idea) => (
                   <IdeaCard key={idea.ideaId} idea={idea} />
                 ))}

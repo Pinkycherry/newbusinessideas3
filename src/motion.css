@@ -285,3 +285,192 @@
     transition-duration: var(--mo-dur-2);
   }
 }
+
+/* ============================================================
+   CINEMATIC LAYER — the `cx-` family.
+
+   The `mo-` layer above is the taste floor: it makes an element
+   acknowledge a cursor. This layer is the opposite intent — it makes a
+   whole SECTION behave like a physical space the cursor is moving
+   through. A scene publishes --dx/--dy (inertial cursor offset), --dv
+   (pointer speed), --din (presence) and --sc-p (scroll progress); every
+   layer inside it reads those, weighted by its own --z depth.
+
+   One scene = one pointer listener and one shared frame callback,
+   whatever the number of layers inside it. That is the property that
+   lets this hold frame rate with hundreds of animated elements, which
+   the per-element approach cannot.
+
+   Transform and opacity only. No !important. No hex.
+   ============================================================ */
+
+.cx-scene {
+  /* Neutral fallbacks so a scene renders correctly before JS runs and
+     for anyone whose JS never runs at all. */
+  --dx: 0;
+  --dy: 0;
+  --dv: 0;
+  --din: 0;
+  --sc-p: 0.5;
+  perspective: 1400px;
+  transform-style: preserve-3d;
+}
+
+/* A layer inside a scene. --z is its depth: 0 is glued to the page, 1
+   sits closest to the reader and travels furthest. --zs adds scroll
+   parallax on the same axis, so pointer depth and scroll depth compose
+   instead of fighting. */
+.cx-layer {
+  --z: 0.3;
+  --zs: 0.55; /* was 0 — that zeroed the whole scroll term site-wide */
+  transform: translate3d(
+    calc(var(--dx) * var(--z) * 46px),
+    calc(var(--dy) * var(--z) * 32px + (var(--sc-p) - 0.5) * var(--zs) * -150px),
+    0
+  );
+  transition: transform var(--mo-dur-4) var(--mo-ease-out);
+  will-change: transform;
+}
+
+/* While the cursor is actually in the scene the layer must track it with
+   no transition lag — the inertia is already in the published value, and
+   a CSS transition on top of it reads as lag rather than as weight. The
+   transition above only governs the settle when the cursor leaves. */
+.cx-scene:hover > .cx-layer,
+.cx-scene:hover .cx-layer {
+  transition-duration: 0ms;
+}
+
+/* Scroll-only depth, for scenes with no pointer intent (listings, legal
+   pages, anything the cursor is scanning rather than aiming at). */
+.cx-depth {
+  --zs: 1;
+  transform: translate3d(0, calc((var(--sc-p) - 0.5) * var(--zs) * -70px), 0);
+  will-change: transform;
+}
+
+/* Counter-layer: moves against the cursor. Used sparingly — one element
+   per scene at most — because opposed motion is what makes the rest of
+   the scene read as having real depth rather than as a single sliding
+   plane. */
+.cx-counter {
+  --z: 0.3;
+  transform: translate3d(calc(var(--dx) * var(--z) * -14px), calc(var(--dy) * var(--z) * -10px), 0);
+  transition: transform var(--mo-dur-4) var(--mo-ease-out);
+  will-change: transform;
+}
+
+/* Presence light. Follows the cursor across the scene and fades with
+   --din, so a scene visibly wakes when entered and settles when left.
+   Opacity only — no blur animation, no box-shadow geometry. */
+.cx-sheen {
+  position: relative;
+  isolation: isolate;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cx-sheen::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: calc(var(--din, 0) * (0.28 + var(--dv, 0) * 0.4));
+    background: radial-gradient(
+      36% 46% at calc(50% + var(--dx, 0) * 50%) calc(50% + var(--dy, 0) * 50%),
+      var(--accent) 0%,
+      transparent 72%
+    );
+  }
+}
+
+/* Weight on press — an interactive piece should feel like it has mass.
+   Scale only, one frame of give, no bounce. */
+.cx-press {
+  transition: transform var(--mo-dur-2) var(--mo-ease-out);
+}
+
+.cx-press:active {
+  transform: scale(0.988);
+  transition-duration: var(--mo-dur-1);
+}
+
+/* Scrubbed reveal: driven by --sc-p rather than by an entry trigger, so
+   the element is tied to the scroll position instead of fired once by
+   it. Reads as a sequence the reader is driving, not a fade that
+   happened at them. */
+.cx-scrub {
+  opacity: clamp(0, calc((var(--sc-p, 0.5) - 0.12) * 4), 1);
+  transform: translate3d(0, calc((1 - clamp(0, calc((var(--sc-p, 0.5) - 0.12) * 4), 1)) * 26px), 0);
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cx-layer,
+  .cx-counter,
+  .cx-depth,
+  .cx-scrub {
+    transform: none;
+    opacity: 1;
+  }
+
+  .cx-sheen::before {
+    opacity: 0;
+  }
+
+  .cx-press:active {
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Depth tokens. Named depths instead of a per-element inline --z,
+   so a template opts a child into the field with one class and the
+   depth ladder stays consistent across every page.
+   --------------------------------------------------------------- */
+.cx-z1 {
+  --z: 0.16;
+}
+
+.cx-z2 {
+  --z: 0.34;
+}
+
+.cx-z3 {
+  --z: 0.58;
+}
+
+/* ---------------------------------------------------------------
+   Touch is the main case, not the fallback.
+
+   A coarse pointer has no cursor to track, so the same depth field
+   is driven by the scene's own scroll progress (--sc-p) instead:
+   layers separate as the section travels through the viewport, the
+   deeper layer moving further, which is the same parallax the
+   cursor produces on a desktop — sourced from the finger instead.
+   No extra listeners: --sc-p is already published by the scene's
+   shared scroll callback.
+   --------------------------------------------------------------- */
+@media (hover: none), (pointer: coarse) {
+  .cx-layer {
+    transform: translate3d(
+      0,
+      calc((var(--sc-p, 0.5) - 0.5) * (var(--z, 0.3) + var(--zs, 0.55)) * -110px),
+      0
+    );
+    transition: none;
+  }
+
+  .cx-counter {
+    transform: translate3d(0, calc((var(--sc-p, 0.5) - 0.5) * var(--z, 0.3) * 62px), 0);
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cx-layer,
+  .cx-counter {
+    transform: none;
+  }
+}

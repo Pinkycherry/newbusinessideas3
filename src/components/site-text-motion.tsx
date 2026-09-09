@@ -35,6 +35,10 @@ export function SiteTextMotion() {
 
   useEffect(() => {
     if (status !== "idle") return;
+    // The homepage runs the void's own motion grammar and owns every reveal on
+    // it. Letting the sitewide wave also grab its h1/h2/h3 is what put two
+    // entrance animations on the same headings.
+    if (pathname === "/") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const root = document.documentElement;

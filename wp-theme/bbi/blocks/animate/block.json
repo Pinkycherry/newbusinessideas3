@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bbi/animate",
+  "title": "Animate",
+  "category": "design",
+  "icon": "controls-forward",
+  "description": "Wrap anything and give it a scroll animation you control — direction, distance, speed, and whether it replays every pass.",
+  "keywords": [ "animation", "reveal", "scroll", "motion" ],
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [ "wide", "full" ],
+    "spacing": { "margin": true, "padding": true },
+    "color": { "background": true, "text": true }
+  },
+  "attributes": {
+    "direction": { "type": "string", "default": "up" },
+    "distance": { "type": "number", "default": 24 },
+    "duration": { "type": "number", "default": 600 },
+    "delay": { "type": "number", "default": 0 },
+    "scale": { "type": "number", "default": 100 },
+    "replay": { "type": "boolean", "default": true },
+    "stagger": { "type": "number", "default": 0 }
+  },
+  "editorScript": "file:./index.js",
+  "style": "bbi"
+}

@@ -1,0 +1,36 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"2.5rem","bottom":"3.5rem","left":"0.75rem","right":"0.75rem"}}},"layout":{"type":"constrained","contentSize":"72rem"}} -->
+<main class="wp-block-group" style="padding-top:2.5rem;padding-right:0.75rem;padding-bottom:3.5rem;padding-left:0.75rem">
+
+	<!-- wp:query-title {"type":"archive","showPrefix":false} /-->
+
+	<!-- wp:query {"queryId":1,"query":{"perPage":12,"pages":0,"offset":0,"postType":"post","inherit":true},"layout":{"type":"default"}} -->
+	<div class="wp-block-query">
+		<!-- wp:post-template {"className":"is-style-bbi-grid","layout":{"type":"grid","columnCount":3}} -->
+			<!-- wp:group {"className":"mo-card glass glass-hover bbi-card-pad","style":{"border":{"radius":"1rem"}},"layout":{"type":"constrained"}} -->
+			<div class="wp-block-group mo-card glass glass-hover bbi-card-pad" style="border-radius:1rem">
+				<!-- wp:post-title {"level":3,"isLink":true,"className":"t-card"} /-->
+				<!-- wp:post-excerpt {"moreText":""} /-->
+			</div>
+			<!-- /wp:group -->
+		<!-- /wp:post-template -->
+
+		<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"left"},"style":{"spacing":{"margin":{"top":"2.5rem"}}}} -->
+			<!-- wp:query-pagination-previous /-->
+			<!-- wp:query-pagination-numbers /-->
+			<!-- wp:query-pagination-next /-->
+		<!-- /wp:query-pagination -->
+
+		<!-- wp:query-no-results -->
+			<!-- wp:paragraph {"className":"is-style-t-lead"} -->
+			<p class="is-style-t-lead">Nothing here yet.</p>
+			<!-- /wp:paragraph -->
+		<!-- /wp:query-no-results -->
+	</div>
+	<!-- /wp:query -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

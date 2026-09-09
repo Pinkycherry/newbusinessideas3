@@ -3,7 +3,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { CALCULATORS } from "@/lib/calculators";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
-import { useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
+import {
+  useDepthScene,
+  useElementPointerGroup,
+  useStaggerReveal,
+  useTextReveal,
+} from "@/motion";
 
 const TITLE = "Business Calculators for Indian Founders | BBI";
 const DESCRIPTION =
@@ -26,6 +31,11 @@ export const Route = createFileRoute("/calculator/")({
 function CalculatorIndex() {
   // One headline reveal per page, on the H1. One stagger, on the grid.
   const titleRef = useTextReveal<HTMLHeadingElement>();
+  // Masthead depth scene: one shared observer + one shared frame callback
+  // for the whole header. Cursor depth on fine pointers, scroll depth on touch
+  // (see motion.css, coarse-pointer block).
+  const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
+
   const gridRef = useStaggerReveal<HTMLDivElement>({ direction: "up", stagger: 0.05 });
   // One pointer listener for the whole grid rather than one per card.
   const pointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
@@ -47,13 +57,16 @@ function CalculatorIndex() {
         ]}
       />
       <SiteShell>
-        <div className="mx-auto max-w-6xl px-3 py-12 sm:px-4">
+        <div ref={sceneRef} className="cx-scene mx-auto max-w-6xl px-3 py-12 sm:px-4">
           {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
           <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Calculators" }]} />
           <p className="mt-6 t-eyebrow">
             Calculators
           </p>
-          <h1 ref={titleRef} className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
+          <h1
+            ref={titleRef}
+            className="cx-layer cx-z3 mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl"
+          >
             Small tools that answer{" "}
             <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
               one question each
