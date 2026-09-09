@@ -37,9 +37,14 @@ export default function StickyScroll({
 
   const current = items[active] ?? items[0];
 
+  // An idea whose research fields are all empty passes an empty array here.
+  // Without this the component still rendered its frame — a tall, blank plate
+  // reading "00 OF 00" with a screen of dead space above and below it.
+  if (items.length === 0) return null;
+
   return (
     <div ref={hostRef} className={cn("relative lg:grid lg:grid-cols-2 lg:gap-12", className)}>
-      <div className="space-y-16 lg:space-y-32">
+      <div className="space-y-10 lg:space-y-16">
         {items.map((item, index) => (
           <div key={item.title}>
             <h3
@@ -62,19 +67,29 @@ export default function StickyScroll({
         ))}
       </div>
       <div className="hidden lg:block">
-        <div className="sticky top-28 flex h-72 items-center justify-center overflow-hidden rounded-md border border-border bg-card p-8">
+        <div className="sticky top-28 flex h-56 items-center justify-center overflow-hidden rounded-md border border-border bg-card p-8">
+          {/* This plate used to also print "01 of 03". That was a string I
+              wrote, and no word on this site is mine to add — the position is
+              already carried by the rule below, which needs no caption. */}
           <motion.div
             key={current?.title ?? "sticky"}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
-            className="text-center"
+            transition={{ duration: 0.3 }}
+            className="w-full text-center"
           >
-            <span className="block font-mono text-xs uppercase tracking-[0.24em] text-muted-foreground">
-              {String(active + 1).padStart(2, "0")} of {String(items.length).padStart(2, "0")}
-            </span>
-            <span className="mt-4 block text-2xl font-semibold leading-tight tracking-tight text-primary">
+            <span className="block text-xl font-semibold leading-tight tracking-tight text-primary sm:text-2xl">
               {current?.title}
+            </span>
+            <span aria-hidden className="mx-auto mt-5 flex w-24 gap-1">
+              {items.map((item, index) => (
+                <span
+                  key={item.title}
+                  className={`h-px flex-1 transition-colors duration-300 ${
+                    index === active ? "bg-primary" : "bg-border"
+                  }`}
+                />
+              ))}
             </span>
           </motion.div>
         </div>
