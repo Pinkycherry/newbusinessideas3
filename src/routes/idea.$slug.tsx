@@ -170,7 +170,7 @@ function DemandBlock({ score }: { score: number | null }) {
         <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
           Demand signal
         </h2>
-        <span className="text-xs font-semibold uppercase tracking-widest text-accent">{band}</span>
+        <span className="text-xs font-semibold uppercase tracking-widest text-hl-teal">{band}</span>
       </div>
       <div
         className="demand-gauge-track mt-4"
@@ -184,7 +184,7 @@ function DemandBlock({ score }: { score: number | null }) {
             settled one: --sc-p falls back to 1 and the fill sits at the real
             score rather than at zero. */}
         <div
-          className="h-full w-full origin-left rounded-full bg-gradient-to-r from-primary to-accent"
+          className="h-full w-full origin-left rounded-full bg-hl-teal"
           style={{
             transform: `scaleX(calc(${(pct / 100).toFixed(4)} * clamp(0, calc(var(--sc-p, 1) * 1.6), 1)))`,
           }}

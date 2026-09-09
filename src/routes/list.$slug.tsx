@@ -115,7 +115,7 @@ function Entry({ entry, categorySlug }: { entry: ListicleEntry; categorySlug: st
 
       {entry.sections.map((section) => (
         <div key={section.label} className="mt-5">
-          <h3 className="text-[11px] font-semibold uppercase tracking-widest text-accent">
+          <h3 className="text-[11px] font-semibold uppercase tracking-widest text-hl-gold">
             {section.label}
           </h3>
           <p className="mt-2 whitespace-pre-line leading-relaxed text-muted-foreground">
