@@ -513,7 +513,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
   const categories = data?.categories ?? [];
 
   return (
-    <div className="fixed inset-0 z-50 lg:hidden">
+    <div className="bbi-overlay fixed inset-0 z-50 lg:hidden">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

@@ -3169,9 +3169,19 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
 /* Every direct child of the instrument shell sits above the background field.
    Without this the field paints over the content instead of behind it, since
    the field is fixed and the sections are static. */
-.bbi-instrument > * {
+.bbi-instrument > *:not(.bbi-overlay) {
   position: relative;
   z-index: 1;
+}
+/* A full-screen overlay is the ONE thing this rule must not touch. It is
+   unlayered, so `position: relative` beat Tailwind's `fixed` utility outright,
+   and the mobile menu — a direct child of the shell — stopped being fixed at
+   all: a zero-height relative block wedged between the header and main, with
+   its z-50 capped at 1 by the same rule. It rendered, and could not be seen or
+   tapped. Overlays sit above the header, which is at 50. */
+.bbi-instrument > .bbi-overlay {
+  position: fixed;
+  z-index: 80;
 }
 /* Everything below the hero gets a solid ground. The page has to be readable
    before it is atmospheric. */

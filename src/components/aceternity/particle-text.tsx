@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -77,6 +77,7 @@ export default function ParticleText({
   fontSize = "clamp(2.2rem, 6vw, 4.2rem)",
   fontWeight = 700,
   fontFamily = "inherit",
+  minWidth = 1024,
 }: {
   text: string;
   className?: string;
@@ -93,11 +94,31 @@ export default function ParticleText({
   fontSize?: string | number;
   fontWeight?: number;
   fontFamily?: string;
+  /** Below this viewport width the heading renders as ordinary text. */
+  minWidth?: number;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  // The particle field is a POINTER effect on a large display heading. On a
+  // phone it is neither: the sampled points never close up at the width and
+  // size a phone gives the heading, so the H1 rendered as a smear of dots that
+  // could not be read at all — and every tap anywhere on the screen scattered
+  // it again, because the listener is on the window. Below `minWidth`, or on a
+  // device with no fine pointer, this renders the heading as ordinary text and
+  // starts no canvas, no observer and no listener.
+  const [asType, setAsType] = useState(true);
+  useEffect(() => {
+    const decide = () => {
+      const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+      setAsType(!fine || window.innerWidth < minWidth);
+    };
+    decide();
+    window.addEventListener("resize", decide);
+    return () => window.removeEventListener("resize", decide);
+  }, [minWidth]);
 
   useEffect(() => {
+    if (asType) return;
     const container = containerRef.current;
     const canvas = canvasRef.current;
     if (!container || !canvas) return;
@@ -407,7 +428,12 @@ export default function ParticleText({
     fontSize,
     fontWeight,
     fontFamily,
+    asType,
   ]);
+
+  // Plain type. `className` carries the canvas's reserved height, which a real
+  // heading must not inherit, so it is dropped here.
+  if (asType) return <span className="block w-full">{text}</span>;
 
   return (
     <span ref={containerRef} className={cn("relative block w-full", className)}>
