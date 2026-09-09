@@ -14,49 +14,53 @@ export const Route = createFileRoute("/disclaimer")({
 function DisclaimerPage() {
   return (
     <ContentPage
+      tone="notice"
       eyebrow="Disclaimer"
       title="Research, not"
       highlight="advice"
-      intro="Everything on BBI is informational. Starting a business is risky, and nothing here removes that risk or guarantees an outcome."
+      intro="Everything here is information. Starting a business is risky, and nothing on this site takes that risk away or promises you an outcome."
     >
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
-      <Section heading="No professional advice">
+      <Section heading="This is not professional advice">
         <p>
-          Blueprints, trend scores and verdicts do not constitute financial, investment, legal, tax,
-          accounting or regulatory advice. Consult qualified professionals in your jurisdiction
-          before committing capital or signing anything.
+          Blueprints, trend scores and verdicts are our research and our opinion. They are not
+          financial, investment, legal, tax, accounting or regulatory advice. Before you put money
+          in, sign anything, or register a business, talk to a qualified professional who knows the
+          rules where you plan to operate.
         </p>
       </Section>
-      <Section heading="No guarantee of results">
+      <Section heading="Nobody can promise you results">
         <p>
-          Market conditions change, competitors appear, and execution dominates idea quality. A
-          strong trend score is a signal about momentum at the time of research — not a prediction
-          of your revenue.
+          Markets move. Competitors turn up. Two people can build the same idea and get opposite
+          results, because how you run it matters more than what you picked. A high trend score
+          means momentum looked strong when we researched it. It is not a forecast of your revenue.
         </p>
       </Section>
-      <Section heading="Validation handoff output">
+      <Section heading="Research that comes from outside BBI">
         <Bullets
           items={[
-            "The Validate button's output comes from Claude or Perplexity on your own account, not from us, and can contain errors.",
-            "That output may be out of date relative to current market conditions.",
-            "Always verify numbers, regulations and competitive claims independently.",
+            "Research you pull up from an idea page is produced outside BBI. It is not our work, and it can contain mistakes.",
+            "It reflects one moment in time, so treat it as possibly out of date the day you read it.",
+            "Check the numbers, the rules and the claims about competitors yourself before you act on any of them.",
           ]}
         />
       </Section>
-      <Section heading="Third-party content and links">
+      <Section heading="Links and other people's content">
         <p>
-          Articles on our blog and links to external sites are provided for context. We do not
-          control third-party content and are not responsible for it.
+          Our blog links out to other sites for context. We do not control what sits on them and we
+          are not responsible for it. Read them the way you should read us — as a starting point,
+          not a verdict.
         </p>
       </Section>
-      <Section heading="Accuracy and corrections">
+      <Section heading="We get things wrong too">
         <p>
-          We research carefully but do not warrant that every detail is complete or current. If you
-          spot something wrong, tell us via the{" "}
-          <Link to="/contact" className="text-accent underline underline-offset-4">
+          We research carefully. We still do not claim that every detail is complete or current. If
+          something looks wrong, tell us on the{" "}
+          <Link to="/contact" className="mo-link font-semibold text-accent">
             contact page
           </Link>{" "}
-          with the idea ID and we will review it.
+          with the idea ID and we will look at it. Corrections make the library better, so send
+          them.
         </p>
       </Section>
       {/* EDITABLE SECTION END */}

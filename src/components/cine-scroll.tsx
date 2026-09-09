@@ -21,7 +21,7 @@ export function CineScroll() {
         for (const e of entries) {
           if (!e.isIntersecting || seen.has(e.target)) continue;
           seen.add(e.target);
-          const delay = Number((e.target as HTMLElement).dataset.cineDelay ?? 0);
+          const delay = Number((e.target as HTMLElement).dataset["cineDelay"] ?? 0);
           window.setTimeout(() => e.target.classList.add("cine-in"), delay);
           io.unobserve(e.target);
         }

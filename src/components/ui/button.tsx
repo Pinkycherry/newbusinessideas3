@@ -6,23 +6,24 @@ import { cn } from "@/lib/utils";
 import { usePillInteraction } from "@/hooks/use-pill-interaction";
 
 /**
- * Every non-link, non-ghost variant is a rounded-full pill — there is no
- * "square button" variant left. Motion (hover scale/lift, press spring) is
- * owned by usePillInteraction (GSAP), not a CSS transition, so it stays in
- * sync with every other pill-shaped element site-wide (glass-pill links,
- * category badges) that uses the same hook.
+ * Every non-link, non-ghost variant is a plate: a small shared radius rather
+ * than the fully rounded pill this used to be, matching the cards, panels and
+ * nav bar around it. Motion (hover scale/lift, press spring) is still owned by
+ * usePillInteraction (GSAP), not a CSS transition, so it stays in sync with
+ * every other interactive surface site-wide (glass-pill links, category
+ * badges) that uses the same hook — the hook is about timing, not shape.
  */
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-semibold cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default: "glass-btn",
         destructive:
-          "rounded-full bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+          "rounded-md bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline: "glass-btn",
         secondary: "glass-btn",
-        ghost: "rounded-full hover:bg-accent hover:text-accent-foreground",
+        ghost: "rounded-md hover:bg-accent hover:text-accent-foreground",
         link: "rounded-none text-primary underline-offset-4 hover:underline",
       },
       size: {

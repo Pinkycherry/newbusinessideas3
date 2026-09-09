@@ -3,8 +3,11 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getCatalog } from "@/lib/ideas.functions";
+import FocusCards from "@/components/aceternity/focus-cards";
+import { photoAt } from "@/config/imagery";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { usePillInteraction } from "@/hooks/use-pill-interaction";
+import { useScrollProgress, useTextReveal } from "@/motion";
 
 const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
 
@@ -70,6 +73,8 @@ function SubcategoryPill({
 
 function BrowsePage() {
   const { data } = useSuspenseQuery(catalogQuery);
+  const headingRef = useTextReveal<HTMLHeadingElement>();
+  const depthRef = useScrollProgress<HTMLDivElement>();
   return (
     <>
       <JsonLd
@@ -87,45 +92,40 @@ function BrowsePage() {
         ]}
       />
       <SiteShell>
-        <div className="mx-auto max-w-6xl px-4 py-12">
+        <div ref={depthRef} className="bbi-depth mx-auto max-w-6xl px-4 py-12">
           <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Browse" }]} />
-          <h1 className="mt-4 text-3xl font-bold tracking-tight">The full idea library</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {data.totalIdeas} ideas · {data.totalSubcategories} subcategories ·{" "}
-            {data.categories.length} categories
-          </p>
-          <div className="mt-10 space-y-6">
-            {data.categories.map((category) => (
-              <section
-                key={category.categorySlug}
-                className="glass glass-hover rounded-3xl px-5 py-6 sm:px-8 sm:py-7"
-              >
-                <div className="iv-plainlinks flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
-                  <Link
-                    to="/category/$categorySlug"
-                    params={{ categorySlug: category.categorySlug }}
-                    className="bbi-heading-glow text-xl font-bold tracking-tight text-foreground transition-colors hover:text-primary sm:text-2xl"
-                  >
-                    {category.categoryName}
-                  </Link>
-                  <span className="inline-flex w-fit shrink-0 items-center rounded-full bg-primary/10 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-primary">
-                    {category.ideaCount} ideas
-                  </span>
-                </div>
-                {/* Fluid tag cloud — width is driven by label length, never a rigid grid. */}
-                <div className="iv-tag-cloud mt-5">
-                  {category.subcategories.map((sub) => (
-                    <SubcategoryPill
-                      key={sub.slug}
-                      categorySlug={category.categorySlug}
-                      subcategorySlug={sub.slug}
-                      label={sub.name}
-                    />
-                  ))}
-                </div>
-              </section>
-            ))}
+          <div className="bbi-depth-back">
+            <h1 ref={headingRef} className="mt-4 text-3xl font-bold tracking-tight">
+              The full idea library
+            </h1>
+            {/* One line, two figures. The third used to be "N subcategories",
+              which was the idea count wearing a different label —
+              subcategory_name is byte-identical to title, so there are exactly
+              as many subcategories as ideas and the number said nothing. */}
+            <p className="mt-2 text-sm text-muted-foreground">
+              {data.totalIdeas} researched blueprints across {data.totalCategories} categories
+            </p>
           </div>
+          {/* Was `space-y-6`: fourteen full-width bars, each holding a single
+              line of text and a count, roughly 1,600px of page to say what a
+              grid says in 400. FocusCards instead: hovering one category pulls
+              it forward and lets the rest fall back, so a long grid answers
+              where the reader is looking. Photography comes from
+              ethicalfounder.com, BBI's parent site — see src/config/imagery.ts. */}
+          <FocusCards
+            className="bbi-depth-front mt-8"
+            cards={data.categories.map((category, index) => {
+              const photo = photoAt(index);
+              return {
+                title: category.categoryName,
+                meta: `${category.ideaCount} blueprints`,
+                src: photo.src,
+                alt: photo.alt,
+                to: "/category/$categorySlug",
+                params: { categorySlug: category.categorySlug },
+              };
+            })}
+          />
         </div>
       </SiteShell>
     </>

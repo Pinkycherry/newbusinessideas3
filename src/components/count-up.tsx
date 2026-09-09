@@ -39,7 +39,10 @@ export function CountUp({ value, suffix = "" }: { value: number; suffix?: string
         scrollTrigger: {
           trigger: el,
           start: "top 88%",
-          once: true,
+          // The count runs again each time the figure comes back into view.
+          // A number that animates once and is then frozen for the rest of
+          // the session is indistinguishable from static text.
+          toggleActions: "restart reverse restart reverse",
         },
       });
     });
