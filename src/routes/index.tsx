@@ -46,7 +46,7 @@ import type { CategoryNode } from "@/lib/ideas.functions";
 import { hideImgIfBroken } from "@/lib/utils";
 import { AccordionItem } from "@/components/accordion-item";
 import { loadGsap, prefersReducedMotion } from "@/lib/motion";
-import { Odometer, useScrollProgress, useStaggerReveal } from "@/motion";
+import { Odometer, useScrollProgress, useStaggerReveal, useTwoWayReveal } from "@/motion";
 
 /**
  * Hero's primary CTA. Every action on this page is a HoverBorderGradient now,
@@ -286,6 +286,11 @@ function HomePage() {
   const { data: highlights } = useSuspenseQuery(featuredQuery);
   const { data: trending } = useSuspenseQuery(trendingQuery);
   const featured = highlights.slice(0, 6);
+
+  // Phones only. The homepage is 17,000px tall on a 390px screen and a reader
+  // travels it in both directions; a one-way reveal is seen once. See
+  // src/motion/use-two-way-reveal.tsx.
+  useTwoWayReveal();
 
   return (
     <SiteShell tone="instrument">

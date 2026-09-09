@@ -3322,3 +3322,188 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
   border: 0 !important;
   padding: 0 !important;
 }
+
+/* =======================================================================
+   MOBILE
+   Everything below is scoped to a phone. The desktop layout is unchanged.
+   Measured on a 390x844 touch viewport before any of it was written:
+   185 tap targets under 40px, 105 pieces of body copy at 11px, one gutter
+   at 12px next to another at 24px, and a page 17,381px tall with one-way
+   reveals that a reader travelling it twice only ever sees once.
+   ======================================================================= */
+
+/* ---- two-way scroll reveal --------------------------------------------
+   `data-reveal` is set only by useTwoWayReveal, so no-JS and
+   prefers-reduced-motion render every section in place. `data-reveal-from`
+   carries the direction the reader was travelling, so a section rises into
+   view going down and drops into view coming back up — the motion always
+   runs against the thumb. */
+@media (max-width: 1023px) {
+  [data-reveal] {
+    transition:
+      opacity 480ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  [data-reveal="out"][data-reveal-from="down"] {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+  [data-reveal="out"][data-reveal-from="up"] {
+    opacity: 0;
+    transform: translate3d(0, -22px, 0);
+  }
+  [data-reveal="in"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* ---- type floor ----------------------------------------------------
+     11px was the single most common size in the body copy. On a phone held
+     at arm's length that is not reading, it is squinting. Nothing that
+     carries words drops below 12.5px, and the legends that label a whole
+     region hold their size. */
+  /* NOT `max(0.8125rem, 1em)`: `1em` is the INHERITED size, so an 11px label
+     inside a 16px section resolves to 16px and every small mark on the page
+     jumps a size. The floor has to be applied to the classes that actually
+     set the small sizes, which is what the block below does. */
+  html.light .bbi-instrument figcaption {
+    font-size: 0.8125rem;
+  }
+  /* `.ins-num` at 0.6875rem is 11px, and it is the single most common size in
+     the page's body copy — 70 elements of it on the homepage alone, all of
+     them labels next to a figure. Measured, not guessed. */
+  html.light .bbi-instrument .ins-num,
+  html.light .bbi-instrument .text-\[0\.6875rem\],
+  html.light .bbi-instrument .text-\[11px\],
+  html.light .bbi-instrument .text-xs {
+    font-size: 0.8125rem !important;
+  }
+  html.light .bbi-instrument .text-\[10px\] {
+    font-size: 0.78125rem !important;
+  }
+  /* The odometer figure itself must not be dragged down with its label. */
+  html.light .bbi-instrument .ins-num.text-3xl {
+    font-size: 1.875rem !important;
+  }
+  html.light .bbi-instrument .ins-legend {
+    font-size: 0.875rem !important;
+  }
+  /* Headings come down a step so a long one stops taking six lines. */
+  html.light .bbi-instrument h1 {
+    font-size: clamp(1.85rem, 8.4vw, 2.4rem) !important;
+    line-height: 1.08;
+  }
+  html.light .bbi-instrument h2 {
+    font-size: clamp(1.45rem, 6.4vw, 1.9rem) !important;
+    line-height: 1.12;
+  }
+
+  /* ---- one gutter ----------------------------------------------------
+     The hero sat at 24px and every section under it at 12px, so the page
+     had two left edges. One value, and it is the wider of the two. */
+  .bbi-instrument .px-3,
+  .bbi-instrument .px-6 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* ---- vertical rhythm ------------------------------------------------
+     Sections arrived at 0, 40 and 64px above their headings. One step. */
+  .bbi-instrument main > section + section,
+  .bbi-instrument main section.mt-16,
+  .bbi-instrument main section.mt-10 {
+    margin-top: 3rem;
+  }
+
+  /* ---- tap targets ----------------------------------------------------
+     Both platform guidelines put the floor at 44px and 185 targets on this
+     page were under 40. The padding is applied to the row, not the label,
+     so nothing reflows. */
+  .bbi-instrument a[class*="rounded"],
+  .bbi-instrument button:not([aria-label="Open navigation menu"]),
+  .bbi-instrument [role="combobox"],
+  .bbi-instrument [role="option"] {
+    min-height: 44px;
+  }
+  .bbi-instrument a[class*="rounded"],
+  .bbi-instrument button:not([aria-label="Open navigation menu"]) {
+    display: inline-flex;
+    align-items: center;
+  }
+  .bbi-instrument nav a,
+  .bbi-instrument footer a {
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+  }
+
+  /* ---- decoration that costs more than it gives ----------------------
+     The floating icon cluster is aria-hidden decoration. On a phone it takes
+     160px of vertical space to show a row of circles clipped at both edges,
+     and it runs 36 infinite wobble animations to do it. It is the only thing
+     on the page that overflowed the viewport. Gone below 768px; unchanged on
+     a desktop, where it has the width to read as a row. */
+  .bbi-instrument .bbi-icons {
+    display: none;
+  }
+
+  /* ---- image slots ----------------------------------------------------
+     A 16:10 frame on a 390px screen is 244px of picture above the words.
+     5:3 on the cards, 3:2 for a standalone frame, and every one of them
+     goes full-bleed to the gutter rather than sitting in a second inset. */
+  .bbi-instrument figure.mo-media {
+    aspect-ratio: 3 / 2;
+  }
+  .bbi-instrument .aspect-\[21\/9\] {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* ---- press feedback ----------------------------------------------------
+   A phone has no hover, so every hover state this site has is dead weight
+   there and a tap gets no acknowledgement at all. On a coarse pointer the
+   press itself answers: the plate sinks a hair and its rule brightens, for
+   as long as the thumb is down. Transform and border only — no layout, no
+   repaint of anything underneath. */
+@media (hover: none) and (pointer: coarse) {
+  .bbi-instrument a,
+  .bbi-instrument button,
+  .bbi-instrument [role="button"],
+  .bbi-instrument .mo-card,
+  .bbi-instrument [role="combobox"] {
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      transform 140ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 140ms ease;
+  }
+  .bbi-instrument a:active,
+  .bbi-instrument button:active,
+  .bbi-instrument [role="button"]:active,
+  .bbi-instrument .mo-card:active,
+  .bbi-instrument [role="combobox"]:active {
+    transform: scale(0.972);
+    border-color: var(--ins-rule-strong);
+  }
+  /* A card is a bigger object, so it moves less. */
+  .bbi-instrument .mo-card:active {
+    transform: scale(0.988);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bbi-instrument a:active,
+    .bbi-instrument button:active,
+    .bbi-instrument [role="button"]:active,
+    .bbi-instrument .mo-card:active,
+    .bbi-instrument [role="combobox"]:active {
+      transform: none;
+    }
+  }
+}

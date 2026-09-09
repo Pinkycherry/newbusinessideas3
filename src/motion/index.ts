@@ -57,3 +57,5 @@ export type { TiltOptions } from "./use-tilt";
 
 export { useWipe } from "./use-wipe";
 export type { WipeOptions, WipeDirection } from "./use-wipe";
+
+export { useTwoWayReveal } from "./use-two-way-reveal";
