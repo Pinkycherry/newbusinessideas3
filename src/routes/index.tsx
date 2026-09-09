@@ -22,6 +22,7 @@ import EvervaultCard from "@/components/aceternity/evervault-card";
 import MaskContainer from "@/components/aceternity/svg-mask-effect";
 import SparklesCore from "@/components/aceternity/sparkles";
 import LinkPreview from "@/components/aceternity/link-preview";
+import Lens from "@/components/aceternity/lens";
 import Tabs from "@/components/aceternity/tabs";
 import StickyScroll from "@/components/aceternity/sticky-scroll";
 import { photoAt } from "@/config/imagery";
@@ -304,14 +305,16 @@ function HomePage() {
               <span className="text-[var(--ins-signal)]">idea will work</span>?
             </h1>
             <div className="mt-7 grid gap-7 lg:grid-cols-[minmax(0,40ch)_1fr] lg:items-start">
-              <p className="text-[0.9375rem] leading-relaxed text-[var(--ins-dim)]">
-                We built a free home for real business ideas — side hustles, zero investment ideas,
-                work from home ideas, and low investment ideas. Every idea is researched, not
-                guessed. We tell you who will actually pay you, how the money works, and what will
-                hurt you in year one. Then we give it to you straight — build it, or walk away.
-                Browse for free. Validate as many times as you want. Pay only once, if you ever want
-                full access.
-              </p>
+              <Lens className="text-[0.9375rem] leading-relaxed text-[var(--ins-dim)]">
+                <p>
+                  We built a free home for real business ideas — side hustles, zero investment
+                  ideas, work from home ideas, and low investment ideas. Every idea is researched,
+                  not guessed. We tell you who will actually pay you, how the money works, and what
+                  will hurt you in year one. Then we give it to you straight — build it, or walk
+                  away. Browse for free. Validate as many times as you want. Pay only once, if you
+                  ever want full access.
+                </p>
+              </Lens>
               {/* Capped: uncapped this frame grew to 430px and became the
                   loudest thing on a page whose subject is the data. */}
               <div className="max-h-[15rem] overflow-hidden lg:pl-2">
@@ -344,9 +347,9 @@ function HomePage() {
                 className="ins-cell border-0 px-6 py-7"
               >
                 <h3 className="text-base font-semibold text-[var(--ins-read)]">{panel.label}</h3>
-                <p className="mt-2 max-w-[58ch] text-sm leading-relaxed text-[var(--ins-dim)]">
-                  {panel.body}
-                </p>
+                <Lens className="mt-2 max-w-[58ch] text-sm leading-relaxed text-[var(--ins-dim)]">
+                  <p>{panel.body}</p>
+                </Lens>
               </EvervaultCard>
             ))}
           </div>
@@ -1120,7 +1123,7 @@ function WhoForSection() {
       <h2 className="mt-3 max-w-2xl">For the person with an idea and nothing else.</h2>
       {/* Two paragraphs at a real reading measure, side by side, rather than
           stacked in the left half of a card. */}
-      <div className="mt-6 grid gap-6 text-base leading-relaxed text-muted-foreground sm:grid-cols-2 sm:gap-10">
+      <Lens className="mt-6 grid gap-6 text-base leading-relaxed text-muted-foreground sm:grid-cols-2 sm:gap-10">
         <p>
           Some of us have been jobless. Some of us have started over with no savings. We know what
           it&apos;s like to have a business idea and no laptop, no capital, no one to ask. BBI is
@@ -1133,7 +1136,7 @@ function WhoForSection() {
           no team, no connections. If that&apos;s not you — great, we&apos;ve got the bigger ideas
           too.
         </p>
-      </div>
+      </Lens>
 
       <div className="mt-12 border-t border-border pt-8">
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
