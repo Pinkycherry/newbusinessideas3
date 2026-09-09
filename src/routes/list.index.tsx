@@ -44,12 +44,12 @@ export const Route = createFileRoute("/list/")({
   },
   component: ListIndexPage,
   errorComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <p className="mx-auto max-w-6xl px-4 py-24">Couldn't load the lists — try refreshing.</p>
     </SiteShell>
   ),
   notFoundComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <p className="mx-auto max-w-6xl px-4 py-24">That page doesn't exist.</p>
     </SiteShell>
   ),
@@ -107,7 +107,7 @@ function ListIndexPage() {
           ]),
         ]}
       />
-      <SiteShell>
+      <SiteShell tone="instrument">
         <div ref={sceneRef} className="cx-scene mx-auto max-w-6xl px-4 py-12">
           {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
           <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Lists" }]} />

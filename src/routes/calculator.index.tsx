@@ -51,7 +51,7 @@ function CalculatorIndex() {
           ]),
         ]}
       />
-      <SiteShell>
+      <SiteShell tone="instrument">
         <div ref={sceneRef} className="cx-scene mx-auto max-w-6xl px-3 py-12 sm:px-4">
           {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
           <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Calculators" }]} />

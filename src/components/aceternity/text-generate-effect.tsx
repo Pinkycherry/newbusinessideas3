@@ -36,15 +36,27 @@ export default function TextGenerateEffect({
   }, []);
   const shown = seen || !supported;
   const tokens = words.split(" ");
+  // Two things a per-word reveal gets wrong on a long paragraph, both measured
+  // on this one (104 words):
+  //
+  // 1. `filter: blur()` per word puts every word on its own composited layer.
+  //    104 of them sat blurred whenever the paragraph was below the fold, and
+  //    that alone was a measurable share of the page's paint cost. The reveal
+  //    reads the same with opacity and a two-pixel lift, at no such price.
+  // 2. A fixed per-word stagger made the last word arrive 4.7 SECONDS after
+  //    the first. The whole paragraph now lands inside `WINDOW`, however many
+  //    words it holds.
+  const WINDOW = 0.9;
+  const step = Math.min(stagger, WINDOW / Math.max(tokens.length - 1, 1));
 
   return (
     <p ref={ref} className={cn(className)}>
       {tokens.map((token, index) => (
         <motion.span
           key={`${token}-${index}`}
-          initial={{ opacity: 0, filter: "blur(7px)" }}
-          animate={{ opacity: shown ? 1 : 0, filter: shown ? "blur(0px)" : "blur(7px)" }}
-          transition={{ duration: 0.45, delay: index * stagger }}
+          initial={{ opacity: 0, y: 2 }}
+          animate={{ opacity: shown ? 1 : 0, y: shown ? 0 : 2 }}
+          transition={{ duration: 0.42, delay: index * step }}
           className="inline-block whitespace-pre"
         >
           {token}

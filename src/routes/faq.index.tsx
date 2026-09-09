@@ -57,7 +57,7 @@ function FaqIndexPage() {
   const ready = categories.filter((c) => (counts[c.categorySlug] ?? 0) > 0).length;
 
   return (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <JsonLd
         schema={[
           breadcrumbSchema([

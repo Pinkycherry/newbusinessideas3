@@ -186,6 +186,43 @@ function useCatalog() {
   return { data };
 }
 
+/** Same reasoning as HoverBorderGradient: the rest/hover pair is React state
+ * and an inline style, because four attempts at stating it in CSS measured as
+ * the rule matching and the colour not changing. */
+function SignInAction({ onNavigate, full }: { onNavigate?: () => void; full: boolean }) {
+  const [hovered, setHovered] = useState(false);
+  const ref = useRef<HTMLAnchorElement | null>(null);
+  // Set as important — see the note in hover-border-gradient.tsx. A plain
+  // inline colour was still being beaten by an author !important rule.
+  useEffect(() => {
+    ref.current?.style.setProperty(
+      "color",
+      hovered ? "var(--ins-void, var(--primary-foreground))" : "var(--ins-read, var(--foreground))",
+      "important",
+    );
+  }, [hovered]);
+  return (
+    <Link
+      ref={ref}
+      to="/sign-in"
+      onClick={onNavigate}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocus={() => setHovered(true)}
+      onBlur={() => setHovered(false)}
+      className={`ins-action whitespace-nowrap rounded-md border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors duration-300 ${full ? "block text-center" : ""}`}
+      style={{
+        backgroundColor: hovered
+          ? "var(--ins-signal, var(--primary))"
+          : "var(--ins-face, var(--card))",
+        borderColor: hovered ? "var(--ins-signal, var(--primary))" : "var(--ins-rule, var(--border))",
+      }}
+    >
+      Sign In
+    </Link>
+  );
+}
+
 function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boolean }) {
   const auth = useAuth();
 
@@ -217,19 +254,7 @@ function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boo
 
   return (
     <>
-      <Link
-        to="/sign-in"
-        onClick={onNavigate}
-        className={`whitespace-nowrap rounded-md border border-border bg-card px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground transition-colors duration-300 hover:border-primary hover:text-primary ${full ? "block text-center" : ""}`}
-        // Inline beats the cascade outright, which is what this needed: the
-        // arbitrary variant never compiled, and repointing the base token, the
-        // @theme alias and the utility all still resolved to the light ink.
-        // Outside the instrument --ins-read is undefined, so this falls back to
-        // the inherited colour and the light templates are untouched.
-        style={{ color: "var(--ins-read, currentColor)" }}
-      >
-        Sign In
-      </Link>
+      <SignInAction {...(onNavigate ? { onNavigate } : {})} full={full ?? false} />
       <HoverBorderGradient asChild containerClassName={full ? "w-full" : "shrink-0"}>
         <Link
           to="/browse"

@@ -1369,9 +1369,14 @@ html.light .iv-skeleton {
   html.light .bbi-instrument main {
     color: var(--ins-read) !important;
   }
-  html.light .bbi-instrument header a,
-  html.light .bbi-instrument header button,
-  html.light .bbi-instrument header span,
+  /* :not(.ins-action) — an element that sets its own colour inline must be
+     left alone. This rule carries !important, and !important beats an inline
+     style, so without the exclusion it silently overrode the actions' own
+     hover state: the inline style read `color: var(--ins-void…)` while the
+     computed value stayed at --ins-read. That is what "white on white" was. */
+  html.light .bbi-instrument header a:not(.ins-action),
+  html.light .bbi-instrument header button:not(.ins-action),
+  html.light .bbi-instrument header span:not(.ins-action),
   html.light .bbi-instrument .glass-nav a,
   html.light .bbi-instrument .glass-nav button,
   html.light .bbi-instrument .iv-nav-panel a,
@@ -2910,13 +2915,23 @@ html.light .bbi-instrument,
 .bbi-instrument .iv-nav-panel * {
   color: inherit !important;
 }
-.bbi-instrument .glass-btn:hover,
-.bbi-instrument .glass-pill:hover,
-.bbi-instrument .glass-btn:hover *,
-.bbi-instrument .glass-pill:hover * {
-  background: var(--ins-signal) !important;
-  border-color: var(--ins-signal) !important;
-  color: var(--ins-void) !important;
+/* The hover plate. It used to fill white and set the label to housing ink,
+   including on every descendant — and `background` on a descendant `span` is
+   what produced the white-on-white label that survived four earlier attempts
+   at this, because the fix kept being applied to a DIFFERENT rule further down
+   the file. The plate now stays dark and brightens; nothing here paints a
+   descendant's background at all. `.ins-action` opts out: those controls set
+   their colours imperatively. */
+.bbi-instrument .glass-btn:not(.ins-action):hover,
+.bbi-instrument .glass-pill:not(.ins-action):hover {
+  background: var(--ins-face-2) !important;
+  border-color: var(--ins-rule-strong) !important;
+}
+.bbi-instrument .glass-btn:not(.ins-action):hover,
+.bbi-instrument .glass-pill:not(.ins-action):hover,
+.bbi-instrument .glass-btn:not(.ins-action):hover *,
+.bbi-instrument .glass-pill:not(.ins-action):hover * {
+  color: var(--ins-bright) !important;
 }
 .bbi-instrument .ac-cta {
   background: var(--ins-signal);
@@ -2999,15 +3014,19 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
   html.light .bbi-instrument footer {
     color: var(--ins-read) !important;
   }
-  html.light .bbi-instrument a,
-  html.light .bbi-instrument button,
-  html.light .bbi-instrument .glass-nav a,
-  html.light .bbi-instrument .glass-nav button,
-  html.light .bbi-instrument .glass-btn,
-  html.light .bbi-instrument .glass-pill,
-  html.light .bbi-instrument .glass-btn *,
-  html.light .bbi-instrument .glass-pill *,
-  html.light .bbi-instrument .iv-nav-panel a {
+  /* NOT a blanket `a, button` rule any more. That version carried
+     !important, so it beat every `hover:text-*` utility in the tree: a button
+     whose hover fills the plate white kept its label at --ins-read, i.e. white
+     on white. Links with no colour of their own inherit --ins-read from the
+     shell; the ones named here are the ones that genuinely need forcing,
+     because a light-mode rule is aimed at them. */
+  html.light .bbi-instrument .glass-nav a:not(:hover),
+  html.light .bbi-instrument .glass-nav button:not(:hover),
+  html.light .bbi-instrument .glass-btn:not(:hover),
+  html.light .bbi-instrument .glass-pill:not(:hover),
+  html.light .bbi-instrument .glass-btn:not(:hover) *,
+  html.light .bbi-instrument .glass-pill:not(:hover) *,
+  html.light .bbi-instrument .iv-nav-panel a:not(:hover) {
     color: var(--ins-read) !important;
   }
   html.light .bbi-instrument .text-muted-foreground {
@@ -3020,6 +3039,8 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
     color: var(--ins-bright) !important;
     font-size: 0.9375rem !important;
   }
+
+
 
   /* PORTALS. Radix mounts select, dialog and tooltip content on document.body,
      so nothing scoped to .bbi-instrument can reach it — that is why the open
@@ -3049,22 +3070,25 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
     color: #ffffff !important;
   }
 
-  /* A filled control inverts to housing ink. The hover state was painting the
-     plate white and leaving the label at --ins-read, i.e. white on white. */
-  html.light .bbi-instrument .glass-pill:hover,
-  html.light .bbi-instrument .glass-btn:hover,
-  html.light .bbi-instrument .glass-pill:hover *,
-  html.light .bbi-instrument .glass-btn:hover *,
-  html.light .bbi-instrument .glass-pill[data-state="open"],
-  html.light .bbi-instrument .glass-pill[data-state="open"] * {
-    background-color: transparent !important;
-    color: var(--ins-void) !important;
+  /* A plate does NOT invert on hover in this scope. Inverting it was the source
+     of two opposite unreadable states in a row: first white label on a white
+     plate, then — once a later, equally specific rule kept the plate dark —
+     housing ink on a dark plate. A plate that stays dark and simply brightens
+     its readout and its rule cannot produce either. `.ins-action` is excluded
+     because those controls set their own colours imperatively. */
+  html.light .bbi-instrument .glass-pill:not(.ins-action):hover,
+  html.light .bbi-instrument .glass-btn:not(.ins-action):hover,
+  html.light .bbi-instrument .glass-pill:not(.ins-action)[data-state="open"] {
+    background-color: var(--ins-face-2) !important;
+    border-color: var(--ins-rule-strong) !important;
   }
-  html.light .bbi-instrument .glass-pill:hover,
-  html.light .bbi-instrument .glass-btn:hover,
-  html.light .bbi-instrument .glass-pill[data-state="open"] {
-    background-color: var(--ins-signal) !important;
-    border-color: var(--ins-signal) !important;
+  html.light .bbi-instrument .glass-pill:not(.ins-action):hover,
+  html.light .bbi-instrument .glass-btn:not(.ins-action):hover,
+  html.light .bbi-instrument .glass-pill:not(.ins-action):hover *,
+  html.light .bbi-instrument .glass-btn:not(.ins-action):hover *,
+  html.light .bbi-instrument .glass-pill:not(.ins-action)[data-state="open"],
+  html.light .bbi-instrument .glass-pill:not(.ins-action)[data-state="open"] * {
+    color: var(--ins-bright) !important;
   }
 
   /* The Golden Tree's leaf labels: white on the housing, ink when lit. */
@@ -3087,8 +3111,8 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
     color: var(--ins-void) !important;
   }
   /* The Radix select trigger kept its light-mode gradient and dark label. */
-  html.light .bbi-instrument [data-slot="select-trigger"],
-  html.light .bbi-instrument button[role="combobox"],
+  html.light .bbi-instrument [data-slot="select-trigger"]:not(:hover),
+  html.light .bbi-instrument button[role="combobox"]:not(:hover),
   html.light .bbi-instrument [role="listbox"],
   html.light .bbi-instrument [data-radix-select-content] {
     background: var(--ins-face) !important;
@@ -3097,8 +3121,10 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
     color: var(--ins-read) !important;
     box-shadow: none !important;
   }
-  html.light .bbi-instrument [data-slot="select-trigger"] *,
-  html.light .bbi-instrument button[role="combobox"] *,
+  /* `:not(:hover)` again — printed after the hover block, so without it the
+     resting readout colour would apply on hover as well. */
+  html.light .bbi-instrument [data-slot="select-trigger"]:not(:hover) *,
+  html.light .bbi-instrument button[role="combobox"]:not(:hover) *,
   html.light .bbi-instrument [role="option"],
   html.light .bbi-instrument [role="option"] * {
     color: var(--ins-read) !important;
@@ -3111,21 +3137,27 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
   html.light .bbi-instrument .ins-legend .ins-read {
     color: var(--ins-signal) !important;
   }
-  html.light .bbi-instrument a:hover,
-  html.light .bbi-instrument .glass-pill:hover,
-  html.light .bbi-instrument .glass-pill:hover * {
+  /* Links brighten on hover. A `.glass-pill` must NOT be in this list: its
+     hover state fills the plate white, so brightening the label too printed
+     white on white. That rule is printed above and this one used to undo it
+     at equal specificity purely by coming later. */
+  html.light .bbi-instrument a:not(.glass-pill):hover {
     color: var(--ins-signal-hot) !important;
   }
   /* The logo stamp inverts: signal ground, housing ink. */
   html.light .bbi-instrument header a > span[class*="bg-primary"] {
     color: var(--ins-void) !important;
   }
-  html.light .bbi-instrument .glass,
-  html.light .bbi-instrument .glass-nav,
-  html.light .bbi-instrument .glass-btn,
-  html.light .bbi-instrument .glass-pill,
+  /* The resting plate. `:not(:hover)` matters: this rule is printed AFTER the
+     hover block above and carries the same specificity, so without it the
+     resting background wins on hover too and the hover state silently does
+     nothing. */
+  html.light .bbi-instrument .glass:not(.ins-action):not(:hover),
+  html.light .bbi-instrument .glass-nav:not(.ins-action),
+  html.light .bbi-instrument .glass-btn:not(.ins-action):not(:hover),
+  html.light .bbi-instrument .glass-pill:not(.ins-action):not(:hover),
   html.light .bbi-instrument .iv-nav-panel,
-  html.light .bbi-instrument [role="combobox"],
+  html.light .bbi-instrument [role="combobox"]:not(:hover),
   html.light .bbi-instrument input {
     background: var(--ins-face) !important;
     border-color: var(--ins-rule) !important;
@@ -3179,4 +3211,15 @@ html.light .bbi-instrument .bbi-orbit-center-label,
 html.light .bbi-instrument [class*="tree"] span,
 html.light .bbi-instrument [class*="node"] span {
   color: var(--ins-bright) !important;
+}
+
+
+
+
+/* The document ground follows the tone. Without this the light body colour
+   sat behind the shell and showed wherever the shell did not reach — and on
+   an interior page shorter than the viewport, that is most of the screen. */
+html[data-tone="instrument"],
+html[data-tone="instrument"] body {
+  background-color: #141414 !important;
 }

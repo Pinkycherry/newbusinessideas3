@@ -49,14 +49,14 @@ export const Route = createFileRoute("/category/$categorySlug/$subcategorySlug")
   },
   component: SubcategoryPage,
   errorComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <p className="mx-auto max-w-6xl px-4 py-24">
         Couldn't load this subcategory — try refreshing.
       </p>
     </SiteShell>
   ),
   notFoundComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <p className="mx-auto max-w-6xl px-4 py-24">We don't have that subcategory.</p>
     </SiteShell>
   ),
@@ -111,7 +111,7 @@ function SubcategoryPage() {
           ]),
         ]}
       />
-      <SiteShell>
+      <SiteShell tone="instrument">
         <div ref={depthRef} className="bbi-depth mx-auto max-w-6xl px-4 py-12">
           <Breadcrumbs
             items={[

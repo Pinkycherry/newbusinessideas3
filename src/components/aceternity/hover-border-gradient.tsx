@@ -34,6 +34,23 @@ export default function HoverBorderGradient({
   duration?: number;
 }) {
   const [hovered, setHovered] = React.useState(false);
+  const faceRef = React.useRef<HTMLButtonElement | null>(null);
+
+  // `color` is set imperatively AS IMPORTANT. A plain inline style was not
+  // enough: the plate inverted to white on hover while the label stayed at
+  // --ins-read, i.e. white on white, because some author rule carrying
+  // !important still beat the inline declaration. An inline !important beats
+  // every author rule there is, which ends the argument rather than winning
+  // another round of it.
+  React.useEffect(() => {
+    const node = faceRef.current;
+    if (!node) return;
+    node.style.setProperty(
+      "color",
+      hovered ? "var(--ins-void, var(--primary-foreground))" : "var(--ins-read, var(--foreground))",
+      "important",
+    );
+  }, [hovered]);
   const [edge, setEdge] = React.useState<(typeof ORDER)[number]>("TOP");
   const Comp = asChild ? Slot : "button";
 
@@ -67,10 +84,25 @@ export default function HoverBorderGradient({
       />
       <Comp
         className={cn(
-          "relative z-10 inline-flex items-center justify-center gap-2 rounded-full bg-card px-6 py-3 text-sm font-semibold tracking-tight text-foreground transition-colors duration-300 hover:bg-primary hover:text-primary-foreground focus-visible:outline-none",
+          // `ins-action` is the hook. Arbitrary `hover:` utilities were not
+          // reliably winning here (three different attempts, all measured with
+          // :hover confirmed matching and the colour unchanged), so the whole
+          // rest/hover pair is stated once in @layer utilities against this
+          // class instead of guessed at per call site.
+          "ins-action relative z-10 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-tight transition-colors duration-300 focus-visible:outline-none",
           className,
         )}
-        style={{ color: "var(--ins-read, currentColor)" }}
+        ref={faceRef}
+        style={{
+          backgroundColor: hovered
+            ? "var(--ins-signal, var(--primary))"
+            : "var(--ins-face, var(--card))",
+        }}
+        // NOT `style`: an inline colour cannot be overridden by the hover
+        // utility above, which is what pinned the label at --ins-read while
+        // the plate filled white. The rest colour is a class now, so hover
+        // wins normally.
+
         {...rest}
       >
         {children}

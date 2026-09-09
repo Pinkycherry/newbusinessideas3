@@ -32,7 +32,7 @@ export const Route = createFileRoute("/blog/")({
   }),
   component: BlogIndex,
   errorComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <div className="mx-auto max-w-6xl px-4 py-24">
         <h1 className="text-2xl font-bold">The blog feed is unavailable</h1>
         <p className="mt-2 text-muted-foreground">
@@ -56,7 +56,7 @@ function BlogIndex() {
   const gridRef = useStaggerReveal<HTMLDivElement>({ direction: "up", stagger: 0.05 });
 
   return (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <div ref={sceneRef} className="cx-scene mx-auto max-w-6xl px-3 py-12 sm:px-4">
         {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
         <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Blog" }]} />

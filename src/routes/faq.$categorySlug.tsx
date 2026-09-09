@@ -50,7 +50,7 @@ export const Route = createFileRoute("/faq/$categorySlug")({
   },
   component: FaqCategoryPage,
   notFoundComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <p className="mx-auto max-w-6xl px-4 py-24">We don&apos;t have that category.</p>
     </SiteShell>
   ),
@@ -67,7 +67,7 @@ function FaqCategoryPage() {
   const path = `/faq/${category.categorySlug}`;
 
   return (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <JsonLd
         schema={[
           breadcrumbSchema([

@@ -55,7 +55,7 @@ export const Route = createFileRoute("/blog/$slug")({
   },
   component: BlogPostPage,
   notFoundComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <div className="mx-auto max-w-6xl px-4 py-24">
         <p>That article doesn&apos;t exist — it may have been moved or taken down.</p>
         <Link to="/blog" className="mt-4 inline-block text-primary underline">
@@ -65,7 +65,7 @@ export const Route = createFileRoute("/blog/$slug")({
     </SiteShell>
   ),
   errorComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <p className="mx-auto max-w-6xl px-4 py-24">This article could not be loaded.</p>
     </SiteShell>
   ),
@@ -92,7 +92,7 @@ function BlogPostPage() {
   const thirdBlock = blocks.slice(midIndex).join("");
 
   return (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <article ref={sceneRef} className="cx-scene mx-auto max-w-3xl px-3 py-12 sm:px-4">
         {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
         {/* Reading progress lives in SiteShell (site-shell.tsx — the rail

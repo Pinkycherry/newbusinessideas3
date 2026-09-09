@@ -48,12 +48,12 @@ export const Route = createFileRoute("/category/$categorySlug/")({
   },
   component: CategoryPage,
   errorComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <p className="mx-auto max-w-6xl px-4 py-24">Couldn't load this category — try refreshing.</p>
     </SiteShell>
   ),
   notFoundComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <p className="mx-auto max-w-6xl px-4 py-24">We don't have that category.</p>
     </SiteShell>
   ),
@@ -115,7 +115,7 @@ function CategoryPage() {
           ]),
         ]}
       />
-      <SiteShell>
+      <SiteShell tone="instrument">
         <div ref={depthRef} className="bbi-depth mx-auto max-w-6xl px-4 py-12">
           {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
           <Breadcrumbs

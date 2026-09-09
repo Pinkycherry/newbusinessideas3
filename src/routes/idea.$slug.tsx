@@ -127,12 +127,12 @@ export const Route = createFileRoute("/idea/$slug")({
   },
   component: IdeaPage,
   errorComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <p className="mx-auto max-w-6xl px-4 py-24">This idea could not be loaded.</p>
     </SiteShell>
   ),
   notFoundComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <div className="mx-auto max-w-6xl px-4 py-24">
         <p>That idea does not exist in the library.</p>
         <Link to="/browse" className="mt-4 inline-block text-primary underline">
@@ -359,7 +359,7 @@ function IdeaPage() {
           breadcrumbSchema(breadcrumbItems),
         ]}
       />
-      <SiteShell>
+      <SiteShell tone="instrument">
         <div
           ref={mastheadRef}
           className="cx-scene mx-auto grid max-w-6xl gap-10 px-4 py-12 lg:grid-cols-[minmax(0,1fr)_20rem]"

@@ -52,7 +52,7 @@ export const Route = createFileRoute("/calculator/$slug")({
   },
   component: CalculatorRoute,
   notFoundComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <div className="mx-auto max-w-3xl px-4 py-24">
         <h1 className="text-2xl font-bold">That calculator doesn&apos;t exist</h1>
         <p className="mt-2 text-muted-foreground">
@@ -115,7 +115,7 @@ function CalculatorPage({ calculator }: { calculator: Calculator }) {
           ]),
         ]}
       />
-      <SiteShell>
+      <SiteShell tone="instrument">
         <div ref={sceneRef} className="cx-scene mx-auto max-w-6xl px-3 py-12 sm:px-4">
           {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
           <Breadcrumbs

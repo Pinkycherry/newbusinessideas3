@@ -218,6 +218,7 @@ export default function GlowCursor({
     let lastFrame = performance.now();
     let raf = 0;
     let destroyed = false;
+    let asleep = false;
 
     const resize = () => {
       width = Math.max(window.innerWidth, 1);
@@ -246,6 +247,7 @@ export default function GlowCursor({
       target.x = x;
       target.y = y;
       lastInput = performance.now();
+      wake();
     };
 
     const render = (now: number) => {
@@ -286,6 +288,28 @@ export default function GlowCursor({
       program.uniforms["uTime"].value = now * 0.001;
       program.uniforms["uFade"].value = fade;
       renderer.render({ scene: mesh });
+
+      // Sleep when there is nothing left to draw. Measured on the homepage:
+      // this full-viewport shader runs a 63-iteration loop per pixel per
+      // frame, and it kept doing that while the trail was fully faded out —
+      // which is the whole time the reader is scrolling, because a wheel does
+      // not fire pointermove. Scrolling measured 1fps with the loop always on.
+      // Hiding the canvas as well as stopping the loop matters: a fixed,
+      // full-screen `mix-blend-screen` layer costs on every frame the page
+      // paints even when its own pixels are transparent.
+      if (fadeTarget === 0 && fade < 0.002) {
+        asleep = true;
+        canvas.hidden = true;
+        return;
+      }
+      raf = window.requestAnimationFrame(render);
+    };
+
+    const wake = () => {
+      if (destroyed || !asleep) return;
+      asleep = false;
+      canvas.hidden = false;
+      lastFrame = performance.now();
       raf = window.requestAnimationFrame(render);
     };
 

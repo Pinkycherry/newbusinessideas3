@@ -111,6 +111,7 @@ export default function ParticleText({
     let gathering = false;
     let gatherStart = 0;
     let onScreen = true;
+    let restFrames = 0;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let width = 0;
     let height = 0;
@@ -175,7 +176,24 @@ export default function ParticleText({
 
       ctx.globalAlpha = 1;
       if (gathering && complete) gathering = false;
-      if (onScreen) raf = window.requestAnimationFrame(render);
+
+      // Freeze once the cloud has settled. The idle drift is a sub-pixel
+      // wobble, and paying for a full canvas repaint of several thousand
+      // particles every frame, forever, to get it is what made the top of the
+      // homepage stutter while scrolling. The loop restarts the moment the
+      // pointer comes near, which is when the motion is actually visible.
+      const busy = gathering || pointer.active;
+      restFrames = busy ? 0 : restFrames + 1;
+      if (!onScreen || restFrames > 45) {
+        raf = null;
+        return;
+      }
+      raf = window.requestAnimationFrame(render);
+    };
+
+    const wake = () => {
+      restFrames = 0;
+      if (raf === null && onScreen) raf = window.requestAnimationFrame(render);
     };
 
     const sample = async () => {
@@ -309,6 +327,7 @@ export default function ParticleText({
         gatherStart = performance.now();
         gathering = true;
       }
+      restFrames = 0;
       if (raf === null) raf = window.requestAnimationFrame(render);
     };
 
@@ -321,7 +340,18 @@ export default function ParticleText({
       const rect = canvas.getBoundingClientRect();
       pointer.x = event.clientX - rect.left;
       pointer.y = event.clientY - rect.top;
-      pointer.active = true;
+      // Only count the pointer as active when it is close enough to push a
+      // particle. Before this, a cursor anywhere on the page ran the repulsion
+      // maths for every particle on every frame of a heading it was nowhere
+      // near.
+      const margin = repelRadius + 80;
+      const near =
+        pointer.x > -margin &&
+        pointer.y > -margin &&
+        pointer.x < rect.width + margin &&
+        pointer.y < rect.height + margin;
+      pointer.active = near;
+      if (near) wake();
     };
     const onLeave = () => {
       pointer.active = false;
@@ -338,7 +368,8 @@ export default function ParticleText({
       const next = entries.some((e) => e.isIntersecting);
       if (next && !onScreen) {
         onScreen = true;
-        raf = window.requestAnimationFrame(render);
+        restFrames = 0;
+        if (raf === null) raf = window.requestAnimationFrame(render);
       } else if (!next && onScreen) {
         onScreen = false;
         if (raf !== null) window.cancelAnimationFrame(raf);
