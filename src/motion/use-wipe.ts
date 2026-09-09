@@ -61,8 +61,10 @@ export function useWipe<T extends HTMLElement = HTMLElement>(
         duration,
         delay,
         ease: "power3.inOut",
-        onComplete: () => el.style.removeProperty("clip-path"),
-        scrollTrigger: { trigger: el, start, once: true },
+        // No `onComplete` clip-path removal: it stripped the very property
+        // the reverse needs to animate back, so a two-way wipe would play
+        // once and then have nothing to return to.
+        scrollTrigger: { trigger: el, start, toggleActions: "restart reverse restart reverse" },
       });
     });
 

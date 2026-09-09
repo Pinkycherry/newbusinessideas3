@@ -14,6 +14,7 @@ export const Route = createFileRoute("/about")({
 function AboutPage() {
   return (
     <ContentPage
+      tone="brief"
       eyebrow="About"
       title="We publish blueprints,"
       highlight="not listicles"
@@ -42,8 +43,7 @@ function AboutPage() {
         <p>
           We don&apos;t charge for AI analysis. Every blueprint has a Validate button that gets you
           real research — market sizing, target buyer, revenue model, risks and a launch roadmap,
-          built from that idea&apos;s real record — free, using AI tools you already pay for. It
-          runs on your account, not ours.
+          built from that idea&apos;s real record — free, using AI tools you already pay for.
         </p>
       </Section>
       <Section heading="What we do not do">
