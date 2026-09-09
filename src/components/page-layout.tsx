@@ -208,9 +208,11 @@ export function ContentPage({
             {highlight && (
               <>
                 {" "}
-                <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
-                  {highlight}
-                </span>
+                {/* Was a three-stop gradient ending on --warm (#B6B5E3), which
+                    is why "One tap, with Google" faded into lavender on a page
+                    whose palette has no lavender in it. The highlight is the
+                    brightest value in the palette and nothing else. */}
+                <span className="text-[var(--ins-bright,var(--foreground))]">{highlight}</span>
               </>
             )}
           </h1>

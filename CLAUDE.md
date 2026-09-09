@@ -40,6 +40,10 @@ honest about limits.
 - **Never generate a second n8n workflow** — edit the existing one.
 - **The custom cursor was removed at the founder's request.** Do not reinstate
   it.
+- **Every image follows `IMAGE_SEO.md`** — file name of at least five
+  keywords, alt text of four, one focus keyword, three supporting keywords, two
+  long-tail phrases and a description. The same shape applies to page, category
+  and blueprint SEO. Set by the founder as a standing rule, not a one-off.
 - Report work with **full URLs**, never bare commit hashes.
 - **Every theme change gets a new version number**, in all four places at once:
   `wp-theme/bbi/style.css`, `BBI_VERSION` in `functions.php`, each

@@ -219,6 +219,8 @@ export default function GlowCursor({
     let raf = 0;
     let destroyed = false;
     let asleep = false;
+    let targetColor = hexToRgb(color);
+    let targetColor2 = hexToRgb(secondaryColor);
 
     const resize = () => {
       width = Math.max(window.innerWidth, 1);
@@ -247,7 +249,26 @@ export default function GlowCursor({
       target.x = x;
       target.y = y;
       lastInput = performance.now();
+      sampleGround(event.clientX, event.clientY);
       wake();
+    };
+
+    // The trail is white, which vanishes over a white ground — the inverted
+    // pricing band on the homepage swallowed it completely. Any element can
+    // publish `--glow-cursor` (and optionally `--glow-cursor-2`) and the trail
+    // takes those colours while the pointer is over it. Sampled on pointermove
+    // rather than per frame, and only when the element under the pointer
+    // actually changed, so it costs one style read per move at most.
+    let groundEl: Element | null = null;
+    const sampleGround = (clientX: number, clientY: number) => {
+      const el = document.elementFromPoint(clientX, clientY);
+      if (el === groundEl) return;
+      groundEl = el;
+      const cs = el ? window.getComputedStyle(el) : null;
+      const one = cs?.getPropertyValue("--glow-cursor").trim();
+      const two = cs?.getPropertyValue("--glow-cursor-2").trim();
+      targetColor = one ? hexToRgb(one) : hexToRgb(color);
+      targetColor2 = two ? hexToRgb(two) : one ? hexToRgb(one) : hexToRgb(secondaryColor);
     };
 
     const render = (now: number) => {
@@ -284,6 +305,17 @@ export default function GlowCursor({
       const fadeStep = (16.667 * delta) / Math.max(fadeDuration, 16);
       const fadeTarget = initialized && idleFor <= idleTimeout ? 1 : 0;
       fade += (fadeTarget - fade) * Math.min(1, fadeStep * 7);
+
+      // Ease into the ground's colour rather than snapping, so crossing the
+      // edge of an inverted band reads as the trail changing rather than as
+      // two different cursors.
+      const tint = program.uniforms["uColor"].value as number[];
+      const tint2 = program.uniforms["uSecondaryColor"].value as number[];
+      const colorEase = Math.min(1, 0.12 * delta);
+      for (let i = 0; i < 3; i++) {
+        tint[i] = (tint[i] ?? 0) + ((targetColor[i] ?? 0) - (tint[i] ?? 0)) * colorEase;
+        tint2[i] = (tint2[i] ?? 0) + ((targetColor2[i] ?? 0) - (tint2[i] ?? 0)) * colorEase;
+      }
 
       program.uniforms["uTime"].value = now * 0.001;
       program.uniforms["uFade"].value = fade;

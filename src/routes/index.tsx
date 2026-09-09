@@ -7,7 +7,7 @@ import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
 import { CategoryBadge } from "@/components/category-badge";
 import { AdSlot } from "@/components/AdSlot";
-import { HeroSlider } from "@/components/hero-slider";
+import { HeroFrame } from "@/components/hero-slider";
 import { BusinessIcons } from "@/components/business-icons";
 import { CardFan } from "@/components/card-fan";
 import HoverBorderGradient from "@/components/aceternity/hover-border-gradient";
@@ -25,7 +25,7 @@ import ParticleText from "@/components/aceternity/particle-text";
 import LineWaves from "@/components/aceternity/line-waves";
 import GlowCursor from "@/components/aceternity/glow-cursor";
 import Tabs from "@/components/aceternity/tabs";
-import { photoAt } from "@/config/imagery";
+import { categoryImage } from "@/config/category-imagery";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
 import {
   Select,
@@ -351,7 +351,11 @@ function HomePage() {
             </div>
           </dl>
 
-          <div className="mt-9 grid gap-9 lg:grid-cols-[minmax(0,44ch)_1fr] lg:items-start">
+          {/* The image column was `1fr` of a two-column grid holding a 16:10
+              carousel — half the hero, three photographs, and the tallest
+              thing above the fold. It is capped at 18rem now and the copy
+              takes the width it gives back. */}
+          <div className="mt-9 grid gap-9 lg:grid-cols-[minmax(0,58ch)_minmax(0,18rem)] lg:items-start">
             <Lens className="text-base leading-relaxed text-[var(--ins-read)]">
               <p>
                 We built a free home for real business ideas — side hustles, zero investment ideas,
@@ -362,11 +366,8 @@ function HomePage() {
                 full access.
               </p>
             </Lens>
-            {/* A ratio rather than a cap: the cap cropped the Golden Tree
-                artwork mid-canopy, and no bound at all let the frame grow past
-                900px tall. */}
-            <div className="aspect-[16/10] w-full lg:pl-2">
-              <HeroSlider />
+            <div className="w-full max-w-[18rem]">
+              <HeroFrame />
             </div>
           </div>
 
@@ -395,9 +396,10 @@ function HomePage() {
                 className="ins-cell border-0 px-6 py-7"
               >
                 <h3 className="text-base font-semibold text-[var(--ins-bright)]">{panel.label}</h3>
-                <p className="mt-2 max-w-[58ch] text-sm leading-relaxed text-[var(--ins-read)]">
-                  {panel.body}
-                </p>
+                <TextGenerateEffect
+                  words={panel.body}
+                  className="mt-2 max-w-[58ch] text-sm leading-relaxed text-[var(--ins-read)]"
+                />
               </EvervaultCard>
             ))}
           </div>
@@ -470,12 +472,17 @@ function HomePage() {
                 key={`lib-row-${row}`}
                 direction={row === 1 ? "right" : "left"}
                 speed={46 + row * 8}
-                cards={slice.map((category, index) => {
-                  const photo = photoAt(index + row);
+                cards={slice.map((category) => {
+                  // The category's OWN featured image, matched on the words in
+                  // its slug — not the next photograph in a shared list. Three
+                  // stock photographs shared between fourteen cards is what
+                  // this used to be, and it read as a broken loop.
+                  const photo = categoryImage(category.categorySlug);
                   return {
                     title: category.categoryName,
                     meta: `${category.ideaCount} blueprints`,
-                    ...(photo ? { src: photo.src, alt: photo.alt } : {}),
+                    src: photo.src,
+                    alt: photo.alt,
                     to: "/category/$categorySlug",
                     params: { categorySlug: category.categorySlug },
                   };
@@ -559,18 +566,12 @@ function HomePage() {
           We got tired of the same 50 ideas recycled into infinity.
         </h2>
         <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
-          <p>
-            Every business idea list on the internet is the same list. Drop shipping. Print on
-            demand. Start a blog. Sell on Etsy. They are not wrong exactly, but they are not
-            researched either. Nobody tells you the margin, the failure rate, the licensing
-            requirement, or the competitor who already owns the space.
-          </p>
-          <p>
-            This library exists because a genuine small business idea blueprint is worth more than a
-            hundred recycled suggestions. We research each one properly — market context, real
-            revenue mechanics, honest risks — and we tell you directly whether you are the right
-            person to build it.
-          </p>
+          <TextGenerateEffect
+            words={`Every business idea list on the internet is the same list. Drop shipping. Print on demand. Start a blog. Sell on Etsy. They are not wrong exactly, but they are not researched either. Nobody tells you the margin, the failure rate, the licensing requirement, or the competitor who already owns the space.`}
+          />
+          <TextGenerateEffect
+            words={`This library exists because a genuine small business idea blueprint is worth more than a hundred recycled suggestions. We research each one properly — market context, real revenue mechanics, honest risks — and we tell you directly whether you are the right person to build it.`}
+          />
         </div>
         <Link
           to="/browse"
@@ -718,10 +719,10 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
         <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-5xl">
           The Golden Tree of Business Growth
         </h2>
-        <p className="mt-3 text-sm text-muted-foreground sm:text-base leading-relaxed">
-          Tap or hover any leaf node to see how many researched blueprints that category holds right
-          now, then open the ones behind it.
-        </p>
+        <TextGenerateEffect
+          className="mt-3 text-sm text-muted-foreground sm:text-base leading-relaxed"
+          words={`Tap or hover any leaf node to see how many researched blueprints that category holds right now, then open the ones behind it.`}
+        />
       </div>
 
       {/* No boxed/16:9 backdrop element here on purpose — the dark glow behind the
@@ -1083,9 +1084,10 @@ function HowItWorksSection() {
             <h3 className="self-center text-xl font-semibold leading-snug text-[var(--ins-bright)] sm:text-2xl">
               {step.t}
             </h3>
-            <p className="self-center max-w-[62ch] text-base leading-relaxed text-[var(--ins-read)]">
-              {step.d}
-            </p>
+            <TextGenerateEffect
+              words={step.d}
+              className="self-center max-w-[62ch] text-base leading-relaxed text-[var(--ins-read)]"
+            />
           </li>
         ))}
       </ol>
@@ -1187,9 +1189,10 @@ function WhoForSection() {
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
           Built with you in mind
         </p>
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          These are the things people actually type at 1am. Every one of them goes somewhere real.
-        </p>
+        <TextGenerateEffect
+          className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground"
+          words={`These are the things people actually type at 1am. Every one of them goes somewhere real.`}
+        />
         {/* Was six flat cards with the sub-line stranded at the bottom by a
             justify-between and nothing to engage with. Each is an Evervault
             plate now: the pointer carries a window through a character field,
@@ -1262,12 +1265,10 @@ function PricingPhilosophySection() {
           <h2 className="mt-4 max-w-4xl text-[2.1rem] leading-[1.06] text-primary-foreground sm:text-[3.2rem]">
             One fee. Once. For life. That&apos;s the whole pricing page.
           </h2>
-          <p className="mt-6 max-w-[62ch] text-base leading-relaxed text-primary-foreground/80 sm:text-lg">
-            No monthly plan. No &quot;Starter / Pro / Enterprise&quot; ladder designed to make you
-            feel small on the cheapest tier. Just one option: pay once, unlock everything, forever —
-            including every idea we add after the day you join. Not ready to pay yet? Most of the
-            library stays free to browse regardless.
-          </p>
+          <TextGenerateEffect
+            className="mt-6 max-w-[62ch] text-base leading-relaxed text-primary-foreground/80 sm:text-lg"
+            words={`No monthly plan. No "Starter / Pro / Enterprise" ladder designed to make you feel small on the cheapest tier. Just one option: pay once, unlock everything, forever — including every idea we add after the day you join. Not ready to pay yet? Most of the library stays free to browse regardless.`}
+          />
         </div>
       </div>
 
@@ -1293,10 +1294,9 @@ function TeamSection() {
         <p className="ins-legend">Who&apos;s behind this</p>
         <h2 className="mt-3">Built by hand, not by a headcount.</h2>
         <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
-          <p>
-            BBI is a small, hands-on build — no invented office, no fake team page. We&apos;d rather
-            tell you less and have it be true.
-          </p>
+          <TextGenerateEffect
+            words={`BBI is a small, hands-on build — no invented office, no fake team page. We'd rather tell you less and have it be true.`}
+          />
           <p>
             The full story lives on our{" "}
             <LinkPreview url="https://newbusinessideas3.vercel.app/about" className="font-semibold">
@@ -1335,14 +1335,10 @@ function InspiredBySection() {
       <div className="border-l-2 border-primary pl-6 sm:pl-8">
         <p className="ins-legend">Where this came from</p>
         <h2 className="mt-3">We didn&apos;t invent this model. We learned it.</h2>
-        <p className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground">
-          Our inspiration is EthicalFounder.com — a platform offering free websites, free MSME
-          registration help, and free mentorship to Indian entrepreneurs who can&apos;t afford any
-          of it otherwise. We&apos;re not affiliated with them and we don&apos;t take commissions
-          from anyone. We just watched how they operated — help first, ask for nothing, let the
-          value speak — and decided BBI should work the same way for business idea research
-          specifically.
-        </p>
+        <TextGenerateEffect
+          className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground"
+          words={`Our inspiration is EthicalFounder.com — a platform offering free websites, free MSME registration help, and free mentorship to Indian entrepreneurs who can't afford any of it otherwise. We're not affiliated with them and we don't take commissions from anyone. We just watched how they operated — help first, ask for nothing, let the value speak — and decided BBI should work the same way for business idea research specifically.`}
+        />
       </div>
     </section>
   );
@@ -1369,12 +1365,10 @@ function ComparisonSection() {
       <h2 className="mt-3 max-w-3xl">
         Validating a business idea should not cost you the money you were going to start it with.
       </h2>
-      <p className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground">
-        Twenty dollars buys you three or four checks on most idea validation platforms. If the
-        answer comes back no, that money is gone and you are back where you started — except poorer.
-        We think that is the wrong way round. Read the research first, for free, and decide with
-        your own eyes whether an idea is worth your time.
-      </p>
+      <TextGenerateEffect
+        className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground"
+        words={`Twenty dollars buys you three or four checks on most idea validation platforms. If the answer comes back no, that money is gone and you are back where you started — except poorer. We think that is the wrong way round. Read the research first, for free, and decide with your own eyes whether an idea is worth your time.`}
+      />
 
       {/* Was two blocks of loose sentences with no markers, so nothing said
           which line answered which, or even that these were lists. Numbered
@@ -1436,11 +1430,10 @@ function FutureProofSpotlight() {
     <section className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4">
       <p className="ins-legend">Ways into the library</p>
       <h2 className="mt-3 max-w-3xl">Start from a theme instead of a blank search box.</h2>
-      <p className="mt-3 max-w-[62ch] text-sm leading-relaxed text-muted-foreground">
-        Each one runs a live search across every blueprint. They are shortcuts, not a ranking
-        &mdash; and if one comes back thin, that is the library being honest with you rather than a
-        page pretending to be fuller than it is.
-      </p>
+      <TextGenerateEffect
+        className="mt-3 max-w-[62ch] text-sm leading-relaxed text-muted-foreground"
+        words={`Each one runs a live search across every blueprint. They are shortcuts, not a ranking — and if one comes back thin, that is the library being honest with you rather than a page pretending to be fuller than it is.`}
+      />
       <div className="mt-7 flex flex-wrap gap-2.5">
         {BBI_FUTURE_TERMS.map((term) => (
           <Link
@@ -1582,12 +1575,10 @@ function PromiseSection() {
           <h2 className="text-[2rem] leading-[1.08] sm:text-[2.8rem]">
             We&apos;re not here to sell you a dream. We&apos;re here to hand you the research.
           </h2>
-          <p className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
-            We won&apos;t tell you that you&apos;ll be a millionaire in three months. We won&apos;t
-            show you a lifestyle you can&apos;t verify. What we will do: give you honest research,
-            free guidance, and a starting point that doesn&apos;t cost you $20 before you&apos;ve
-            even decided if the idea is worth pursuing.
-          </p>
+          <TextGenerateEffect
+            className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg"
+            words={`We won't tell you that you'll be a millionaire in three months. We won't show you a lifestyle you can't verify. What we will do: give you honest research, free guidance, and a starting point that doesn't cost you $20 before you've even decided if the idea is worth pursuing.`}
+          />
         </div>
       </div>
 

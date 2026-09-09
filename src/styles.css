@@ -3223,3 +3223,92 @@ html[data-tone="instrument"],
 html[data-tone="instrument"] body {
   background-color: #141414 !important;
 }
+
+/* ---- TextGenerateEffect ------------------------------------------------
+   One keyframe, no library, no blur. `.tg` alone paints nothing: the hidden
+   state hangs off `[data-tg="armed"]`, which only JavaScript sets, so a
+   server-rendered paragraph and a browser with scripting off both show the
+   finished text. */
+.tg-w {
+  display: inline-block;
+  white-space: pre;
+}
+.tg[data-tg="armed"] .tg-w {
+  opacity: 0;
+  transform: translateY(2px);
+}
+.tg[data-tg="in"] .tg-w {
+  animation: tg-word 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes tg-word {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tg .tg-w {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* ---- the inverted pricing band ----------------------------------------
+   The one white ground on the homepage. The glow cursor is white, so over
+   this band it disappeared entirely; `--glow-cursor` is the hook the cursor
+   reads to recolour itself, and here it takes the gold of the Golden Tree.
+   Nothing else on the site sets it, so the trail stays white everywhere the
+   ground is dark. */
+.bbi-instrument .bg-primary {
+  --glow-cursor: #E0A93B;
+  --glow-cursor-2: #8A5D00;
+}
+
+/* ---- the filled action on a plate --------------------------------------
+   `.ac-cta` paints its own white ground and dark ink. Inside a `.glass`
+   plate the generic descendant rule repainted its label at --ins-read, i.e.
+   near-white ink on a white button — which is what the sign-in page showed.
+   Printed last, and covering the label's own descendants, so nothing after
+   it can take the ink back. */
+html.light .bbi-instrument .ac-cta,
+html.light .bbi-instrument .ac-cta *,
+html.light .bbi-instrument .glass .ac-cta,
+html.light .bbi-instrument .glass .ac-cta * {
+  background-color: var(--ins-signal) !important;
+  color: var(--ins-void) !important;
+  border-color: var(--ins-signal) !important;
+}
+html.light .bbi-instrument .ac-cta:hover,
+html.light .bbi-instrument .ac-cta:hover *,
+html.light .bbi-instrument .glass .ac-cta:hover,
+html.light .bbi-instrument .glass .ac-cta:hover * {
+  background-color: var(--ins-read) !important;
+  color: var(--ins-void) !important;
+  border-color: var(--ins-read) !important;
+}
+
+/* ---- breadcrumbs -------------------------------------------------------
+   They were two pills: a light chip with lighter text on it, unreadable, and
+   a second chip that read as a button next to it. A breadcrumb is a path,
+   not a control — plain marks on the ground, the current page brighter than
+   the ones behind it. */
+html.light .bbi-instrument nav[aria-label="Breadcrumb"] a {
+  color: var(--ins-faint) !important;
+  background: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+html.light .bbi-instrument nav[aria-label="Breadcrumb"] a:hover {
+  color: var(--ins-read) !important;
+}
+html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a)) {
+  color: var(--ins-read) !important;
+  background: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+}

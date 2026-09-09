@@ -1,100 +1,42 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 import { hideImgIfBroken } from "@/lib/utils";
 
 /**
- * Hero imagery slider. Slides use the imagery already used across the site
- * (the Golden Tree artwork first) — purely visual, no clickable nodes on top.
+ * The hero's single image frame.
+ *
+ * It was a three-slide carousel on a 16:10 frame filling half the hero. The
+ * founder asked for something simple and smaller, and for the hero to stop
+ * paying to load it: three photographs, a rotation timer, framer-motion
+ * cross-fades and a row of dot controls have all gone. One image, eager, at a
+ * fraction of the height.
+ *
+ * The two captions that belonged to the removed slides went with them; the
+ * Golden Tree's own caption is unchanged.
  */
-const SLIDES = [
-  {
-    src: "https://ethicalfounder.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg",
-    alt: "The Golden Tree of Business Growth — business ideas mapped across branches",
-    caption: "The Golden Tree — every branch is a live category",
-  },
-  {
-    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-16.jpg.webp",
-    alt: "Founder working at a laptop in a warmly lit workspace",
-    caption: "Blueprints written for the person who has to build it",
-  },
-  {
-    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-37.jpg.webp",
-    alt: "Close-up of hands typing on a laptop keyboard",
-    caption: "Free validation on every blueprint",
-  },
-];
+const HERO_IMAGE = {
+  src: "https://ethicalfounder.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg",
+  alt: "The Golden Tree of Business Growth — business ideas mapped across branches",
+  caption: "The Golden Tree — every branch is a live category",
+};
 
-export function HeroSlider() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const t = setInterval(() => setIndex((i) => (i + 1) % SLIDES.length), 5200);
-    return () => clearInterval(t);
-  }, []);
-
-  const slide = SLIDES[index]!;
-
+export function HeroFrame() {
   return (
-    <div className="relative">
-      {/* The homepage hero's image slot. `.mo-media` is the site-wide slot
-          treatment (MOTION_SPEC §3, homepage): the frame stays exactly the size
-          it is and the image scales inside it. It supplies the clip and the
-          radius, so the local `rounded-[2rem]` it would have overridden is
-          gone rather than left in place looking authoritative. */}
-      <div className="mo-media iv-hero-frame glass relative aspect-[16/10] w-full">
-        <AnimatePresence mode="sync">
-          <motion.img
-            key={slide.src}
-            ref={hideImgIfBroken}
-            src={slide.src}
-            alt={slide.alt}
-            // The first slide is the LCP-critical hero image — always
-            // visible on load, never actually below the fold, so
-            // loading="lazy" on it was actively counterproductive (telling
-            // the browser to deprioritize the one image that most needs
-            // priority). Later slides genuinely aren't needed until the
-            // interval rotates to them, so they stay lazy.
-            loading={index === 0 ? "eager" : "lazy"}
-            fetchPriority={index === 0 ? "high" : "auto"}
-            initial={{ opacity: 0, scale: 1.08 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.02 }}
-            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0 h-full w-full object-cover"
-            onError={(e) => (e.currentTarget.style.display = "none")}
-          />
-        </AnimatePresence>
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent" />
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={slide.caption}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute bottom-4 left-4 right-16 text-xs font-semibold uppercase tracking-[0.18em] text-foreground sm:text-[13px]"
-          >
-            {slide.caption}
-          </motion.p>
-        </AnimatePresence>
-      </div>
-
-      <div className="absolute bottom-4 right-4 flex gap-1.5">
-        {SLIDES.map((s, i) => (
-          <button
-            key={s.src}
-            type="button"
-            onClick={() => setIndex(i)}
-            aria-label={`Show slide ${i + 1}`}
-            aria-current={i === index}
-            className={`h-1.5 rounded-full transition-all duration-500 ${
-              i === index ? "w-7 bg-primary" : "w-2.5 bg-foreground/35 hover:bg-foreground/60"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
+    <figure className="mo-media iv-hero-frame glass relative aspect-[4/3] w-full">
+      <img
+        ref={hideImgIfBroken}
+        src={HERO_IMAGE.src}
+        alt={HERO_IMAGE.alt}
+        loading="eager"
+        fetchPriority="high"
+        className="absolute inset-0 h-full w-full object-cover"
+        onError={(e) => (e.currentTarget.style.display = "none")}
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent" />
+      <figcaption className="absolute bottom-3 left-4 right-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground">
+        {HERO_IMAGE.caption}
+      </figcaption>
+    </figure>
   );
 }
 
