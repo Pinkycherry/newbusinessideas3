@@ -19,15 +19,12 @@ import LayoutTextFlip from "@/components/aceternity/layout-text-flip";
 import TextGenerateEffect from "@/components/aceternity/text-generate-effect";
 import EncryptedText from "@/components/aceternity/encrypted-text";
 import EvervaultCard from "@/components/aceternity/evervault-card";
-import MaskContainer from "@/components/aceternity/svg-mask-effect";
-import SparklesCore from "@/components/aceternity/sparkles";
 import LinkPreview from "@/components/aceternity/link-preview";
 import Lens from "@/components/aceternity/lens";
 import ParticleText from "@/components/aceternity/particle-text";
 import LineWaves from "@/components/aceternity/line-waves";
 import GlowCursor from "@/components/aceternity/glow-cursor";
 import Tabs from "@/components/aceternity/tabs";
-import StickyScroll from "@/components/aceternity/sticky-scroll";
 import { photoAt } from "@/config/imagery";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
 import {
@@ -292,20 +289,6 @@ function HomePage() {
 
   return (
     <SiteShell tone="instrument">
-      {/* The background field. Fixed behind everything, pointer-events:none so
-          it never swallows a click, and it holds no WebGL context at all under
-          prefers-reduced-motion. */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 z-0"
-        style={{ height: "100vh" }}
-      >
-        <LineWaves className="h-full w-full" brightness={0.085} />
-        {/* A scrim. At full strength the field competed with the copy for
-            contrast and the body text stopped being comfortably readable. */}
-        <div className="absolute inset-0 bg-[var(--ins-void)]/55" />
-      </div>
-
       {/* The trail. It does not replace the system cursor — the canvas is
           pointer-events:none, so every hit target is exactly where it was. */}
       <GlowCursor />
@@ -326,9 +309,18 @@ function HomePage() {
         id="hero"
         data-anchor="hero"
         data-anchor-label="Top"
-        className="relative border-b border-[var(--ins-rule)]"
+        className="relative overflow-hidden border-b border-[var(--ins-rule)]"
       >
-        <div className="mx-auto max-w-[92rem] px-6 py-10 lg:py-14">
+        {/* The field lives in the HERO, not behind the document. Fixed to the
+            viewport it showed through every section — sections have no ground
+            of their own — so all the body copy and every heading sat on moving
+            light bands. They measured #FFFFFF and still read grey, because the
+            thing behind them was brighter than they were. */}
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <LineWaves className="h-full w-full" brightness={0.11} />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--ins-void)]/40 via-[var(--ins-void)]/55 to-[var(--ins-void)]" />
+        </div>
+        <div className="relative mx-auto max-w-[92rem] px-6 py-10 lg:py-14">
           <p className="ins-legend">The Truth About Business Ideas</p>
 
           <h1 className="mt-5">
@@ -1069,37 +1061,35 @@ function HowItWorksSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <p className="ins-legend">Step by step</p>
-      {/* The sparkle field sits BEHIND the mask, so the reveal uncovers a lit
-          surface rather than a flat one. Both layers carry the same real
-          sentence: with no pointer, no JS, or reduced motion the mask bows out
-          and the heading is simply shown. */}
-      <div className="relative mt-3 overflow-hidden border border-border">
-        <div aria-hidden className="pointer-events-none absolute inset-0 opacity-60">
-          <SparklesCore density={40} />
-        </div>
-        <MaskContainer
-          className="relative min-h-[13rem] py-10 sm:min-h-[15rem]"
-          revealText={
-            <span className="block max-w-3xl text-[1.9rem] font-bold leading-[1.06] sm:text-[2.6rem]">
-              Grab the idea. Validate it however you want. Keep the money.
+      <h2 className="mt-4 max-w-4xl text-[2rem] leading-[1.05] sm:text-[3rem]">
+        Grab the idea. Validate it however you want. Keep the money.
+      </h2>
+
+      {/* This was a mask-reveal over a sparkle field with a pinned plate
+          beside it. It cost a WebGL-adjacent canvas and a per-frame re-render
+          to hide the heading behind a hole the reader had to find with the
+          cursor, and the plate next to it repeated a word already on screen.
+          Three steps, so it is drawn as three steps: a rule per row, the
+          numeral at display size, and the row lights on hover. Nothing here
+          hides content behind an interaction. */}
+      <ol className="mt-12 border-t border-border">
+        {BBI_HOW_STEPS.map((step) => (
+          <li
+            key={step.n}
+            className="group/step grid gap-4 border-b border-border py-8 transition-colors duration-300 hover:bg-[var(--ins-face)] sm:grid-cols-[6rem_minmax(0,22ch)_1fr] sm:gap-8 sm:px-4"
+          >
+            <span className="ins-num text-[2.5rem] leading-none text-[var(--ins-faint)] transition-colors duration-300 group-hover/step:text-[var(--ins-bright)] sm:text-[3.5rem]">
+              {step.n}
             </span>
-          }
-        >
-          <span className="block max-w-3xl text-[1.9rem] font-bold leading-[1.06] sm:text-[2.6rem]">
-            Grab the idea. Validate it however you want. Keep the money.
-          </span>
-        </MaskContainer>
-      </div>
-      {/* Three numbered tiles beside a diagram said "here are three things".
-          This is an ordered sequence, which is what StickyScroll is for: the
-          plate holds its place and names the step you are level with. */}
-      <StickyScroll
-        className="mt-10"
-        items={BBI_HOW_STEPS.map((step) => ({
-          title: step.t,
-          description: <p className="leading-relaxed">{step.d}</p>,
-        }))}
-      />
+            <h3 className="self-center text-xl font-semibold leading-snug text-[var(--ins-bright)] sm:text-2xl">
+              {step.t}
+            </h3>
+            <p className="self-center max-w-[62ch] text-base leading-relaxed text-[var(--ins-read)]">
+              {step.d}
+            </p>
+          </li>
+        ))}
+      </ol>
 
       <div className="mt-14 border-t border-border pt-8">
         <p className="ins-legend">Validating & using BBI</p>

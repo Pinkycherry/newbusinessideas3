@@ -3020,6 +3020,65 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
     color: var(--ins-bright) !important;
     font-size: 0.9375rem !important;
   }
+
+  /* PORTALS. Radix mounts select, dialog and tooltip content on document.body,
+     so nothing scoped to .bbi-instrument can reach it — that is why the open
+     category dropdown kept a white panel, dark labels and an indigo tick. The
+     flag lives on <html>, which portal content does inherit. */
+  html[data-tone="instrument"] [role="listbox"],
+  html[data-tone="instrument"] [data-radix-select-content],
+  html[data-tone="instrument"] [data-radix-popper-content-wrapper] > * {
+    background: #1e1e1e !important;
+    background-image: none !important;
+    border: 1px solid rgb(224 224 224 / 0.14) !important;
+    color: #e0e0e0 !important;
+    box-shadow: none !important;
+  }
+  html[data-tone="instrument"] [role="option"],
+  html[data-tone="instrument"] [role="option"] *,
+  html[data-tone="instrument"] [data-radix-select-content] * {
+    color: #e0e0e0 !important;
+  }
+  html[data-tone="instrument"] [role="option"][data-highlighted],
+  html[data-tone="instrument"] [role="option"][data-state="checked"] {
+    background: #262626 !important;
+    color: #ffffff !important;
+    outline: none !important;
+  }
+  html[data-tone="instrument"] [role="option"] svg {
+    color: #ffffff !important;
+  }
+
+  /* A filled control inverts to housing ink. The hover state was painting the
+     plate white and leaving the label at --ins-read, i.e. white on white. */
+  html.light .bbi-instrument .glass-pill:hover,
+  html.light .bbi-instrument .glass-btn:hover,
+  html.light .bbi-instrument .glass-pill:hover *,
+  html.light .bbi-instrument .glass-btn:hover *,
+  html.light .bbi-instrument .glass-pill[data-state="open"],
+  html.light .bbi-instrument .glass-pill[data-state="open"] * {
+    background-color: transparent !important;
+    color: var(--ins-void) !important;
+  }
+  html.light .bbi-instrument .glass-pill:hover,
+  html.light .bbi-instrument .glass-btn:hover,
+  html.light .bbi-instrument .glass-pill[data-state="open"] {
+    background-color: var(--ins-signal) !important;
+    border-color: var(--ins-signal) !important;
+  }
+
+  /* The Golden Tree's leaf labels: white on the housing, ink when lit. */
+  html.light .bbi-instrument .tree-node,
+  html.light .bbi-instrument .tree-node *,
+  html.light .bbi-instrument [class*="leaf"],
+  html.light .bbi-instrument [class*="leaf"] * {
+    color: var(--ins-bright) !important;
+  }
+  html.light .bbi-instrument .tree-node:hover,
+  html.light .bbi-instrument .tree-node:hover * {
+    background-color: var(--ins-signal) !important;
+    color: var(--ins-void) !important;
+  }
   /* A filled plate inverts: white ground, housing ink. Without this the
      ContainerTextFlip rendered as a solid white box with white text in it. */
   html.light .bbi-instrument .bg-primary,
@@ -3082,8 +3141,10 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
   position: relative;
   z-index: 1;
 }
-.bbi-instrument > [aria-hidden][style*="100vh"] {
-  z-index: 0;
+/* Everything below the hero gets a solid ground. The page has to be readable
+   before it is atmospheric. */
+.bbi-instrument > main {
+  background: var(--ins-void);
 }
 /* The header and its dropdowns must sit above every section. Without this the
    blanket z-index:1 above put the header in the same layer as the content, and

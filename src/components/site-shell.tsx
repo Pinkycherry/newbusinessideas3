@@ -749,6 +749,17 @@ export function SiteShell({
   tone?: "instrument";
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  // Radix renders selects, dialogs and tooltips through a PORTAL on
+  // document.body, outside this subtree — which is why a `.bbi-instrument …`
+  // selector never reached the open dropdown and it kept its light panel and
+  // indigo tick. A flag on <html> is the only thing portal content inherits.
+  useEffect(() => {
+    if (tone !== "instrument") return;
+    document.documentElement.dataset["tone"] = "instrument";
+    return () => {
+      delete document.documentElement.dataset["tone"];
+    };
+  }, [tone]);
   // Publishes --page-p on :root; the rail under the header is the only thing
   // that reads it here, and it does so with a composited scaleX.
   usePageScrollProgress();

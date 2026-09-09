@@ -55,7 +55,11 @@ export function useOdometer<T extends HTMLElement = HTMLElement>(
       return;
     }
 
-    el.textContent = render(from);
+    // Fail OPEN: paint the REAL figure first. The count-up is an
+    // enhancement, and if its ScrollTrigger never fires — which is exactly
+    // what was happening, leaving the page reading "0+ researched blueprints"
+    // — the reader still sees the true number rather than a zero.
+    el.textContent = render(value);
 
     let cancelled = false;
     let tween: gsap.core.Tween | null = null;
@@ -74,7 +78,15 @@ export function useOdometer<T extends HTMLElement = HTMLElement>(
         onComplete: () => {
           if (ref.current) ref.current.textContent = render(value);
         },
-        scrollTrigger: { trigger: el, start, toggleActions: "restart reverse restart reverse" },
+        // Never reverse. "restart reverse" counted the figure back DOWN to
+        // its `from` value on scroll-out and left it there, so the page read
+        // "0+ researched blueprints" for anyone who had scrolled past — a
+        // counter that lies about the catalogue is worse than no counter.
+        // Never reverse. "restart reverse" counted the figure back DOWN to
+        // its `from` value on scroll-out and left it there.
+        scrollTrigger: { trigger: el, start, toggleActions: "play none none none" },
+        // And never let the tween paint `from` before it actually runs.
+        immediateRender: false,
       });
     });
 
