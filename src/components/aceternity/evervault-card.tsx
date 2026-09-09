@@ -1,5 +1,5 @@
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -39,7 +39,12 @@ export default function EvervaultCard({
 }) {
   const x = useMotionValue(-400);
   const y = useMotionValue(-400);
-  const [field, setField] = useState(() => noise(2600, seed));
+  // Generated ONCE. The first version regenerated 2,600 characters of noise
+  // inside onMouseMove and pushed them through setState, so every pointer
+  // frame re-rendered the card — that is why it felt like it was not tracking
+  // the cursor. Only the mask position moves now, and it moves as a motion
+  // value, outside React's render cycle entirely.
+  const field = useMemo(() => noise(2600, seed), [seed]);
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
@@ -55,7 +60,7 @@ export default function EvervaultCard({
     };
   }, []);
 
-  const mask = useMotionTemplate`radial-gradient(180px at ${x}px ${y}px, black 20%, transparent 78%)`;
+  const mask = useMotionTemplate`radial-gradient(190px at ${x}px ${y}px, black 26%, transparent 80%)`;
 
   return (
     <div
@@ -64,7 +69,6 @@ export default function EvervaultCard({
         const rect = event.currentTarget.getBoundingClientRect();
         x.set(event.clientX - rect.left);
         y.set(event.clientY - rect.top);
-        setField(noise(2600, Math.round(event.clientX + event.clientY + seed)));
       }}
       onMouseLeave={() => {
         x.set(-400);
@@ -78,7 +82,7 @@ export default function EvervaultCard({
       {enabled ? (
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute inset-0 select-none break-all p-2 font-mono text-[0.6rem] leading-[1.05] text-primary/70 opacity-0 transition-opacity duration-300 group-hover/ev:opacity-100"
+          className="pointer-events-none absolute inset-0 select-none break-all p-2 font-mono text-[0.6rem] leading-[1.05] text-[var(--ins-dim)] opacity-0 transition-opacity duration-300 group-hover/ev:opacity-100"
           style={{ maskImage: mask, WebkitMaskImage: mask }}
         >
           {field}

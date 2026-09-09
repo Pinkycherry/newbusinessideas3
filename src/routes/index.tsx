@@ -23,6 +23,9 @@ import MaskContainer from "@/components/aceternity/svg-mask-effect";
 import SparklesCore from "@/components/aceternity/sparkles";
 import LinkPreview from "@/components/aceternity/link-preview";
 import Lens from "@/components/aceternity/lens";
+import ParticleText from "@/components/aceternity/particle-text";
+import LineWaves from "@/components/aceternity/line-waves";
+import GlowCursor from "@/components/aceternity/glow-cursor";
 import Tabs from "@/components/aceternity/tabs";
 import StickyScroll from "@/components/aceternity/sticky-scroll";
 import { photoAt } from "@/config/imagery";
@@ -53,11 +56,40 @@ import { Odometer, useScrollProgress, useStaggerReveal } from "@/motion";
  * at the founder's instruction: brand ink travels the plate's border until the
  * pointer arrives, then fills it.
  */
+/** The mark that rides inside every action on this page, matching the
+ * HoverBorderGradient reference: a glyph and a label, not a bare word. */
+function SearchGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden className="h-3.5 w-3.5 shrink-0">
+      <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="2" />
+      <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function ArrowGlyph() {
+  return (
+    <svg viewBox="0 0 66 65" fill="none" aria-hidden className="h-3 w-3 shrink-0">
+      <path
+        d="M8 8.05571C8 8.05571 54.9009 18.1782 57.8687 30.062C60.8365 41.9458 9.05432 57.4696 9.05432 57.4696"
+        stroke="currentColor"
+        strokeWidth="15"
+        strokeMiterlimit="3.86874"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 function HeroCta() {
   return (
-    <HoverBorderGradient asChild containerClassName="justify-self-start">
-      <Link to="/browse" className="text-xs font-extrabold uppercase tracking-[0.18em]">
-        Browse the library
+    <HoverBorderGradient asChild containerClassName="rounded-full justify-self-start">
+      <Link
+        to="/browse"
+        className="rounded-full text-xs font-extrabold uppercase tracking-[0.18em]"
+      >
+        <ArrowGlyph />
+        <span>Browse the library</span>
       </Link>
     </HoverBorderGradient>
   );
@@ -106,10 +138,12 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
           Surprise me
           <ContainerTextFlip
             words={categories.map((c) => c.categoryName)}
-            className="text-[11px] font-semibold normal-case tracking-normal"
+            className="text-sm font-semibold normal-case tracking-normal sm:text-base"
           />
         </p>
-        <h2 className="mt-3">Pick a category, or don&apos;t. We&apos;ll surprise you.</h2>
+        <h2 className="mt-4 text-[2rem] leading-[1.05] sm:text-[3rem]">
+          Pick a category, or don&apos;t. We&apos;ll surprise you.
+        </h2>
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <Select
             value={categorySlug || "any"}
@@ -258,6 +292,24 @@ function HomePage() {
 
   return (
     <SiteShell tone="instrument">
+      {/* The background field. Fixed behind everything, pointer-events:none so
+          it never swallows a click, and it holds no WebGL context at all under
+          prefers-reduced-motion. */}
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-0"
+        style={{ height: "100vh" }}
+      >
+        <LineWaves className="h-full w-full" brightness={0.085} />
+        {/* A scrim. At full strength the field competed with the copy for
+            contrast and the body text stopped being comfortably readable. */}
+        <div className="absolute inset-0 bg-[var(--ins-void)]/55" />
+      </div>
+
+      {/* The trail. It does not replace the system cursor — the canvas is
+          pointer-events:none, so every hit target is exactly where it was. */}
+      <GlowCursor />
+
       {/* LLM crawlable summary */}
       <p className="sr-only">
         BBI (Bro Business Ideas) is a business idea directory and startup intelligence library. This
@@ -266,78 +318,82 @@ function HomePage() {
         by sector, investment level, and founder profile.
       </p>
 
-      {/* HERO — the readout column is the whole idea in miniature: the
-          catalogue's live figures are lit and sit level with the headline,
-          because the library IS the product. The previous version put a
-          paragraph about the library here instead. */}
+      {/* HERO. The readout sidebar is gone — it was a generic dashboard rail
+          and it stole a fifth of the fold from the headline. The two figures
+          it carried now sit inline under the H1, where they read as part of
+          the sentence rather than as chrome. */}
       <section
         id="hero"
         data-anchor="hero"
         data-anchor-label="Top"
-        className="border-b border-[var(--ins-rule)]"
+        className="relative z-10 border-b border-[var(--ins-rule)]"
       >
-        <div className="mx-auto grid max-w-[92rem] gap-px bg-[var(--ins-rule)] px-0 lg:grid-cols-[15rem_1fr]">
-          <div className="flex flex-col gap-7 bg-[var(--ins-void)] px-6 py-7">
-            <p className="ins-legend text-[0.6875rem]">The Truth About Business Ideas</p>
-            <dl className="grid grid-cols-2 gap-5 lg:grid-cols-1">
-              <div>
-                <dd className="ins-num text-4xl font-semibold leading-none text-[var(--ins-signal)]">
-                  {catalog.totalIdeas}
-                </dd>
-                <dt className="ins-num mt-1.5 text-[0.6875rem] text-[var(--ins-dim)]">
-                  researched blueprints
-                </dt>
-              </div>
-              <div>
-                <dd className="ins-num text-4xl font-semibold leading-none text-hl-teal">
-                  {catalog.categories.length}
-                </dd>
-                <dt className="ins-num mt-1.5 text-[0.6875rem] text-[var(--ins-dim)]">
-                  live categories
-                </dt>
-              </div>
-            </dl>
+        <div className="mx-auto max-w-[92rem] px-6 py-10 lg:py-14">
+          <p className="ins-legend">The Truth About Business Ideas</p>
+
+          <h1 className="mt-5">
+            <ParticleText
+              text="Tired of paying just to check if your idea will work?"
+              className="h-[11rem] sm:h-[17rem]"
+              fontSize="clamp(2.1rem, 4.6vw, 3.6rem)"
+              fontWeight={700}
+              color="#FFFFFF"
+              highlightColor="#B2B2B2"
+            />
+          </h1>
+
+          <dl className="mt-2 flex flex-wrap items-baseline gap-x-10 gap-y-3">
+            <div className="flex items-baseline gap-2.5">
+              <dd className="ins-num text-3xl font-semibold leading-none text-[var(--ins-bright)]">
+                {catalog.totalIdeas}
+              </dd>
+              <dt className="ins-num text-[0.6875rem] text-[var(--ins-dim)]">
+                researched blueprints
+              </dt>
+            </div>
+            <div className="flex items-baseline gap-2.5">
+              <dd className="ins-num text-3xl font-semibold leading-none text-[var(--ins-bright)]">
+                {catalog.categories.length}
+              </dd>
+              <dt className="ins-num text-[0.6875rem] text-[var(--ins-dim)]">live categories</dt>
+            </div>
+          </dl>
+
+          <div className="mt-9 grid gap-9 lg:grid-cols-[minmax(0,44ch)_1fr] lg:items-start">
+            <Lens className="text-base leading-relaxed text-[var(--ins-read)]">
+              <p>
+                We built a free home for real business ideas — side hustles, zero investment ideas,
+                work from home ideas, and low investment ideas. Every idea is researched, not
+                guessed. We tell you who will actually pay you, how the money works, and what will
+                hurt you in year one. Then we give it to you straight — build it, or walk away.
+                Browse for free. Validate as many times as you want. Pay only once, if you ever want
+                full access.
+              </p>
+            </Lens>
+            {/* A ratio rather than a cap: the cap cropped the Golden Tree
+                artwork mid-canopy, and no bound at all let the frame grow past
+                900px tall. */}
+            <div className="aspect-[16/10] w-full lg:pl-2">
+              <HeroSlider />
+            </div>
           </div>
 
-          <div className="bg-[var(--ins-void)] px-6 py-7 lg:px-9">
-            <h1 className="max-w-[17ch] text-[2.4rem] leading-[0.96] sm:text-[3.9rem]">
-              Tired of paying just to check if your{" "}
-              <span className="text-[var(--ins-signal)]">idea will work</span>?
-            </h1>
-            <div className="mt-7 grid gap-7 lg:grid-cols-[minmax(0,40ch)_1fr] lg:items-start">
-              <Lens className="text-[0.9375rem] leading-relaxed text-[var(--ins-dim)]">
-                <p>
-                  We built a free home for real business ideas — side hustles, zero investment
-                  ideas, work from home ideas, and low investment ideas. Every idea is researched,
-                  not guessed. We tell you who will actually pay you, how the money works, and what
-                  will hurt you in year one. Then we give it to you straight — build it, or walk
-                  away. Browse for free. Validate as many times as you want. Pay only once, if you
-                  ever want full access.
-                </p>
-              </Lens>
-              {/* Capped: uncapped this frame grew to 430px and became the
-                  loudest thing on a page whose subject is the data. */}
-              <div className="max-h-[15rem] overflow-hidden lg:pl-2">
-                <HeroSlider />
-              </div>
-            </div>
-
-            <div className="mt-7 flex flex-wrap items-center gap-3">
-              <HeroCta />
+          <div className="mt-9 flex flex-wrap items-center gap-3">
+            <HeroCta />
+            <HoverBorderGradient asChild containerClassName="rounded-full">
               <Link
                 to="/search"
                 search={{ q: "" }}
-                className="ins-num flex min-w-0 items-center gap-2 border border-[var(--ins-rule)] px-4 py-3 text-[0.8125rem] text-[var(--ins-dim)] transition-colors duration-200 hover:border-[var(--ins-signal)] hover:text-[var(--ins-read)]"
+                className="ins-num rounded-full text-[0.8125rem]"
               >
-                <span aria-hidden>⌕</span>
+                <SearchGlyph />
                 <span>Search idea blueprints…</span>
               </Link>
-            </div>
+            </HoverBorderGradient>
           </div>
         </div>
 
-        {/* The two hero panels become a two-cell readout strip sharing one
-            rule with the block above, rather than two cards in a gap. */}
+        {/* The two hero panels, sharing one rule with the block above. */}
         <div className="mx-auto max-w-[92rem]">
           <div className="ins-grid border-t border-[var(--ins-rule)] sm:grid-cols-2">
             {HERO_PANELS.map((panel) => (
@@ -346,10 +402,10 @@ function HomePage() {
                 seed={panel.label.length}
                 className="ins-cell border-0 px-6 py-7"
               >
-                <h3 className="text-base font-semibold text-[var(--ins-read)]">{panel.label}</h3>
-                <Lens className="mt-2 max-w-[58ch] text-sm leading-relaxed text-[var(--ins-dim)]">
-                  <p>{panel.body}</p>
-                </Lens>
+                <h3 className="text-base font-semibold text-[var(--ins-bright)]">{panel.label}</h3>
+                <p className="mt-2 max-w-[58ch] text-sm leading-relaxed text-[var(--ins-read)]">
+                  {panel.body}
+                </p>
               </EvervaultCard>
             ))}
           </div>
@@ -412,7 +468,7 @@ function HomePage() {
       >
         <div className="mx-auto max-w-[92rem] px-6">
           <p className="ins-legend">The library</p>
-          <h2 className="mt-3 max-w-2xl">Every category, and what it actually holds.</h2>
+          <h2 className="mt-3 max-w-3xl">Every category, and what it actually holds.</h2>
         </div>
         <div className="mt-8 grid gap-4">
           {[0, 1].map((row) => {
@@ -1120,7 +1176,7 @@ function WhoForSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <p className="ins-legend">Who we built this for</p>
-      <h2 className="mt-3 max-w-2xl">For the person with an idea and nothing else.</h2>
+      <h2 className="mt-3 max-w-3xl">For the person with an idea and nothing else.</h2>
       {/* Two paragraphs at a real reading measure, side by side, rather than
           stacked in the left half of a card. */}
       <Lens className="mt-6 grid gap-6 text-base leading-relaxed text-muted-foreground sm:grid-cols-2 sm:gap-10">
@@ -1145,25 +1201,39 @@ function WhoForSection() {
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
           These are the things people actually type at 1am. Every one of them goes somewhere real.
         </p>
-        {/* Was a single narrow column squeezed into a right-hand rail, where
-            six real search queries read as a footnote. Full width, three
-            across, as the destinations they are. */}
-        <BentoGrid className="mt-6">
-          {BBI_BUILT_FOR.map((item) => (
-            <Link
+        {/* Was six flat cards with the sub-line stranded at the bottom by a
+            justify-between and nothing to engage with. Each is an Evervault
+            plate now: the pointer carries a window through a character field,
+            the query is numbered so the set reads as a list, and the two lines
+            sit together instead of at opposite ends of a tall box. */}
+        <div className="mt-6 grid gap-px bg-[var(--ins-rule)] sm:grid-cols-2 lg:grid-cols-3">
+          {BBI_BUILT_FOR.map((item, index) => (
+            <EvervaultCard
               key={item.phrase}
-              to={item.to}
-              {...(item.params ? { params: item.params } : {})}
-              {...(item.search ? { search: item.search } : {})}
-              className="group/bento flex h-full flex-col justify-between gap-3 rounded-md border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50"
+              seed={item.phrase.length + index}
+              className="border-0 bg-[var(--ins-void)]"
             >
-              <span className="font-semibold leading-snug tracking-tight transition-colors duration-300 group-hover/bento:text-primary">
-                {item.phrase}
-              </span>
-              <span className="text-sm leading-relaxed text-muted-foreground">{item.line}</span>
-            </Link>
+              <Link
+                to={item.to}
+                {...(item.params ? { params: item.params } : {})}
+                {...(item.search ? { search: item.search } : {})}
+                className="group/q flex h-full flex-col gap-2 p-5"
+              >
+                <span className="ins-num text-[0.6875rem] text-[var(--ins-faint)]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="text-base font-semibold leading-snug text-[var(--ins-bright)] transition-colors duration-300 group-hover/q:text-[var(--ins-signal)]">
+                  {item.phrase}
+                </span>
+                <span className="text-sm leading-relaxed text-[var(--ins-read)]">{item.line}</span>
+                <span
+                  aria-hidden
+                  className="mt-3 h-px w-0 bg-[var(--ins-bright)] transition-all duration-500 group-hover/q:w-full"
+                />
+              </Link>
+            </EvervaultCard>
           ))}
-        </BentoGrid>
+        </div>
       </div>
     </section>
   );
@@ -1317,35 +1387,44 @@ function ComparisonSection() {
         your own eyes whether an idea is worth your time.
       </p>
 
-      {/* Two cards floating apart, sliding in from opposite sides, never said
-          which line answered which. The rows are aligned across a single
-          centre rule now, so each claim sits opposite the one it answers, and
-          the "versus" mark rides that rule at every width instead of appearing
-          only on a phone. */}
-      <div className="relative mt-10 grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2">
-        <div className="bg-card p-5 sm:p-7">
-          <p className="ins-legend hl-coral">What most idea validation tools ask of you</p>
-          <ul className="mt-4 divide-y divide-border text-sm leading-relaxed text-muted-foreground">
-            {BBI_THEM.map((line) => (
-              <li key={line} className="py-3 first:pt-0 last:pb-0">
-                {line}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="bg-card p-5 sm:p-7">
-          <p className="ins-legend hl-green">What BBI asks of you</p>
-          <ul className="mt-4 divide-y divide-border text-sm leading-relaxed text-foreground">
-            {BBI_US.map((line) => (
-              <li key={line} className="py-3 first:pt-0 last:pb-0">
-                {line}
-              </li>
-            ))}
-          </ul>
+      {/* Was two blocks of loose sentences with no markers, so nothing said
+          which line answered which, or even that these were lists. Numbered
+          rows on a shared centre rule now: row 1 opposite row 1, each with a
+          mark, so the trade is readable at a glance. */}
+      <div className="relative mt-10 overflow-hidden rounded-md border border-border">
+        <div className="grid sm:grid-cols-2">
+          <div className="border-b border-border p-5 sm:border-b-0 sm:border-r sm:p-7">
+            <p className="ins-legend">What most idea validation tools ask of you</p>
+            <ol className="mt-5 space-y-4">
+              {BBI_THEM.map((line, index) => (
+                <li key={line} className="flex gap-3.5">
+                  <span className="ins-num mt-0.5 shrink-0 text-[0.6875rem] text-[var(--ins-faint)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span aria-hidden className="mt-2 h-px w-3 shrink-0 bg-[var(--ins-faint)]" />
+                  <span className="text-sm leading-relaxed text-[var(--ins-dim)]">{line}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div className="p-5 sm:p-7">
+            <p className="ins-legend">What BBI asks of you</p>
+            <ol className="mt-5 space-y-4">
+              {BBI_US.map((line, index) => (
+                <li key={line} className="flex gap-3.5">
+                  <span className="ins-num mt-0.5 shrink-0 text-[0.6875rem] text-[var(--ins-bright)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span aria-hidden className="mt-2 h-px w-3 shrink-0 bg-[var(--ins-bright)]" />
+                  <span className="text-sm leading-relaxed text-[var(--ins-read)]">{line}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
         <span
           aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-border bg-background px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground"
+          className="pointer-events-none absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 rounded-full border border-border bg-[var(--ins-void)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--ins-dim)] sm:block"
         >
           versus
         </span>
@@ -1367,7 +1446,7 @@ function FutureProofSpotlight() {
   return (
     <section className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4">
       <p className="ins-legend">Ways into the library</p>
-      <h2 className="mt-3 max-w-2xl">Start from a theme instead of a blank search box.</h2>
+      <h2 className="mt-3 max-w-3xl">Start from a theme instead of a blank search box.</h2>
       <p className="mt-3 max-w-[62ch] text-sm leading-relaxed text-muted-foreground">
         Each one runs a live search across every blueprint. They are shortcuts, not a ranking
         &mdash; and if one comes back thin, that is the library being honest with you rather than a
@@ -1438,8 +1517,8 @@ function KeywordMosaic() {
       <h2 className="mt-2 max-w-2xl">
         <EncryptedText
           text="Business ideas by industry, founder, and model"
-          encryptedClassName="text-[var(--ins-dim,#8b8aa6)]"
-          revealedClassName="text-[var(--ins-read,#e9e8f6)]"
+          encryptedClassName="text-[var(--ins-faint)]"
+          revealedClassName="text-[var(--ins-bright)]"
         />
       </h2>
       {/* Was three panels side by side, each a wall of pills — 18 links

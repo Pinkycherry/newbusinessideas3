@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { animate, motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
@@ -18,8 +18,8 @@ export default function MaskContainer({
   children,
   revealText,
   className,
-  size = 24,
-  revealSize = 320,
+  size = 28,
+  revealSize = 340,
 }: {
   children: ReactNode;
   revealText: ReactNode;
@@ -28,9 +28,16 @@ export default function MaskContainer({
   revealSize?: number;
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const [hovered, setHovered] = useState(false);
   const [enabled, setEnabled] = useState(false);
+
+  // Motion values, not state. The first version called setState on every
+  // pointer frame, which re-rendered the whole section on each mouse move —
+  // that is the lag, and it is also why the hole lagged behind the cursor.
+  const x = useMotionValue(-9999);
+  const y = useMotionValue(-9999);
+  const r = useMotionValue(size);
+  const maskImage = useMotionTemplate`radial-gradient(circle ${r}px at ${x}px ${y}px, transparent 0, transparent 98%, black 100%)`;
 
   useEffect(() => {
     const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -45,7 +52,14 @@ export default function MaskContainer({
     };
   }, []);
 
-  const r = hovered ? revealSize : size;
+  useEffect(() => {
+    const controls = animate(r, hovered ? revealSize : size, {
+      type: "spring",
+      stiffness: 220,
+      damping: 32,
+    });
+    return () => controls.stop();
+  }, [hovered, r, revealSize, size]);
 
   if (!enabled) {
     // The honest fallback: show the thing the mask would have revealed.
@@ -55,31 +69,35 @@ export default function MaskContainer({
   }
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      onMouseMove={(event) => {
-        const rect = ref.current?.getBoundingClientRect();
-        if (!rect) return;
-        setPos({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => {
+        setHovered(false);
+        x.set(-9999);
+        y.set(-9999);
       }}
-      onMouseLeave={() => setPos(null)}
-      className={cn("relative", className)}
+      onMouseMove={(event) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        x.set(event.clientX - rect.left);
+        y.set(event.clientY - rect.top);
+      }}
+      className={cn("relative overflow-hidden", className)}
     >
+      {/* The revealed layer sits underneath and is always painted. */}
+      <div className="absolute inset-0 flex items-center justify-center px-6 text-center text-[var(--ins-bright)]">
+        {revealText}
+      </div>
+      {/* The cover is punched through by the mask, so the hole shows the layer
+          below rather than the cover being drawn inside a circle. */}
       <motion.div
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        animate={{
-          maskPosition: pos ? `${pos.x - r / 2}px ${pos.y - r / 2}px` : "0px 0px",
-          maskSize: `${r}px`,
-        }}
-        transition={{ type: "spring", stiffness: 300, damping: 40 }}
-        className="absolute inset-0 flex items-center justify-center bg-[var(--ins-signal,theme(colors.primary))] text-[var(--ins-void,#07070f)] [mask-image:radial-gradient(circle,black_50%,transparent_51%)] [mask-repeat:no-repeat]"
+        style={{ maskImage, WebkitMaskImage: maskImage }}
+        className="absolute inset-0 flex items-center justify-center bg-[var(--ins-void)] px-6 text-center text-[var(--ins-dim)]"
       >
-        {/* An opaque plate so the layer below cannot bleed through the fill. */}
-        <div className="absolute inset-0 bg-[var(--ins-signal,theme(colors.primary))]" />
-        <div className="relative z-10 px-6 text-center">{revealText}</div>
+        {children}
       </motion.div>
-      <div className="flex items-center justify-center px-6 text-center">{children}</div>
-    </motion.div>
+      {/* Keeps the block its natural height without a magic min-height. */}
+      <div className="invisible px-6 text-center">{revealText}</div>
+    </div>
   );
 }

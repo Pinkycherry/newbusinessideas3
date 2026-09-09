@@ -21,7 +21,7 @@ export default function SparklesCore({
   density = 60,
   minSize = 0.5,
   maxSize = 1.4,
-  color = "#8886DB",
+  color = "#E0E0E0",
 }: {
   className?: string;
   density?: number;

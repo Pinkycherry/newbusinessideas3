@@ -96,7 +96,7 @@ export default function Lens({
       {hovering ? (
         <span
           aria-hidden
-          className="pointer-events-none absolute z-30 rounded-full ring-1 ring-[var(--ins-signal,theme(colors.primary))]/40"
+          className="pointer-events-none absolute z-30 rounded-full ring-1 ring-[var(--ins-signal)]/40"
           style={{
             left: pos.x - radius,
             top: pos.y - radius,

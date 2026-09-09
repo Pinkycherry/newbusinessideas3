@@ -1384,7 +1384,7 @@ html.light .iv-skeleton {
   }
   /* The logo stamp is the one inversion: signal ground, housing ink. */
   html.light .bbi-instrument header a > span[class*="bg-primary"] {
-    color: #07070f !important;
+    color: var(--ins-void) !important;
   }
   html.light .bbi-instrument .glass,
   html.light .bbi-instrument .glass-nav,
@@ -2739,28 +2739,34 @@ html.bbi-motion [data-wave].revealed:not(:has(.rv)) {
    ============================================================ */
 html.light .bbi-instrument,
 .bbi-instrument {
-  /* Housing */
-  --ins-void: #07070f;
-  --ins-face: #0f0f24;
-  --ins-face-2: #14142e;
-  --ins-rule: rgb(136 134 219 / 0.18);
-  --ins-rule-strong: rgb(136 134 219 / 0.34);
-  /* Signal — brand indigo lifted until it is legible on the housing.
-     #4643BA is the brand ink and stays the brand ink; at 4.5:1 against
-     #07070F it is unreadable as text, so the LIT form of it is used here. */
-  --ins-signal: #8886db;
-  --ins-signal-hot: #b6b5e3;
-  /* Readout */
-  --ins-read: #e9e8f6;
-  --ins-dim: #8b8aa6;
+  /* THE ETHEREAL DREAM PALETTE — the founder's brand colours, and the only
+     colours allowed anywhere in this scope, animations included:
+       #FFFFFF  #E0E0E0  #B2B2B2  #757575  #000000
+     The ground is dark but deliberately NOT black (#000000 is reserved for
+     contrast, not for the page), so the housing sits a few steps up from it.
+     No indigo, no teal, no accent hues — every one of those has been removed
+     rather than dimmed. */
+  --ins-black: #000000;
+  --ins-void: #141414;   /* the housing: dark, not black */
+  --ins-face: #1e1e1e;   /* a module face, one step up from the ground */
+  --ins-face-2: #262626;
+  --ins-rule: rgb(224 224 224 / 0.14);
+  --ins-rule-strong: rgb(224 224 224 / 0.32);
+  /* Signal is pure white. In a five-value greyscale the only thing left to
+     carry emphasis is contrast itself, so the loudest element is the lightest. */
+  --ins-signal: #ffffff;
+  --ins-signal-hot: #ffffff;
+  /* Readout. #E0E0E0 for body, #B2B2B2 for secondary, #757575 only for marks
+     that are not load-bearing — at 3.4:1 on this ground it is not body text. */
+  --ins-read: #e0e0e0;
+  --ins-bright: #ffffff;
+  --ins-dim: #b2b2b2;
+  --ins-faint: #757575;
 
   background: var(--ins-void);
   color: var(--ins-read);
   font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
 
-  /* Tokens the existing components read, repointed at the housing so
-     every card, button and border already in the tree lands in this
-     world without being rewritten one call site at a time. */
   --background: var(--ins-void);
   --foreground: var(--ins-read);
   --card: var(--ins-face);
@@ -2768,9 +2774,15 @@ html.light .bbi-instrument,
   --muted-foreground: var(--ins-dim);
   --border: var(--ins-rule);
   --primary: var(--ins-signal);
-  --primary-foreground: #07070f;
+  --primary-foreground: var(--ins-void);
   --accent: var(--ins-signal-hot);
   --ring: var(--ins-signal);
+  /* The highlight hues are neutralised in this scope. They are still defined
+     globally for the light templates; here they resolve to the greyscale. */
+  --hl-gold: var(--ins-dim);
+  --hl-green: var(--ins-read);
+  --hl-coral: var(--ins-faint);
+  --hl-teal: var(--ins-bright);
   --radius: 0;
 
   /* And the @theme aliases, which is the part that actually reaches a Tailwind
@@ -2787,9 +2799,9 @@ html.light .bbi-instrument,
   --color-border: var(--ins-rule);
   --color-input: var(--ins-rule);
   --color-primary: var(--ins-signal);
-  --color-primary-foreground: #07070f;
+  --color-primary-foreground: var(--ins-void);
   --color-accent: var(--ins-signal-hot);
-  --color-accent-foreground: #07070f;
+  --color-accent-foreground: var(--ins-void);
   --color-ring: var(--ins-signal);
 }
 
@@ -2901,12 +2913,12 @@ html.light .bbi-instrument,
 .bbi-instrument .glass-pill:hover * {
   background: var(--ins-signal) !important;
   border-color: var(--ins-signal) !important;
-  color: #07070f !important;
+  color: var(--ins-void) !important;
 }
 .bbi-instrument .ac-cta {
   background: var(--ins-signal);
   border-color: var(--ins-signal);
-  color: #07070f;
+  color: var(--ins-void);
 }
 /* The page rail and the nav's own hairline. */
 .bbi-instrument header .bg-border {
@@ -2945,7 +2957,7 @@ html.light .bbi-instrument .iv-nav-panel a:hover {
 }
 /* The logo stamp keeps its inverted relationship: signal ground, housing ink. */
 html.light .bbi-instrument header a span[class*="bg-primary"] {
-  color: #07070f !important;
+  color: var(--ins-void) !important;
 }
 /* Footer and any remaining muted text inside the housing. */
 html.light .bbi-instrument .text-muted-foreground {
@@ -2965,7 +2977,7 @@ html.light .bbi-instrument .text-accent { color: var(--ins-signal-hot) !importan
 html.light .bbi-instrument .bg-card { background-color: var(--ins-face) !important; }
 html.light .bbi-instrument .bg-background { background-color: var(--ins-void) !important; }
 html.light .bbi-instrument .bg-primary { background-color: var(--ins-signal) !important; }
-html.light .bbi-instrument .text-primary-foreground { color: #07070f !important; }
+html.light .bbi-instrument .text-primary-foreground { color: var(--ins-void) !important; }
 html.light .bbi-instrument .border-border,
 html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !important; }
 
@@ -3010,7 +3022,7 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
   }
   /* The logo stamp inverts: signal ground, housing ink. */
   html.light .bbi-instrument header a > span[class*="bg-primary"] {
-    color: #07070f !important;
+    color: var(--ins-void) !important;
   }
   html.light .bbi-instrument .glass,
   html.light .bbi-instrument .glass-nav,
@@ -3023,4 +3035,16 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
     border-color: var(--ins-rule) !important;
     box-shadow: none !important;
   }
+}
+
+
+/* Every direct child of the instrument shell sits above the background field.
+   Without this the field paints over the content instead of behind it, since
+   the field is fixed and the sections are static. */
+.bbi-instrument > * {
+  position: relative;
+  z-index: 1;
+}
+.bbi-instrument > [aria-hidden][style*="100vh"] {
+  z-index: 0;
 }

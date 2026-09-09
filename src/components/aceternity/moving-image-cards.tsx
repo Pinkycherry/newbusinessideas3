@@ -81,13 +81,13 @@ export default function MovingImageCards({
                 onError={(event) => hideImgIfBroken(event.currentTarget)}
                 className="absolute inset-0 h-full w-full object-cover opacity-70 transition-all duration-500 group-hover/card:scale-105 group-hover/card:opacity-100"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#07070f] via-[#07070f]/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[var(--ins-void)] via-[var(--ins-void)]/40 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-4">
-                <span className="block text-base font-semibold leading-snug text-[var(--ins-read,#e9e8f6)]">
+                <span className="block text-base font-semibold leading-snug text-[var(--ins-bright)]">
                   {card.title}
                 </span>
                 {card.meta ? (
-                  <span className="ins-num mt-0.5 block text-[0.6875rem] text-[var(--ins-dim,#8b8aa6)]">
+                  <span className="ins-num mt-0.5 block text-[0.6875rem] text-[var(--ins-dim)]">
                     {card.meta}
                   </span>
                 ) : null}
