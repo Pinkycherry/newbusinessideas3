@@ -61,7 +61,7 @@ export function Reveal({
         scrollTrigger: {
           trigger: ref.current,
           start: "top 88%",
-          once: true,
+          toggleActions: "restart reverse restart reverse",
         },
       });
     });

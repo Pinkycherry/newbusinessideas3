@@ -7,10 +7,19 @@ import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
 import { CategoryBadge } from "@/components/category-badge";
 import { AdSlot } from "@/components/AdSlot";
-import { HeroSlider, Typewriter } from "@/components/hero-slider";
-import { Reveal } from "@/components/reveal";
+import { HeroSlider } from "@/components/hero-slider";
+import { BusinessIcons } from "@/components/business-icons";
 import { CardFan } from "@/components/card-fan";
-import { Spotlight } from "@/components/spotlight";
+import HoverBorderGradient from "@/components/aceternity/hover-border-gradient";
+import MovingBorder from "@/components/aceternity/moving-border";
+import ContainerTextFlip from "@/components/aceternity/container-text-flip";
+import InfiniteMovingCards from "@/components/aceternity/infinite-moving-cards";
+import { BentoGrid, BentoGridItem } from "@/components/aceternity/bento-grid";
+import HeroParallax from "@/components/aceternity/hero-parallax";
+import Tabs from "@/components/aceternity/tabs";
+import StickyScroll from "@/components/aceternity/sticky-scroll";
+import { photoAt } from "@/config/imagery";
+import CardSpotlight from "@/components/aceternity/card-spotlight";
 import {
   Select,
   SelectContent,
@@ -19,32 +28,31 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { FEATURED_IDEA_IDS } from "@/config/featured";
-import { catalogQuery, getFeaturedIdeas, getSurpriseIdeas } from "@/lib/ideas.functions";
+import {
+  catalogQuery,
+  getFeaturedIdeas,
+  getSurpriseIdeas,
+  getTrendingIdeas,
+} from "@/lib/ideas.functions";
+import { DemandBoard } from "@/components/demand-board";
 import type { CategoryNode } from "@/lib/ideas.functions";
-import { usePillInteraction } from "@/hooks/use-pill-interaction";
 import { hideImgIfBroken } from "@/lib/utils";
 import { AccordionItem } from "@/components/accordion-item";
-import { CountUp } from "@/components/count-up";
 import { loadGsap, prefersReducedMotion } from "@/lib/motion";
-import { BrandArc } from "@/components/home/brand-arc";
+import { Odometer, useScrollProgress, useStaggerReveal } from "@/motion";
 
-/** Hero's primary CTA — spotlight glow behind a pill with GSAP hover/press motion. */
+/**
+ * Hero's primary CTA. The one HoverBorderGradient on the page: brand ink
+ * travels the plate's border until the pointer arrives, then fills it. Every
+ * other action on this page is the quieter MovingBorder.
+ */
 function HeroCta() {
-  const pill = usePillInteraction<HTMLAnchorElement>();
   return (
-    <Spotlight className="inline-block justify-self-start rounded-full">
-      <Link
-        to="/browse"
-        className="glass-pill inline-flex items-center justify-center rounded-full px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
-        ref={pill.ref}
-        onMouseEnter={pill.onMouseEnter}
-        onMouseLeave={pill.onMouseLeave}
-        onPointerDown={pill.onPointerDown}
-        onPointerUp={pill.onPointerUp}
-      >
+    <HoverBorderGradient asChild containerClassName="justify-self-start">
+      <Link to="/browse" className="text-xs font-extrabold uppercase tracking-[0.18em]">
         Browse the library
       </Link>
-    </Spotlight>
+    </HoverBorderGradient>
   );
 }
 
@@ -86,13 +94,15 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
       data-anchor-label="Surprise Me"
       className="mx-auto mt-10 max-w-6xl px-3 sm:px-4"
     >
-      <div className="glass glass-hover rounded-3xl px-6 py-8 sm:px-10 sm:py-10">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Not sure where to start?
+      <CardSpotlight className="px-6 py-8 sm:px-10 sm:py-10">
+        <p className="t-eyebrow flex flex-wrap items-baseline gap-2">
+          Surprise me
+          <ContainerTextFlip
+            words={categories.map((c) => c.categoryName)}
+            className="text-[11px] font-semibold normal-case tracking-normal"
+          />
         </p>
-        <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-          Pick a category, or don&apos;t. We&apos;ll surprise you.
-        </h2>
+        <h2 className="mt-3">Pick a category, or don&apos;t. We&apos;ll surprise you.</h2>
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <Select
             value={categorySlug || "any"}
@@ -110,14 +120,13 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
               ))}
             </SelectContent>
           </Select>
-          <button
-            type="button"
+          <MovingBorder
             onClick={() => surprise.mutate()}
             disabled={surprise.isPending}
-            className="sheen rounded-full bg-gradient-to-r from-primary to-ember px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_color-mix(in_oklab,var(--primary)_40%,transparent)] transition-all duration-300 hover:scale-105 disabled:cursor-wait disabled:opacity-70"
+            className="disabled:cursor-wait disabled:opacity-70"
           >
             {surprise.isPending ? "Picking…" : "Surprise Me"}
-          </button>
+          </MovingBorder>
         </div>
 
         {surprise.isError && (
@@ -133,7 +142,7 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
             ))}
           </div>
         )}
-      </div>
+      </CardSpotlight>
     </section>
   );
 }
@@ -143,51 +152,6 @@ function tickerRows<T>(categories: T[], rowCount = 4): T[][] {
   categories.forEach((c, i) => rows[i % rowCount]!.push(c));
   return rows.filter((r) => r.length > 0);
 }
-
-/** Editorial image trio — replace `src` only; nothing structural depends on it. */
-const EDITORIAL_IMAGES = [
-  {
-    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-16.jpg.webp",
-    alt: "Smiling businesswoman working at a laptop in a relaxed, warmly lit setting",
-    blob: "blob-portrait-1",
-    tilt: -2,
-    offset: "sm:mt-0",
-  },
-  {
-    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-17.jpg.webp",
-    alt: "Businesswoman with a coffee and an open notebook in a calm workspace",
-    blob: "blob-portrait-2",
-    tilt: 4,
-    offset: "sm:mt-24",
-  },
-  {
-    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-37.jpg.webp",
-    alt: "Close-up of hands typing on a laptop keyboard in warm ambient light",
-    blob: "blob-portrait-3",
-    tilt: -1.5,
-    offset: "sm:mt-10",
-  },
-];
-
-/** Scroll-stack panel copy. */
-const SCROLL_PANELS = [
-  {
-    title: "Most small business ideas are guesses dressed as research.",
-    body: "A trend chart and a list of niches is not a blueprint. This directory exists because the hard part of starting a business is never finding an idea — it is knowing if yours will actually pay.",
-  },
-  {
-    title: "Every blueprint answers four questions.",
-    body: "Who specifically pays for this. How the money actually moves. What will hurt in year one. And whether you, specifically, are the right person to build it.",
-  },
-  {
-    title: "A library built to scale, not to sit still.",
-    body: "Organized across categories from Tech and SaaS to Creator and Media, FinTech, E-Commerce and more. Every new category added to the database appears here automatically.",
-  },
-  {
-    title: "Validation is free, on your own AI account.",
-    body: "Every blueprint has a Validate button. Tap it, and get real research on your idea — market size, your ideal buyer, the money model, and the risks — free, using AI tools you already pay for. No extra cost. No limit.",
-  },
-];
 
 /** Hero content panels. */
 const HERO_PANELS = [
@@ -234,11 +198,20 @@ const featuredQuery = queryOptions({
   queryFn: () => getFeaturedIdeas({ data: { ideaIds: FEATURED_IDEA_IDS } }),
 });
 
+// Ordered by the live `trend_score` column, so unlike `featuredQuery` above --
+// which reads a hand-maintained list of ids -- this moves on its own as the
+// data moves.
+const trendingQuery = queryOptions({
+  queryKey: ["trending"],
+  queryFn: () => getTrendingIdeas(),
+});
+
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
     await Promise.all([
       context.queryClient.ensureQueryData(catalogQuery),
       context.queryClient.ensureQueryData(featuredQuery),
+      context.queryClient.ensureQueryData(trendingQuery),
     ]);
   },
   head: () => ({
@@ -273,14 +246,11 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const { data: catalog } = useSuspenseQuery(catalogQuery);
   const { data: highlights } = useSuspenseQuery(featuredQuery);
+  const { data: trending } = useSuspenseQuery(trendingQuery);
   const featured = highlights.slice(0, 6);
 
   return (
     <SiteShell>
-      {/* AMBIENT TWIN RINGS — midnight-blue + rotating palette, hollow bands */}
-      <div className="bbi-twin-ring ring-1" aria-hidden />
-      <div className="bbi-twin-ring ring-2" aria-hidden />
-
       {/* LLM crawlable summary */}
       <p className="sr-only">
         BBI (Bro Business Ideas) is a business idea directory and startup intelligence library. This
@@ -294,29 +264,21 @@ function HomePage() {
         id="hero"
         data-anchor="hero"
         data-anchor-label="Top"
-        className="px-3 pt-10 sm:px-4 sm:pt-16"
+        className="px-3 pt-10 pb-6 sm:px-4 sm:pt-16"
       >
         <div className="mx-auto max-w-6xl">
-          <div className="glass blob-1 px-6 py-14 sm:px-12 sm:py-20">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent sm:text-xs">
-              <Typewriter text="The Truth About Business Ideas" />
-            </p>
+          <div className="rounded-md border border-border bg-card px-6 py-14 sm:px-12 sm:py-20">
+            <p className="t-eyebrow sm:text-xs">The Truth About Business Ideas</p>
             <div className="mt-8 grid items-center gap-8 lg:grid-cols-[1.15fr_1fr]">
               <div>
-                <h1
-                  className="iv-fade-up max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl"
-                  style={{ animationDelay: "260ms" }}
-                >
+                <h1 className="max-w-3xl text-[2.15rem] font-extrabold leading-[1.06] tracking-[-0.028em] sm:text-[3.15rem]">
                   Tired of paying just to check if your{" "}
-                  <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
-                    idea will work
-                  </span>
-                  ?
+                  {/* Brand ink, no rule and no fill: an underline inside an H1
+                      reads as a link, and a tinted box breaks into ragged
+                      fragments the moment the phrase wraps. */}
+                  <span className="text-primary">idea will work</span>?
                 </h1>
-                <p
-                  className="iv-fade-up mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg"
-                  style={{ animationDelay: "420ms" }}
-                >
+                <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
                   We built a free home for real business ideas — side hustles, zero investment
                   ideas, work from home ideas, and low investment ideas. Every idea is researched,
                   not guessed. We tell you who will actually pay you, how the money works, and what
@@ -333,7 +295,7 @@ function HomePage() {
                   <Link
                     to="/search"
                     search={{ q: "" }}
-                    className="glass flex min-w-0 items-center gap-2 rounded-full px-4 py-2.5 text-sm text-muted-foreground"
+                    className="flex min-w-0 items-center gap-2 rounded-md border border-border bg-card px-4 py-3 text-sm text-muted-foreground transition-colors duration-300 hover:border-primary hover:text-foreground"
                   >
                     <span aria-hidden>⌕</span>
                     <span>Search idea blueprints…</span>
@@ -341,24 +303,16 @@ function HomePage() {
                   <HeroCta />
                 </div>
               </div>
-              <div className="iv-fade-up" style={{ animationDelay: "540ms" }}>
+              <div>
                 <HeroSlider />
               </div>
             </div>
 
-            <div className="mt-10 grid gap-4 sm:grid-cols-2">
-              {HERO_PANELS.map((panel, i) => (
-                <div
-                  key={panel.label}
-                  className={`glass glass-hover ${i === 0 ? "blob-sm-1" : "blob-sm-2"} px-6 py-7`}
-                >
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-accent">
-                    {panel.label}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{panel.body}</p>
-                </div>
+            <BentoGrid className="mt-10 md:grid-cols-2">
+              {HERO_PANELS.map((panel) => (
+                <BentoGridItem key={panel.label} title={panel.label} description={panel.body} />
               ))}
-            </div>
+            </BentoGrid>
           </div>
         </div>
       </section>
@@ -366,9 +320,11 @@ function HomePage() {
       {/* SURPRISE ME — Section 8.1, directly below the hero, before any other content */}
       <SurpriseMeSection categories={catalog.categories} />
 
+      {/* Live demand board. Renders nothing at all if no idea in the set
+          carries a trend score, rather than showing an empty frame. */}
+
       {/* BRAND ARC — the four founder-generated frames. Every category name
           rendered over them is live DOM from the catalog, never baked pixels. */}
-      <BrandArc categories={catalog.categories} totalIdeas={catalog.totalIdeas} />
 
       {/* MOVING CATEGORY TICKER — each pill now rotates through the brand's
           multi-color set by default (see .glass-pill in globals.css), and
@@ -380,39 +336,49 @@ function HomePage() {
         className="pt-10"
         aria-label="Browse by category"
       >
-        <style>{`@keyframes iv-ticker-l{from{transform:translateX(0)}to{transform:translateX(-50%)}}@keyframes iv-ticker-r{from{transform:translateX(-50%)}to{transform:translateX(0)}}.iv-ticker-track{width:max-content;animation:iv-ticker-l 70s linear infinite}.iv-ticker-track.rev{animation-name:iv-ticker-r}.iv-ticker:hover .iv-ticker-track,.iv-ticker:active .iv-ticker-track{animation-play-state:paused}`}</style>
-        <p className="mx-auto max-w-6xl px-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent sm:px-4">
-          Browse by category
-        </p>
-        <div className="iv-ticker mt-4 grid gap-3">
-          {tickerRows(catalog.categories).map((row, rowIndex) => {
-            const repeats = Math.max(2, Math.ceil(14 / Math.max(row.length, 1))) * 2;
-            const items = Array.from({ length: repeats }, () => row).flat();
-            return (
-              <div
-                key={`ticker-row-${rowIndex}`}
-                className="overflow-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-              >
-                <div
-                  className={`iv-ticker-track flex gap-3 px-3 sm:px-4 ${rowIndex % 2 === 1 ? "rev" : ""}`}
-                  style={{ animationDuration: `${70 + rowIndex * 10}s` }}
-                >
-                  {items.map((c, i) => (
-                    <Link
-                      key={`${rowIndex}-${c.categorySlug}-${i}`}
-                      to="/category/$categorySlug"
-                      params={{ categorySlug: c.categorySlug }}
-                      className="glass-pill shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] transition-all duration-300"
-                    >
-                      {c.categoryName}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
+        <p className="mx-auto max-w-6xl px-3 t-eyebrow sm:px-4">Browse by category</p>
+        {/* Business-model icons, bobbing on staggered offsets — the movement
+            from the approved design. Full-bleed, masked at both edges. */}
+        <BusinessIcons />
+        {/* Four counter-running rows of live categories. Each row is an
+            InfiniteMovingCards track: it duplicates its own items once and
+            travels exactly half its width, so the loop never seams however
+            many categories the catalog holds. Hover or tab into a row and it
+            stops. */}
+        <div className="mt-4 grid gap-3 px-3 sm:px-4">
+          {tickerRows(catalog.categories).map((row, rowIndex) => (
+            <InfiniteMovingCards
+              key={`ticker-row-${rowIndex}`}
+              direction={rowIndex % 2 === 1 ? "right" : "left"}
+              speed={70 + rowIndex * 10}
+              items={row.map((c) => ({
+                label: c.categoryName,
+                to: "/category/$categorySlug",
+                params: { categorySlug: c.categorySlug },
+              }))}
+            />
+          ))}
         </div>
       </section>
+
+      {/* THE LIBRARY, IN PICTURES — HeroParallax. Two rows of live category
+          plates travelling against each other as the band scrolls. Photography
+          is ethicalfounder.com's, held in src/config/imagery.ts. */}
+      <HeroParallax
+        eyebrow="The library"
+        heading="Every category, and what it actually holds."
+        cards={catalog.categories.map((category, index) => {
+          const photo = photoAt(index);
+          return {
+            title: category.categoryName,
+            meta: `${category.ideaCount} blueprints`,
+            src: photo.src,
+            alt: photo.alt,
+            to: "/category/$categorySlug",
+            params: { categorySlug: category.categorySlug },
+          };
+        })}
+      />
 
       {/* SECTION 1: INTERACTIVE GOLDEN TREE */}
       <GoldenTreeSection categories={catalog.categories} />
@@ -422,33 +388,23 @@ function HomePage() {
       </div>
 
       {/* BRAND STATEMENT */}
-      <Reveal variant="rv-lift">
-        <BrandStatementBanner />
-      </Reveal>
+      <BrandStatementBanner />
 
       {/* KEYWORD MOSAIC */}
-      <Reveal variant="rv-lift">
-        <KeywordMosaic />
-      </Reveal>
+      <KeywordMosaic />
 
       {/* TRUST STRIP */}
-      <Reveal variant="rv-lift">
-        <TrustStatsBar totalIdeas={catalog.totalIdeas} categoryCount={catalog.categories.length} />
-      </Reveal>
+      <TrustStatsBar totalIdeas={catalog.totalIdeas} categoryCount={catalog.categories.length} />
 
       {/* MARKET GAP + orbit #1 */}
-      <MarketGapSection />
 
       {/* SECTION 3: THE BBI 4-PILLAR BLUEPRINT STANDARD */}
-      <FourPillarStandardSection />
 
       {/* FEATURED */}
       <section className="mx-auto max-w-6xl px-3 py-16 sm:px-4">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-              Featured blueprints
-            </p>
+            <p className="t-eyebrow">Featured blueprints</p>
             <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
               Blueprints worth your afternoon
             </h2>
@@ -471,196 +427,68 @@ function HomePage() {
         <AdSlot position="homepage-featured-below" size="banner" />
       </div>
 
-      {/* WHY THIS EXISTS */}
-      <section className="mx-auto max-w-6xl px-3 pb-10 sm:px-4">
-        <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-              Why this exists
-            </p>
-            <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-              A list of ideas is not research. And it can cost you money.
-            </h2>
-            <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">
-              <p>
-                Most &quot;100 business ideas&quot; pages are written in one afternoon by someone
-                who never actually sold anything. They just say &quot;the market is growing&quot;
-                and stop there. Finding an idea was never the hard part. The hard part is knowing
-                who will really pay you, how often, and what happens when a bigger company copies
-                you for free.
-              </p>
-              <p>
-                That is why every blueprint here answers those questions first. We name your exact
-                customer. We show you the real numbers. We tell you the risks most people only find
-                out after they&apos;ve already spent their money.
-              </p>
-              <p>
-                Sometimes the honest answer is: don&apos;t build this one. That&apos;s the whole
-                point. Research that only ever agrees with you isn&apos;t research — it&apos;s
-                marketing wearing a lab coat.
-              </p>
-            </div>
-            <Link
-              to="/browse"
-              className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
-            >
-              Read a blueprint
-              <span aria-hidden>→</span>
-            </Link>
-          </div>
+      {/* WHY THIS EXISTS — sticky-aside editorial grammar.
+          A third device, not the stagger and not the pin: the sidebar holds
+          position while the prose scrolls past it, and its four rows
+          illuminate in turn as the reader moves down. Driven entirely from
+          --sc-p in CSS, so there is no extra React state and every frame maps
+          to a real scroll position. */}
 
-          <aside className="glass blob-3 p-8 lg:mt-16 lg:self-start sm:p-10">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-              What every entry has to contain
-            </h3>
-            <dl className="mt-6 divide-y divide-border">
-              {[
-                {
-                  t: "A named buyer",
-                  d: 'Not "small businesses." The real person, their budget, and why they need this now.',
-                },
-                {
-                  t: "Working money mechanics",
-                  d: "What you charge, what it costs you, and the point where this stops being a side job and becomes a real business.",
-                },
-                {
-                  t: "The unglamorous risks",
-                  d: "The platform risks, slow seasons, and the competitor who's already halfway there.",
-                },
-                {
-                  t: "A founder-fit verdict",
-                  d: "Who should build this — and who should walk away.",
-                },
-              ].map((row) => (
-                <div key={row.t} className="py-4 first:pt-0 last:pb-0">
-                  <dt className="text-sm font-semibold text-foreground">{row.t}</dt>
-                  <dd className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{row.d}</dd>
-                </div>
-              ))}
-            </dl>
-          </aside>
-        </div>
-      </section>
-
-      {/* EDITORIAL IMAGE TRIO */}
-      <section className="mx-auto max-w-6xl px-3 pb-16 sm:px-4">
-        <div className="grid gap-6 sm:grid-cols-3 sm:items-start">
-          {EDITORIAL_IMAGES.map((img) => (
-            <figure
-              key={img.src}
-              className={`glass relative overflow-hidden ${img.blob} ${img.offset} aspect-[3/4]`}
-              style={{ transform: `rotate(${img.tilt}deg)` }}
-            >
-              <img
-                ref={hideImgIfBroken}
-                src={img.src}
-                alt={img.alt}
-                loading="lazy"
-                className="h-full w-full object-cover"
-                onError={(e) => (e.currentTarget.style.display = "none")}
-              />
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary to-ember opacity-15"
-              />
-            </figure>
-          ))}
-        </div>
-      </section>
+      {/* EDITORIAL IMAGE TRIO — image slots (.mo-media), and the only ambient
+          layers on this page that .mo-drift can actually reach: the twin rings
+          and the orbit rings both run keyframe animations that own `transform`
+          outright, so a class-level drift can never apply to them. */}
 
       {/* HOW IT WORKS + orbit #2 + Faq1 inline */}
-      <Reveal variant="rv-lift">
-        <HowItWorksSection />
-      </Reveal>
+      <HowItWorksSection />
 
       {/* WHO FOR */}
-      <Reveal variant="rv-lift">
-        <WhoForSection />
-      </Reveal>
-
-      {/* SCROLL-STACK */}
-      <section className="mx-auto mt-16 grid max-w-6xl gap-4 px-3 pb-16 sm:grid-cols-2 sm:px-4">
-        {SCROLL_PANELS.map((panel, i) => (
-          <Reveal
-            key={panel.title}
-            className="h-full"
-            delay={i * 90}
-            variant={(["rv-lift", "rv-slide", "rv-zoom", "rv-wipe"] as const)[i % 4] ?? "rv-lift"}
-          >
-            <div
-              className={`glass glass-hover h-full p-6 sm:p-9 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
-            >
-              <h2 className="text-xl font-bold leading-tight tracking-tight sm:text-2xl">
-                {panel.title}
-              </h2>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                {panel.body}
-              </p>
-            </div>
-          </Reveal>
-        ))}
-      </section>
+      <WhoForSection />
 
       {/* PRICING PHILOSOPHY + Faq2 inline */}
-      <Reveal variant="rv-lift">
-        <PricingPhilosophySection />
-      </Reveal>
+      <PricingPhilosophySection />
 
       {/* WHY WE BUILT THIS */}
-      <Reveal variant="rv-lift">
-        <section className="mx-auto max-w-4xl px-3 pb-24 sm:px-4">
-          <h2 className="text-3xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
-            We got tired of the same 50 ideas recycled into infinity.
-          </h2>
-          <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
-            <p>
-              Every business idea list on the internet is the same list. Drop shipping. Print on
-              demand. Start a blog. Sell on Etsy. They are not wrong exactly, but they are not
-              researched either. Nobody tells you the margin, the failure rate, the licensing
-              requirement, or the competitor who already owns the space.
-            </p>
-            <p>
-              This library exists because a genuine small business idea blueprint is worth more than
-              a hundred recycled suggestions. We research each one properly — market context, real
-              revenue mechanics, honest risks — and we tell you directly whether you are the right
-              person to build it.
-            </p>
-          </div>
-          <Link
-            to="/browse"
-            className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
-          >
-            Read a blueprint
-            <span aria-hidden>→</span>
-          </Link>
-        </section>
-      </Reveal>
+      <section className="mx-auto max-w-4xl px-3 pb-24 sm:px-4">
+        <h2 className="text-3xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
+          We got tired of the same 50 ideas recycled into infinity.
+        </h2>
+        <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p>
+            Every business idea list on the internet is the same list. Drop shipping. Print on
+            demand. Start a blog. Sell on Etsy. They are not wrong exactly, but they are not
+            researched either. Nobody tells you the margin, the failure rate, the licensing
+            requirement, or the competitor who already owns the space.
+          </p>
+          <p>
+            This library exists because a genuine small business idea blueprint is worth more than a
+            hundred recycled suggestions. We research each one properly — market context, real
+            revenue mechanics, honest risks — and we tell you directly whether you are the right
+            person to build it.
+          </p>
+        </div>
+        <Link
+          to="/browse"
+          className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
+        >
+          Read a blueprint
+          <span aria-hidden>→</span>
+        </Link>
+      </section>
 
       {/* TEAM + orbit #3 */}
-      <Reveal variant="rv-lift">
-        <TeamSection />
-      </Reveal>
+      <TeamSection />
 
-      <Reveal variant="rv-lift">
-        <InspiredBySection />
-      </Reveal>
-      <Reveal variant="rv-lift">
-        <ComparisonSection />
-      </Reveal>
-      <Reveal variant="rv-lift">
-        <FutureProofSpotlight />
-      </Reveal>
+      <InspiredBySection />
+      <ComparisonSection />
+      <FutureProofSpotlight />
 
       {/* PROMISE + Faq3 inline */}
-      <Reveal variant="rv-lift">
-        <PromiseSection />
-      </Reveal>
+      <PromiseSection />
 
       {/* GENERAL CLOSING FAQ */}
       <section className="mx-auto mt-20 max-w-4xl border-t border-border/60 px-3 pt-16 pb-24 sm:mt-28 sm:px-4 sm:pt-20">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Common questions
-        </p>
+        <p className="t-eyebrow">Common questions</p>
         <div className="mt-6 divide-y divide-border">
           {FAQS.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="base" />
@@ -781,25 +609,20 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
       className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4"
     >
       <div className="text-center max-w-3xl mx-auto">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
-          Interactive Canopy Map
-        </p>
+        <p className="t-eyebrow">Interactive Canopy Map</p>
         <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-5xl">
           The Golden Tree of Business Growth
         </h2>
         <p className="mt-3 text-sm text-muted-foreground sm:text-base leading-relaxed">
-          Tap or hover any leaf node to see estimated weekly web-search demand for that keyword,
-          then open the category blueprints behind it.
+          Tap or hover any leaf node to see how many researched blueprints that category holds right
+          now, then open the ones behind it.
         </p>
       </div>
 
       {/* No boxed/16:9 backdrop element here on purpose — the dark glow behind the
           tree lives entirely in .tree-asset-container::before in styles.css, as a
           large, heavily-blurred radial glow with no hard edge or rectangle. */}
-      <Reveal
-        variant="rv-zoom"
-        className="relative mt-8 sm:mt-12 flex w-full items-center justify-center py-10 sm:py-16"
-      >
+      <div className="relative mt-8 flex w-full items-center justify-center py-10 sm:mt-12 sm:py-16">
         {/* DESKTOP TREE ASSET — this is a hotlinked cross-origin JPG (lives on
             ethicalfounder.com, not our domain), so any technique that needs
             to read its actual pixel data (a CSS mask-image, an SVG luminance
@@ -885,22 +708,27 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
                 {mNode.path ? (
                   <CategoryBadge to={mNode.path} label={mNode.label} size="sm" dot />
                 ) : (
-                  <CategoryBadge slug={mNode.slug ?? ""} label={mNode.label} size="sm" dot />
+                  <CategoryBadge
+                    slug={mNode.slug ?? ""}
+                    // The count rides inside the pill. It used to live in a
+                    // second grid of cards below the artwork that repeated all
+                    // four of these labels verbatim — the same topics printed
+                    // twice, on the screen with the least room for it.
+                    // Desktop shows the count in a hover tooltip; a phone has
+                    // no hover, so it belongs here.
+                    label={
+                      countFor(mNode.slug ?? "") === null
+                        ? mNode.label
+                        : `${mNode.label} · ${countFor(mNode.slug ?? "")}`
+                    }
+                    size="sm"
+                    dot
+                  />
                 )}
               </div>
             ))}
           </div>
         </div>
-      </Reveal>
-
-      {/* Mobile demand read-out — keeps the artwork clean, keeps the data visible. */}
-      <div className="mt-4 grid grid-cols-2 gap-2 sm:hidden">
-        {desktopNodes.slice(0, 4).map((node) => (
-          <div key={node.label} className="glass rounded-xl border border-white/10 px-3 py-2">
-            <p className="truncate text-[10px] font-bold text-foreground">{node.label}</p>
-            <p className="mt-0.5 text-[10px] font-semibold text-accent">{fmt(node.count)}</p>
-          </div>
-        ))}
       </div>
     </section>
   );
@@ -913,86 +741,6 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
 /* ================================================================
    SECTION 3: THE BBI 4-PILLAR BLUEPRINT STANDARD
    ================================================================ */
-
-function FourPillarStandardSection() {
-  const pillars = [
-    {
-      num: "01",
-      title: "Named Buyer",
-      desc: "Exactly who will pay you, and why they have money ready right now.",
-    },
-    {
-      num: "02",
-      title: "Unit Economics",
-      desc: "Simple numbers on price, cost, and when you actually start making profit.",
-    },
-    {
-      num: "03",
-      title: "1st-Year Risks",
-      desc: "The hidden costs and traps that quietly kill new businesses.",
-    },
-    {
-      num: "04",
-      title: "Founder-Fit Verdict",
-      desc: "An honest answer: should you build this, or walk away?",
-    },
-  ];
-
-  return (
-    <section className="mx-auto mt-16 sm:mt-24 max-w-6xl px-3 sm:px-4">
-      <div className="text-center max-w-2xl mx-auto">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          The Research Standard
-        </p>
-        <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-4xl">
-          Not just a list. Real research you can trust.
-        </h2>
-        <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-          Before you spend a rupee or a weekend, check these 4 things on every idea.
-        </p>
-      </div>
-
-      {/* Mobile: plain stacked grid — a fanned arc needs room neighbors don't
-          have on narrow viewports, so it only renders at sm: and up. */}
-      <div className="mt-10 grid gap-4 grid-cols-1 sm:hidden">
-        {pillars.map((p) => (
-          <div
-            key={p.num}
-            className="glass glass-hover flex flex-col p-6 rounded-2xl border border-white/10"
-          >
-            <span className="text-xs font-extrabold text-accent tracking-widest">{p.num}</span>
-            <h3 className="mt-2 text-base font-bold text-foreground">{p.title}</h3>
-            <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
-          </div>
-        ))}
-      </div>
-      <div className="mt-10 hidden sm:block">
-        <CardFan
-          overlap="-1.75rem"
-          cardClassName="glass glass-hover flex w-56 flex-col p-6 rounded-2xl border border-white/10 bg-background"
-        >
-          {pillars.map((p) => (
-            <div key={p.num}>
-              <span className="text-xs font-extrabold text-accent tracking-widest">{p.num}</span>
-              <h3 className="mt-2 text-base font-bold text-foreground">{p.title}</h3>
-              <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
-            </div>
-          ))}
-        </CardFan>
-      </div>
-
-      <div className="mt-8 text-center">
-        <Link
-          to="/browse"
-          className="glass-pill inline-flex items-center gap-2 rounded-full px-6 py-3 text-xs font-extrabold uppercase tracking-[0.18em]"
-        >
-          <span>Explore All Categories</span>
-          <span>→</span>
-        </Link>
-      </div>
-    </section>
-  );
-}
 
 /* ================================================================
    DYNAMIC ROTATING DISCOVERY TOAST
@@ -1075,22 +823,26 @@ function OrbitDiagram({
 
 function BrandStatementBanner() {
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass glass-hover bbi-shape-banner px-6 py-12 sm:px-14 sm:py-16">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-accent">
-          Who we are
-        </p>
-        <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
-          BBI — Bro Business Ideas.
-        </h2>
-        <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+    // Was a bordered card with a morphing colour wash behind it. The block
+    // people actually stop and read does not need a frame around it: a rule
+    // above, the statement at display size, and the prose set to a real
+    // measure beside it.
+    <section className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4 sm:pt-16">
+      <p className="t-eyebrow">Who we are</p>
+      <div className="mt-4 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+        <h2 className="text-[2.4rem] leading-[1.04] sm:text-[3.4rem]">BBI — Bro Business Ideas.</h2>
+        {/* This paragraph was briefly run through a word-by-word reveal. A
+            reader scrolling past at speed saw half a sentence, and if the
+            observer never fired they saw none of it — copy that can fail to
+            appear is not a trade worth making for an entrance. */}
+        <p className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
           We have been where you are. We paid for those $20 &quot;validation&quot; platforms too. We
           got a few generic lines back, spent our money, and got nothing real in return. When we
           asked for help, no one answered. That hurt. So we built the thing we needed back then — a
           free, honest library of small business ideas and side hustles, with real research, not
-          empty hype. Browse for free, always. Validate as many times as you want, on your own
-          account, at no extra cost. Pay once — ₹199 for 3 months or ₹399 for life — only if you
-          want full access. Never a monthly bill.
+          empty hype. Browse for free, always. Validate as many times as you want, at no extra cost.
+          Pay once — ₹199 for 3 months or ₹399 for life — only if you want full access. Never a
+          monthly bill.
         </p>
       </div>
     </section>
@@ -1104,84 +856,59 @@ function TrustStatsBar({
   totalIdeas: number;
   categoryCount: number;
 }) {
+  // MOTION_SPEC §4 — the odometer runs on the ONE figure with a real source
+  // behind it (catalog.totalIdeas, straight from loader data). The other two
+  // tiles are not loader values, so they are plain text: a number with no live
+  // source gets no counter and no animation.
   const stats = [
     {
       value: totalIdeas,
-      suffix: "+",
+      live: true,
       label: "Researched blueprints",
       note: `Across ${categoryCount} live categories, growing every week`,
-      shape: "bbi-shape-stat-1",
     },
     {
       value: 967,
-      suffix: "",
+      live: false,
       label: "Founders reviewed us",
       note: "Reviewed BBI's structure and functionality before we shipped it",
-      shape: "bbi-shape-stat-2",
     },
     {
       value: 2,
-      suffix: "",
+      live: false,
       label: "Simple pricing plans",
       note: "₹199 for 3 months, ₹399 for life. Pay once. No surprise bills, ever.",
-      shape: "bbi-shape-stat-3",
     },
   ];
   return (
-    <div className="mx-auto mt-8 grid max-w-6xl gap-4 px-3 sm:grid-cols-3 sm:px-4">
+    // Three identical tiles said the three figures carried equal weight. Only
+    // one of them has a live source behind it, so only that one claims two
+    // columns — the grid ranks them the way the data does.
+    <BentoGrid className="mx-auto mt-8 max-w-6xl px-3 sm:px-4">
       {stats.map((stat) => (
-        <div
+        <BentoGridItem
           key={stat.label}
-          className={`glass glass-hover ${stat.shape} px-6 py-7 text-center transition-transform duration-300 hover:scale-[1.02] sm:text-left`}
-        >
-          <p className="text-3xl font-extrabold tracking-tight text-accent sm:text-4xl">
-            <CountUp value={stat.value} suffix={stat.suffix} />
-          </p>
-          <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
-            {stat.label}
-          </p>
-          <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{stat.note}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function MarketGapSection() {
-  return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <Reveal>
-        <div className="glass glass-hover bbi-shape-diamond grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-              The problem we found
+          className={stat.live ? "md:col-span-2" : ""}
+          header={
+            <p
+              className={`font-extrabold tracking-tight text-primary ${
+                stat.live ? "text-5xl sm:text-7xl" : "text-4xl sm:text-5xl"
+              }`}
+            >
+              {stat.live ? (
+                <Odometer value={stat.value} format={(n) => `${Math.round(n)}+`} />
+              ) : (
+                stat.value
+              )}
             </p>
-            <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-              Why is everyone still charging you $20 to check one idea?
-            </h2>
-            <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">
-              <p>
-                Before we built BBI, we went looking for a place to check our own business ideas.
-                Every place we found charged at least $20 for three or four &quot;validations.&quot;
-                It sounded like deep research. It wasn&apos;t. It was really just one AI call — the
-                same kind of call you could run yourself, a hundred times over, for the price of one
-                month of Claude or Perplexity.
-              </p>
-              <p>
-                We are regular people. Most of us have full-time jobs and build BBI at night and on
-                weekends, because we know what it feels like to stare at a $20 paywall with nothing
-                left to spend. So we built the thing we wished someone had built for us.
-              </p>
-            </div>
-          </div>
-          <OrbitDiagram
-            centerLabel="BBI"
-            centerSub="Free library"
-            nodes={["Named buyer", "Money mechanics", "Real risks", "Founder verdict"]}
-          />
-        </div>
-      </Reveal>
-    </section>
+          }
+          title={
+            <span className="text-xs font-semibold uppercase tracking-[0.2em]">{stat.label}</span>
+          }
+          description={stat.note}
+        />
+      ))}
+    </BentoGrid>
   );
 }
 
@@ -1213,8 +940,8 @@ const BBI_FAQ_1 = [
     a: "No. Browsing the library is free. Lifetime access is a one-time optional unlock, not a requirement to see ideas.",
   },
   {
-    q: "Which AI does the Validate button use?",
-    a: "Claude or Perplexity, your choice — free, on your own account. We deliberately don't support ChatGPT or Grok.",
+    q: "Is there a limit on how many ideas I can validate?",
+    a: "No. Validation is free and unlimited — it costs you nothing extra, using AI tools you already pay for.",
   },
   {
     q: "How is this different from an AI idea generator?",
@@ -1225,39 +952,23 @@ const BBI_FAQ_1 = [
 function HowItWorksSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-        <OrbitDiagram
-          centerLabel="Your idea"
-          centerSub="Start here"
-          nodes={["Browse", "Take it anywhere", "Go lifetime"]}
-        />
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-            How it works
-          </p>
-          <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-            Grab the idea. Validate it however you want. Keep the money.
-          </h2>
-          <div className="mt-6 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-            {BBI_HOW_STEPS.map((step) => (
-              <div key={step.n} className="glass glass-hover bbi-shape-step flex gap-4 p-6">
-                <span className="bbi-shape-step-badge glass flex h-11 w-11 shrink-0 items-center justify-center text-sm font-extrabold text-accent">
-                  {step.n}
-                </span>
-                <div>
-                  <h3 className="text-base font-semibold text-foreground">{step.t}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{step.d}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <p className="t-eyebrow">Step by step</p>
+      <h2 className="mt-3 max-w-3xl">
+        Grab the idea. Validate it however you want. Keep the money.
+      </h2>
+      {/* Three numbered tiles beside a diagram said "here are three things".
+          This is an ordered sequence, which is what StickyScroll is for: the
+          plate holds its place and names the step you are level with. */}
+      <StickyScroll
+        className="mt-10"
+        items={BBI_HOW_STEPS.map((step) => ({
+          title: step.t,
+          description: <p className="leading-relaxed">{step.d}</p>,
+        }))}
+      />
 
-      <div className="glass bbi-shape-faq1 mt-10 p-6 sm:p-9">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Validating & using BBI
-        </p>
+      <div className="mt-14 border-t border-border pt-8">
+        <p className="t-eyebrow">Validating & using BBI</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_1.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
@@ -1268,45 +979,113 @@ function HowItWorksSection() {
   );
 }
 
+/**
+ * The six phrases in the right-hand card are real search queries, and they are
+ * kept word-for-word on purpose — that is the whole point of them being here.
+ *
+ * What was wrong with them was everything around them. They were a bare <ul>:
+ * no sentence, no punctuation, nothing to click. Six phrases sitting next to a
+ * library that has a page for every one of them, going nowhere.
+ *
+ * Each one now (a) links to the place in the library that actually answers it,
+ * so the block does a job instead of holding keywords, and (b) carries one line
+ * underneath in the same voice as the prose beside it. The destinations are
+ * real: every slug below was read off the live table, not typed from memory,
+ * and every /search query was counted against it first.
+ */
+const BBI_BUILT_FOR: {
+  phrase: string;
+  line: string;
+  to: string;
+  params?: { categorySlug: string };
+  search?: { q: string };
+}[] = [
+  {
+    phrase: "Any business idea without investment",
+    line: "\u201cSave up first\u201d is not advice when there is nothing to save.",
+    to: "/category/$categorySlug",
+    params: { categorySlug: "zero-investment-business-ideas" },
+  },
+  {
+    phrase: "Work from home business opportunity",
+    line: "Start from the room you are already paying rent for.",
+    to: "/category/$categorySlug",
+    params: { categorySlug: "work-from-home-business-ideas" },
+  },
+  {
+    phrase: "Best business to start with little money",
+    line: "Small capital is a constraint. It is not a verdict.",
+    to: "/category/$categorySlug",
+    params: { categorySlug: "low-investment-business-ideas" },
+  },
+  {
+    phrase: "Side hustle and best side job ideas",
+    line: "Keep the salary. Build the second thing quietly.",
+    to: "/category/$categorySlug",
+    params: { categorySlug: "side-hustle-ideas" },
+  },
+  {
+    phrase: "Business ideas for teenagers",
+    line: "Too young is something people say. It is not a rule.",
+    to: "/search",
+    search: { q: "teen" },
+  },
+  {
+    phrase: "Stay-at-home-mom business ideas",
+    line: "Work that fits around a day you do not get to control.",
+    to: "/search",
+    search: { q: "mom" },
+  },
+];
+
 function WhoForSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-shape-soft-deep grid gap-8 p-8 sm:p-12 lg:grid-cols-[1.1fr_0.9fr]">
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-            Who we built this for
-          </p>
-          <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-            For the person with an idea and nothing else.
-          </h2>
-          <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
-            <p>
-              Some of us have been jobless. Some of us have started over with no savings. We know
-              what it&apos;s like to have a business idea and no laptop, no capital, no one to ask.
-              BBI is for that person — the one Googling &quot;business ideas&quot; from a phone, at
-              1am, hoping something makes sense for their actual life.
-            </p>
-            <p>
-              We&apos;re not writing &quot;start a SaaS and make a million dollars&quot; content
-              aimed at people who already have funding. We write for people starting from zero: no
-              investment, no team, no connections. If that&apos;s not you — great, we&apos;ve got
-              the bigger ideas too.
-            </p>
-          </div>
-        </div>
-        <div className="glass bbi-shape-hex self-start p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
-            Built with you in mind
-          </p>
-          <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
-            <li>Any business idea without investment</li>
-            <li>Work from home business opportunity</li>
-            <li>Best business to start with little money</li>
-            <li>Side hustle & best side job ideas</li>
-            <li>Business ideas for teenagers & veterans</li>
-            <li>Stay-at-home-mom business ideas</li>
-          </ul>
-        </div>
+      <p className="t-eyebrow">Who we built this for</p>
+      <h2 className="mt-3 max-w-2xl">For the person with an idea and nothing else.</h2>
+      {/* Two paragraphs at a real reading measure, side by side, rather than
+          stacked in the left half of a card. */}
+      <div className="mt-6 grid gap-6 text-base leading-relaxed text-muted-foreground sm:grid-cols-2 sm:gap-10">
+        <p>
+          Some of us have been jobless. Some of us have started over with no savings. We know what
+          it&apos;s like to have a business idea and no laptop, no capital, no one to ask. BBI is
+          for that person — the one Googling &quot;business ideas&quot; from a phone, at 1am, hoping
+          something makes sense for their actual life.
+        </p>
+        <p>
+          We&apos;re not writing &quot;start a SaaS and make a million dollars&quot; content aimed
+          at people who already have funding. We write for people starting from zero: no investment,
+          no team, no connections. If that&apos;s not you — great, we&apos;ve got the bigger ideas
+          too.
+        </p>
+      </div>
+
+      <div className="mt-12 border-t border-border pt-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+          Built with you in mind
+        </p>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+          These are the things people actually type at 1am. Every one of them goes somewhere real.
+        </p>
+        {/* Was a single narrow column squeezed into a right-hand rail, where
+            six real search queries read as a footnote. Full width, three
+            across, as the destinations they are. */}
+        <BentoGrid className="mt-6">
+          {BBI_BUILT_FOR.map((item) => (
+            <Link
+              key={item.phrase}
+              to={item.to}
+              {...(item.params ? { params: item.params } : {})}
+              {...(item.search ? { search: item.search } : {})}
+              className="group/bento flex h-full flex-col justify-between gap-3 rounded-md border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50"
+            >
+              <span className="font-semibold leading-snug tracking-tight transition-colors duration-300 group-hover/bento:text-primary">
+                {item.phrase}
+              </span>
+              <span className="text-sm leading-relaxed text-muted-foreground">{item.line}</span>
+            </Link>
+          ))}
+        </BentoGrid>
       </div>
     </section>
   );
@@ -1333,26 +1112,30 @@ const BBI_FAQ_2 = [
 
 function PricingPhilosophySection() {
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass glass-hover bbi-shape-ticket p-8 text-center sm:p-12">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Pricing, honestly
-        </p>
-        <h2 className="mx-auto mt-3 max-w-2xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-          One fee. Once. For life. That&apos;s the whole pricing page.
-        </h2>
-        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
-          No monthly plan. No &quot;Starter / Pro / Enterprise&quot; ladder designed to make you
-          feel small on the cheapest tier. Just one option: pay once, unlock everything, forever —
-          including every idea we add after the day you join. Not ready to pay yet? Most of the
-          library stays free to browse regardless.
-        </p>
+    <section className="mt-16">
+      {/* The one inverted band on the page. Twelve sections of paper in a row
+          flatten out; the pricing statement is the right place to break the
+          rhythm, and it is the only block here that is genuinely an assertion
+          rather than an explanation. */}
+      <div className="bg-primary py-16 text-primary-foreground sm:py-24">
+        <div className="mx-auto max-w-6xl px-3 sm:px-4">
+          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-primary-foreground/70">
+            Pricing, honestly
+          </p>
+          <h2 className="mt-4 max-w-4xl text-[2.1rem] leading-[1.06] text-primary-foreground sm:text-[3.2rem]">
+            One fee. Once. For life. That&apos;s the whole pricing page.
+          </h2>
+          <p className="mt-6 max-w-[62ch] text-base leading-relaxed text-primary-foreground/80 sm:text-lg">
+            No monthly plan. No &quot;Starter / Pro / Enterprise&quot; ladder designed to make you
+            feel small on the cheapest tier. Just one option: pay once, unlock everything, forever —
+            including every idea we add after the day you join. Not ready to pay yet? Most of the
+            library stays free to browse regardless.
+          </p>
+        </div>
       </div>
 
-      <div className="glass bbi-shape-faq2 mt-6 p-6 sm:p-9">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Pricing & the market gap
-        </p>
+      <div className="mx-auto mt-12 max-w-6xl px-3 sm:px-4">
+        <p className="t-eyebrow">Pricing & the market gap</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_2.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
@@ -1366,28 +1149,30 @@ function PricingPhilosophySection() {
 function TeamSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-shape-card-a grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-            Who&apos;s behind this
+      {/* Was prose squeezed into the left half of a card with the diagram
+          filling the right. The text is short and personal; it reads better at
+          a narrow measure with the diagram given its own full width below. */}
+      <div className="max-w-2xl">
+        <p className="t-eyebrow">Who&apos;s behind this</p>
+        <h2 className="mt-3">Built by hand, not by a headcount.</h2>
+        <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
+          <p>
+            BBI is a small, hands-on build — no invented office, no fake team page. We&apos;d rather
+            tell you less and have it be true.
           </p>
-          <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-            Built by hand, not by a headcount.
-          </h2>
-          <div className="mt-5 max-w-3xl space-y-4 text-base leading-relaxed text-muted-foreground">
-            <p>
-              BBI is a small, hands-on build — no invented office, no fake team page. We&apos;d
-              rather tell you less and have it be true.
-            </p>
-            <p>
-              The full story lives on our{" "}
-              <Link to="/about" className="text-accent underline underline-offset-4">
-                About page
-              </Link>
-              .
-            </p>
-          </div>
+          <p>
+            The full story lives on our{" "}
+            <Link
+              to="/about"
+              className="font-semibold text-primary underline decoration-border underline-offset-4 transition-colors hover:text-accent"
+            >
+              About page
+            </Link>
+            .
+          </p>
         </div>
+      </div>
+      <div className="mt-10 border-t border-border pt-10">
         <OrbitDiagram
           centerLabel="Hands-on"
           centerSub="build"
@@ -1406,14 +1191,12 @@ function TeamSection() {
 function InspiredBySection() {
   return (
     <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
-      <div className="glass bbi-shape-card-a p-8 sm:p-10">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Where this came from
-        </p>
-        <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
-          We didn&apos;t invent this model. We learned it.
-        </h2>
-        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+      {/* Was a centred card. This is an attribution, so it is set as one: a
+          rule down the left edge, the way a citation is marked in print. */}
+      <div className="border-l-2 border-primary pl-6 sm:pl-8">
+        <p className="t-eyebrow">Where this came from</p>
+        <h2 className="mt-3">We didn&apos;t invent this model. We learned it.</h2>
+        <p className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground">
           Our inspiration is EthicalFounder.com — a platform offering free websites, free MSME
           registration help, and free mentorship to Indian entrepreneurs who can&apos;t afford any
           of it otherwise. We&apos;re not affiliated with them and we don&apos;t take commissions
@@ -1426,90 +1209,66 @@ function InspiredBySection() {
   );
 }
 
-/**
- * The two comparison cards slide in from opposite sides and converge, with
- * a brief glow pulse on arrival — built locally with gsap + ScrollTrigger
- * (same loadGsap(true)/once:true pattern as Reveal) rather than through
- * Reveal itself, since the "glow on arrival" step is specific to this
- * section's own visual language, not something every Reveal caller wants.
- */
+const BBI_THEM = [
+  "You pay every month, whether you use it that month or not.",
+  "Twenty dollars gets you a handful of checks, then it asks for more.",
+  "What comes back is the same generic paragraph anyone else would get.",
+  "You pay before you are allowed to see whether it was worth paying for.",
+];
+
+const BBI_US = [
+  "Read every researched idea in the library without paying anything.",
+  "If you want the full thing, you pay once. There is no second bill.",
+  "Validate as many ideas as you like. We do not ration it.",
+  "Change your mind, come back in a year, and it is all still yours.",
+];
+
 function ComparisonSection() {
-  const leftRef = useRef<HTMLDivElement | null>(null);
-  const rightRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (prefersReducedMotion()) return;
-    const left = leftRef.current;
-    const right = rightRef.current;
-    if (!left || !right) return;
-
-    const restShadow = getComputedStyle(left).boxShadow;
-    const glowShadow = `0 0 0 1px color-mix(in oklab, var(--primary) 55%, transparent), 0 0 34px -6px color-mix(in oklab, var(--primary) 60%, transparent), ${restShadow}`;
-
-    let cancelled = false;
-    let tl: gsap.core.Timeline | null = null;
-
-    loadGsap(true).then((gsap) => {
-      if (cancelled) return;
-      // The left card keeps its resting opacity-80 (Tailwind class) — it's
-      // deliberately dimmed relative to the highlighted right card, so the
-      // reveal must animate each card TO its own resting opacity, not both
-      // to fully opaque.
-      gsap.set(left, { x: -60, opacity: 0 });
-      gsap.set(right, { x: 60, opacity: 0 });
-      tl = gsap.timeline({
-        scrollTrigger: { trigger: left, start: "top 85%", once: true },
-      });
-      tl.to(left, { x: 0, opacity: 0.8, duration: 0.7, ease: "power3.out" }, 0)
-        .to(right, { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0)
-        .to([left, right], { boxShadow: glowShadow, duration: 0.25, ease: "power1.out" })
-        .to([left, right], { boxShadow: restShadow, duration: 0.7, ease: "power1.out" });
-    });
-
-    return () => {
-      cancelled = true;
-      tl?.scrollTrigger?.kill();
-      tl?.kill();
-    };
-  }, []);
-
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-        The comparison
-      </p>
-      <h2 className="mt-2 max-w-2xl text-2xl font-bold tracking-tight sm:text-3xl">
-        $20 for four validations. Or one AI subscription that does a thousand.
+      <p className="t-eyebrow">The comparison</p>
+      <h2 className="mt-3 max-w-3xl">
+        Validating a business idea should not cost you the money you were going to start it with.
       </h2>
-      <div className="mt-8 grid gap-5 sm:grid-cols-2">
-        <div
-          ref={leftRef}
-          className="glass bbi-shape-compare-sharp border border-border/60 p-7 opacity-80"
-        >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            Typical validator platform
-          </p>
-          <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
-            <li>Monthly or per-use fee</li>
-            <li>3–5 validations per $20</li>
-            <li>Generic, boilerplate output</li>
-            <li>Paywall before you see anything real</li>
+      <p className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground">
+        Twenty dollars buys you three or four checks on most idea validation platforms. If the
+        answer comes back no, that money is gone and you are back where you started — except poorer.
+        We think that is the wrong way round. Read the research first, for free, and decide with
+        your own eyes whether an idea is worth your time.
+      </p>
+
+      {/* Two cards floating apart, sliding in from opposite sides, never said
+          which line answered which. The rows are aligned across a single
+          centre rule now, so each claim sits opposite the one it answers, and
+          the "versus" mark rides that rule at every width instead of appearing
+          only on a phone. */}
+      <div className="relative mt-10 grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2">
+        <div className="bg-card p-5 sm:p-7">
+          <p className="t-eyebrow hl-coral">What most idea validation tools ask of you</p>
+          <ul className="mt-4 divide-y divide-border text-sm leading-relaxed text-muted-foreground">
+            {BBI_THEM.map((line) => (
+              <li key={line} className="py-3 first:pt-0 last:pb-0">
+                {line}
+              </li>
+            ))}
           </ul>
         </div>
-        <div
-          ref={rightRef}
-          className="glass glass-hover bbi-shape-compare-round border border-primary/40 p-7"
-        >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-            BBI + your own AI tool
-          </p>
-          <ul className="mt-4 space-y-2.5 text-sm text-foreground">
-            <li>Browse researched ideas free</li>
-            <li>Pay once for lifetime access, if you want it</li>
-            <li>Validate as many times as you want, no artificial limit</li>
-            <li>Use an AI subscription you may already have</li>
+        <div className="bg-card p-5 sm:p-7">
+          <p className="t-eyebrow hl-green">What BBI asks of you</p>
+          <ul className="mt-4 divide-y divide-border text-sm leading-relaxed text-foreground">
+            {BBI_US.map((line) => (
+              <li key={line} className="py-3 first:pt-0 last:pb-0">
+                {line}
+              </li>
+            ))}
           </ul>
         </div>
+        <span
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-border bg-background px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground"
+        >
+          versus
+        </span>
       </div>
     </section>
   );
@@ -1526,30 +1285,25 @@ const BBI_FUTURE_TERMS = [
 
 function FutureProofSpotlight() {
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-shape-diamond p-8 sm:p-12">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Where the market is headed
-        </p>
-        <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
-          The ideas that don&apos;t age out.
-        </h2>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          These categories hold up regardless of what the economy does next — pulled straight from
-          the live library, not a marketing list.
-        </p>
-        <div className="mt-6 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
-          {BBI_FUTURE_TERMS.map((term) => (
-            <Link
-              key={term.label}
-              to="/search"
-              search={{ q: term.query }}
-              className="glass-pill min-w-0 rounded-full px-3 py-2 text-center text-[11px] font-medium leading-snug transition-all duration-300 sm:px-4 sm:text-xs"
-            >
-              {term.label}
-            </Link>
-          ))}
-        </div>
+    <section className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4">
+      <p className="t-eyebrow">Ways into the library</p>
+      <h2 className="mt-3 max-w-2xl">Start from a theme instead of a blank search box.</h2>
+      <p className="mt-3 max-w-[62ch] text-sm leading-relaxed text-muted-foreground">
+        Each one runs a live search across every blueprint. They are shortcuts, not a ranking
+        &mdash; and if one comes back thin, that is the library being honest with you rather than a
+        page pretending to be fuller than it is.
+      </p>
+      <div className="mt-7 flex flex-wrap gap-2.5">
+        {BBI_FUTURE_TERMS.map((term) => (
+          <Link
+            key={term.label}
+            to="/search"
+            search={{ q: term.query }}
+            className="rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary"
+          >
+            {term.label}
+          </Link>
+        ))}
       </div>
     </section>
   );
@@ -1600,35 +1354,33 @@ const BBI_KEYWORD_GROUPS: KeywordGroup[] = [
 function KeywordMosaic() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4" aria-label="Browse ideas by keyword">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-        Every angle covered
-      </p>
-      <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-        Business ideas by industry, founder, and model
-      </h2>
-      <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {BBI_KEYWORD_GROUPS.map((group) => (
-          <Reveal key={group.heading} className="h-full">
-            <div className="glass glass-hover bbi-shape-card-a h-full p-4 sm:p-6">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
-                {group.heading}
-              </h3>
-              <div className="mt-4 grid grid-cols-2 content-start gap-2 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] lg:grid-cols-1 xl:grid-cols-2">
-                {group.terms.map((term) => (
-                  <Link
-                    key={term.label}
-                    to="/search"
-                    search={{ q: term.query }}
-                    className="glass-pill min-w-0 rounded-full px-2.5 py-2 text-center text-[11px] font-medium leading-tight"
-                  >
-                    {term.label}
-                  </Link>
-                ))}
-              </div>
+      <p className="t-eyebrow">Every angle covered</p>
+      <h2 className="mt-2 max-w-2xl">Business ideas by industry, founder, and model</h2>
+      {/* Was three panels side by side, each a wall of pills — 18 links
+          competing at once, and the same shape repeated three times. As tabs,
+          one axis is legible at a time and the marker slides between them. */}
+      <Tabs
+        className="mt-7"
+        listClassName="inline-flex"
+        items={BBI_KEYWORD_GROUPS.map((group) => ({
+          value: group.heading,
+          label: group.heading,
+          content: (
+            <div className="flex flex-wrap gap-2.5">
+              {group.terms.map((term) => (
+                <Link
+                  key={term.label}
+                  to="/search"
+                  search={{ q: term.query }}
+                  className="rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary"
+                >
+                  {term.label}
+                </Link>
+              ))}
             </div>
-          </Reveal>
-        ))}
-      </div>
+          ),
+        }))}
+      />
     </section>
   );
 }
@@ -1666,27 +1418,27 @@ function PromiseSection() {
       id="promise"
       data-anchor="promise"
       data-anchor-label="Our promise"
-      className="mx-auto mt-16 max-w-4xl px-3 sm:px-4"
+      className="mx-auto mt-16 max-w-6xl px-3 sm:px-4"
     >
-      <div className="glass glass-hover bbi-shape-shield p-8 text-center sm:p-12">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Our promise
-        </p>
-        <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
-          We&apos;re not here to sell you a dream. We&apos;re here to hand you the research.
-        </h2>
-        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-          We won&apos;t tell you that you&apos;ll be a millionaire in three months. We won&apos;t
-          show you a lifestyle you can&apos;t verify. What we will do: give you honest research,
-          free guidance, and a starting point that doesn&apos;t cost you $20 before you&apos;ve even
-          decided if the idea is worth pursuing.
-        </p>
+      {/* The last statement on the page, so it is set as one — no card around
+          it, the claim at display size, the qualification beside it. */}
+      <div className="border-t border-border pt-12">
+        <p className="t-eyebrow">Our promise</p>
+        <div className="mt-4 grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-14">
+          <h2 className="text-[2rem] leading-[1.08] sm:text-[2.8rem]">
+            We&apos;re not here to sell you a dream. We&apos;re here to hand you the research.
+          </h2>
+          <p className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
+            We won&apos;t tell you that you&apos;ll be a millionaire in three months. We won&apos;t
+            show you a lifestyle you can&apos;t verify. What we will do: give you honest research,
+            free guidance, and a starting point that doesn&apos;t cost you $20 before you&apos;ve
+            even decided if the idea is worth pursuing.
+          </p>
+        </div>
       </div>
 
-      <div className="glass bbi-shape-faq3 mt-6 p-6 sm:p-9">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-          Common searches, answered
-        </p>
+      <div className="mt-12">
+        <p className="t-eyebrow">Common searches, answered</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_3.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
