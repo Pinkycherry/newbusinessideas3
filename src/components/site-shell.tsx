@@ -743,18 +743,18 @@ export function SiteShell({ children }: { children: ReactNode }) {
         <div aria-hidden className="mx-auto h-px max-w-6xl overflow-hidden rounded-full bg-border">
           <div className="mo-page-rail h-full w-full bg-accent" />
         </div>
-        <div className="glass-nav mx-auto mt-2 flex max-w-6xl items-center justify-between gap-4 rounded-full px-4 py-2.5 sm:px-6 sm:py-3">
+        <div className="glass-nav mx-auto mt-2 flex max-w-6xl items-center justify-between gap-3 rounded-md border border-border px-4 py-2.5 sm:gap-5 sm:px-6 sm:py-3">
           <Link
             to="/"
             onClick={() => setMobileOpen(false)}
-            className="flex min-w-0 items-baseline gap-2"
+            className="flex shrink-0 items-baseline gap-2"
           >
-            <span className="shrink-0 rounded-full bg-gradient-to-r from-primary to-accent px-2.5 py-0.5 text-sm font-black uppercase tracking-[0.18em] text-primary-foreground shadow-[0_0_24px_color-mix(in_oklab,var(--primary)_45%,transparent)] sm:text-lg">
+            <span className="shrink-0 rounded-[3px] bg-primary px-2.5 py-1 text-sm font-black uppercase tracking-[0.18em] text-primary-foreground sm:text-base">
               BBI
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-5 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground lg:flex">
+          <nav className="hidden min-w-0 items-center gap-4 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground lg:flex xl:gap-5">
             <CategoryMega />
             <BrowseByTypeDropdown />
             <LinkListDropdown label="Explore" items={EXPLORE_ITEMS} />
