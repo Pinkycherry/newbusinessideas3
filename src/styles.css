@@ -1320,21 +1320,41 @@ html.light .iv-skeleton {
   html.light .glass-nav a:hover {
     color: #2B2871 !important;
   }
+  /* The plate. This rule is the one that decides how every legacy `glass`
+     surface on the site actually looks, and it has to live HERE, inside
+     @layer utilities: an !important declaration inside a layer beats an
+     unlayered one, so the flat reprint further up this file was being
+     overruled by the frosted-lavender gradient that used to sit at these
+     three selectors. That is why the redesign reached the hero and the
+     cards but stopped at every mid-page section. */
   html.light .glass,
   html.light .glass-btn,
   html.light .glass-pill {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(238, 236, 248, 0.9) 100%) !important;
-    border: 1px solid rgba(43, 40, 113, 0.16) !important;
-    color: #0C0C25 !important;
-    box-shadow:
-      0 1px 0 0 rgba(255, 255, 255, 0.95) inset,
-      0 18px 40px -26px rgba(12, 12, 37, 0.45) !important;
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--foreground) !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  html.light .glass-btn,
+  html.light .glass-pill {
+    transition:
+      border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 240ms cubic-bezier(0.22, 1, 0.36, 1) !important;
   }
   html.light .glass-btn:hover,
   html.light .glass-pill:hover {
-    background: linear-gradient(180deg, rgba(238, 236, 248, 0.98) 0%, rgba(218, 217, 242, 0.95) 100%) !important;
-    border-color: rgba(70, 67, 186, 0.42) !important;
-    color: #2B2871 !important;
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: var(--primary-foreground) !important;
+  }
+  /* The label inside a pill is coloured by its own rule further up, which
+     would otherwise keep it near-black against the filled hover state. */
+  html.light .glass-btn:hover *,
+  html.light .glass-pill:hover * {
+    color: var(--primary-foreground) !important;
   }
 }
 
@@ -1358,11 +1378,11 @@ html.light .iv-skeleton {
   0%, 100% { opacity: 0.7; }
   50%      { opacity: 1; }
 }
+/* Ink does not glow. The halo and its pulse are gone; the class stays so the
+   call sites do not have to change. */
 .bbi-heading-glow {
-  text-shadow:
-    0 0 12px rgba(136, 134, 219, 0.4),
-    0 0 26px rgba(70, 67, 186, 0.26);
-  animation: bbi-heading-glow-pulse 3.4s ease-in-out infinite;
+  text-shadow: none;
+  animation: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .bbi-heading-glow {
@@ -1416,8 +1436,8 @@ footer .iv-tag-cloud { gap: 0.5rem; }
 
 /* Light mode: footer/cloud pills get a soft light-grey/blue fill + dark text. */
 html.light .iv-tag-cloud .iv-tag {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(238, 236, 248, 0.92) 100%) !important;
-  border-color: rgba(43, 40, 113, 0.18) !important;
+  background: var(--card) !important;
+  border-color: var(--border) !important;
   color: #0C0C25 !important;
   box-shadow:
     0 1px 0 0 rgba(255, 255, 255, 0.95) inset,
@@ -2060,11 +2080,10 @@ html.light .idea-shell::before { opacity: 0.42; }
   inset: -10%;
   pointer-events: none;
   z-index: 0;
-  background: radial-gradient(
-    62% 62% at 38% 34%,
-    color-mix(in oklab, var(--primary) 34%, transparent) 0%,
-    transparent 74%
-  );
+  /* Was a radial wash of brand ink at 34% — the diagonal lavender smear
+     across the banner. Ambient colour fields are the language this redesign
+     replaced; the shape stays (it still clips the layer) but paints nothing. */
+  background: none;
   clip-path: polygon(
     calc(6% + var(--sc-morph) * 24%) 0%,
     calc(94% - var(--sc-morph) * 18%) calc(2% + var(--sc-morph) * 16%),

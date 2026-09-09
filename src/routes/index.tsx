@@ -16,9 +16,10 @@ import ContainerTextFlip from "@/components/aceternity/container-text-flip";
 import InfiniteMovingCards from "@/components/aceternity/infinite-moving-cards";
 import { BentoGrid, BentoGridItem } from "@/components/aceternity/bento-grid";
 import HeroParallax from "@/components/aceternity/hero-parallax";
+import Tabs from "@/components/aceternity/tabs";
+import StickyScroll from "@/components/aceternity/sticky-scroll";
 import { photoAt } from "@/config/imagery";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
-import TextGenerateEffect from "@/components/aceternity/text-generate-effect";
 import {
   Select,
   SelectContent,
@@ -821,19 +822,20 @@ function OrbitDiagram({
 }
 
 function BrandStatementBanner() {
-  // Publishes --sc-p, which the morphing silhouette below reads. The shape is
-  // the only thing that moves here — the copy itself never shifts, because
-  // this is the one block on the page people actually stop and read.
-  const morphRef = useScrollProgress<HTMLElement>();
   return (
-    <section ref={morphRef} className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass glass-hover bbi-card-motion bbi-shape-banner bbi-morph-host relative overflow-hidden px-6 py-12 sm:px-14 sm:py-16">
-        <span className="bbi-morph-shape" aria-hidden />
-        <p className="t-eyebrow">Who we are</p>
-        <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
-          BBI — Bro Business Ideas.
-        </h2>
-        <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+    // Was a bordered card with a morphing colour wash behind it. The block
+    // people actually stop and read does not need a frame around it: a rule
+    // above, the statement at display size, and the prose set to a real
+    // measure beside it.
+    <section className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4 sm:pt-16">
+      <p className="t-eyebrow">Who we are</p>
+      <div className="mt-4 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+        <h2 className="text-[2.4rem] leading-[1.04] sm:text-[3.4rem]">BBI — Bro Business Ideas.</h2>
+        {/* This paragraph was briefly run through a word-by-word reveal. A
+            reader scrolling past at speed saw half a sentence, and if the
+            observer never fired they saw none of it — copy that can fail to
+            appear is not a trade worth making for an entrance. */}
+        <p className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
           We have been where you are. We paid for those $20 &quot;validation&quot; platforms too. We
           got a few generic lines back, spent our money, and got nothing real in return. When we
           asked for help, no one answered. That hurt. So we built the thing we needed back then — a
@@ -854,7 +856,6 @@ function TrustStatsBar({
   totalIdeas: number;
   categoryCount: number;
 }) {
-  const statsRef = useStaggerReveal<HTMLDivElement>();
   // MOTION_SPEC §4 — the odometer runs on the ONE figure with a real source
   // behind it (catalog.totalIdeas, straight from loader data). The other two
   // tiles are not loader values, so they are plain text: a number with no live
@@ -865,44 +866,49 @@ function TrustStatsBar({
       live: true,
       label: "Researched blueprints",
       note: `Across ${categoryCount} live categories, growing every week`,
-      shape: "bbi-shape-stat-1",
     },
     {
       value: 967,
       live: false,
       label: "Founders reviewed us",
       note: "Reviewed BBI's structure and functionality before we shipped it",
-      shape: "bbi-shape-stat-2",
     },
     {
       value: 2,
       live: false,
       label: "Simple pricing plans",
       note: "₹199 for 3 months, ₹399 for life. Pay once. No surprise bills, ever.",
-      shape: "bbi-shape-stat-3",
     },
   ];
   return (
-    <div ref={statsRef} className="mx-auto mt-8 grid max-w-6xl gap-4 px-3 sm:grid-cols-3 sm:px-4">
+    // Three identical tiles said the three figures carried equal weight. Only
+    // one of them has a live source behind it, so only that one claims two
+    // columns — the grid ranks them the way the data does.
+    <BentoGrid className="mx-auto mt-8 max-w-6xl px-3 sm:px-4">
       {stats.map((stat) => (
-        <div
+        <BentoGridItem
           key={stat.label}
-          className={`mo-card glass glass-hover ${stat.shape} px-6 py-7 text-center sm:text-left`}
-        >
-          <p className="text-3xl font-extrabold tracking-tight text-accent sm:text-4xl">
-            {stat.live ? (
-              <Odometer value={stat.value} format={(n) => `${Math.round(n)}+`} />
-            ) : (
-              stat.value
-            )}
-          </p>
-          <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
-            {stat.label}
-          </p>
-          <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{stat.note}</p>
-        </div>
+          className={stat.live ? "md:col-span-2" : ""}
+          header={
+            <p
+              className={`font-extrabold tracking-tight text-primary ${
+                stat.live ? "text-5xl sm:text-7xl" : "text-4xl sm:text-5xl"
+              }`}
+            >
+              {stat.live ? (
+                <Odometer value={stat.value} format={(n) => `${Math.round(n)}+`} />
+              ) : (
+                stat.value
+              )}
+            </p>
+          }
+          title={
+            <span className="text-xs font-semibold uppercase tracking-[0.2em]">{stat.label}</span>
+          }
+          description={stat.note}
+        />
       ))}
-    </div>
+    </BentoGrid>
   );
 }
 
@@ -944,40 +950,24 @@ const BBI_FAQ_1 = [
 ];
 
 function HowItWorksSection() {
-  const stepsRef = useStaggerReveal<HTMLDivElement>();
-  // Second depth beat on the page, far enough below ComparisonSection that the
-  // two read as rhythm rather than as the whole page drifting.
-  const depthRef = useScrollProgress<HTMLElement>();
   return (
-    <section ref={depthRef} className="bbi-depth mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-        <div className="bbi-depth-back">
-          <OrbitDiagram
-            centerLabel="Your idea"
-            centerSub="Start here"
-            nodes={["Browse", "Take it anywhere", "Go lifetime"]}
-          />
-        </div>
-        <div className="bbi-depth-front">
-          <p className="t-eyebrow">Step by step</p>
-          <h2 className="mt-3">Grab the idea. Validate it however you want. Keep the money.</h2>
-          <div ref={stepsRef} className="mt-6 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-            {BBI_HOW_STEPS.map((step) => (
-              <div key={step.n} className="mo-card glass glass-hover bbi-shape-step flex gap-4 p-6">
-                <span className="bbi-shape-step-badge glass flex h-11 w-11 shrink-0 items-center justify-center text-sm font-extrabold text-accent">
-                  {step.n}
-                </span>
-                <div>
-                  <h3 className="text-base font-semibold text-foreground">{step.t}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{step.d}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <p className="t-eyebrow">Step by step</p>
+      <h2 className="mt-3 max-w-3xl">
+        Grab the idea. Validate it however you want. Keep the money.
+      </h2>
+      {/* Three numbered tiles beside a diagram said "here are three things".
+          This is an ordered sequence, which is what StickyScroll is for: the
+          plate holds its place and names the step you are level with. */}
+      <StickyScroll
+        className="mt-10"
+        items={BBI_HOW_STEPS.map((step) => ({
+          title: step.t,
+          description: <p className="leading-relaxed">{step.d}</p>,
+        }))}
+      />
 
-      <div className="glass bbi-shape-faq1 mt-10 p-5 sm:p-7">
+      <div className="mt-14 border-t border-border pt-8">
         <p className="t-eyebrow">Validating & using BBI</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_1.map((item) => (
@@ -1049,63 +1039,53 @@ const BBI_BUILT_FOR: {
 ];
 
 function WhoForSection() {
-  // The six keyword links were the last cards on the page with no motion
-  // owner at all -- measured, not guessed: they carried no inline opacity and
-  // no `data-revealed`, which is the signature of a card no hook has claimed.
-  const listRef = useStaggerReveal<HTMLUListElement>({ selector: ".mo-card", stagger: 0.045 });
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-shape-soft-deep grid gap-6 p-5 sm:p-9 lg:grid-cols-[1.1fr_0.9fr]">
-        <div>
-          <p className="t-eyebrow">Who we built this for</p>
-          <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-            For the person with an idea and nothing else.
-          </h2>
-          <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
-            <p>
-              Some of us have been jobless. Some of us have started over with no savings. We know
-              what it&apos;s like to have a business idea and no laptop, no capital, no one to ask.
-              BBI is for that person — the one Googling &quot;business ideas&quot; from a phone, at
-              1am, hoping something makes sense for their actual life.
-            </p>
-            <p>
-              We&apos;re not writing &quot;start a SaaS and make a million dollars&quot; content
-              aimed at people who already have funding. We write for people starting from zero: no
-              investment, no team, no connections. If that&apos;s not you — great, we&apos;ve got
-              the bigger ideas too.
-            </p>
-          </div>
-        </div>
-        <div className="glass bbi-shape-hex self-start p-5 sm:p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
-            Built with you in mind
-          </p>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            These are the things people actually type at 1am. Every one of them goes somewhere real.
-          </p>
-          {/* One column on a phone, two across on a tablet — where this used to
-              render as a single thin list under two paragraphs of prose — and
-              back to one in the narrow right rail on desktop. */}
-          <ul ref={listRef} className="mt-5 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
-            {BBI_BUILT_FOR.map((item) => (
-              <li key={item.phrase}>
-                <Link
-                  to={item.to}
-                  {...(item.params ? { params: item.params } : {})}
-                  {...(item.search ? { search: item.search } : {})}
-                  className="mo-card glass-hover block h-full rounded-xl border border-border/60 px-4 py-3"
-                >
-                  <span className="block text-sm font-semibold leading-snug text-foreground">
-                    {item.phrase}
-                  </span>
-                  <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
-                    {item.line}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <p className="t-eyebrow">Who we built this for</p>
+      <h2 className="mt-3 max-w-2xl">For the person with an idea and nothing else.</h2>
+      {/* Two paragraphs at a real reading measure, side by side, rather than
+          stacked in the left half of a card. */}
+      <div className="mt-6 grid gap-6 text-base leading-relaxed text-muted-foreground sm:grid-cols-2 sm:gap-10">
+        <p>
+          Some of us have been jobless. Some of us have started over with no savings. We know what
+          it&apos;s like to have a business idea and no laptop, no capital, no one to ask. BBI is
+          for that person — the one Googling &quot;business ideas&quot; from a phone, at 1am, hoping
+          something makes sense for their actual life.
+        </p>
+        <p>
+          We&apos;re not writing &quot;start a SaaS and make a million dollars&quot; content aimed
+          at people who already have funding. We write for people starting from zero: no investment,
+          no team, no connections. If that&apos;s not you — great, we&apos;ve got the bigger ideas
+          too.
+        </p>
+      </div>
+
+      <div className="mt-12 border-t border-border pt-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+          Built with you in mind
+        </p>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+          These are the things people actually type at 1am. Every one of them goes somewhere real.
+        </p>
+        {/* Was a single narrow column squeezed into a right-hand rail, where
+            six real search queries read as a footnote. Full width, three
+            across, as the destinations they are. */}
+        <BentoGrid className="mt-6">
+          {BBI_BUILT_FOR.map((item) => (
+            <Link
+              key={item.phrase}
+              to={item.to}
+              {...(item.params ? { params: item.params } : {})}
+              {...(item.search ? { search: item.search } : {})}
+              className="group/bento flex h-full flex-col justify-between gap-3 rounded-md border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50"
+            >
+              <span className="font-semibold leading-snug tracking-tight transition-colors duration-300 group-hover/bento:text-primary">
+                {item.phrase}
+              </span>
+              <span className="text-sm leading-relaxed text-muted-foreground">{item.line}</span>
+            </Link>
+          ))}
+        </BentoGrid>
       </div>
     </section>
   );
@@ -1446,37 +1426,35 @@ const BBI_KEYWORD_GROUPS: KeywordGroup[] = [
 ];
 
 function KeywordMosaic() {
-  const groupsRef = useStaggerReveal<HTMLDivElement>();
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4" aria-label="Browse ideas by keyword">
       <p className="t-eyebrow">Every angle covered</p>
-      <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-        Business ideas by industry, founder, and model
-      </h2>
-      <div ref={groupsRef} className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {BBI_KEYWORD_GROUPS.map((group) => (
-          <div
-            key={group.heading}
-            className="mo-card glass glass-hover bbi-shape-card-a h-full p-4 sm:p-6"
-          >
-            <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
-              {group.heading}
-            </h3>
-            <div className="mt-4 grid grid-cols-2 content-start gap-2 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] lg:grid-cols-1 xl:grid-cols-2">
+      <h2 className="mt-2 max-w-2xl">Business ideas by industry, founder, and model</h2>
+      {/* Was three panels side by side, each a wall of pills — 18 links
+          competing at once, and the same shape repeated three times. As tabs,
+          one axis is legible at a time and the marker slides between them. */}
+      <Tabs
+        className="mt-7"
+        listClassName="inline-flex"
+        items={BBI_KEYWORD_GROUPS.map((group) => ({
+          value: group.heading,
+          label: group.heading,
+          content: (
+            <div className="flex flex-wrap gap-2.5">
               {group.terms.map((term) => (
                 <Link
                   key={term.label}
                   to="/search"
                   search={{ q: term.query }}
-                  className="glass-pill min-w-0 rounded-full px-2.5 py-2 text-center text-[11px] font-medium leading-tight"
+                  className="rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary"
                 >
                   {term.label}
                 </Link>
               ))}
             </div>
-          </div>
-        ))}
-      </div>
+          ),
+        }))}
+      />
     </section>
   );
 }

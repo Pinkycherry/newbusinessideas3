@@ -49,6 +49,14 @@ const COPY_ATTRS = new Set([
   "answer",
   "question",
   "summary",
+  "words",
+  "phrase",
+  "line",
+  "note",
+  "t",
+  "d",
+  "q",
+  "a",
 ]);
 
 const files = [];
@@ -60,9 +68,17 @@ const files = [];
   }
 })(ROOT);
 
+/** The five entities JSX text carries. A JSX *attribute* value arrives from
+ * the compiler already decoded, JSX *text* does not, so the same sentence
+ * compared across a move from one to the other would read as removed-and-added
+ * when nothing about the rendered page changed. Normalise both to the decoded
+ * form, which is what a visitor actually sees. */
+const ENTITIES = { "&quot;": '"', "&apos;": "'", "&amp;": "&", "&lt;": "<", "&gt;": ">" };
+const decode = (text) => text.replace(/&(?:quot|apos|amp|lt|gt);/g, (m) => ENTITIES[m] ?? m);
+
 const seen = new Set();
 const add = (raw) => {
-  const text = String(raw).replace(/\s+/g, " ").trim();
+  const text = decode(String(raw)).replace(/\s+/g, " ").trim();
   if (text.length < 2) return;
   if (!/[A-Za-z]/.test(text)) return;
   seen.add(text);
