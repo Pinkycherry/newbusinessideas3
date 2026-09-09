@@ -687,7 +687,7 @@ function IdeaPage() {
                       key={c.categorySlug}
                       to="/category/$categorySlug"
                       params={{ categorySlug: c.categorySlug }}
-                      className="mo-row glass-pill inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold"
+                      className="mo-row glass-pill inline-flex items-center gap-2 rounded-md px-4 py-2 text-xs font-semibold"
                     >
                       <span>{c.categoryName}</span>
                       <span className="text-[10px] opacity-70">{c.ideaCount}</span>

@@ -19,6 +19,17 @@ import * as THREE from "three";
 /** BBI ink: brand indigo -> soft violet -> pale violet. */
 export const BRAND_ETHER_COLORS = ["#4643BA", "#8886DB", "#B6B5E3"] as const;
 
+/**
+ * The paper the field is printed on.
+ *
+ * The colour ramp is mixed toward this at low velocity. It must be the real
+ * page ground: leaving it black — the upstream default for a transparent
+ * canvas — makes every soft edge of the fluid fade through grey before its
+ * alpha reaches zero, which reads as smoke over the page rather than ink in
+ * it.
+ */
+const PAPER = "#F7F6FB";
+
 export interface LiquidEtherProps {
   /** Hex stops building the velocity-to-color ramp. */
   colors?: readonly string[];
@@ -46,6 +57,8 @@ export interface LiquidEtherProps {
   takeoverDuration?: number;
   autoResumeDelay?: number;
   autoRampDuration?: number;
+  /** Page ground the ramp fades into. Defaults to the paper token. */
+  groundColor?: string;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -68,6 +81,7 @@ export default function LiquidEther({
   takeoverDuration = 0.25,
   autoResumeDelay = 3000,
   autoRampDuration = 0.6,
+  groundColor = PAPER,
   className = "",
   style,
 }: LiquidEtherProps) {
@@ -119,6 +133,9 @@ export default function LiquidEther({
   useEffect(() => {
     const container = mountRef.current;
     if (!container) return;
+
+    const ground = new THREE.Color(groundColor);
+    const groundVec = new THREE.Vector4(ground.r, ground.g, ground.b, 0);
 
     const reduceMotion =
       typeof window !== "undefined" &&
@@ -638,7 +655,7 @@ void main(){
             velocity: { value: vel0.texture },
             boundarySpace: { value: new THREE.Vector2() },
             palette: { value: paletteTex },
-            bgColor: { value: new THREE.Vector4(0, 0, 0, 0) },
+            bgColor: { value: groundVec },
           },
         }),
       ),
@@ -789,7 +806,7 @@ void main(){
       renderer.forceContextLoss();
     };
     // Only the palette rebuilds the context; everything else tunes through optsRef.
-  }, [colorKey]);
+  }, [colorKey, groundColor]);
 
   return (
     <div

@@ -80,7 +80,7 @@ function PlatformButton({
         disabled={disabled}
         onClick={() => onSelect(platform.id)}
         {...motionProps}
-        className="glass-pill inline-flex items-center gap-2.5 rounded-full px-6 py-3 text-sm font-semibold disabled:cursor-wait disabled:opacity-70"
+        className="glass-pill inline-flex items-center gap-2.5 rounded-md px-6 py-3 text-sm font-semibold disabled:cursor-wait disabled:opacity-70"
       >
         <Icon aria-hidden className="h-5 w-5 shrink-0" />
         <span>{isOpening ? "Opening…" : `Continue with ${platform.label}`}</span>

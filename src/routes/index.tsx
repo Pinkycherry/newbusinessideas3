@@ -49,10 +49,10 @@ import { Odometer, useMagnet, useScrollProgress, useStaggerReveal, useTextReveal
 function HeroCta() {
   const magnetRef = useMagnet<HTMLAnchorElement>();
   return (
-    <Spotlight className="inline-block justify-self-start rounded-full">
+    <Spotlight className="inline-block justify-self-start rounded-md">
       <Link
         to="/browse"
-        className="glass-pill inline-flex items-center justify-center rounded-full px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
+        className="glass-pill inline-flex items-center justify-center rounded-md px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
         ref={magnetRef}
       >
         Browse the library
@@ -1014,7 +1014,7 @@ function FourPillarStandardSection() {
       <div className="mt-8 text-center">
         <Link
           to="/browse"
-          className="glass-pill inline-flex items-center gap-2 rounded-full px-6 py-3 text-xs font-extrabold uppercase tracking-[0.18em]"
+          className="glass-pill inline-flex items-center gap-2 rounded-md px-6 py-3 text-xs font-extrabold uppercase tracking-[0.18em]"
         >
           <span>Explore All Categories</span>
         </Link>

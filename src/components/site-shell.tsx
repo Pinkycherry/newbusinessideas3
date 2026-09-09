@@ -47,7 +47,7 @@ function FooterCta() {
     <Spotlight className="mt-5 inline-block rounded-full">
       <Link
         to="/browse"
-        className="glass-pill inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
+        className="glass-pill inline-flex items-center gap-2 rounded-md px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
         ref={pill.ref}
         onMouseEnter={pill.onMouseEnter}
         onMouseLeave={pill.onMouseLeave}
