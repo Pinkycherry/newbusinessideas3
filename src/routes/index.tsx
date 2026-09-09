@@ -9,6 +9,11 @@ import { CategoryBadge } from "@/components/category-badge";
 import { AdSlot } from "@/components/AdSlot";
 import { HeroSlider, Typewriter } from "@/components/hero-slider";
 import LiquidEther from "@/components/effects/liquid-ether";
+import CardFlip from "@/components/effects/card-flip";
+import ShimmerText from "@/components/effects/shimmer-text";
+import SlideTextLink from "@/components/effects/slide-text-link";
+import TextCycle from "@/components/effects/text-cycle";
+import AttractButton from "@/components/effects/attract-button";
 import { BusinessIcons } from "@/components/business-icons";
 import { WaveText } from "@/components/wave-text";
 import { Reveal } from "@/components/reveal";
@@ -99,8 +104,14 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
       data-anchor-label="Surprise Me"
       className="mx-auto mt-10 max-w-6xl px-3 sm:px-4"
     >
-      <div className="glass glass-hover bbi-card-motion rounded-3xl px-6 py-8 sm:px-10 sm:py-10">
-        <p className="t-eyebrow">Surprise me</p>
+      <div className="glass glass-hover bbi-card-motion rounded-md border border-border px-6 py-8 sm:px-10 sm:py-10">
+        <p className="t-eyebrow flex flex-wrap items-baseline gap-2">
+          Surprise me
+          <TextCycle
+            phrases={categories.map((c) => c.categoryName)}
+            className="text-hl-teal normal-case tracking-normal"
+          />
+        </p>
         <h2 className="mt-3">Pick a category, or don&apos;t. We&apos;ll surprise you.</h2>
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <Select
@@ -119,14 +130,13 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
               ))}
             </SelectContent>
           </Select>
-          <button
-            type="button"
+          <AttractButton
             onClick={() => surprise.mutate()}
             disabled={surprise.isPending}
-            className="sheen rounded-full bg-gradient-to-r from-primary to-ember px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_color-mix(in_oklab,var(--primary)_40%,transparent)] transition-all duration-300 hover:scale-105 disabled:cursor-wait disabled:opacity-70"
+            className="disabled:cursor-wait disabled:opacity-70"
           >
             {surprise.isPending ? "Picking…" : "Surprise Me"}
-          </button>
+          </AttractButton>
         </div>
 
         {surprise.isError && (
@@ -385,14 +395,8 @@ function HomePage() {
             </div>
 
             <div ref={heroPanelsRef} className="mt-10 grid gap-4 sm:grid-cols-2">
-              {HERO_PANELS.map((panel, i) => (
-                <div
-                  key={panel.label}
-                  className={`glass glass-hover ${i === 0 ? "blob-sm-1" : "blob-sm-2"} px-6 py-7`}
-                >
-                  <h3 className="t-card">{panel.label}</h3>
-                  <p className="t-lead mt-2.5">{panel.body}</p>
-                </div>
+              {HERO_PANELS.map((panel) => (
+                <CardFlip key={panel.label} title={panel.label} description={panel.body} />
               ))}
             </div>
           </div>
@@ -488,7 +492,10 @@ function HomePage() {
           <div>
             <p className="t-eyebrow">Featured blueprints</p>
             <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-              Blueprints worth your afternoon
+              <ShimmerText
+                text="Blueprints worth your afternoon"
+                className="text-2xl sm:text-3xl"
+              />
             </h2>
           </div>
           <Link
@@ -541,13 +548,9 @@ function HomePage() {
                 marketing wearing a lab coat.
               </p>
             </div>
-            <Link
-              to="/browse"
-              className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
-            >
+            <SlideTextLink to="/browse" className="mt-8 tracking-[0.2em] uppercase text-xs">
               Read a blueprint
-              <span aria-hidden>→</span>
-            </Link>
+            </SlideTextLink>
           </div>
 
           <aside className="bbi-editorial-aside glass blob-3 p-6 sm:p-8 lg:mt-16 lg:self-start">

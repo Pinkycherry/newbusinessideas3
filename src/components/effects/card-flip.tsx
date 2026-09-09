@@ -21,10 +21,10 @@ export default function CardFlip({
   actionLabel,
 }: {
   title: string;
-  subtitle: string;
+  subtitle?: string;
   description: string;
-  points: string[];
-  actionLabel: string;
+  points?: string[];
+  actionLabel?: string;
 }) {
   const [flipped, setFlipped] = useState(false);
 
@@ -38,6 +38,16 @@ export default function CardFlip({
       onMouseLeave={() => setFlipped(false)}
       onFocus={() => setFlipped(true)}
       onBlur={() => setFlipped(false)}
+      onClick={() => setFlipped((v) => !v)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setFlipped((v) => !v);
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-pressed={flipped}
     >
       <div
         className={cn(
@@ -51,7 +61,9 @@ export default function CardFlip({
           <div className="flex items-end justify-between gap-3">
             <div className="space-y-1.5">
               <h3 className="text-lg font-semibold leading-snug text-foreground">{title}</h3>
-              <p className="line-clamp-2 text-sm text-muted-foreground">{subtitle}</p>
+              {subtitle ? (
+                <p className="line-clamp-2 text-sm text-muted-foreground">{subtitle}</p>
+              ) : null}
             </div>
             <Repeat2 aria-hidden className="h-4 w-4 shrink-0 text-primary" />
           </div>
@@ -64,7 +76,7 @@ export default function CardFlip({
               <p className="text-sm text-muted-foreground">{description}</p>
             </div>
             <ul className="space-y-2">
-              {points.map((point, i) => (
+              {(points ?? []).map((point, i) => (
                 <li
                   key={point}
                   className="flex items-center gap-2 text-sm text-foreground transition-[transform,opacity] duration-300 motion-reduce:transition-none"
@@ -80,9 +92,11 @@ export default function CardFlip({
               ))}
             </ul>
           </div>
-          <p className="mt-5 border-t border-border pt-4 text-sm font-medium text-primary">
-            {actionLabel}
-          </p>
+          {actionLabel ? (
+            <p className="mt-5 border-t border-border pt-4 text-sm font-medium text-primary">
+              {actionLabel}
+            </p>
+          ) : null}
         </div>
       </div>
     </div>

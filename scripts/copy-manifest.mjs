@@ -38,6 +38,7 @@ const COPY_ATTRS = new Set([
   "tooltip",
   "aria-label",
   "ariaLabel",
+  "text",
 ]);
 
 const files = [];

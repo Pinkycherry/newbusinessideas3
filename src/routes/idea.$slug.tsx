@@ -1,4 +1,5 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+import ShareLinks from "@/components/effects/share-links";
 import { queryOptions } from "@tanstack/react-query";
 import { Lock } from "lucide-react";
 
@@ -397,6 +398,13 @@ function IdeaPage() {
                   {idea.title}
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">{idea.businessDescription}</p>
+
+                <div className="mt-5">
+                  <ShareLinks
+                    url={typeof window === "undefined" ? "" : window.location.href}
+                    title={idea.title}
+                  />
+                </div>
               </div>
 
               {/* A real telemetry readout, not a decorative visual: the idea's
