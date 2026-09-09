@@ -82,7 +82,7 @@ export default function EvervaultCard({
       {enabled ? (
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute inset-0 select-none break-all p-2 font-mono text-[0.6rem] leading-[1.05] text-[var(--ins-dim)] opacity-0 transition-opacity duration-300 group-hover/ev:opacity-100"
+          className="pointer-events-none absolute inset-0 z-0 select-none break-all p-2 font-mono text-[0.55rem] leading-[1.05] text-[var(--ins-faint)] opacity-0 transition-opacity duration-500 group-hover/ev:opacity-40"
           style={{ maskImage: mask, WebkitMaskImage: mask }}
         >
           {field}

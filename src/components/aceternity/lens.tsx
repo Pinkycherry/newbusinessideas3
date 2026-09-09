@@ -51,7 +51,9 @@ export default function Lens({
 
   // A tight feather. At 78% the falloff was wide enough that the original text
   // bled through the magnified copy all around the rim.
-  const mask = `radial-gradient(circle ${radius}px at ${pos.x}px ${pos.y}px, black 94%, transparent 100%)`;
+  // The mask is expressed against the padded box, so the +32px inset above
+  // does not shift the hole away from the cursor.
+  const mask = `radial-gradient(circle ${radius}px at ${pos.x + 32}px ${pos.y + 32}px, black 94%, transparent 100%)`;
 
   return (
     <div
@@ -69,10 +71,13 @@ export default function Lens({
         <motion.div
           aria-hidden
           inert
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.15 }}
-          className="pointer-events-none absolute inset-0 z-20 select-none overflow-hidden"
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+          // Inset by the lens radius rather than clipped to the text box: a
+          // lens near an edge was slicing the magnified words in half.
+          className="pointer-events-none absolute -inset-8 z-20 select-none overflow-hidden p-8"
           // Opaque, or the original text shows through the magnified copy and
           // the two render as unreadable soup. The fallback keeps this correct
           // on the light templates, where --ins-void is not defined.

@@ -5,10 +5,10 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const SWEEP: Record<"TOP" | "RIGHT" | "BOTTOM" | "LEFT", string> = {
-  TOP: "radial-gradient(22% 62% at 50% 0%, var(--primary) 0%, transparent 100%)",
-  RIGHT: "radial-gradient(22% 62% at 100% 50%, var(--primary) 0%, transparent 100%)",
-  BOTTOM: "radial-gradient(22% 62% at 50% 100%, var(--primary) 0%, transparent 100%)",
-  LEFT: "radial-gradient(22% 62% at 0% 50%, var(--primary) 0%, transparent 100%)",
+  TOP: "radial-gradient(40% 90% at 50% 0%, var(--primary) 0%, transparent 100%)",
+  RIGHT: "radial-gradient(40% 90% at 100% 50%, var(--primary) 0%, transparent 100%)",
+  BOTTOM: "radial-gradient(40% 90% at 50% 100%, var(--primary) 0%, transparent 100%)",
+  LEFT: "radial-gradient(40% 90% at 0% 50%, var(--primary) 0%, transparent 100%)",
 };
 const ORDER = ["TOP", "RIGHT", "BOTTOM", "LEFT"] as const;
 
@@ -67,7 +67,7 @@ export default function HoverBorderGradient({
       />
       <Comp
         className={cn(
-          "relative z-10 inline-flex items-center justify-center gap-2 rounded-[calc(var(--radius)-1px)] bg-card px-6 py-3 text-sm font-semibold tracking-tight text-foreground transition-colors duration-300 hover:bg-primary hover:text-primary-foreground focus-visible:outline-none",
+          "relative z-10 inline-flex items-center justify-center gap-2 rounded-full bg-card px-6 py-3 text-sm font-semibold tracking-tight text-foreground transition-colors duration-300 hover:bg-primary hover:text-primary-foreground focus-visible:outline-none",
           className,
         )}
         style={{ color: "var(--ins-read, currentColor)" }}

@@ -326,7 +326,7 @@ function HomePage() {
         id="hero"
         data-anchor="hero"
         data-anchor-label="Top"
-        className="relative z-10 border-b border-[var(--ins-rule)]"
+        className="relative border-b border-[var(--ins-rule)]"
       >
         <div className="mx-auto max-w-[92rem] px-6 py-10 lg:py-14">
           <p className="ins-legend">The Truth About Business Ideas</p>

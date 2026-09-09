@@ -2836,11 +2836,14 @@ html.light .bbi-instrument,
 .ins-legend {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.85rem;
   font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 0.6875rem;
-  letter-spacing: 0.02em;
-  color: var(--ins-dim);
+  /* Was 0.6875rem in --ins-dim: too small to read and too dim to notice.
+     A legend that labels a whole region has to be legible from a scan. */
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ins-bright);
   text-transform: none;
 }
 .ins-legend::after {
@@ -3007,9 +3010,43 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
   html.light .bbi-instrument .iv-nav-panel a {
     color: var(--ins-read) !important;
   }
-  html.light .bbi-instrument .text-muted-foreground,
-  html.light .bbi-instrument .ins-legend {
+  html.light .bbi-instrument .text-muted-foreground {
     color: var(--ins-dim) !important;
+  }
+  /* The legend labels a whole region and has to read from a scan, so it takes
+     the brightest value. It was being pulled back down to --ins-dim here,
+     which is why enlarging it in the unlayered rule changed nothing. */
+  html.light .bbi-instrument .ins-legend {
+    color: var(--ins-bright) !important;
+    font-size: 0.9375rem !important;
+  }
+  /* A filled plate inverts: white ground, housing ink. Without this the
+     ContainerTextFlip rendered as a solid white box with white text in it. */
+  html.light .bbi-instrument .bg-primary,
+  html.light .bbi-instrument .bg-primary * {
+    background-color: var(--ins-signal) !important;
+    color: var(--ins-void) !important;
+  }
+  /* The Radix select trigger kept its light-mode gradient and dark label. */
+  html.light .bbi-instrument [data-slot="select-trigger"],
+  html.light .bbi-instrument button[role="combobox"],
+  html.light .bbi-instrument [role="listbox"],
+  html.light .bbi-instrument [data-radix-select-content] {
+    background: var(--ins-face) !important;
+    background-image: none !important;
+    border-color: var(--ins-rule) !important;
+    color: var(--ins-read) !important;
+    box-shadow: none !important;
+  }
+  html.light .bbi-instrument [data-slot="select-trigger"] *,
+  html.light .bbi-instrument button[role="combobox"] *,
+  html.light .bbi-instrument [role="option"],
+  html.light .bbi-instrument [role="option"] * {
+    color: var(--ins-read) !important;
+  }
+  html.light .bbi-instrument [role="option"][data-highlighted] {
+    background: var(--ins-face-2) !important;
+    color: var(--ins-bright) !important;
   }
   html.light .bbi-instrument .text-primary,
   html.light .bbi-instrument .ins-legend .ins-read {
@@ -3047,4 +3084,38 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
 }
 .bbi-instrument > [aria-hidden][style*="100vh"] {
   z-index: 0;
+}
+/* The header and its dropdowns must sit above every section. Without this the
+   blanket z-index:1 above put the header in the same layer as the content, and
+   a section carrying its own z-index painted straight over the open menu —
+   the menu was visible but unclickable. */
+.bbi-instrument > header {
+  z-index: 50;
+}
+.bbi-instrument .iv-nav-panel {
+  z-index: 60;
+}
+
+
+/* Type contrast inside the housing. Headings take the brightest value in the
+   palette, body text the next one down. The background field sits behind a
+   scrim, but a heading still has to win against it outright. */
+html.light .bbi-instrument h1,
+html.light .bbi-instrument h2,
+html.light .bbi-instrument h3,
+html.light .bbi-instrument h4 {
+  color: var(--ins-bright) !important;
+}
+html.light .bbi-instrument p,
+html.light .bbi-instrument li,
+html.light .bbi-instrument dd,
+html.light .bbi-instrument dt {
+  color: var(--ins-read);
+}
+
+/* The Golden Tree's node labels are dark-on-dark in this world. */
+html.light .bbi-instrument .bbi-orbit-center-label,
+html.light .bbi-instrument [class*="tree"] span,
+html.light .bbi-instrument [class*="node"] span {
+  color: var(--ins-bright) !important;
 }
