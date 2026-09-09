@@ -15,6 +15,8 @@ import MovingBorder from "@/components/aceternity/moving-border";
 import ContainerTextFlip from "@/components/aceternity/container-text-flip";
 import InfiniteMovingCards from "@/components/aceternity/infinite-moving-cards";
 import { BentoGrid, BentoGridItem } from "@/components/aceternity/bento-grid";
+import HeroParallax from "@/components/aceternity/hero-parallax";
+import { photoAt } from "@/config/imagery";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
 import TextGenerateEffect from "@/components/aceternity/text-generate-effect";
 import {
@@ -357,6 +359,25 @@ function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* THE LIBRARY, IN PICTURES — HeroParallax. Two rows of live category
+          plates travelling against each other as the band scrolls. Photography
+          is ethicalfounder.com's, held in src/config/imagery.ts. */}
+      <HeroParallax
+        eyebrow="The library"
+        heading="Every category, and what it actually holds."
+        cards={catalog.categories.map((category, index) => {
+          const photo = photoAt(index);
+          return {
+            title: category.categoryName,
+            meta: `${category.ideaCount} blueprints`,
+            src: photo.src,
+            alt: photo.alt,
+            to: "/category/$categorySlug",
+            params: { categorySlug: category.categorySlug },
+          };
+        })}
+      />
 
       {/* SECTION 1: INTERACTIVE GOLDEN TREE */}
       <GoldenTreeSection categories={catalog.categories} />

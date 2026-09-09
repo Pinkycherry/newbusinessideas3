@@ -16,15 +16,15 @@ export type Photo = { src: string; alt: string };
 export const EF_LIBRARY: Photo[] = [
   {
     src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-16.jpg.webp",
-    alt: "A founder at work on an early business plan",
+    alt: "Founder working at a laptop in a warmly lit workspace",
   },
   {
     src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-37.jpg.webp",
-    alt: "Notes and figures from a business teardown",
+    alt: "Close-up of hands typing on a laptop keyboard",
   },
   {
     src: "https://ethicalfounder.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg",
-    alt: "The business ideas tree, drawn as branching categories",
+    alt: "The Golden Tree of Business Growth, business ideas mapped across branches",
   },
 ];
 
