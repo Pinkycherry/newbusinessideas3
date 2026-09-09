@@ -163,51 +163,6 @@ function tickerRows<T>(categories: T[], rowCount = 4): T[][] {
   return rows.filter((r) => r.length > 0);
 }
 
-/** Editorial image trio — replace `src` only; nothing structural depends on it. */
-const EDITORIAL_IMAGES = [
-  {
-    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-16.jpg.webp",
-    alt: "Smiling businesswoman working at a laptop in a relaxed, warmly lit setting",
-    blob: "blob-portrait-1",
-    tilt: -2,
-    offset: "sm:mt-0",
-  },
-  {
-    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-17.jpg.webp",
-    alt: "Businesswoman with a coffee and an open notebook in a calm workspace",
-    blob: "blob-portrait-2",
-    tilt: 4,
-    offset: "sm:mt-24",
-  },
-  {
-    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-37.jpg.webp",
-    alt: "Close-up of hands typing on a laptop keyboard in warm ambient light",
-    blob: "blob-portrait-3",
-    tilt: -1.5,
-    offset: "sm:mt-10",
-  },
-];
-
-/** Scroll-stack panel copy. */
-const SCROLL_PANELS = [
-  {
-    title: "Most small business ideas are guesses dressed as research.",
-    body: "A trend chart and a list of niches is not a blueprint. This directory exists because the hard part of starting a business is never finding an idea — it is knowing if yours will actually pay.",
-  },
-  {
-    title: "Every blueprint answers four questions.",
-    body: "Who specifically pays for this. How the money actually moves. What will hurt in year one. And whether you, specifically, are the right person to build it.",
-  },
-  {
-    title: "A library built to scale, not to sit still.",
-    body: "Organized across categories from Tech and SaaS to Creator and Media, FinTech, E-Commerce and more. Every new category added to the database appears here automatically.",
-  },
-  {
-    title: "Validation is free, and there is no limit on it.",
-    body: "Every blueprint has a Validate button. Tap it, and get real research on your idea — market size, your ideal buyer, the money model, and the risks — free, using AI tools you already pay for. No extra cost. No limit.",
-  },
-];
-
 /** Hero content panels. */
 const HERO_PANELS = [
   {
@@ -309,11 +264,8 @@ function HomePage() {
   // Card rows that previously arrived as one block now arrive in sequence.
   const heroPanelsRef = useStaggerReveal<HTMLDivElement>();
   const featuredRef = useStaggerReveal<HTMLDivElement>({ stagger: 0.05 });
-  const editorialRef = useStaggerReveal<HTMLDivElement>({ stagger: 0.08 });
-  const scrollPanelsRef = useStaggerReveal<HTMLElement>({ stagger: 0.08 });
   // Publishes --sc-p across the editorial section so its ambient wash layers
   // (and only those — never the type) can drift via .mo-drift.
-  const editorialSectionRef = useScrollProgress<HTMLElement>();
 
   return (
     <SiteShell>
@@ -408,7 +360,6 @@ function HomePage() {
 
       {/* Live demand board. Renders nothing at all if no idea in the set
           carries a trend score, rather than showing an empty frame. */}
-      <DemandBoard ideas={trending} />
 
       {/* BRAND ARC — the four founder-generated frames. Every category name
           rendered over them is live DOM from the catalog, never baked pixels. */}
@@ -481,10 +432,8 @@ function HomePage() {
       </Reveal>
 
       {/* MARKET GAP + orbit #1 */}
-      <MarketGapSection />
 
       {/* SECTION 3: THE BBI 4-PILLAR BLUEPRINT STANDARD */}
-      <FourPillarStandardSection />
 
       {/* FEATURED */}
       <section className="mx-auto max-w-6xl px-3 py-16 sm:px-4">
@@ -522,100 +471,11 @@ function HomePage() {
           illuminate in turn as the reader moves down. Driven entirely from
           --sc-p in CSS, so there is no extra React state and every frame maps
           to a real scroll position. */}
-      <section className="bbi-editorial mx-auto max-w-6xl px-3 pb-10 sm:px-4">
-        <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
-          <div>
-            <p className="t-eyebrow">Why this exists</p>
-            <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-              A list of ideas is not research. And it can cost you money.
-            </h2>
-            <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">
-              <p>
-                Most &quot;100 business ideas&quot; pages are written in one afternoon by someone
-                who never actually sold anything. They just say &quot;the market is growing&quot;
-                and stop there. Finding an idea was never the hard part. The hard part is knowing
-                who will really pay you, how often, and what happens when a bigger company copies
-                you for free.
-              </p>
-              <p>
-                That is why every blueprint here answers those questions first. We name your exact
-                customer. We show you the real numbers. We tell you the risks most people only find
-                out after they&apos;ve already spent their money.
-              </p>
-              <p>
-                Sometimes the honest answer is: don&apos;t build this one. That&apos;s the whole
-                point. Research that only ever agrees with you isn&apos;t research — it&apos;s
-                marketing wearing a lab coat.
-              </p>
-            </div>
-            <SlideTextLink to="/browse" className="mt-8 tracking-[0.2em] uppercase text-xs">
-              Read a blueprint
-            </SlideTextLink>
-          </div>
-
-          <aside className="bbi-editorial-aside glass blob-3 p-6 sm:p-8 lg:mt-16 lg:self-start">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-              What every entry has to contain
-            </h3>
-            <dl className="mt-6 divide-y divide-border">
-              {[
-                {
-                  t: "A named buyer",
-                  d: 'Not "small businesses." The real person, their budget, and why they need this now.',
-                },
-                {
-                  t: "Working money mechanics",
-                  d: "What you charge, what it costs you, and the point where this stops being a side job and becomes a real business.",
-                },
-                {
-                  t: "The unglamorous risks",
-                  d: "The platform risks, slow seasons, and the competitor who's already halfway there.",
-                },
-                {
-                  t: "A founder-fit verdict",
-                  d: "Who should build this — and who should walk away.",
-                },
-              ].map((row) => (
-                <div key={row.t} className="bbi-editorial-row py-4 first:pt-0 last:pb-0">
-                  <dt className="text-sm font-semibold text-foreground">{row.t}</dt>
-                  <dd className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{row.d}</dd>
-                </div>
-              ))}
-            </dl>
-          </aside>
-        </div>
-      </section>
 
       {/* EDITORIAL IMAGE TRIO — image slots (.mo-media), and the only ambient
           layers on this page that .mo-drift can actually reach: the twin rings
           and the orbit rings both run keyframe animations that own `transform`
           outright, so a class-level drift can never apply to them. */}
-      <section ref={editorialSectionRef} className="mx-auto max-w-6xl px-3 pb-16 sm:px-4">
-        <div ref={editorialRef} className="grid gap-6 sm:grid-cols-3 sm:items-start">
-          {EDITORIAL_IMAGES.map((img) => (
-            <figure
-              key={img.src}
-              className={`mo-media glass relative ${img.blob} ${img.offset} aspect-[3/4]`}
-              style={{ transform: `rotate(${img.tilt}deg)` }}
-            >
-              <img
-                ref={hideImgIfBroken}
-                src={img.src}
-                alt={img.alt}
-                loading="lazy"
-                className="h-full w-full object-cover"
-                onError={(e) => (e.currentTarget.style.display = "none")}
-              />
-              {/* Inset past the frame by more than the drift travel so the
-                  wash never exposes an untinted strip at either edge. */}
-              <span
-                aria-hidden
-                className="mo-drift pointer-events-none absolute -inset-6 bg-gradient-to-br from-primary to-ember opacity-15"
-              />
-            </figure>
-          ))}
-        </div>
-      </section>
 
       {/* HOW IT WORKS + orbit #2 + Faq1 inline */}
       <Reveal variant="rv-lift">
@@ -626,29 +486,6 @@ function HomePage() {
       <Reveal variant="rv-lift">
         <WhoForSection />
       </Reveal>
-
-      {/* SCROLL-STACK — one stagger on the row, replacing four different
-          per-card reveal variants (the "four dialects" MOTION_SPEC exists to
-          collapse). The panel divs are now the grid items directly, which is
-          the same box the Reveal wrapper used to occupy. */}
-      <section
-        ref={scrollPanelsRef}
-        className="mx-auto mt-16 grid max-w-6xl gap-4 px-3 pb-16 sm:grid-cols-2 sm:px-4"
-      >
-        {SCROLL_PANELS.map((panel, i) => (
-          <div
-            key={panel.title}
-            className={`mo-card glass glass-hover h-full p-5 sm:p-7 ${["blob-2", "blob-4", "blob-5", "blob-6"][i]}`}
-          >
-            <h2 className="text-xl font-bold leading-tight tracking-tight sm:text-2xl">
-              {panel.title}
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-              {panel.body}
-            </p>
-          </div>
-        ))}
-      </section>
 
       {/* PRICING PHILOSOPHY + Faq2 inline */}
       <Reveal variant="rv-lift">
@@ -964,68 +801,6 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
    SECTION 3: THE BBI 4-PILLAR BLUEPRINT STANDARD
    ================================================================ */
 
-function FourPillarStandardSection() {
-  const tilesRef = useStaggerReveal<HTMLDivElement>();
-  const pillars = [
-    {
-      num: "01",
-      title: "Named Buyer",
-      desc: "Exactly who will pay you, and why they have money ready right now.",
-    },
-    {
-      num: "02",
-      title: "Unit Economics",
-      desc: "Simple numbers on price, cost, and when you actually start making profit.",
-    },
-    {
-      num: "03",
-      title: "1st-Year Risks",
-      desc: "The hidden costs and traps that quietly kill new businesses.",
-    },
-    {
-      num: "04",
-      title: "Founder-Fit Verdict",
-      desc: "An honest answer: should you build this, or walk away?",
-    },
-  ];
-
-  return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:mt-24 sm:px-4">
-      <div className="mx-auto max-w-2xl text-center">
-        <p className="t-eyebrow">The Research Standard</p>
-        <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-4xl">
-          Not just a list. Real research you can trust.
-        </h2>
-        <p className="mt-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">
-          Before you spend a rupee or a weekend, check these 4 things on every idea.
-        </p>
-      </div>
-
-      <div ref={tilesRef} className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {pillars.map((pillar) => (
-          <div
-            key={pillar.num}
-            className="glass bbi-card-motion flex flex-col rounded-2xl border border-border p-6"
-          >
-            <span className="text-xs font-extrabold tracking-widest text-accent">{pillar.num}</span>
-            <h3 className="mt-2 text-base font-bold text-foreground">{pillar.title}</h3>
-            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{pillar.desc}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-8 text-center">
-        <Link
-          to="/browse"
-          className="glass-pill inline-flex items-center gap-2 rounded-md px-6 py-3 text-xs font-extrabold uppercase tracking-[0.18em]"
-        >
-          <span>Explore All Categories</span>
-        </Link>
-      </div>
-    </section>
-  );
-}
-
 /* ================================================================
    DYNAMIC ROTATING DISCOVERY TOAST
    ================================================================ */
@@ -1188,41 +963,6 @@ function TrustStatsBar({
         </div>
       ))}
     </div>
-  );
-}
-
-function MarketGapSection() {
-  return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <Reveal>
-        <div className="glass glass-hover bbi-shape-diamond grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
-            <p className="t-eyebrow">The problem we found</p>
-            <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-              Why is everyone still charging you $20 to check one idea?
-            </h2>
-            <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">
-              <p>
-                Before we built BBI, we went looking for a place to check our own business ideas.
-                Every place we found charged at least $20 for three or four &quot;validations.&quot;
-                It sounded like deep research. It wasn&apos;t. It was research you could run
-                yourself, a hundred times over, with AI tools you already pay for.
-              </p>
-              <p>
-                We are regular people. Most of us have full-time jobs and build BBI at night and on
-                weekends, because we know what it feels like to stare at a $20 paywall with nothing
-                left to spend. So we built the thing we wished someone had built for us.
-              </p>
-            </div>
-          </div>
-          <OrbitDiagram
-            centerLabel="BBI"
-            centerSub="Free library"
-            nodes={["Named buyer", "Money mechanics", "Real risks", "Founder verdict"]}
-          />
-        </div>
-      </Reveal>
-    </section>
   );
 }
 
