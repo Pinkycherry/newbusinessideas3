@@ -20,9 +20,10 @@ The brand indigo `#4643BA` is unchanged. What changed is its job: it was a
 glow — gradient washes, frosted glass, coloured shadow — and it is now ink:
 rules, marks, plate edges.
 
-**No word of the site changed.** `scripts/copy-manifest.mjs` walks the
-TypeScript AST and collects every user-visible string; the set has diffed
-identical on every commit.
+**No word of the site was lost.** `scripts/copy-manifest.mjs` walks the
+TypeScript AST and collects every user-visible string. Against the `02cbbf2`
+baseline of 390, the site differs by exactly one addition — "Share", from the
+share control on the blueprint page — and zero removals.
 
 ## Tokens
 
@@ -57,10 +58,10 @@ redesign and unused on the page that needed them most:
 | `liquid-ether` | hero ground | WebGL fluid in brand ink. The one loud moment |
 | `shimmer-text` | standing lines | never body copy — a moving gradient on a paragraph is unreadable |
 | `slide-text-link` | links | CSS only, no runtime cost |
-| `card-flip` | available | needs a title/points pair; not wired, see below |
-| `attract-button` | available | ink specks gathering to the pointer |
-| `text-cycle` | available | needs a phrase set; not wired, see below |
-| `share-links` | available | adds a "Share" control |
+| `card-flip` | the two hero panels | label on the front, body on the back. Flips on hover, tap and Enter/Space, so the back is reachable on touch |
+| `attract-button` | Surprise Me | ink specks gathering to the pointer |
+| `text-cycle` | Surprise Me eyebrow | cycles the real catalogue — data, not decoration |
+| `share-links` | blueprint page | share destinations unrolling sideways |
 
 Existing site motion is untouched and still in force: `useMagnet`,
 `useStaggerReveal`, `useTextReveal`, `useScrollProgress` and the GSAP
@@ -68,14 +69,16 @@ Existing site motion is untouched and still in force: `useMagnet`,
 
 Every effect honours `prefers-reduced-motion`.
 
-### Two effects are built but deliberately not wired
+### All seven are wired
 
-`card-flip` needs a title, a subtitle, a description and a list of points per
-card. `text-cycle` needs a set of phrases to rotate. The surfaces they would
-suit — "What you get", "How it works" — carry a single label and one body
-paragraph each. Wiring either would mean **writing new copy**, which the
-every-word rule forbids without a decision from the owner. They are ready and
-one import away once that copy exists.
+An earlier version of this file said two were held back because they needed
+copy that did not exist. That was too cautious: `card-flip` runs on the hero
+panels' own label and body, and `text-cycle` runs on the real category names
+from the catalogue. Neither needed a word written.
+
+The one thing `card-flip` did need was reach. Hover alone would have hidden a
+panel's body on touch, where there is no hover, so it flips on tap and on
+Enter or Space too and carries `role`/`tabIndex`/`aria-pressed`.
 
 ## Bugs found and fixed on the way
 
@@ -89,6 +92,11 @@ one import away once that copy exists.
 - The fluid hero fading through grey: the shader mixed toward `vec4(0,0,0,0)`,
   so soft edges passed through black before their alpha reached zero. It now
   mixes toward the paper token.
+- The copy check's own blind spot. `scripts/copy-manifest.mjs` did not read
+  `text` props, so it could not see strings passed that way — including the
+  hero eyebrow — and reported a false removal the moment a string moved into
+  one. `text` is now counted, and the baseline was regenerated from `02cbbf2`
+  with the corrected extractor: **390 strings**, not the 389 first recorded.
 
 ## Environment notes for whoever picks this up
 
