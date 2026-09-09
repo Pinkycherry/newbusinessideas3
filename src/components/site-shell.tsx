@@ -26,7 +26,6 @@ import {
 // text placeholder.
 import { RiOpenaiFill, RiGrokAiFill } from "react-icons/ri";
 
-import { AmbientScene } from "@/components/ambient-scene";
 import { LiveSearch } from "@/components/live-search";
 import { FloatingDock } from "@/components/floating-dock";
 import { CategoryBadge } from "@/components/category-badge";
@@ -738,7 +737,6 @@ export function SiteShell({ children }: { children: ReactNode }) {
   const footerCategories = topCategories(allCategories, 5);
   return (
     <div className="relative flex min-h-screen flex-col text-foreground">
-      <AmbientScene />
       <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">
         {/* Reading position for the whole document. One composited transform
             per frame, driven from --page-p — no layout, no repaint. */}

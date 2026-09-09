@@ -15,7 +15,7 @@ export default tseslint.config(
   // agents (git worktree) — each one duplicates the entire src/ tree, so a
   // root-level `eslint .` without this exclusion multiplies every real
   // finding by however many worktrees happen to exist at the time.
-  { ignores: ["dist", ".output", ".vinxi", ".claude/skills", ".claude/worktrees"] },
+  { ignores: ["dist", ".output", ".vinxi", ".claude/skills", ".claude/worktrees", ".localdev"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],

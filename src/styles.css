@@ -1026,28 +1026,45 @@ button[class*="from-primary"]:hover,
    LIGHT MODE — html.light overrides (flicker-free, set pre-hydration)
    ============================================================ */
 html.light {
-  --background: #FCFBFE;
-  --background-2: #EEECF8;
-  --foreground: #0C0C25;
-  --foreground-hover: #FCFBFE;
-  --card: rgba(255, 255, 255, 0.72);
-  --card-foreground: #0C0C25;
+  /* ------------------------------------------------------------
+     FIELD GUIDE — paper and ink.
+
+     The brand indigo is unchanged at #4643BA. What changed is its
+     JOB: it was a glow (gradient washes, blurred glass, coloured
+     shadow) and it is now ink (rules, plate numbers, marks). The
+     ground is paper the page is printed on, so cards are opaque
+     and structure is carried by rules rather than by shadows.
+
+     Deliberately NOT the warm cream (#F4F1EA) that this kind of
+     brief usually attracts: the ground is cooled toward the brand
+     violet so paper and ink belong to one family.
+     ------------------------------------------------------------ */
+  --background: #F7F6FB;
+  --background-2: #EFEDF7;
+  --foreground: #12122E;
+  --foreground-hover: #F7F6FB;
+  /* Opaque. A plate is printed, not frosted — this single value is
+     what stops every card in the site reading as glass. */
+  --card: #FFFFFF;
+  --card-foreground: #12122E;
   --popover: #FFFFFF;
-  --popover-foreground: #0C0C25;
+  --popover-foreground: #12122E;
   --primary: #4643BA;
   --primary-foreground: #FFFFFF;
-  --secondary: #EEECF8;
-  --secondary-foreground: #0C0C25;
-  --muted: rgba(43, 40, 113, 0.06);
-  --muted-foreground: #3A3697;
+  --secondary: #EFEDF7;
+  --secondary-foreground: #12122E;
+  --muted: rgba(70, 67, 186, 0.05);
+  --muted-foreground: #5B5892;
   --accent: #4643BA;
   --accent-foreground: #FFFFFF;
-  --border: rgba(43, 40, 113, 0.18);
-  --input: rgba(43, 40, 113, 0.14);
+  /* The plate rule. Structure is a drawn line at a readable weight,
+     not a soft edge. */
+  --border: rgba(70, 67, 186, 0.22);
+  --input: rgba(70, 67, 186, 0.28);
   --ring: #4643BA;
   --ember: #8886DB;
-  --warm: #3A3697;
-  --glass-border: rgba(43, 40, 113, 0.22);
+  --warm: #5B5892;
+  --glass-border: rgba(70, 67, 186, 0.22);
   --violet: #4643BA;
   --violet-soft: #8886DB;
 
@@ -1097,34 +1114,42 @@ html.light {
   --hl-teal: #10627A;
 }
 html.light body {
-  background-color: #FCFBFE !important;
-  color: #0C0C25;
+  background-color: #F7F6FB !important;
+  color: #12122E;
 }
 /* The base body background is `!important` inside @layer base; important
    declarations in a layer beat unlayered ones, so the light override must
    live in the same layer to win. */
 @layer base {
   html.light body {
-    background-color: #FCFBFE !important;
-    color: #0C0C25;
+    background-color: #F7F6FB !important;
+    color: #12122E;
   }
 }
-html.light body::before {
-  opacity: 0.12;
-}
+/* Paper has no atmosphere. `body::before` is a starfield on a 7s twinkle and
+   `body::after` a violet nebula wash — the deep-space backdrop this design is
+   leaving behind. The animation has to go with the opacity: a running
+   animation sets opacity every frame and would otherwise beat the static
+   value here, which is why the field survived an earlier `opacity: 0`. */
+html.light body::before,
 html.light body::after {
-  opacity: 0.25;
+  opacity: 0 !important;
+  animation: none !important;
+  background-image: none !important;
 }
+/* The glass system, reprinted as plates. Flat paper, one drawn rule, no blur
+   and no coloured shadow — the three things that made every surface read as
+   frosted violet. The class names stay so no component has to change. */
 html.light .glass,
 html.light .glass-nav,
 html.light .glass-btn,
 html.light .glass-pill {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(238, 236, 248, 0.86) 100%) !important;
-  border-color: rgba(43, 40, 113, 0.16) !important;
-  color: #0C0C25;
-  box-shadow:
-    0 1px 0 0 rgba(255, 255, 255, 0.9) inset,
-    0 18px 40px -26px rgba(12, 12, 37, 0.45) !important;
+  background: #FFFFFF !important;
+  border-color: rgba(70, 67, 186, 0.22) !important;
+  color: #12122E;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
 }
 html.light .iv-ticker-track a:hover {
   color: #FFFFFF !important;
