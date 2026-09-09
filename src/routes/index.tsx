@@ -8,7 +8,7 @@ import { SiteShell } from "@/components/site-shell";
 import { CategoryBadge } from "@/components/category-badge";
 import { AdSlot } from "@/components/AdSlot";
 import { HeroSlider, Typewriter } from "@/components/hero-slider";
-import { HeroField } from "@/components/hero-field";
+import LiquidEther from "@/components/effects/liquid-ether";
 import { BusinessIcons } from "@/components/business-icons";
 import { WaveText } from "@/components/wave-text";
 import { Reveal } from "@/components/reveal";
@@ -326,10 +326,15 @@ function HomePage() {
         data-anchor-label="Top"
         className="bbi-field-host px-3 pt-10 pb-6 sm:px-4 sm:pt-16"
       >
-        {/* The field IS the hero background. `.bbi-hero-open` drops the panel's
-            backdrop-blur, which was blurring the 2px particles into nothing and
-            leaving the field visible only in a thin strip around the card. */}
-        <HeroField className="bbi-field" />
+        {/* The hero ground: a fluid field in brand ink. This is the one place
+            the page is allowed to be loud — everything else is paper and rules. */}
+        <LiquidEther
+          className="bbi-field"
+          mouseForce={18}
+          cursorSize={120}
+          autoIntensity={1.8}
+          resolution={0.42}
+        />
         <div className="mx-auto max-w-6xl">
           <div className="glass bbi-hero-open blob-1 px-6 py-14 sm:px-12 sm:py-20">
             <p className="t-eyebrow sm:text-xs">
