@@ -47,9 +47,7 @@ function ContactPage() {
       <div className="grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-4">
         {channels.map((c) => (
           <div key={c.value} className="glass glass-hover rounded-2xl px-5 py-6">
-            <p className="t-eyebrow">
-              {c.label}
-            </p>
+            <p className="t-eyebrow">{c.label}</p>
             <a
               href={`mailto:${c.value}`}
               className="mo-link mt-2 inline-block text-base font-semibold text-accent"

@@ -1357,6 +1357,60 @@ html.light .iv-skeleton {
     color: var(--primary-foreground) !important;
   }
 }
+  /* THE HOUSING, inside the layer that demonstrably wins.
+     Rules appended at the end of this file were not reaching the compiled
+     sheet — a DOM query for rules matching the header's links came back
+     empty while `.bbi-instrument`'s own background applied fine. Declaring
+     the overrides here, in the same @layer utilities block as the light-mode
+     rules they have to beat and printed after them, is the shape that works. */
+  html.light .bbi-instrument,
+  html.light .bbi-instrument header,
+  html.light .bbi-instrument footer,
+  html.light .bbi-instrument main {
+    color: var(--ins-read) !important;
+  }
+  html.light .bbi-instrument header a,
+  html.light .bbi-instrument header button,
+  html.light .bbi-instrument header span,
+  html.light .bbi-instrument .glass-nav a,
+  html.light .bbi-instrument .glass-nav button,
+  html.light .bbi-instrument .iv-nav-panel a,
+  html.light .bbi-instrument .iv-nav-panel button {
+    color: var(--ins-read) !important;
+  }
+  html.light .bbi-instrument header a:hover,
+  html.light .bbi-instrument .iv-nav-panel a:hover {
+    color: var(--ins-signal-hot) !important;
+  }
+  /* The logo stamp is the one inversion: signal ground, housing ink. */
+  html.light .bbi-instrument header a > span[class*="bg-primary"] {
+    color: #07070f !important;
+  }
+  html.light .bbi-instrument .glass,
+  html.light .bbi-instrument .glass-nav,
+  html.light .bbi-instrument .glass-btn,
+  html.light .bbi-instrument .glass-pill,
+  html.light .bbi-instrument .iv-nav-panel,
+  html.light .bbi-instrument [role="combobox"],
+  html.light .bbi-instrument input,
+  html.light .bbi-instrument select {
+    background: var(--ins-face) !important;
+    border-color: var(--ins-rule) !important;
+    color: var(--ins-read) !important;
+    box-shadow: none !important;
+  }
+  html.light .bbi-instrument [role="combobox"] *,
+  html.light .bbi-instrument .glass-pill *,
+  html.light .bbi-instrument .glass-btn * {
+    color: var(--ins-read) !important;
+  }
+  html.light .bbi-instrument input::placeholder {
+    color: var(--ins-dim) !important;
+  }
+  html.light .bbi-instrument .text-muted-foreground {
+    color: var(--ins-dim) !important;
+  }
+
 
 /* ============================================================
    CATEGORY HEADING GLOW — breathing brand-color halo behind
@@ -2665,3 +2719,308 @@ html.bbi-motion [data-wave].revealed:not(:has(.rv)) {
   background: color-mix(in oklab, var(--primary) 86%, #000000);
 }
 .ac-cta:disabled { opacity: 0.6; }
+
+/* ============================================================
+   THE INSTRUMENT
+   ------------------------------------------------------------
+   BBI's one committed idea: the library is a measuring
+   instrument, not a brochure about one. Scoped to `.bbi-instrument`
+   so a template that has not been redesigned yet keeps the light
+   treatment rather than half-inheriting this one.
+
+   The trap this has to avoid is well known — "near-black ground
+   plus one bright accent" is the second-commonest generated-page
+   look there is. Darkness is not what makes this an instrument.
+   DENSITY is: real readings, tabular numerals, rules that divide
+   two actual things, and more legible information per screen than
+   a marketing page would dare. If a section here ends up airy,
+   with big padding and a glow, it has become the cliché and
+   should be rebuilt tighter.
+   ============================================================ */
+html.light .bbi-instrument,
+.bbi-instrument {
+  /* Housing */
+  --ins-void: #07070f;
+  --ins-face: #0f0f24;
+  --ins-face-2: #14142e;
+  --ins-rule: rgb(136 134 219 / 0.18);
+  --ins-rule-strong: rgb(136 134 219 / 0.34);
+  /* Signal — brand indigo lifted until it is legible on the housing.
+     #4643BA is the brand ink and stays the brand ink; at 4.5:1 against
+     #07070F it is unreadable as text, so the LIT form of it is used here. */
+  --ins-signal: #8886db;
+  --ins-signal-hot: #b6b5e3;
+  /* Readout */
+  --ins-read: #e9e8f6;
+  --ins-dim: #8b8aa6;
+
+  background: var(--ins-void);
+  color: var(--ins-read);
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Tokens the existing components read, repointed at the housing so
+     every card, button and border already in the tree lands in this
+     world without being rewritten one call site at a time. */
+  --background: var(--ins-void);
+  --foreground: var(--ins-read);
+  --card: var(--ins-face);
+  --card-foreground: var(--ins-read);
+  --muted-foreground: var(--ins-dim);
+  --border: var(--ins-rule);
+  --primary: var(--ins-signal);
+  --primary-foreground: #07070f;
+  --accent: var(--ins-signal-hot);
+  --ring: var(--ins-signal);
+  --radius: 0;
+
+  /* And the @theme aliases, which is the part that actually reaches a Tailwind
+     utility. `--color-foreground: var(--foreground)` is declared once on :root,
+     so it resolves THERE and descendants inherit the already-substituted value
+     — redefining `--foreground` further down the tree never reaches
+     `text-foreground`. Both halves have to be written. (CLAUDE.md, cascade
+     fact 2, arrived at the hard way: the header rendered #0C0C25 on #0F0F24.) */
+  --color-background: var(--ins-void);
+  --color-foreground: var(--ins-read);
+  --color-card: var(--ins-face);
+  --color-card-foreground: var(--ins-read);
+  --color-muted-foreground: var(--ins-dim);
+  --color-border: var(--ins-rule);
+  --color-input: var(--ins-rule);
+  --color-primary: var(--ins-signal);
+  --color-primary-foreground: #07070f;
+  --color-accent: var(--ins-signal-hot);
+  --color-accent-foreground: #07070f;
+  --color-ring: var(--ins-signal);
+}
+
+/* Display is condensed. That is the density signal, and it gives the
+   page real typographic contrast against the text face — which the
+   previous version did not have, because its display and text faces
+   were the same family. */
+.bbi-instrument h1,
+.bbi-instrument h2 {
+  font-family: "IBM Plex Sans Condensed", "IBM Plex Sans", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  line-height: 1.02;
+}
+.bbi-instrument h3,
+.bbi-instrument h4 {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+}
+
+/* Every number on this page is mono and tabular, so columns of figures
+   line up on the decimal the way an instrument's do. */
+.ins-num {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* A legend sits ON the rule that opens a module, not stacked above the
+   heading as a tracked-out all-caps label. Same words, and it now marks
+   where a region begins instead of decorating it. */
+.ins-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  color: var(--ins-dim);
+  text-transform: none;
+}
+.ins-legend::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--ins-rule);
+}
+.ins-legend .ins-read {
+  color: var(--ins-signal);
+}
+
+/* Modules share their rules instead of floating apart with gaps and
+   radii. One 1px grid line, drawn once, between two real regions. */
+.ins-module {
+  border-top: 1px solid var(--ins-rule);
+}
+.ins-grid {
+  display: grid;
+  gap: 1px;
+  background: var(--ins-rule);
+}
+.ins-cell {
+  background: var(--ins-void);
+  padding: 1.5rem;
+}
+.ins-cell--lit {
+  background: var(--ins-face);
+}
+
+/* Controls are the only rounded things here: if it has a radius, you
+   can press it. */
+.bbi-instrument a[class*="rounded"],
+.bbi-instrument button[class*="rounded"] {
+  border-radius: 2px;
+}
+
+/* The housing has no starfield, no nebula and no glow. An instrument is
+   lit by its own readings. */
+.bbi-instrument::before,
+.bbi-instrument::after {
+  display: none !important;
+}
+
+/* The shell adopts the housing. These are unlayered with !important
+   deliberately: the light-mode plate rules live in @layer utilities and
+   carry !important themselves, and unlayered !important is the only
+   thing that outranks that — the same cascade fact that bit this
+   redesign twice already, used on purpose this time. */
+.bbi-instrument .glass,
+.bbi-instrument .glass-nav,
+.bbi-instrument .glass-btn,
+.bbi-instrument .glass-pill,
+.bbi-instrument .iv-nav-panel {
+  background: var(--ins-face) !important;
+  border-color: var(--ins-rule) !important;
+  color: var(--ins-read) !important;
+  box-shadow: none !important;
+}
+.bbi-instrument .glass *,
+.bbi-instrument .glass-nav *,
+.bbi-instrument .glass-btn *,
+.bbi-instrument .glass-pill *,
+.bbi-instrument .iv-nav-panel * {
+  color: inherit !important;
+}
+.bbi-instrument .glass-btn:hover,
+.bbi-instrument .glass-pill:hover,
+.bbi-instrument .glass-btn:hover *,
+.bbi-instrument .glass-pill:hover * {
+  background: var(--ins-signal) !important;
+  border-color: var(--ins-signal) !important;
+  color: #07070f !important;
+}
+.bbi-instrument .ac-cta {
+  background: var(--ins-signal);
+  border-color: var(--ins-signal);
+  color: #07070f;
+}
+/* The page rail and the nav's own hairline. */
+.bbi-instrument header .bg-border {
+  background: var(--ins-rule) !important;
+}
+/* Inputs are housing too, not white boxes punched into it. */
+.bbi-instrument input,
+.bbi-instrument [role="combobox"] {
+  background: var(--ins-face) !important;
+  border-color: var(--ins-rule) !important;
+  color: var(--ins-read) !important;
+}
+.bbi-instrument input::placeholder {
+  color: var(--ins-dim) !important;
+}
+
+/* The light-mode nav rules are written as `html.light .glass-nav a`, which
+   is more specific than `.bbi-instrument .glass-nav *`. Matching that shape
+   and going one class deeper is what actually wins — `color: inherit` did
+   not, and the header rendered #0C0C25 text on the #07070F housing. */
+html.light .bbi-instrument .glass-nav a,
+html.light .bbi-instrument .glass-nav button,
+html.light .bbi-instrument .glass-nav span,
+html.light .bbi-instrument .iv-nav-panel a,
+html.light .bbi-instrument .iv-nav-panel button,
+html.light .bbi-instrument .glass a,
+html.light .bbi-instrument .glass button,
+html.light .bbi-instrument .glass span,
+html.light .bbi-instrument .glass p,
+html.light .bbi-instrument .glass li {
+  color: var(--ins-read) !important;
+}
+html.light .bbi-instrument .glass-nav a:hover,
+html.light .bbi-instrument .iv-nav-panel a:hover {
+  color: var(--ins-signal-hot) !important;
+}
+/* The logo stamp keeps its inverted relationship: signal ground, housing ink. */
+html.light .bbi-instrument header a span[class*="bg-primary"] {
+  color: #07070f !important;
+}
+/* Footer and any remaining muted text inside the housing. */
+html.light .bbi-instrument .text-muted-foreground {
+  color: var(--ins-dim) !important;
+}
+
+/* `@theme inline` means Tailwind bakes the RESOLVED value into each utility at
+   build time — `text-foreground` compiles to a literal colour, not
+   `var(--color-foreground)`. So repointing tokens, base or alias, can never
+   reach a utility. The utilities themselves have to be restated inside the
+   housing. This is the third distinct cascade trap in this stylesheet; the
+   other two are written up in CLAUDE.md. */
+html.light .bbi-instrument .text-foreground { color: var(--ins-read) !important; }
+html.light .bbi-instrument .text-muted-foreground { color: var(--ins-dim) !important; }
+html.light .bbi-instrument .text-primary { color: var(--ins-signal) !important; }
+html.light .bbi-instrument .text-accent { color: var(--ins-signal-hot) !important; }
+html.light .bbi-instrument .bg-card { background-color: var(--ins-face) !important; }
+html.light .bbi-instrument .bg-background { background-color: var(--ins-void) !important; }
+html.light .bbi-instrument .bg-primary { background-color: var(--ins-signal) !important; }
+html.light .bbi-instrument .text-primary-foreground { color: #07070f !important; }
+html.light .bbi-instrument .border-border,
+html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !important; }
+
+/* CLAUDE.md's cascade fact 3 says unlayered rules beat every @layer. That is
+   true for NORMAL declarations and exactly BACKWARDS for !important ones:
+   for important declarations layer precedence is reversed, so an important
+   rule inside @layer utilities beats an important rule outside it. That is
+   why `html.light .glass-nav a { color:#0C0C25 !important }` kept winning
+   against unlayered overrides, against repointed base tokens, against the
+   @theme aliases, and even against an inline style — !important beats inline.
+   The override has to live in the same layer, printed after. */
+@layer utilities {
+  html.light .bbi-instrument,
+  html.light .bbi-instrument header,
+  html.light .bbi-instrument main,
+  html.light .bbi-instrument footer {
+    color: var(--ins-read) !important;
+  }
+  html.light .bbi-instrument a,
+  html.light .bbi-instrument button,
+  html.light .bbi-instrument .glass-nav a,
+  html.light .bbi-instrument .glass-nav button,
+  html.light .bbi-instrument .glass-btn,
+  html.light .bbi-instrument .glass-pill,
+  html.light .bbi-instrument .glass-btn *,
+  html.light .bbi-instrument .glass-pill *,
+  html.light .bbi-instrument .iv-nav-panel a {
+    color: var(--ins-read) !important;
+  }
+  html.light .bbi-instrument .text-muted-foreground,
+  html.light .bbi-instrument .ins-legend {
+    color: var(--ins-dim) !important;
+  }
+  html.light .bbi-instrument .text-primary,
+  html.light .bbi-instrument .ins-legend .ins-read {
+    color: var(--ins-signal) !important;
+  }
+  html.light .bbi-instrument a:hover,
+  html.light .bbi-instrument .glass-pill:hover,
+  html.light .bbi-instrument .glass-pill:hover * {
+    color: var(--ins-signal-hot) !important;
+  }
+  /* The logo stamp inverts: signal ground, housing ink. */
+  html.light .bbi-instrument header a > span[class*="bg-primary"] {
+    color: #07070f !important;
+  }
+  html.light .bbi-instrument .glass,
+  html.light .bbi-instrument .glass-nav,
+  html.light .bbi-instrument .glass-btn,
+  html.light .bbi-instrument .glass-pill,
+  html.light .bbi-instrument .iv-nav-panel,
+  html.light .bbi-instrument [role="combobox"],
+  html.light .bbi-instrument input {
+    background: var(--ins-face) !important;
+    border-color: var(--ins-rule) !important;
+    box-shadow: none !important;
+  }
+}

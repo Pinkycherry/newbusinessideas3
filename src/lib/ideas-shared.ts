@@ -88,7 +88,9 @@ function toObjectList<T>(value: unknown, pick: (o: Record<string, unknown>) => T
   for (let i = 0; i < 3; i += 1) {
     if (Array.isArray(current)) {
       return current
-        .map((item) => (item && typeof item === "object" ? pick(item as Record<string, unknown>) : null))
+        .map((item) =>
+          item && typeof item === "object" ? pick(item as Record<string, unknown>) : null,
+        )
         .filter((item): item is T => item !== null);
     }
     if (typeof current !== "string") return [];
@@ -167,7 +169,10 @@ export function toIdeaDetail(row: IdeaRow): IdeaDetail {
     ),
     externalLinks: toObjectList(row.external_links, (o) =>
       typeof o["url"] === "string"
-        ? { label: typeof o["label"] === "string" && o["label"] ? o["label"] : o["url"], url: o["url"] }
+        ? {
+            label: typeof o["label"] === "string" && o["label"] ? o["label"] : o["url"],
+            url: o["url"],
+          }
         : null,
     ),
   };

@@ -66,9 +66,7 @@ export async function fetchPostBySlug(slug: string): Promise<{
   post: BlogPost;
   related: BlogPostCard[];
 } | null> {
-  const found = (await wpFetch(
-    `/posts?slug=${encodeURIComponent(slug)}&_embed=1`,
-  )) as WpPost[];
+  const found = (await wpFetch(`/posts?slug=${encodeURIComponent(slug)}&_embed=1`)) as WpPost[];
   const post = found[0];
   if (!post) return null;
 
@@ -80,6 +78,9 @@ export async function fetchPostBySlug(slug: string): Promise<{
       html: sanitizeWordPressHtml(post.content.rendered),
       sourceUrl: post.link,
     },
-    related: recent.filter((p) => p.slug !== slug).slice(0, 3).map(toCard),
+    related: recent
+      .filter((p) => p.slug !== slug)
+      .slice(0, 3)
+      .map(toCard),
   };
 }

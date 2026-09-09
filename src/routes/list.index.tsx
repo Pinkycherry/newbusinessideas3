@@ -6,12 +6,7 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getListicleIndex, type ListicleSummary } from "@/lib/lists.functions";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { siteUrl } from "@/lib/site-config";
-import {
-  useDepthScene,
-  useElementPointerGroup,
-  useStaggerReveal,
-  useTextReveal,
-} from "@/motion";
+import { useDepthScene, useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
 
 /**
  * PROJECT_BRIEF.md Section 6.3 — the index of every listicle. One listicle per

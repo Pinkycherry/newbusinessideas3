@@ -221,6 +221,12 @@ function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boo
         to="/sign-in"
         onClick={onNavigate}
         className={`whitespace-nowrap rounded-md border border-border bg-card px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground transition-colors duration-300 hover:border-primary hover:text-primary ${full ? "block text-center" : ""}`}
+        // Inline beats the cascade outright, which is what this needed: the
+        // arbitrary variant never compiled, and repointing the base token, the
+        // @theme alias and the utility all still resolved to the light ink.
+        // Outside the instrument --ins-read is undefined, so this falls back to
+        // the inherited colour and the light templates are untouched.
+        style={{ color: "var(--ins-read, currentColor)" }}
       >
         Sign In
       </Link>
@@ -732,7 +738,16 @@ function NewsletterSignup() {
   );
 }
 
-export function SiteShell({ children }: { children: ReactNode }) {
+export function SiteShell({
+  children,
+  tone,
+}: {
+  children: ReactNode;
+  /** "instrument" swaps the shell into the dark panel world. Scoped rather
+   * than global so a template that has not been redesigned yet keeps the
+   * light treatment instead of half-inheriting this one. */
+  tone?: "instrument";
+}) {
   const [mobileOpen, setMobileOpen] = useState(false);
   // Publishes --page-p on :root; the rail under the header is the only thing
   // that reads it here, and it does so with a composited scaleX.
@@ -743,7 +758,11 @@ export function SiteShell({ children }: { children: ReactNode }) {
   // uncapped, this block was 3,300px of footer per page at 200 categories.
   const footerCategories = topCategories(allCategories, 5);
   return (
-    <div className="relative flex min-h-screen flex-col text-foreground">
+    <div
+      className={`relative flex min-h-screen flex-col text-foreground${
+        tone === "instrument" ? " bbi-instrument" : ""
+      }`}
+    >
       <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">
         {/* Reading position for the whole document. One composited transform
             per frame, driven from --page-p — no layout, no repaint. */}

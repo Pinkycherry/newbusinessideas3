@@ -8,12 +8,7 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getListicle, type ListicleEntry, type ListiclePage } from "@/lib/lists.functions";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { siteUrl } from "@/lib/site-config";
-import {
-  useDepthScene,
-  useElementPointerGroup,
-  useStaggerReveal,
-  useTextReveal,
-} from "@/motion";
+import { useDepthScene, useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
 
 /**
  * PROJECT_BRIEF.md Section 6.3 — the listicle template. One page per category,
@@ -215,7 +210,6 @@ function ListiclePageRoute() {
   // for the whole header. Cursor depth on fine pointers, scroll depth on touch
   // (see motion.css, coarse-pointer block).
   const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
-
 
   const entriesPointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
   const entriesRevealRef = useStaggerReveal<HTMLDivElement>({

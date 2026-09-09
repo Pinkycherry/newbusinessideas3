@@ -4,12 +4,7 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getCategoryFaqCounts } from "@/lib/faqs.functions";
 import { getCatalog } from "@/lib/ideas.functions";
 import { JsonLd, breadcrumbSchema, webPageSchema } from "@/lib/schema";
-import {
-  useDepthScene,
-  useElementPointerGroup,
-  useStaggerReveal,
-  useTextReveal,
-} from "@/motion";
+import { useDepthScene, useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
 import { useCallback } from "react";
 
 /**
@@ -49,7 +44,6 @@ function FaqIndexPage() {
   // (see motion.css, coarse-pointer block).
   const sceneRef = useDepthScene<HTMLElement>({ strength: 0.5 });
 
-
   const pointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
   const revealRef = useStaggerReveal<HTMLDivElement>({ selector: ".mo-card", stagger: 0.03 });
   const gridRef = useCallback(
@@ -81,9 +75,7 @@ function FaqIndexPage() {
       <main ref={sceneRef} className="cx-scene mx-auto w-full max-w-6xl px-3 pb-24 pt-6 sm:px-4">
         <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Questions" }]} />
 
-        <p className="mt-8 t-eyebrow">
-          Questions
-        </p>
+        <p className="mt-8 t-eyebrow">Questions</p>
         <h1
           ref={headingRef}
           className="cx-layer cx-z3 mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl"

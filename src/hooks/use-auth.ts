@@ -43,19 +43,19 @@ export function useAuth(): AuthState {
       .maybeSingle()
       .then(
         ({ data }: { data: Record<string, unknown> | null }) => {
-        if (cancelled) return;
-        const tier = data?.["plan_tier"] as PlanTier | undefined;
-        if (tier === "lifetime") {
-          setPlanTier("lifetime");
-        } else if (
-          tier === "3month" &&
-          data?.["plan_expires_at"] &&
-          new Date(data["plan_expires_at"] as string) > new Date()
-        ) {
-          setPlanTier("3month");
-        } else {
-          setPlanTier("none");
-        }
+          if (cancelled) return;
+          const tier = data?.["plan_tier"] as PlanTier | undefined;
+          if (tier === "lifetime") {
+            setPlanTier("lifetime");
+          } else if (
+            tier === "3month" &&
+            data?.["plan_expires_at"] &&
+            new Date(data["plan_expires_at"] as string) > new Date()
+          ) {
+            setPlanTier("3month");
+          } else {
+            setPlanTier("none");
+          }
         },
         () => {
           if (!cancelled) setPlanTier("none");

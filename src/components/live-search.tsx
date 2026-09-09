@@ -10,7 +10,13 @@ import { searchIdeas } from "@/lib/ideas.functions";
  * Live suggest search. The query itself stays on the server (createServerFn);
  * only the matched card array crosses to the client.
  */
-export function LiveSearch({ className = "", onNavigate }: { className?: string; onNavigate?: () => void }) {
+export function LiveSearch({
+  className = "",
+  onNavigate,
+}: {
+  className?: string;
+  onNavigate?: () => void;
+}) {
   const navigate = useNavigate();
   const [term, setTerm] = useState("");
   const [debounced, setDebounced] = useState("");

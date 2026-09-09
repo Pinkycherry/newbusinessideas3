@@ -3,12 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { CALCULATORS } from "@/lib/calculators";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
-import {
-  useDepthScene,
-  useElementPointerGroup,
-  useStaggerReveal,
-  useTextReveal,
-} from "@/motion";
+import { useDepthScene, useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
 
 const TITLE = "Business Calculators for Indian Founders | BBI";
 const DESCRIPTION =
@@ -60,9 +55,7 @@ function CalculatorIndex() {
         <div ref={sceneRef} className="cx-scene mx-auto max-w-6xl px-3 py-12 sm:px-4">
           {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
           <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Calculators" }]} />
-          <p className="mt-6 t-eyebrow">
-            Calculators
-          </p>
+          <p className="mt-6 t-eyebrow">Calculators</p>
           <h1
             ref={titleRef}
             className="cx-layer cx-z3 mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl"

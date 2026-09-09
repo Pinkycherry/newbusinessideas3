@@ -11,11 +11,17 @@ import { HeroSlider } from "@/components/hero-slider";
 import { BusinessIcons } from "@/components/business-icons";
 import { CardFan } from "@/components/card-fan";
 import HoverBorderGradient from "@/components/aceternity/hover-border-gradient";
-import MovingBorder from "@/components/aceternity/moving-border";
 import ContainerTextFlip from "@/components/aceternity/container-text-flip";
 import InfiniteMovingCards from "@/components/aceternity/infinite-moving-cards";
 import { BentoGrid, BentoGridItem } from "@/components/aceternity/bento-grid";
-import HeroParallax from "@/components/aceternity/hero-parallax";
+import MovingImageCards from "@/components/aceternity/moving-image-cards";
+import LayoutTextFlip from "@/components/aceternity/layout-text-flip";
+import TextGenerateEffect from "@/components/aceternity/text-generate-effect";
+import EncryptedText from "@/components/aceternity/encrypted-text";
+import EvervaultCard from "@/components/aceternity/evervault-card";
+import MaskContainer from "@/components/aceternity/svg-mask-effect";
+import SparklesCore from "@/components/aceternity/sparkles";
+import LinkPreview from "@/components/aceternity/link-preview";
 import Tabs from "@/components/aceternity/tabs";
 import StickyScroll from "@/components/aceternity/sticky-scroll";
 import { photoAt } from "@/config/imagery";
@@ -42,9 +48,9 @@ import { loadGsap, prefersReducedMotion } from "@/lib/motion";
 import { Odometer, useScrollProgress, useStaggerReveal } from "@/motion";
 
 /**
- * Hero's primary CTA. The one HoverBorderGradient on the page: brand ink
- * travels the plate's border until the pointer arrives, then fills it. Every
- * other action on this page is the quieter MovingBorder.
+ * Hero's primary CTA. Every action on this page is a HoverBorderGradient now,
+ * at the founder's instruction: brand ink travels the plate's border until the
+ * pointer arrives, then fills it.
  */
 function HeroCta() {
   return (
@@ -95,7 +101,7 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
       className="mx-auto mt-10 max-w-6xl px-3 sm:px-4"
     >
       <CardSpotlight className="px-6 py-8 sm:px-10 sm:py-10">
-        <p className="t-eyebrow flex flex-wrap items-baseline gap-2">
+        <p className="ins-legend flex flex-wrap items-baseline gap-2">
           Surprise me
           <ContainerTextFlip
             words={categories.map((c) => c.categoryName)}
@@ -120,13 +126,13 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
               ))}
             </SelectContent>
           </Select>
-          <MovingBorder
+          <HoverBorderGradient
             onClick={() => surprise.mutate()}
             disabled={surprise.isPending}
             className="disabled:cursor-wait disabled:opacity-70"
           >
             {surprise.isPending ? "Picking…" : "Surprise Me"}
-          </MovingBorder>
+          </HoverBorderGradient>
         </div>
 
         {surprise.isError && (
@@ -237,7 +243,7 @@ export const Route = createFileRoute("/")({
   }),
   component: HomePage,
   errorComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <p className="mx-auto max-w-6xl px-4 py-24">The idea library could not be loaded.</p>
     </SiteShell>
   ),
@@ -250,7 +256,7 @@ function HomePage() {
   const featured = highlights.slice(0, 6);
 
   return (
-    <SiteShell>
+    <SiteShell tone="instrument">
       {/* LLM crawlable summary */}
       <p className="sr-only">
         BBI (Bro Business Ideas) is a business idea directory and startup intelligence library. This
@@ -259,60 +265,90 @@ function HomePage() {
         by sector, investment level, and founder profile.
       </p>
 
-      {/* HERO */}
+      {/* HERO — the readout column is the whole idea in miniature: the
+          catalogue's live figures are lit and sit level with the headline,
+          because the library IS the product. The previous version put a
+          paragraph about the library here instead. */}
       <section
         id="hero"
         data-anchor="hero"
         data-anchor-label="Top"
-        className="px-3 pt-10 pb-6 sm:px-4 sm:pt-16"
+        className="border-b border-[var(--ins-rule)]"
       >
-        <div className="mx-auto max-w-6xl">
-          <div className="rounded-md border border-border bg-card px-6 py-14 sm:px-12 sm:py-20">
-            <p className="t-eyebrow sm:text-xs">The Truth About Business Ideas</p>
-            <div className="mt-8 grid items-center gap-8 lg:grid-cols-[1.15fr_1fr]">
+        <div className="mx-auto grid max-w-[92rem] gap-px bg-[var(--ins-rule)] px-0 lg:grid-cols-[15rem_1fr]">
+          <div className="flex flex-col gap-7 bg-[var(--ins-void)] px-6 py-7">
+            <p className="ins-legend text-[0.6875rem]">The Truth About Business Ideas</p>
+            <dl className="grid grid-cols-2 gap-5 lg:grid-cols-1">
               <div>
-                <h1 className="max-w-3xl text-[2.15rem] font-extrabold leading-[1.06] tracking-[-0.028em] sm:text-[3.15rem]">
-                  Tired of paying just to check if your{" "}
-                  {/* Brand ink, no rule and no fill: an underline inside an H1
-                      reads as a link, and a tinted box breaks into ragged
-                      fragments the moment the phrase wraps. */}
-                  <span className="text-primary">idea will work</span>?
-                </h1>
-                <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                  We built a free home for real business ideas — side hustles, zero investment
-                  ideas, work from home ideas, and low investment ideas. Every idea is researched,
-                  not guessed. We tell you who will actually pay you, how the money works, and what
-                  will hurt you in year one. Then we give it to you straight — build it, or walk
-                  away. Browse for free. Validate as many times as you want. Pay only once, if you
-                  ever want full access.
-                </p>
-
-                {/* Quick-action row, styled after the reference: a plain frosted
-                search-style bar plus a rotating-color CTA pill, sitting
-                inline the way "Search..." and "Button" sit in the reference
-                image. Nothing else on the page changes structurally. */}
-                <div className="mt-8 grid gap-3 sm:grid-cols-[minmax(0,24rem)_auto] sm:items-center">
-                  <Link
-                    to="/search"
-                    search={{ q: "" }}
-                    className="flex min-w-0 items-center gap-2 rounded-md border border-border bg-card px-4 py-3 text-sm text-muted-foreground transition-colors duration-300 hover:border-primary hover:text-foreground"
-                  >
-                    <span aria-hidden>⌕</span>
-                    <span>Search idea blueprints…</span>
-                  </Link>
-                  <HeroCta />
-                </div>
+                <dd className="ins-num text-4xl font-semibold leading-none text-[var(--ins-signal)]">
+                  {catalog.totalIdeas}
+                </dd>
+                <dt className="ins-num mt-1.5 text-[0.6875rem] text-[var(--ins-dim)]">
+                  researched blueprints
+                </dt>
               </div>
               <div>
+                <dd className="ins-num text-4xl font-semibold leading-none text-hl-teal">
+                  {catalog.categories.length}
+                </dd>
+                <dt className="ins-num mt-1.5 text-[0.6875rem] text-[var(--ins-dim)]">
+                  live categories
+                </dt>
+              </div>
+            </dl>
+          </div>
+
+          <div className="bg-[var(--ins-void)] px-6 py-7 lg:px-9">
+            <h1 className="max-w-[17ch] text-[2.4rem] leading-[0.96] sm:text-[3.9rem]">
+              Tired of paying just to check if your{" "}
+              <span className="text-[var(--ins-signal)]">idea will work</span>?
+            </h1>
+            <div className="mt-7 grid gap-7 lg:grid-cols-[minmax(0,40ch)_1fr] lg:items-start">
+              <p className="text-[0.9375rem] leading-relaxed text-[var(--ins-dim)]">
+                We built a free home for real business ideas — side hustles, zero investment ideas,
+                work from home ideas, and low investment ideas. Every idea is researched, not
+                guessed. We tell you who will actually pay you, how the money works, and what will
+                hurt you in year one. Then we give it to you straight — build it, or walk away.
+                Browse for free. Validate as many times as you want. Pay only once, if you ever want
+                full access.
+              </p>
+              {/* Capped: uncapped this frame grew to 430px and became the
+                  loudest thing on a page whose subject is the data. */}
+              <div className="max-h-[15rem] overflow-hidden lg:pl-2">
                 <HeroSlider />
               </div>
             </div>
 
-            <BentoGrid className="mt-10 md:grid-cols-2">
-              {HERO_PANELS.map((panel) => (
-                <BentoGridItem key={panel.label} title={panel.label} description={panel.body} />
-              ))}
-            </BentoGrid>
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <HeroCta />
+              <Link
+                to="/search"
+                search={{ q: "" }}
+                className="ins-num flex min-w-0 items-center gap-2 border border-[var(--ins-rule)] px-4 py-3 text-[0.8125rem] text-[var(--ins-dim)] transition-colors duration-200 hover:border-[var(--ins-signal)] hover:text-[var(--ins-read)]"
+              >
+                <span aria-hidden>⌕</span>
+                <span>Search idea blueprints…</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* The two hero panels become a two-cell readout strip sharing one
+            rule with the block above, rather than two cards in a gap. */}
+        <div className="mx-auto max-w-[92rem]">
+          <div className="ins-grid border-t border-[var(--ins-rule)] sm:grid-cols-2">
+            {HERO_PANELS.map((panel) => (
+              <EvervaultCard
+                key={panel.label}
+                seed={panel.label.length}
+                className="ins-cell border-0 px-6 py-7"
+              >
+                <h3 className="text-base font-semibold text-[var(--ins-read)]">{panel.label}</h3>
+                <p className="mt-2 max-w-[58ch] text-sm leading-relaxed text-[var(--ins-dim)]">
+                  {panel.body}
+                </p>
+              </EvervaultCard>
+            ))}
           </div>
         </div>
       </section>
@@ -336,7 +372,7 @@ function HomePage() {
         className="pt-10"
         aria-label="Browse by category"
       >
-        <p className="mx-auto max-w-6xl px-3 t-eyebrow sm:px-4">Browse by category</p>
+        <p className="ins-legend mx-auto max-w-6xl px-3 sm:px-4">Browse by category</p>
         {/* Business-model icons, bobbing on staggered offsets — the movement
             from the approved design. Full-bleed, masked at both edges. */}
         <BusinessIcons />
@@ -350,7 +386,7 @@ function HomePage() {
             <InfiniteMovingCards
               key={`ticker-row-${rowIndex}`}
               direction={rowIndex % 2 === 1 ? "right" : "left"}
-              speed={70 + rowIndex * 10}
+              speed={34 + rowIndex * 5}
               items={row.map((c) => ({
                 label: c.categoryName,
                 to: "/category/$categorySlug",
@@ -361,24 +397,44 @@ function HomePage() {
         </div>
       </section>
 
-      {/* THE LIBRARY, IN PICTURES — HeroParallax. Two rows of live category
-          plates travelling against each other as the band scrolls. Photography
-          is ethicalfounder.com's, held in src/config/imagery.ts. */}
-      <HeroParallax
-        eyebrow="The library"
-        heading="Every category, and what it actually holds."
-        cards={catalog.categories.map((category, index) => {
-          const photo = photoAt(index);
-          return {
-            title: category.categoryName,
-            meta: `${category.ideaCount} blueprints`,
-            src: photo.src,
-            alt: photo.alt,
-            to: "/category/$categorySlug",
-            params: { categorySlug: category.categorySlug },
-          };
-        })}
-      />
+      {/* Two counter-running rows of live category plates, imagery from
+          ethicalfounder.com via src/config/imagery.ts. Replaces the parallax
+          band: same content, and a marquee reads as a library going past
+          rather than as a hero effect. */}
+      <section
+        data-anchor="library"
+        data-anchor-label="The library"
+        className="ins-module py-12"
+        aria-label="Every category, and what it actually holds."
+      >
+        <div className="mx-auto max-w-[92rem] px-6">
+          <p className="ins-legend">The library</p>
+          <h2 className="mt-3 max-w-2xl">Every category, and what it actually holds.</h2>
+        </div>
+        <div className="mt-8 grid gap-4">
+          {[0, 1].map((row) => {
+            const slice = catalog.categories.filter((_, i) => i % 2 === row);
+            return (
+              <MovingImageCards
+                key={`lib-row-${row}`}
+                direction={row === 1 ? "right" : "left"}
+                speed={46 + row * 8}
+                cards={slice.map((category, index) => {
+                  const photo = photoAt(index + row);
+                  return {
+                    title: category.categoryName,
+                    meta: `${category.ideaCount} blueprints`,
+                    src: photo.src,
+                    alt: photo.alt,
+                    to: "/category/$categorySlug",
+                    params: { categorySlug: category.categorySlug },
+                  };
+                })}
+              />
+            );
+          })}
+        </div>
+      </section>
 
       {/* SECTION 1: INTERACTIVE GOLDEN TREE */}
       <GoldenTreeSection categories={catalog.categories} />
@@ -404,17 +460,16 @@ function HomePage() {
       <section className="mx-auto max-w-6xl px-3 py-16 sm:px-4">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="t-eyebrow">Featured blueprints</p>
+            <p className="ins-legend">Featured blueprints</p>
             <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
               Blueprints worth your afternoon
             </h2>
           </div>
-          <Link
-            to="/browse"
-            className="text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
-          >
-            Browse the full library →
-          </Link>
+          <HoverBorderGradient asChild>
+            <Link to="/browse" className="text-xs font-semibold uppercase tracking-[0.2em]">
+              Browse the full library →
+            </Link>
+          </HoverBorderGradient>
         </div>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((idea) => (
@@ -488,7 +543,7 @@ function HomePage() {
 
       {/* GENERAL CLOSING FAQ */}
       <section className="mx-auto mt-20 max-w-4xl border-t border-border/60 px-3 pt-16 pb-24 sm:mt-28 sm:px-4 sm:pt-20">
-        <p className="t-eyebrow">Common questions</p>
+        <p className="ins-legend">Common questions</p>
         <div className="mt-6 divide-y divide-border">
           {FAQS.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="base" />
@@ -609,7 +664,7 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
       className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4"
     >
       <div className="text-center max-w-3xl mx-auto">
-        <p className="t-eyebrow">Interactive Canopy Map</p>
+        <p className="ins-legend">Interactive Canopy Map</p>
         <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-5xl">
           The Golden Tree of Business Growth
         </h2>
@@ -828,22 +883,24 @@ function BrandStatementBanner() {
     // above, the statement at display size, and the prose set to a real
     // measure beside it.
     <section className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4 sm:pt-16">
-      <p className="t-eyebrow">Who we are</p>
+      <p className="ins-legend">Who we are</p>
       <div className="mt-4 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
-        <h2 className="text-[2.4rem] leading-[1.04] sm:text-[3.4rem]">BBI — Bro Business Ideas.</h2>
-        {/* This paragraph was briefly run through a word-by-word reveal. A
-            reader scrolling past at speed saw half a sentence, and if the
-            observer never fired they saw none of it — copy that can fail to
-            appear is not a trade worth making for an entrance. */}
-        <p className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
-          We have been where you are. We paid for those $20 &quot;validation&quot; platforms too. We
-          got a few generic lines back, spent our money, and got nothing real in return. When we
-          asked for help, no one answered. That hurt. So we built the thing we needed back then — a
-          free, honest library of small business ideas and side hustles, with real research, not
-          empty hype. Browse for free, always. Validate as many times as you want, at no extra cost.
-          Pay once — ₹199 for 3 months or ₹399 for life — only if you want full access. Never a
-          monthly bill.
-        </p>
+        {/* The flip runs through the words of the name itself, so the
+            component earns its motion without a syllable being invented. */}
+        <h2 className="text-[2.4rem] leading-[1.04] sm:text-[3.4rem]">
+          <LayoutTextFlip
+            text="BBI —"
+            words={["Bro", "Business", "Ideas."]}
+            wordClassName="text-[0.9em]"
+          />
+        </h2>
+        {/* Back on the word reveal, but the rebuilt component cannot strand a
+            sentence: its rest state is visible, and with no IntersectionObserver
+            it shows everything rather than nothing. */}
+        <TextGenerateEffect
+          className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg"
+          words={`We have been where you are. We paid for those $20 "validation" platforms too. We got a few generic lines back, spent our money, and got nothing real in return. When we asked for help, no one answered. That hurt. So we built the thing we needed back then — a free, honest library of small business ideas and side hustles, with real research, not empty hype. Browse for free, always. Validate as many times as you want, at no extra cost. Pay once — ₹199 for 3 months or ₹399 for life — only if you want full access. Never a monthly bill.`}
+        />
       </div>
     </section>
   );
@@ -952,10 +1009,28 @@ const BBI_FAQ_1 = [
 function HowItWorksSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <p className="t-eyebrow">Step by step</p>
-      <h2 className="mt-3 max-w-3xl">
-        Grab the idea. Validate it however you want. Keep the money.
-      </h2>
+      <p className="ins-legend">Step by step</p>
+      {/* The sparkle field sits BEHIND the mask, so the reveal uncovers a lit
+          surface rather than a flat one. Both layers carry the same real
+          sentence: with no pointer, no JS, or reduced motion the mask bows out
+          and the heading is simply shown. */}
+      <div className="relative mt-3 overflow-hidden border border-border">
+        <div aria-hidden className="pointer-events-none absolute inset-0 opacity-60">
+          <SparklesCore density={40} />
+        </div>
+        <MaskContainer
+          className="relative min-h-[13rem] py-10 sm:min-h-[15rem]"
+          revealText={
+            <span className="block max-w-3xl text-[1.9rem] font-bold leading-[1.06] sm:text-[2.6rem]">
+              Grab the idea. Validate it however you want. Keep the money.
+            </span>
+          }
+        >
+          <span className="block max-w-3xl text-[1.9rem] font-bold leading-[1.06] sm:text-[2.6rem]">
+            Grab the idea. Validate it however you want. Keep the money.
+          </span>
+        </MaskContainer>
+      </div>
       {/* Three numbered tiles beside a diagram said "here are three things".
           This is an ordered sequence, which is what StickyScroll is for: the
           plate holds its place and names the step you are level with. */}
@@ -968,7 +1043,7 @@ function HowItWorksSection() {
       />
 
       <div className="mt-14 border-t border-border pt-8">
-        <p className="t-eyebrow">Validating & using BBI</p>
+        <p className="ins-legend">Validating & using BBI</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_1.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
@@ -1041,7 +1116,7 @@ const BBI_BUILT_FOR: {
 function WhoForSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <p className="t-eyebrow">Who we built this for</p>
+      <p className="ins-legend">Who we built this for</p>
       <h2 className="mt-3 max-w-2xl">For the person with an idea and nothing else.</h2>
       {/* Two paragraphs at a real reading measure, side by side, rather than
           stacked in the left half of a card. */}
@@ -1135,7 +1210,7 @@ function PricingPhilosophySection() {
       </div>
 
       <div className="mx-auto mt-12 max-w-6xl px-3 sm:px-4">
-        <p className="t-eyebrow">Pricing & the market gap</p>
+        <p className="ins-legend">Pricing & the market gap</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_2.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
@@ -1153,7 +1228,7 @@ function TeamSection() {
           filling the right. The text is short and personal; it reads better at
           a narrow measure with the diagram given its own full width below. */}
       <div className="max-w-2xl">
-        <p className="t-eyebrow">Who&apos;s behind this</p>
+        <p className="ins-legend">Who&apos;s behind this</p>
         <h2 className="mt-3">Built by hand, not by a headcount.</h2>
         <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
           <p>
@@ -1162,12 +1237,14 @@ function TeamSection() {
           </p>
           <p>
             The full story lives on our{" "}
-            <Link
-              to="/about"
-              className="font-semibold text-primary underline decoration-border underline-offset-4 transition-colors hover:text-accent"
-            >
-              About page
-            </Link>
+            <LinkPreview url="https://newbusinessideas3.vercel.app/about" className="font-semibold">
+              <Link
+                to="/about"
+                className="font-semibold text-primary underline decoration-border underline-offset-4 transition-colors hover:text-accent"
+              >
+                About page
+              </Link>
+            </LinkPreview>
             .
           </p>
         </div>
@@ -1194,7 +1271,7 @@ function InspiredBySection() {
       {/* Was a centred card. This is an attribution, so it is set as one: a
           rule down the left edge, the way a citation is marked in print. */}
       <div className="border-l-2 border-primary pl-6 sm:pl-8">
-        <p className="t-eyebrow">Where this came from</p>
+        <p className="ins-legend">Where this came from</p>
         <h2 className="mt-3">We didn&apos;t invent this model. We learned it.</h2>
         <p className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground">
           Our inspiration is EthicalFounder.com — a platform offering free websites, free MSME
@@ -1226,7 +1303,7 @@ const BBI_US = [
 function ComparisonSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <p className="t-eyebrow">The comparison</p>
+      <p className="ins-legend">The comparison</p>
       <h2 className="mt-3 max-w-3xl">
         Validating a business idea should not cost you the money you were going to start it with.
       </h2>
@@ -1244,7 +1321,7 @@ function ComparisonSection() {
           only on a phone. */}
       <div className="relative mt-10 grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2">
         <div className="bg-card p-5 sm:p-7">
-          <p className="t-eyebrow hl-coral">What most idea validation tools ask of you</p>
+          <p className="ins-legend hl-coral">What most idea validation tools ask of you</p>
           <ul className="mt-4 divide-y divide-border text-sm leading-relaxed text-muted-foreground">
             {BBI_THEM.map((line) => (
               <li key={line} className="py-3 first:pt-0 last:pb-0">
@@ -1254,7 +1331,7 @@ function ComparisonSection() {
           </ul>
         </div>
         <div className="bg-card p-5 sm:p-7">
-          <p className="t-eyebrow hl-green">What BBI asks of you</p>
+          <p className="ins-legend hl-green">What BBI asks of you</p>
           <ul className="mt-4 divide-y divide-border text-sm leading-relaxed text-foreground">
             {BBI_US.map((line) => (
               <li key={line} className="py-3 first:pt-0 last:pb-0">
@@ -1286,7 +1363,7 @@ const BBI_FUTURE_TERMS = [
 function FutureProofSpotlight() {
   return (
     <section className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4">
-      <p className="t-eyebrow">Ways into the library</p>
+      <p className="ins-legend">Ways into the library</p>
       <h2 className="mt-3 max-w-2xl">Start from a theme instead of a blank search box.</h2>
       <p className="mt-3 max-w-[62ch] text-sm leading-relaxed text-muted-foreground">
         Each one runs a live search across every blueprint. They are shortcuts, not a ranking
@@ -1354,8 +1431,14 @@ const BBI_KEYWORD_GROUPS: KeywordGroup[] = [
 function KeywordMosaic() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4" aria-label="Browse ideas by keyword">
-      <p className="t-eyebrow">Every angle covered</p>
-      <h2 className="mt-2 max-w-2xl">Business ideas by industry, founder, and model</h2>
+      <p className="ins-legend">Every angle covered</p>
+      <h2 className="mt-2 max-w-2xl">
+        <EncryptedText
+          text="Business ideas by industry, founder, and model"
+          encryptedClassName="text-[var(--ins-dim,#8b8aa6)]"
+          revealedClassName="text-[var(--ins-read,#e9e8f6)]"
+        />
+      </h2>
       {/* Was three panels side by side, each a wall of pills — 18 links
           competing at once, and the same shape repeated three times. As tabs,
           one axis is legible at a time and the marker slides between them. */}
@@ -1423,7 +1506,7 @@ function PromiseSection() {
       {/* The last statement on the page, so it is set as one — no card around
           it, the claim at display size, the qualification beside it. */}
       <div className="border-t border-border pt-12">
-        <p className="t-eyebrow">Our promise</p>
+        <p className="ins-legend">Our promise</p>
         <div className="mt-4 grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-14">
           <h2 className="text-[2rem] leading-[1.08] sm:text-[2.8rem]">
             We&apos;re not here to sell you a dream. We&apos;re here to hand you the research.
@@ -1438,7 +1521,7 @@ function PromiseSection() {
       </div>
 
       <div className="mt-12">
-        <p className="t-eyebrow">Common searches, answered</p>
+        <p className="ins-legend">Common searches, answered</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_3.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />

@@ -8,12 +8,7 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
 import { searchIdeas } from "@/lib/ideas.functions";
 import type { IdeaCard as IdeaCardData } from "@/lib/ideas-shared";
-import {
-  useDepthScene,
-  useElementPointerGroup,
-  useStaggerReveal,
-  useTextReveal,
-} from "@/motion";
+import { useDepthScene, useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
 
 export const Route = createFileRoute("/search")({
   validateSearch: z.object({ q: z.string().optional() }),
@@ -89,7 +84,6 @@ function SearchPage() {
   // for the whole header. Cursor depth on fine pointers, scroll depth on touch
   // (see motion.css, coarse-pointer block).
   const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
-
 
   const query = useQuery({
     queryKey: ["search", q ?? ""],

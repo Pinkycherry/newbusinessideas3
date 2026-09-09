@@ -94,9 +94,7 @@ function FaqCategoryPage() {
           ]}
         />
 
-        <p className="mt-8 t-eyebrow">
-          Questions
-        </p>
+        <p className="mt-8 t-eyebrow">Questions</p>
         <h1
           ref={headingRef}
           className="cx-layer cx-z3 mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl"
@@ -120,10 +118,7 @@ function FaqCategoryPage() {
             >
               Read the {category.ideaCount} blueprints instead
             </Link>
-            <Link
-              to="/browse"
-              className="mo-link t-eyebrow"
-            >
+            <Link to="/browse" className="mo-link t-eyebrow">
               The full library
             </Link>
           </FaqEmptyState>

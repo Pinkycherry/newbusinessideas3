@@ -70,6 +70,7 @@ export default function HoverBorderGradient({
           "relative z-10 inline-flex items-center justify-center gap-2 rounded-[calc(var(--radius)-1px)] bg-card px-6 py-3 text-sm font-semibold tracking-tight text-foreground transition-colors duration-300 hover:bg-primary hover:text-primary-foreground focus-visible:outline-none",
           className,
         )}
+        style={{ color: "var(--ins-read, currentColor)" }}
         {...rest}
       >
         {children}

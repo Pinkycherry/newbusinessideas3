@@ -33,7 +33,9 @@ export function decodeEntities(input: string): string {
 }
 
 export function stripHtml(input: string): string {
-  return decodeEntities(input.replace(/<[^>]*>/g, " ")).replace(/\s+/g, " ").trim();
+  return decodeEntities(input.replace(/<[^>]*>/g, " "))
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 /** Cuts on a word boundary — never mid-word. */
