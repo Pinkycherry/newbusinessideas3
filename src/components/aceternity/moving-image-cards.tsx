@@ -6,8 +6,10 @@ import { cn, hideImgIfBroken } from "@/lib/utils";
 export type MovingImageCard = {
   title: string;
   meta?: string;
-  src: string;
-  alt: string;
+  /** Absent once the photo library runs out — the card falls back to a
+   * typographic plate rather than repeating a picture already on screen. */
+  src?: string;
+  alt?: string;
   to: string;
   params: Record<string, string>;
 };
@@ -73,15 +75,26 @@ export default function MovingImageCards({
               tabIndex={index >= half.length ? -1 : undefined}
               className="group/card relative block h-48 w-[20rem] overflow-hidden border border-border bg-card md:h-56 md:w-[26rem]"
             >
-              <img
-                src={card.src}
-                alt={card.alt}
-                loading="lazy"
-                ref={hideImgIfBroken}
-                onError={(event) => hideImgIfBroken(event.currentTarget)}
-                className="absolute inset-0 h-full w-full object-cover opacity-70 transition-all duration-500 group-hover/card:scale-105 group-hover/card:opacity-100"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[var(--ins-void)] via-[var(--ins-void)]/40 to-transparent" />
+              {card.src ? (
+                <>
+                  <img
+                    src={card.src}
+                    alt={card.alt ?? ""}
+                    loading="lazy"
+                    ref={hideImgIfBroken}
+                    onError={(event) => hideImgIfBroken(event.currentTarget)}
+                    className="absolute inset-0 h-full w-full object-cover opacity-70 transition-all duration-500 group-hover/card:scale-105 group-hover/card:opacity-100"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--ins-void)] via-[var(--ins-void)]/40 to-transparent" />
+                </>
+              ) : (
+                // No photograph for this slot. A ruled plate rather than the
+                // same picture for the twentieth time.
+                <span
+                  aria-hidden
+                  className="absolute inset-0 bg-[var(--ins-face)] transition-colors duration-500 group-hover/card:bg-[var(--ins-face-2)]"
+                />
+              )}
               <div className="absolute inset-x-0 bottom-0 p-4">
                 <span className="block text-base font-semibold leading-snug text-[var(--ins-bright)]">
                   {card.title}

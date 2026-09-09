@@ -28,14 +28,19 @@ export const EF_LIBRARY: Photo[] = [
   },
 ];
 
-/** The photo for slot `index`, cycling through the library. */
-export function photoAt(index: number): Photo {
-  const pool = EF_LIBRARY;
-  if (pool.length === 0) return { src: "", alt: "" };
-  return pool[((index % pool.length) + pool.length) % pool.length] as Photo;
+/**
+ * The photo for slot `index`, or null once the library runs out.
+ *
+ * It used to cycle. On a page with 60 image slots and three real photographs
+ * that produced the same two pictures twenty-one and twenty times over, which
+ * reads as a broken loop rather than as photography. A slot with no photo of
+ * its own gets a typographic plate instead, and starts showing one the moment
+ * a URL for it exists in EF_LIBRARY.
+ */
+export function photoAt(index: number): Photo | null {
+  if (index < 0 || index >= EF_LIBRARY.length) return null;
+  return EF_LIBRARY[index] as Photo;
 }
 
-/** `count` photos starting at `offset`, cycling through the library. */
-export function photoRun(count: number, offset = 0): Photo[] {
-  return Array.from({ length: count }, (_, i) => photoAt(offset + i));
-}
+/** How many slots can currently be given a distinct photograph. */
+export const PHOTO_COUNT = EF_LIBRARY.length;

@@ -56,11 +56,30 @@ const Card = memo(function Card({
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       ) : null}
-      <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/35 to-transparent" />
+      {card.src ? (
+        <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/35 to-transparent" />
+      ) : (
+        <span aria-hidden className="absolute inset-0 bg-card" />
+      )}
       <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-5">
-        <span className="text-lg font-semibold leading-snug text-background">{card.title}</span>
+        {/* Over a photograph the label sits on a dark scrim; on a bare plate
+            it sits on the card itself, where text-background would be
+            invisible. */}
+        <span
+          className={cn(
+            "text-lg font-semibold leading-snug",
+            card.src ? "text-background" : "text-foreground",
+          )}
+        >
+          {card.title}
+        </span>
         {card.meta ? (
-          <span className="text-[11px] uppercase tracking-[0.18em] text-background/70">
+          <span
+            className={cn(
+              "text-[11px] uppercase tracking-[0.18em]",
+              card.src ? "text-background/70" : "text-muted-foreground",
+            )}
+          >
             {card.meta}
           </span>
         ) : null}

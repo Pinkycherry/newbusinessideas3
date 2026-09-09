@@ -119,8 +119,7 @@ function BrowsePage() {
               return {
                 title: category.categoryName,
                 meta: `${category.ideaCount} blueprints`,
-                src: photo.src,
-                alt: photo.alt,
+                ...(photo ? { src: photo.src, alt: photo.alt } : {}),
                 to: "/category/$categorySlug",
                 params: { categorySlug: category.categorySlug },
               };
