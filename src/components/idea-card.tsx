@@ -4,8 +4,6 @@ import { Lock } from "lucide-react";
 import type { IdeaCard as IdeaCardData } from "@/lib/ideas-shared";
 import { useAuth } from "@/hooks/use-auth";
 
-const BLOBS = ["blob-sm-1", "blob-sm-2", "blob-sm-3"] as const;
-
 export function IdeaCard({
   idea,
   featured = false,
@@ -31,17 +29,11 @@ export function IdeaCard({
   // "anonymous" status renders the locked treatment.
   const locked = auth.status === "anonymous";
 
-  // Organic blob outline, deterministic per idea so neighbouring cards differ.
-  const blob =
-    BLOBS[
-      Math.abs(idea.slug.split("").reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 7)) %
-        BLOBS.length
-    ];
   return (
     <Link
       to="/idea/$slug"
       params={{ slug: idea.slug }}
-      className={`glass glass-hover mo-card bbi-card-motion group relative flex h-full min-w-0 flex-col overflow-hidden ${blob} p-4 sm:p-5 ${
+      className={`glass glass-hover mo-card bbi-card-motion group relative flex h-full min-w-0 flex-col overflow-hidden rounded-md border border-border p-4 sm:p-5 ${
         featured ? "sm:col-span-2" : ""
       }`}
     >
@@ -51,7 +43,7 @@ export function IdeaCard({
         <div className="flex items-center justify-between gap-3 text-[11px] uppercase tracking-widest text-muted-foreground">
           <span className="truncate">{idea.subcategoryName}</span>
           {idea.trendScore !== null && (
-            <span className="shrink-0 text-accent">Trend {idea.trendScore}</span>
+            <span className="shrink-0 tabular-nums text-hl-teal">Trend {idea.trendScore}</span>
           )}
         </div>
         <h3
