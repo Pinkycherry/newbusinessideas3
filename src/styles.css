@@ -1162,8 +1162,23 @@ html.light .glass-pill {
   backdrop-filter: none !important;
   box-shadow: none !important;
 }
-html.light .iv-ticker-track a:hover {
-  color: #FFFFFF !important;
+/* The Aceternity hover signature, given to every legacy plate on the site in
+   one rule rather than at twenty-odd call sites: the border takes brand ink
+   and the plate rises a hair. It is the same gesture CardSpotlight and
+   BentoGridItem make, so a page that mixes new components with older markup
+   still reads as one set. */
+html.light .glass-hover {
+  transition:
+    border-color 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+html.light .glass-hover:hover {
+  border-color: color-mix(in oklab, var(--primary) 50%, transparent) !important;
+  transform: translateY(-2px);
+  box-shadow: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.light .glass-hover:hover { transform: none; }
 }
 /* Light mode: keep every label inside a light glass surface dark enough to read. */
 html.light .glass-btn,
@@ -2232,30 +2247,28 @@ html.light .idea-shell::before { opacity: 0.42; }
    bold out of Instrument Serif, without editing all 70 call sites.
    ========================================================================= */
 
-/* Instrument Serif ships ONE weight (400). Hierarchy therefore has to come
-   from SIZE, not weight — the previous version dropped every heading from
-   800/700/600 to 400 with no size compensation, which is why the hero read
-   thin and weak on a phone. h3 stays sans: most h3s here are small card
-   titles, and a 400-weight serif at 16-18px is genuinely hard to read. */
-h1,
-h2 {
+/* --font-display is Geist, which ships the full weight range, so hierarchy
+   comes from WEIGHT again and the sizes come back down. The previous numbers
+   (up to 5rem for an h1) existed to compensate for Instrument Serif's single
+   400 weight; with a real 700 available they only made headlines shout and
+   pushed the hero's first line off the fold.
+
+   These are :where() rules — zero specificity — so any size utility a call
+   site sets (text-3xl, text-[3.15rem]) wins outright, which the previous
+   unlayered versions silently overrode site-wide. */
+:where(h1, h2) {
   font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: -0.018em;
-  line-height: 1.02;
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  line-height: 1.05;
+  text-wrap: balance;
 }
-/* Restore the presence the weight drop cost, at every breakpoint. */
-h1 {
-  font-size: clamp(2.6rem, 9.2vw, 4.5rem);
+:where(h1) {
+  font-size: clamp(2.25rem, 5.4vw, 3.5rem);
 }
-@media (min-width: 640px) {
-  h1 {
-    font-size: clamp(3.4rem, 5.6vw, 5rem);
-  }
-}
-h2 {
-  font-size: clamp(1.9rem, 5.4vw, 3rem);
-  line-height: 1.06;
+:where(h2) {
+  font-size: clamp(1.6rem, 3.2vw, 2.25rem);
+  line-height: 1.12;
 }
 
 /* ============================================================================
@@ -2285,12 +2298,11 @@ h2 {
    `text-lg` utilities on every h3 in the codebase and resize the whole site.
    Size stays where the call site put it; only the treatment is unified.
    ========================================================================= */
-h3,
-h4 {
+:where(h3, h4) {
   font-family: var(--font-sans);
   font-weight: 600;
-  letter-spacing: -0.011em;
-  line-height: 1.32;
+  letter-spacing: -0.014em;
+  line-height: 1.3;
 }
 
 /* A card's own title. Sentence case, sans, sized between body and h2 -- the
@@ -2547,19 +2559,78 @@ html.bbi-motion [data-wave].revealed:not(:has(.rv)) {
   .bbi-icons .bbi-icon { animation: none; }
 }
 
-/* The field sits behind the hero's glass card, clipped to the section. */
-.bbi-field-host {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
+
+
+
+/* ============================================================
+   ACETERNITY LAYER
+   The motion primitives behind src/components/aceternity/*.
+   Two keyframe sets, both compositor-only, both silent under
+   prefers-reduced-motion. Everything else in that folder animates
+   through Framer Motion, which respects the same preference in JS.
+   ============================================================ */
+
+/* InfiniteMovingCards: the track is duplicated once, so translating it
+   exactly -50% lands the copy where the original began — a seam-free loop
+   at any item count. */
+@keyframes ac-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
 }
-.bbi-field-host > .bbi-field {
+.ac-marquee-track {
+  animation-name: ac-marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+.ac-marquee:hover .ac-marquee-track,
+.ac-marquee:focus-within .ac-marquee-track { animation-play-state: paused; }
+
+/* MovingBorder: one point of ink running the perimeter. The conic gradient
+   is painted on the 1px padding box of the wrapper and rotated, which the
+   compositor handles without repainting the button face inside it. */
+@keyframes ac-orbit {
+  to { transform: rotate(1turn); }
+}
+.ac-orbit::before {
+  content: "";
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  pointer-events: none;
+  inset: -140%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 300deg,
+    var(--primary) 348deg,
+    transparent 360deg
+  );
+  animation: ac-orbit 5.5s linear infinite;
+  z-index: 0;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .ac-marquee-track { animation: none; }
+  .ac-orbit::before { animation: none; background: var(--border); }
+}
 
+/* The solid form of the site's action, for the places a HoverBorderGradient
+   would be too loud: sign-in, the paywall's confirm, the locked-content
+   prompt. Same plate radius and brand ink as every other control — no
+   gradient between two nearly identical colours, no glow, no scale-up. */
+.ac-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 600;
+  border: 1px solid var(--primary);
+  transition:
+    background-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ac-cta:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--primary) 86%, #000000);
+}
+.ac-cta:disabled { opacity: 0.6; }

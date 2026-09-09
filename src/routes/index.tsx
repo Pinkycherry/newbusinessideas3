@@ -7,18 +7,16 @@ import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
 import { CategoryBadge } from "@/components/category-badge";
 import { AdSlot } from "@/components/AdSlot";
-import { HeroSlider, Typewriter } from "@/components/hero-slider";
-import LiquidEther from "@/components/effects/liquid-ether";
-import CardFlip from "@/components/effects/card-flip";
-import ShimmerText from "@/components/effects/shimmer-text";
-import SlideTextLink from "@/components/effects/slide-text-link";
-import TextCycle from "@/components/effects/text-cycle";
-import AttractButton from "@/components/effects/attract-button";
+import { HeroSlider } from "@/components/hero-slider";
 import { BusinessIcons } from "@/components/business-icons";
-import { WaveText } from "@/components/wave-text";
-import { Reveal } from "@/components/reveal";
 import { CardFan } from "@/components/card-fan";
-import { Spotlight } from "@/components/spotlight";
+import HoverBorderGradient from "@/components/aceternity/hover-border-gradient";
+import MovingBorder from "@/components/aceternity/moving-border";
+import ContainerTextFlip from "@/components/aceternity/container-text-flip";
+import InfiniteMovingCards from "@/components/aceternity/infinite-moving-cards";
+import { BentoGrid, BentoGridItem } from "@/components/aceternity/bento-grid";
+import CardSpotlight from "@/components/aceternity/card-spotlight";
+import TextGenerateEffect from "@/components/aceternity/text-generate-effect";
 import {
   Select,
   SelectContent,
@@ -38,31 +36,20 @@ import type { CategoryNode } from "@/lib/ideas.functions";
 import { hideImgIfBroken } from "@/lib/utils";
 import { AccordionItem } from "@/components/accordion-item";
 import { loadGsap, prefersReducedMotion } from "@/lib/motion";
-import { Odometer, useMagnet, useScrollProgress, useStaggerReveal, useTextReveal } from "@/motion";
+import { Odometer, useScrollProgress, useStaggerReveal } from "@/motion";
 
 /**
- * Hero's primary CTA — spotlight glow behind a pill, plus the page's single
- * magnet (MOTION_SPEC §2.4: one per page, on the most important CTA).
- *
- * The pill hover/press tween that used to sit on this element was removed
- * rather than left in place: `useMagnet` writes `transform` directly on every
- * pointer frame and the pill tween writes `transform` through gsap, so the two
- * would overwrite each other and the CTA would lose its hover scale the moment
- * the cursor moved. One writer per transform is the rule the motion system
- * exists to enforce; every other pill on the page keeps its tween untouched.
+ * Hero's primary CTA. The one HoverBorderGradient on the page: brand ink
+ * travels the plate's border until the pointer arrives, then fills it. Every
+ * other action on this page is the quieter MovingBorder.
  */
 function HeroCta() {
-  const magnetRef = useMagnet<HTMLAnchorElement>();
   return (
-    <Spotlight className="inline-block justify-self-start rounded-md">
-      <Link
-        to="/browse"
-        className="glass-pill inline-flex items-center justify-center rounded-md px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
-        ref={magnetRef}
-      >
+    <HoverBorderGradient asChild containerClassName="justify-self-start">
+      <Link to="/browse" className="text-xs font-extrabold uppercase tracking-[0.18em]">
         Browse the library
       </Link>
-    </Spotlight>
+    </HoverBorderGradient>
   );
 }
 
@@ -104,12 +91,12 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
       data-anchor-label="Surprise Me"
       className="mx-auto mt-10 max-w-6xl px-3 sm:px-4"
     >
-      <div className="glass glass-hover bbi-card-motion rounded-md border border-border px-6 py-8 sm:px-10 sm:py-10">
+      <CardSpotlight className="px-6 py-8 sm:px-10 sm:py-10">
         <p className="t-eyebrow flex flex-wrap items-baseline gap-2">
           Surprise me
-          <TextCycle
-            phrases={categories.map((c) => c.categoryName)}
-            className="text-hl-teal normal-case tracking-normal"
+          <ContainerTextFlip
+            words={categories.map((c) => c.categoryName)}
+            className="text-[11px] font-semibold normal-case tracking-normal"
           />
         </p>
         <h2 className="mt-3">Pick a category, or don&apos;t. We&apos;ll surprise you.</h2>
@@ -130,13 +117,13 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
               ))}
             </SelectContent>
           </Select>
-          <AttractButton
+          <MovingBorder
             onClick={() => surprise.mutate()}
             disabled={surprise.isPending}
             className="disabled:cursor-wait disabled:opacity-70"
           >
             {surprise.isPending ? "Picking…" : "Surprise Me"}
-          </AttractButton>
+          </MovingBorder>
         </div>
 
         {surprise.isError && (
@@ -152,7 +139,7 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
             ))}
           </div>
         )}
-      </div>
+      </CardSpotlight>
     </section>
   );
 }
@@ -259,20 +246,8 @@ function HomePage() {
   const { data: trending } = useSuspenseQuery(trendingQuery);
   const featured = highlights.slice(0, 6);
 
-  // MOTION_SPEC §2.3 — exactly one headline reveal per page, and it is the H1.
-  const h1Ref = useTextReveal<HTMLHeadingElement>();
-  // Card rows that previously arrived as one block now arrive in sequence.
-  const heroPanelsRef = useStaggerReveal<HTMLDivElement>();
-  const featuredRef = useStaggerReveal<HTMLDivElement>({ stagger: 0.05 });
-  // Publishes --sc-p across the editorial section so its ambient wash layers
-  // (and only those — never the type) can drift via .mo-drift.
-
   return (
     <SiteShell>
-      {/* AMBIENT TWIN RINGS — midnight-blue + rotating palette, hollow bands */}
-      <div className="bbi-twin-ring ring-1" aria-hidden />
-      <div className="bbi-twin-ring ring-2" aria-hidden />
-
       {/* LLM crawlable summary */}
       <p className="sr-only">
         BBI (Bro Business Ideas) is a business idea directory and startup intelligence library. This
@@ -286,37 +261,21 @@ function HomePage() {
         id="hero"
         data-anchor="hero"
         data-anchor-label="Top"
-        className="bbi-field-host px-3 pt-10 pb-6 sm:px-4 sm:pt-16"
+        className="px-3 pt-10 pb-6 sm:px-4 sm:pt-16"
       >
-        {/* The hero ground: a fluid field in brand ink. This is the one place
-            the page is allowed to be loud — everything else is paper and rules. */}
-        <LiquidEther
-          className="bbi-field"
-          mouseForce={18}
-          cursorSize={120}
-          autoIntensity={1.8}
-          resolution={0.42}
-        />
         <div className="mx-auto max-w-6xl">
-          <div className="glass bbi-hero-open blob-1 px-6 py-14 sm:px-12 sm:py-20">
-            <p className="t-eyebrow sm:text-xs">
-              <Typewriter text="The Truth About Business Ideas" />
-            </p>
+          <div className="rounded-md border border-border bg-card px-6 py-14 sm:px-12 sm:py-20">
+            <p className="t-eyebrow sm:text-xs">The Truth About Business Ideas</p>
             <div className="mt-8 grid items-center gap-8 lg:grid-cols-[1.15fr_1fr]">
               <div>
-                <h1
-                  ref={h1Ref}
-                  className="max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl"
-                >
-                  <WaveText>
-                    Tired of paying just to check if your{" "}
-                    <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
-                      idea will work
-                    </span>
-                    ?
-                  </WaveText>
+                <h1 className="max-w-3xl text-[2.15rem] font-extrabold leading-[1.06] tracking-[-0.028em] sm:text-[3.15rem]">
+                  Tired of paying just to check if your{" "}
+                  {/* Brand ink, no rule and no fill: an underline inside an H1
+                      reads as a link, and a tinted box breaks into ragged
+                      fragments the moment the phrase wraps. */}
+                  <span className="text-primary">idea will work</span>?
                 </h1>
-                <p data-wave className="mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
+                <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
                   We built a free home for real business ideas — side hustles, zero investment
                   ideas, work from home ideas, and low investment ideas. Every idea is researched,
                   not guessed. We tell you who will actually pay you, how the money works, and what
@@ -333,7 +292,7 @@ function HomePage() {
                   <Link
                     to="/search"
                     search={{ q: "" }}
-                    className="glass flex min-w-0 items-center gap-2 rounded-full px-4 py-2.5 text-sm text-muted-foreground"
+                    className="flex min-w-0 items-center gap-2 rounded-md border border-border bg-card px-4 py-3 text-sm text-muted-foreground transition-colors duration-300 hover:border-primary hover:text-foreground"
                   >
                     <span aria-hidden>⌕</span>
                     <span>Search idea blueprints…</span>
@@ -341,16 +300,16 @@ function HomePage() {
                   <HeroCta />
                 </div>
               </div>
-              <div className="iv-fade-up" style={{ animationDelay: "540ms" }}>
+              <div>
                 <HeroSlider />
               </div>
             </div>
 
-            <div ref={heroPanelsRef} className="mt-10 grid gap-4 sm:grid-cols-2">
+            <BentoGrid className="mt-10 md:grid-cols-2">
               {HERO_PANELS.map((panel) => (
-                <CardFlip key={panel.label} title={panel.label} description={panel.body} />
+                <BentoGridItem key={panel.label} title={panel.label} description={panel.body} />
               ))}
-            </div>
+            </BentoGrid>
           </div>
         </div>
       </section>
@@ -374,38 +333,28 @@ function HomePage() {
         className="pt-10"
         aria-label="Browse by category"
       >
-        <style>{`@keyframes iv-ticker-l{from{transform:translateX(0)}to{transform:translateX(-50%)}}@keyframes iv-ticker-r{from{transform:translateX(-50%)}to{transform:translateX(0)}}.iv-ticker-track{width:max-content;animation:iv-ticker-l 70s linear infinite}.iv-ticker-track.rev{animation-name:iv-ticker-r}.iv-ticker:hover .iv-ticker-track,.iv-ticker:active .iv-ticker-track{animation-play-state:paused}`}</style>
         <p className="mx-auto max-w-6xl px-3 t-eyebrow sm:px-4">Browse by category</p>
         {/* Business-model icons, bobbing on staggered offsets — the movement
             from the approved design. Full-bleed, masked at both edges. */}
         <BusinessIcons />
-        <div className="iv-ticker mt-4 grid gap-3">
-          {tickerRows(catalog.categories).map((row, rowIndex) => {
-            const repeats = Math.max(2, Math.ceil(14 / Math.max(row.length, 1))) * 2;
-            const items = Array.from({ length: repeats }, () => row).flat();
-            return (
-              <div
-                key={`ticker-row-${rowIndex}`}
-                className="overflow-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-              >
-                <div
-                  className={`iv-ticker-track flex gap-3 px-3 sm:px-4 ${rowIndex % 2 === 1 ? "rev" : ""}`}
-                  style={{ animationDuration: `${70 + rowIndex * 10}s` }}
-                >
-                  {items.map((c, i) => (
-                    <Link
-                      key={`${rowIndex}-${c.categorySlug}-${i}`}
-                      to="/category/$categorySlug"
-                      params={{ categorySlug: c.categorySlug }}
-                      className="glass-pill shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] transition-all duration-300"
-                    >
-                      {c.categoryName}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
+        {/* Four counter-running rows of live categories. Each row is an
+            InfiniteMovingCards track: it duplicates its own items once and
+            travels exactly half its width, so the loop never seams however
+            many categories the catalog holds. Hover or tab into a row and it
+            stops. */}
+        <div className="mt-4 grid gap-3 px-3 sm:px-4">
+          {tickerRows(catalog.categories).map((row, rowIndex) => (
+            <InfiniteMovingCards
+              key={`ticker-row-${rowIndex}`}
+              direction={rowIndex % 2 === 1 ? "right" : "left"}
+              speed={70 + rowIndex * 10}
+              items={row.map((c) => ({
+                label: c.categoryName,
+                to: "/category/$categorySlug",
+                params: { categorySlug: c.categorySlug },
+              }))}
+            />
+          ))}
         </div>
       </section>
 
@@ -417,19 +366,13 @@ function HomePage() {
       </div>
 
       {/* BRAND STATEMENT */}
-      <Reveal variant="rv-lift">
-        <BrandStatementBanner />
-      </Reveal>
+      <BrandStatementBanner />
 
       {/* KEYWORD MOSAIC */}
-      <Reveal variant="rv-lift">
-        <KeywordMosaic />
-      </Reveal>
+      <KeywordMosaic />
 
       {/* TRUST STRIP */}
-      <Reveal variant="rv-lift">
-        <TrustStatsBar totalIdeas={catalog.totalIdeas} categoryCount={catalog.categories.length} />
-      </Reveal>
+      <TrustStatsBar totalIdeas={catalog.totalIdeas} categoryCount={catalog.categories.length} />
 
       {/* MARKET GAP + orbit #1 */}
 
@@ -441,10 +384,7 @@ function HomePage() {
           <div>
             <p className="t-eyebrow">Featured blueprints</p>
             <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-              <ShimmerText
-                text="Blueprints worth your afternoon"
-                className="text-2xl sm:text-3xl"
-              />
+              Blueprints worth your afternoon
             </h2>
           </div>
           <Link
@@ -454,7 +394,7 @@ function HomePage() {
             Browse the full library →
           </Link>
         </div>
-        <div ref={featuredRef} className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((idea) => (
             <IdeaCard key={idea.ideaId} idea={idea} />
           ))}
@@ -478,69 +418,51 @@ function HomePage() {
           outright, so a class-level drift can never apply to them. */}
 
       {/* HOW IT WORKS + orbit #2 + Faq1 inline */}
-      <Reveal variant="rv-lift">
-        <HowItWorksSection />
-      </Reveal>
+      <HowItWorksSection />
 
       {/* WHO FOR */}
-      <Reveal variant="rv-lift">
-        <WhoForSection />
-      </Reveal>
+      <WhoForSection />
 
       {/* PRICING PHILOSOPHY + Faq2 inline */}
-      <Reveal variant="rv-lift">
-        <PricingPhilosophySection />
-      </Reveal>
+      <PricingPhilosophySection />
 
       {/* WHY WE BUILT THIS */}
-      <Reveal variant="rv-lift">
-        <section className="mx-auto max-w-4xl px-3 pb-24 sm:px-4">
-          <h2 className="text-3xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
-            We got tired of the same 50 ideas recycled into infinity.
-          </h2>
-          <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
-            <p>
-              Every business idea list on the internet is the same list. Drop shipping. Print on
-              demand. Start a blog. Sell on Etsy. They are not wrong exactly, but they are not
-              researched either. Nobody tells you the margin, the failure rate, the licensing
-              requirement, or the competitor who already owns the space.
-            </p>
-            <p>
-              This library exists because a genuine small business idea blueprint is worth more than
-              a hundred recycled suggestions. We research each one properly — market context, real
-              revenue mechanics, honest risks — and we tell you directly whether you are the right
-              person to build it.
-            </p>
-          </div>
-          <Link
-            to="/browse"
-            className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
-          >
-            Read a blueprint
-            <span aria-hidden>→</span>
-          </Link>
-        </section>
-      </Reveal>
+      <section className="mx-auto max-w-4xl px-3 pb-24 sm:px-4">
+        <h2 className="text-3xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
+          We got tired of the same 50 ideas recycled into infinity.
+        </h2>
+        <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p>
+            Every business idea list on the internet is the same list. Drop shipping. Print on
+            demand. Start a blog. Sell on Etsy. They are not wrong exactly, but they are not
+            researched either. Nobody tells you the margin, the failure rate, the licensing
+            requirement, or the competitor who already owns the space.
+          </p>
+          <p>
+            This library exists because a genuine small business idea blueprint is worth more than a
+            hundred recycled suggestions. We research each one properly — market context, real
+            revenue mechanics, honest risks — and we tell you directly whether you are the right
+            person to build it.
+          </p>
+        </div>
+        <Link
+          to="/browse"
+          className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
+        >
+          Read a blueprint
+          <span aria-hidden>→</span>
+        </Link>
+      </section>
 
       {/* TEAM + orbit #3 */}
-      <Reveal variant="rv-lift">
-        <TeamSection />
-      </Reveal>
+      <TeamSection />
 
-      <Reveal variant="rv-lift">
-        <InspiredBySection />
-      </Reveal>
-      <Reveal variant="rv-lift">
-        <ComparisonSection />
-      </Reveal>
-      <Reveal variant="rv-lift">
-        <FutureProofSpotlight />
-      </Reveal>
+      <InspiredBySection />
+      <ComparisonSection />
+      <FutureProofSpotlight />
 
       {/* PROMISE + Faq3 inline */}
-      <Reveal variant="rv-lift">
-        <PromiseSection />
-      </Reveal>
+      <PromiseSection />
 
       {/* GENERAL CLOSING FAQ */}
       <section className="mx-auto mt-20 max-w-4xl border-t border-border/60 px-3 pt-16 pb-24 sm:mt-28 sm:px-4 sm:pt-20">
@@ -678,10 +600,7 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
       {/* No boxed/16:9 backdrop element here on purpose — the dark glow behind the
           tree lives entirely in .tree-asset-container::before in styles.css, as a
           large, heavily-blurred radial glow with no hard edge or rectangle. */}
-      <Reveal
-        variant="rv-zoom"
-        className="relative mt-8 sm:mt-12 flex w-full items-center justify-center py-10 sm:py-16"
-      >
+      <div className="relative mt-8 flex w-full items-center justify-center py-10 sm:mt-12 sm:py-16">
         {/* DESKTOP TREE ASSET — this is a hotlinked cross-origin JPG (lives on
             ethicalfounder.com, not our domain), so any technique that needs
             to read its actual pixel data (a CSS mask-image, an SVG luminance
@@ -788,7 +707,7 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
             ))}
           </div>
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }

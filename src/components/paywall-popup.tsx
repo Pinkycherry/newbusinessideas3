@@ -39,14 +39,14 @@ export function PaywallPopup({
           <Link
             to="/pricing"
             onClick={() => onOpenChange(false)}
-            className="sheen flex-1 rounded-full border border-border px-5 py-3 text-center text-sm font-semibold transition-all duration-300 hover:border-primary"
+            className="flex-1 rounded-md border border-border bg-card px-5 py-3 text-center text-sm font-semibold transition-colors duration-300 hover:border-primary hover:text-primary"
           >
             Get 3 Months — ₹199
           </Link>
           <Link
             to="/pricing"
             onClick={() => onOpenChange(false)}
-            className="sheen flex-1 rounded-full bg-gradient-to-r from-primary to-ember px-5 py-3 text-center text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_color-mix(in_oklab,var(--primary)_40%,transparent)] transition-all duration-300 hover:scale-[1.02]"
+            className="ac-cta flex-1 px-5 py-3 text-center text-sm"
           >
             Get Lifetime — ₹399
           </Link>

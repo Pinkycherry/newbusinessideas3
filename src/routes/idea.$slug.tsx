@@ -1,5 +1,7 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import ShareLinks from "@/components/effects/share-links";
+import StickyScroll from "@/components/aceternity/sticky-scroll";
+import CardSpotlight from "@/components/aceternity/card-spotlight";
 import { queryOptions } from "@tanstack/react-query";
 import { Lock } from "lucide-react";
 
@@ -458,33 +460,47 @@ function IdeaPage() {
 
                 {/* Researched detail — each block renders only when the pipeline
                     has filled it, so un-enriched ideas are unaffected. */}
-                <div data-anchor="research" data-anchor-label="Research">
-                  <RichSection title="The opportunity" body={idea.marketOpportunity} />
-                  <RichSection title="Who actually pays you" body={idea.targetCustomer} />
-                  <RichSection title="How the money works" body={idea.howYouMakeMoney} />
+                <div data-anchor="research" data-anchor-label="Research" className="mt-10">
+                  {/* StickyScroll: the four research blocks read as one argument,
+                      so the plate on the right holds its place and names which
+                      part of that argument the reader is level with. Blocks the
+                      pipeline has not filled simply do not appear. */}
+                  <StickyScroll
+                    items={[
+                      { title: "The opportunity", body: idea.marketOpportunity },
+                      { title: "Who actually pays you", body: idea.targetCustomer },
+                      { title: "How the money works", body: idea.howYouMakeMoney },
+                      { title: "Your edge", body: idea.competitionEdge },
+                    ]
+                      .filter((entry) => Boolean(entry.body))
+                      .map((entry) => ({
+                        title: entry.title,
+                        description: (
+                          <p className="whitespace-pre-line leading-relaxed">{entry.body}</p>
+                        ),
+                      }))}
+                  />
 
                   {(idea.startupCost || idea.incomePotential) && (
                     <div className="mt-6 grid gap-4 sm:grid-cols-2">
                       {idea.startupCost && (
-                        <section className="rounded-lg border border-border bg-card p-5">
+                        <CardSpotlight className="p-5">
                           <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-coral">
                             What it costs to start
                           </h2>
                           <p className="mt-2 text-sm leading-relaxed">{idea.startupCost}</p>
-                        </section>
+                        </CardSpotlight>
                       )}
                       {idea.incomePotential && (
-                        <section className="rounded-lg border border-border bg-card p-5">
+                        <CardSpotlight className="p-5">
                           <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-green">
                             What you can earn
                           </h2>
                           <p className="mt-2 text-sm leading-relaxed">{idea.incomePotential}</p>
-                        </section>
+                        </CardSpotlight>
                       )}
                     </div>
                   )}
-
-                  <RichSection title="Your edge" body={idea.competitionEdge} />
                 </div>
 
                 {idea.gettingStartedSteps.length > 0 && (
@@ -578,7 +594,7 @@ function IdeaPage() {
                   <Link
                     to="/sign-in"
                     search={{ redirect: ideaPath }}
-                    className="sheen rounded-full bg-gradient-to-r from-primary to-ember px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground shadow-[0_10px_36px_color-mix(in_oklab,var(--primary)_40%,transparent)] transition-transform duration-300 hover:scale-105"
+                    className="ac-cta px-5 py-2.5 text-xs uppercase tracking-widest"
                   >
                     Continue with Google
                   </Link>

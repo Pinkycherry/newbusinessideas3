@@ -1,17 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { useCallback } from "react";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { getCatalog } from "@/lib/ideas.functions";
+import FocusCards from "@/components/aceternity/focus-cards";
+import { photoAt } from "@/config/imagery";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { usePillInteraction } from "@/hooks/use-pill-interaction";
-import {
-  useElementPointerGroup,
-  useScrollProgress,
-  useStaggerReveal,
-  useTextReveal,
-} from "@/motion";
+import { useScrollProgress, useTextReveal } from "@/motion";
 
 const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
 
@@ -78,19 +74,7 @@ function SubcategoryPill({
 function BrowsePage() {
   const { data } = useSuspenseQuery(catalogQuery);
   const headingRef = useTextReveal<HTMLHeadingElement>();
-  // MOTION_SPEC section 3 — gallery grammar. One delegated pointer listener
-  // for all 14 category panels, and one short-stagger reveal, both anchored
-  // on the same container element, so they share a single callback ref.
-  const pointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
-  const revealRef = useStaggerReveal<HTMLDivElement>({ stagger: 0.03 });
   const depthRef = useScrollProgress<HTMLDivElement>();
-  const listRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      pointerRef.current = node;
-      revealRef.current = node;
-    },
-    [pointerRef, revealRef],
-  );
   return (
     <>
       <JsonLd
@@ -124,41 +108,24 @@ function BrowsePage() {
           </div>
           {/* Was `space-y-6`: fourteen full-width bars, each holding a single
               line of text and a count, roughly 1,600px of page to say what a
-              grid says in 400. Compact three-up grid instead — the card is
-              sized to its content rather than to the container. */}
-          <div
-            ref={listRef}
-            className="bbi-depth-front mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {data.categories.map((category) => (
-              <section
-                key={category.categorySlug}
-                className="glass glass-hover mo-card rounded-2xl px-4 py-4 sm:px-5"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <Link
-                    to="/category/$categorySlug"
-                    params={{ categorySlug: category.categorySlug }}
-                    className="bbi-heading-glow text-base font-bold leading-snug tracking-tight text-foreground transition-colors hover:text-primary sm:text-lg"
-                  >
-                    {category.categoryName}
-                  </Link>
-                  <span className="shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary">
-                    {category.ideaCount}
-                  </span>
-                </div>
-                {/* This block used to render one pill per SUBCATEGORY, and
-                    since every idea carries its own unique subcategory that
-                    meant one pill per idea — 290 of them on this page today,
-                    each labelled with an idea's own title and linking to a
-                    one-card page duplicating it. At the 10,000-page target it
-                    would have been 10,000 pills in a single tag cloud.
-
-                    The category link and its count above are the navigation.
-                    The card stays a card at any catalogue size. */}
-              </section>
-            ))}
-          </div>
+              grid says in 400. FocusCards instead: hovering one category pulls
+              it forward and lets the rest fall back, so a long grid answers
+              where the reader is looking. Photography comes from
+              ethicalfounder.com, BBI's parent site — see src/config/imagery.ts. */}
+          <FocusCards
+            className="bbi-depth-front mt-8"
+            cards={data.categories.map((category, index) => {
+              const photo = photoAt(index);
+              return {
+                title: category.categoryName,
+                meta: `${category.ideaCount} blueprints`,
+                src: photo.src,
+                alt: photo.alt,
+                to: "/category/$categorySlug",
+                params: { categorySlug: category.categorySlug },
+              };
+            })}
+          />
         </div>
       </SiteShell>
     </>

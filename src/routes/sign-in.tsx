@@ -45,7 +45,7 @@ function SignInPage() {
           type="button"
           onClick={handleSignIn}
           disabled={pending}
-          className="sheen mx-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-ember px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_10px_36px_color-mix(in_oklab,var(--primary)_40%,transparent)] transition-all duration-300 hover:scale-105 disabled:cursor-wait disabled:opacity-70"
+          className="ac-cta mx-auto px-6 py-3 text-sm disabled:cursor-wait"
         >
           {pending ? "Redirecting…" : "Continue with Google"}
         </button>

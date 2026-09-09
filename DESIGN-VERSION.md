@@ -1,110 +1,72 @@
-# Field Guide — version record
+# Design version record
 
-The current visual system, and what it replaced. Companion to
-`DEPLOYMENT-BASELINE.md` (on `claude/code-skills-plugins-setup-zg8aqz`),
-which pins the commit this redesign started from.
+## v3 — The Aceternity theme (2026-09-09)
 
-## This version
+Branch: `claude/bbi-field-guide`
 
-| | |
+The component set the founder supplied is now the site's theme, not a garnish
+on top of an older one. Header to footer, a card, a button and a heading each
+have exactly one implementation.
+
+### What the components are, and where they run
+
+| Component | Where |
 |---|---|
-| **Stamped (UTC)** | `2026-09-09T04:01:57Z` |
-| **Branch** | `claude/bbi-field-guide` |
-| **Started from** | `02cbbf2` — the live production commit, not `main` |
-| **Design world** | Field Guide — paper and ink, plates and rules |
-| **Preview** | https://newbusinessideas3-git-claude-bbi-field-guide-pinky12.vercel.app |
+| HoverBorderGradient | The one primary action per view — hero CTA, footer CTA, header "Browse free" |
+| MovingBorder | Secondary actions — Surprise Me, newsletter Subscribe |
+| CardSpotlight | Every idea card, the Surprise Me panel, the cost/earn plates on a blueprint |
+| BentoGrid / BentoGridItem | The hero's two content panels |
+| InfiniteMovingCards | The four category rows under "Browse by category" |
+| FocusCards | The category grid on /browse |
+| StickyScroll | The four research blocks on a blueprint page |
+| ContainerTextFlip | The live category name in the Surprise Me eyebrow |
+| FlipWords, TextGenerateEffect, Tabs, AnimatedTooltip | Built and available; see "Not placed" |
 
-## The rule that governs it
+### What was removed
 
-The brand indigo `#4643BA` is unchanged. What changed is its job: it was a
-glow — gradient washes, frosted glass, coloured shadow — and it is now ink:
-rules, marks, plate edges.
+- **LiquidEther** and the `three` dependency (~600 kB out of the bundle).
+- Six bespoke effect components: CardFlip, ShimmerText, SlideTextLink,
+  TextCycle, AttractButton, and the ambient twin rings.
+- The site-wide `Reveal` scroll wrappers, `WaveText`, and the hero `Typewriter`.
+- Five hand-written gradient-pill button styles, replaced by one `.ac-cta` rule.
+- The hand-rolled `iv-ticker` keyframes, replaced by InfiniteMovingCards.
 
-**No word of the site was lost.** `scripts/copy-manifest.mjs` walks the
-TypeScript AST and collects every user-visible string. Against the `02cbbf2`
-baseline of 390, the site differs by exactly one addition — "Share", from the
-share control on the blueprint page — and zero removals.
+### Typography
 
-## Tokens
+`--font-display` is Geist, which ships real weights, so hierarchy comes from
+weight again and the sizes came down: h1 from `clamp(3.4rem, 5.6vw, 5rem)` to
+`clamp(2.25rem, 5.4vw, 3.5rem)`, h2 to `clamp(1.6rem, 3.2vw, 2.25rem)`. The
+heading rules are now `:where()` selectors, so a size utility at a call site
+wins instead of being silently overridden.
 
-| Token | Value | Role |
-|---|---|---|
-| `--background` | `#F7F6FB` | paper, cooled toward the violet — deliberately not warm cream |
-| `--foreground` | `#12122E` | ink |
-| `--primary` / `--ring` | `#4643BA` | engraving ink. Unchanged from before |
-| `--card` | `#FFFFFF` | opaque. The single value that stops surfaces reading as glass |
-| `--border` | `rgba(70,67,186,0.22)` | the plate rule |
-| `--radius` | `0.5rem` | plate, not capsule |
+### Not placed, and why
 
-Plate radii: `0.5rem` / `0.375rem` / `0.4375rem`, from a capsule set of
-`1.75` / `1.25` / `1.5rem`.
+- **AnimatedTooltip** — the team section says in as many words that there is no
+  fake team page. A row of portrait stamps would contradict its own copy.
+- **Globe3D** — no geographic data in the schema.
+- **AnimatedTestimonials** — would require inventing quotes.
+- **LinkPreview** — needs an external screenshot service (api.microlink.io).
+- **Compare**, **HeroParallax** — both need a supply of imagery; see below.
 
-## The verdict palette
+### Imagery
 
-Four colours, defined and contrast-measured in `styles.css` before this
-redesign and unused on the page that needed them most:
+Every photograph is an ethicalfounder.com URL, listed in `src/config/imagery.ts`.
+That file currently holds the three URLs already known to resolve. The container's
+network policy blocks the domain, so the library could not be enumerated from
+here — paste more media URLs into `EF_LIBRARY` and every image slot on the site
+picks them up.
 
-| Token | Value | Means |
-|---|---|---|
-| `--hl-gold` | `#8A5D00` | emphasis and labels |
-| `--hl-green` | `#0F6E44` | a positive verdict — why it works, what you earn |
-| `--hl-coral` | `#B0442C` | a cost or a risk — what hurts, what it costs |
-| `--hl-teal` | `#10627A` | a measured figure — trend scores, demand |
+### Copy
 
-## Motion
+`node scripts/copy-manifest.mjs` reads JSX text, copy-bearing JSX attributes,
+and (new in this pass) copy-bearing keys of object literals — which is how
+content declared as data reaches the page. Diffed against `02cbbf2`, this pass
+removes nothing; the 29 strings absent from the baseline all belong to the
+long homepage sections the founder asked to cut.
 
-| Effect | Where | Notes |
-|---|---|---|
-| `liquid-ether` | hero ground | WebGL fluid in brand ink. The one loud moment |
-| `shimmer-text` | standing lines | never body copy — a moving gradient on a paragraph is unreadable |
-| `slide-text-link` | links | CSS only, no runtime cost |
-| `card-flip` | the two hero panels | label on the front, body on the back. Flips on hover, tap and Enter/Space, so the back is reachable on touch |
-| `attract-button` | Surprise Me | ink specks gathering to the pointer |
-| `text-cycle` | Surprise Me eyebrow | cycles the real catalogue — data, not decoration |
-| `share-links` | blueprint page | share destinations unrolling sideways |
+---
 
-Existing site motion is untouched and still in force: `useMagnet`,
-`useStaggerReveal`, `useTextReveal`, `useScrollProgress` and the GSAP
-`usePillInteraction` hook.
+## v2 — Field Guide (2026-09-09T04:01:57Z)
 
-Every effect honours `prefers-reduced-motion`.
-
-### All seven are wired
-
-An earlier version of this file said two were held back because they needed
-copy that did not exist. That was too cautious: `card-flip` runs on the hero
-panels' own label and body, and `text-cycle` runs on the real category names
-from the catalogue. Neither needed a word written.
-
-The one thing `card-flip` did need was reach. Hover alone would have hidden a
-panel's body on touch, where there is no hover, so it flips on tap and on
-Enter or Space too and carries `role`/`tabIndex`/`aria-pressed`.
-
-## Bugs found and fixed on the way
-
-- A per-card hash (reduce → abs → modulo over the slug) selecting between
-  `blob-sm-1/2/3`, all byte-identical, so it computed a constant for every
-  card in every grid.
-- A gauge fill of `from-primary to-accent` — byte-identical tokens, so a
-  gradient between one colour.
-- The header overlap at 1280px, where the logo carried `min-w-0` and was
-  crushed by the nav. Predates this redesign.
-- The fluid hero fading through grey: the shader mixed toward `vec4(0,0,0,0)`,
-  so soft edges passed through black before their alpha reached zero. It now
-  mixes toward the paper token.
-- The copy check's own blind spot. `scripts/copy-manifest.mjs` did not read
-  `text` props, so it could not see strings passed that way — including the
-  hero eyebrow — and reported a false removal the moment a string moved into
-  one. `text` is now counted, and the baseline was regenerated from `02cbbf2`
-  with the corrected extractor: **390 strings**, not the 389 first recorded.
-
-## Environment notes for whoever picks this up
-
-- Install with **npm**, not bun. `bun.lock` resolves 42 packages through
-  Lovable's private registry; `package-lock.json` is clean public npm.
-- The build environment blocks `*.supabase.co`, `nutrizoe.in` (the blog
-  source) and the off-site `/wp-content/` images. `/blog` returns 500 locally
-  for that reason alone and is fine on Vercel.
-- `.localdev/` holds a PostgREST stand-in that renders the site offline; it is
-  gitignored and never deployed.
-- `three` costs 1.16 MB (234 kB gzip) for the hero alone.
+Paper and ink, plates and rules. Brand indigo `#4643BA` re-roled from glow to
+ink. Superseded above.

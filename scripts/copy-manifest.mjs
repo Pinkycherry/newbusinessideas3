@@ -6,6 +6,9 @@
  * strings a visitor can actually read:
  *   - JSX text nodes
  *   - string literals passed to copy-bearing JSX attributes (title, alt, ...)
+ *   - string literals on copy-bearing keys of object literals (title, body, ...),
+ *     which is how content that is declared as data and rendered by a component
+ *     reaches the page — HERO_PANELS, FAQS, the StickyScroll entries
  *
  * Run it before and after a redesign and diff the two files. Any line that
  * disappears is a word that went missing.
@@ -39,6 +42,13 @@ const COPY_ATTRS = new Set([
   "aria-label",
   "ariaLabel",
   "text",
+  "body",
+  "q",
+  "a",
+  "name",
+  "answer",
+  "question",
+  "summary",
 ]);
 
 const files = [];
@@ -87,6 +97,16 @@ for (const file of files.sort()) {
           add(init.expression.text);
         }
       }
+    }
+
+    // { title: "...", body: "..." } — copy declared as data rather than markup.
+    if (
+      ts.isPropertyAssignment(node) &&
+      (ts.isIdentifier(node.name) || ts.isStringLiteral(node.name)) &&
+      COPY_ATTRS.has(node.name.text)
+    ) {
+      const value = node.initializer;
+      if (ts.isStringLiteral(value) || ts.isNoSubstitutionTemplateLiteral(value)) add(value.text);
     }
 
     ts.forEachChild(node, visit);

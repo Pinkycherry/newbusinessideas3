@@ -29,7 +29,6 @@ import { RiOpenaiFill, RiGrokAiFill } from "react-icons/ri";
 import { LiveSearch } from "@/components/live-search";
 import { FloatingDock } from "@/components/floating-dock";
 import { CategoryBadge } from "@/components/category-badge";
-import { Spotlight } from "@/components/spotlight";
 import { catalogQuery } from "@/lib/ideas.functions";
 import { usePageScrollProgress } from "@/motion";
 import { topCategories, typeGroups } from "@/lib/catalog-display";
@@ -38,26 +37,18 @@ import { prefersReducedMotion } from "@/lib/motion";
 
 import { useAuth } from "@/hooks/use-auth";
 import { signOut } from "@/lib/auth-client";
-import { usePillInteraction } from "@/hooks/use-pill-interaction";
+import HoverBorderGradient from "@/components/aceternity/hover-border-gradient";
+import MovingBorder from "@/components/aceternity/moving-border";
 
 /** Footer's primary CTA — spotlight glow behind a pill with GSAP hover/press motion. */
 function FooterCta() {
-  const pill = usePillInteraction<HTMLAnchorElement>();
   return (
-    <Spotlight className="mt-5 inline-block rounded-full">
-      <Link
-        to="/browse"
-        className="glass-pill inline-flex items-center gap-2 rounded-md px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.18em]"
-        ref={pill.ref}
-        onMouseEnter={pill.onMouseEnter}
-        onMouseLeave={pill.onMouseLeave}
-        onPointerDown={pill.onPointerDown}
-        onPointerUp={pill.onPointerUp}
-      >
-        <span aria-hidden>⌕</span>
+    <HoverBorderGradient asChild containerClassName="mt-5">
+      <Link to="/browse" className="text-xs font-extrabold uppercase tracking-[0.18em]">
+        <span aria-hidden>&#8981;</span>
         <span>Browse the library free</span>
       </Link>
-    </Spotlight>
+    </HoverBorderGradient>
   );
 }
 
@@ -229,17 +220,19 @@ function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boo
       <Link
         to="/sign-in"
         onClick={onNavigate}
-        className={`glass rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground transition-all duration-300 hover:border-primary ${full ? "block text-center" : ""}`}
+        className={`whitespace-nowrap rounded-md border border-border bg-card px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground transition-colors duration-300 hover:border-primary hover:text-primary ${full ? "block text-center" : ""}`}
       >
         Sign In
       </Link>
-      <Link
-        to="/browse"
-        onClick={onNavigate}
-        className={`sheen rounded-full bg-gradient-to-r from-primary to-ember px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary-foreground shadow-[0_8px_28px_color-mix(in_oklab,var(--primary)_40%,transparent)] transition-all duration-300 hover:scale-105 ${full ? "block text-center" : ""}`}
-      >
-        Browse free
-      </Link>
+      <HoverBorderGradient asChild containerClassName={full ? "w-full" : "shrink-0"}>
+        <Link
+          to="/browse"
+          onClick={onNavigate}
+          className={`whitespace-nowrap px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] ${full ? "w-full justify-center" : ""}`}
+        >
+          Browse free
+        </Link>
+      </HoverBorderGradient>
     </>
   );
 }
@@ -301,9 +294,18 @@ function NavDropdown({
         aria-haspopup="menu"
         onFocus={() => isDesktop() && openNow()}
         onClick={() => setOpen((v) => !v)}
-        className="bbi-nav-morph flex items-center gap-1.5 uppercase tracking-[0.18em] transition-colors duration-300 hover:text-foreground"
+        className="relative flex items-center gap-1 rounded-[calc(var(--radius)-2px)] px-1.5 py-1 uppercase tracking-[0.18em] transition-colors duration-300 hover:text-foreground"
       >
-        {label}
+        {/* One marker element shared across every dropdown trigger, so moving
+            along the bar slides a single plate rather than fading N of them. */}
+        {open ? (
+          <motion.span
+            layoutId="ac-nav-marker"
+            transition={{ type: "spring", stiffness: 340, damping: 30 }}
+            className="absolute inset-0 rounded-[calc(var(--radius)-2px)] bg-primary/10"
+          />
+        ) : null}
+        <span className="relative z-10">{label}</span>
         <span
           aria-hidden
           className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
@@ -315,10 +317,10 @@ function NavDropdown({
         {open && (
           <motion.div
             role="menu"
-            initial={{ opacity: 0, y: -10, scale: 0.985 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.985 }}
-            transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: -8, scale: 0.9, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -8, scale: 0.9, filter: "blur(8px)" }}
+            transition={{ type: "spring", stiffness: 260, damping: 26 }}
             onMouseEnter={openNow}
             onMouseLeave={closeSoon}
             className={`iv-nav-panel ${panelClassName}`}
@@ -711,9 +713,14 @@ function NewsletterSignup() {
             placeholder="Enter your email address"
             className="bbi-footer-input"
           />
-          <button type="submit" disabled={state === "sending"} className="bbi-footer-subscribe">
+          <MovingBorder
+            type="submit"
+            disabled={state === "sending"}
+            className="w-full justify-center"
+            containerClassName="w-full"
+          >
             {state === "sending" ? "Signing you up…" : "Subscribe"}
-          </button>
+          </MovingBorder>
           {state === "error" && (
             <p className="text-xs text-destructive" role="alert">
               {message}
@@ -754,7 +761,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             </span>
           </Link>
 
-          <nav className="hidden min-w-0 items-center gap-4 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground lg:flex xl:gap-5">
+          <nav className="hidden shrink-0 items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground lg:flex xl:gap-4">
             <CategoryMega />
             <BrowseByTypeDropdown />
             <LinkListDropdown label="Explore" items={EXPLORE_ITEMS} />
@@ -770,8 +777,12 @@ export function SiteShell({ children }: { children: ReactNode }) {
             ))}
           </nav>
 
+          {/* Nav labels cannot reflow and the two actions must stay on one
+              line, so the search field is what gives way: it appears from xl
+              up, where there is room for all three. Below lg the whole group
+              is replaced by the sheet menu, which carries the search itself. */}
           <div className="hidden shrink-0 items-center gap-2 lg:flex">
-            <LiveSearch className="w-44 xl:w-56" />
+            <LiveSearch className="hidden xl:block xl:w-52" />
             <AuthButtons />
           </div>
 
