@@ -226,13 +226,13 @@ function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
     >
       <div className="grid gap-4 md:grid-cols-2">
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-green">
             Why it works
           </h2>
           <ul className="mt-3 space-y-3 text-sm">
             {idea.pros.map((pro) => (
               <li key={pro} className="flex gap-2">
-                <span aria-hidden className="text-accent">
+                <span aria-hidden className="text-hl-green">
                   +
                 </span>
                 <span>{pro}</span>
@@ -241,13 +241,13 @@ function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
           </ul>
         </div>
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-destructive">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-coral">
             What will hurt
           </h2>
           <ul className="mt-3 space-y-3 text-sm">
             {idea.cons.map((con) => (
               <li key={con} className="flex gap-2">
-                <span aria-hidden className="text-destructive">
+                <span aria-hidden className="text-hl-coral">
                   −
                 </span>
                 <span>{con}</span>
@@ -459,7 +459,7 @@ function IdeaPage() {
                     <div className="mt-6 grid gap-4 sm:grid-cols-2">
                       {idea.startupCost && (
                         <section className="rounded-lg border border-border bg-card p-5">
-                          <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
+                          <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-coral">
                             What it costs to start
                           </h2>
                           <p className="mt-2 text-sm leading-relaxed">{idea.startupCost}</p>
@@ -467,7 +467,7 @@ function IdeaPage() {
                       )}
                       {idea.incomePotential && (
                         <section className="rounded-lg border border-border bg-card p-5">
-                          <h2 className="text-sm font-semibold uppercase tracking-widest text-accent">
+                          <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-green">
                             What you can earn
                           </h2>
                           <p className="mt-2 text-sm leading-relaxed">{idea.incomePotential}</p>
