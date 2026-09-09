@@ -115,6 +115,25 @@ for (const file of files.sort()) {
       }
     }
 
+    // const BBI_US = ["...", "..."] — a list of sentences held as a plain
+    // array and mapped into <li> at render. Restricted to CONSTANT_CASE
+    // declarations so that arrays of slugs, class names and query keys
+    // elsewhere in the tree are not swept up as prose.
+    if (ts.isArrayLiteralExpression(node)) {
+      const decl = node.parent;
+      const name =
+        decl && ts.isVariableDeclaration(decl) && ts.isIdentifier(decl.name)
+          ? decl.name.text
+          : "";
+      if (/^[A-Z][A-Z0-9_]*$/.test(name)) {
+        for (const element of node.elements) {
+          if (ts.isStringLiteral(element) || ts.isNoSubstitutionTemplateLiteral(element)) {
+            add(element.text);
+          }
+        }
+      }
+    }
+
     // { title: "...", body: "..." } — copy declared as data rather than markup.
     if (
       ts.isPropertyAssignment(node) &&

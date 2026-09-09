@@ -1112,21 +1112,29 @@ const BBI_FAQ_2 = [
 
 function PricingPhilosophySection() {
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass glass-hover bbi-shape-ticket p-6 text-center sm:p-9">
-        <p className="t-eyebrow">Pricing, honestly</p>
-        <h2 className="mx-auto mt-3 max-w-2xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-          One fee. Once. For life. That&apos;s the whole pricing page.
-        </h2>
-        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
-          No monthly plan. No &quot;Starter / Pro / Enterprise&quot; ladder designed to make you
-          feel small on the cheapest tier. Just one option: pay once, unlock everything, forever —
-          including every idea we add after the day you join. Not ready to pay yet? Most of the
-          library stays free to browse regardless.
-        </p>
+    <section className="mt-16">
+      {/* The one inverted band on the page. Twelve sections of paper in a row
+          flatten out; the pricing statement is the right place to break the
+          rhythm, and it is the only block here that is genuinely an assertion
+          rather than an explanation. */}
+      <div className="bg-primary py-16 text-primary-foreground sm:py-24">
+        <div className="mx-auto max-w-6xl px-3 sm:px-4">
+          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-primary-foreground/70">
+            Pricing, honestly
+          </p>
+          <h2 className="mt-4 max-w-4xl text-[2.1rem] leading-[1.06] text-primary-foreground sm:text-[3.2rem]">
+            One fee. Once. For life. That&apos;s the whole pricing page.
+          </h2>
+          <p className="mt-6 max-w-[62ch] text-base leading-relaxed text-primary-foreground/80 sm:text-lg">
+            No monthly plan. No &quot;Starter / Pro / Enterprise&quot; ladder designed to make you
+            feel small on the cheapest tier. Just one option: pay once, unlock everything, forever —
+            including every idea we add after the day you join. Not ready to pay yet? Most of the
+            library stays free to browse regardless.
+          </p>
+        </div>
       </div>
 
-      <div className="glass bbi-shape-faq2 mt-6 p-5 sm:p-7">
+      <div className="mx-auto mt-12 max-w-6xl px-3 sm:px-4">
         <p className="t-eyebrow">Pricing & the market gap</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_2.map((item) => (
@@ -1139,35 +1147,32 @@ function PricingPhilosophySection() {
 }
 
 function TeamSection() {
-  // The section is one big card, so the stagger runs on its two columns
-  // rather than on the card itself -- staggering a single child is just a
-  // fade with extra steps.
-  // The ref goes on the SECTION, not the card. With it on the card, the card
-  // is the container rather than a child, so the thing you actually see never
-  // animates -- only its two columns do.
-  const ref = useStaggerReveal<HTMLElement>({ selector: ".mo-card", distance: 22 });
   return (
-    <section ref={ref} className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="mo-card glass bbi-shape-card-a grid gap-8 p-6 sm:p-9 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
-        <div>
-          <p className="t-eyebrow">Who&apos;s behind this</p>
-          <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-            Built by hand, not by a headcount.
-          </h2>
-          <div className="mt-5 max-w-3xl space-y-4 text-base leading-relaxed text-muted-foreground">
-            <p>
-              BBI is a small, hands-on build — no invented office, no fake team page. We&apos;d
-              rather tell you less and have it be true.
-            </p>
-            <p>
-              The full story lives on our{" "}
-              <Link to="/about" className="text-accent underline underline-offset-4">
-                About page
-              </Link>
-              .
-            </p>
-          </div>
+    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      {/* Was prose squeezed into the left half of a card with the diagram
+          filling the right. The text is short and personal; it reads better at
+          a narrow measure with the diagram given its own full width below. */}
+      <div className="max-w-2xl">
+        <p className="t-eyebrow">Who&apos;s behind this</p>
+        <h2 className="mt-3">Built by hand, not by a headcount.</h2>
+        <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
+          <p>
+            BBI is a small, hands-on build — no invented office, no fake team page. We&apos;d rather
+            tell you less and have it be true.
+          </p>
+          <p>
+            The full story lives on our{" "}
+            <Link
+              to="/about"
+              className="font-semibold text-primary underline decoration-border underline-offset-4 transition-colors hover:text-accent"
+            >
+              About page
+            </Link>
+            .
+          </p>
         </div>
+      </div>
+      <div className="mt-10 border-t border-border pt-10">
         <OrbitDiagram
           centerLabel="Hands-on"
           centerSub="build"
@@ -1186,12 +1191,12 @@ function TeamSection() {
 function InspiredBySection() {
   return (
     <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
-      <div className="glass bbi-shape-card-a p-6 sm:p-8">
+      {/* Was a centred card. This is an attribution, so it is set as one: a
+          rule down the left edge, the way a citation is marked in print. */}
+      <div className="border-l-2 border-primary pl-6 sm:pl-8">
         <p className="t-eyebrow">Where this came from</p>
-        <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
-          We didn&apos;t invent this model. We learned it.
-        </h2>
-        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+        <h2 className="mt-3">We didn&apos;t invent this model. We learned it.</h2>
+        <p className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground">
           Our inspiration is EthicalFounder.com — a platform offering free websites, free MSME
           registration help, and free mentorship to Indian entrepreneurs who can&apos;t afford any
           of it otherwise. We&apos;re not affiliated with them and we don&apos;t take commissions
@@ -1204,134 +1209,66 @@ function InspiredBySection() {
   );
 }
 
-/**
- * The two comparison cards slide in from opposite sides and converge — the one
- * bespoke beat kept on this page, because "two things meeting in the middle"
- * is the section's actual argument and no shared primitive expresses it.
- *
- * The glow pulse that used to fire on arrival animated `box-shadow`, which
- * MOTION_SPEC §2.8 forbids outright (it re-rasterises a blurred shadow every
- * frame and is the single most expensive thing you can tween). It is gone; the
- * cards now take their hover response from `.mo-card` like every other card on
- * the site. `clearProps` drops gsap's residual inline transform once the
- * converge lands, so the shared hover lift has an unclaimed transform to use.
- */
+const BBI_THEM = [
+  "You pay every month, whether you use it that month or not.",
+  "Twenty dollars gets you a handful of checks, then it asks for more.",
+  "What comes back is the same generic paragraph anyone else would get.",
+  "You pay before you are allowed to see whether it was worth paying for.",
+];
+
+const BBI_US = [
+  "Read every researched idea in the library without paying anything.",
+  "If you want the full thing, you pay once. There is no second bill.",
+  "Validate as many ideas as you like. We do not ration it.",
+  "Change your mind, come back in a year, and it is all still yours.",
+];
+
 function ComparisonSection() {
-  const leftRef = useRef<HTMLDivElement | null>(null);
-  const rightRef = useRef<HTMLDivElement | null>(null);
-  // Publishes --sc-p on the section as it crosses the viewport. The depth
-  // classes below read it. It is deliberately NOT on the cards: `.mo-card`
-  // already owns their `transform` for the hover lift, and two rules writing
-  // one property means whichever loses the cascade is silently dropped.
-  const depthRef = useScrollProgress<HTMLElement>();
-
-  useEffect(() => {
-    if (prefersReducedMotion()) return;
-    const left = leftRef.current;
-    const right = rightRef.current;
-    if (!left || !right) return;
-
-    let cancelled = false;
-    let tl: gsap.core.Timeline | null = null;
-
-    loadGsap(true).then((gsap) => {
-      if (cancelled) return;
-      // Both cards now resolve to full opacity. The left one used to rest at
-      // opacity-80 to read as the lesser option, which worked side by side on a
-      // desktop and read as a half-loaded card once the columns stacked on a
-      // phone. It separates itself by surface and border now, not by fading.
-      // If that Tailwind class ever comes back, this tween has to come back
-      // with it — a dimmed class and a tween to 1 fight each other.
-      gsap.set(left, { x: -60, opacity: 0 });
-      gsap.set(right, { x: 60, opacity: 0 });
-      tl = gsap.timeline({
-        // Was `once: true` — a third one-shot latch, missed in the two-way
-        // pass because it is a bespoke timeline in this file rather than a
-        // call into `useStaggerReveal`. The two cards now slide in from
-        // their own sides on every pass, in both directions.
-        scrollTrigger: {
-          trigger: left,
-          start: "top 85%",
-          toggleActions: "restart reverse restart reverse",
-        },
-      });
-      tl.to(left, { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0).to(
-        right,
-        { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
-        0,
-      );
-    });
-
-    return () => {
-      cancelled = true;
-      tl?.scrollTrigger?.kill();
-      tl?.kill();
-    };
-  }, []);
-
   return (
-    <section ref={depthRef} className="bbi-depth mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="bbi-depth-back">
-        <p className="t-eyebrow">The comparison</p>
-        <h2 className="mt-2 max-w-3xl text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
-          Validating a business idea should not cost you the money you were going to start it with.
-        </h2>
-        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-          Twenty dollars buys you three or four checks on most idea validation platforms. If the
-          answer comes back no, that money is gone and you are back where you started — except
-          poorer. We think that is the wrong way round. Read the research first, for free, and
-          decide with your own eyes whether an idea is worth your time.
-        </p>
-      </div>
-      <div className="bbi-depth-front mt-8 grid items-stretch gap-4 sm:grid-cols-2 sm:gap-5">
-        <div
-          ref={leftRef}
-          className="mo-card glass bbi-shape-compare-sharp border border-border/60 p-5 sm:p-7"
-        >
+    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+      <p className="t-eyebrow">The comparison</p>
+      <h2 className="mt-3 max-w-3xl">
+        Validating a business idea should not cost you the money you were going to start it with.
+      </h2>
+      <p className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground">
+        Twenty dollars buys you three or four checks on most idea validation platforms. If the
+        answer comes back no, that money is gone and you are back where you started — except poorer.
+        We think that is the wrong way round. Read the research first, for free, and decide with
+        your own eyes whether an idea is worth your time.
+      </p>
+
+      {/* Two cards floating apart, sliding in from opposite sides, never said
+          which line answered which. The rows are aligned across a single
+          centre rule now, so each claim sits opposite the one it answers, and
+          the "versus" mark rides that rule at every width instead of appearing
+          only on a phone. */}
+      <div className="relative mt-10 grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2">
+        <div className="bg-card p-5 sm:p-7">
           <p className="t-eyebrow hl-coral">What most idea validation tools ask of you</p>
-          <ul className="mt-4 divide-y divide-hl-coral/20 text-sm leading-relaxed text-muted-foreground">
-            <li className="py-3 first:pt-0 last:pb-0">
-              You pay every month, whether you use it that month or not.
-            </li>
-            <li className="py-3 first:pt-0 last:pb-0">
-              Twenty dollars gets you a handful of checks, then it asks for more.
-            </li>
-            <li className="py-3 first:pt-0 last:pb-0">
-              What comes back is the same generic paragraph anyone else would get.
-            </li>
-            <li className="py-3 first:pt-0 last:pb-0">
-              You pay before you are allowed to see whether it was worth paying for.
-            </li>
+          <ul className="mt-4 divide-y divide-border text-sm leading-relaxed text-muted-foreground">
+            {BBI_THEM.map((line) => (
+              <li key={line} className="py-3 first:pt-0 last:pb-0">
+                {line}
+              </li>
+            ))}
           </ul>
         </div>
-        {/* The stacked order on a phone put two cards on top of each other with
-            nothing saying they were being compared. This marker sits between
-            them on mobile and rides the column gutter from sm: up. */}
-        <div aria-hidden className="pointer-events-none -my-1 flex justify-center sm:hidden">
-          <span className="glass rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            versus
-          </span>
-        </div>
-        <div
-          ref={rightRef}
-          className="mo-card glass glass-hover bbi-shape-compare-round border border-primary/40 p-5 sm:p-7"
-        >
+        <div className="bg-card p-5 sm:p-7">
           <p className="t-eyebrow hl-green">What BBI asks of you</p>
-          <ul className="mt-4 divide-y divide-hl-green/25 text-sm leading-relaxed text-foreground">
-            <li className="py-3 first:pt-0 last:pb-0">
-              Read every researched idea in the library without paying anything.
-            </li>
-            <li className="py-3 first:pt-0 last:pb-0">
-              If you want the full thing, you pay once. There is no second bill.
-            </li>
-            <li className="py-3 first:pt-0 last:pb-0">
-              Validate as many ideas as you like. We do not ration it.
-            </li>
-            <li className="py-3 first:pt-0 last:pb-0">
-              Change your mind, come back in a year, and it is all still yours.
-            </li>
+          <ul className="mt-4 divide-y divide-border text-sm leading-relaxed text-foreground">
+            {BBI_US.map((line) => (
+              <li key={line} className="py-3 first:pt-0 last:pb-0">
+                {line}
+              </li>
+            ))}
           </ul>
         </div>
+        <span
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-border bg-background px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground"
+        >
+          versus
+        </span>
       </div>
     </section>
   );
@@ -1348,36 +1285,25 @@ const BBI_FUTURE_TERMS = [
 
 function FutureProofSpotlight() {
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <div className="glass bbi-shape-diamond p-6 sm:p-9">
-        <p className="t-eyebrow">Ways into the library</p>
-        <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
-          Start from a theme instead of a blank search box.
-        </h2>
-        {/* The previous lead said these were "pulled straight from the live
-            library, not a marketing list". BBI_FUTURE_TERMS is six hand-typed
-            strings in this file, so that sentence was false on a live page —
-            it claimed data provenance for a hardcoded constant, under a
-            heading ("where the market is headed") the pills never supported.
-            The terms stay verbatim because they carry the search value; the
-            copy around them now describes what they actually do. */}
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          Each one runs a live search across every blueprint. They are shortcuts, not a ranking
-          &mdash; and if one comes back thin, that is the library being honest with you rather than
-          a page pretending to be fuller than it is.
-        </p>
-        <div className="mt-6 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
-          {BBI_FUTURE_TERMS.map((term) => (
-            <Link
-              key={term.label}
-              to="/search"
-              search={{ q: term.query }}
-              className="glass-pill min-w-0 rounded-full px-3 py-2 text-center text-[11px] font-medium leading-snug transition-all duration-300 sm:px-4 sm:text-xs"
-            >
-              {term.label}
-            </Link>
-          ))}
-        </div>
+    <section className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4">
+      <p className="t-eyebrow">Ways into the library</p>
+      <h2 className="mt-3 max-w-2xl">Start from a theme instead of a blank search box.</h2>
+      <p className="mt-3 max-w-[62ch] text-sm leading-relaxed text-muted-foreground">
+        Each one runs a live search across every blueprint. They are shortcuts, not a ranking
+        &mdash; and if one comes back thin, that is the library being honest with you rather than a
+        page pretending to be fuller than it is.
+      </p>
+      <div className="mt-7 flex flex-wrap gap-2.5">
+        {BBI_FUTURE_TERMS.map((term) => (
+          <Link
+            key={term.label}
+            to="/search"
+            search={{ q: term.query }}
+            className="rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary"
+          >
+            {term.label}
+          </Link>
+        ))}
       </div>
     </section>
   );
@@ -1492,22 +1418,26 @@ function PromiseSection() {
       id="promise"
       data-anchor="promise"
       data-anchor-label="Our promise"
-      className="mx-auto mt-16 max-w-4xl px-3 sm:px-4"
+      className="mx-auto mt-16 max-w-6xl px-3 sm:px-4"
     >
-      <div className="glass glass-hover bbi-shape-shield p-6 text-center sm:p-9">
+      {/* The last statement on the page, so it is set as one — no card around
+          it, the claim at display size, the qualification beside it. */}
+      <div className="border-t border-border pt-12">
         <p className="t-eyebrow">Our promise</p>
-        <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
-          We&apos;re not here to sell you a dream. We&apos;re here to hand you the research.
-        </h2>
-        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-          We won&apos;t tell you that you&apos;ll be a millionaire in three months. We won&apos;t
-          show you a lifestyle you can&apos;t verify. What we will do: give you honest research,
-          free guidance, and a starting point that doesn&apos;t cost you $20 before you&apos;ve even
-          decided if the idea is worth pursuing.
-        </p>
+        <div className="mt-4 grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-14">
+          <h2 className="text-[2rem] leading-[1.08] sm:text-[2.8rem]">
+            We&apos;re not here to sell you a dream. We&apos;re here to hand you the research.
+          </h2>
+          <p className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
+            We won&apos;t tell you that you&apos;ll be a millionaire in three months. We won&apos;t
+            show you a lifestyle you can&apos;t verify. What we will do: give you honest research,
+            free guidance, and a starting point that doesn&apos;t cost you $20 before you&apos;ve
+            even decided if the idea is worth pursuing.
+          </p>
+        </div>
       </div>
 
-      <div className="glass bbi-shape-faq3 mt-6 p-5 sm:p-7">
+      <div className="mt-12">
         <p className="t-eyebrow">Common searches, answered</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_3.map((item) => (
