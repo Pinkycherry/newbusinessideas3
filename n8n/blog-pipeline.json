@@ -91,27 +91,27 @@
           "fieldValues": [
             {
               "fieldId": "slug",
-              "fieldValue": "={{ $('Parse and Guard Post').item.json.post.slug }}"
+              "fieldValue": "={{ $json.post.slug }}"
             },
             {
               "fieldId": "title",
-              "fieldValue": "={{ $('Parse and Guard Post').item.json.post.title }}"
+              "fieldValue": "={{ $json.post.title }}"
             },
             {
               "fieldId": "excerpt",
-              "fieldValue": "={{ $('Parse and Guard Post').item.json.post.excerpt }}"
+              "fieldValue": "={{ $json.post.excerpt }}"
             },
             {
               "fieldId": "html",
-              "fieldValue": "={{ $('Parse and Guard Post').item.json.post.content_html }}"
+              "fieldValue": "={{ $json.post.content_html }}"
             },
             {
               "fieldId": "meta_description",
-              "fieldValue": "={{ $('Parse and Guard Post').item.json.post.meta_description }}"
+              "fieldValue": "={{ $json.post.meta_description }}"
             },
             {
               "fieldId": "categories",
-              "fieldValue": "={{ [$('Parse and Guard Post').item.json.category].filter(Boolean) }}"
+              "fieldValue": "={{ [$json.category].filter(Boolean) }}"
             },
             {
               "fieldId": "status",
@@ -126,9 +126,9 @@
           "name": "Supabase account"
         }
       },
-      "onError": "continueRegularOutput",
       "retryOnFail": true,
-      "maxTries": 2
+      "maxTries": 2,
+      "waitBetweenTries": 2000
     },
     {
       "parameters": {
@@ -148,23 +148,174 @@
           "matchingColumns": [
             "blog_id"
           ],
-          "schema": [],
+          "schema": [
+            {
+              "id": "blog_id",
+              "displayName": "blog_id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "slug",
+              "displayName": "slug",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "seo_title",
+              "displayName": "seo_title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "meta_description",
+              "displayName": "meta_description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "excerpt",
+              "displayName": "excerpt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "image_file_name",
+              "displayName": "image_file_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "image_alt",
+              "displayName": "image_alt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "image_focus_keyword",
+              "displayName": "image_focus_keyword",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "image_keywords",
+              "displayName": "image_keywords",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "image_long_tail_1",
+              "displayName": "image_long_tail_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "image_long_tail_2",
+              "displayName": "image_long_tail_2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "image_description",
+              "displayName": "image_description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "generated_at",
+              "displayName": "generated_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "quality_error",
+              "displayName": "quality_error",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
           "value": {
-            "blog_id": "={{ $('Parse and Guard Post').item.json.blog_id }}",
-            "status": "={{ $('Parse and Guard Post').item.json.blog_status }}",
-            "slug": "={{ $('Parse and Guard Post').item.json.post.slug }}",
-            "seo_title": "={{ $('Parse and Guard Post').item.json.post.seo_title }}",
-            "meta_description": "={{ $('Parse and Guard Post').item.json.post.meta_description }}",
-            "excerpt": "={{ $('Parse and Guard Post').item.json.post.excerpt }}",
-            "image_file_name": "={{ $('Parse and Guard Post').item.json.post.image_file_name }}",
-            "image_alt": "={{ $('Parse and Guard Post').item.json.post.image_alt }}",
-            "image_focus_keyword": "={{ $('Parse and Guard Post').item.json.post.image_focus_keyword }}",
-            "image_keywords": "={{ $('Parse and Guard Post').item.json.post.image_keywords }}",
-            "image_long_tail_1": "={{ $('Parse and Guard Post').item.json.post.image_long_tail_1 }}",
-            "image_long_tail_2": "={{ $('Parse and Guard Post').item.json.post.image_long_tail_2 }}",
-            "image_description": "={{ $('Parse and Guard Post').item.json.post.image_description }}",
+            "blog_id": "={{ $json.blog_id }}",
+            "status": "={{ $json.blog_status }}",
+            "slug": "={{ $json.post.slug }}",
+            "seo_title": "={{ $json.post.seo_title }}",
+            "meta_description": "={{ $json.post.meta_description }}",
+            "excerpt": "={{ $json.post.excerpt }}",
+            "image_file_name": "={{ $json.post.image_file_name }}",
+            "image_alt": "={{ $json.post.image_alt }}",
+            "image_focus_keyword": "={{ $json.post.image_focus_keyword }}",
+            "image_keywords": "={{ $json.post.image_keywords }}",
+            "image_long_tail_1": "={{ $json.post.image_long_tail_1 }}",
+            "image_long_tail_2": "={{ $json.post.image_long_tail_2 }}",
+            "image_description": "={{ $json.post.image_description }}",
             "generated_at": "={{ $now.toISO() }}",
-            "quality_error": "={{ $('Parse and Guard Post').item.json.quality_error }}"
+            "quality_error": "={{ $json.quality_error }}"
           }
         },
         "options": {}
@@ -183,7 +334,9 @@
           "name": "Google Sheets account"
         }
       },
-      "onError": "continueRegularOutput"
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 2000
     },
     {
       "parameters": {
@@ -263,6 +416,21 @@
       ],
       "notesInFlow": true,
       "notes": "Only completed posts insert. needs_review still updates the sheet with its reason."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Runs when Loop Blog Rows finishes, on the \"done\" output.\n//\n// This branch was empty, so a run that published nothing looked exactly like a\n// run that worked: every node green, no output anywhere. That is the single\n// most confusing failure mode this pipeline has, so it now reports itself.\nconst items = $input.all();\nconst total = items.length;\n\nconst published = [];\nconst skipped = [];\nfor (const item of items) {\n  const j = item.json;\n  const id = j.blog_id || j.title || 'unknown row';\n  if (j.blog_status === 'completed') published.push(id);\n  else skipped.push(id + ' -- ' + (j.quality_error || 'no reason recorded'));\n}\n\nconst summary = {\n  rows_read: total,\n  published: published.length,\n  skipped: skipped.length,\n  published_ids: published,\n  skipped_with_reasons: skipped,\n};\n\nif (total > 0 && published.length === 0) {\n  summary.warning =\n    'Every row was skipped, so nothing reached Supabase. The reason for each is ' +\n    'in skipped_with_reasons above, and in the quality_error column of the sheet.';\n}\n\nreturn [{ json: summary }];\n"
+      },
+      "id": "blogsum-0001",
+      "name": "Run Summary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        520
+      ],
+      "notesInFlow": true,
+      "notes": "Reports published vs skipped, with the reason for every skip."
     }
   ],
   "connections": {
@@ -279,7 +447,13 @@
     },
     "Loop Blog Rows": {
       "main": [
-        [],
+        [
+          {
+            "node": "Run Summary",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "Blog Writer Agent",
