@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery, useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
@@ -17,11 +17,17 @@ import LayoutTextFlip from "@/components/aceternity/layout-text-flip";
 import TextGenerateEffect from "@/components/aceternity/text-generate-effect";
 import BlurText from "@/components/aceternity/blur-text";
 import SpotlightCard from "@/components/aceternity/spotlight-card";
-import MoltenMetal from "@/components/aceternity/molten-metal";
+
+/* WebGL is not on the critical path. `ogl` was bundled into the shared routes
+   chunk — 169KB shipped to every visitor of every page for two decorative
+   canvases that only exist on the homepage hero. Lazy, they split into their
+   own chunk that is fetched after the page has painted, and a browser that
+   never gets there never pays for it. */
+const MoltenMetal = lazy(() => import("@/components/aceternity/molten-metal"));
+const GlowCursor = lazy(() => import("@/components/aceternity/glow-cursor"));
 import EncryptedText from "@/components/aceternity/encrypted-text";
 import LinkPreview from "@/components/aceternity/link-preview";
 import Lens from "@/components/aceternity/lens";
-import GlowCursor from "@/components/aceternity/glow-cursor";
 import Tabs from "@/components/aceternity/tabs";
 import { categoryImage } from "@/config/category-imagery";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
@@ -294,7 +300,9 @@ function HomePage() {
     <SiteShell tone="instrument">
       {/* The trail. It does not replace the system cursor — the canvas is
           pointer-events:none, so every hit target is exactly where it was. */}
-      <GlowCursor />
+      <Suspense fallback={null}>
+        <GlowCursor />
+      </Suspense>
 
       {/* LLM crawlable summary */}
       <p className="sr-only">
@@ -320,7 +328,9 @@ function HomePage() {
             light bands. They measured #FFFFFF and still read grey, because the
             thing behind them was brighter than they were. */}
         <div aria-hidden className="pointer-events-none absolute inset-0">
-          <MoltenMetal className="h-full w-full" brightness={1.15} speed={0.18} opacity={0.9} />
+          <Suspense fallback={null}>
+            <MoltenMetal className="h-full w-full" brightness={1.15} speed={0.18} opacity={0.9} />
+          </Suspense>
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--ins-void)]/55 via-[var(--ins-void)]/62 to-[var(--ins-void)]" />
         </div>
         {/* Centred. The hero was a left column with two thirds of the fold
@@ -1202,28 +1212,39 @@ function WhoForSection() {
             card now — the same plate, the same light under the pointer, as
             every other card on the site — with the query numbered so the set
             reads as a list and the two lines sitting together. */}
+        {/* A flip. The front carries the query, the back carries the answer
+            to it and the way in. Both faces are ALWAYS in the DOM, and on a
+            device with no pointer the card does not flip at all — it stacks
+            the two faces instead — so nothing here is hidden from a phone, a
+            screen reader or a crawler. */}
         <div className="mt-6 grid gap-px bg-[var(--ins-rule)] sm:grid-cols-2 lg:grid-cols-3">
           {BBI_BUILT_FOR.map((item, index) => (
-            <SpotlightCard key={item.phrase} className="border-0 !bg-[var(--ins-void)]">
-              <Link
-                to={item.to}
-                {...(item.params ? { params: item.params } : {})}
-                {...(item.search ? { search: item.search } : {})}
-                className="group/q flex h-full flex-col gap-2 p-5"
-              >
-                <span className="ins-num text-[0.6875rem] text-[var(--ins-faint)]">
-                  {String(index + 1).padStart(2, "0")}
+            <Link
+              key={item.phrase}
+              to={item.to}
+              {...(item.params ? { params: item.params } : {})}
+              {...(item.search ? { search: item.search } : {})}
+              className="bbi-flip block bg-[var(--ins-void)]"
+            >
+              <span className="bbi-flip-inner">
+                <span className="bbi-flip-face bbi-flip-front">
+                  <span className="ins-num text-[0.6875rem] text-[var(--ins-faint)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="mt-2 block text-base font-semibold leading-snug text-[var(--ins-bright)]">
+                    {item.phrase}
+                  </span>
                 </span>
-                <span className="text-base font-semibold leading-snug text-[var(--ins-bright)] transition-colors duration-300 group-hover/q:text-[var(--ins-signal)]">
-                  {item.phrase}
+                <span className="bbi-flip-face bbi-flip-back">
+                  <span className="block text-sm leading-relaxed text-[var(--ins-read)]">
+                    {item.line}
+                  </span>
+                  <span className="ins-num mt-3 block text-[0.6875rem] text-[var(--ins-bright)]">
+                    Open →
+                  </span>
                 </span>
-                <span className="text-sm leading-relaxed text-[var(--ins-read)]">{item.line}</span>
-                <span
-                  aria-hidden
-                  className="mt-3 h-px w-0 bg-[var(--ins-bright)] transition-all duration-500 group-hover/q:w-full"
-                />
-              </Link>
-            </SpotlightCard>
+              </span>
+            </Link>
           ))}
         </div>
       </div>
@@ -1442,7 +1463,7 @@ function FutureProofSpotlight() {
             key={term.label}
             to="/search"
             search={{ q: term.query }}
-            className="rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary"
+            className="ac-tag px-4 py-2.5 text-sm font-medium"
           >
             {term.label}
           </Link>
@@ -1521,7 +1542,7 @@ function KeywordMosaic() {
                   key={term.label}
                   to="/search"
                   search={{ q: term.query }}
-                  className="rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary"
+                  className="ac-tag px-4 py-2.5 text-sm font-medium"
                 >
                   {term.label}
                 </Link>

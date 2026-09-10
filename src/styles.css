@@ -2850,9 +2850,12 @@ html.light .bbi-instrument,
   font-family: "IBM Plex Mono", ui-monospace, monospace;
   /* Was 0.6875rem in --ins-dim: too small to read and too dim to notice.
      A legend that labels a whole region has to be legible from a scan. */
-  font-size: 1.0625rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  /* This is what the founder calls the section heading, so it is sized like
+     one rather than like a label — twice now it has come back as too small
+     to read. */
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
   color: var(--ins-bright);
   text-transform: none;
 }
@@ -3042,7 +3045,7 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
      which is why enlarging it in the unlayered rule changed nothing. */
   html.light .bbi-instrument .ins-legend {
     color: var(--ins-bright) !important;
-    font-size: 1.0625rem !important;
+    font-size: 1.375rem !important;
   }
 
 
@@ -3289,8 +3292,11 @@ html[data-tone="instrument"] body {
    Nothing else on the site sets it, so the trail stays white everywhere the
    ground is dark. */
 .bbi-instrument .bg-primary {
-  --glow-cursor: #E0A93B;
-  --glow-cursor-2: #8A5D00;
+  /* Black on the white ground. Gold was asked for first and then changed —
+     on a #FFFFFF band the trail has to be the darkest value there is or it
+     disappears the same way the white one did. */
+  --glow-cursor: #000000;
+  --glow-cursor-2: #757575;
 }
 
 /* ---- the filled action on a plate --------------------------------------
@@ -3410,7 +3416,7 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
     font-size: 1.875rem !important;
   }
   html.light .bbi-instrument .ins-legend {
-    font-size: 0.875rem !important;
+    font-size: 1.1875rem !important;
   }
   /* Headings come down a step so a long one stops taking six lines. */
   html.light .bbi-instrument h1 {
@@ -3602,11 +3608,25 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
   }
 }
 
+/* THREE TIERS, one rule set. The palette has no second hue to differentiate
+   with, so the tiers differentiate by VALUE instead: the band that travels
+   the border and the plate it resolves into step down the greyscale.
+
+     tier 1  primary actions   band #FFFFFF  fills #FFFFFF, ink #141414
+     tier 2  search-term tags  band #B2B2B2  fills #E0E0E0, ink #141414
+     tier 3  footer actions    band #757575  fills #B2B2B2, ink #141414
+
+   Every tier is the same gesture at a different weight, so a reader can tell
+   a primary action from a tag from a footer link without a colour being
+   invented for any of them. */
 .bbi-instrument .ac-action,
 .bbi-instrument button:not(.bbi-bare):not([aria-label="Open navigation menu"]),
 .bbi-instrument a.ac-cta,
 .bbi-instrument .glass-btn,
 .bbi-instrument .glass-pill {
+  --act-band: var(--ins-signal);
+  --act-fill: var(--ins-signal);
+  --act-ink: var(--ins-void);
   position: relative;
   border: 1px solid transparent !important;
   border-radius: 0.375rem;
@@ -3615,7 +3635,7 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
     conic-gradient(
         from var(--bbi-edge),
         transparent 0deg,
-        var(--ins-signal) 40deg,
+        var(--act-band) 40deg,
         transparent 90deg,
         transparent 360deg
       )
@@ -3626,6 +3646,45 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
     background 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* TIER 2 — the search-term tags. They are Links, not buttons, so they never
+   picked the treatment up; and they are a long row of equal options, which is
+   why they take the quieter band rather than the signal. */
+.bbi-instrument .ac-tag {
+  --act-band: var(--ins-dim);
+  --act-fill: var(--ins-read);
+  --act-ink: var(--ins-void);
+  position: relative;
+  border: 1px solid transparent !important;
+  border-radius: 0.375rem;
+  background:
+    linear-gradient(var(--ins-face), var(--ins-face)) padding-box,
+    conic-gradient(
+        from var(--bbi-edge),
+        transparent 0deg,
+        var(--act-band) 40deg,
+        transparent 90deg,
+        transparent 360deg
+      )
+      border-box !important;
+  animation: bbi-edge-travel 5.6s linear infinite;
+  color: var(--ins-read) !important;
+  transition:
+    color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* TIER 3 — the footer. Quietest band of the three, because a footer is the
+   last thing on the page and should not compete with the actions above it. */
+.bbi-instrument .bbi-footer .ac-action,
+.bbi-instrument .bbi-footer button:not(.bbi-bare),
+.bbi-instrument .bbi-footer a[class*="rounded"],
+.bbi-instrument .bbi-footer .bbi-footer-more {
+  --act-band: var(--ins-faint);
+  --act-fill: var(--ins-dim);
+  --act-ink: var(--ins-void);
+  animation-duration: 6.4s;
+}
+
 /* Under the pointer the travelling band resolves into a solid plate and the
    ink inverts — the label reads as ink on signal, never signal on signal.
    The animation stops: there is nothing left to travel. */
@@ -3634,20 +3693,22 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
 .bbi-instrument a.ac-cta:hover,
 .bbi-instrument .glass-btn:hover,
 .bbi-instrument .glass-pill:hover,
-.bbi-instrument .glass-pill[data-state="open"] {
+.bbi-instrument .glass-pill[data-state="open"],
+.bbi-instrument .ac-tag:hover {
   animation: none;
   background:
-    linear-gradient(var(--ins-signal), var(--ins-signal)) padding-box,
-    linear-gradient(var(--ins-signal), var(--ins-signal)) border-box !important;
-  color: var(--ins-void) !important;
+    linear-gradient(var(--act-fill), var(--act-fill)) padding-box,
+    linear-gradient(var(--act-fill), var(--act-fill)) border-box !important;
+  color: var(--act-ink) !important;
 }
 .bbi-instrument .ac-action:hover *,
 .bbi-instrument button:not(.bbi-bare):not([aria-label="Open navigation menu"]):hover *,
 .bbi-instrument a.ac-cta:hover *,
 .bbi-instrument .glass-btn:hover *,
 .bbi-instrument .glass-pill:hover *,
-.bbi-instrument .glass-pill[data-state="open"] * {
-  color: var(--ins-void) !important;
+.bbi-instrument .glass-pill[data-state="open"] *,
+.bbi-instrument .ac-tag:hover * {
+  color: var(--act-ink) !important;
   background-color: transparent !important;
 }
 
@@ -3664,6 +3725,7 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
 
 @media (prefers-reduced-motion: reduce) {
   .bbi-instrument .ac-action,
+  .bbi-instrument .ac-tag,
   .bbi-instrument button,
   .bbi-instrument a.ac-cta,
   .bbi-instrument .glass-btn,
@@ -3676,6 +3738,7 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
    screen nobody is hovering is pure battery. */
 @media (hover: none) {
   .bbi-instrument .ac-action,
+  .bbi-instrument .ac-tag,
   .bbi-instrument button,
   .bbi-instrument a.ac-cta,
   .bbi-instrument .glass-btn,
@@ -3770,4 +3833,101 @@ html.light .bbi-instrument .bbi-faq-mark {
 html.light .bbi-instrument .bbi-faq-row:hover .bbi-faq-mark,
 html.light .bbi-instrument .bbi-faq-row[aria-expanded="true"] .bbi-faq-mark {
   color: var(--ins-bright) !important;
+}
+
+/* ---- the footer plate --------------------------------------------------
+   The footer's own surface used a colour-mixed drop shadow off --foreground,
+   which in this scope is a white glow under the plate. A footer is a plate
+   like every other plate here: face colour, one drawn rule, no shadow. Its
+   links take the tier-3 ink so the whole block reads as one weight. */
+html.light .bbi-instrument .bbi-footer {
+  background: var(--ins-face) !important;
+  border: 1px solid var(--ins-rule) !important;
+  box-shadow: none !important;
+}
+html.light .bbi-instrument .bbi-footer-link {
+  color: var(--ins-dim) !important;
+}
+html.light .bbi-instrument .bbi-footer-link:hover,
+html.light .bbi-instrument .bbi-footer-link:focus-visible {
+  color: var(--ins-bright) !important;
+}
+html.light .bbi-instrument .bbi-footer-heading {
+  color: var(--ins-bright) !important;
+}
+
+/* ---- card flip ---------------------------------------------------------
+   Front carries the query, back carries the answer and the way in. Both
+   faces are always in the DOM — nothing is hidden from a crawler or a screen
+   reader — and the back is only rotated out of sight, never removed.
+
+   Below `hover: hover` the card does not flip: the two faces stack and both
+   read at once, because a flip on a touch screen is a piece of content you
+   cannot reach. */
+.bbi-flip {
+  position: relative;
+  min-height: 11.5rem;
+  perspective: 900px;
+}
+.bbi-flip-inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform-style: preserve-3d;
+}
+.bbi-flip-face {
+  display: block;
+  padding: 1.25rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.bbi-flip-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  background: var(--ins-face);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media (hover: hover) and (pointer: fine) {
+  .bbi-flip:hover .bbi-flip-inner,
+  .bbi-flip:focus-visible .bbi-flip-inner {
+    transform: rotateY(180deg);
+  }
+}
+/* No pointer: no flip. Both faces stack and read at once. */
+@media (hover: none) {
+  .bbi-flip {
+    perspective: none;
+    min-height: 0;
+  }
+  .bbi-flip-inner {
+    transform: none !important;
+    transform-style: flat;
+  }
+  .bbi-flip-back {
+    position: static;
+    transform: none;
+    background: transparent;
+    padding-top: 0;
+  }
+  .bbi-flip-face {
+    backface-visibility: visible;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-flip-inner {
+    transition: none;
+  }
+}
+
+/* The last row of an accordion block had nothing under it: the row owns its
+   own padding now, so the block ended flush with the final question and the
+   next section's heading — which is large — read as sitting on top of it. */
+.bbi-faq-item:last-child {
+  padding-bottom: 1rem;
 }

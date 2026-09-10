@@ -38,7 +38,6 @@ import { prefersReducedMotion } from "@/lib/motion";
 import { useAuth } from "@/hooks/use-auth";
 import { signOut } from "@/lib/auth-client";
 import HoverBorderGradient from "@/components/aceternity/hover-border-gradient";
-import MovingBorder from "@/components/aceternity/moving-border";
 
 /** Footer's primary CTA — spotlight glow behind a pill with GSAP hover/press motion. */
 function FooterCta() {
@@ -747,14 +746,16 @@ function NewsletterSignup() {
             placeholder="Enter your email address"
             className="bbi-footer-input"
           />
-          <MovingBorder
+          {/* Was a fourth button treatment on a site that now has one. It is
+              the footer tier of the shared action: the same travelling band,
+              at the quietest weight of the three. */}
+          <button
             type="submit"
             disabled={state === "sending"}
-            className="w-full justify-center"
-            containerClassName="w-full"
+            className="ac-action w-full justify-center px-4 py-2.5 text-sm font-semibold disabled:cursor-wait disabled:opacity-70"
           >
             {state === "sending" ? "Signing you up…" : "Subscribe"}
-          </MovingBorder>
+          </button>
           {state === "error" && (
             <p className="text-xs text-destructive" role="alert">
               {message}

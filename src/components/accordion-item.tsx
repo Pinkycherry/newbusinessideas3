@@ -26,7 +26,7 @@ export function AccordionItem({
   const padY = size === "base" ? "py-4" : "py-3";
 
   return (
-    <div>
+    <div className="bbi-faq-item">
       {/* `bbi-bare` opts this row OUT of the site-wide action treatment. That
           treatment is for buttons that look like buttons: it draws a
           travelling band along the border and fills the plate white under the
