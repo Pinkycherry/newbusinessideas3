@@ -100,8 +100,8 @@ whole point of the table. Shape:
 exactly when present and picks its own distinct combination when absent. They
 exist to stop every idea reading alike.
 
-**Currently populated: 30 of 116.** Run the idea pipeline and those thirty
-process end to end while the other 86 are skipped and counted by `Run Summary`.
+**Currently populated: 48 of 116.** Run the idea pipeline and those forty-eight
+process end to end while the other 68 are skipped and counted by `Run Summary`.
 
 Ideas that share a *business model* share their sourced economics, with a
 per-idea `voice_angle` and `open_with` so no two pages read alike. The insert
@@ -114,11 +114,11 @@ block is shared across all of them. Freelance rates are **not** shared: grant
 writing, copyediting, illustration and podcast editing all price differently,
 so each needs its own sourced research.
 
-The remaining 86 break down by business model as:
+The remaining 68 break down by business model as:
 
 | Cluster | Count | Shared economics? |
 |---|---|---|
-| Marketplace / platform (two-sided) | 17 | yes — take rate, liquidity, LTV:CAC |
+| Marketplace / platform (two-sided) | 0 — done | yes — take rate, liquidity, LTV:CAC |
 | Part-time local or physical shift | 27 | no — varies by trade |
 | Part-time freelance service | 20 | no — rates differ per discipline |
 | Subscription / membership | 12 | partly |
