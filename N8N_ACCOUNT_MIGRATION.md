@@ -1,100 +1,121 @@
-# Moving the idea pipeline to a new n8n account
+# n8n workflows — import guide
 
-The old n8n instance (`pinkypinky1212.app.n8n.cloud`) ran out of free plan. Its
-workflow has been exported to **`n8n-idea-pipeline-v3.json`** in this repo so
-nothing is lost. That file is the rescue copy — import it into the new account.
+The old n8n instance ran out of free plan. The workflows live here now, split
+into three files so each can be imported and run on its own.
 
-The old `n8n-idea-pipeline-v2.json` has been deleted. It was nine nodes; the
-live workflow had grown to twenty-eight, and its gate logic was different and
-wrong (see "What was stale" below). Importing it would have quietly reintroduced
-a bug. It is still in git history if it is ever needed.
+| File | Workflow | Trigger | What it does |
+|---|---|---|---|
+| `n8n/idea-pipeline.json` | BBI 1 - Idea Pipeline | `When clicking "Test workflow"` | Sheet seed rows + Stage 1 research → writer → sheet + Supabase |
+| `n8n/faq-pool.json` | BBI 2 - FAQ Pool | `FAQ Pool - Run` | Completed ideas → per-category FAQ pool |
+| `n8n/blog-pipeline.json` | BBI 3 - Blog Pipeline | `Blog - Run` | Blog queue sheet → post → Supabase |
 
-## Import steps
+They were previously one 29-node workflow with three unrelated branches sharing
+a canvas. Nothing is shared between them, so splitting loses nothing.
 
-1. In the new account: **Workflows → Import from File →
-   `n8n-idea-pipeline-v3.json`**.
-2. Re-create the three credentials. The workflow references them by name, but
-   credential IDs are per-account, so every node using one will show a
-   "credential not found" warning until you re-select it:
+## Import
 
-   | Credential type | Name in the export | Used by |
-   |---|---|---|
-   | Google Sheets OAuth2 | `Google Sheets account` | Read Pending Rows, Update Row in Sheet, Read Blog Queue, Mark Blog Row Done |
-   | Google Gemini (PaLM) API | `Google Gemini(PaLM) Api account` | Google Gemini Chat Model |
-   | Supabase API | `Supabase account` | Sync to Supabase, Read Completed Ideas, Write FAQ Pool, Write Blog Post |
+Import each file separately, then re-select credentials — credential IDs are
+per-account, so every node using one warns until you pick the new one.
 
-3. Open each of those nodes once and pick the new credential from the dropdown.
-4. The sheet and the Supabase project are unchanged — same document ID, same
-   tab (`Updated SuperBase1`, gid `1572637316`), same `ideas` table. Nothing to
-   re-point.
+| Credential type | Name in the export | Used by |
+|---|---|---|
+| Google Sheets OAuth2 | `Google Sheets account` | idea pipeline, blog pipeline |
+| Google Gemini (PaLM) API | `Google Gemini(PaLM) Api account` | idea pipeline |
+| Supabase API | `Supabase account` | all three |
 
-## Known placeholder, still unfixed
+The FAQ pool and blog workflows call Gemini over plain HTTP Request nodes with
+a key from their `Rotate Gemini Key` node, so check that node holds a live key.
 
-`Read Blog Queue` has `documentId: "REPLACE_WITH_YOUR_SHEET_ID"` and
-`sheetName: "Blog Queue"`. That was never filled in on the old account either,
-so the blog branch (`Blog - Run`) has never worked. It needs a real sheet ID
-before that trigger will do anything. The idea branch and the FAQ branch are
-unaffected.
+## Two bugs fixed during the split
 
-## The three triggers
+**1. The FAQ and blog loops could never run.** In both, the processing chain was
+wired to the `Loop` node's **`done`** output (index 0) with the **`loop`** output
+(index 1) left empty. A Split In Batches node emits the current batch on `loop`
+and only fires `done` once the batches are exhausted — so the batch went to an
+unconnected output, `done` never fired, and the chain never executed. Both are
+now wired `loop → processing → back to loop`, with `done` left open.
 
-The workflow holds three independent branches, each with its own manual trigger:
+**2. The idea pipeline's `done` output went nowhere.** Added `Run Summary`,
+which reports `total_rows_read`, `rows_with_research_facts` and
+`rows_skipped_missing_research_facts`, and warns when every row was skipped. A
+starved run used to look identical to a working one.
 
-- **`When clicking "Test workflow"`** — the idea pipeline (sheet → writer → sheet + Supabase)
-- **`FAQ Pool - Run`** — builds the per-category FAQ pool from completed ideas
-- **`Blog - Run`** — the blog branch, blocked on the placeholder above
+## Stage 1 research now comes from Supabase, not the sheet
 
-## What is actually blocking the idea pipeline
+This is the change that unblocks the idea pipeline.
 
-Importing this will not by itself make the pipeline produce ideas. The blocker
-is in the data, not the workflow:
+All 116 pending sheet rows (`IDEA-00284` → `IDEA-00399`, sheet rows 285–400)
+carry only the seed columns — category, subcategory, keywords,
+`business_description`. Their `research_facts`, `title`, `slug`, `seo_title`,
+`meta_description`, `tags` and link columns are all empty. Verified by running
+the workflow with its writes disabled: the gate evaluated 116 rows and returned
+**true 0 times, false 116 times**.
 
-- The sheet holds **116 pending rows** (`IDEA-00284` → `IDEA-00399`, sheet rows
-  285–400).
-- **All 116 have an empty `research_facts` cell.** Confirmed by running the
-  workflow with its writes disabled: the `Has research_facts?` gate evaluated
-  116 rows and returned **true 0 times, false 116 times**.
-- Those rows also have empty `title`, `slug`, `seo_title`, `meta_description`,
-  `tags`, `external_links` and `internal_link_anchors`. Only the seed columns
-  are filled (category, subcategory, keywords, `business_description`).
+Writing those columns back into the sheet is not possible from the pipeline's
+side, so Stage 1 output now lives in Supabase instead:
 
-So the Stage 1 research pass has never been run for these rows. The gate is
-doing its job — it is the only thing stopping 116 rows with a blank title and a
-blank slug from being inserted into Supabase. **Fix the input, not the gate.**
+```
+public.idea_research
+  idea_id  (pk)  title  slug  seo_title  meta_description
+  tags  external_links  internal_link_anchors  research_facts   (all jsonb)
+  created_at  updated_at
+```
 
-For contrast, the seven rows that do have `research_facts` (`IDEA-00603`–
-`IDEA-00608`, plus `IDEA-00283`) all completed normally. The pipeline works; it
-is starved.
+It is a **separate table on purpose**. `public.ideas` has `idea_id` as its
+primary key and `slug` as unique, so pre-inserting a pending idea there would
+collide with the row the pipeline itself inserts at the end of its run. This
+table is additive and touches none of the 290 existing rows.
 
-## What changed in the export
+Two new nodes in the idea pipeline consume it, between `Loop Over Items` and
+the gate:
 
-One addition, nothing removed:
+- **`Fetch Stage 1 Research`** — Supabase lookup on `idea_research` by
+  `idea_id`. `alwaysOutputData` is on, so an idea with no research yet arrives
+  as an empty object, falls through with an empty `research_facts`, and is
+  skipped by the gate exactly as before. A miss is not an error.
+- **`Merge Research`** — merges the researcher's fields onto the seed row from
+  the sheet, stringifying the jsonb columns because both the gate and the
+  writer prompt expect text.
 
-- **`Run Summary`** (Code node) is now wired to the `Loop Over Items` **"done"**
-  output, which was previously connected to nothing. That empty branch is why a
-  starved run looked identical to a working one — the loop and the IF would
-  flash once per row, nothing downstream would light up, and the execution would
-  report success having written nothing. The new node reports
-  `total_rows_read`, `rows_with_research_facts` and
-  `rows_skipped_missing_research_facts`, and adds an explicit warning when every
-  row was skipped.
+The gate itself is unchanged and should stay that way: it is the only thing
+stopping rows with a blank `title` and blank `slug` from reaching Supabase, and
+`slug` is unique, so blanks would collide after the first one.
 
-## What was stale in `n8n-idea-pipeline-v2.json`
+### Filling `idea_research`
 
-Recorded here because the difference mattered:
+Rows are researched and inserted directly into Supabase. Every number in
+`research_facts` must trace to a URL in its own `sources` array — that is the
+whole point of the table. Shape:
 
-- 9 nodes vs 28 live — the whole FAQ-pool branch and blog branch were missing.
-- Its gate was `research_facts` **contains the string `"facts"`**. The live gate
-  is `length > 50`. The old check would wrongly reject research written in the
-  `IDEA-00283` shape, whose keys are `startup_cost` / `market_size` /
-  `voice_angle` with no `facts` key at all.
-- It had no `Quality Guard` node.
+```json
+{
+  "facts":   ["A claim with a real number", "Another"],
+  "sources": ["https://…", "https://…"],
+  "voice_angle": "the emotional stance for this idea",
+  "open_with":   "how to start it"
+}
+```
+
+`voice_angle` and `open_with` are optional; the writer prompt follows them
+exactly when present and picks its own distinct combination when absent. They
+exist to stop every idea reading alike.
+
+**Currently populated: 3 of 116** — `IDEA-00284`, `IDEA-00285`, `IDEA-00286`.
+Run the idea pipeline and those three process end to end while the other 113
+are skipped and counted by `Run Summary`.
+
+## Still unfixed
+
+`Read Blog Queue` in `n8n/blog-pipeline.json` has
+`documentId: "REPLACE_WITH_YOUR_SHEET_ID"` and `sheetName: "Blog Queue"`. That
+placeholder was never filled on the old account either, so the blog workflow has
+never run. It needs a real sheet ID.
 
 ## Data shapes — no mismatch, existing or future
 
-Nine Supabase columns are `jsonb` but hold a JSON *string* rather than a JSON
-array, because the parser does `JSON.stringify(...)` and the Supabase node
-writes that string straight into a `jsonb` column:
+Nine `jsonb` columns in `public.ideas` hold a JSON *string* rather than an array,
+because the parser does `JSON.stringify(...)` and the Supabase node writes that
+string into a `jsonb` column:
 
 | Column | Rows storing a string | Rows storing a real array |
 |---|---|---|
@@ -102,8 +123,10 @@ writes that string straight into a `jsonb` column:
 | `getting_started_steps`, `tools_needed`, `faq_json`, `external_links`, `internal_link_anchors` | 8 | 0 |
 | `research_facts` | 7 | 0 |
 
-This is cosmetic, not breaking. `toStringList` and `toObjectList` in
+Cosmetic, not breaking. `toStringList` and `toObjectList` in
 `src/lib/ideas-shared.ts` unwrap up to three levels, so a double-encoded string
-and a real array both render correctly. If the parser is ever changed to write
-real arrays, old and new rows will still both work — the helpers accept either.
-No backfill is required, and none has been run.
+and a real array both render. Old and new rows keep working either way, so no
+backfill is owed and none has been run.
+
+The new `idea_research` table stores proper jsonb objects and arrays, not
+strings — confirmed with `jsonb_typeof` after insert.
