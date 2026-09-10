@@ -100,14 +100,31 @@ whole point of the table. Shape:
 exactly when present and picks its own distinct combination when absent. They
 exist to stop every idea reading alike.
 
-**Currently populated: 13 of 116.** Run the idea pipeline and those thirteen
-process end to end while the other 103 are skipped and counted by `Run Summary`.
+**Currently populated: 20 of 116.** Run the idea pipeline and those twenty
+process end to end while the other 96 are skipped and counted by `Run Summary`.
 
-Ideas that share a business model share their sourced economics — the template
-licensing cluster, the unattended-machine cluster, the plant-growing cluster —
-with a per-idea `voice_angle` and `open_with` so no two pages read alike. The
-insert pattern is a CTE holding each cluster's fact block once, concatenated
-per row with `jsonb_build_object('voice_angle', …, 'open_with', …)`.
+Ideas that share a *business model* share their sourced economics, with a
+per-idea `voice_angle` and `open_with` so no two pages read alike. The insert
+pattern is a CTE holding each cluster's fact block once, concatenated per row
+with `jsonb_build_object('voice_angle', …, 'open_with', …)`.
+
+Sharing is only legitimate where the numbers genuinely are the same. Marketplace
+take rate and liquidity benchmarks apply to any two-sided platform, so that
+block is shared across all of them. Freelance rates are **not** shared: grant
+writing, copyediting, illustration and podcast editing all price differently,
+so each needs its own sourced research.
+
+The remaining 96 break down by business model as:
+
+| Cluster | Count | Shared economics? |
+|---|---|---|
+| Marketplace / platform (two-sided) | 27 | yes — take rate, liquidity, LTV:CAC |
+| Part-time local or physical shift | 27 | no — varies by trade |
+| Part-time freelance service | 20 | no — rates differ per discipline |
+| Subscription / membership | 12 | partly |
+| Backyard growing | 2 | yes — grower pricing |
+| Unclassified | 7 | no |
+| Coin-operated / unattended | 1 | yes — machine economics |
 
 Every row is checked before it lands: at least three facts and three sources,
 a unique slug, a non-blank title, and no banned filler, vendor name or year in
