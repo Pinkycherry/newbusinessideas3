@@ -17,11 +17,11 @@ import { BentoGrid, BentoGridItem } from "@/components/aceternity/bento-grid";
 import MovingImageCards from "@/components/aceternity/moving-image-cards";
 import LayoutTextFlip from "@/components/aceternity/layout-text-flip";
 import TextGenerateEffect from "@/components/aceternity/text-generate-effect";
+import BlurText from "@/components/aceternity/blur-text";
 import EncryptedText from "@/components/aceternity/encrypted-text";
 import EvervaultCard from "@/components/aceternity/evervault-card";
 import LinkPreview from "@/components/aceternity/link-preview";
 import Lens from "@/components/aceternity/lens";
-import ParticleText from "@/components/aceternity/particle-text";
 import LineWaves from "@/components/aceternity/line-waves";
 import GlowCursor from "@/components/aceternity/glow-cursor";
 import Tabs from "@/components/aceternity/tabs";
@@ -328,15 +328,14 @@ function HomePage() {
         <div className="relative mx-auto max-w-[92rem] px-6 py-10 lg:py-14">
           <p className="ins-legend">The Truth About Business Ideas</p>
 
-          <h1 className="mt-5">
-            <ParticleText
-              text="Tired of paying just to check if your idea will work?"
-              className="h-[11rem] sm:h-[17rem]"
-              fontSize="clamp(2.1rem, 4.6vw, 3.6rem)"
-              fontWeight={700}
-              color="#FFFFFF"
-              highlightColor="#B2B2B2"
-            />
+          {/* The H1 is real type on every device now. The particle heading it
+              replaced resolved into readable letterforms only at desktop
+              display size — on a phone it rendered this line as a smear of
+              dots — and its pointer listener sat on the window, so a tap
+              anywhere scattered it. The blur reveal reads the same on a 390px
+              screen as on a 1440px one, and it is text the whole time. */}
+          <h1 className="mt-5 max-w-[22ch]">
+            <BlurText text="Tired of paying just to check if your idea will work?" />
           </h1>
 
           <dl className="mt-2 flex flex-wrap items-baseline gap-x-10 gap-y-3">
