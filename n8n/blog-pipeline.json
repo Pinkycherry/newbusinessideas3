@@ -301,24 +301,26 @@
             }
           ],
           "value": {
-            "blog_id": "={{ $json.blog_id }}",
-            "status": "={{ $json.blog_status }}",
-            "slug": "={{ $json.post.slug }}",
-            "seo_title": "={{ $json.post.seo_title }}",
-            "meta_description": "={{ $json.post.meta_description }}",
-            "excerpt": "={{ $json.post.excerpt }}",
-            "image_file_name": "={{ $json.post.image_file_name }}",
-            "image_alt": "={{ $json.post.image_alt }}",
-            "image_focus_keyword": "={{ $json.post.image_focus_keyword }}",
-            "image_keywords": "={{ $json.post.image_keywords }}",
-            "image_long_tail_1": "={{ $json.post.image_long_tail_1 }}",
-            "image_long_tail_2": "={{ $json.post.image_long_tail_2 }}",
-            "image_description": "={{ $json.post.image_description }}",
+            "blog_id": "={{ $('Parse and Guard Post').first().json.blog_id }}",
+            "status": "={{ $('Parse and Guard Post').first().json.blog_status }}",
+            "slug": "={{ $('Parse and Guard Post').first().json.post.slug || '' }}",
+            "seo_title": "={{ $('Parse and Guard Post').first().json.post.seo_title || '' }}",
+            "meta_description": "={{ $('Parse and Guard Post').first().json.post.meta_description || '' }}",
+            "excerpt": "={{ $('Parse and Guard Post').first().json.post.excerpt || '' }}",
+            "image_file_name": "={{ $('Parse and Guard Post').first().json.post.image_file_name || '' }}",
+            "image_alt": "={{ $('Parse and Guard Post').first().json.post.image_alt || '' }}",
+            "image_focus_keyword": "={{ $('Parse and Guard Post').first().json.post.image_focus_keyword || '' }}",
+            "image_keywords": "={{ $('Parse and Guard Post').first().json.post.image_keywords || '' }}",
+            "image_long_tail_1": "={{ $('Parse and Guard Post').first().json.post.image_long_tail_1 || '' }}",
+            "image_long_tail_2": "={{ $('Parse and Guard Post').first().json.post.image_long_tail_2 || '' }}",
+            "image_description": "={{ $('Parse and Guard Post').first().json.post.image_description || '' }}",
             "generated_at": "={{ $now.toISO() }}",
-            "quality_error": "={{ $json.quality_error }}"
+            "quality_error": "={{ $('Parse and Guard Post').first().json.quality_error }}"
           }
         },
-        "options": {}
+        "options": {},
+        "notes": "Reads Parse and Guard Post by name, never $json. Two branches feed this node: the gate's false output carries the guard's item, but Write Blog Post carries the inserted Supabase row, which has no blog_id and no post object. Using $json meant a successful row matched an empty blog_id and updated nothing.",
+        "notesInFlow": true
       },
       "id": "0e24502a-9da2-45e2-b130-f3b5cc05eedb",
       "name": "Mark Blog Row Done",

@@ -124,3 +124,26 @@ backfill is owed and none has been run.
 
 The new `idea_research` table stores proper jsonb objects and arrays, not
 strings — confirmed with `jsonb_typeof` after insert.
+
+## Why a successful row wrote to Supabase but left the sheet empty
+
+`Mark Blog Row Done` is fed by two branches: the `Ready To Publish?` false output,
+which carries `Parse and Guard Post`'s item, and `Write Blog Post`, which carries
+the **inserted Supabase row**. That row has no `blog_id`, no `blog_status` and no
+`post` object, so on the success path `{{ $json.blog_id }}` resolved to nothing,
+the update matched no row by `blog_id`, and the sheet was silently left alone.
+Failed rows updated correctly, which is why the sheet only ever showed
+`needs_review`.
+
+Every expression on that node now reads `$('Parse and Guard Post').first().json`
+by name, so both branches write the same fields.
+
+## The SEO fields have nowhere to live in Supabase yet
+
+`Write Blog Post` maps seven columns: `slug`, `title`, `excerpt`, `html`,
+`meta_description`, `categories`, `status`. The writer also produces `seo_title`,
+`image_prompt`, `image_file_name`, `image_alt`, `image_focus_keyword`,
+`image_keywords`, `image_long_tail_1`, `image_long_tail_2` and
+`image_description` -- and none of them are stored there. Until `blog_posts`
+gains those columns, the Blog Queue sheet is the only record of them, which the
+fix above restores.
