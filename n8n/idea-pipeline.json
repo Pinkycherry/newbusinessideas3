@@ -842,6 +842,61 @@
       ],
       "notesInFlow": true,
       "notes": "Only status=completed inserts. needs_retry / needs_review go straight back to the loop."
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "idea_research",
+        "returnAll": false,
+        "limit": 1,
+        "filterType": "manual",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "idea_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.idea_id }}"
+            }
+          ]
+        }
+      },
+      "id": "fetchres-0001",
+      "name": "Fetch Stage 1 Research",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        300,
+        180
+      ],
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 2000,
+      "notesInFlow": true,
+      "notes": "Looks up idea_research by idea_id. A miss skips the row, it never stalls the loop.",
+      "credentials": {
+        "supabaseApi": {
+          "id": "B7VX9z6RAJCh89LB",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Merge Stage 1 research onto the seed row from the sheet.\n//\n// The sheet supplies only the seed columns (category, subcategory, keywords,\n// business_description). research_facts is empty on every pending row there,\n// so the researcher's output -- title, slug, the SEO fields, tags, links and\n// research_facts -- is read from Supabase table idea_research instead.\n//\n// A miss is not an error. The lookup runs with alwaysOutputData, so an idea\n// with no research yet arrives as an empty object, falls through with an empty\n// research_facts, and is skipped by the gate exactly as before.\nconst src = $('Loop Over Items').item.json;\nconst found = $input.item.json || {};\nconst hit = Boolean(found && found.idea_id);\n\nconst str = (v) => (v === undefined || v === null) ? '' : String(v);\n// jsonb comes back parsed; the gate and the writer prompt both want text.\nconst text = (v) => (v === undefined || v === null) ? ''\n  : (typeof v === 'string' ? v : JSON.stringify(v));\nconst pick = (k, fb) => (hit && found[k]) ? found[k] : fb;\n\nreturn {\n  json: {\n    ...src,\n    title:                 str(pick('title',            src.title)),\n    slug:                  str(pick('slug',             src.slug)),\n    seo_title:             str(pick('seo_title',        src.seo_title)),\n    meta_description:      str(pick('meta_description', src.meta_description)),\n    tags:                  text(pick('tags',                  src.tags)) || '[]',\n    external_links:        text(pick('external_links',        src.external_links)) || '[]',\n    internal_link_anchors: text(pick('internal_link_anchors', src.internal_link_anchors)) || '[]',\n    research_facts:        text(pick('research_facts',        src.research_facts)),\n    research_found:        hit,\n  },\n};\n"
+      },
+      "id": "mergeres-0001",
+      "name": "Merge Research",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        300,
+        300
+      ],
+      "notesInFlow": true,
+      "notes": "Sheet seed row + researcher fields from Supabase."
     }
   ],
   "connections": {
@@ -878,7 +933,7 @@
         ],
         [
           {
-            "node": "Has research_facts?",
+            "node": "Fetch Stage 1 Research",
             "type": "main",
             "index": 0
           }
@@ -981,6 +1036,28 @@
         [
           {
             "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Stage 1 Research": {
+      "main": [
+        [
+          {
+            "node": "Merge Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Research": {
+      "main": [
+        [
+          {
+            "node": "Has research_facts?",
             "type": "main",
             "index": 0
           }
