@@ -17,7 +17,7 @@
       "parameters": {
         "documentId": {
           "__rl": true,
-          "value": "REPLACE_WITH_YOUR_SHEET_ID",
+          "value": "1RDeR1tFvg8MN09spWutt0vhSLERSRG797XQuftZrGgA",
           "mode": "id"
         },
         "sheetName": {
@@ -65,7 +65,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Parse Gemini's JSON and refuse anything that would publish badly.\n//\n// The model is asked for raw JSON, but it still occasionally wraps the object\n// in a markdown fence, so strip that before parsing rather than failing the\n// whole batch on a formatting quirk.\nconst out = [];\n\nfor (const item of $input.all()) {\n  const raw = item.json?.text ?? item.json?.output ?? item.json?.candidates?.[0]?.content?.parts?.[0]?.text ?? '';\n  const cleaned = String(raw).replace(/^\\s*```(?:json)?/i, '').replace(/```\\s*$/, '').trim();\n\n  let post;\n  try {\n    post = JSON.parse(cleaned);\n  } catch (e) {\n    throw new Error('Gemini did not return valid JSON for \"' + (item.json.title ?? 'unknown row') + '\": ' + e.message);\n  }\n\n  const need = ['title', 'slug', 'excerpt', 'content_html', 'image_prompt', 'meta_description'];\n  const missing = need.filter((k) => !post[k] || String(post[k]).trim() === '');\n  if (missing.length) throw new Error('Post is missing required fields: ' + missing.join(', '));\n\n  // Guards. Each of these has shipped as a real defect on this project before.\n  if (/<h1[\\s>]/i.test(post.content_html)) throw new Error('content_html contains an <h1>; the theme renders the title.');\n  if (/<script|<style|onerror=|onclick=/i.test(post.content_html)) throw new Error('content_html contains script/style/handlers.');\n  if (String(post.title).length > 80) throw new Error('Title too long: ' + post.title.length);\n  if (String(post.meta_description).length > 165) throw new Error('meta_description too long: ' + post.meta_description.length);\n\n  const words = String(post.content_html).replace(/<[^>]+>/g, ' ').split(/\\s+/).filter(Boolean).length;\n  if (words < 350) throw new Error('Post is only ' + words + ' words; too thin to publish.');\n\n  post.slug = String(post.slug).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');\n\n  out.push({ json: { ...item.json, post, wordCount: words } });\n}\n\nreturn out;"
+        "jsCode": "// Parse the model's JSON and refuse anything that would publish badly.\n//\n// Faults are RECORDED, not thrown. A throw here aborted the entire execution,\n// so one bad generation destroyed every row still queued behind it. A failing\n// row is now marked needs_review with a reason, the sheet records it, and the\n// Supabase insert is skipped for that row alone.\nconst out = [];\n\nfor (const item of $input.all()) {\n  const raw = item.json?.text ?? item.json?.output ?? item.json?.candidates?.[0]?.content?.parts?.[0]?.text ?? '';\n  const cleaned = String(raw).replace(/^\\s*```(?:json)?/i, '').replace(/```\\s*$/, '').trim();\n\n  const problems = [];\n  let post = null;\n  try {\n    post = JSON.parse(cleaned);\n  } catch (e) {\n    // Truncated output is the usual cause, so say so rather than dumping the parser error alone.\n    problems.push('invalid JSON (often a truncated response): ' + e.message);\n  }\n\n  if (post) {\n    const need = ['title', 'slug', 'seo_title', 'meta_description', 'excerpt', 'image_prompt', 'content_html'];\n    const missing = need.filter((k) => !post[k] || String(post[k]).trim() === '');\n    if (missing.length) problems.push('missing required fields: ' + missing.join(', '));\n\n    const html = String(post.content_html ?? '');\n    if (/<h1[\\s>]/i.test(html)) problems.push('content_html contains an <h1>; the theme renders the title');\n    if (/<script|<style|onerror=|onclick=/i.test(html)) problems.push('content_html contains script, style or an event handler');\n    if (String(post.title ?? '').length > 80) problems.push('title too long: ' + String(post.title).length);\n    if (String(post.meta_description ?? '').length > 165) problems.push('meta_description too long: ' + String(post.meta_description).length);\n    if (post.slug) post.slug = String(post.slug).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');\n  }\n\n  const words = post && post.content_html\n    ? String(post.content_html).replace(/<[^>]+>/g, ' ').split(/\\s+/).filter(Boolean).length\n    : 0;\n  if (words < 350) problems.push('only ' + words + ' words, too thin to publish');\n\n  out.push({ json: {\n    ...item.json,\n    post: post || {},\n    wordCount: words,\n    blog_status: problems.length ? 'needs_review' : 'completed',\n    quality_error: problems.join('; '),\n  } });\n}\n\nreturn out;\n"
       },
       "id": "b261fabe-30aa-4bcf-aad6-4839418bcb07",
       "name": "Parse and Guard Post",
@@ -125,14 +125,17 @@
           "id": "TByDz4NFAQDHJH8N",
           "name": "Supabase account"
         }
-      }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2
     },
     {
       "parameters": {
         "operation": "update",
         "documentId": {
           "__rl": true,
-          "value": "REPLACE_WITH_YOUR_SHEET_ID",
+          "value": "1RDeR1tFvg8MN09spWutt0vhSLERSRG797XQuftZrGgA",
           "mode": "id"
         },
         "sheetName": {
@@ -143,13 +146,25 @@
         "columns": {
           "mappingMode": "defineBelow",
           "matchingColumns": [
-            "row_id"
+            "blog_id"
           ],
+          "schema": [],
           "value": {
-            "row_id": "={{ $('Parse and Guard Post').item.json.row_id }}",
-            "status": "done",
-            "published_slug": "={{ $('Parse and Guard Post').item.json.post.slug }}",
-            "word_count": "={{ $('Parse and Guard Post').item.json.wordCount }}"
+            "blog_id": "={{ $('Parse and Guard Post').item.json.blog_id }}",
+            "status": "={{ $('Parse and Guard Post').item.json.blog_status }}",
+            "slug": "={{ $('Parse and Guard Post').item.json.post.slug }}",
+            "seo_title": "={{ $('Parse and Guard Post').item.json.post.seo_title }}",
+            "meta_description": "={{ $('Parse and Guard Post').item.json.post.meta_description }}",
+            "excerpt": "={{ $('Parse and Guard Post').item.json.post.excerpt }}",
+            "image_file_name": "={{ $('Parse and Guard Post').item.json.post.image_file_name }}",
+            "image_alt": "={{ $('Parse and Guard Post').item.json.post.image_alt }}",
+            "image_focus_keyword": "={{ $('Parse and Guard Post').item.json.post.image_focus_keyword }}",
+            "image_keywords": "={{ $('Parse and Guard Post').item.json.post.image_keywords }}",
+            "image_long_tail_1": "={{ $('Parse and Guard Post').item.json.post.image_long_tail_1 }}",
+            "image_long_tail_2": "={{ $('Parse and Guard Post').item.json.post.image_long_tail_2 }}",
+            "image_description": "={{ $('Parse and Guard Post').item.json.post.image_description }}",
+            "generated_at": "={{ $now.toISO() }}",
+            "quality_error": "={{ $('Parse and Guard Post').item.json.quality_error }}"
           }
         },
         "options": {}
@@ -167,13 +182,15 @@
           "id": "X5eCOEMEYNZp8kvz",
           "name": "Google Sheets account"
         }
-      }
+      },
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
         "modelName": "models/gemini-3.6-flash",
         "options": {
-          "temperature": 0.9
+          "temperature": 0.9,
+          "maxOutputTokens": 8192
         }
       },
       "id": "gemblog-0001",
@@ -194,7 +211,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=You are the staff writer for BBI (Bro Business Ideas), a free, researched business-idea library at businessidea.io, written India-first for people starting from zero: no investment, no team, no connections.\n\nWrite ONE complete blog post from the brief below.\n\n=== THE BRIEF (from the sheet row) ===\nWorking title: {{ $json.title }}\nPrimary keyword: {{ $json.primary_keyword }}\nSecondary keywords: {{ $json.secondary_keywords }}\nCategory: {{ $json.category }}\nSearch intent: {{ $json.search_intent }}\nAngle the writer must take: {{ $json.angle }}\nInternal link to include: {{ $json.internal_link }}\nTarget word count: {{ $json.word_count }}\n\n=== VOICE — THIS IS NOT OPTIONAL ===\nBBI's reader is often jobless, often broke, often on a phone at 1am. Write to that person as an equal, never down to them.\n- Short sentences. Plain words. No corporate register, no hype, no \"unlock\", \"leverage\", \"game-changer\", \"dive in\", \"in today's fast-paced world\".\n- No em-dash-heavy rhythm. No rhetorical question openers.\n- Concrete over abstract: rupees, hours, a real weekly routine, an actual first customer.\n- Say the hard part out loud. If an idea needs capital the reader may not have, say so in the same paragraph you recommend it.\n- Never invent statistics, studies, funding figures or named sources. If you do not know a number, describe the shape of it in words instead. A made-up figure is worse than no figure.\n- Never name or describe the AI tools BBI hands off to.\n\n=== STRUCTURE ===\n- Open with the reader's actual situation in 2-3 sentences. No throat-clearing.\n- 4 to 7 H2 sections. Sentence case headings, never Title Case, never a question mark on a label.\n- Where a list genuinely helps, use one. Otherwise write prose.\n- Close with what to do this week, in three concrete steps.\n\n\n\n=== BODY LANGUAGE AND TONE PATTERNS - READ TWICE ===\n\nYou are not narrating at the reader. You are sitting across a table from them.\nWrite the way a person who has actually done this talks to someone who has not.\n\nPOSTURE\n- Level, never above. The reader is broke, not stupid. Never explain what they\n  already know; never assume they know what they do not.\n- Calm. No urgency theatre, no \"act now\", no manufactured scarcity.\n- Willing to say \"this one is not for you\" and mean it. A page that talks\n  everyone into everything is worth nothing.\n\nRHYTHM\n- Vary sentence length deliberately. A long explanatory sentence, then a short\n  one that lands. Then move on.\n- Never open two consecutive paragraphs the same way.\n- No rhetorical question as an opener. No \"Let's dive in\". No \"Here's the\n  thing\". No \"But here's the kicker\".\n- Avoid an em-dash-heavy cadence. Use a full stop where a dash would be lazy.\n\nWHAT CONFIDENCE SOUNDS LIKE\n- Specificity, never superlatives. \"You will spend the first month calling\n  shops\" beats \"incredible opportunity\".\n- Name the boring part. The paperwork, the waiting, the unglamorous hours.\n- Where something is genuinely uncertain, say it plainly rather than hedging\n  with weasel words.\n\nWHAT TO NEVER SOUND LIKE\n- A brochure, a pitch deck, a LinkedIn post, or a motivational reel.\n- An assistant being helpful. No \"Certainly\", no \"I hope this helps\", no\n  meta-commentary about the task.\n- A template. If two outputs could swap paragraphs without anyone noticing,\n  the writing has failed.\n\n=== OUTPUT ===\nReturn ONLY valid JSON, no markdown fence, matching exactly:\n{\n  \"title\": \"final post title, sentence case, under 65 characters\",\n  \"slug\": \"url-safe-lowercase-hyphenated\",\n  \"excerpt\": \"one sentence under 155 characters, no ellipsis\",\n  \"content_html\": \"the full post as clean semantic HTML using only <h2> <h3> <p> <ul> <li> <ol> <strong> <em> <a>. No inline styles, no <div>, no <script>, no <h1> (the theme renders the title).\",\n  \"image_prompt\": \"a photographic scene description for the cover image: a real workspace or setting relevant to this post, natural light, no text, no logos, no people's faces, no charts\",\n  \"meta_description\": \"under 158 characters, includes the primary keyword naturally\"\n}"
+        "text": "=You are the staff writer for BBI (Bro Business Ideas), a free, researched business-idea library at businessidea.io, written India-first for people starting from zero: no investment, no team, no connections.\n\nWrite ONE complete blog post from the brief below.\n\n=== THE BRIEF (from the sheet row) ===\nWorking title: {{ $json.title }}\nPrimary keyword: {{ $json.primary_keyword }}\nSecondary keywords: {{ $json.secondary_keywords }}\nCategory: {{ $json.category }}\nSearch intent: {{ $json.search_intent }}\nAngle the writer must take: {{ $json.angle }}\nInternal link to include: {{ $json.internal_link }}\nTarget word count: {{ $json.word_count }}\n\n=== VOICE — THIS IS NOT OPTIONAL ===\nBBI's reader is often jobless, often broke, often on a phone at 1am. Write to that person as an equal, never down to them.\n- Short sentences. Plain words. No corporate register, no hype, no \"unlock\", \"leverage\", \"game-changer\", \"dive in\", \"in today's fast-paced world\".\n- No em-dash-heavy rhythm. No rhetorical question openers.\n- Concrete over abstract: rupees, hours, a real weekly routine, an actual first customer.\n- Say the hard part out loud. If an idea needs capital the reader may not have, say so in the same paragraph you recommend it.\n- Never invent statistics, studies, funding figures or named sources. If you do not know a number, describe the shape of it in words instead. A made-up figure is worse than no figure.\n- Never name or describe the AI tools BBI hands off to.\n\n=== STRUCTURE ===\n- Open with the reader's actual situation in 2-3 sentences. No throat-clearing.\n- 4 to 7 H2 sections. Sentence case headings, never Title Case, never a question mark on a label.\n- Where a list genuinely helps, use one. Otherwise write prose.\n- Close with what to do this week, in three concrete steps.\n\n\n\n=== BODY LANGUAGE AND TONE PATTERNS - READ TWICE ===\n\nYou are not narrating at the reader. You are sitting across a table from them.\nWrite the way a person who has actually done this talks to someone who has not.\n\nPOSTURE\n- Level, never above. The reader is broke, not stupid. Never explain what they\n  already know; never assume they know what they do not.\n- Calm. No urgency theatre, no \"act now\", no manufactured scarcity.\n- Willing to say \"this one is not for you\" and mean it. A page that talks\n  everyone into everything is worth nothing.\n\nRHYTHM\n- Vary sentence length deliberately. A long explanatory sentence, then a short\n  one that lands. Then move on.\n- Never open two consecutive paragraphs the same way.\n- No rhetorical question as an opener. No \"Let's dive in\". No \"Here's the\n  thing\". No \"But here's the kicker\".\n- Avoid an em-dash-heavy cadence. Use a full stop where a dash would be lazy.\n\nWHAT CONFIDENCE SOUNDS LIKE\n- Specificity, never superlatives. \"You will spend the first month calling\n  shops\" beats \"incredible opportunity\".\n- Name the boring part. The paperwork, the waiting, the unglamorous hours.\n- Where something is genuinely uncertain, say it plainly rather than hedging\n  with weasel words.\n\nWHAT TO NEVER SOUND LIKE\n- A brochure, a pitch deck, a LinkedIn post, or a motivational reel.\n- An assistant being helpful. No \"Certainly\", no \"I hope this helps\", no\n  meta-commentary about the task.\n- A template. If two outputs could swap paragraphs without anyone noticing,\n  the writing has failed.\n\n=== OUTPUT ===\nReturn ONLY valid JSON, no markdown fence, matching exactly. The short fields\ncome FIRST on purpose: if a response is ever cut short, the metadata is already\npresent and only the tail of the article is lost.\n{\n  \"title\": \"final post title, sentence case, under 65 characters\",\n  \"slug\": \"url-safe-lowercase-hyphenated\",\n  \"seo_title\": \"50 to 60 characters, carries the primary keyword\",\n  \"meta_description\": \"140 to 158 characters, includes the primary keyword naturally\",\n  \"excerpt\": \"one sentence under 155 characters, no ellipsis\",\n  \"image_prompt\": \"a photographic scene description for the cover image: a real workspace or setting relevant to this post, natural light, no text, no logos, no faces, no charts\",\n  \"image_file_name\": \"lowercase hyphenated, at least 5 keywords, ending .webp\",\n  \"image_alt\": \"exactly 4 keywords written as a real sentence describing the picture. NOT the file name repeated\",\n  \"image_focus_keyword\": \"one phrase, the single thing the image should rank for\",\n  \"image_keywords\": \"3 supporting keywords, comma separated, none of them the focus keyword\",\n  \"image_long_tail_1\": \"a full phrase someone would actually type\",\n  \"image_long_tail_2\": \"a second, different full phrase\",\n  \"image_description\": \"one or two sentences containing the focus keyword, reading as a caption a person would want under the picture\",\n  \"content_html\": \"LAST and by far the longest field. The full post as clean semantic HTML using only <h2> <h3> <p> <ul> <li> <ol> <strong> <em> <a>. No inline styles, no <div>, no <script>, no <h1> (the theme renders the title).\"\n}\n\nWrite content_html last and in full. Never truncate it, and never end the JSON early.\n"
       },
       "id": "blogagent-0001",
       "name": "Blog Writer Agent",
@@ -211,6 +228,41 @@
       "alwaysOutputData": true,
       "notesInFlow": true,
       "notes": "Custom prompt with the full voice and tone contract. Retries a rate limit instead of killing the run."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "blog-ok",
+              "leftValue": "={{ $json.blog_status }}",
+              "rightValue": "completed",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "blogok-0001",
+      "name": "Ready To Publish?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        900,
+        220
+      ],
+      "notesInFlow": true,
+      "notes": "Only completed posts insert. needs_review still updates the sheet with its reason."
     }
   ],
   "connections": {
@@ -252,7 +304,7 @@
       "main": [
         [
           {
-            "node": "Write Blog Post",
+            "node": "Ready To Publish?",
             "type": "main",
             "index": 0
           }
@@ -298,6 +350,24 @@
           {
             "node": "Blog Writer Agent",
             "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ready To Publish?": {
+      "main": [
+        [
+          {
+            "node": "Write Blog Post",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Blog Row Done",
+            "type": "main",
             "index": 0
           }
         ]

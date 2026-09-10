@@ -128,7 +128,8 @@
       "parameters": {
         "modelName": "models/gemini-3.6-flash",
         "options": {
-          "temperature": 1
+          "temperature": 1,
+          "maxOutputTokens": 8192
         }
       },
       "id": "gemfaq-0001",
