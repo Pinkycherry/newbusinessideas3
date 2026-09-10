@@ -100,9 +100,18 @@ whole point of the table. Shape:
 exactly when present and picks its own distinct combination when absent. They
 exist to stop every idea reading alike.
 
-**Currently populated: 3 of 116** — `IDEA-00284`, `IDEA-00285`, `IDEA-00286`.
-Run the idea pipeline and those three process end to end while the other 113
-are skipped and counted by `Run Summary`.
+**Currently populated: 13 of 116.** Run the idea pipeline and those thirteen
+process end to end while the other 103 are skipped and counted by `Run Summary`.
+
+Ideas that share a business model share their sourced economics — the template
+licensing cluster, the unattended-machine cluster, the plant-growing cluster —
+with a per-idea `voice_angle` and `open_with` so no two pages read alike. The
+insert pattern is a CTE holding each cluster's fact block once, concatenated
+per row with `jsonb_build_object('voice_angle', …, 'open_with', …)`.
+
+Every row is checked before it lands: at least three facts and three sources,
+a unique slug, a non-blank title, and no banned filler, vendor name or year in
+the title, SEO title or meta description.
 
 ## Still unfixed
 
