@@ -3738,3 +3738,36 @@ html.light .bbi-instrument .bbi-orbit-node:hover .bbi-orbit-node-label {
   border-color: var(--ins-rule-strong) !important;
   color: var(--ins-bright) !important;
 }
+
+/* ---- FAQ disclosure rows ----------------------------------------------
+   Opted out of the action treatment with `.bbi-bare`, and given the answer a
+   row should give: the plate lifts one step and the question brightens. No
+   travelling border, no white fill — measured on the page before this, the
+   band read as a light streak crossing each question at rest, and hovering
+   turned the whole row into a solid white bar. */
+html.light .bbi-instrument .bbi-faq-row {
+  color: var(--ins-read) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  animation: none !important;
+  transition:
+    background-color 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+html.light .bbi-instrument .bbi-faq-row:hover,
+html.light .bbi-instrument .bbi-faq-row[aria-expanded="true"] {
+  background: var(--ins-face) !important;
+  color: var(--ins-bright) !important;
+}
+html.light .bbi-instrument .bbi-faq-row:focus-visible {
+  outline: 2px solid var(--ins-signal);
+  outline-offset: -2px;
+}
+html.light .bbi-instrument .bbi-faq-mark {
+  color: var(--ins-faint) !important;
+}
+html.light .bbi-instrument .bbi-faq-row:hover .bbi-faq-mark,
+html.light .bbi-instrument .bbi-faq-row[aria-expanded="true"] .bbi-faq-mark {
+  color: var(--ins-bright) !important;
+}

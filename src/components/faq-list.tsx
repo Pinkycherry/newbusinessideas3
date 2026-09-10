@@ -46,12 +46,12 @@ function FaqItem({ faq }: { faq: CategoryFaq }) {
           aria-expanded={open}
           aria-controls={panelId}
           onClick={() => setOpen((v) => !v)}
-          className="mo-row flex w-full items-start justify-between gap-4 rounded-lg py-1 text-left text-sm font-semibold text-foreground"
+          className="bbi-bare bbi-faq-row mo-row flex w-full items-start justify-between gap-4 rounded-lg px-2 py-1.5 text-left text-sm font-semibold"
         >
           <span className="min-w-0 leading-snug">{faq.question}</span>
           <span
             aria-hidden
-            className="mt-0.5 shrink-0 text-accent transition-transform duration-200"
+            className="bbi-faq-mark mt-0.5 shrink-0 transition-transform duration-200"
             style={{ transform: open ? "rotate(45deg)" : "rotate(0deg)" }}
           >
             +
