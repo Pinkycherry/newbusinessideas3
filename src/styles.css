@@ -3507,3 +3507,55 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
     }
   }
 }
+
+/* ---- SpotlightCard -----------------------------------------------------
+   The site's one card. A flat plate in the housing's face colour with a
+   single drawn rule, and a soft white light that follows the pointer across
+   it. No colour but the brand greyscale: in a five-value palette the only
+   thing left to carry emphasis is light.
+
+   The pointer position arrives as --spot-x / --spot-y, written straight to
+   the element by the component, so moving the cursor across thirty of these
+   re-renders nothing. */
+.bbi-spot {
+  position: relative;
+  overflow: hidden;
+  background: var(--ins-face, #1e1e1e);
+  border: 1px solid var(--ins-rule, rgb(224 224 224 / 0.14));
+  border-radius: 0;
+  transition:
+    border-color 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.bbi-spot[data-lit="on"] {
+  border-color: var(--ins-rule-strong, rgb(224 224 224 / 0.32));
+  background: var(--ins-face-2, #262626);
+}
+.bbi-spot-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 420ms ease-in-out;
+  background: radial-gradient(
+    circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    var(--spot-color, rgb(255 255 255 / 0.09)),
+    transparent 72%
+  );
+}
+.bbi-spot[data-lit="on"] .bbi-spot-light {
+  opacity: 1;
+}
+/* No pointer, no spotlight — and no wasted paint chasing one. The press
+   state in the mobile block answers the tap instead. */
+@media (hover: none) {
+  .bbi-spot-light {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-spot,
+  .bbi-spot-light {
+    transition: none;
+  }
+}

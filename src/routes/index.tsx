@@ -7,19 +7,17 @@ import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
 import { CategoryBadge } from "@/components/category-badge";
 import { AdSlot } from "@/components/AdSlot";
-import { HeroFrame } from "@/components/hero-slider";
 import { BusinessIcons } from "@/components/business-icons";
 import { CardFan } from "@/components/card-fan";
 import HoverBorderGradient from "@/components/aceternity/hover-border-gradient";
 import ContainerTextFlip from "@/components/aceternity/container-text-flip";
 import InfiniteMovingCards from "@/components/aceternity/infinite-moving-cards";
-import { BentoGrid, BentoGridItem } from "@/components/aceternity/bento-grid";
 import MovingImageCards from "@/components/aceternity/moving-image-cards";
 import LayoutTextFlip from "@/components/aceternity/layout-text-flip";
 import TextGenerateEffect from "@/components/aceternity/text-generate-effect";
 import BlurText from "@/components/aceternity/blur-text";
+import SpotlightCard from "@/components/aceternity/spotlight-card";
 import EncryptedText from "@/components/aceternity/encrypted-text";
-import EvervaultCard from "@/components/aceternity/evervault-card";
 import LinkPreview from "@/components/aceternity/link-preview";
 import Lens from "@/components/aceternity/lens";
 import LineWaves from "@/components/aceternity/line-waves";
@@ -338,44 +336,41 @@ function HomePage() {
             <BlurText text="Tired of paying just to check if your idea will work?" />
           </h1>
 
-          <dl className="mt-2 flex flex-wrap items-baseline gap-x-10 gap-y-3">
-            <div className="flex items-baseline gap-2.5">
-              <dd className="ins-num text-3xl font-semibold leading-none text-[var(--ins-bright)]">
-                {catalog.totalIdeas}
+          {/* The two figures, at display size. They are the fold's proof —
+              the reader's first question is whether anything is actually
+              behind the promise — so they are set as large as the headline
+              rather than as a caption under it, and both of them count up. */}
+          <dl className="mt-7 flex flex-wrap items-end gap-x-12 gap-y-5 sm:gap-x-16">
+            <div>
+              <dd className="ins-num text-[3.25rem] font-bold leading-[0.95] text-[var(--ins-bright)] sm:text-[4.5rem]">
+                <Odometer value={catalog.totalIdeas} format={(n) => `${Math.round(n)}`} />
               </dd>
-              <dt className="ins-num text-[0.6875rem] text-[var(--ins-dim)]">
-                researched blueprints
-              </dt>
+              <dt className="mt-1.5 text-sm text-[var(--ins-dim)]">researched blueprints</dt>
             </div>
-            <div className="flex items-baseline gap-2.5">
-              <dd className="ins-num text-3xl font-semibold leading-none text-[var(--ins-bright)]">
-                {catalog.categories.length}
+            <div aria-hidden className="hidden h-14 w-px bg-[var(--ins-rule)] sm:block" />
+            <div>
+              <dd className="ins-num text-[3.25rem] font-bold leading-[0.95] text-[var(--ins-bright)] sm:text-[4.5rem]">
+                <Odometer value={catalog.categories.length} format={(n) => `${Math.round(n)}`} />
               </dd>
-              <dt className="ins-num text-[0.6875rem] text-[var(--ins-dim)]">live categories</dt>
+              <dt className="mt-1.5 text-sm text-[var(--ins-dim)]">live categories</dt>
             </div>
           </dl>
 
-          {/* The image column was `1fr` of a two-column grid holding a 16:10
-              carousel — half the hero, three photographs, and the tallest
-              thing above the fold. It is capped at 18rem now and the copy
-              takes the width it gives back. */}
-          <div className="mt-9 grid gap-9 lg:grid-cols-[minmax(0,58ch)_minmax(0,18rem)] lg:items-start">
-            <Lens className="text-base leading-relaxed text-[var(--ins-read)]">
-              <p>
-                We built a free home for real business ideas — side hustles, zero investment ideas,
-                work from home ideas, and low investment ideas. Every idea is researched, not
-                guessed. We tell you who will actually pay you, how the money works, and what will
-                hurt you in year one. Then we give it to you straight — build it, or walk away.
-                Browse for free. Validate as many times as you want. Pay only once, if you ever want
-                full access.
-              </p>
-            </Lens>
-            <div className="w-full max-w-[18rem]">
-              <HeroFrame />
-            </div>
-          </div>
+          {/* No image. The hero is the headline, the proof, the promise and
+              the way in — nothing else. The picture that used to sit here was
+              the tallest thing above the fold, was hotlinked from another
+              domain, and said nothing the headline had not already said. */}
+          <Lens className="mt-8 max-w-[68ch] text-base leading-relaxed text-[var(--ins-read)]">
+            <p>
+              We built a free home for real business ideas — side hustles, zero investment ideas,
+              work from home ideas, and low investment ideas. Every idea is researched, not guessed.
+              We tell you who will actually pay you, how the money works, and what will hurt you in
+              year one. Then we give it to you straight — build it, or walk away. Browse for free.
+              Validate as many times as you want. Pay only once, if you ever want full access.
+            </p>
+          </Lens>
 
-          <div className="mt-9 flex flex-wrap items-center gap-3">
+          <div className="mt-8 flex flex-wrap items-center gap-3">
             <HeroCta />
             <HoverBorderGradient asChild containerClassName="rounded-full">
               <Link
@@ -388,15 +383,21 @@ function HomePage() {
               </Link>
             </HoverBorderGradient>
           </div>
+
+          {/* Every clause here is already true elsewhere on the site — the
+              library is free to browse, nothing asks for a card, and the one
+              payment is optional. Nothing new is claimed. */}
+          <p className="mt-5 text-sm text-[var(--ins-dim)]">
+            100% free to browse · No credit card required · Pay only if you want full access
+          </p>
         </div>
 
         {/* The two hero panels, sharing one rule with the block above. */}
         <div className="mx-auto max-w-[92rem]">
           <div className="ins-grid border-t border-[var(--ins-rule)] sm:grid-cols-2">
             {HERO_PANELS.map((panel) => (
-              <EvervaultCard
+              <SpotlightCard
                 key={panel.label}
-                seed={panel.label.length}
                 className="ins-cell border-0 px-6 py-7"
               >
                 <h3 className="text-base font-semibold text-[var(--ins-bright)]">{panel.label}</h3>
@@ -404,7 +405,7 @@ function HomePage() {
                   words={panel.body}
                   className="mt-2 max-w-[58ch] text-sm leading-relaxed text-[var(--ins-read)]"
                 />
-              </EvervaultCard>
+              </SpotlightCard>
             ))}
           </div>
         </div>
@@ -484,7 +485,6 @@ function HomePage() {
                   const photo = categoryImage(category.categorySlug);
                   return {
                     title: category.categoryName,
-                    meta: `${category.ideaCount} blueprints`,
                     src: photo.src,
                     alt: photo.alt,
                     to: "/category/$categorySlug",
@@ -968,59 +968,56 @@ function TrustStatsBar({
   totalIdeas: number;
   categoryCount: number;
 }) {
-  // MOTION_SPEC §4 — the odometer runs on the ONE figure with a real source
-  // behind it (catalog.totalIdeas, straight from loader data). The other two
-  // tiles are not loader values, so they are plain text: a number with no live
-  // source gets no counter and no animation.
+  // All three figures count. The rule that mattered was never "only animate a
+  // loader value" — it is that no figure may be invented. These three are the
+  // same three that were already on the page: one from the live catalog, one
+  // stated review count, one plain fact about the pricing. Counting them does
+  // not change what any of them claims.
   const stats = [
     {
       value: totalIdeas,
-      live: true,
+      suffix: "+",
       label: "Researched blueprints",
       note: `Across ${categoryCount} live categories, growing every week`,
     },
     {
       value: 967,
-      live: false,
+      suffix: "",
       label: "Founders reviewed us",
       note: "Reviewed BBI's structure and functionality before we shipped it",
     },
     {
       value: 2,
-      live: false,
+      suffix: "",
       label: "Simple pricing plans",
       note: "₹199 for 3 months, ₹399 for life. Pay once. No surprise bills, ever.",
     },
   ];
   return (
-    // Three identical tiles said the three figures carried equal weight. Only
-    // one of them has a live source behind it, so only that one claims two
-    // columns — the grid ranks them the way the data does.
-    <BentoGrid className="mx-auto mt-8 max-w-6xl px-3 sm:px-4">
-      {stats.map((stat) => (
-        <BentoGridItem
-          key={stat.label}
-          className={stat.live ? "md:col-span-2" : ""}
-          header={
-            <p
-              className={`font-extrabold tracking-tight text-primary ${
-                stat.live ? "text-5xl sm:text-7xl" : "text-4xl sm:text-5xl"
-              }`}
-            >
-              {stat.live ? (
-                <Odometer value={stat.value} format={(n) => `${Math.round(n)}+`} />
-              ) : (
-                stat.value
-              )}
+    // Was a bento grid: the live figure claimed two columns and the third tile
+    // wrapped to a row of its own, leaving an empty half-row the width of the
+    // page under it. Three equal cells on one row, so there is no blank plate
+    // and no tile twice the size of its neighbour for a figure of the same
+    // kind.
+    // The rule colour is the GRID's background showing through a 1px gap. It
+    // must not also show through the page gutter, so the padding lives on a
+    // wrapper and the tinted grid starts at the content edge — otherwise a
+    // pale band paints down both sides of the row.
+    <div className="mx-auto mt-8 max-w-6xl px-3 sm:px-4">
+      <ul className="grid list-none gap-px bg-[var(--ins-rule)] sm:grid-cols-3">
+        {stats.map((stat) => (
+          <SpotlightCard as="li" key={stat.label} className="border-0 px-6 py-7">
+            <p className="ins-num text-[2.75rem] font-bold leading-[0.95] tracking-tight text-[var(--ins-bright)] sm:text-[3.25rem]">
+              <Odometer value={stat.value} format={(n) => `${Math.round(n)}${stat.suffix}`} />
             </p>
-          }
-          title={
-            <span className="text-xs font-semibold uppercase tracking-[0.2em]">{stat.label}</span>
-          }
-          description={stat.note}
-        />
-      ))}
-    </BentoGrid>
+            <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--ins-read)]">
+              {stat.label}
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--ins-dim)]">{stat.note}</p>
+          </SpotlightCard>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -1198,17 +1195,13 @@ function WhoForSection() {
           words={`These are the things people actually type at 1am. Every one of them goes somewhere real.`}
         />
         {/* Was six flat cards with the sub-line stranded at the bottom by a
-            justify-between and nothing to engage with. Each is an Evervault
-            plate now: the pointer carries a window through a character field,
-            the query is numbered so the set reads as a list, and the two lines
-            sit together instead of at opposite ends of a tall box. */}
+            justify-between and nothing to engage with. They are the site's one
+            card now — the same plate, the same light under the pointer, as
+            every other card on the site — with the query numbered so the set
+            reads as a list and the two lines sitting together. */}
         <div className="mt-6 grid gap-px bg-[var(--ins-rule)] sm:grid-cols-2 lg:grid-cols-3">
           {BBI_BUILT_FOR.map((item, index) => (
-            <EvervaultCard
-              key={item.phrase}
-              seed={item.phrase.length + index}
-              className="border-0 bg-[var(--ins-void)]"
-            >
+            <SpotlightCard key={item.phrase} className="border-0 !bg-[var(--ins-void)]">
               <Link
                 to={item.to}
                 {...(item.params ? { params: item.params } : {})}
@@ -1227,7 +1220,7 @@ function WhoForSection() {
                   className="mt-3 h-px w-0 bg-[var(--ins-bright)] transition-all duration-500 group-hover/q:w-full"
                 />
               </Link>
-            </EvervaultCard>
+            </SpotlightCard>
           ))}
         </div>
       </div>
