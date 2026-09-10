@@ -84,12 +84,26 @@ and `slug` is unique, so blanks would collide after the first one. All 116
 pending sheet rows currently have an empty `research_facts`, which is why the
 run processes nothing — the pipeline is starved, not broken.
 
-## Still unfixed
+## The blog queue sheet is wired up
 
-`Read Blog Queue` in `n8n/blog-pipeline.json` has
-`documentId: "REPLACE_WITH_YOUR_SHEET_ID"` and `sheetName: "Blog Queue"`. That
-placeholder was never filled on the old account either, so the blog workflow has
-never run. It needs a real sheet ID.
+`Read Blog Queue` now points at the real Blog Queue sheet
+(`1RDeR1tFvg8MN09spWutt0vhSLERSRG797XQuftZrGgA`, tab `Blog Queue`), replacing
+the `REPLACE_WITH_YOUR_SHEET_ID` placeholder that was never filled on the old
+account.
+
+## Why the blog post body is no longer inside the JSON
+
+Asking the writer for `content_html` as a JSON string was a design fault, not a
+truncation. One ordinary attribute -- `<a href="/category/part-time-business-ideas">`
+-- closes the JSON string early, and the parse dies thousands of characters into
+the article with `Expected ',' or '}' after property value`. Escaping cannot be
+relied on from a model over a 7,000-character body.
+
+The writer now returns two blocks: a small metadata object after `<<<META>>>`,
+then the raw, unescaped article after `<<<HTML>>>`. `Parse and Guard Post` splits
+on the marker, so only a few hundred characters of short fields ever pass through
+`JSON.parse`. The old single-object shape is still accepted, so a run already in
+flight does not break.
 
 ## Data shapes — no mismatch, existing or future
 
