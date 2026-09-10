@@ -1287,10 +1287,13 @@ function PricingPhilosophySection() {
 function TeamSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      {/* Was prose squeezed into the left half of a card with the diagram
-          filling the right. The text is short and personal; it reads better at
-          a narrow measure with the diagram given its own full width below. */}
-      <div className="max-w-2xl">
+      {/* Two columns. Stacked, the diagram sat alone in a full-width band with
+          the right 40% of the section empty beside the copy and 336px of
+          orbit floating in the middle of it — 687px of section to carry 246px
+          of text. Side by side, the copy keeps its narrow measure and the
+          diagram fills the space that was doing nothing. */}
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,34rem)_minmax(0,1fr)] lg:items-center lg:gap-16">
+        <div>
         <p className="ins-legend">Who&apos;s behind this</p>
         <h2 className="mt-3">Built by hand, not by a headcount.</h2>
         <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
@@ -1309,9 +1312,8 @@ function TeamSection() {
             </LinkPreview>
             .
           </p>
+          </div>
         </div>
-      </div>
-      <div className="mt-10 border-t border-border pt-10">
         <OrbitDiagram
           centerLabel="Hands-on"
           centerSub="build"

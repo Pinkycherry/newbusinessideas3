@@ -3685,3 +3685,56 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
     background: var(--ins-face) !important;
   }
 }
+
+/* ---- the orbit diagram, in brand colours -------------------------------
+   Measured inside the "Built by hand" section before this was written: an
+   indigo gradient disc (#DAD9F2 to #4643BA) at the centre, gold rings at
+   rgba(180,120,40,.55) and rgba(160,105,35,.6), four amber dots at
+   rgb(180,120,42), and node labels whose plate and whose ink were BOTH near
+   white — "Real research", "Direct accountability", "No fake team page" and
+   "Always improving" were white on white and could not be read at all.
+
+   The orbit's own rules are spread across four blocks earlier in this file,
+   several of them already carrying !important. One scoped block printed last
+   is the only way to be sure none of them is missed — the same approach the
+   rest of the instrument world uses. */
+html.light .bbi-instrument .bbi-orbit-ring,
+html.light .bbi-instrument .bbi-orbit-ring-inner,
+html.light .bbi-instrument .bbi-orbit-ring-outer {
+  border-color: var(--ins-rule) !important;
+  box-shadow: none !important;
+}
+html.light .bbi-instrument .bbi-orbit-ring-outer {
+  border-color: var(--ins-rule-strong) !important;
+}
+html.light .bbi-instrument .bbi-orbit-dot {
+  background: var(--ins-dim) !important;
+  box-shadow: none !important;
+}
+/* The centre inverts — it is the one filled element in the diagram, so it
+   takes the signal and its ink drops to the housing. */
+html.light .bbi-instrument .bbi-orbit-center {
+  background: var(--ins-signal) !important;
+  background-image: none !important;
+  border-color: var(--ins-signal) !important;
+  box-shadow: none !important;
+}
+html.light .bbi-instrument .bbi-orbit-center .bbi-orbit-center-label,
+html.light .bbi-instrument .bbi-orbit-center .bbi-orbit-center-sub {
+  color: var(--ins-void) !important;
+}
+/* The labels were the actual bug: a white plate carrying white text. Dark
+   plate, drawn rule, readout ink. */
+html.light .bbi-instrument .bbi-orbit-node-label {
+  background: var(--ins-face) !important;
+  background-image: none !important;
+  border: 1px solid var(--ins-rule) !important;
+  color: var(--ins-read) !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+html.light .bbi-instrument .bbi-orbit-node:hover .bbi-orbit-node-label {
+  background: var(--ins-face-2) !important;
+  border-color: var(--ins-rule-strong) !important;
+  color: var(--ins-bright) !important;
+}
