@@ -17,10 +17,10 @@ import LayoutTextFlip from "@/components/aceternity/layout-text-flip";
 import TextGenerateEffect from "@/components/aceternity/text-generate-effect";
 import BlurText from "@/components/aceternity/blur-text";
 import SpotlightCard from "@/components/aceternity/spotlight-card";
+import MoltenMetal from "@/components/aceternity/molten-metal";
 import EncryptedText from "@/components/aceternity/encrypted-text";
 import LinkPreview from "@/components/aceternity/link-preview";
 import Lens from "@/components/aceternity/lens";
-import LineWaves from "@/components/aceternity/line-waves";
 import GlowCursor from "@/components/aceternity/glow-cursor";
 import Tabs from "@/components/aceternity/tabs";
 import { categoryImage } from "@/config/category-imagery";
@@ -320,10 +320,13 @@ function HomePage() {
             light bands. They measured #FFFFFF and still read grey, because the
             thing behind them was brighter than they were. */}
         <div aria-hidden className="pointer-events-none absolute inset-0">
-          <LineWaves className="h-full w-full" brightness={0.11} />
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--ins-void)]/40 via-[var(--ins-void)]/55 to-[var(--ins-void)]" />
+          <MoltenMetal className="h-full w-full" brightness={1.15} speed={0.18} opacity={0.9} />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--ins-void)]/55 via-[var(--ins-void)]/62 to-[var(--ins-void)]" />
         </div>
-        <div className="relative mx-auto max-w-[92rem] px-6 py-10 lg:py-14">
+        {/* Centred. The hero was a left column with two thirds of the fold
+            empty beside it; with no image left to fill that space there was
+            nothing holding the right-hand side. */}
+        <div className="relative mx-auto flex max-w-[62rem] flex-col items-center px-6 py-12 text-center lg:py-16">
           <p className="ins-legend">The Truth About Business Ideas</p>
 
           {/* The H1 is real type on every device now. The particle heading it
@@ -332,7 +335,7 @@ function HomePage() {
               dots — and its pointer listener sat on the window, so a tap
               anywhere scattered it. The blur reveal reads the same on a 390px
               screen as on a 1440px one, and it is text the whole time. */}
-          <h1 className="mt-5 max-w-[22ch]">
+          <h1 className="mt-5 max-w-[20ch]">
             <BlurText text="Tired of paying just to check if your idea will work?" />
           </h1>
 
@@ -340,7 +343,7 @@ function HomePage() {
               the reader's first question is whether anything is actually
               behind the promise — so they are set as large as the headline
               rather than as a caption under it, and both of them count up. */}
-          <dl className="mt-7 flex flex-wrap items-end gap-x-12 gap-y-5 sm:gap-x-16">
+          <dl className="mt-8 flex flex-wrap items-end justify-center gap-x-12 gap-y-5 sm:gap-x-16">
             <div>
               <dd className="ins-num text-[3.25rem] font-bold leading-[0.95] text-[var(--ins-bright)] sm:text-[4.5rem]">
                 <Odometer value={catalog.totalIdeas} format={(n) => `${Math.round(n)}`} />
@@ -360,7 +363,7 @@ function HomePage() {
               the way in — nothing else. The picture that used to sit here was
               the tallest thing above the fold, was hotlinked from another
               domain, and said nothing the headline had not already said. */}
-          <Lens className="mt-8 max-w-[68ch] text-base leading-relaxed text-[var(--ins-read)]">
+          <Lens className="mt-8 max-w-[62ch] text-base leading-relaxed text-[var(--ins-read)]">
             <p>
               We built a free home for real business ideas — side hustles, zero investment ideas,
               work from home ideas, and low investment ideas. Every idea is researched, not guessed.
@@ -370,7 +373,7 @@ function HomePage() {
             </p>
           </Lens>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <HeroCta />
             <HoverBorderGradient asChild containerClassName="rounded-full">
               <Link
