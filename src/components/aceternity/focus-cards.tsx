@@ -56,30 +56,23 @@ const Card = memo(function Card({
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       ) : null}
+      {/* The scrim is the HOUSING, stated outright, not `--foreground`.
+          `from-foreground/85` with `text-background` was correct in the light
+          theme it was written for — dark scrim, light label. Both tokens
+          inverted in the instrument scope, so it became a LIGHT scrim carrying
+          DARK text over a mid-tone photograph: measured at 1.11:1 on /browse,
+          across all 28 cards. Explicit values cannot flip under it again. */}
       {card.src ? (
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/35 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--ins-void)] via-[var(--ins-void)]/55 to-transparent" />
       ) : (
         <span aria-hidden className="absolute inset-0 bg-card" />
       )}
       <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-5">
-        {/* Over a photograph the label sits on a dark scrim; on a bare plate
-            it sits on the card itself, where text-background would be
-            invisible. */}
-        <span
-          className={cn(
-            "text-lg font-semibold leading-snug",
-            card.src ? "text-background" : "text-foreground",
-          )}
-        >
+        <span className="text-lg font-semibold leading-snug text-[var(--ins-bright)]">
           {card.title}
         </span>
         {card.meta ? (
-          <span
-            className={cn(
-              "text-[11px] uppercase tracking-[0.18em]",
-              card.src ? "text-background/70" : "text-muted-foreground",
-            )}
-          >
+          <span className="text-[11px] uppercase tracking-[0.18em] text-[var(--ins-dim)]">
             {card.meta}
           </span>
         ) : null}
