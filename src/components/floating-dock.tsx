@@ -16,7 +16,13 @@ export function FloatingDock() {
 
   useEffect(() => {
     // Back-to-top must work on every route, anchors or not.
-    const onScroll = () => setScrolled(window.scrollY > 400);
+    // Twenty per cent of THIS page, not a fixed 400px. A 17,000px homepage
+    // and a 1,400px contact page are not the same journey, and on the short
+    // one 400px is most of the way down.
+    const onScroll = () => {
+      const travel = document.documentElement.scrollHeight - window.innerHeight;
+      setScrolled(travel > 0 && window.scrollY > travel * 0.2);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-anchor]"));
@@ -49,7 +55,13 @@ export function FloatingDock() {
   };
 
   return (
-    <div className="fixed bottom-5 right-4 z-40 flex flex-col items-end gap-2 sm:bottom-7 sm:right-6">
+    /* `bbi-overlay` is the opt-out from `.bbi-instrument > *`, which sets
+       `position: relative` on every direct child of the shell and is
+       unlayered, so it beat Tailwind's `fixed` outright. The dock IS a direct
+       child — so it was not fixed at all: it sat in the flow wherever the
+       document happened to put it, which is why it stopped travelling with
+       the reader. Same rule that had caught the mobile menu and the header. */
+    <div className="bbi-overlay fixed bottom-5 right-4 z-40 flex flex-col items-end gap-2 sm:bottom-7 sm:right-6">
       <AnimatePresence>
         {open && anchors.length > 0 && (
           <motion.nav

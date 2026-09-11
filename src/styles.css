@@ -3931,3 +3931,45 @@ html.light .bbi-instrument .bbi-footer-heading {
 .bbi-faq-item:last-child {
   padding-bottom: 1rem;
 }
+
+/* ---- disabled actions --------------------------------------------------
+   A disabled button still has to be READ — "Checkout not live yet" is the
+   whole message. It was near-invisible: the action treatment's plate plus a
+   blanket opacity-60 on top of a label that was already the dimmest value.
+
+   No travelling band (there is nothing to travel to), a face plate, and the
+   label at --ins-dim in full opacity. 7.9:1 on the housing — it reads as
+   unavailable because of the cursor and the flat plate, not because it has
+   been faded until it cannot be seen. */
+html.light .bbi-instrument button:disabled,
+html.light .bbi-instrument button[disabled],
+html.light .bbi-instrument .ac-cta:disabled,
+html.light .bbi-instrument .ac-action:disabled {
+  animation: none !important;
+  background: var(--ins-face) !important;
+  border: 1px solid var(--ins-rule) !important;
+  color: var(--ins-dim) !important;
+  opacity: 1 !important;
+  cursor: not-allowed;
+}
+html.light .bbi-instrument button:disabled *,
+html.light .bbi-instrument .ac-cta:disabled * {
+  color: var(--ins-dim) !important;
+}
+/* It must not light up on hover either — a plate that inverts under the
+   pointer reads as clickable, and this one is not. */
+html.light .bbi-instrument button:disabled:hover,
+html.light .bbi-instrument .ac-cta:disabled:hover,
+html.light .bbi-instrument .ac-action:disabled:hover {
+  background: var(--ins-face) !important;
+  color: var(--ins-dim) !important;
+  border-color: var(--ins-rule) !important;
+}
+
+/* The dock travels with the reader. See floating-dock.tsx for why the class
+   is needed at all; this only raises it above the header's 50 so it is never
+   covered on a page scrolled to the bottom. */
+.bbi-instrument > .bbi-overlay {
+  position: fixed;
+  z-index: 80;
+}

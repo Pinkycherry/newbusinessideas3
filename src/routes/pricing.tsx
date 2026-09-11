@@ -70,7 +70,7 @@ function PricingPage() {
             <button
               type="button"
               disabled
-              className="ac-cta mt-7 w-full cursor-not-allowed px-6 py-3 text-sm opacity-60"
+              className="ac-cta mt-7 w-full cursor-not-allowed px-6 py-3 text-sm"
             >
               Checkout not live yet
             </button>
