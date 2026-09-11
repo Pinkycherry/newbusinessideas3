@@ -3297,6 +3297,10 @@ html[data-tone="instrument"] body {
      disappears the same way the white one did. */
   --glow-cursor: #000000;
   --glow-cursor-2: #757575;
+  /* `multiply` is what makes a black trail visible at all — see the blend
+     note in glow-cursor.tsx. Stated here rather than left to the luminance
+     inference so the band's intent is readable from the band. */
+  --glow-cursor-blend: multiply;
 }
 
 /* ---- the filled action on a plate --------------------------------------

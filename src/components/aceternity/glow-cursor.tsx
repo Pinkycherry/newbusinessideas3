@@ -269,6 +269,21 @@ export default function GlowCursor({
       const two = cs?.getPropertyValue("--glow-cursor-2").trim();
       targetColor = one ? hexToRgb(one) : hexToRgb(color);
       targetColor2 = two ? hexToRgb(two) : one ? hexToRgb(one) : hexToRgb(secondaryColor);
+
+      // THE BLEND MODE HAS TO FOLLOW THE COLOUR. The canvas normally sits in
+      // `screen`, which is right for a white trail on a dark ground — but
+      // screen(x, 0) = x, so a BLACK trail in screen mode is a mathematical
+      // no-op and paints nothing at all. That is why setting --glow-cursor to
+      // #000000 on the white pricing band appeared to do nothing: the value
+      // was read correctly and then blended into invisibility.
+      //
+      // A ground can say which it wants; otherwise it is inferred from the
+      // trail's own luminance, so any future dark trail works without anyone
+      // having to remember this.
+      const declared = cs?.getPropertyValue("--glow-cursor-blend").trim();
+      const [r, g, bl] = targetColor;
+      const dark = 0.2126 * (r ?? 1) + 0.7152 * (g ?? 1) + 0.0722 * (bl ?? 1) < 0.5;
+      canvas.style.mixBlendMode = declared || (dark ? "multiply" : "screen");
     };
 
     const render = (now: number) => {
@@ -381,6 +396,8 @@ export default function GlowCursor({
       ref={canvasRef}
       aria-hidden
       className={
+        // `mixBlendMode` is set imperatively by sampleGround, so the class
+        // only carries the starting value.
         "pointer-events-none fixed inset-0 z-[60] block h-full w-full select-none mix-blend-screen " +
         (className ?? "")
       }
