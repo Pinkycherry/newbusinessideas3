@@ -127,6 +127,71 @@ The pipeline cannot tell finished rows from unfinished ones.
 
 ---
 
+## 2.2 THE ONE OPEN TASK — fill all 409 rows, zero pending, zero retry
+
+Verified by query on 2026-09-13. `ideas` now holds **all 409 rows** from the
+founder's sheet export. The row count is finished. The *columns* are not.
+
+| Column | Rows still empty (of 409) |
+|---|---|
+| `target_customer`, `how_you_make_money`, `startup_cost`, `getting_started_steps`, `faq_json`, `tools_needed`, `income_potential`, `competition_edge`, `time_to_first_customer`, `market_opportunity` | **357** |
+| `research_facts` | **326** |
+| `seo_title`, `meta_description` | **325** |
+| `summary`, `verdict` | **75** |
+| `slug` | **45** |
+| `status` not `completed` (62 pending + 13 needs_retry) | **75** |
+
+So roughly **52 rows are genuinely complete**. The goal is 409 complete rows,
+every column filled with researched content, nothing left `pending` or
+`needs_retry`, all of it live on the site through Supabase.
+
+Note the site only renders `status = 'completed'`, so the 75 are invisible
+rather than broken. The 357 with missing narrative columns *do* render — with
+empty sections. That is the more visible problem.
+
+### The fix: one Supabase Edge Function, not n8n, not the chat window
+
+The founder has ruled out another n8n run for this. Doing it through a chat
+assistant is worse: every row's text would cross the conversation twice and
+the whole conversation is re-billed on every call, which is exactly what burned
+21% of a 5-hour budget on a single resume. **Generated content must never pass
+through the conversation.**
+
+The cheap path is to move the generator next to the data:
+
+1. **One Supabase Edge Function**, e.g. `enrich-ideas`. It selects a batch of
+   rows with empty columns, calls the founder's existing Gemini key, writes the
+   result straight back to `ideas`, and returns only a count.
+2. **The Gemini key lives as a Supabase secret**, set once in the dashboard.
+   Never in the repo, never in chat.
+3. **Invoke it on a loop** — `pg_cron` every few minutes, or just click Run in
+   the dashboard until the backlog is zero. Progress is one number:
+   `select count(*) from ideas where target_customer is null`.
+4. **Token cost to the assistant: the function source once.** The 409 rows of
+   generated research never enter a conversation at all.
+
+Port two rules from the n8n pipeline into the function, because they are what
+kept the existing rows honest:
+
+- **Quality Guard** — reject a field rather than write a placeholder, and never
+  emit a page-dating year. Rows go back to `needs_retry`, not to `completed`.
+- **`research_facts` must carry real `sources`**. The 83 good rows all do. A row
+  whose facts have no source URL is not finished, it is fabricated, and the
+  house rule on zero invented numbers applies to generated columns too.
+
+Two things the function must not do: write an empty string into `slug` (that is
+what caused the `ideas_slug_key` 23505 failure), and flip an existing
+`completed` row to any other status.
+
+### Why this order matters
+
+Once all 409 rows are complete in Supabase, the founder exports that table to
+CSV and uses it as the seed for the next generation run in n8n. That is the
+point of finishing here first: the database becomes the source of truth and the
+sheet stops being the thing that has to be repaired.
+
+---
+
 ## 3. Hardcoded content in the codebase
 
 Real, deliberate, and edited by hand — but not coming from a database, so it
