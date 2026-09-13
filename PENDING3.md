@@ -302,3 +302,76 @@ does not change without a deploy.
 7. **`sameAs`, `SITE_URL`, legal pages** — launch blockers, not build blockers.
 8. **`blog_posts` (4 rows)** — wire or drop. Leaving orphan tables is how this
    became unclear the first time. (`idea_research` is not an orphan — see §2.1.)
+
+---
+
+## 7. Page architecture — ours against the competitor's, 2026-09-13
+
+Reconciled from PENDING.md, PENDING2.md (§C and §O) and this file, against the
+competitor's real URL patterns.
+
+**How the competitor's patterns were obtained.** `ideaproof.io` is blocked by
+this environment's egress proxy — `curl` returns `http=000` and `WebFetch`
+returns `EGRESS_BLOCKED`. The sitemap could not be read. The patterns below come
+from live search results that surfaced their indexed URLs, so they are real URLs
+but **not a complete sitemap**. Treat the list as a floor, not a census.
+
+### Their patterns (observed)
+
+| Pattern | Example seen |
+|---|---|
+| `/` | homepage |
+| `/validate-idea` | the paid product itself |
+| `/features` | product feature page |
+| `/guides/<slug>` | `/guides/business-idea-validation-guide` |
+| `/lists/<slug>` | `/lists/top-validation-tools`, `/lists/business-ideas-kids`, `/lists/ai-tools-entrepreneurs` |
+| `/tools/<slug>` | `/tools/startup-idea-generator`, plus LTV / CAC / Runway / Market Size / Break-Even / ROI calculators |
+| `/blog/<slug>` | `/blog/authority-building-tools-and-technologies-comparis-…` |
+
+### The map, using our own names
+
+The founder's naming, set earlier: their `guides` is our **Step By Step
+Guides**, their `lists` is our **shortlist**, their `tools` is our **Useful
+Tools**. FAQ and calculator keep their names.
+
+| Them | Us | State |
+|---|---|---|
+| `/lists/<slug>` | `/shortlist` + `/shortlist/<slug>` | **Built.** Auto-generated from `ideas`; the brief wants these written long |
+| `/blog/<slug>` | `/blog` + `/blog/<slug>` | **Built, disconnected.** Reads WordPress at `nutrizoe.in`, not the `blog_posts` table that now holds 14 posts |
+| `/tools/<slug>` (calculators) | `/calculator` + `/calculator/<slug>` | **Built.** 31 hand-written calculators |
+| `/tools/<slug>` (directory) | `/useful-tools` | **Missing.** PENDING2 §C6 and §O — blocked on content, not engineering |
+| `/guides/<slug>` | `/step-by-step/<slug>` | **Missing.** PENDING2 §C4 and §O — blocked on content |
+| — | `/versus/<slug>` | **Missing.** Brief §6.11, PENDING2 §C8 |
+| `/features`, `/validate-idea` | — | **Deliberately not copied.** Those sell a paid credit generator. We are a free library; the blueprint page is the product |
+
+### Where our architecture is already larger than theirs
+
+Worth stating, because it decides where effort goes. They generate a report on
+demand and have no permanent indexable library. We have:
+
+- `/idea/<slug>` — **409 rows**, 334 live
+- `/category/<slug>` — 16 live categories
+- `/faq` + `/faq/<category>` — 84 researched FAQs
+- `/validate/<industry>` — 16 vertical landing pages
+
+So the gap is not breadth of ideas. It is the three **editorial** page types
+above, and every one of them was already marked in PENDING2 §O as *blocked on
+content, not on engineering*. That judgement still holds: building the routes
+empty adds dead pages, which is the same thin-content mistake §2.3 of this file
+just cleaned up by de-indexing 409 subcategory URLs.
+
+### Order that falls out of this
+
+1. **Repoint `/blog` at `blog_posts`.** 14 posts exist and none are visible.
+   Pure engineering, no content decision, and it unblocks the founder's next
+   batch of 20.
+2. **Enrichment run** (§2.2) — fills the columns on all 409 rows. Every editorial
+   page type below feeds off that data, so doing it first stops the other three
+   from being written twice.
+3. **`/step-by-step/<slug>`** — needs the founder to choose the guide topics.
+   Highest-value of the three: it is the pattern the competitor ranks on.
+4. **`/useful-tools`** — a curated directory is an editorial judgement. Needs a
+   real tool list, not an invented one.
+5. **`/versus/<slug>`** — needs a real position to compare. Founder's call.
+
+Nothing here should be started before step 2 finishes.
