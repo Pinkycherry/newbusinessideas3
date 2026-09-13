@@ -186,24 +186,24 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "idea_id": "={{ $json.idea_id }}",
-            "summary": "={{ $json.summary }}",
-            "market_opportunity": "={{ $json.market_opportunity }}",
-            "target_customer": "={{ $json.target_customer }}",
-            "how_you_make_money": "={{ $json.how_you_make_money }}",
-            "startup_cost": "={{ $json.startup_cost }}",
-            "income_potential": "={{ $json.income_potential }}",
-            "competition_edge": "={{ $json.competition_edge }}",
-            "getting_started_steps": "={{ $json.getting_started_steps }}",
-            "tools_needed": "={{ $json.tools_needed }}",
-            "time_to_first_customer": "={{ $json.time_to_first_customer }}",
-            "faq_json": "={{ $json.faq_json }}",
-            "pros_json": "={{ $json.pros_json }}",
-            "cons_json": "={{ $json.cons_json }}",
-            "verdict": "={{ $json.verdict }}",
-            "trend_score": "={{ $json.trend_score }}",
-            "tier": "={{ $json.tier }}",
-            "status": "={{ $json.status }}"
+            "idea_id": "={{ $('Quality Guard').item.json.idea_id }}",
+            "summary": "={{ $('Quality Guard').item.json.summary }}",
+            "market_opportunity": "={{ $('Quality Guard').item.json.market_opportunity }}",
+            "target_customer": "={{ $('Quality Guard').item.json.target_customer }}",
+            "how_you_make_money": "={{ $('Quality Guard').item.json.how_you_make_money }}",
+            "startup_cost": "={{ $('Quality Guard').item.json.startup_cost }}",
+            "income_potential": "={{ $('Quality Guard').item.json.income_potential }}",
+            "competition_edge": "={{ $('Quality Guard').item.json.competition_edge }}",
+            "getting_started_steps": "={{ $('Quality Guard').item.json.getting_started_steps }}",
+            "tools_needed": "={{ $('Quality Guard').item.json.tools_needed }}",
+            "time_to_first_customer": "={{ $('Quality Guard').item.json.time_to_first_customer }}",
+            "faq_json": "={{ $('Quality Guard').item.json.faq_json }}",
+            "pros_json": "={{ $('Quality Guard').item.json.pros_json }}",
+            "cons_json": "={{ $('Quality Guard').item.json.cons_json }}",
+            "verdict": "={{ $('Quality Guard').item.json.verdict }}",
+            "trend_score": "={{ $('Quality Guard').item.json.trend_score }}",
+            "tier": "={{ $('Quality Guard').item.json.tier }}",
+            "status": "={{ $('Quality Guard').item.json.status }}"
           },
           "matchingColumns": [
             "idea_id"
@@ -855,7 +855,7 @@
       "main": [
         [
           {
-            "node": "Ready For Supabase?",
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -866,7 +866,7 @@
       "main": [
         [
           {
-            "node": "Loop Over Items",
+            "node": "Update Row in Sheet",
             "type": "main",
             "index": 0
           }
@@ -888,7 +888,7 @@
       "main": [
         [
           {
-            "node": "Update Row in Sheet",
+            "node": "Ready For Supabase?",
             "type": "main",
             "index": 0
           }
@@ -906,7 +906,7 @@
         ],
         [
           {
-            "node": "Loop Over Items",
+            "node": "Update Row in Sheet",
             "type": "main",
             "index": 0
           }
