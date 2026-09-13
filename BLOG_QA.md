@@ -175,3 +175,58 @@ never publish a bad one.
 - **A plagiarism percentage.** The post is written from research, not rewritten
   from a source, so the number would only ever confirm what the method already
   guarantees.
+
+---
+
+## Blog Queue seed — 10 rows, 2026-09-13 22:39 UTC
+
+Ten rows for the **Blog Queue** sheet (doc `1RDeR1tFvg8MN09spWutt0vhSLERSRG797XQuftZrGgA`,
+tab `Blog Queue`), ready for the founder to paste and run through the n8n blog
+pipeline. The file is `n8n/seed/blog-queue-10-rows.csv`.
+
+Columns match exactly what `Blog Writer Agent` reads in `n8n/blog-pipeline.json`:
+`title, category, primary_keyword, secondary_keywords, angle, search_intent,
+internal_link, word_count`, plus `row_id` and `status` for the queue itself.
+Nothing invented — every `internal_link` points at a real, live, `completed`
+idea page with a real slug, and every category name is one of the real ones.
+
+### The one SEO decision worth recording
+
+**No blog targets its idea page's own money term.** `primary_keyword` on every
+row is an adjacent, long-tail question — "how often should gutters be cleaned",
+"why freelance invoices look unprofessional" — not the focus keyword the idea
+page already owns. Pointing both at the same phrase is keyword cannibalisation:
+the two pages split their own signal and the weaker one wins nothing. The blog
+catches the question; the idea page keeps the money term and receives the click.
+
+Each post is a 300–400 word glimpse. It opens on one concrete moment, states
+the real constraint, and stops before the answer. The answer is the idea page.
+
+| row_id | Primary keyword (blog) | Sends to |
+|---|---|---|
+| BLOG-0001 | subscription box fulfillment mistakes | `/idea/subscription-box-curation-software` |
+| BLOG-0002 | who repairs goodyear welted boots | `/idea/premium-leather-boot-recrafting` |
+| BLOG-0003 | bike shop drop off wait times | `/idea/mobile-bike-tuneup-membership` |
+| BLOG-0004 | how often should gutters be cleaned | `/idea/gutter-guard-subscription-service` |
+| BLOG-0005 | why freelance invoices look unprofessional | `/idea/invoice-template-sets-trades` |
+| BLOG-0006 | small business social media writers block | `/idea/social-caption-template-packs` |
+| BLOG-0007 | small business employee onboarding checklist | `/idea/onboarding-checklist-sets-employers` |
+| BLOG-0008 | how fresh is supermarket coffee | `/idea/weekend-coffee-roasting-market` |
+| BLOG-0009 | hiring licensed tradespeople problems | `/idea/niche-job-board-one-trade` |
+| BLOG-0010 | where do home inspectors ask for second opinions | `/idea/home-inspector-member-community` |
+
+### Known blocker, not caused by these rows
+
+`/blog` does not read Supabase. `src/lib/site-config.ts:18` hardcodes
+`DEFAULT_WORDPRESS_SITE_URL = "https://nutrizoe.in"` with no env override, so
+the blog route currently serves an unrelated site's posts. The `blog_posts`
+table already exists with the right shape and holds 4 rows. **Until
+`blog.server.ts` is pointed at `blog_posts`, anything Gemini writes into
+Supabase will not appear on the site.** Worth doing before the run, not after.
+
+### Also on 2026-09-13 22:39 UTC
+
+`IDEA-00283` ("Prairie Hopper Pet Feeds") had an empty `slug` — a completed
+idea with no reachable URL. Set to `passive-income-pet-food-dispenser-business`,
+derived from its own stored `focus_keyword`, with a uniqueness guard in the
+same statement. It was the last completed row without a URL.
