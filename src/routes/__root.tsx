@@ -15,6 +15,7 @@ import { PointerChannelProvider, PageTransition } from "../motion";
 import { SiteTextMotion } from "@/components/site-text-motion";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { catalogQuery } from "../lib/ideas.functions";
+import { JsonLd, organisationSchema } from "@/lib/schema";
 
 function NotFoundComponent() {
   return (
@@ -118,6 +119,10 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en" className="light">
       <head>
         <HeadContent />
+        {/* The publishing entity, declared once for the whole site rather than
+            per route. Every page already said what it was about; none said who
+            stands behind it, which is the E-E-A-T signal that was missing. */}
+        <JsonLd schema={organisationSchema()} />
       </head>
       <body>
         {children}
