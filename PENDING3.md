@@ -115,12 +115,44 @@ changing it would break a published URL.
 `income_potential` and `time_to_first_customer` are figures a reader may spend
 savings against.
 
-### Taxonomy defect — decide before templates
+### Taxonomy defect — RESOLVED 2026-09-13 by de-indexing, not by rewriting
 
-`subcategory_slug` has **290 distinct values across 290 ideas**. Average 1.00
-ideas per subcategory; **zero** subcategories contain more than one idea. So
-`/category/[slug]/[subcategory]` can only ever show a single idea. The route
-exists and renders. The data makes it meaningless.
+`subcategory_slug` has **409 distinct values across 409 ideas**. Zero
+subcategories contain more than one idea, so `/category/[slug]/[subcategory]`
+can only ever show a single idea and duplicates the idea page it links to.
+
+**Collapsing them was attempted and abandoned, on evidence.** Three clustering
+signals were tested against the live table:
+
+| Signal | Result |
+|---|---|
+| Repeated 2-word heads in `subcategory_name` | Only **113 of 409** share any head, and the heads are noise prefixes: `part time` (48), `evening freelance` (21), `licensing a` (19), `coin operated` (13) |
+| `tags` array | Only 3 tags appear 6+ times, covering **27 ideas** |
+| Category itself | Already the parent layer |
+
+Those heads are useless as groups — all 48 "part time" ideas are already inside
+`part-time-business-ideas`, so grouping by them rebuilds the layer above and
+still leaves 296 singletons. The reason is that `subcategory_name` was never a
+taxonomy: "Part Time Weekend Farmers Market Coffee Roasting Sales" *is* the
+idea. Recovering groups would mean inventing ~40 category names, which
+`CLAUDE.md` forbids outright.
+
+**What was done instead — zero writes to live rows:**
+
+- `sitemap-categories[.]xml.ts` no longer emits one URL per subcategory. It was
+  submitting **409 thin pages** to Google, each holding a single idea.
+- `category.$categorySlug.$subcategorySlug.tsx` now carries
+  `robots: noindex,follow`, matching the convention already used in
+  `search.tsx`.
+- Internal links and the route itself are **deliberately left in place**. A
+  crawler has to reach the page to see the noindex, anything already indexed
+  must not 404, and `follow` keeps equity flowing to the idea pages.
+- `subcategory_slug` is untouched in Supabase. Nothing was mutated.
+
+**The real fix, queued for the enrichment run:** add a `sub_theme` field to the
+generator's output. That produces a genuine grouping from researched data rather
+than guesswork, and the subcategory pages can be turned back on as pages that
+actually list something.
 
 `status` is `'completed'` on all 290 rows, including the 282 missing 13 fields.
 The pipeline cannot tell finished rows from unfinished ones.
