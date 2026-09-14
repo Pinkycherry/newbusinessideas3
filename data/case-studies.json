@@ -1,0 +1,70 @@
+{
+  "title": "Founder stories",
+  "purpose": "Illustrative composites showing how the patterns in our own blueprints play out in practice. Every story here is assembled from the research behind the blueprints named in based_on_idea_ids — none of them is a real named founder, and none of them carries a revenue, income or earnings figure, because we do not have verified ones and will not invent them.",
+  "data_level": "PLACEHOLDER",
+  "replace_with": "Interviews with real founders, published with their consent and with any figure they are willing to have quoted. Until that exists, these stay marked PLACEHOLDER and no number goes in.",
+  "no_figures_policy": "No revenue, income, earnings, profit, turnover or valuation figure appears in this file. Anyone adding one must have a named, checkable source for it.",
+  "updated": "2026-09-14",
+  "stories": [
+    {
+      "slug": "ugc-agency-founder-story",
+      "title": "The one who stopped selling videos and started selling a slot",
+      "model": "User-generated content agency",
+      "data_level": "PLACEHOLDER",
+      "illustrative_note": "A composite, not a real person. Assembled from the research behind the blueprints listed below.",
+      "what_they_do": "They film short, unpolished product videos for brands — the kind shot on a phone at a kitchen counter rather than on a set. The work is not filmmaking; it is looking like a customer rather than an advertisement, which is the whole reason brands pay for it.",
+      "first_customer": "A small brand already posting its own videos and doing it badly. They did not pitch a service. They filmed one video for a product they had actually bought, sent it over unasked, and offered to do a set at a fixed price. Sending finished work instead of a proposal is the move that opened the door.",
+      "what_hurt": "Selling videos one at a time meant starting from zero every month and negotiating every price. The fix was structural rather than creative: a fixed number of videos a month at one price, agreed up front. Turning it into a retained slot ended the negotiation and made the month predictable. The second thing that hurt was revisions — unlimited feedback quietly ate the margin until the round count was written into the offer.",
+      "turning_point": "Charging for a monthly slot instead of for finished videos.",
+      "based_on_idea_ids": ["IDEA-00022", "IDEA-00028", "IDEA-00030"]
+    },
+    {
+      "slug": "content-repurposing-studio-founder-story",
+      "title": "The one who sold the offcuts of work already done",
+      "model": "Content repurposing studio",
+      "data_level": "PLACEHOLDER",
+      "illustrative_note": "A composite, not a real person. Assembled from the research behind the blueprints listed below.",
+      "what_they_do": "They take long recordings a creator has already made — a podcast episode, a webinar, a lecture — and cut them into short clips for social platforms. Nothing new is created. The raw material already exists and is sitting unused, which is exactly why the buyer finds the price easy to accept.",
+      "first_customer": "A podcaster with a back catalogue and no time. They clipped three moments out of an old episode, posted nothing, and sent the files directly with a note saying which episodes they would do next. The back catalogue was the pitch.",
+      "what_hurt": "The work is genuinely repetitive, and doing it manually filled every evening without the volume ever going up. Speeding it up with tooling helped and introduced its own problem: the clips started looking like everyone else's, and the buyer began asking what they were paying for. What they were actually paying for turned out to be judgement about which moment was worth clipping — so that became the thing sold, with the cutting as the cheap part.",
+      "turning_point": "Selling the choice of moment rather than the volume of clips.",
+      "based_on_idea_ids": ["IDEA-00235", "IDEA-00024", "IDEA-00030"]
+    },
+    {
+      "slug": "evening-side-hustle-founder-story",
+      "title": "The one who kept the job on purpose",
+      "model": "Evening service alongside full-time work",
+      "data_level": "PLACEHOLDER",
+      "illustrative_note": "A composite, not a real person. Assembled from the research behind the blueprints listed below.",
+      "what_they_do": "They rewrite CVs and covering letters in the evenings, using a skill they already used at work. Nothing was bought to start: a laptop that already existed, a phone number, and hours that were already free.",
+      "first_customer": "Someone in their own extended network who had been job-hunting for months without replies. They asked for nothing the first time and a normal price the second, once there was a before-and-after to point at. The first job was the portfolio.",
+      "what_hurt": "Every customer was a one-off. A CV is rewritten once and then the customer is gone for years, so the business had no repeat purchase and no referral loop worth the name — a fresh stranger had to be found every single week. The shape that eventually worked was moving upstream to people who send others: placement advisers and course coordinators with a steady flow of candidates. The second thing that hurt was the temptation to quit the job early. Keeping it is what made it possible to hold a price instead of taking whatever was offered.",
+      "turning_point": "Selling to the person who refers candidates, not to the candidate.",
+      "based_on_idea_ids": ["IDEA-00219", "IDEA-00209", "IDEA-00201"]
+    },
+    {
+      "slug": "faceless-channel-founder-story",
+      "title": "The one nobody could see",
+      "model": "Faceless video channel",
+      "data_level": "PLACEHOLDER",
+      "illustrative_note": "A composite, not a real person. Assembled from the research behind the blueprints listed below.",
+      "what_they_do": "They run a video channel on one narrow subject without ever appearing in it — script, voice, stock visuals, nothing personal. The appeal is obvious to anyone uncomfortable on camera, and it is also the model's central problem.",
+      "first_customer": "There wasn't one for a long time, and that is the honest part of this story. A channel has no customer until it has an audience, so the early months produced no money at all — which makes this the opposite of a service business, where the first payment can arrive in week one.",
+      "what_hurt": "Two things. Because no face appears, there is nothing for a viewer to attach loyalty to, so every video has to win its audience again from nothing. And being invisible is easy to copy: a working format gets imitated quickly by people with the same tools. What survived was a subject genuinely hard to research, where the work was in knowing the material rather than in the editing.",
+      "turning_point": "Choosing a subject that was hard to research rather than one that was easy to produce.",
+      "based_on_idea_ids": ["IDEA-00021", "IDEA-00026", "IDEA-00023"]
+    },
+    {
+      "slug": "local-service-route-founder-story",
+      "title": "The one who drove the same street every month",
+      "model": "Local service round",
+      "data_level": "PLACEHOLDER",
+      "illustrative_note": "A composite, not a real person. Assembled from the research behind the blueprints listed below.",
+      "what_they_do": "A recurring practical service delivered in person on a fixed route — one of the maintenance jobs every household needs, nobody enjoys, and most people put off until something goes wrong.",
+      "first_customer": "A neighbour, then the neighbour either side. Door-to-door on one street, with a date offered rather than a quote requested. Working a single street rather than a whole town is what made the travel time survivable.",
+      "what_hurt": "The early days were spent driving, not working — jobs scattered across a city meant most of the day was in traffic, and the day's takings did not reflect the day's hours. Tightening the round to one area at a time, on a repeating schedule, fixed it. The other thing that hurt was pricing per visit: customers forgot to book again. Selling the round as a standing arrangement with a set month meant the work returned without being chased.",
+      "turning_point": "Selling a scheduled round instead of individual visits.",
+      "based_on_idea_ids": ["IDEA-00599", "IDEA-00602", "IDEA-00228"]
+    }
+  ]
+}
