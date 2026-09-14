@@ -4,13 +4,14 @@
  * Every calculator on the site is one entry in `CALCULATORS` below. The two
  * routes (`/calculator` and `/calculator/$slug`) read this file and render
  * whatever they find — they contain no arithmetic and no per-calculator
- * branching. Adding a fifth calculator means adding one object to that array
+ * branching. Adding another calculator means adding one object to that array
  * and nothing else: no new route file, no new component, no rebuild of the
  * index page, no schema or breadcrumb work.
  *
  * The maths lives in exported pure functions (`breakEven`, `startupCost`,
- * `roi`, `fundingNeeded`). They take plain numbers, return plain data, touch
- * no browser API, and can be called straight from a test or a script.
+ * `roi`, `fundingNeeded`, `runway`, `acquisitionCost`, `lifetimeValue`,
+ * `marketSize`). They take plain numbers, return plain data, touch no browser
+ * API, and can be called straight from a test or a script.
  *
  * Two rules the numbers here are held to:
  *
@@ -625,6 +626,360 @@ export function fundingNeeded(input: FundingNeededInput): readonly Reading[] {
 }
 
 // ---------------------------------------------------------------------------
+// 5. Runway
+// ---------------------------------------------------------------------------
+
+/**
+ * `fundingNeeded` above also reports months of runway, on the way to a raise
+ * amount. This one is deliberately the other half of that question: it never
+ * asks how much to raise, and instead works backwards from the month you are
+ * aiming for to the spending that reaches it and the cut that gets you there.
+ */
+export type RunwayInput = {
+  currentCash: number;
+  monthlySpend: number;
+  monthlyRevenue: number;
+  targetMonths: number;
+};
+
+export function runway(input: RunwayInput): readonly Reading[] {
+  const { currentCash, monthlySpend, monthlyRevenue, targetMonths } = input;
+  const netBurn = monthlySpend - monthlyRevenue;
+
+  // `targetMonths` has a minimum of 1, so this division is always safe. The
+  // ceiling is total spending, not net burn, because that is the number a
+  // founder actually controls line by line.
+  const spendCeiling = currentCash / targetMonths + monthlyRevenue;
+  const cut = Math.max(0, monthlySpend - spendCeiling);
+
+  const monthsReading: Reading =
+    netBurn > 0
+      ? {
+          key: "months-left",
+          label: "Months the money lasts",
+          display: formatMonths(currentCash / netBurn),
+          formula: `Cash in hand divided by cash going out each month. ${formatRupees(currentCash)} divided by ${formatRupees(netBurn)} a month is ${formatMonths(currentCash / netBurn)}.`,
+          status: "ok",
+          primary: true,
+          ...(currentCash === 0
+            ? { note: "You entered no cash in hand, so there is no runway left at all." }
+            : {}),
+        }
+      : {
+          key: "months-left",
+          label: "Months the money lasts",
+          display: "The money is not running out",
+          formula:
+            "Cash in hand divided by cash going out each month — which here is zero or less, so there is nothing to divide by.",
+          note:
+            netBurn === 0
+              ? "Revenue exactly matches spending, so the cash you hold stays where it is."
+              : `Revenue is ${formatRupees(Math.abs(netBurn))} a month more than you spend, so the cash you hold grows instead of running down.`,
+          status: "blocked",
+          primary: true,
+        };
+
+  return [
+    monthsReading,
+    {
+      key: "spend-ceiling",
+      label: `Most you can spend a month and still reach ${formatCount(targetMonths)} months`,
+      display: formatRupees(spendCeiling),
+      formula: `Cash in hand divided by ${formatCount(targetMonths)} months, plus the revenue you expect each month. ${formatRupees(currentCash)} divided by ${formatCount(targetMonths)} is ${formatRupees(currentCash / targetMonths)}, plus ${formatRupees(monthlyRevenue)} is ${formatRupees(spendCeiling)}.`,
+      status: "ok",
+    },
+    {
+      key: "cut-needed",
+      label: `Monthly spending to cut to reach ${formatCount(targetMonths)} months`,
+      display: formatRupees(cut),
+      formula: `What you spend now minus the most you can spend. ${formatRupees(monthlySpend)} minus ${formatRupees(spendCeiling)} is ${formatRupees(monthlySpend - spendCeiling)}.`,
+      status: "ok",
+      ...(cut === 0
+        ? {
+            note: `You already spend less than that ceiling, so nothing has to be cut to reach ${formatCount(targetMonths)} months. A cut never goes below zero.`,
+          }
+        : {}),
+    },
+    {
+      key: "net-burn",
+      label: "Cash going out each month",
+      display: formatRupees(netBurn),
+      formula: `Monthly spending minus monthly revenue. ${formatRupees(monthlySpend)} minus ${formatRupees(monthlyRevenue)} is ${formatRupees(netBurn)}.`,
+      status: "ok",
+    },
+  ];
+}
+
+// ---------------------------------------------------------------------------
+// 6. Customer acquisition cost
+// ---------------------------------------------------------------------------
+
+export type AcquisitionCostInput = {
+  adSpend: number;
+  peopleCost: number;
+  toolsCost: number;
+  newCustomers: number;
+};
+
+export function acquisitionCost(input: AcquisitionCostInput): readonly Reading[] {
+  const { adSpend, peopleCost, toolsCost, newCustomers } = input;
+  const total = adSpend + peopleCost + toolsCost;
+
+  const totalReading: Reading = {
+    key: "total-spend",
+    label: "Total spent on winning customers",
+    display: formatRupees(total),
+    formula: `Ads plus people plus tools. ${formatRupees(adSpend)} plus ${formatRupees(peopleCost)} plus ${formatRupees(toolsCost)} is ${formatRupees(total)}.`,
+    status: "ok",
+  };
+
+  // Spending money and winning nobody is a real month, and the answer to it is
+  // a sentence, not a division by zero.
+  if (newCustomers === 0) {
+    return [
+      {
+        key: "cac",
+        label: "Cost to win one customer",
+        display: "No customers to divide by",
+        formula:
+          "Total spent divided by customers won — which here is zero, so there is nothing to divide by.",
+        note:
+          total === 0
+            ? "You spent nothing and won nobody, so there is no cost per customer to work out."
+            : `You spent ${formatRupees(total)} and won nobody, so every rupee of it is unrecovered. There is no cost per customer until the first one arrives.`,
+        status: "blocked",
+        primary: true,
+      },
+      {
+        key: "next-hundred",
+        label: "Spend to win the next 100 customers",
+        display: "Not yet knowable",
+        formula: "Cost to win one customer multiplied by 100.",
+        note: "Without a first customer there is no rate to multiply.",
+        status: "blocked",
+      },
+      {
+        key: "ad-share",
+        label: "Ad spend per customer won",
+        display: "No customers to divide by",
+        formula: "Ad spend divided by customers won — which here is zero.",
+        status: "blocked",
+      },
+      totalReading,
+    ];
+  }
+
+  const cac = total / newCustomers;
+
+  return [
+    {
+      key: "cac",
+      label: "Cost to win one customer",
+      display: formatRupees(cac, true),
+      formula: `Total spent divided by customers won. ${formatRupees(total)} divided by ${formatCount(newCustomers)} is ${formatRupees(cac, true)}.`,
+      status: "ok",
+      primary: true,
+      ...(total === 0
+        ? {
+            note: `You won ${formatCount(newCustomers)} customers without spending anything, so the cost per customer is zero.`,
+          }
+        : {}),
+    },
+    {
+      key: "next-hundred",
+      label: "Spend to win the next 100 customers",
+      display: formatRupees(cac * 100),
+      formula: `Cost to win one customer multiplied by 100. ${formatRupees(cac, true)} times 100 is ${formatRupees(cac * 100)}.`,
+      note: "This assumes the next hundred cost what the last batch did. Your own experience decides whether they will.",
+      status: "ok",
+    },
+    {
+      key: "ad-share",
+      label: "Ad spend per customer won",
+      display: formatRupees(adSpend / newCustomers, true),
+      formula: `Ad spend divided by customers won. ${formatRupees(adSpend)} divided by ${formatCount(newCustomers)} is ${formatRupees(adSpend / newCustomers, true)}.`,
+      status: "ok",
+    },
+    totalReading,
+  ];
+}
+
+// ---------------------------------------------------------------------------
+// 7. Customer lifetime value
+// ---------------------------------------------------------------------------
+
+export type LifetimeValueInput = {
+  monthlyRevenuePerCustomer: number;
+  grossMarginPercent: number;
+  monthlyChurnPercent: number;
+  costToWinCustomer: number;
+};
+
+export function lifetimeValue(input: LifetimeValueInput): readonly Reading[] {
+  const { monthlyRevenuePerCustomer, grossMarginPercent, monthlyChurnPercent, costToWinCustomer } =
+    input;
+
+  // Nobody leaving means no average lifespan to measure. That is a real answer
+  // for a business with one cohort and no history, and it is named rather than
+  // shown as an infinite customer.
+  if (monthlyChurnPercent === 0) {
+    return [
+      {
+        key: "ltv-margin",
+        label: "Gross profit from one customer",
+        display: "No leaving rate to measure",
+        formula:
+          "100 divided by the monthly leaving rate gives the average months a customer stays — and that rate is zero here, so there is nothing to divide by.",
+        note: "At a zero leaving rate a customer never leaves, so their lifetime never ends and cannot be totalled. Use the rate you actually see, even a rough one.",
+        status: "blocked",
+        primary: true,
+      },
+      {
+        key: "lifespan",
+        label: "Months a customer stays",
+        display: "No leaving rate to measure",
+        formula: "100 divided by the monthly leaving rate.",
+        status: "blocked",
+      },
+      {
+        key: "ltv-revenue",
+        label: "Revenue from one customer",
+        display: "No leaving rate to measure",
+        formula: "Monthly revenue per customer multiplied by the months they stay.",
+        status: "blocked",
+      },
+      {
+        key: "ratio",
+        label: "Gross profit for every rupee spent winning them",
+        display: "Not yet knowable",
+        formula: "Gross profit from one customer divided by what it costs to win one.",
+        status: "blocked",
+      },
+    ];
+  }
+
+  const lifespanMonths = 100 / monthlyChurnPercent;
+  const revenueValue = monthlyRevenuePerCustomer * lifespanMonths;
+  const marginValue = revenueValue * (grossMarginPercent / 100);
+
+  const ratioReading: Reading =
+    costToWinCustomer === 0
+      ? {
+          key: "ratio",
+          label: "Gross profit for every rupee spent winning them",
+          display: "Nothing spent to compare against",
+          formula:
+            "Gross profit from one customer divided by what it costs to win one — which here is zero, so there is nothing to divide by.",
+          note: "You entered no cost to win a customer, so every rupee of gross profit is kept. Put in your real cost to see the comparison.",
+          status: "blocked",
+        }
+      : {
+          key: "ratio",
+          label: "Gross profit for every rupee spent winning them",
+          display: formatRupees(marginValue / costToWinCustomer, true),
+          formula: `Gross profit from one customer divided by what it costs to win one. ${formatRupees(marginValue)} divided by ${formatRupees(costToWinCustomer)} is ${formatRupees(marginValue / costToWinCustomer, true)}.`,
+          note: "This tool sets no target for that number. What counts as enough depends on how long you can wait to get the money back.",
+          status: "ok",
+        };
+
+  return [
+    {
+      key: "ltv-margin",
+      label: "Gross profit from one customer",
+      display: formatRupees(marginValue),
+      formula: `Revenue from one customer multiplied by your gross margin. ${formatRupees(revenueValue)} times ${formatPercent(grossMarginPercent)} is ${formatRupees(marginValue)}.`,
+      status: "ok",
+      primary: true,
+      ...(grossMarginPercent === 0
+        ? {
+            note: "At a zero gross margin nothing is left after the cost of serving a customer, so their revenue never becomes profit.",
+          }
+        : {}),
+    },
+    {
+      key: "lifespan",
+      label: "Months a customer stays",
+      display: formatMonths(lifespanMonths),
+      formula: `100 divided by the share who leave each month. 100 divided by ${formatPercent(monthlyChurnPercent)} is ${formatMonths(lifespanMonths)}.`,
+      status: "ok",
+    },
+    {
+      key: "ltv-revenue",
+      label: "Revenue from one customer",
+      display: formatRupees(revenueValue),
+      formula: `Monthly revenue per customer multiplied by the months they stay. ${formatRupees(monthlyRevenuePerCustomer)} times ${formatMonths(lifespanMonths)} is ${formatRupees(revenueValue)}.`,
+      status: "ok",
+    },
+    ratioReading,
+  ];
+}
+
+// ---------------------------------------------------------------------------
+// 8. Market size
+// ---------------------------------------------------------------------------
+
+/**
+ * TAM, SAM and SOM are normally sold with an industry figure dropped in at the
+ * top. This one has no such figure and never will: every number below comes
+ * out of the four boxes the visitor fills in. If they do not know how many
+ * buyers exist, this tool cannot tell them — and says so rather than guessing.
+ */
+export type MarketSizeInput = {
+  totalBuyers: number;
+  annualSpendPerBuyer: number;
+  reachablePercent: number;
+  winnablePercent: number;
+};
+
+export function marketSize(input: MarketSizeInput): readonly Reading[] {
+  const { totalBuyers, annualSpendPerBuyer, reachablePercent, winnablePercent } = input;
+
+  const reachableBuyers = totalBuyers * (reachablePercent / 100);
+  const winnableBuyers = reachableBuyers * (winnablePercent / 100);
+  const tam = totalBuyers * annualSpendPerBuyer;
+  const sam = reachableBuyers * annualSpendPerBuyer;
+  const som = winnableBuyers * annualSpendPerBuyer;
+
+  return [
+    {
+      key: "som",
+      label: "Your realistic share, a year (SOM)",
+      display: formatRupees(som),
+      formula: `The buyers you can reach, narrowed to the share you think you can win, multiplied by what one pays a year. ${formatCount(Math.round(winnableBuyers))} buyers times ${formatRupees(annualSpendPerBuyer)} is ${formatRupees(som)}.`,
+      status: "ok",
+      primary: true,
+      ...(som === 0
+        ? {
+            note: "One of your four numbers is zero, so this comes to nothing. Change it and the answer moves with it.",
+          }
+        : {}),
+    },
+    {
+      key: "sam",
+      label: "The part you can reach, a year (SAM)",
+      display: formatRupees(sam),
+      formula: `All buyers narrowed to the share you can actually sell to, multiplied by what one pays a year. ${formatCount(Math.round(reachableBuyers))} buyers times ${formatRupees(annualSpendPerBuyer)} is ${formatRupees(sam)}.`,
+      status: "ok",
+    },
+    {
+      key: "tam",
+      label: "Everyone who could buy, a year (TAM)",
+      display: formatRupees(tam),
+      formula: `All buyers multiplied by what one pays a year. ${formatCount(totalBuyers)} times ${formatRupees(annualSpendPerBuyer)} is ${formatRupees(tam)}.`,
+      note: "This is only as good as the buyer count you typed. This tool holds no market data and will not invent one for you.",
+      status: "ok",
+    },
+    {
+      key: "winnable-buyers",
+      label: "Customers inside your realistic share",
+      display: formatCount(Math.round(winnableBuyers)),
+      formula: `All buyers, narrowed twice. ${formatCount(totalBuyers)} times ${formatPercent(reachablePercent)} is ${formatCount(Math.round(reachableBuyers))}, times ${formatPercent(winnablePercent)} is ${formatCount(Math.round(winnableBuyers))}.`,
+      status: "ok",
+    },
+  ];
+}
+
+// ---------------------------------------------------------------------------
 // The registry
 // ---------------------------------------------------------------------------
 
@@ -963,6 +1318,275 @@ export const CALCULATORS: readonly Calculator[] = [
         monthlyRevenue: at(v, "monthlyRevenue"),
         currentCash: at(v, "currentCash"),
         monthsToCover: at(v, "monthsToCover"),
+      }),
+  },
+  {
+    slug: "runway",
+    title: "Runway",
+    highlight: "calculator",
+    answers: "How many months the money lasts, and what you have to cut to make it last longer.",
+    intro:
+      "Put in what you hold, what you spend and what you earn. This works out how long the money lasts, the most you can spend a month to reach the month you are aiming for, and the gap between the two.",
+    description:
+      "Work out how many months your cash lasts at your own burn, the monthly spending that reaches the month you are aiming for, and the cut needed to get there. Rupee amounts, free, nothing saved.",
+    fields: [
+      {
+        key: "currentCash",
+        label: "Cash in hand today",
+        group: "Where you stand",
+        unitLabel: "in rupees",
+        prefix: "₹",
+        help: "What is actually in the bank right now, not what has been promised to you.",
+        min: 0,
+        max: RUPEE_MAX,
+        step: 10000,
+        defaultValue: 600000,
+      },
+      {
+        key: "targetMonths",
+        label: "Months you are aiming to reach",
+        group: "Where you stand",
+        unitLabel: "number of months",
+        suffix: "months",
+        help: "How far ahead you want the money to last — the month of a launch, a first paying customer, or the next raise.",
+        min: 1,
+        max: 60,
+        step: 1,
+        defaultValue: 12,
+      },
+      {
+        key: "monthlySpend",
+        label: "Money going out each month",
+        group: "Every month",
+        unitLabel: "in rupees",
+        prefix: "₹",
+        help: "Everything you spend in a month — rent, salaries, stock, ads, tools, bills, fees.",
+        min: 0,
+        max: RUPEE_MAX,
+        step: 5000,
+        defaultValue: 85000,
+      },
+      {
+        key: "monthlyRevenue",
+        label: "Revenue you expect each month",
+        group: "Every month",
+        unitLabel: "in rupees",
+        prefix: "₹",
+        help: "Money you expect customers to pay you in a normal month. Zero if you have not started earning.",
+        min: 0,
+        max: RUPEE_MAX,
+        step: 5000,
+        defaultValue: 20000,
+      },
+    ],
+    compute: (v) =>
+      runway({
+        currentCash: at(v, "currentCash"),
+        monthlySpend: at(v, "monthlySpend"),
+        monthlyRevenue: at(v, "monthlyRevenue"),
+        targetMonths: at(v, "targetMonths"),
+      }),
+  },
+  {
+    slug: "customer-acquisition-cost",
+    title: "Customer acquisition cost",
+    highlight: "calculator",
+    answers: "What one customer costs you to win, once ads, people and tools are counted.",
+    intro:
+      "Put in what you spent getting customers over a period and how many you actually won. This works out what one customer cost you, and what the next hundred would cost at the same rate.",
+    description:
+      "Work out customer acquisition cost in rupees from ad spend, people cost, tool cost and the customers you won. No benchmarks, no industry averages — only your own numbers.",
+    fields: [
+      {
+        key: "adSpend",
+        label: "Spent on ads and promotion",
+        group: "What you spent in the period",
+        unitLabel: "in rupees",
+        prefix: "₹",
+        help: "Every rupee paid to reach people — ads, boosted posts, flyers, a paid collaboration, a listing fee.",
+        min: 0,
+        max: RUPEE_MAX,
+        step: 1000,
+        defaultValue: 20000,
+      },
+      {
+        key: "peopleCost",
+        label: "Spent on people doing the selling",
+        group: "What you spent in the period",
+        unitLabel: "in rupees",
+        prefix: "₹",
+        help: "Pay, commission or a share of your own time costed out, for whoever chased and closed customers in that period.",
+        min: 0,
+        max: RUPEE_MAX,
+        step: 1000,
+        defaultValue: 15000,
+      },
+      {
+        key: "toolsCost",
+        label: "Spent on tools for selling",
+        group: "What you spent in the period",
+        unitLabel: "in rupees",
+        prefix: "₹",
+        help: "Subscriptions used to find or follow up customers in that period. Leave it at zero if you are on free plans.",
+        min: 0,
+        max: RUPEE_MAX,
+        step: 500,
+        defaultValue: 0,
+      },
+      {
+        key: "newCustomers",
+        label: "New customers won",
+        group: "What you got",
+        unitLabel: "number of customers",
+        suffix: "customers",
+        help: "How many paying customers that spending actually brought in. Count people who paid, not enquiries.",
+        min: 0,
+        max: 1_000_000,
+        step: 1,
+        defaultValue: 25,
+      },
+    ],
+    compute: (v) =>
+      acquisitionCost({
+        adSpend: at(v, "adSpend"),
+        peopleCost: at(v, "peopleCost"),
+        toolsCost: at(v, "toolsCost"),
+        newCustomers: at(v, "newCustomers"),
+      }),
+  },
+  {
+    slug: "customer-lifetime-value",
+    title: "Customer lifetime value",
+    highlight: "calculator",
+    answers: "What one customer is worth in gross profit before they leave.",
+    intro:
+      "Put in what a customer pays you each month, what is left after the cost of serving them, and the share who leave each month. This works out how long they stay and what that is worth.",
+    description:
+      "Work out customer lifetime value in rupees from monthly revenue per customer, gross margin and your monthly churn rate, and compare it with what you spend to win one.",
+    fields: [
+      {
+        key: "monthlyRevenuePerCustomer",
+        label: "What one customer pays each month",
+        group: "What a customer brings in",
+        unitLabel: "in rupees",
+        prefix: "₹",
+        help: "The average a single customer pays you in a month. For one-off sales, use what they spend in a month on average.",
+        min: 0,
+        max: 10_000_000,
+        step: 100,
+        defaultValue: 1500,
+      },
+      {
+        key: "grossMarginPercent",
+        label: "Gross margin",
+        group: "What a customer brings in",
+        unitLabel: "as a percentage",
+        suffix: "%",
+        help: "Of every 100 rupees a customer pays, how many are left after the direct cost of serving them.",
+        min: 0,
+        max: 100,
+        step: 1,
+        defaultValue: 70,
+      },
+      {
+        key: "monthlyChurnPercent",
+        label: "Share of customers who leave each month",
+        group: "How long they stay",
+        unitLabel: "as a percentage",
+        suffix: "%",
+        help: "Out of 100 customers, how many stop paying in a month. A rough figure from your own records beats a guessed one.",
+        min: 0,
+        max: 100,
+        step: 1,
+        defaultValue: 5,
+      },
+      {
+        key: "costToWinCustomer",
+        label: "What it costs to win one customer",
+        group: "How long they stay",
+        unitLabel: "in rupees",
+        prefix: "₹",
+        help: "What you spend on average to get one customer. The acquisition cost calculator works this out if you do not know it.",
+        min: 0,
+        max: 10_000_000,
+        step: 100,
+        defaultValue: 1400,
+      },
+    ],
+    compute: (v) =>
+      lifetimeValue({
+        monthlyRevenuePerCustomer: at(v, "monthlyRevenuePerCustomer"),
+        grossMarginPercent: at(v, "grossMarginPercent"),
+        monthlyChurnPercent: at(v, "monthlyChurnPercent"),
+        costToWinCustomer: at(v, "costToWinCustomer"),
+      }),
+  },
+  {
+    slug: "market-size",
+    title: "Market size",
+    highlight: "calculator",
+    answers:
+      "What your market is worth a year, split into everyone, the reachable part, and your realistic share.",
+    intro:
+      "Put in how many buyers exist, what one spends a year, and how much of that you can reach and win. This works out TAM, SAM and SOM from your four numbers and nothing else.",
+    description:
+      "Work out TAM, SAM and SOM in rupees from your own buyer count, annual spend per buyer and the share you can reach and win. No market data, no industry averages.",
+    fields: [
+      {
+        key: "totalBuyers",
+        label: "Buyers who could want this",
+        group: "The whole market",
+        unitLabel: "number of buyers",
+        suffix: "buyers",
+        help: "How many people or businesses could buy what you sell at all. Count from a directory, a census figure or a list you can point to — not a feeling.",
+        min: 0,
+        max: 1_000_000_000,
+        step: 1000,
+        defaultValue: 50000,
+      },
+      {
+        key: "annualSpendPerBuyer",
+        label: "What one buyer spends a year",
+        group: "The whole market",
+        unitLabel: "in rupees",
+        prefix: "₹",
+        help: "What a single buyer pays for this kind of thing across a year, to you or to anyone else.",
+        min: 0,
+        max: 10_000_000,
+        step: 500,
+        defaultValue: 6000,
+      },
+      {
+        key: "reachablePercent",
+        label: "Share you can actually reach",
+        group: "Your part of it",
+        unitLabel: "as a percentage",
+        suffix: "%",
+        help: "Of all those buyers, how many you could serve given where you are, what you speak and what you can deliver.",
+        min: 0,
+        max: 100,
+        step: 1,
+        defaultValue: 20,
+      },
+      {
+        key: "winnablePercent",
+        label: "Share of those you think you can win",
+        group: "Your part of it",
+        unitLabel: "as a percentage",
+        suffix: "%",
+        help: "Of the buyers you can reach, how many you expect to choose you over every other option. Your own call, and worth keeping low.",
+        min: 0,
+        max: 100,
+        step: 1,
+        defaultValue: 5,
+      },
+    ],
+    compute: (v) =>
+      marketSize({
+        totalBuyers: at(v, "totalBuyers"),
+        annualSpendPerBuyer: at(v, "annualSpendPerBuyer"),
+        reachablePercent: at(v, "reachablePercent"),
+        winnablePercent: at(v, "winnablePercent"),
       }),
   },
 ];
