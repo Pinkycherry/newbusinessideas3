@@ -219,7 +219,11 @@
       "slug": "serviceable-obtainable-market",
       "category": "Market",
       "definition": "The share of the serviceable market you realistically expect to win, given your competition and your capacity. Shortened to SOM. It is the only one of the three numbers you should plan against.",
-      "related": ["serviceable-addressable-market", "total-addressable-market", "competitor-analysis"]
+      "related": [
+        "serviceable-addressable-market",
+        "total-addressable-market",
+        "competitor-analysis"
+      ]
     },
     {
       "term": "Product-market fit",
