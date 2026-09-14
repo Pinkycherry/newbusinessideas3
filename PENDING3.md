@@ -451,6 +451,14 @@ interviews, published with consent, quoting only figures the founder allows.
 5. **PENDING3's own calculator count was wrong** and is corrected in this
    commit: three rows claimed 31 calculators where the file held 4. It now holds
    8, and those rows say 8.
+6. **No sitemap lists any calculator page.** Found while verifying this sprint
+   and not caused by it: `sitemap-pages[.]xml.ts` holds a hand-written
+   `STATIC_PAGES` array that has never included `/calculator` or any
+   `/calculator/<slug>`, so all eight tool pages are invisible to crawlers. The
+   fix is additive and needs no hardcoded slug — import `CALCULATORS` and map it,
+   the way `sitemap-ideas` already maps its rows. Left undone here only because
+   that is a route file and this round was scoped to data and content. It is the
+   cheapest SEO win currently on the board.
 
 ### What this unblocks
 
