@@ -236,7 +236,7 @@ does not change without a deploy.
 | Featured blueprints strip | `src/config/featured.ts` | **LIVE** | 3 real `idea_id`s; unknown ids are skipped, never faked | Nothing — edit the array to change picks |
 | Photography | `src/config/imagery.ts` | **LIVE** | `ethicalfounder.com` WordPress library, real URLs | Nothing |
 | Category imagery | `src/config/category-imagery.ts` | **LIVE** | Real files under `public/images/categories/` | Nothing |
-| Calculators (31 entries) | `src/lib/calculators.ts` | **LIVE** | Hand-written formulas, run client-side, rupees | Nothing — formulas are the content |
+| Calculators (8 entries) | `src/lib/calculators.ts` | **LIVE** | Hand-written formulas, run client-side, rupees | Nothing — formulas are the content |
 | Pricing page | `src/routes/pricing.tsx` | **SAMPLE** | 1 hardcoded array | Confirm real prices before launch |
 | Services page | `src/routes/services.tsx` | **SAMPLE** | 1 hardcoded array | Founder-confirmed services |
 | Vertical landing pages | `src/routes/validate.$industrySlug.tsx` | **SAMPLE** | 1 hardcoded array + reads `ideas` | Indian verticals per Brief §6.10 |
@@ -254,7 +254,7 @@ does not change without a deploy.
 | `/idea/[slug]` | **PARTIAL** | `ideas` + `category_faqs` fallback | 13 sections empty on 282 ideas |
 | `/faq` and `/faq/[category]` | **LIVE** | `category_faqs`, 84 rows | — |
 | `/shortlist` and `/shortlist/[slug]` | **PARTIAL** | Generated from `ideas` | Brief §6.3 wants top-10 written long; currently auto-generated |
-| `/calculator` + `/calculator/[slug]` | **LIVE** | `calculators.ts`, 31 entries | — |
+| `/calculator` + `/calculator/[slug]` | **LIVE** | `calculators.ts`, 8 entries | — |
 | `/validate/[vertical]` | **SAMPLE** | Hardcoded array + `ideas` | Brief §6.10 |
 | `/search` | **LIVE** | `ideas` | — |
 | `/blog` + `/blog/[slug]` | **LIVE** | WordPress at `nutrizoe.in` | Points at an unrelated site — confirm intended source |
@@ -338,7 +338,7 @@ Tools**. FAQ and calculator keep their names.
 |---|---|---|
 | `/lists/<slug>` | `/shortlist` + `/shortlist/<slug>` | **Built.** Auto-generated from `ideas`; the brief wants these written long |
 | `/blog/<slug>` | `/blog` + `/blog/<slug>` | **Built, disconnected.** Reads WordPress at `nutrizoe.in`, not the `blog_posts` table that now holds 14 posts |
-| `/tools/<slug>` (calculators) | `/calculator` + `/calculator/<slug>` | **Built.** 31 hand-written calculators |
+| `/tools/<slug>` (calculators) | `/calculator` + `/calculator/<slug>` | **Built.** 8 hand-written calculators |
 | `/tools/<slug>` (directory) | `/useful-tools` | **Missing.** PENDING2 §C6 and §O — blocked on content, not engineering |
 | `/guides/<slug>` | `/step-by-step/<slug>` | **Missing.** PENDING2 §C4 and §O — blocked on content |
 | — | `/versus/<slug>` | **Missing.** Brief §6.11, PENDING2 §C8 |
@@ -375,3 +375,87 @@ just cleaned up by de-indexing 409 subcategory URLs.
 5. **`/versus/<slug>`** — needs a real position to compare. Founder's call.
 
 Nothing here should be started before step 2 finishes.
+
+---
+
+## 8. Data sprint register — content written without routes, 2026-09-14
+
+Everything in this section was produced in one pass on 2026-09-14. It is data
+and content only: **no route, no component, no CSS and no Supabase write**. The
+point was to settle the content first so the pages can be built against it later
+instead of shipping empty and being filled in afterwards.
+
+The sprint brief asked for this log in `BUTTERFLY_EFFECT.md`. It is here
+instead, because that file is a rules-and-blast-radius checklist with no
+register to append to, and this file is already the live content register.
+
+### What was produced
+
+| Slug / file | Type | Where | ACTUAL / PLACEHOLDER | What it is | Focus keywords |
+|---|---|---|---|---|---|
+| `runway` | Calculator | `src/lib/calculators.ts` | **ACTUAL** | Months the money lasts, the monthly spending ceiling for a target month, the cut to get there | runway calculator, how long will my money last |
+| `customer-acquisition-cost` | Calculator | `src/lib/calculators.ts` | **ACTUAL** | Ads + people + tools over customers won; cost of the next hundred | customer acquisition cost calculator, CAC |
+| `customer-lifetime-value` | Calculator | `src/lib/calculators.ts` | **ACTUAL** | Months a customer stays from the leaving rate; revenue and gross profit over that life | customer lifetime value calculator, LTV |
+| `market-size` | Calculator | `src/lib/calculators.ts` | **ACTUAL** | TAM, SAM and SOM from four visitor inputs and nothing else | tam sam som calculator, market size calculator |
+| `glossary` (69 terms) | Data | `data/glossary.json` | **ACTUAL** | Six categories: Money, Customers, Market, Business models, India and compliance, Funding | founder glossary, business terms explained |
+| `business-idea-validation` | Guide, 782 words | `content/guides/` | **ACTUAL** | Find the buyer before you build; money changing hands is the only proof | how to validate a business idea |
+| `zero-investment-business-models` | Guide, 820 words | `content/guides/` | **ACTUAL** | Five models that work from nothing and the catch in each | zero investment business |
+| `product-market-fit` | Guide, 675 words | `content/guides/` | **ACTUAL** | Four signals that mean something, three that only look like it | product market fit |
+| `tam-sam-som-explained` | Guide, 621 words | `content/guides/` | **ACTUAL** | The three numbers, how to get them from countable things | tam sam som |
+| `pre-launch-checklist` | Guide, 549 words | `content/guides/` | **ACTUAL** | What actually blocks a first sale, and what to skip | pre launch checklist |
+| 5 founder stories | Data | `data/case-studies.json` | **PLACEHOLDER** | UGC agency, repurposing studio, evening side hustle, faceless channel, local service round | founder stories, case studies |
+
+### Why the founder stories are PLACEHOLDER and the rest is not
+
+The calculators, glossary and guides are ACTUAL because they contain nothing
+that needed inventing: arithmetic on the visitor's own numbers, definitions, and
+method. Not one statistic appears in any of the five guides.
+
+The founder stories are PLACEHOLDER because a founder story is normally sold on
+its numbers, and we have no verified ones. So that file carries **no revenue,
+income, earnings or profit figure at all** — a grep confirms no currency amount,
+no percentage and no multi-digit number outside the idea ids. Each story instead
+records `based_on_idea_ids`, pointing at the blueprints the pattern came from, so
+the provenance is checkable. `replace_with` in that file names the exit: real
+interviews, published with consent, quoting only figures the founder allows.
+
+### Verification run
+
+- `npx tsc --noEmit` clean; `npx eslint src/lib/calculators.ts` clean;
+  `prettier --check data/ content/` clean.
+- All eight calculators asserted across zeros, defaults, maximums and mixed
+  min/max bounds: no `NaN`, no `Infinity`, no empty display, exactly one primary
+  reading each. This holds to rule 2 in the `calculators.ts` header.
+- Both JSON files parse. All 69 glossary slugs unique; every entry in every
+  `related[]` array resolves inside the file; no entry references itself.
+- Of the 44 internal links across the five guides, the 12 `/idea/` and 6
+  `/category/` targets were each verified against Supabase as live rows with
+  status `completed`, and the 14 `based_on_idea_ids` in the stories likewise.
+
+### Known gaps, deliberate
+
+1. **`/startup-guides/` and `/founder-glossary/` have no routes.** The guides
+   link to both because that is the slug structure the founder set. Those links
+   are dead until the routes exist. Nothing renders this content yet, so nothing
+   is crawlable, but the routes are now the blocker rather than the content.
+2. **Guide links point at `/calculator/<slug>`, the live route.** The founder's
+   structure puts tools at `/useful-tools/<slug>`. When the calculator route
+   moves, five links in the guides move with it — one sed.
+3. **`sub_theme` is still missing from the generator**, so subcategory pages
+   stay `noindex,follow`. Unchanged by this sprint (see the taxonomy section).
+4. **No `learning-resources` content exists.** `/learning-resources/` was in the
+   sprint's slug list and nothing was written for it: a curated resource list is
+   an editorial judgement about other people's material, and inventing entries
+   for it would be the same mistake as inventing a statistic. It needs the
+   founder's own picks.
+5. **PENDING3's own calculator count was wrong** and is corrected in this
+   commit: three rows claimed 31 calculators where the file held 4. It now holds
+   8, and those rows say 8.
+
+### What this unblocks
+
+PENDING2 §O has had `/step-by-step/*`, `/useful-tools` and `/versus/*` marked
+*blocked on content, not engineering* since August. Three of the five page types
+in §7 above now have their content: the tools, the guides and the glossary. The
+routes are ordinary work against settled data, which is what this sprint was
+for.
