@@ -1,0 +1,491 @@
+{
+  "title": "Founder glossary",
+  "purpose": "Plain definitions of the words a first-time founder meets while reading a BBI blueprint. Definitional only: no market sizes, no averages, no typical costs, no benchmarks. Where a real threshold or rate exists in law, this file names the authority to check rather than printing a number that goes stale.",
+  "data_level": "ACTUAL",
+  "updated": "2026-09-14",
+  "terms": [
+    {
+      "term": "Runway",
+      "slug": "runway",
+      "category": "Money",
+      "definition": "How many months your business can keep going before the money runs out. You get it by dividing the cash you hold by the cash leaving each month. Runway is counted in months, not rupees, because months are what you actually plan against.",
+      "related": ["burn-rate", "cash-flow", "bootstrapping"]
+    },
+    {
+      "term": "Burn rate",
+      "slug": "burn-rate",
+      "category": "Money",
+      "definition": "The cash your business loses in a month. Gross burn is everything going out; net burn is that minus what comes in. When revenue is bigger than spending your net burn is negative, which means the pile is growing instead of shrinking.",
+      "related": ["runway", "cash-flow", "fixed-costs"]
+    },
+    {
+      "term": "Break-even point",
+      "slug": "break-even-point",
+      "category": "Money",
+      "definition": "The point where money coming in exactly matches money going out, so you are neither losing nor making. Below it every month costs you; above it every sale adds to profit. It is usually stated as a number of units or a level of monthly sales.",
+      "related": ["contribution-margin", "fixed-costs", "variable-costs"]
+    },
+    {
+      "term": "Fixed costs",
+      "slug": "fixed-costs",
+      "category": "Money",
+      "definition": "Costs that stay the same whether you sell one thing or a thousand — rent, salaries, a licence, a machine, a subscription. They are the reason a quiet month still costs money. Cutting them is the fastest way to buy yourself more runway.",
+      "related": ["variable-costs", "break-even-point", "burn-rate"]
+    },
+    {
+      "term": "Variable costs",
+      "slug": "variable-costs",
+      "category": "Money",
+      "definition": "Costs that go up and down with how much you sell — material, packing, courier, payment charges, a per-order fee. Every extra sale brings its own variable cost with it. They decide how much of each sale you actually keep.",
+      "related": ["fixed-costs", "contribution-margin", "cost-of-goods-sold"]
+    },
+    {
+      "term": "Contribution margin",
+      "slug": "contribution-margin",
+      "category": "Money",
+      "definition": "What one sale leaves behind after its own variable cost — the price minus what that unit cost you to make and deliver. It is the money available to pay down your fixed costs. If it is zero or less, selling more makes things worse, not better.",
+      "related": ["variable-costs", "break-even-point", "gross-margin"]
+    },
+    {
+      "term": "Cost of goods sold",
+      "slug": "cost-of-goods-sold",
+      "category": "Money",
+      "definition": "The direct cost of the things you sold — materials, manufacturing, the freelancer who did the work, the wholesale price you paid. Usually shortened to COGS. It excludes rent, ads and salaries that are not tied to a specific sale.",
+      "related": ["gross-margin", "variable-costs", "revenue"]
+    },
+    {
+      "term": "Gross margin",
+      "slug": "gross-margin",
+      "category": "Money",
+      "definition": "Of every hundred rupees a customer pays you, how many are left after the direct cost of serving them. Written as a percentage. It tells you how much room a business has to pay for everything else — ads, rent, your own salary.",
+      "related": ["cost-of-goods-sold", "net-margin", "contribution-margin"]
+    },
+    {
+      "term": "Net margin",
+      "slug": "net-margin",
+      "category": "Money",
+      "definition": "What is left of every hundred rupees of revenue after every cost, including rent, ads, tax and interest. This is the number that decides whether the business supports you. A healthy gross margin with a negative net margin means the overheads are eating the business.",
+      "related": ["gross-margin", "profit", "revenue"]
+    },
+    {
+      "term": "Unit economics",
+      "slug": "unit-economics",
+      "category": "Money",
+      "definition": "Whether one single sale, one customer or one order makes money on its own. You work it out by putting everything one unit earns against everything one unit costs. A business with broken unit economics gets worse as it grows, not better.",
+      "related": ["contribution-margin", "customer-acquisition-cost", "customer-lifetime-value"]
+    },
+    {
+      "term": "Cash flow",
+      "slug": "cash-flow",
+      "category": "Money",
+      "definition": "The timing of money in and money out of your bank account. It is not the same as profit: an invoice you have raised but not been paid for counts as profit and not as cash. Businesses close with full order books because the cash arrived later than the bills.",
+      "related": ["working-capital", "runway", "invoice"]
+    },
+    {
+      "term": "Working capital",
+      "slug": "working-capital",
+      "category": "Money",
+      "definition": "The money tied up in running the business day to day — stock on the shelf, work you have done but not been paid for, minus what you owe suppliers. The longer customers take to pay you, the more working capital you need just to stand still.",
+      "related": ["cash-flow", "invoice", "bootstrapping"]
+    },
+    {
+      "term": "Revenue",
+      "slug": "revenue",
+      "category": "Money",
+      "definition": "The total amount customers pay you before any cost is taken out. Also called turnover or top line. It is the easiest number to grow and the easiest one to mistake for success.",
+      "related": ["profit", "net-margin", "average-order-value"]
+    },
+    {
+      "term": "Profit",
+      "slug": "profit",
+      "category": "Money",
+      "definition": "What is left of revenue after the costs of earning it. Gross profit takes out direct costs only; net profit takes out everything. A founder paying themselves nothing is hiding a cost, which makes the profit look better than it is.",
+      "related": ["revenue", "net-margin", "gross-margin"]
+    },
+    {
+      "term": "Return on investment",
+      "slug": "return-on-investment",
+      "category": "Money",
+      "definition": "What you got back compared with what you put in, as a percentage of the amount you put in. Shortened to ROI. It only means something alongside a time period — the same return over six months and over six years are very different things.",
+      "related": ["payback-period", "profit", "seed-capital"]
+    },
+    {
+      "term": "Payback period",
+      "slug": "payback-period",
+      "category": "Money",
+      "definition": "How long it takes to earn back money you have already spent, whether on stock, equipment or winning a customer. It is measured in months. A long payback period is survivable if you have the cash to wait, and fatal if you do not.",
+      "related": ["return-on-investment", "customer-acquisition-cost", "runway"]
+    },
+    {
+      "term": "Bootstrapping",
+      "slug": "bootstrapping",
+      "category": "Money",
+      "definition": "Building a business from your own savings and the revenue it earns, without outside investment. It means growth is limited to what the business can pay for, and it means nobody else owns a share of what you build.",
+      "related": ["seed-capital", "equity", "runway"]
+    },
+    {
+      "term": "Customer acquisition cost",
+      "slug": "customer-acquisition-cost",
+      "category": "Customers",
+      "definition": "What one new customer costs you to win, counting ads, the time spent selling and the tools used to do it. Shortened to CAC. Divide everything you spent getting customers in a period by the number of customers who actually paid.",
+      "related": ["customer-lifetime-value", "conversion-rate", "payback-period"]
+    },
+    {
+      "term": "Customer lifetime value",
+      "slug": "customer-lifetime-value",
+      "category": "Customers",
+      "definition": "What one customer is worth in total before they stop buying. Shortened to LTV or CLV. The honest version counts gross profit rather than revenue, because the cost of serving them is real.",
+      "related": ["customer-acquisition-cost", "churn-rate", "retention"]
+    },
+    {
+      "term": "Churn rate",
+      "slug": "churn-rate",
+      "category": "Customers",
+      "definition": "The share of customers who stop buying in a given period, usually a month. Its opposite is retention. Churn quietly decides how hard you have to work: high churn means you are refilling a leaking bucket every month.",
+      "related": ["retention", "customer-lifetime-value", "repeat-customer"]
+    },
+    {
+      "term": "Retention",
+      "slug": "retention",
+      "category": "Customers",
+      "definition": "Customers staying and buying again. It is measured as the share still with you after a period. Retention is cheaper than acquisition because you are not paying to be found a second time.",
+      "related": ["churn-rate", "repeat-customer", "customer-lifetime-value"]
+    },
+    {
+      "term": "Average order value",
+      "slug": "average-order-value",
+      "category": "Customers",
+      "definition": "What a typical single order is worth. Divide total revenue in a period by the number of orders in it. Raising it is often easier than finding more customers, because the person is already buying.",
+      "related": ["revenue", "repeat-customer", "conversion-rate"]
+    },
+    {
+      "term": "Conversion rate",
+      "slug": "conversion-rate",
+      "category": "Customers",
+      "definition": "The share of people who take the step you wanted, out of everyone who could have. Enquiries into paying customers, visitors into enquiries, trials into subscriptions. Always state which step you mean, or the number says nothing.",
+      "related": ["funnel", "lead", "customer-acquisition-cost"]
+    },
+    {
+      "term": "Lead",
+      "slug": "lead",
+      "category": "Customers",
+      "definition": "Someone who has shown interest but has not paid — a phone enquiry, a form filled in, a message asking your price. A lead is not revenue, and counting leads as customers is the commonest way founders talk themselves into a bad plan.",
+      "related": ["funnel", "conversion-rate", "cold-outreach"]
+    },
+    {
+      "term": "Funnel",
+      "slug": "funnel",
+      "category": "Customers",
+      "definition": "The path from a stranger hearing about you to a customer paying you, split into steps. It is called a funnel because fewer people remain at each step. Its use is diagnostic: it shows you which single step is losing you the most people.",
+      "related": ["conversion-rate", "lead", "cold-outreach"]
+    },
+    {
+      "term": "Repeat customer",
+      "slug": "repeat-customer",
+      "category": "Customers",
+      "definition": "Someone who buys from you more than once. Repeat customers cost nothing to find again, which is why a business with them behaves completely differently from one selling to strangers every month.",
+      "related": ["retention", "churn-rate", "average-order-value"]
+    },
+    {
+      "term": "Referral",
+      "slug": "referral",
+      "category": "Customers",
+      "definition": "A customer who came because an existing one told them about you. Referrals usually convert faster and cost less than advertising. They are also the clearest sign that what you deliver is genuinely good, because nobody risks their own name on a bad recommendation.",
+      "related": ["retention", "customer-acquisition-cost", "lead"]
+    },
+    {
+      "term": "Cold outreach",
+      "slug": "cold-outreach",
+      "category": "Customers",
+      "definition": "Contacting someone who has never heard of you — a call, a message, a walk into their shop. It is the cheapest way to get a first customer when you have no audience, and it is uncomfortable, which is why most people skip it and stay stuck.",
+      "related": ["lead", "funnel", "pre-selling"]
+    },
+    {
+      "term": "Total addressable market",
+      "slug": "total-addressable-market",
+      "category": "Market",
+      "definition": "The whole amount everyone who could ever buy what you sell spends on it in a year. Shortened to TAM. It is a ceiling, not a forecast, and it is the number most often inflated to make a plan look exciting.",
+      "related": ["serviceable-addressable-market", "serviceable-obtainable-market", "niche"]
+    },
+    {
+      "term": "Serviceable addressable market",
+      "slug": "serviceable-addressable-market",
+      "category": "Market",
+      "definition": "The part of the total market you could actually serve, given where you are, what you can deliver and who you can reach. Shortened to SAM. A dosa cart in Coimbatore cannot serve all of India, however large the food market is.",
+      "related": ["total-addressable-market", "serviceable-obtainable-market", "beachhead-market"]
+    },
+    {
+      "term": "Serviceable obtainable market",
+      "slug": "serviceable-obtainable-market",
+      "category": "Market",
+      "definition": "The share of the serviceable market you realistically expect to win, given your competition and your capacity. Shortened to SOM. It is the only one of the three numbers you should plan against.",
+      "related": ["serviceable-addressable-market", "total-addressable-market", "competitor-analysis"]
+    },
+    {
+      "term": "Product-market fit",
+      "slug": "product-market-fit",
+      "category": "Market",
+      "definition": "The point where enough people want what you have made that selling stops being a fight. You feel it as pull: customers return without being chased, and word of mouth starts doing work you used to do yourself. Before it, growing spend just buys more disappointment.",
+      "related": ["minimum-viable-product", "validation", "retention"]
+    },
+    {
+      "term": "Minimum viable product",
+      "slug": "minimum-viable-product",
+      "category": "Market",
+      "definition": "The smallest version of your idea that a real customer can actually use and pay for. Shortened to MVP. Its job is to answer one question — will anyone buy this — using as little time and money as possible.",
+      "related": ["validation", "proof-of-concept", "product-market-fit"]
+    },
+    {
+      "term": "Validation",
+      "slug": "validation",
+      "category": "Market",
+      "definition": "Proving with evidence that people will pay, before you build the whole thing. Money changing hands is validation. Compliments, likes, a friend saying it is a great idea, and a full waiting list nobody has paid to join are not.",
+      "related": ["pre-selling", "minimum-viable-product", "ideal-customer-profile"]
+    },
+    {
+      "term": "Pre-selling",
+      "slug": "pre-selling",
+      "category": "Market",
+      "definition": "Taking money for something before you have made it — a deposit, a pre-order, a paid pilot. It is the strongest validation there is, because it tests the only thing that matters. It also funds the build with the customer's money instead of yours.",
+      "related": ["validation", "cold-outreach", "bootstrapping"]
+    },
+    {
+      "term": "Proof of concept",
+      "slug": "proof-of-concept",
+      "category": "Market",
+      "definition": "A rough test showing the thing can be done at all, usually built for yourself rather than a customer. It answers whether it works, while a minimum viable product answers whether anyone wants it. Confusing the two wastes months.",
+      "related": ["minimum-viable-product", "validation", "pivot"]
+    },
+    {
+      "term": "Ideal customer profile",
+      "slug": "ideal-customer-profile",
+      "category": "Market",
+      "definition": "A specific description of the person or business you are best placed to serve — who they are, what they already spend money on, and what is going wrong for them. Shortened to ICP. The narrower it is, the easier every later decision becomes.",
+      "related": ["niche", "validation", "positioning"]
+    },
+    {
+      "term": "Niche",
+      "slug": "niche",
+      "category": "Market",
+      "definition": "A narrow, specific slice of a market rather than the whole of it. Narrowing feels like giving up customers and is usually the opposite: it makes you the obvious choice for a smaller group, which is how a business with no budget gets found at all.",
+      "related": ["ideal-customer-profile", "positioning", "beachhead-market"]
+    },
+    {
+      "term": "Positioning",
+      "slug": "positioning",
+      "category": "Market",
+      "definition": "The one thing you want a customer to think when they hear your name, and who you want thinking it. Positioning is a choice about what you are not, as much as what you are. Without it you compete only on price.",
+      "related": ["niche", "ideal-customer-profile", "competitor-analysis"]
+    },
+    {
+      "term": "Beachhead market",
+      "slug": "beachhead-market",
+      "category": "Market",
+      "definition": "The first small market you go after, chosen because you can win it completely and use it to reach the next one. It is a starting point picked on purpose, not a limit on ambition.",
+      "related": ["niche", "serviceable-addressable-market", "positioning"]
+    },
+    {
+      "term": "Competitor analysis",
+      "slug": "competitor-analysis",
+      "category": "Market",
+      "definition": "Looking closely at who already serves your customers, what they charge, and what their customers complain about. Their reviews are the cheapest research available. No competitors usually means no market, not an open field.",
+      "related": ["positioning", "serviceable-obtainable-market", "moat"]
+    },
+    {
+      "term": "Moat",
+      "slug": "moat",
+      "category": "Market",
+      "definition": "Whatever makes you hard to copy once you are working — a reputation, a supplier nobody else has, a licence, a following, switching costs. Most small businesses have none at the start, which is fine, as long as you know it.",
+      "related": ["competitor-analysis", "positioning", "intellectual-property"]
+    },
+    {
+      "term": "Pivot",
+      "slug": "pivot",
+      "category": "Market",
+      "definition": "Changing direction based on what you have learned, while keeping what still works — a different customer, a different offer, a different price. A pivot is a decision made on evidence. Changing because this month felt hard is not one.",
+      "related": ["validation", "product-market-fit", "proof-of-concept"]
+    },
+    {
+      "term": "Subscription model",
+      "slug": "subscription-model",
+      "category": "Business models",
+      "definition": "Customers pay a set amount every month or year for continued access instead of buying once. It makes revenue predictable and makes churn the number that decides everything. It only works when the value keeps arriving after the first payment.",
+      "related": ["churn-rate", "retention", "freemium"]
+    },
+    {
+      "term": "Productised service",
+      "slug": "productised-service",
+      "category": "Business models",
+      "definition": "A service sold like a product: fixed scope, fixed price, a named deliverable, no custom quote. It removes the negotiation from every sale and lets you build a repeatable process. It is one of the few models that works with no capital.",
+      "related": ["service-business", "subscription-model", "unit-economics"]
+    },
+    {
+      "term": "Service business",
+      "slug": "service-business",
+      "category": "Business models",
+      "definition": "You sell your time and skill rather than a thing. It can start with no money and earn in the first week, which is its real advantage. Its limit is that revenue is tied to hours, so growth means hiring or raising your price.",
+      "related": ["productised-service", "freelancing", "unit-economics"]
+    },
+    {
+      "term": "Freelancing",
+      "slug": "freelancing",
+      "category": "Business models",
+      "definition": "Working for several clients on your own account rather than for one employer. It is the shortest distance between a skill and money. Whether it becomes a business depends on whether you build something that earns when you are not working.",
+      "related": ["service-business", "productised-service", "sole-proprietorship"]
+    },
+    {
+      "term": "Marketplace model",
+      "slug": "marketplace-model",
+      "category": "Business models",
+      "definition": "You connect buyers and sellers and take a cut, without owning what is sold. The hard part is that you must attract both sides at once, and neither will arrive for the other's absence. Almost always harder than it looks from the outside.",
+      "related": ["commission", "reseller", "dropshipping"]
+    },
+    {
+      "term": "Dropshipping",
+      "slug": "dropshipping",
+      "category": "Business models",
+      "definition": "You list and sell products that a supplier ships directly to the customer, so you never hold stock. It removes upfront inventory cost and leaves you with thin margins and no control over delivery, which is where the complaints come from.",
+      "related": ["marketplace-model", "reseller", "gross-margin"]
+    },
+    {
+      "term": "White labelling",
+      "slug": "white-labelling",
+      "category": "Business models",
+      "definition": "Selling someone else's product or service under your own name. It lets you offer something you cannot make yourself. The risk is that your reputation now depends entirely on a supplier your customer has never heard of.",
+      "related": ["reseller", "dropshipping", "productised-service"]
+    },
+    {
+      "term": "Reseller",
+      "slug": "reseller",
+      "category": "Business models",
+      "definition": "You buy at a lower price and sell at a higher one, keeping the difference. Your margin is the whole business, so it lives and dies on what you paid and what you can charge. Simple to start and unforgiving on pricing mistakes.",
+      "related": ["white-labelling", "dropshipping", "commission"]
+    },
+    {
+      "term": "Commission",
+      "slug": "commission",
+      "category": "Business models",
+      "definition": "A share of a sale paid to whoever brought it in, rather than a fixed fee. It costs nothing until money arrives, which is why it suits a business with no cash. It also means your income moves with someone else's buying decisions.",
+      "related": ["affiliate-marketing", "marketplace-model", "reseller"]
+    },
+    {
+      "term": "Affiliate marketing",
+      "slug": "affiliate-marketing",
+      "category": "Business models",
+      "definition": "Earning a commission for sending customers to someone else's product through your own link or recommendation. It needs an audience before it earns anything, so it is usually a second income on top of something, not a first business.",
+      "related": ["commission", "referral", "freemium"]
+    },
+    {
+      "term": "Freemium",
+      "slug": "freemium",
+      "category": "Business models",
+      "definition": "A free version that is genuinely useful, with paid features on top. It buys reach without an advertising budget and costs you in serving people who never pay. It works only when the free version leads naturally to a reason to upgrade.",
+      "related": ["subscription-model", "conversion-rate", "affiliate-marketing"]
+    },
+    {
+      "term": "Sole proprietorship",
+      "slug": "sole-proprietorship",
+      "category": "India and compliance",
+      "definition": "A business owned and run by one person with no separate legal identity from them. It is the simplest and cheapest way to start in India, and it means your personal assets are not shielded from the business's debts.",
+      "related": ["private-limited-company", "limited-liability-partnership", "udyam-registration"]
+    },
+    {
+      "term": "Private limited company",
+      "slug": "private-limited-company",
+      "category": "India and compliance",
+      "definition": "A company registered with the Ministry of Corporate Affairs, separate in law from the people who own it, with shares that can be issued to investors. It costs money to set up and carries yearly filing duties. Almost every outside investor will expect one.",
+      "related": ["sole-proprietorship", "limited-liability-partnership", "equity"]
+    },
+    {
+      "term": "Limited liability partnership",
+      "slug": "limited-liability-partnership",
+      "category": "India and compliance",
+      "definition": "A partnership where the partners are not personally liable for the business's debts beyond what they put in. Shortened to LLP. It suits two or more people running a service business together; it is a poor fit if you intend to raise equity.",
+      "related": ["private-limited-company", "sole-proprietorship", "equity"]
+    },
+    {
+      "term": "Udyam registration",
+      "slug": "udyam-registration",
+      "category": "India and compliance",
+      "definition": "The government's registration for micro, small and medium enterprises in India, done online on the Udyam portal at udyamregistration.gov.in. It is what makes a small business eligible for several government schemes, and there is no fee to register.",
+      "related": ["sole-proprietorship", "goods-and-services-tax", "current-account"]
+    },
+    {
+      "term": "Goods and services tax",
+      "slug": "goods-and-services-tax",
+      "category": "India and compliance",
+      "definition": "India's single indirect tax on most goods and services, shortened to GST. Registration becomes compulsory above a turnover threshold and for certain kinds of business regardless of turnover. Thresholds and rates change, so check the current ones on the official portal at gst.gov.in rather than trusting a figure in an article.",
+      "related": ["invoice", "udyam-registration", "current-account"]
+    },
+    {
+      "term": "Current account",
+      "slug": "current-account",
+      "category": "India and compliance",
+      "definition": "A bank account meant for business transactions rather than personal ones. Keeping business money out of your personal account is the difference between knowing what you earn and guessing. Most banks ask for proof that the business exists before opening one.",
+      "related": ["udyam-registration", "payment-gateway", "cash-flow"]
+    },
+    {
+      "term": "Payment gateway",
+      "slug": "payment-gateway",
+      "category": "India and compliance",
+      "definition": "The service that lets you take card, netbanking and UPI payments online and passes the money to your bank account. It charges a percentage of each transaction and usually holds the money for a settlement period, both of which belong in your costs and your cash flow plan.",
+      "related": ["current-account", "cash-flow", "invoice"]
+    },
+    {
+      "term": "Invoice",
+      "slug": "invoice",
+      "category": "India and compliance",
+      "definition": "The document that formally asks a customer to pay, listing what was supplied, the amount and the due date. Raising one is not being paid: the gap between the two is where small businesses run out of cash.",
+      "related": ["cash-flow", "working-capital", "goods-and-services-tax"]
+    },
+    {
+      "term": "Intellectual property",
+      "slug": "intellectual-property",
+      "category": "India and compliance",
+      "definition": "Rights over things you created rather than things you own physically — a brand name, a logo, writing, a design, an invention. In India these are registered through the Controller General of Patents, Designs and Trade Marks. Registering a name early is cheaper than losing it later.",
+      "related": ["moat", "positioning", "private-limited-company"]
+    },
+    {
+      "term": "Seed capital",
+      "slug": "seed-capital",
+      "category": "Funding",
+      "definition": "The first money that gets a business started, from savings, family, a grant or an early investor. It buys the time to find out whether the idea works. Most businesses in this library need very little of it, which is the point.",
+      "related": ["bootstrapping", "angel-investor", "equity"]
+    },
+    {
+      "term": "Angel investor",
+      "slug": "angel-investor",
+      "category": "Funding",
+      "definition": "An individual who puts their own money into an early business in exchange for a share of it. They usually invest before any institution will and often bring contacts with them. They also become part-owners, with a say you did not have before.",
+      "related": ["seed-capital", "equity", "dilution"]
+    },
+    {
+      "term": "Equity",
+      "slug": "equity",
+      "category": "Funding",
+      "definition": "Ownership of the business, held as shares. Giving equity away raises money you do not have to repay, and it is the one thing you cannot get back. Everything else in a funding conversation is negotiable; this is what you are actually selling.",
+      "related": ["dilution", "angel-investor", "private-limited-company"]
+    },
+    {
+      "term": "Dilution",
+      "slug": "dilution",
+      "category": "Funding",
+      "definition": "Your share of the company getting smaller because new shares were issued to someone else. Your percentage falls even though the number of shares you hold does not change. Dilution is not automatically bad, as long as what the business gained is worth more than the share you gave up.",
+      "related": ["equity", "angel-investor", "valuation"]
+    },
+    {
+      "term": "Valuation",
+      "slug": "valuation",
+      "category": "Funding",
+      "definition": "What a business is agreed to be worth at the moment money is invested in it. For an early business it is a negotiated opinion, not a measurement. It decides how much of the company a given cheque buys.",
+      "related": ["equity", "dilution", "term-sheet"]
+    },
+    {
+      "term": "Term sheet",
+      "slug": "term-sheet",
+      "category": "Funding",
+      "definition": "A short document setting out the main terms of a proposed investment before the full legal agreements are drawn up — amount, valuation, and what rights the investor gets. It is mostly not binding, and it is where the terms you will live with are actually decided.",
+      "related": ["valuation", "equity", "angel-investor"]
+    }
+  ]
+}
