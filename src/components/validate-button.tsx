@@ -93,6 +93,13 @@ function PlatformButton({
   );
 }
 
+// TEMPORARY — founder asked to test the actual validation flow (prompt
+// content, pros/cons, per-platform behavior) without the paid-plan check
+// getting in the way. Flip back to `true` to restore the Step 0 precondition
+// from PROJECT_BRIEF.md Section 3.2/3.3. Nothing else about the gate logic
+// changes; anonymous visitors still go to sign-in first either way.
+const PAYWALL_ENABLED = false;
+
 export function ValidateButton({ slug }: { slug: string }) {
   const ideaPath = `/idea/${slug}`;
   const auth = useAuth();
@@ -120,7 +127,7 @@ export function ValidateButton({ slug }: { slug: string }) {
       navigate({ to: "/sign-in", search: { redirect: ideaPath } });
       return;
     }
-    if (auth.status === "authenticated" && auth.hasActivePlan) {
+    if (!PAYWALL_ENABLED || (auth.status === "authenticated" && auth.hasActivePlan)) {
       setActivePlatform(platform);
       go.mutate(platform);
       return;
