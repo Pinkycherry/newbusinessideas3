@@ -42,10 +42,25 @@ function buildValidationPrompt(idea: IdeaDetail, extraContext?: string): string 
   return lines.join("\n");
 }
 
+// PROJECT_BRIEF.md Section 3.3 (2026-09-16) — Gemini and Grok added to the
+// platform roster. Claude and Perplexity's `?q=` deep links are confirmed
+// working (tested live, per Section 8). Gemini's and Grok's are the
+// documented/commonly-used pattern for each but have NOT been tested live
+// from this environment -- verify both manually before relying on them; if
+// either doesn't actually prefill, the user still lands on a real chat
+// window, just without the prompt already in it.
 function platformUrl(platform: ValidatePlatform, prompt: string): string {
   const encoded = encodeURIComponent(prompt);
-  if (platform === "claude") return `https://claude.ai/new?q=${encoded}`;
-  return `https://www.perplexity.ai/search?q=${encoded}`;
+  switch (platform) {
+    case "claude":
+      return `https://claude.ai/new?q=${encoded}`;
+    case "perplexity":
+      return `https://www.perplexity.ai/search?q=${encoded}`;
+    case "gemini":
+      return `https://gemini.google.com/app?q=${encoded}`;
+    case "grok":
+      return `https://grok.com/?q=${encoded}`;
+  }
 }
 
 export async function buildValidateUrl(

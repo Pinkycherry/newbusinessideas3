@@ -97,6 +97,23 @@ Implementation note (added by Claude Code): actually charging ₹199/₹399 requ
 
 ---
 
+**3.3 Premium content gating — the FOMO model (RESOLVED 2026-09-16, supersedes the "no gating" language in Section 3.2 point 2 and the 2026-08-08 note under Section 8)**
+
+The 2026-08-08 note under Section 8 said gating was removed and all ideas are fully readable once signed in. That is no longer the model. The founder has explicitly reinstated visual gating, as a deliberate fear-of-loss (FOMO) conversion mechanic, not as an accident or a regression:
+
+- **The business logic.** Certain idea-page sections are intentionally shown but visually locked/blurred, on purpose, to create fear of loss and drive the purchase. This is not hiding the product forever and not misleading the user — the teaser (title, category, business description, pros, demand signal) stays fully free and readable by anyone, signed in or not.
+- **What stays locked, for everyone, permanently — signing in does NOT unlock these:**
+  - **The Blueprint** — target customer, revenue mechanics, competitive edge, downside risks, and the verdict (the "honest no").
+  - **Tactical Playbooks** — the getting-started steps, tools needed, and time to first customer.
+  - **Real Numbers** — market opportunity, startup cost, and income potential. (TAM/SAM/SOM, CAC and LTV are not yet real columns in `ideas` — see the n8n automation thread for closing that gap. Nothing under this heading is ever a fabricated figure; where a metric doesn't exist yet, it's simply not shown, never invented.)
+- **The Validate button is the actual unlock, and it is the only one.** A user does not pay to read the locked sections on our own page — they never become readable here, for anyone, at any tier. Paying unlocks the Validate button itself. Clicking it takes the locked data server-side, builds a structured prompt from it, and redirects the user to their chosen external LLM with that prompt pre-loaded. The user reads and explores the premium research inside that external LLM, not on businessidea.io.
+- **The four validation platforms:** Claude, Perplexity, Gemini, and Grok. ChatGPT is deliberately excluded. (This replaces the earlier Claude+Perplexity-only list in Section 8.)
+- **Pricing stays exactly as it is** — ₹199 for 3 months, ₹399 for lifetime. Prices may go down in the future; they will never go up.
+
+Read Section 8 below with this note in mind: its flow description (pick a platform, backend builds the prompt, redirect with it pre-loaded) is still accurate and unchanged. Only its Step 0 framing and the "no gating" resolution above it are superseded — the precondition is still "does the user have an active paid plan," it just now also governs whether the Blueprint/Playbooks/Numbers sections are worth showing in their locked state at all (they always are, regardless of plan).
+
+---
+
 **4. Reference sites — technical/architecture study only**
 
 **4.1 Our own current build**
@@ -275,7 +292,7 @@ This has been tested live and works. Implement exactly as follows, no copy/paste
 Flow:
 0. Precondition (added by Section 3.2): check whether the logged-in user has an active paid plan (₹199 3-month or ₹399 lifetime). If not, do not proceed to Step 1 — show the paywall popup from Section 3.2 instead.
 1. User is on any idea page, clicks Validate for Free.
-2. User picks a platform (Claude, Perplexity — no ChatGPT, no Grok, deliberately excluded from this product's positioning).
+2. User picks a platform. Per Section 3.3 (2026-09-16), this list is now Claude, Perplexity, Gemini, and Grok — ChatGPT deliberately excluded. (Superseded: this line originally read "Claude, Perplexity — no ChatGPT, no Grok.")
 3. Backend builds a URL for the chosen platform with the idea's specific validation prompt attached as a query parameter (e.g. https://claude.ai/new?q=<encoded prompt>). This happens invisibly — no prompt text is ever shown or copyable in our UI.
 
    The prompt itself must be a fully engineered, detailed instruction — not a casual one-liner. The user is about to spend one of their own daily uses on their own AI account, so this needs to be worth it. The backend prompt template should explicitly instruct the destination AI to: (a) produce a complete, structured markdown-file-style output covering the idea's market analysis, target buyer, revenue model, key risks, and a launch roadmap; and (b) generate an accompanying visual (a chart, diagram, or similar) where the platform supports it, not just plain paragraphs. This prompt template lives once in the backend, is applied to every idea via variable substitution (idea title, category, key facts), and should be treated as one of the highest-leverage pieces of copy in the whole product — it's effectively doing the job a $20/month competitor charges for. If the user's daily platform limit is already used up when they land there, that's expected and outside our control — the platform fee they paid us covers curation and access, not their AI provider's usage limits, and no messaging on our site needs to apologize for or explain that.

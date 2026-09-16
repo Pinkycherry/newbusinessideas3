@@ -4,7 +4,7 @@ import StickyScroll from "@/components/aceternity/sticky-scroll";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
 import { queryOptions } from "@tanstack/react-query";
 import { Lock } from "lucide-react";
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { ValidateButton } from "@/components/validate-button";
@@ -20,7 +20,6 @@ import {
 import { type IdeaCard as IdeaCardType, type IdeaDetail } from "@/lib/ideas-shared";
 import { JsonLd, absoluteUrl, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { hideImgIfBroken } from "@/lib/utils";
-import { useAuth } from "@/hooks/use-auth";
 import { useDepthScene, useElementPointerGroup, useScrollProgress, useTextReveal } from "@/motion";
 
 type IdeaDetailData = {
@@ -306,6 +305,53 @@ function RichSection({ title, body }: { title: string; body: string }) {
   );
 }
 
+/**
+ * PROJECT_BRIEF.md Section 3.3 (2026-09-16) — the FOMO model. These panels
+ * are never unlocked on our own page, for anyone, at any tier: not by
+ * signing in, not by paying. The real researched content still renders in
+ * the DOM underneath the blur — this is a visual tease, not cloaking, and a
+ * search crawler reads the same real text a human can't make out — a CSS
+ * filter is the only thing between a reader and it. The only way to
+ * actually read it is the Validate button below: paying unlocks that
+ * button, which sends this exact content, server-side, into the reader's
+ * own chosen LLM. It is never unblurred here.
+ */
+function LockedSection({
+  title,
+  anchorId,
+  anchorLabel,
+  children,
+}: {
+  title: string;
+  anchorId: string;
+  anchorLabel: string;
+  children: ReactNode;
+}) {
+  return (
+    <section className="relative mt-10" data-anchor={anchorId} data-anchor-label={anchorLabel}>
+      <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-accent">
+        Premium research
+      </p>
+      <h2 className="mt-1 text-xl font-bold tracking-tight">{title}</h2>
+      <div className="relative mt-4">
+        <div aria-hidden="true" className="pointer-events-none select-none blur-sm">
+          {children}
+        </div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-background/70 px-4 text-center">
+          <Lock className="h-5 w-5 text-accent" aria-hidden />
+          <p className="text-sm font-semibold">This is what the Validate button unlocks</p>
+          <a
+            href="#validate"
+            className="text-xs font-semibold uppercase tracking-widest text-primary underline decoration-border underline-offset-4 hover:text-accent"
+          >
+            See how to unlock it ↓
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function IdeaPage() {
   // Reads the router's own loaderData rather than re-running the query via
   // useSuspenseQuery. router.tsx creates a fresh, empty QueryClient on both
@@ -322,7 +368,6 @@ function IdeaPage() {
   // Non-null by construction: the loader throws notFound() when the query
   // returns null, so this component never renders without data.
   const data = Route.useLoaderData() as NonNullable<IdeaDetailData>;
-  const auth = useAuth();
   // MOTION_SPEC §2.3 — the page's single headline reveal, on the idea title.
   const titleRef = useTextReveal<HTMLHeadingElement>();
   // One delegated pointer listener per rail rather than one per card.
@@ -334,9 +379,6 @@ function IdeaPage() {
   const mastheadRef = useDepthScene<HTMLDivElement>({ strength: 0.5, weight: 0.14 });
   if (!data) return null;
   const { idea, related, relatedCategories, trending, variant, gradient } = data;
-  // PROJECT_BRIEF.md Section 3.2 — full blueprint content is blurred behind
-  // a sign-in gate; the title/description teaser above stays visible.
-  const contentLocked = auth.status !== "authenticated";
 
   const showSidebarList = related.length > 3;
   const sidebarRelated = showSidebarList ? related.slice(0, 3) : [];
@@ -491,165 +533,165 @@ function IdeaPage() {
               </div>
             </div>
 
-            <div className="relative">
-              <div
-                className={contentLocked ? "pointer-events-none select-none blur-sm" : undefined}
-              >
-                <section className="mt-10" data-anchor="breakdown" data-anchor-label="Breakdown">
-                  <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                    The breakdown
-                  </h2>
-                  <p className="mt-3 whitespace-pre-line leading-relaxed">{idea.summary}</p>
-                </section>
+            {/* The free teaser. Anyone, signed in or not, reads this. */}
+            <section className="mt-10" data-anchor="breakdown" data-anchor-label="Breakdown">
+              <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                The breakdown
+              </h2>
+              <p className="mt-3 whitespace-pre-line leading-relaxed">{idea.summary}</p>
+            </section>
 
-                <ComputedVerdictPanel idea={idea} />
+            {/* PROJECT_BRIEF.md Section 3.3 — three panels, always locked,
+                for everyone, at every tier. See LockedSection's own comment
+                for why. Each wraps an existing, unmodified component/block
+                so none of their internal scroll-linked devices (StickyScroll,
+                ComputedVerdictPanel's pin) need to change shape. */}
+            <LockedSection title="The Blueprint" anchorId="blueprint" anchorLabel="The Blueprint">
+              <StickyScroll
+                items={[
+                  { title: "The opportunity", body: idea.marketOpportunity },
+                  { title: "Who actually pays you", body: idea.targetCustomer },
+                  { title: "How the money works", body: idea.howYouMakeMoney },
+                  { title: "Your edge", body: idea.competitionEdge },
+                ]
+                  .filter((entry) => Boolean(entry.body))
+                  .map((entry) => ({
+                    title: entry.title,
+                    description: (
+                      <p className="whitespace-pre-line leading-relaxed">{entry.body}</p>
+                    ),
+                  }))}
+              />
+              <ComputedVerdictPanel idea={idea} />
+            </LockedSection>
 
-                <div className="mt-8">
-                  <AdSlot position="idea-detail-between-proscons-verdict" size="banner" />
-                </div>
+            <div className="mt-8">
+              <AdSlot position="idea-detail-between-proscons-verdict" size="banner" />
+            </div>
 
-                {/* Researched detail — each block renders only when the pipeline
-                    has filled it, so un-enriched ideas are unaffected. */}
-                <div data-anchor="research" data-anchor-label="Research" className="mt-10">
-                  {/* StickyScroll: the four research blocks read as one argument,
-                      so the plate on the right holds its place and names which
-                      part of that argument the reader is level with. Blocks the
-                      pipeline has not filled simply do not appear. */}
-                  <StickyScroll
-                    items={[
-                      { title: "The opportunity", body: idea.marketOpportunity },
-                      { title: "Who actually pays you", body: idea.targetCustomer },
-                      { title: "How the money works", body: idea.howYouMakeMoney },
-                      { title: "Your edge", body: idea.competitionEdge },
-                    ]
-                      .filter((entry) => Boolean(entry.body))
-                      .map((entry) => ({
-                        title: entry.title,
-                        description: (
-                          <p className="whitespace-pre-line leading-relaxed">{entry.body}</p>
-                        ),
-                      }))}
-                  />
-
-                  {(idea.startupCost || idea.incomePotential) && (
-                    <div className="mt-6 grid grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-4">
-                      {idea.startupCost && (
-                        <CardSpotlight className="p-5">
-                          <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-coral">
-                            What it costs to start
-                          </h2>
-                          <p className="mt-2 text-sm leading-relaxed">{idea.startupCost}</p>
-                        </CardSpotlight>
-                      )}
-                      {idea.incomePotential && (
-                        <CardSpotlight className="p-5">
-                          <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-green">
-                            What you can earn
-                          </h2>
-                          <p className="mt-2 text-sm leading-relaxed">{idea.incomePotential}</p>
-                        </CardSpotlight>
-                      )}
-                    </div>
+            <LockedSection title="Real Numbers" anchorId="numbers" anchorLabel="Real Numbers">
+              {idea.startupCost || idea.incomePotential ? (
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-4">
+                  {idea.startupCost && (
+                    <CardSpotlight className="p-5">
+                      <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-coral">
+                        What it costs to start
+                      </h2>
+                      <p className="mt-2 text-sm leading-relaxed">{idea.startupCost}</p>
+                    </CardSpotlight>
+                  )}
+                  {idea.incomePotential && (
+                    <CardSpotlight className="p-5">
+                      <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-green">
+                        What you can earn
+                      </h2>
+                      <p className="mt-2 text-sm leading-relaxed">{idea.incomePotential}</p>
+                    </CardSpotlight>
                   )}
                 </div>
+              ) : (
+                <p className="text-sm leading-relaxed">
+                  The real-numbers research for this idea is still in progress.
+                </p>
+              )}
+            </LockedSection>
 
-                {idea.gettingStartedSteps.length > 0 && (
-                  <section className="mt-10" data-anchor="steps" data-anchor-label="Steps">
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                      How to start
-                    </h2>
-                    <ol className="mt-4 space-y-3">
-                      {idea.gettingStartedSteps.map((step, i) => (
-                        <li key={step} className="flex gap-3 text-sm leading-relaxed">
-                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">
-                            {i + 1}
-                          </span>
-                          <span>{step}</span>
-                        </li>
-                      ))}
-                    </ol>
-                  </section>
-                )}
-
-                {idea.toolsNeeded.length > 0 && (
-                  <section className="mt-10">
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                      What you need
-                    </h2>
-                    <ul className="mt-3 flex flex-wrap gap-2">
-                      {idea.toolsNeeded.map((tool) => (
-                        <li
-                          key={tool}
-                          className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
-                        >
-                          {tool}
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                )}
-
-                <RichSection title="Time to first customer" body={idea.timeToFirstCustomer} />
-
-                {faqAbove.length > 0 && (
-                  <section className="mt-10">
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                      Questions people ask
-                    </h2>
-                    <div className="mt-4 space-y-3">
-                      {faqAbove.map((item) => (
-                        <details
-                          key={item.q}
-                          className="rounded-lg border border-border bg-card p-4 text-sm"
-                        >
-                          <summary className="cursor-pointer font-semibold">{item.q}</summary>
-                          <p className="mt-2 leading-relaxed text-muted-foreground">{item.a}</p>
-                        </details>
-                      ))}
-                    </div>
-                  </section>
-                )}
-
-                {idea.externalLinks.length > 0 && (
-                  <section className="mt-10">
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                      Useful resources
-                    </h2>
-                    <ul className="mt-3 space-y-2 text-sm">
-                      {idea.externalLinks.map((link) => (
-                        <li key={link.url}>
-                          <a
-                            href={link.url}
-                            target="_blank"
-                            rel="nofollow noopener"
-                            className="font-semibold text-primary underline decoration-border underline-offset-4 hover:text-accent"
-                          >
-                            {link.label}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                )}
-
-                <div className="mt-8">
-                  <AdSlot position="idea-detail-below-verdict" size="banner" />
-                </div>
-              </div>
-
-              {contentLocked && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-background/55 text-center">
-                  <Lock className="h-6 w-6 text-accent" aria-hidden />
-                  <p className="text-sm font-semibold">Sign in free to read the full blueprint</p>
-                  <Link
-                    to="/sign-in"
-                    search={{ redirect: ideaPath }}
-                    className="ac-cta px-5 py-2.5 text-xs uppercase tracking-widest"
-                  >
-                    Continue with Google
-                  </Link>
+            <LockedSection
+              title="Tactical Playbooks"
+              anchorId="playbooks"
+              anchorLabel="Tactical Playbooks"
+            >
+              {idea.gettingStartedSteps.length > 0 && (
+                <div>
+                  <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                    How to start
+                  </h2>
+                  <ol className="mt-4 space-y-3">
+                    {idea.gettingStartedSteps.map((step, i) => (
+                      <li key={step} className="flex gap-3 text-sm leading-relaxed">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">
+                          {i + 1}
+                        </span>
+                        <span>{step}</span>
+                      </li>
+                    ))}
+                  </ol>
                 </div>
               )}
+              {idea.toolsNeeded.length > 0 && (
+                <div className="mt-8">
+                  <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                    What you need
+                  </h2>
+                  <ul className="mt-3 flex flex-wrap gap-2">
+                    {idea.toolsNeeded.map((tool) => (
+                      <li
+                        key={tool}
+                        className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
+                      >
+                        {tool}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {idea.timeToFirstCustomer && (
+                <div className="mt-8">
+                  <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                    Time to first customer
+                  </h2>
+                  <p className="mt-3 whitespace-pre-line leading-relaxed">
+                    {idea.timeToFirstCustomer}
+                  </p>
+                </div>
+              )}
+            </LockedSection>
+
+            {/* FAQ and citations are not part of the locked research — they
+                stay free, same as the teaser above. */}
+            {faqAbove.length > 0 && (
+              <section className="mt-10">
+                <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                  Questions people ask
+                </h2>
+                <div className="mt-4 space-y-3">
+                  {faqAbove.map((item) => (
+                    <details
+                      key={item.q}
+                      className="rounded-lg border border-border bg-card p-4 text-sm"
+                    >
+                      <summary className="cursor-pointer font-semibold">{item.q}</summary>
+                      <p className="mt-2 leading-relaxed text-muted-foreground">{item.a}</p>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {idea.externalLinks.length > 0 && (
+              <section className="mt-10">
+                <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                  Useful resources
+                </h2>
+                <ul className="mt-3 space-y-2 text-sm">
+                  {idea.externalLinks.map((link) => (
+                    <li key={link.url}>
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="nofollow noopener"
+                        className="font-semibold text-primary underline decoration-border underline-offset-4 hover:text-accent"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            <div className="mt-8">
+              <AdSlot position="idea-detail-below-verdict" size="banner" />
             </div>
 
             <DemandBlock score={idea.trendScore} />

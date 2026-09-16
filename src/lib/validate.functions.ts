@@ -8,7 +8,7 @@ export const getValidateUrl = createServerFn({ method: "GET" })
     z
       .object({
         slug: z.string().min(1).max(200),
-        platform: z.enum(["claude", "perplexity"]),
+        platform: z.enum(["claude", "perplexity", "gemini", "grok"]),
         // Optional free-text box from validate-context-input.tsx — folded
         // into the master prompt server-side, never stored.
         context: z.string().trim().max(VALIDATE_CONTEXT_MAX_LENGTH).optional(),
