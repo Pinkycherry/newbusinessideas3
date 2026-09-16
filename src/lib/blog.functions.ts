@@ -7,7 +7,9 @@ export const getBlogPosts = createServerFn({ method: "GET" })
   )
   .handler(async ({ data }) => {
     const { fetchPosts } = await import("./blog.server");
-    return fetchPosts(data.page, 12);
+    // blog.index.tsx always requests page 1 and has no "load more" control, so
+    // a page size smaller than the total post count silently hides the rest.
+    return fetchPosts(data.page, 50);
   });
 
 export const getBlogPost = createServerFn({ method: "GET" })

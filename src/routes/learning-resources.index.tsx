@@ -113,7 +113,7 @@ function LearningResourcesIndexPage() {
           ]),
         ]}
       />
-      <SiteShell>
+      <SiteShell tone="instrument">
         <div className="mx-auto max-w-6xl px-3 py-10 sm:px-4 sm:py-14">
           <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Learning Resources" }]} />
 

@@ -32,14 +32,14 @@ export const Route = createFileRoute("/browse")({
   }),
   component: BrowsePage,
   errorComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <p className="mx-auto max-w-6xl px-4 py-24">
         Couldn't load the idea library — try refreshing.
       </p>
     </SiteShell>
   ),
   notFoundComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <p className="mx-auto max-w-6xl px-4 py-24">That page doesn't exist.</p>
     </SiteShell>
   ),
@@ -91,7 +91,7 @@ function BrowsePage() {
           ]),
         ]}
       />
-      <SiteShell>
+      <SiteShell tone="instrument">
         <div ref={depthRef} className="bbi-depth mx-auto max-w-6xl px-4 py-12">
           <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Browse" }]} />
           <div className="bbi-depth-back">

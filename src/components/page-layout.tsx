@@ -196,7 +196,7 @@ export function ContentPage({
           ]),
         ]}
       />
-      <SiteShell>
+      <SiteShell tone="instrument">
         <div
           ref={sceneRef}
           className={`cx-scene mx-auto ${wide ? "max-w-6xl" : "max-w-3xl"} px-3 py-12 sm:px-4`}
