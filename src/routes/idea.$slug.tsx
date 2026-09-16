@@ -316,6 +316,12 @@ function RichSection({ title, body }: { title: string; body: string }) {
  * button, which sends this exact content, server-side, into the reader's
  * own chosen LLM. It is never unblurred here.
  */
+// TEMPORARY — founder asked to see every section unblurred while reviewing
+// layout and content gaps against Supabase. Flip back to `true` to restore
+// the permanent lock from PROJECT_BRIEF.md Section 3.3. Nothing else about
+// LockedSection changes: same sections, same structure, blur switched off.
+const LOCK_ENABLED = false;
+
 function LockedSection({
   title,
   anchorId,
@@ -334,19 +340,24 @@ function LockedSection({
       </p>
       <h2 className="mt-1 text-xl font-bold tracking-tight">{title}</h2>
       <div className="relative mt-4">
-        <div aria-hidden="true" className="pointer-events-none select-none blur-sm">
+        <div
+          aria-hidden={LOCK_ENABLED}
+          className={LOCK_ENABLED ? "pointer-events-none select-none blur-sm" : undefined}
+        >
           {children}
         </div>
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-background/70 px-4 text-center">
-          <Lock className="h-5 w-5 text-accent" aria-hidden />
-          <p className="text-sm font-semibold">This is what the Validate button unlocks</p>
-          <a
-            href="#validate"
-            className="text-xs font-semibold uppercase tracking-widest text-primary underline decoration-border underline-offset-4 hover:text-accent"
-          >
-            See how to unlock it ↓
-          </a>
-        </div>
+        {LOCK_ENABLED && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-background/70 px-4 text-center">
+            <Lock className="h-5 w-5 text-accent" aria-hidden />
+            <p className="text-sm font-semibold">This is what the Validate button unlocks</p>
+            <a
+              href="#validate"
+              className="text-xs font-semibold uppercase tracking-widest text-primary underline decoration-border underline-offset-4 hover:text-accent"
+            >
+              See how to unlock it ↓
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );
