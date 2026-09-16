@@ -637,6 +637,16 @@ const footerColumns: { title: string; links: { to: string; label: string }[] }[]
     ],
   },
   {
+    title: "Resources",
+    links: [
+      { to: "/calculator", label: "Calculators & Tools" },
+      { to: "/startup-guides", label: "Startup Guides" },
+      { to: "/founder-stories", label: "Founder Stories" },
+      { to: "/founder-glossary", label: "Startup Glossary" },
+      { to: "/learning-resources", label: "Learning Resources" },
+    ],
+  },
+  {
     title: "Company",
     links: [
       { to: "/about", label: "About" },

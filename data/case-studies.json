@@ -1,0 +1,261 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-14T01:00:00.000Z",
+  "stories_count": 5,
+  "case_studies": [
+    {
+      "id": "case-01-ugc-agency",
+      "slug": "ugc-creator-agency-dtc",
+      "story_theme": "UGC Agency",
+      "title": "Scaling a Creator-Led UGC Agency for DTC Brands",
+      "data_level": "PLACEHOLDER",
+      "status": "completed",
+      "problem_identified": "Direct-to-Consumer (DTC) beauty and wellness brands were experiencing creative ad fatigue on TikTok and Meta within 7 to 10 days, but lacked the internal staff to scout, brief, and contract dozens of micro-creators every month.",
+      "solution_and_offer": "A productized 'Creative Sprints' subscription: 12 high-converting, tested UGC videos per month with scripting, creator management, and raw hooks included for a flat retainer of premium pricing/month.",
+      "execution_milestones": [
+        {
+          "month": "Phase",
+          "milestone_title": "First Beta Client",
+          "key_action": "Manually pitched 60 DTC founders on professional networks with a free creative tear-down video showing why their existing TikTok ads were fatiguing."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "Roster Standardization",
+          "key_action": "Built an Airtable database of 120 vetted micro-creators paid revenue per approved asset, locking in predictable 60%+ gross margins."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "Significant Scaling",
+          "key_action": "Hired a part-time video creative director to review drafts, freeing the founder to focus 100% on outbound sales."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "Stabilized Scale",
+          "key_action": "Maintained 10 brand retainers on automated Stripe billing with 90-day minimum commitments."
+        }
+      ],
+      "tech_stack_and_tools": [
+        "Database Tool",
+        "Industry Standard Tool",
+        "Payment Processor",
+        "Team Chat",
+        "Cold Email Tool"
+      ],
+      "customer_acquisition_tactics": [
+        "Unsolicited 3-minute Loom video audits critiquing current Meta Ad Library creatives of targeted brands",
+        "Publishing weekly breakdown carousels on professional networks analyzing top-performing TikTok ad hooks",
+        "Referral incentives giving clients a small budget off next month's invoice for introduced brand founders"
+      ],
+      "primary_bottleneck_and_fix": "Creators frequently missed production deadlines. Fixed by implementing a strict 48-hour revision clause and maintaining an active 3x creator bench for fast substitution.",
+      "key_takeaways_for_founders": [
+        "Never buy ad space yourself; sell the creative asset inventory to brands that already have dedicated ad budgets.",
+        "Productize deliverables into predictable monthly counts rather than open-ended consulting hours.",
+        "High margins require separating creative strategy (in-house) from creator fulfillment (contracted)."
+      ],
+      "is_composite": "This is an illustrative composite case study representing common patterns in this business model. It does not represent a specific real founder."
+    },
+    {
+      "id": "case-02-ai-repurposing",
+      "slug": "ai-content-repurposing-b2b",
+      "story_theme": "AI Repurposing",
+      "title": "Bootstrapping an Executive Content Repurposing Service",
+      "data_level": "PLACEHOLDER",
+      "status": "completed",
+      "problem_identified": "B2B SaaS CEOs and venture partners were recording 45-minute podcast interviews and webinar keynotes, but letting the recordings sit idle on YouTube without extracting written text or vertical video clips.",
+      "solution_and_offer": "The 'Thought-Leader Engine': Hand over one raw webinar or podcast audio file per week, and receive 5 polished LinkedIn thought-leadership posts, 1 Substack newsletter essay, and 3 vertical video shorts with captions in 72 hours.",
+      "execution_milestones": [
+        {
+          "month": "Phase",
+          "milestone_title": "Free Proof of Concept",
+          "key_action": "Transcribed 3 venture capitalists' podcast appearances for free, generated carousels, and sent them via direct message. Two immediately converted into paying revenue/month retainers."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "AI Workflow Hardening",
+          "key_action": "Configured custom Claude prompt chains tuned specifically to each client's tone of voice, reducing draft creation time from 4 hours to 30 minutes."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "Hiring Human Polishers",
+          "key_action": "Employed two junior editors to review and humanize AI outputs, ensuring no robotic phrasing reached client approval portals."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "Tiered Expansion",
+          "key_action": "Upsold existing accounts to a revenue/month tier that included ghostwritten X/Twitter threads and personal newsletter distribution."
+        }
+      ],
+      "tech_stack_and_tools": [
+        "AI Language Model",
+        "Industry Standard Tool",
+        "Database Tool",
+        "Payment Processor"
+      ],
+      "customer_acquisition_tactics": [
+        "Direct professional networks outreach to recently funded Series A and Series B CEOs whose social accounts were dormant",
+        "Delivering a finished 'sample week' of content completely free before asking for a contract",
+        "Partnering with podcast production agencies that lacked in-house written editorial capability"
+      ],
+      "primary_bottleneck_and_fix": "AI hallucinations and generic advice made early drafts feel bland. Solved by requiring clients to send 3-minute voice notes answering specific prompt questions to inject proprietary founder anecdotes.",
+      "key_takeaways_for_founders": [
+        "Do not sell 'AI services'; sell the business outcome of an active, authoritative personal brand.",
+        "Clients do not pay for the LLM; they pay for the editorial judgment that removes AI cliches.",
+        "Retainer contracts with clear weekly deliverables create compound MRR stability."
+      ],
+      "is_composite": "This is an illustrative composite case study representing common patterns in this business model. It does not represent a specific real founder."
+    },
+    {
+      "id": "case-03-side-hustle",
+      "slug": "notion-systems-micro-consulting",
+      "story_theme": "Side Hustle",
+      "title": "From Weekend Side Hustle Notion Workflow Systems",
+      "data_level": "PLACEHOLDER",
+      "status": "completed",
+      "problem_identified": "Small creative agencies (5-15 employees) were drowning in fragmented project management across Trello, Asana, and messy Google Docs, but could not justify hiring an enterprise systems integrator.",
+      "solution_and_offer": "A dual-tier monetization engine: A premium pricing self-serve 'Agency Operating System' Notion template for DIY teams, paired with a premium pricing 'Done-In-A-Weekend' migration service for busy agency owners.",
+      "execution_milestones": [
+        {
+          "month": "Phase",
+          "milestone_title": "First Digital Sales",
+          "key_action": "Shared an interactive GIF walkthrough of his internal project dashboard on the r/Notion subreddit and Twitter, driving 9 template sales at revenue."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "First High-Ticket Client",
+          "key_action": "A buyer of the template requested custom implementation. Charged revenue to migrate their agency's data over a single weekend."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "Productized Consistency",
+          "key_action": "Capped custom implementations at 3 per month to protect his day-job schedule while template revenue rose organically to revenue/month."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "Significant Scaling",
+          "key_action": "Partnered with agency coaches who bundle the template into their operational training programs."
+        }
+      ],
+      "tech_stack_and_tools": [
+        "Database Tool",
+        "Checkout Platform",
+        "Industry Standard Tool",
+        "Scheduling Link",
+        "Automation Tool"
+      ],
+      "customer_acquisition_tactics": [
+        "Publishing 60-second video tutorials showing specific agency workflow fixes (e.g., 'How to track client retainer hours in Notion')",
+        "Offering a free 15-minute 'Workflow Diagnostic Call' with zero pitch, letting agency owners naturally request implementation",
+        "Building free mini-templates as lead magnets to capture prospective buyer emails"
+      ],
+      "primary_bottleneck_and_fix": "Agency clients asked for continuous minor tweaks post-launch. Fixed by including a strict 14-day warranty period, after which maintenance required a market rates/month support retainer.",
+      "key_takeaways_for_founders": [
+        "A low-ticket digital template (premium pricing) is the best possible lead generation funnel for a high-ticket service (premium pricing).",
+        "Solve problems for people who already have software budgets; agencies spend money on operations every week.",
+        "Limiting client capacity creates genuine urgency and prevents side-hustle burnout."
+      ],
+      "is_composite": "This is an illustrative composite case study representing common patterns in this business model. It does not represent a specific real founder."
+    },
+    {
+      "id": "case-04-faceless-yt",
+      "slug": "faceless-youtube-finance-automation",
+      "story_theme": "Faceless YT",
+      "title": "Building a Faceless Business History YouTube Channel",
+      "data_level": "PLACEHOLDER",
+      "status": "completed",
+      "problem_identified": "Millions of curious viewers want engaging, documentary-style breakdowns of corporate scandals, startup rivalries, and economic history, but existing television documentaries are slow, formal, and paywalled.",
+      "solution_and_offer": "A weekly 14-minute faceless documentary channel publishing high-tension, fast-paced business storytelling videos produced using archival public domain footage, generated motion graphics, and rich audio design.",
+      "execution_milestones": [
+        {
+          "month": "Phase",
+          "milestone_title": "The Initial Grind",
+          "key_action": "Published several videos with minimal views. Studied click-through rates (CTR) and average view duration (AVD) rigorously."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "First Algorithm Breakout",
+          "key_action": "Video on 'How Red Bull Actually Makes Money' hit significant traction. Qualified for monetization within 48 hours."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "Integrating Dedicated Sponsors",
+          "key_action": "Secured first 60-second integrated sponsorship from a B2B brokerage for revenue in addition to the platform platform ad revenue."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "Systematized Pipeline",
+          "key_action": "Built an automated assembly line: freelance researcher writes script, voice generation tools renders voiceover, freelance editor cuts video in video editors."
+        }
+      ],
+      "tech_stack_and_tools": [
+        "AI Voice Generator",
+        "AI Image Generator",
+        "Video Editor",
+        "Audio Library",
+        "Industry Standard Tool"
+      ],
+      "customer_acquisition_tactics": [
+        "A/B testing thumbnail designs with extreme emotional contrast and under 4 words of text",
+        "Engineering high-retention hooks that delay the primary answer to the 8-minute mark",
+        "Repurposing 45-second climax clips to short-form video platforms with pinned comments linking to the main video"
+      ],
+      "primary_bottleneck_and_fix": "Scriptwriting took 25 hours per video. Solved by hiring an economics graduate student on freelance platforms at market rates per script to conduct primary historical research.",
+      "key_takeaways_for_founders": [
+        "Video platforms is not a video platform; it is a packaging and retention optimization engine.",
+        "Finance and business documentary niches generate significantly higher advertiser returns than gaming or entertainment.",
+        "Never monetize with AdSense alone; direct brand sponsorships generate the majority of total gross income."
+      ],
+      "is_composite": "This is an illustrative composite case study representing common patterns in this business model. It does not represent a specific real founder."
+    },
+    {
+      "id": "case-05-service-business",
+      "slug": "cold-email-infrastructure-agency",
+      "story_theme": "Service Business",
+      "title": "Bootstrapping a Cold Email Infrastructure Service",
+      "data_level": "PLACEHOLDER",
+      "status": "completed",
+      "problem_identified": "Stricter Major email providers inbox delivery guidelines introduced caused outbound sales teams' emails to land in spam folders, yet sales leaders lacked the technical DNS expertise (SPF, DKIM, DMARC) to configure multi-domain sending engines.",
+      "solution_and_offer": "Turnkey Deliverability Infrastructure: Setup 20 secondary domains, configure all DNS records, connect automated warmup software, and deliver ready-to-send inbox systems in 48 hours for premium pricing setup + premium pricing/month maintenance.",
+      "execution_milestones": [
+        {
+          "month": "Phase",
+          "milestone_title": "Initial 3 Tech Setups",
+          "key_action": "Audited domain health for 20 sales leaders in outbound communities who complained about deliverability drop-offs. Converted 3 into full infrastructure rebuilds."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "Monthly Retainer Introduction",
+          "key_action": "Introduced continuous domain health monitoring (revenue/month) to catch blacklist flags before clients' outbound reps noticed."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "Hitting Venture Backed Startups",
+          "key_action": "Partnered with SDR recruiting agencies, becoming their official infrastructure deployment partner for all newly placed SDRs."
+        },
+        {
+          "month": "Phase",
+          "milestone_title": "Reaching Scale",
+          "key_action": "Automated DNS record creation using DNS APIs scripts, reducing manual onboarding from 6 hours to 18 minutes per client."
+        }
+      ],
+      "tech_stack_and_tools": [
+        "DNS Provider",
+        "Email/Doc Provider",
+        "Cold Email Tool",
+        "DNS Audit Tool",
+        "Payment Processor"
+      ],
+      "customer_acquisition_tactics": [
+        "Offering free 5-minute DNS and email deliverability health audits on professional networks",
+        "Publishing technical guides on surviving major email provider algorithm deliverability changes",
+        "Reciprocal commission referral deals with outbound copywriting and SDR placement agencies"
+      ],
+      "primary_bottleneck_and_fix": "Clients burned domains by uploading unverified scrapings from lead databases. Fixed by bundling mandatory email list verification (verification tools) directly into the monthly monitoring contract.",
+      "key_takeaways_for_founders": [
+        "Look for recent regulatory or platform policy shifts; compliance confusion creates urgent high-ticket service demand.",
+        "Turn one-time technical setups into sticky recurring retainers by offering proactive monitoring.",
+        "Automation of low-level infrastructure tasks expands gross margins dramatically as client volume grows."
+      ],
+      "is_composite": "This is an illustrative composite case study representing common patterns in this business model. It does not represent a specific real founder."
+    }
+  ]
+}
