@@ -1291,6 +1291,20 @@ html.light .iv-skeleton {
   );
 }
 
+/* A scrollable panel still scrolls with this applied -- wheel, trackpad,
+   touch and drag all still work. Only the OS-drawn scrollbar track/thumb
+   is suppressed, which matters here because the "Browse by type" panel is
+   designed to grow wider than the viewport as categories scale into the
+   hundreds, and a bar across the bottom of a dropdown reads as broken
+   layout rather than an intentional horizontal shelf. */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* ============================================================
    THEME-AWARE NAV PANELS + LIGHT-MODE WINS
    Tailwind utilities live in @layer utilities; an !important
@@ -1412,7 +1426,10 @@ html.light .iv-skeleton {
   html.light .bbi-instrument input::placeholder {
     color: var(--ins-dim) !important;
   }
-  html.light .bbi-instrument .text-muted-foreground {
+  /* `:not(:hover)` -- see the duplicate of this rule further down this file
+     for why: without it, a button resting on this class keeps its label
+     dim while the tier system's hover fill turns the plate white under it. */
+  html.light .bbi-instrument .text-muted-foreground:not(:hover) {
     color: var(--ins-dim) !important;
   }
 
@@ -2785,11 +2802,16 @@ html.light .bbi-instrument,
   --accent: var(--ins-signal-hot);
   --ring: var(--ins-signal);
   /* The highlight hues are neutralised in this scope. They are still defined
-     globally for the light templates; here they resolve to the greyscale. */
+     globally for the light templates; here they resolve to the greyscale.
+     `--warm` was missed here originally: it feeds the `from-primary
+     via-accent to-warm` headline gradient on ten page templates, and left at
+     its global violet it painted every one of those headlines with the exact
+     accent hue this scope says it has "removed rather than dimmed." */
   --hl-gold: var(--ins-dim);
   --hl-green: var(--ins-read);
   --hl-coral: var(--ins-faint);
   --hl-teal: var(--ins-bright);
+  --warm: var(--ins-bright);
   --radius: 0;
 
   /* And the @theme aliases, which is the part that actually reaches a Tailwind
@@ -2810,6 +2832,7 @@ html.light .bbi-instrument,
   --color-accent: var(--ins-signal-hot);
   --color-accent-foreground: var(--ins-void);
   --color-ring: var(--ins-signal);
+  --color-warm: var(--ins-bright);
 }
 
 /* Display is condensed. That is the density signal, and it gives the
@@ -3037,7 +3060,14 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
   html.light .bbi-instrument .iv-nav-panel a:not(:hover) {
     color: var(--ins-read) !important;
   }
-  html.light .bbi-instrument .text-muted-foreground {
+  /* `:not(:hover)` for the same reason as the block above: a plain <button>
+     resting on `text-muted-foreground` (Reset, and others like it) still
+     gets the tier system's white hover fill from the blanket
+     `button:not(.bbi-bare)` rule further down this file. Without the
+     exception, this rule -- layered, so senior to that unlayered !important
+     ink-inversion regardless of specificity -- kept the label at --ins-dim
+     while the plate underneath it filled white. */
+  html.light .bbi-instrument .text-muted-foreground:not(:hover) {
     color: var(--ins-dim) !important;
   }
   /* The legend labels a whole region and has to read from a scan, so it takes

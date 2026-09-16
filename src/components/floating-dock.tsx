@@ -56,7 +56,7 @@ export function FloatingDock() {
   };
 
   return (
-    <div className="fixed bottom-5 right-4 z-40 flex flex-col items-end gap-2 sm:bottom-7 sm:right-6">
+    <div className="bbi-overlay fixed bottom-5 right-4 z-40 flex flex-col items-end gap-2 sm:bottom-7 sm:right-6">
       <AnimatePresence>
         {open && anchors.length > 0 && (
           <motion.nav

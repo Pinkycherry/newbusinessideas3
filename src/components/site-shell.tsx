@@ -451,7 +451,7 @@ function BrowseByTypeDropdown() {
       // Fixed at TYPE_COLUMN_ROWS rows tall, so this grows wider as more
       // categories arrive rather than taller -- a hundred categories reads as
       // more columns at the same height, not a panel that needs to scroll.
-      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 max-h-[80vh] w-[min(64rem,94vw)] overflow-x-auto overflow-y-hidden rounded-3xl p-6"
+      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 max-h-[80vh] w-[min(64rem,94vw)] scrollbar-hide overflow-x-auto overflow-y-hidden rounded-3xl p-6"
     >
       {(close) => (
         <div className="flex gap-8">
