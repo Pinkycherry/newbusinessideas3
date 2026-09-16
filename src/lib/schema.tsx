@@ -33,6 +33,14 @@ export function organisationSchema() {
   };
 }
 
+/** Schema.org, Open Graph and Twitter Card all expect a full URL for an
+ *  image, never a root-relative path. Every featured image in this codebase
+ *  is committed under `public/` and referenced as `/images/...`, so this is
+ *  the one place that turns it into the absolute form each of those wants. */
+export function absoluteUrl(path: string): string {
+  return /^https?:\/\//.test(path) ? path : `${siteUrl()}${path}`;
+}
+
 /** The same entity as a nested reference, for use inside another schema node. */
 function publisherRef() {
   return {
@@ -67,6 +75,9 @@ export function articleSchema(input: {
    *  than stating the truth. */
   dateModified?: string | null;
   categoryName: string;
+  /** Root-relative (`/images/...`) or absolute. Resolved to absolute here —
+   *  schema.org and every consumer of it expect a full URL, not a path. */
+  image?: string;
 }) {
   const modified = input.dateModified ?? input.datePublished;
   return {
@@ -76,6 +87,7 @@ export function articleSchema(input: {
     description: input.description,
     ...(input.datePublished ? { datePublished: input.datePublished } : {}),
     ...(modified ? { dateModified: modified } : {}),
+    ...(input.image ? { image: absoluteUrl(input.image) } : {}),
     about: input.categoryName,
     mainEntityOfPage: `${siteUrl()}${input.path}`,
     publisher: publisherRef(),
@@ -87,6 +99,7 @@ export function collectionPageSchema(input: {
   name: string;
   description: string;
   itemCount?: number;
+  image?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -95,6 +108,7 @@ export function collectionPageSchema(input: {
     description: input.description,
     url: `${siteUrl()}${input.path}`,
     ...(input.itemCount !== undefined ? { numberOfItems: input.itemCount } : {}),
+    ...(input.image ? { image: absoluteUrl(input.image) } : {}),
     publisher: publisherRef(),
   };
 }

@@ -10,6 +10,7 @@ import { IdeaCard } from "@/components/idea-card";
 import { ValidateButton } from "@/components/validate-button";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
+import { categoryImage } from "@/config/category-imagery";
 import {
   getIdeaBySlug,
   type IdeaVariant,
@@ -17,7 +18,8 @@ import {
   type RelatedCategory,
 } from "@/lib/ideas.functions";
 import { type IdeaCard as IdeaCardType, type IdeaDetail } from "@/lib/ideas-shared";
-import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/schema";
+import { JsonLd, absoluteUrl, articleSchema, breadcrumbSchema } from "@/lib/schema";
+import { hideImgIfBroken } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { useDepthScene, useElementPointerGroup, useScrollProgress, useTextReveal } from "@/motion";
 
@@ -113,6 +115,12 @@ export const Route = createFileRoute("/idea/$slug")({
       idea?.metaDescription ||
       idea?.businessDescription?.slice(0, 155) ||
       "A researched business idea blueprint with pros, cons and a founder-fit verdict.";
+    // No idea has a photo of its own — this page had no share image at all
+    // before. The category's featured image fills that gap: every idea in
+    // "AI & Automation" sharing one thematic image for its link preview is
+    // the same pattern a blog's tag pages use, not duplicate content, and it
+    // beats the blank preview this page rendered until now.
+    const image = idea ? categoryImage(idea.categorySlug) : null;
     return {
       meta: [
         { title },
@@ -121,6 +129,13 @@ export const Route = createFileRoute("/idea/$slug")({
         { property: "og:description", content: description },
         { property: "og:type", content: "article" },
         { name: "twitter:card", content: "summary_large_image" },
+        ...(image
+          ? [
+              { property: "og:image", content: absoluteUrl(image.src) },
+              { property: "og:image:alt", content: image.alt },
+              { name: "twitter:image", content: absoluteUrl(image.src) },
+            ]
+          : []),
       ],
       links: idea ? [{ rel: "canonical", href: `https://businessidea.io/idea/${idea.slug}` }] : [],
     };
@@ -334,6 +349,7 @@ function IdeaPage() {
   const faqBelow = idea.faq.slice(5, 10);
 
   const ideaPath = `/idea/${idea.slug}`;
+  const categoryFeatured = categoryImage(idea.categorySlug);
   const breadcrumbItems = [
     { name: "Home", path: "/" },
     { name: "Browse", path: "/browse" },
@@ -355,6 +371,7 @@ function IdeaPage() {
             description: idea.businessDescription || idea.summary,
             datePublished: idea.createdAt,
             categoryName: idea.categoryName,
+            image: categoryFeatured.src,
           }),
           breadcrumbSchema(breadcrumbItems),
         ]}
@@ -403,6 +420,26 @@ function IdeaPage() {
                 <div className="idea-hero-meta flex flex-wrap items-center gap-3 text-xs uppercase tracking-widest">
                   <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-secondary-foreground">
                     {idea.ideaId}
+                  </span>
+                  {/* The category's own featured image, small, riding along
+                      next to its name -- the same image the category page
+                      runs as a full hero. Decorative here (the text right
+                      next to it already names the category), so alt is
+                      empty rather than repeating that description across
+                      every idea in the category: the full alt text already
+                      does its SEO job once, on the category page itself. */}
+                  <span className="mo-media relative h-6 w-6 shrink-0 overflow-hidden rounded-full border border-border">
+                    <img
+                      ref={hideImgIfBroken}
+                      src={categoryFeatured.src}
+                      alt=""
+                      aria-hidden="true"
+                      width={24}
+                      height={24}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
                   </span>
                   <span className="text-accent">{idea.categoryName}</span>
                   <span className="text-muted-foreground">/</span>

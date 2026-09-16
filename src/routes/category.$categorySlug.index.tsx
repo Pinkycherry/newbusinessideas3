@@ -5,8 +5,10 @@ import { Fragment, useCallback, type CSSProperties } from "react";
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
+import { categoryImage } from "@/config/category-imagery";
 import { getCategoryPage } from "@/lib/ideas.functions";
-import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { JsonLd, absoluteUrl, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { hideImgIfBroken } from "@/lib/utils";
 import {
   useElementPointerGroup,
   useDepthScene,
@@ -27,8 +29,9 @@ export const Route = createFileRoute("/category/$categorySlug/")({
     if (!data.categoryName) throw notFound();
     return data;
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const name = loaderData?.categoryName ?? "Category";
+    const image = categoryImage(params.categorySlug);
     return {
       meta: [
         { title: `${name} Business Ideas | BBI` },
@@ -43,6 +46,12 @@ export const Route = createFileRoute("/category/$categorySlug/")({
         },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },
+        // The category's featured image doubles as its share card. Alt text
+        // is the same one IMAGE_SEO.md assigns it, so a screen reader, a
+        // crawler and a link preview all describe it identically.
+        { property: "og:image", content: absoluteUrl(image.src) },
+        { property: "og:image:alt", content: image.alt },
+        { name: "twitter:image", content: absoluteUrl(image.src) },
       ],
     };
   },
@@ -64,6 +73,7 @@ function CategoryPage() {
   const { data } = useSuspenseQuery(categoryQuery(categorySlug));
   const categoryName = data.categoryName ?? categorySlug;
   const categoryPath = `/category/${categorySlug}`;
+  const featured = categoryImage(categorySlug);
 
   const headingRef = useTextReveal<HTMLHeadingElement>();
   // MOTION_SPEC section 3 — gallery grammar. `useElementPointerGroup` puts ONE
@@ -107,6 +117,7 @@ function CategoryPage() {
             name: `${categoryName} Business Ideas`,
             description: `Researched ${categoryName} business idea blueprints with pros, cons and verdicts.`,
             itemCount: data.ideas.length,
+            image: featured.src,
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -134,6 +145,26 @@ function CategoryPage() {
               {data.categoryName}
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
+            {/* The category's featured image, served from this domain. File
+                name, alt text and caption all follow IMAGE_SEO.md. `.mo-media`
+                gives it the same subtle hover zoom every other media slot on
+                the site uses (motion.css) -- no bespoke effect invented here. */}
+            <figure className="mo-media glass relative mt-6 aspect-[21/9] w-full overflow-hidden">
+              <img
+                ref={hideImgIfBroken}
+                src={featured.src}
+                alt={featured.alt}
+                width={1200}
+                height={514}
+                loading="eager"
+                fetchPriority="high"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent" />
+              <figcaption className="absolute bottom-3 left-4 right-4 text-[11px] leading-snug text-[var(--ins-read)]">
+                {featured.description}
+              </figcaption>
+            </figure>
           </div>
 
           {/* Ad and grid share the FRONT plane so they travel together. Split

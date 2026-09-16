@@ -4,8 +4,9 @@ import { useCallback, type CSSProperties } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { categoryImage } from "@/config/category-imagery";
 import { getSubcategoryPage } from "@/lib/ideas.functions";
-import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { JsonLd, absoluteUrl, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import {
   useElementPointerGroup,
   useDepthScene,
@@ -28,8 +29,12 @@ export const Route = createFileRoute("/category/$categorySlug/$subcategorySlug")
     if (!data.subcategoryName) throw notFound();
     return data;
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const name = loaderData?.subcategoryName ?? "Subcategory";
+    // No image at the subcategory level -- it belongs to the parent category
+    // and stays that category's, the same object every one of its
+    // subcategories shares.
+    const image = categoryImage(params.categorySlug);
     return {
       meta: [
         { title: `${name} Ideas | BBI` },
@@ -44,6 +49,9 @@ export const Route = createFileRoute("/category/$categorySlug/$subcategorySlug")
         },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },
+        { property: "og:image", content: absoluteUrl(image.src) },
+        { property: "og:image:alt", content: image.alt },
+        { name: "twitter:image", content: absoluteUrl(image.src) },
       ],
     };
   },
@@ -102,6 +110,7 @@ function SubcategoryPage() {
             name: `${subcategoryName} Business Ideas`,
             description: `Business idea blueprints in ${subcategoryName}: what the business is, who it serves, pros, cons and a founder-fit verdict.`,
             itemCount: data.ideas.length,
+            image: categoryImage(categorySlug).src,
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
