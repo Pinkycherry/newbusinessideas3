@@ -1357,6 +1357,65 @@ html.light .iv-skeleton {
     color: var(--primary-foreground) !important;
   }
 }
+  /* THE HOUSING, inside the layer that demonstrably wins.
+     Rules appended at the end of this file were not reaching the compiled
+     sheet — a DOM query for rules matching the header's links came back
+     empty while `.bbi-instrument`'s own background applied fine. Declaring
+     the overrides here, in the same @layer utilities block as the light-mode
+     rules they have to beat and printed after them, is the shape that works. */
+  html.light .bbi-instrument,
+  html.light .bbi-instrument header,
+  html.light .bbi-instrument footer,
+  html.light .bbi-instrument main {
+    color: var(--ins-read) !important;
+  }
+  /* :not(.ins-action) — an element that sets its own colour inline must be
+     left alone. This rule carries !important, and !important beats an inline
+     style, so without the exclusion it silently overrode the actions' own
+     hover state: the inline style read `color: var(--ins-void…)` while the
+     computed value stayed at --ins-read. That is what "white on white" was. */
+  html.light .bbi-instrument header a:not(.ins-action),
+  html.light .bbi-instrument header button:not(.ins-action),
+  html.light .bbi-instrument header span:not(.ins-action),
+  html.light .bbi-instrument .glass-nav a,
+  html.light .bbi-instrument .glass-nav button,
+  html.light .bbi-instrument .iv-nav-panel a,
+  html.light .bbi-instrument .iv-nav-panel button {
+    color: var(--ins-read) !important;
+  }
+  html.light .bbi-instrument header a:hover,
+  html.light .bbi-instrument .iv-nav-panel a:hover {
+    color: var(--ins-signal-hot) !important;
+  }
+  /* The logo stamp is the one inversion: signal ground, housing ink. */
+  html.light .bbi-instrument header a > span[class*="bg-primary"] {
+    color: var(--ins-void) !important;
+  }
+  html.light .bbi-instrument .glass,
+  html.light .bbi-instrument .glass-nav,
+  html.light .bbi-instrument .glass-btn,
+  html.light .bbi-instrument .glass-pill,
+  html.light .bbi-instrument .iv-nav-panel,
+  html.light .bbi-instrument [role="combobox"],
+  html.light .bbi-instrument input,
+  html.light .bbi-instrument select {
+    background: var(--ins-face) !important;
+    border-color: var(--ins-rule) !important;
+    color: var(--ins-read) !important;
+    box-shadow: none !important;
+  }
+  html.light .bbi-instrument [role="combobox"] *,
+  html.light .bbi-instrument .glass-pill *,
+  html.light .bbi-instrument .glass-btn * {
+    color: var(--ins-read) !important;
+  }
+  html.light .bbi-instrument input::placeholder {
+    color: var(--ins-dim) !important;
+  }
+  html.light .bbi-instrument .text-muted-foreground {
+    color: var(--ins-dim) !important;
+  }
+
 
 /* ============================================================
    CATEGORY HEADING GLOW — breathing brand-color halo behind
@@ -2288,11 +2347,13 @@ html.light .idea-shell::before { opacity: 0.42; }
     line-height: 1.05;
     text-wrap: balance;
   }
+  /* Up a step. With the trailing rules gone, a section heading is the only
+     mark opening a region, so it has to carry that weight on its own. */
   h1 {
-    font-size: clamp(2.25rem, 5.4vw, 3.5rem);
+    font-size: clamp(2.6rem, 6vw, 4.25rem);
   }
   h2 {
-    font-size: clamp(1.6rem, 3.2vw, 2.25rem);
+    font-size: clamp(1.95rem, 3.9vw, 2.9rem);
     line-height: 1.12;
   }
 }
@@ -2665,3 +2726,1248 @@ html.bbi-motion [data-wave].revealed:not(:has(.rv)) {
   background: color-mix(in oklab, var(--primary) 86%, #000000);
 }
 .ac-cta:disabled { opacity: 0.6; }
+
+/* ============================================================
+   THE INSTRUMENT
+   ------------------------------------------------------------
+   BBI's one committed idea: the library is a measuring
+   instrument, not a brochure about one. Scoped to `.bbi-instrument`
+   so a template that has not been redesigned yet keeps the light
+   treatment rather than half-inheriting this one.
+
+   The trap this has to avoid is well known — "near-black ground
+   plus one bright accent" is the second-commonest generated-page
+   look there is. Darkness is not what makes this an instrument.
+   DENSITY is: real readings, tabular numerals, rules that divide
+   two actual things, and more legible information per screen than
+   a marketing page would dare. If a section here ends up airy,
+   with big padding and a glow, it has become the cliché and
+   should be rebuilt tighter.
+   ============================================================ */
+html.light .bbi-instrument,
+.bbi-instrument {
+  /* THE ETHEREAL DREAM PALETTE — the founder's brand colours, and the only
+     colours allowed anywhere in this scope, animations included:
+       #FFFFFF  #E0E0E0  #B2B2B2  #757575  #000000
+     The ground is dark but deliberately NOT black (#000000 is reserved for
+     contrast, not for the page), so the housing sits a few steps up from it.
+     No indigo, no teal, no accent hues — every one of those has been removed
+     rather than dimmed. */
+  --ins-black: #000000;
+  --ins-void: #141414;   /* the housing: dark, not black */
+  --ins-face: #1e1e1e;   /* a module face, one step up from the ground */
+  --ins-face-2: #262626;
+  --ins-rule: rgb(224 224 224 / 0.14);
+  --ins-rule-strong: rgb(224 224 224 / 0.32);
+  /* Signal is pure white. In a five-value greyscale the only thing left to
+     carry emphasis is contrast itself, so the loudest element is the lightest. */
+  --ins-signal: #ffffff;
+  --ins-signal-hot: #ffffff;
+  /* Readout. #E0E0E0 for body, #B2B2B2 for secondary, #757575 only for marks
+     that are not load-bearing — at 3.4:1 on this ground it is not body text. */
+  --ins-read: #e0e0e0;
+  --ins-bright: #ffffff;
+  --ins-dim: #b2b2b2;
+  --ins-faint: #757575;
+
+  background: var(--ins-void);
+  color: var(--ins-read);
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --background: var(--ins-void);
+  --foreground: var(--ins-read);
+  --card: var(--ins-face);
+  --card-foreground: var(--ins-read);
+  --muted-foreground: var(--ins-dim);
+  --border: var(--ins-rule);
+  --primary: var(--ins-signal);
+  --primary-foreground: var(--ins-void);
+  --accent: var(--ins-signal-hot);
+  --ring: var(--ins-signal);
+  /* The highlight hues are neutralised in this scope. They are still defined
+     globally for the light templates; here they resolve to the greyscale. */
+  --hl-gold: var(--ins-dim);
+  --hl-green: var(--ins-read);
+  --hl-coral: var(--ins-faint);
+  --hl-teal: var(--ins-bright);
+  --radius: 0;
+
+  /* And the @theme aliases, which is the part that actually reaches a Tailwind
+     utility. `--color-foreground: var(--foreground)` is declared once on :root,
+     so it resolves THERE and descendants inherit the already-substituted value
+     — redefining `--foreground` further down the tree never reaches
+     `text-foreground`. Both halves have to be written. (CLAUDE.md, cascade
+     fact 2, arrived at the hard way: the header rendered #0C0C25 on #0F0F24.) */
+  --color-background: var(--ins-void);
+  --color-foreground: var(--ins-read);
+  --color-card: var(--ins-face);
+  --color-card-foreground: var(--ins-read);
+  --color-muted-foreground: var(--ins-dim);
+  --color-border: var(--ins-rule);
+  --color-input: var(--ins-rule);
+  --color-primary: var(--ins-signal);
+  --color-primary-foreground: var(--ins-void);
+  --color-accent: var(--ins-signal-hot);
+  --color-accent-foreground: var(--ins-void);
+  --color-ring: var(--ins-signal);
+}
+
+/* Display is condensed. That is the density signal, and it gives the
+   page real typographic contrast against the text face — which the
+   previous version did not have, because its display and text faces
+   were the same family. */
+.bbi-instrument h1,
+.bbi-instrument h2 {
+  font-family: "IBM Plex Sans Condensed", "IBM Plex Sans", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  line-height: 1.02;
+}
+.bbi-instrument h3,
+.bbi-instrument h4 {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+}
+
+/* Every number on this page is mono and tabular, so columns of figures
+   line up on the decimal the way an instrument's do. */
+.ins-num {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* A legend sits ON the rule that opens a module, not stacked above the
+   heading as a tracked-out all-caps label. Same words, and it now marks
+   where a region begins instead of decorating it. */
+.ins-legend {
+  /* `inline-flex`, not `flex`: as a block-level flex row it stretched the
+     full width so the removed rule had somewhere to go. It now takes exactly
+     the width of its own words. */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  /* Was 0.6875rem in --ins-dim: too small to read and too dim to notice.
+     A legend that labels a whole region has to be legible from a scan. */
+  /* This is what the founder calls the section heading, so it is sized like
+     one rather than like a label — twice now it has come back as too small
+     to read. */
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  color: var(--ins-bright);
+  text-transform: none;
+}
+/* The trailing hairline is gone. It ran the full width of the page after
+   every legend on the site — one long line under each section heading,
+   pointing at nothing, and the founder counted them as the page's most
+   visible piece of noise. A legend is a label; it does not need a rule to
+   prove where the section starts, because the section's own top border
+   already does. */
+.ins-legend .ins-read {
+  color: var(--ins-signal);
+}
+
+/* Modules share their rules instead of floating apart with gaps and
+   radii. One 1px grid line, drawn once, between two real regions. */
+.ins-module {
+  border-top: 1px solid var(--ins-rule);
+}
+.ins-grid {
+  display: grid;
+  gap: 1px;
+  background: var(--ins-rule);
+}
+.ins-cell {
+  background: var(--ins-void);
+  padding: 1.5rem;
+}
+.ins-cell--lit {
+  background: var(--ins-face);
+}
+
+/* Controls are the only rounded things here: if it has a radius, you
+   can press it. */
+.bbi-instrument a[class*="rounded"],
+.bbi-instrument button[class*="rounded"] {
+  border-radius: 2px;
+}
+
+/* The housing has no starfield, no nebula and no glow. An instrument is
+   lit by its own readings. */
+.bbi-instrument::before,
+.bbi-instrument::after {
+  display: none !important;
+}
+
+/* The shell adopts the housing. These are unlayered with !important
+   deliberately: the light-mode plate rules live in @layer utilities and
+   carry !important themselves, and unlayered !important is the only
+   thing that outranks that — the same cascade fact that bit this
+   redesign twice already, used on purpose this time. */
+.bbi-instrument .glass,
+.bbi-instrument .glass-nav,
+.bbi-instrument .glass-btn,
+.bbi-instrument .glass-pill,
+.bbi-instrument .iv-nav-panel {
+  background: var(--ins-face) !important;
+  border-color: var(--ins-rule) !important;
+  color: var(--ins-read) !important;
+  box-shadow: none !important;
+}
+.bbi-instrument .glass *,
+.bbi-instrument .glass-nav *,
+.bbi-instrument .glass-btn *,
+.bbi-instrument .glass-pill *,
+.bbi-instrument .iv-nav-panel * {
+  color: inherit !important;
+}
+/* The hover plate. It used to fill white and set the label to housing ink,
+   including on every descendant — and `background` on a descendant `span` is
+   what produced the white-on-white label that survived four earlier attempts
+   at this, because the fix kept being applied to a DIFFERENT rule further down
+   the file. The plate now stays dark and brightens; nothing here paints a
+   descendant's background at all. `.ins-action` opts out: those controls set
+   their colours imperatively. */
+.bbi-instrument .glass-btn:not(.ins-action):hover,
+.bbi-instrument .glass-pill:not(.ins-action):hover {
+  background: var(--ins-face-2) !important;
+  border-color: var(--ins-rule-strong) !important;
+}
+.bbi-instrument .glass-btn:not(.ins-action):hover,
+.bbi-instrument .glass-pill:not(.ins-action):hover,
+.bbi-instrument .glass-btn:not(.ins-action):hover *,
+.bbi-instrument .glass-pill:not(.ins-action):hover * {
+  color: var(--ins-bright) !important;
+}
+.bbi-instrument .ac-cta {
+  background: var(--ins-signal);
+  border-color: var(--ins-signal);
+  color: var(--ins-void);
+}
+/* The page rail and the nav's own hairline. */
+.bbi-instrument header .bg-border {
+  background: var(--ins-rule) !important;
+}
+/* Inputs are housing too, not white boxes punched into it. */
+.bbi-instrument input,
+.bbi-instrument [role="combobox"] {
+  background: var(--ins-face) !important;
+  border-color: var(--ins-rule) !important;
+  color: var(--ins-read) !important;
+}
+.bbi-instrument input::placeholder {
+  color: var(--ins-dim) !important;
+}
+
+/* The light-mode nav rules are written as `html.light .glass-nav a`, which
+   is more specific than `.bbi-instrument .glass-nav *`. Matching that shape
+   and going one class deeper is what actually wins — `color: inherit` did
+   not, and the header rendered #0C0C25 text on the #07070F housing. */
+html.light .bbi-instrument .glass-nav a,
+html.light .bbi-instrument .glass-nav button,
+html.light .bbi-instrument .glass-nav span,
+html.light .bbi-instrument .iv-nav-panel a,
+html.light .bbi-instrument .iv-nav-panel button,
+html.light .bbi-instrument .glass a,
+html.light .bbi-instrument .glass button,
+html.light .bbi-instrument .glass span,
+html.light .bbi-instrument .glass p,
+html.light .bbi-instrument .glass li {
+  color: var(--ins-read) !important;
+}
+html.light .bbi-instrument .glass-nav a:hover,
+html.light .bbi-instrument .iv-nav-panel a:hover {
+  color: var(--ins-signal-hot) !important;
+}
+/* The logo stamp keeps its inverted relationship: signal ground, housing ink. */
+html.light .bbi-instrument header a span[class*="bg-primary"] {
+  color: var(--ins-void) !important;
+}
+/* Footer and any remaining muted text inside the housing. */
+html.light .bbi-instrument .text-muted-foreground {
+  color: var(--ins-dim) !important;
+}
+
+/* `@theme inline` means Tailwind bakes the RESOLVED value into each utility at
+   build time — `text-foreground` compiles to a literal colour, not
+   `var(--color-foreground)`. So repointing tokens, base or alias, can never
+   reach a utility. The utilities themselves have to be restated inside the
+   housing. This is the third distinct cascade trap in this stylesheet; the
+   other two are written up in CLAUDE.md. */
+html.light .bbi-instrument .text-foreground { color: var(--ins-read) !important; }
+html.light .bbi-instrument .text-muted-foreground { color: var(--ins-dim) !important; }
+html.light .bbi-instrument .text-primary { color: var(--ins-signal) !important; }
+html.light .bbi-instrument .text-accent { color: var(--ins-signal-hot) !important; }
+html.light .bbi-instrument .bg-card { background-color: var(--ins-face) !important; }
+html.light .bbi-instrument .bg-background { background-color: var(--ins-void) !important; }
+html.light .bbi-instrument .bg-primary { background-color: var(--ins-signal) !important; }
+html.light .bbi-instrument .text-primary-foreground { color: var(--ins-void) !important; }
+html.light .bbi-instrument .border-border,
+html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !important; }
+
+/* CLAUDE.md's cascade fact 3 says unlayered rules beat every @layer. That is
+   true for NORMAL declarations and exactly BACKWARDS for !important ones:
+   for important declarations layer precedence is reversed, so an important
+   rule inside @layer utilities beats an important rule outside it. That is
+   why `html.light .glass-nav a { color:#0C0C25 !important }` kept winning
+   against unlayered overrides, against repointed base tokens, against the
+   @theme aliases, and even against an inline style — !important beats inline.
+   The override has to live in the same layer, printed after. */
+@layer utilities {
+  html.light .bbi-instrument,
+  html.light .bbi-instrument header,
+  html.light .bbi-instrument main,
+  html.light .bbi-instrument footer {
+    color: var(--ins-read) !important;
+  }
+  /* NOT a blanket `a, button` rule any more. That version carried
+     !important, so it beat every `hover:text-*` utility in the tree: a button
+     whose hover fills the plate white kept its label at --ins-read, i.e. white
+     on white. Links with no colour of their own inherit --ins-read from the
+     shell; the ones named here are the ones that genuinely need forcing,
+     because a light-mode rule is aimed at them. */
+  html.light .bbi-instrument .glass-nav a:not(:hover),
+  html.light .bbi-instrument .glass-nav button:not(:hover),
+  html.light .bbi-instrument .glass-btn:not(:hover),
+  html.light .bbi-instrument .glass-pill:not(:hover),
+  html.light .bbi-instrument .glass-btn:not(:hover) *,
+  html.light .bbi-instrument .glass-pill:not(:hover) *,
+  html.light .bbi-instrument .iv-nav-panel a:not(:hover) {
+    color: var(--ins-read) !important;
+  }
+  html.light .bbi-instrument .text-muted-foreground {
+    color: var(--ins-dim) !important;
+  }
+  /* The legend labels a whole region and has to read from a scan, so it takes
+     the brightest value. It was being pulled back down to --ins-dim here,
+     which is why enlarging it in the unlayered rule changed nothing. */
+  html.light .bbi-instrument .ins-legend {
+    color: var(--ins-bright) !important;
+    font-size: 1.375rem !important;
+  }
+
+
+
+  /* PORTALS. Radix mounts select, dialog and tooltip content on document.body,
+     so nothing scoped to .bbi-instrument can reach it — that is why the open
+     category dropdown kept a white panel, dark labels and an indigo tick. The
+     flag lives on <html>, which portal content does inherit. */
+  html[data-tone="instrument"] [role="listbox"],
+  html[data-tone="instrument"] [data-radix-select-content],
+  html[data-tone="instrument"] [data-radix-popper-content-wrapper] > * {
+    background: #1e1e1e !important;
+    background-image: none !important;
+    border: 1px solid rgb(224 224 224 / 0.14) !important;
+    color: #e0e0e0 !important;
+    box-shadow: none !important;
+  }
+  html[data-tone="instrument"] [role="option"],
+  html[data-tone="instrument"] [role="option"] *,
+  html[data-tone="instrument"] [data-radix-select-content] * {
+    color: #e0e0e0 !important;
+  }
+  html[data-tone="instrument"] [role="option"][data-highlighted],
+  html[data-tone="instrument"] [role="option"][data-state="checked"] {
+    background: #262626 !important;
+    color: #ffffff !important;
+    outline: none !important;
+  }
+  html[data-tone="instrument"] [role="option"] svg {
+    color: #ffffff !important;
+  }
+
+  /* A plate does NOT invert on hover in this scope. Inverting it was the source
+     of two opposite unreadable states in a row: first white label on a white
+     plate, then — once a later, equally specific rule kept the plate dark —
+     housing ink on a dark plate. A plate that stays dark and simply brightens
+     its readout and its rule cannot produce either. `.ins-action` is excluded
+     because those controls set their own colours imperatively. */
+  html.light .bbi-instrument .glass-pill:not(.ins-action):hover,
+  html.light .bbi-instrument .glass-btn:not(.ins-action):hover,
+  html.light .bbi-instrument .glass-pill:not(.ins-action)[data-state="open"] {
+    background-color: var(--ins-face-2) !important;
+    border-color: var(--ins-rule-strong) !important;
+  }
+  html.light .bbi-instrument .glass-pill:not(.ins-action):hover,
+  html.light .bbi-instrument .glass-btn:not(.ins-action):hover,
+  html.light .bbi-instrument .glass-pill:not(.ins-action):hover *,
+  html.light .bbi-instrument .glass-btn:not(.ins-action):hover *,
+  html.light .bbi-instrument .glass-pill:not(.ins-action)[data-state="open"],
+  html.light .bbi-instrument .glass-pill:not(.ins-action)[data-state="open"] * {
+    color: var(--ins-bright) !important;
+  }
+
+  /* The Golden Tree's leaf labels: white on the housing, ink when lit. */
+  html.light .bbi-instrument .tree-node,
+  html.light .bbi-instrument .tree-node *,
+  html.light .bbi-instrument [class*="leaf"],
+  html.light .bbi-instrument [class*="leaf"] * {
+    color: var(--ins-bright) !important;
+  }
+  html.light .bbi-instrument .tree-node:hover,
+  html.light .bbi-instrument .tree-node:hover * {
+    background-color: var(--ins-signal) !important;
+    color: var(--ins-void) !important;
+  }
+  /* A filled plate inverts: white ground, housing ink. Without this the
+     ContainerTextFlip rendered as a solid white box with white text in it. */
+  html.light .bbi-instrument .bg-primary,
+  html.light .bbi-instrument .bg-primary * {
+    background-color: var(--ins-signal) !important;
+    color: var(--ins-void) !important;
+  }
+  /* The Radix select trigger kept its light-mode gradient and dark label. */
+  html.light .bbi-instrument [data-slot="select-trigger"]:not(:hover),
+  html.light .bbi-instrument button[role="combobox"]:not(:hover),
+  html.light .bbi-instrument [role="listbox"],
+  html.light .bbi-instrument [data-radix-select-content] {
+    background: var(--ins-face) !important;
+    background-image: none !important;
+    border-color: var(--ins-rule) !important;
+    color: var(--ins-read) !important;
+    box-shadow: none !important;
+  }
+  /* `:not(:hover)` again — printed after the hover block, so without it the
+     resting readout colour would apply on hover as well. */
+  html.light .bbi-instrument [data-slot="select-trigger"]:not(:hover) *,
+  html.light .bbi-instrument button[role="combobox"]:not(:hover) *,
+  html.light .bbi-instrument [role="option"],
+  html.light .bbi-instrument [role="option"] * {
+    color: var(--ins-read) !important;
+  }
+  html.light .bbi-instrument [role="option"][data-highlighted] {
+    background: var(--ins-face-2) !important;
+    color: var(--ins-bright) !important;
+  }
+  html.light .bbi-instrument .text-primary,
+  html.light .bbi-instrument .ins-legend .ins-read {
+    color: var(--ins-signal) !important;
+  }
+  /* Links brighten on hover. A `.glass-pill` must NOT be in this list: its
+     hover state fills the plate white, so brightening the label too printed
+     white on white. That rule is printed above and this one used to undo it
+     at equal specificity purely by coming later. */
+  html.light .bbi-instrument a:not(.glass-pill):hover {
+    color: var(--ins-signal-hot) !important;
+  }
+  /* The logo stamp inverts: signal ground, housing ink. */
+  html.light .bbi-instrument header a > span[class*="bg-primary"] {
+    color: var(--ins-void) !important;
+  }
+  /* The resting plate. `:not(:hover)` matters: this rule is printed AFTER the
+     hover block above and carries the same specificity, so without it the
+     resting background wins on hover too and the hover state silently does
+     nothing. */
+  html.light .bbi-instrument .glass:not(.ins-action):not(:hover),
+  html.light .bbi-instrument .glass-nav:not(.ins-action),
+  html.light .bbi-instrument .glass-btn:not(.ins-action):not(:hover),
+  html.light .bbi-instrument .glass-pill:not(.ins-action):not(:hover),
+  html.light .bbi-instrument .iv-nav-panel,
+  html.light .bbi-instrument [role="combobox"]:not(:hover),
+  html.light .bbi-instrument input {
+    background: var(--ins-face) !important;
+    border-color: var(--ins-rule) !important;
+    box-shadow: none !important;
+  }
+}
+
+
+/* Every direct child of the instrument shell sits above the background field.
+   Without this the field paints over the content instead of behind it, since
+   the field is fixed and the sections are static. */
+.bbi-instrument > *:not(.bbi-overlay) {
+  position: relative;
+  z-index: 1;
+}
+/* A full-screen overlay is the ONE thing this rule must not touch. It is
+   unlayered, so `position: relative` beat Tailwind's `fixed` utility outright,
+   and the mobile menu — a direct child of the shell — stopped being fixed at
+   all: a zero-height relative block wedged between the header and main, with
+   its z-50 capped at 1 by the same rule. It rendered, and could not be seen or
+   tapped. Overlays sit above the header, which is at 50. */
+.bbi-instrument > .bbi-overlay {
+  position: fixed;
+  z-index: 80;
+}
+/* Everything below the hero gets a solid ground. The page has to be readable
+   before it is atmospheric. */
+.bbi-instrument > main {
+  background: var(--ins-void);
+}
+/* The header and its dropdowns must sit above every section. Without this the
+   blanket z-index:1 above put the header in the same layer as the content, and
+   a section carrying its own z-index painted straight over the open menu —
+   the menu was visible but unclickable. */
+/* `:not(.bbi-overlay)` above raised the blanket rule's specificity from one
+   class to two, which quietly overtook this one at (0,1,1) — so the header
+   dropped to z-index 1, the same layer as <main>, and <main> comes later in
+   the document. The mega menu rendered and was painted straight over by the
+   hero. Matching the blanket rule's shape puts this back at (0,2,1).
+   `position` is restored here too: the blanket rule's `relative` had been
+   overriding Tailwind's `sticky` on the header for as long as it has
+   existed. */
+.bbi-instrument > header:not(.bbi-overlay) {
+  position: sticky;
+  z-index: 50;
+}
+.bbi-instrument .iv-nav-panel {
+  z-index: 60;
+}
+
+
+/* Type contrast inside the housing. Headings take the brightest value in the
+   palette, body text the next one down. The background field sits behind a
+   scrim, but a heading still has to win against it outright. */
+html.light .bbi-instrument h1,
+html.light .bbi-instrument h2,
+html.light .bbi-instrument h3,
+html.light .bbi-instrument h4 {
+  color: var(--ins-bright) !important;
+}
+html.light .bbi-instrument p,
+html.light .bbi-instrument li,
+html.light .bbi-instrument dd,
+html.light .bbi-instrument dt {
+  color: var(--ins-read);
+}
+
+/* The Golden Tree's node labels are dark-on-dark in this world. */
+html.light .bbi-instrument .bbi-orbit-center-label,
+html.light .bbi-instrument [class*="tree"] span,
+html.light .bbi-instrument [class*="node"] span {
+  color: var(--ins-bright) !important;
+}
+
+
+
+
+/* The document ground follows the tone. Without this the light body colour
+   sat behind the shell and showed wherever the shell did not reach — and on
+   an interior page shorter than the viewport, that is most of the screen. */
+html[data-tone="instrument"],
+html[data-tone="instrument"] body {
+  background-color: #141414 !important;
+}
+
+/* ---- TextGenerateEffect ------------------------------------------------
+   One keyframe, no library, no blur. `.tg` alone paints nothing: the hidden
+   state hangs off `[data-tg="armed"]`, which only JavaScript sets, so a
+   server-rendered paragraph and a browser with scripting off both show the
+   finished text. */
+.tg-w {
+  display: inline-block;
+  white-space: pre;
+}
+.tg[data-tg="armed"] .tg-w {
+  opacity: 0;
+  transform: translateY(2px);
+}
+.tg[data-tg="in"] .tg-w {
+  animation: tg-word 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes tg-word {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tg .tg-w {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* ---- the inverted pricing band ----------------------------------------
+   The one white ground on the homepage. The glow cursor is white, so over
+   this band it disappeared entirely; `--glow-cursor` is the hook the cursor
+   reads to recolour itself, and here it takes the gold of the Golden Tree.
+   Nothing else on the site sets it, so the trail stays white everywhere the
+   ground is dark. */
+.bbi-instrument .bg-primary {
+  /* Black on the white ground. Gold was asked for first and then changed —
+     on a #FFFFFF band the trail has to be the darkest value there is or it
+     disappears the same way the white one did. */
+  --glow-cursor: #000000;
+  --glow-cursor-2: #757575;
+  /* `multiply` is what makes a black trail visible at all — see the blend
+     note in glow-cursor.tsx. Stated here rather than left to the luminance
+     inference so the band's intent is readable from the band. */
+  --glow-cursor-blend: multiply;
+}
+
+/* ---- the filled action on a plate --------------------------------------
+   This block used to force a WHITE ground and HOUSING INK on `.ac-cta` at
+   rest. The action treatment further down then overrode the ground with its
+   own `background` shorthand — a shorthand beats a longhand printed earlier,
+   and both carry !important — but it sets no resting `color`, so the dark ink
+   from here survived on a dark plate. "Continue with Google" was dark on dark
+   until the pointer touched it.
+   `.ac-cta` is simply tier 1 of the shared treatment now: the same plate and
+   the same readout ink as every other button, inverting on hover. It states
+   no ground of its own, so there is nothing left to disagree with. */
+html.light .bbi-instrument .ac-cta:not(:hover):not(:disabled),
+html.light .bbi-instrument .ac-cta:not(:hover):not(:disabled) *,
+html.light .bbi-instrument .glass .ac-cta:not(:hover):not(:disabled),
+html.light .bbi-instrument .glass .ac-cta:not(:hover):not(:disabled) * {
+  color: var(--ins-read) !important;
+}
+
+/* ---- breadcrumbs -------------------------------------------------------
+   They were two pills: a light chip with lighter text on it, unreadable, and
+   a second chip that read as a button next to it. A breadcrumb is a path,
+   not a control — plain marks on the ground, the current page brighter than
+   the ones behind it. */
+html.light .bbi-instrument nav[aria-label="Breadcrumb"] a {
+  color: var(--ins-faint) !important;
+  background: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+html.light .bbi-instrument nav[aria-label="Breadcrumb"] a:hover {
+  color: var(--ins-read) !important;
+}
+html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a)) {
+  color: var(--ins-read) !important;
+  background: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+/* =======================================================================
+   MOBILE
+   Everything below is scoped to a phone. The desktop layout is unchanged.
+   Measured on a 390x844 touch viewport before any of it was written:
+   185 tap targets under 40px, 105 pieces of body copy at 11px, one gutter
+   at 12px next to another at 24px, and a page 17,381px tall with one-way
+   reveals that a reader travelling it twice only ever sees once.
+   ======================================================================= */
+
+/* ---- two-way scroll reveal --------------------------------------------
+   `data-reveal` is set only by useTwoWayReveal, so no-JS and
+   prefers-reduced-motion render every section in place. `data-reveal-from`
+   carries the direction the reader was travelling, so a section rises into
+   view going down and drops into view coming back up — the motion always
+   runs against the thumb. */
+@media (max-width: 1023px) {
+  [data-reveal] {
+    transition:
+      opacity 480ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  [data-reveal="out"][data-reveal-from="down"] {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+  [data-reveal="out"][data-reveal-from="up"] {
+    opacity: 0;
+    transform: translate3d(0, -22px, 0);
+  }
+  [data-reveal="in"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* ---- type floor ----------------------------------------------------
+     11px was the single most common size in the body copy. On a phone held
+     at arm's length that is not reading, it is squinting. Nothing that
+     carries words drops below 12.5px, and the legends that label a whole
+     region hold their size. */
+  /* NOT `max(0.8125rem, 1em)`: `1em` is the INHERITED size, so an 11px label
+     inside a 16px section resolves to 16px and every small mark on the page
+     jumps a size. The floor has to be applied to the classes that actually
+     set the small sizes, which is what the block below does. */
+  html.light .bbi-instrument figcaption {
+    font-size: 0.8125rem;
+  }
+  /* `.ins-num` at 0.6875rem is 11px, and it is the single most common size in
+     the page's body copy — 70 elements of it on the homepage alone, all of
+     them labels next to a figure. Measured, not guessed. */
+  html.light .bbi-instrument .ins-num,
+  html.light .bbi-instrument .text-\[0\.6875rem\],
+  html.light .bbi-instrument .text-\[11px\],
+  html.light .bbi-instrument .text-xs {
+    font-size: 0.8125rem !important;
+  }
+  html.light .bbi-instrument .text-\[10px\] {
+    font-size: 0.78125rem !important;
+  }
+  /* The odometer figure itself must not be dragged down with its label. */
+  html.light .bbi-instrument .ins-num.text-3xl {
+    font-size: 1.875rem !important;
+  }
+  html.light .bbi-instrument .ins-legend {
+    font-size: 1.1875rem !important;
+  }
+  /* Headings come down a step so a long one stops taking six lines. */
+  html.light .bbi-instrument h1 {
+    font-size: clamp(2.05rem, 9vw, 2.75rem) !important;
+    line-height: 1.08;
+  }
+  html.light .bbi-instrument h2 {
+    font-size: clamp(1.7rem, 7.2vw, 2.2rem) !important;
+    line-height: 1.12;
+  }
+
+  /* ---- one gutter ----------------------------------------------------
+     The hero sat at 24px and every section under it at 12px, so the page
+     had two left edges. One value, and it is the wider of the two. */
+  .bbi-instrument .px-3,
+  .bbi-instrument .px-6 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* ---- vertical rhythm ------------------------------------------------
+     Sections arrived at 0, 40 and 64px above their headings. One step. */
+  .bbi-instrument main > section + section,
+  .bbi-instrument main section.mt-16,
+  .bbi-instrument main section.mt-10 {
+    margin-top: 3rem;
+  }
+
+  /* ---- tap targets ----------------------------------------------------
+     Both platform guidelines put the floor at 44px and 185 targets on this
+     page were under 40. The padding is applied to the row, not the label,
+     so nothing reflows. */
+  .bbi-instrument a[class*="rounded"],
+  .bbi-instrument button:not([aria-label="Open navigation menu"]),
+  .bbi-instrument [role="combobox"],
+  .bbi-instrument [role="option"] {
+    min-height: 44px;
+  }
+  .bbi-instrument a[class*="rounded"],
+  .bbi-instrument button:not([aria-label="Open navigation menu"]) {
+    display: inline-flex;
+    align-items: center;
+  }
+  .bbi-instrument nav a,
+  .bbi-instrument footer a {
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+  }
+
+  /* ---- decoration that costs more than it gives ----------------------
+     The floating icon cluster is aria-hidden decoration. On a phone it takes
+     160px of vertical space to show a row of circles clipped at both edges,
+     and it runs 36 infinite wobble animations to do it. It is the only thing
+     on the page that overflowed the viewport. Gone below 768px; unchanged on
+     a desktop, where it has the width to read as a row. */
+  .bbi-instrument .bbi-icons {
+    display: none;
+  }
+
+  /* ---- image slots ----------------------------------------------------
+     A 16:10 frame on a 390px screen is 244px of picture above the words.
+     5:3 on the cards, 3:2 for a standalone frame, and every one of them
+     goes full-bleed to the gutter rather than sitting in a second inset. */
+  .bbi-instrument figure.mo-media {
+    aspect-ratio: 3 / 2;
+  }
+  .bbi-instrument .aspect-\[21\/9\] {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* ---- press feedback ----------------------------------------------------
+   A phone has no hover, so every hover state this site has is dead weight
+   there and a tap gets no acknowledgement at all. On a coarse pointer the
+   press itself answers: the plate sinks a hair and its rule brightens, for
+   as long as the thumb is down. Transform and border only — no layout, no
+   repaint of anything underneath. */
+@media (hover: none) and (pointer: coarse) {
+  .bbi-instrument a,
+  .bbi-instrument button,
+  .bbi-instrument [role="button"],
+  .bbi-instrument .mo-card,
+  .bbi-instrument [role="combobox"] {
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      transform 140ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 140ms ease;
+  }
+  .bbi-instrument a:active,
+  .bbi-instrument button:active,
+  .bbi-instrument [role="button"]:active,
+  .bbi-instrument .mo-card:active,
+  .bbi-instrument [role="combobox"]:active {
+    transform: scale(0.972);
+    border-color: var(--ins-rule-strong);
+  }
+  /* A card is a bigger object, so it moves less. */
+  .bbi-instrument .mo-card:active {
+    transform: scale(0.988);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bbi-instrument a:active,
+    .bbi-instrument button:active,
+    .bbi-instrument [role="button"]:active,
+    .bbi-instrument .mo-card:active,
+    .bbi-instrument [role="combobox"]:active {
+      transform: none;
+    }
+  }
+}
+
+/* ---- SpotlightCard -----------------------------------------------------
+   The site's one card. A flat plate in the housing's face colour with a
+   single drawn rule, and a soft white light that follows the pointer across
+   it. No colour but the brand greyscale: in a five-value palette the only
+   thing left to carry emphasis is light.
+
+   The pointer position arrives as --spot-x / --spot-y, written straight to
+   the element by the component, so moving the cursor across thirty of these
+   re-renders nothing. */
+.bbi-spot {
+  position: relative;
+  overflow: hidden;
+  background: var(--ins-face, #1e1e1e);
+  border: 1px solid var(--ins-rule, rgb(224 224 224 / 0.14));
+  border-radius: 0;
+  transition:
+    border-color 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.bbi-spot[data-lit="on"] {
+  border-color: var(--ins-rule-strong, rgb(224 224 224 / 0.32));
+  background: var(--ins-face-2, #262626);
+}
+.bbi-spot-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 420ms ease-in-out;
+  background: radial-gradient(
+    circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    var(--spot-color, rgb(255 255 255 / 0.09)),
+    transparent 72%
+  );
+}
+.bbi-spot[data-lit="on"] .bbi-spot-light {
+  opacity: 1;
+}
+/* No pointer, no spotlight — and no wasted paint chasing one. The press
+   state in the mobile block answers the tap instead. */
+@media (hover: none) {
+  .bbi-spot-light {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-spot,
+  .bbi-spot-light {
+    transition: none;
+  }
+}
+
+/* ---- the site's action treatment ---------------------------------------
+   The founder asked for the "Surprise Me" button's effect on every clickable
+   button on the site: a band of light travelling the border at rest, and a
+   filled plate with inverted ink under the pointer.
+
+   It is CSS here, not the HoverBorderGradient component. That component is
+   right for one or two hero actions and wrong for forty: each instance runs
+   its own setInterval, cycling an edge every 1.1s forever and driving a
+   framer animation of a background gradient off it. Forty timers is the
+   thing this page has spent a week getting rid of. One conic gradient on a
+   custom property does the same job with no JavaScript at all.
+
+   `@property` is what makes the angle animatable; without the registration
+   a custom property is a string and cannot be interpolated. Browsers that do
+   not register it simply show the static plate, which is the same plate the
+   button had before. */
+@property --bbi-edge {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes bbi-edge-travel {
+  to {
+    --bbi-edge: 360deg;
+  }
+}
+
+/* THREE TIERS, one rule set. The palette has no second hue to differentiate
+   with, so the tiers differentiate by VALUE instead: the band that travels
+   the border and the plate it resolves into step down the greyscale.
+
+     tier 1  primary actions   band #FFFFFF  fills #FFFFFF, ink #141414
+     tier 2  search-term tags  band #B2B2B2  fills #E0E0E0, ink #141414
+     tier 3  footer actions    band #757575  fills #B2B2B2, ink #141414
+
+   Every tier is the same gesture at a different weight, so a reader can tell
+   a primary action from a tag from a footer link without a colour being
+   invented for any of them. */
+.bbi-instrument .ac-action,
+.bbi-instrument button:not(.bbi-bare):not([aria-label="Open navigation menu"]),
+.bbi-instrument a.ac-cta,
+.bbi-instrument .glass-btn,
+.bbi-instrument .glass-pill {
+  --act-band: var(--ins-signal);
+  --act-fill: var(--ins-signal);
+  --act-ink: var(--ins-void);
+  position: relative;
+  border: 1px solid transparent !important;
+  border-radius: 0.375rem;
+  background:
+    linear-gradient(var(--ins-face), var(--ins-face)) padding-box,
+    conic-gradient(
+        from var(--bbi-edge),
+        transparent 0deg,
+        var(--act-band) 40deg,
+        transparent 90deg,
+        transparent 360deg
+      )
+      border-box !important;
+  animation: bbi-edge-travel 4.4s linear infinite;
+  transition:
+    color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* TIER 2 — the search-term tags. They are Links, not buttons, so they never
+   picked the treatment up; and they are a long row of equal options, which is
+   why they take the quieter band rather than the signal. */
+.bbi-instrument .ac-tag {
+  --act-band: var(--ins-dim);
+  --act-fill: var(--ins-read);
+  --act-ink: var(--ins-void);
+  position: relative;
+  border: 1px solid transparent !important;
+  border-radius: 0.375rem;
+  background:
+    linear-gradient(var(--ins-face), var(--ins-face)) padding-box,
+    conic-gradient(
+        from var(--bbi-edge),
+        transparent 0deg,
+        var(--act-band) 40deg,
+        transparent 90deg,
+        transparent 360deg
+      )
+      border-box !important;
+  animation: bbi-edge-travel 5.6s linear infinite;
+  color: var(--ins-read) !important;
+  transition:
+    color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* TIER 3 — the footer. Quietest band of the three, because a footer is the
+   last thing on the page and should not compete with the actions above it. */
+.bbi-instrument .bbi-footer .ac-action,
+.bbi-instrument .bbi-footer button:not(.bbi-bare),
+.bbi-instrument .bbi-footer a[class*="rounded"],
+.bbi-instrument .bbi-footer .bbi-footer-more {
+  --act-band: var(--ins-faint);
+  --act-fill: var(--ins-dim);
+  --act-ink: var(--ins-void);
+  animation-duration: 6.4s;
+}
+
+/* Under the pointer the travelling band resolves into a solid plate and the
+   ink inverts — the label reads as ink on signal, never signal on signal.
+   The animation stops: there is nothing left to travel. */
+.bbi-instrument .ac-action:hover,
+.bbi-instrument button:not(.bbi-bare):not([aria-label="Open navigation menu"]):hover,
+.bbi-instrument a.ac-cta:hover,
+.bbi-instrument .glass-btn:hover,
+.bbi-instrument .glass-pill:hover,
+.bbi-instrument .glass-pill[data-state="open"],
+.bbi-instrument .ac-tag:hover {
+  animation: none;
+  background:
+    linear-gradient(var(--act-fill), var(--act-fill)) padding-box,
+    linear-gradient(var(--act-fill), var(--act-fill)) border-box !important;
+  color: var(--act-ink) !important;
+}
+.bbi-instrument .ac-action:hover *,
+.bbi-instrument button:not(.bbi-bare):not([aria-label="Open navigation menu"]):hover *,
+.bbi-instrument a.ac-cta:hover *,
+.bbi-instrument .glass-btn:hover *,
+.bbi-instrument .glass-pill:hover *,
+.bbi-instrument .glass-pill[data-state="open"] *,
+.bbi-instrument .ac-tag:hover * {
+  color: var(--act-ink) !important;
+  background-color: transparent !important;
+}
+
+/* Keyboard focus gets the same answer as the pointer, so the treatment is not
+   pointer-only decoration. */
+.bbi-instrument button:not(.bbi-bare):focus-visible,
+.bbi-instrument a.ac-cta:focus-visible,
+.bbi-instrument .glass-btn:focus-visible,
+.bbi-instrument .glass-pill:focus-visible {
+  animation: none;
+  outline: 2px solid var(--ins-signal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bbi-instrument .ac-action,
+  .bbi-instrument .ac-tag,
+  .bbi-instrument button,
+  .bbi-instrument a.ac-cta,
+  .bbi-instrument .glass-btn,
+  .bbi-instrument .glass-pill {
+    animation: none !important;
+  }
+}
+/* No pointer, no travel. A phone shows the plate and answers the tap with the
+   press state in the mobile block above; a border animating forever on a
+   screen nobody is hovering is pure battery. */
+@media (hover: none) {
+  .bbi-instrument .ac-action,
+  .bbi-instrument .ac-tag,
+  .bbi-instrument button,
+  .bbi-instrument a.ac-cta,
+  .bbi-instrument .glass-btn,
+  .bbi-instrument .glass-pill {
+    animation: none !important;
+    border-color: var(--ins-rule) !important;
+    background: var(--ins-face) !important;
+  }
+}
+
+/* ---- the orbit diagram, in brand colours -------------------------------
+   Measured inside the "Built by hand" section before this was written: an
+   indigo gradient disc (#DAD9F2 to #4643BA) at the centre, gold rings at
+   rgba(180,120,40,.55) and rgba(160,105,35,.6), four amber dots at
+   rgb(180,120,42), and node labels whose plate and whose ink were BOTH near
+   white — "Real research", "Direct accountability", "No fake team page" and
+   "Always improving" were white on white and could not be read at all.
+
+   The orbit's own rules are spread across four blocks earlier in this file,
+   several of them already carrying !important. One scoped block printed last
+   is the only way to be sure none of them is missed — the same approach the
+   rest of the instrument world uses. */
+html.light .bbi-instrument .bbi-orbit-ring,
+html.light .bbi-instrument .bbi-orbit-ring-inner,
+html.light .bbi-instrument .bbi-orbit-ring-outer {
+  border-color: var(--ins-rule) !important;
+  box-shadow: none !important;
+}
+html.light .bbi-instrument .bbi-orbit-ring-outer {
+  border-color: var(--ins-rule-strong) !important;
+}
+html.light .bbi-instrument .bbi-orbit-dot {
+  background: var(--ins-dim) !important;
+  box-shadow: none !important;
+}
+/* The centre inverts — it is the one filled element in the diagram, so it
+   takes the signal and its ink drops to the housing. */
+html.light .bbi-instrument .bbi-orbit-center {
+  background: var(--ins-signal) !important;
+  background-image: none !important;
+  border-color: var(--ins-signal) !important;
+  box-shadow: none !important;
+}
+html.light .bbi-instrument .bbi-orbit-center .bbi-orbit-center-label,
+html.light .bbi-instrument .bbi-orbit-center .bbi-orbit-center-sub {
+  color: var(--ins-void) !important;
+}
+/* The labels were the actual bug: a white plate carrying white text. Dark
+   plate, drawn rule, readout ink. */
+html.light .bbi-instrument .bbi-orbit-node-label {
+  background: var(--ins-face) !important;
+  background-image: none !important;
+  border: 1px solid var(--ins-rule) !important;
+  color: var(--ins-read) !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+html.light .bbi-instrument .bbi-orbit-node:hover .bbi-orbit-node-label {
+  background: var(--ins-face-2) !important;
+  border-color: var(--ins-rule-strong) !important;
+  color: var(--ins-bright) !important;
+}
+
+/* ---- FAQ disclosure rows ----------------------------------------------
+   Opted out of the action treatment with `.bbi-bare`, and given the answer a
+   row should give: the plate lifts one step and the question brightens. No
+   travelling border, no white fill — measured on the page before this, the
+   band read as a light streak crossing each question at rest, and hovering
+   turned the whole row into a solid white bar. */
+html.light .bbi-instrument .bbi-faq-row {
+  color: var(--ins-read) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  animation: none !important;
+  transition:
+    background-color 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+html.light .bbi-instrument .bbi-faq-row:hover,
+html.light .bbi-instrument .bbi-faq-row[aria-expanded="true"] {
+  background: var(--ins-face) !important;
+  color: var(--ins-bright) !important;
+}
+html.light .bbi-instrument .bbi-faq-row:focus-visible {
+  outline: 2px solid var(--ins-signal);
+  outline-offset: -2px;
+}
+html.light .bbi-instrument .bbi-faq-mark {
+  color: var(--ins-faint) !important;
+}
+html.light .bbi-instrument .bbi-faq-row:hover .bbi-faq-mark,
+html.light .bbi-instrument .bbi-faq-row[aria-expanded="true"] .bbi-faq-mark {
+  color: var(--ins-bright) !important;
+}
+
+/* ---- the footer plate --------------------------------------------------
+   The footer's own surface used a colour-mixed drop shadow off --foreground,
+   which in this scope is a white glow under the plate. A footer is a plate
+   like every other plate here: face colour, one drawn rule, no shadow. Its
+   links take the tier-3 ink so the whole block reads as one weight. */
+html.light .bbi-instrument .bbi-footer {
+  background: var(--ins-face) !important;
+  border: 1px solid var(--ins-rule) !important;
+  box-shadow: none !important;
+}
+html.light .bbi-instrument .bbi-footer-link {
+  color: var(--ins-dim) !important;
+}
+html.light .bbi-instrument .bbi-footer-link:hover,
+html.light .bbi-instrument .bbi-footer-link:focus-visible {
+  color: var(--ins-bright) !important;
+}
+html.light .bbi-instrument .bbi-footer-heading {
+  color: var(--ins-bright) !important;
+}
+
+/* ---- card flip ---------------------------------------------------------
+   Front carries the query, back carries the answer and the way in. Both
+   faces are always in the DOM — nothing is hidden from a crawler or a screen
+   reader — and the back is only rotated out of sight, never removed.
+
+   Below `hover: hover` the card does not flip: the two faces stack and both
+   read at once, because a flip on a touch screen is a piece of content you
+   cannot reach. */
+.bbi-flip {
+  position: relative;
+  min-height: 11.5rem;
+  perspective: 900px;
+}
+.bbi-flip-inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform-style: preserve-3d;
+}
+.bbi-flip-face {
+  display: block;
+  padding: 1.25rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.bbi-flip-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  background: var(--ins-face);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media (hover: hover) and (pointer: fine) {
+  .bbi-flip:hover .bbi-flip-inner,
+  .bbi-flip:focus-visible .bbi-flip-inner {
+    transform: rotateY(180deg);
+  }
+}
+/* No pointer: no flip. Both faces stack and read at once. */
+@media (hover: none) {
+  .bbi-flip {
+    perspective: none;
+    min-height: 0;
+  }
+  .bbi-flip-inner {
+    transform: none !important;
+    transform-style: flat;
+  }
+  .bbi-flip-back {
+    position: static;
+    transform: none;
+    background: transparent;
+    padding-top: 0;
+  }
+  .bbi-flip-face {
+    backface-visibility: visible;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-flip-inner {
+    transition: none;
+  }
+}
+
+/* The last row of an accordion block had nothing under it: the row owns its
+   own padding now, so the block ended flush with the final question and the
+   next section's heading — which is large — read as sitting on top of it. */
+.bbi-faq-item:last-child {
+  padding-bottom: 1rem;
+}
+
+/* ---- disabled actions --------------------------------------------------
+   A disabled button still has to be READ — "Checkout not live yet" is the
+   whole message. It was near-invisible: the action treatment's plate plus a
+   blanket opacity-60 on top of a label that was already the dimmest value.
+
+   No travelling band (there is nothing to travel to), a face plate, and the
+   label at --ins-dim in full opacity. 7.9:1 on the housing — it reads as
+   unavailable because of the cursor and the flat plate, not because it has
+   been faded until it cannot be seen. */
+html.light .bbi-instrument button:disabled,
+html.light .bbi-instrument button[disabled],
+html.light .bbi-instrument .ac-cta:disabled,
+html.light .bbi-instrument .ac-action:disabled {
+  animation: none !important;
+  background: var(--ins-face) !important;
+  border: 1px solid var(--ins-rule) !important;
+  color: var(--ins-dim) !important;
+  opacity: 1 !important;
+  cursor: not-allowed;
+}
+html.light .bbi-instrument button:disabled *,
+html.light .bbi-instrument .ac-cta:disabled * {
+  color: var(--ins-dim) !important;
+}
+/* It must not light up on hover either — a plate that inverts under the
+   pointer reads as clickable, and this one is not. */
+html.light .bbi-instrument button:disabled:hover,
+html.light .bbi-instrument .ac-cta:disabled:hover,
+html.light .bbi-instrument .ac-action:disabled:hover {
+  background: var(--ins-face) !important;
+  color: var(--ins-dim) !important;
+  border-color: var(--ins-rule) !important;
+}
+
+/* The dock travels with the reader. See floating-dock.tsx for why the class
+   is needed at all; this only raises it above the header's 50 so it is never
+   covered on a page scrolled to the bottom. */
+.bbi-instrument > .bbi-overlay {
+  position: fixed;
+  z-index: 80;
+}

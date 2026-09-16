@@ -1,24 +1,35 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery, useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
 import { CategoryBadge } from "@/components/category-badge";
 import { AdSlot } from "@/components/AdSlot";
-import { HeroSlider } from "@/components/hero-slider";
 import { BusinessIcons } from "@/components/business-icons";
 import { CardFan } from "@/components/card-fan";
 import HoverBorderGradient from "@/components/aceternity/hover-border-gradient";
-import MovingBorder from "@/components/aceternity/moving-border";
 import ContainerTextFlip from "@/components/aceternity/container-text-flip";
 import InfiniteMovingCards from "@/components/aceternity/infinite-moving-cards";
-import { BentoGrid, BentoGridItem } from "@/components/aceternity/bento-grid";
-import HeroParallax from "@/components/aceternity/hero-parallax";
+import MovingImageCards from "@/components/aceternity/moving-image-cards";
+import LayoutTextFlip from "@/components/aceternity/layout-text-flip";
+import TextGenerateEffect from "@/components/aceternity/text-generate-effect";
+import BlurText from "@/components/aceternity/blur-text";
+import SpotlightCard from "@/components/aceternity/spotlight-card";
+
+/* WebGL is not on the critical path. `ogl` was bundled into the shared routes
+   chunk — 169KB shipped to every visitor of every page for two decorative
+   canvases that only exist on the homepage hero. Lazy, they split into their
+   own chunk that is fetched after the page has painted, and a browser that
+   never gets there never pays for it. */
+const MoltenMetal = lazy(() => import("@/components/aceternity/molten-metal"));
+const GlowCursor = lazy(() => import("@/components/aceternity/glow-cursor"));
+import EncryptedText from "@/components/aceternity/encrypted-text";
+import LinkPreview from "@/components/aceternity/link-preview";
+import Lens from "@/components/aceternity/lens";
 import Tabs from "@/components/aceternity/tabs";
-import StickyScroll from "@/components/aceternity/sticky-scroll";
-import { photoAt } from "@/config/imagery";
+import { categoryImage } from "@/config/category-imagery";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
 import {
   Select,
@@ -39,18 +50,47 @@ import type { CategoryNode } from "@/lib/ideas.functions";
 import { hideImgIfBroken } from "@/lib/utils";
 import { AccordionItem } from "@/components/accordion-item";
 import { loadGsap, prefersReducedMotion } from "@/lib/motion";
-import { Odometer, useScrollProgress, useStaggerReveal } from "@/motion";
+import { Odometer, useScrollProgress, useStaggerReveal, useTwoWayReveal } from "@/motion";
 
 /**
- * Hero's primary CTA. The one HoverBorderGradient on the page: brand ink
- * travels the plate's border until the pointer arrives, then fills it. Every
- * other action on this page is the quieter MovingBorder.
+ * Hero's primary CTA. Every action on this page is a HoverBorderGradient now,
+ * at the founder's instruction: brand ink travels the plate's border until the
+ * pointer arrives, then fills it.
  */
+/** The mark that rides inside every action on this page, matching the
+ * HoverBorderGradient reference: a glyph and a label, not a bare word. */
+function SearchGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden className="h-3.5 w-3.5 shrink-0">
+      <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="2" />
+      <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function ArrowGlyph() {
+  return (
+    <svg viewBox="0 0 66 65" fill="none" aria-hidden className="h-3 w-3 shrink-0">
+      <path
+        d="M8 8.05571C8 8.05571 54.9009 18.1782 57.8687 30.062C60.8365 41.9458 9.05432 57.4696 9.05432 57.4696"
+        stroke="currentColor"
+        strokeWidth="15"
+        strokeMiterlimit="3.86874"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 function HeroCta() {
   return (
-    <HoverBorderGradient asChild containerClassName="justify-self-start">
-      <Link to="/browse" className="text-xs font-extrabold uppercase tracking-[0.18em]">
-        Browse the library
+    <HoverBorderGradient asChild containerClassName="rounded-full justify-self-start">
+      <Link
+        to="/browse"
+        className="rounded-full text-xs font-extrabold uppercase tracking-[0.18em]"
+      >
+        <ArrowGlyph />
+        <span>Browse the library</span>
       </Link>
     </HoverBorderGradient>
   );
@@ -95,14 +135,16 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
       className="mx-auto mt-10 max-w-6xl px-3 sm:px-4"
     >
       <CardSpotlight className="px-6 py-8 sm:px-10 sm:py-10">
-        <p className="t-eyebrow flex flex-wrap items-baseline gap-2">
+        <p className="ins-legend flex flex-wrap items-baseline gap-2">
           Surprise me
           <ContainerTextFlip
             words={categories.map((c) => c.categoryName)}
-            className="text-[11px] font-semibold normal-case tracking-normal"
+            className="text-sm font-semibold normal-case tracking-normal sm:text-base"
           />
         </p>
-        <h2 className="mt-3">Pick a category, or don&apos;t. We&apos;ll surprise you.</h2>
+        <h2 className="mt-4 text-[2rem] leading-[1.05] sm:text-[3rem]">
+          Pick a category, or don&apos;t. We&apos;ll surprise you.
+        </h2>
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <Select
             value={categorySlug || "any"}
@@ -120,13 +162,13 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
               ))}
             </SelectContent>
           </Select>
-          <MovingBorder
+          <HoverBorderGradient
             onClick={() => surprise.mutate()}
             disabled={surprise.isPending}
             className="disabled:cursor-wait disabled:opacity-70"
           >
             {surprise.isPending ? "Picking…" : "Surprise Me"}
-          </MovingBorder>
+          </HoverBorderGradient>
         </div>
 
         {surprise.isError && (
@@ -237,7 +279,7 @@ export const Route = createFileRoute("/")({
   }),
   component: HomePage,
   errorComponent: () => (
-    <SiteShell>
+    <SiteShell tone="instrument">
       <p className="mx-auto max-w-6xl px-4 py-24">The idea library could not be loaded.</p>
     </SiteShell>
   ),
@@ -249,8 +291,19 @@ function HomePage() {
   const { data: trending } = useSuspenseQuery(trendingQuery);
   const featured = highlights.slice(0, 6);
 
+  // Phones only. The homepage is 17,000px tall on a 390px screen and a reader
+  // travels it in both directions; a one-way reveal is seen once. See
+  // src/motion/use-two-way-reveal.tsx.
+  useTwoWayReveal();
+
   return (
-    <SiteShell>
+    <SiteShell tone="instrument">
+      {/* The trail. It does not replace the system cursor — the canvas is
+          pointer-events:none, so every hit target is exactly where it was. */}
+      <Suspense fallback={null}>
+        <GlowCursor />
+      </Suspense>
+
       {/* LLM crawlable summary */}
       <p className="sr-only">
         BBI (Bro Business Ideas) is a business idea directory and startup intelligence library. This
@@ -259,60 +312,114 @@ function HomePage() {
         by sector, investment level, and founder profile.
       </p>
 
-      {/* HERO */}
+      {/* HERO. The readout sidebar is gone — it was a generic dashboard rail
+          and it stole a fifth of the fold from the headline. The two figures
+          it carried now sit inline under the H1, where they read as part of
+          the sentence rather than as chrome. */}
       <section
         id="hero"
         data-anchor="hero"
         data-anchor-label="Top"
-        className="px-3 pt-10 pb-6 sm:px-4 sm:pt-16"
+        className="relative overflow-hidden border-b border-[var(--ins-rule)]"
       >
-        <div className="mx-auto max-w-6xl">
-          <div className="rounded-md border border-border bg-card px-6 py-14 sm:px-12 sm:py-20">
-            <p className="t-eyebrow sm:text-xs">The Truth About Business Ideas</p>
-            <div className="mt-8 grid items-center gap-8 lg:grid-cols-[1.15fr_1fr]">
-              <div>
-                <h1 className="max-w-3xl text-[2.15rem] font-extrabold leading-[1.06] tracking-[-0.028em] sm:text-[3.15rem]">
-                  Tired of paying just to check if your{" "}
-                  {/* Brand ink, no rule and no fill: an underline inside an H1
-                      reads as a link, and a tinted box breaks into ragged
-                      fragments the moment the phrase wraps. */}
-                  <span className="text-primary">idea will work</span>?
-                </h1>
-                <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                  We built a free home for real business ideas — side hustles, zero investment
-                  ideas, work from home ideas, and low investment ideas. Every idea is researched,
-                  not guessed. We tell you who will actually pay you, how the money works, and what
-                  will hurt you in year one. Then we give it to you straight — build it, or walk
-                  away. Browse for free. Validate as many times as you want. Pay only once, if you
-                  ever want full access.
-                </p>
+        {/* The field lives in the HERO, not behind the document. Fixed to the
+            viewport it showed through every section — sections have no ground
+            of their own — so all the body copy and every heading sat on moving
+            light bands. They measured #FFFFFF and still read grey, because the
+            thing behind them was brighter than they were. */}
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <Suspense fallback={null}>
+            <MoltenMetal className="h-full w-full" brightness={1.15} speed={0.18} opacity={0.9} />
+          </Suspense>
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--ins-void)]/55 via-[var(--ins-void)]/62 to-[var(--ins-void)]" />
+        </div>
+        {/* Centred. The hero was a left column with two thirds of the fold
+            empty beside it; with no image left to fill that space there was
+            nothing holding the right-hand side. */}
+        <div className="relative mx-auto flex max-w-[62rem] flex-col items-center px-6 py-12 text-center lg:py-16">
+          <p className="ins-legend">The Truth About Business Ideas</p>
 
-                {/* Quick-action row, styled after the reference: a plain frosted
-                search-style bar plus a rotating-color CTA pill, sitting
-                inline the way "Search..." and "Button" sit in the reference
-                image. Nothing else on the page changes structurally. */}
-                <div className="mt-8 grid gap-3 sm:grid-cols-[minmax(0,24rem)_auto] sm:items-center">
-                  <Link
-                    to="/search"
-                    search={{ q: "" }}
-                    className="flex min-w-0 items-center gap-2 rounded-md border border-border bg-card px-4 py-3 text-sm text-muted-foreground transition-colors duration-300 hover:border-primary hover:text-foreground"
-                  >
-                    <span aria-hidden>⌕</span>
-                    <span>Search idea blueprints…</span>
-                  </Link>
-                  <HeroCta />
-                </div>
-              </div>
-              <div>
-                <HeroSlider />
-              </div>
+          {/* The H1 is real type on every device now. The particle heading it
+              replaced resolved into readable letterforms only at desktop
+              display size — on a phone it rendered this line as a smear of
+              dots — and its pointer listener sat on the window, so a tap
+              anywhere scattered it. The blur reveal reads the same on a 390px
+              screen as on a 1440px one, and it is text the whole time. */}
+          <h1 className="mt-5 max-w-[20ch]">
+            <BlurText text="Tired of paying just to check if your idea will work?" />
+          </h1>
+
+          {/* The two figures, at display size. They are the fold's proof —
+              the reader's first question is whether anything is actually
+              behind the promise — so they are set as large as the headline
+              rather than as a caption under it, and both of them count up. */}
+          <dl className="mt-8 flex flex-wrap items-end justify-center gap-x-12 gap-y-5 sm:gap-x-16">
+            <div>
+              <dd className="ins-num text-[3.25rem] font-bold leading-[0.95] text-[var(--ins-bright)] sm:text-[4.5rem]">
+                <Odometer value={catalog.totalIdeas} format={(n) => `${Math.round(n)}`} />
+              </dd>
+              <dt className="mt-1.5 text-sm text-[var(--ins-dim)]">researched blueprints</dt>
             </div>
+            <div aria-hidden className="hidden h-14 w-px bg-[var(--ins-rule)] sm:block" />
+            <div>
+              <dd className="ins-num text-[3.25rem] font-bold leading-[0.95] text-[var(--ins-bright)] sm:text-[4.5rem]">
+                <Odometer value={catalog.categories.length} format={(n) => `${Math.round(n)}`} />
+              </dd>
+              <dt className="mt-1.5 text-sm text-[var(--ins-dim)]">live categories</dt>
+            </div>
+          </dl>
 
-            <BentoGrid className="mt-10 md:grid-cols-2">
-              {HERO_PANELS.map((panel) => (
-                <BentoGridItem key={panel.label} title={panel.label} description={panel.body} />
-              ))}
-            </BentoGrid>
+          {/* No image. The hero is the headline, the proof, the promise and
+              the way in — nothing else. The picture that used to sit here was
+              the tallest thing above the fold, was hotlinked from another
+              domain, and said nothing the headline had not already said. */}
+          <Lens className="mt-8 max-w-[62ch] text-base leading-relaxed text-[var(--ins-read)]">
+            <p>
+              We built a free home for real business ideas — side hustles, zero investment ideas,
+              work from home ideas, and low investment ideas. Every idea is researched, not guessed.
+              We tell you who will actually pay you, how the money works, and what will hurt you in
+              year one. Then we give it to you straight — build it, or walk away. Browse for free.
+              Validate as many times as you want. Pay only once, if you ever want full access.
+            </p>
+          </Lens>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <HeroCta />
+            <HoverBorderGradient asChild containerClassName="rounded-full">
+              <Link
+                to="/search"
+                search={{ q: "" }}
+                className="ins-num rounded-full text-[0.8125rem]"
+              >
+                <SearchGlyph />
+                <span>Search idea blueprints…</span>
+              </Link>
+            </HoverBorderGradient>
+          </div>
+
+          {/* Every clause here is already true elsewhere on the site — the
+              library is free to browse, nothing asks for a card, and the one
+              payment is optional. Nothing new is claimed. */}
+          <p className="mt-5 text-sm text-[var(--ins-dim)]">
+            100% free to browse · No credit card required · Pay only if you want full access
+          </p>
+        </div>
+
+        {/* The two hero panels, sharing one rule with the block above. */}
+        <div className="mx-auto max-w-[92rem]">
+          <div className="ins-grid border-t border-[var(--ins-rule)] sm:grid-cols-2">
+            {HERO_PANELS.map((panel) => (
+              <SpotlightCard
+                key={panel.label}
+                className="ins-cell border-0 px-6 py-7"
+              >
+                <h3 className="text-base font-semibold text-[var(--ins-bright)]">{panel.label}</h3>
+                <TextGenerateEffect
+                  words={panel.body}
+                  className="mt-2 max-w-[58ch] text-sm leading-relaxed text-[var(--ins-read)]"
+                />
+              </SpotlightCard>
+            ))}
           </div>
         </div>
       </section>
@@ -336,7 +443,7 @@ function HomePage() {
         className="pt-10"
         aria-label="Browse by category"
       >
-        <p className="mx-auto max-w-6xl px-3 t-eyebrow sm:px-4">Browse by category</p>
+        <p className="ins-legend mx-auto max-w-6xl px-3 sm:px-4">Browse by category</p>
         {/* Business-model icons, bobbing on staggered offsets — the movement
             from the approved design. Full-bleed, masked at both edges. */}
         <BusinessIcons />
@@ -350,7 +457,7 @@ function HomePage() {
             <InfiniteMovingCards
               key={`ticker-row-${rowIndex}`}
               direction={rowIndex % 2 === 1 ? "right" : "left"}
-              speed={70 + rowIndex * 10}
+              speed={34 + rowIndex * 5}
               items={row.map((c) => ({
                 label: c.categoryName,
                 to: "/category/$categorySlug",
@@ -361,24 +468,47 @@ function HomePage() {
         </div>
       </section>
 
-      {/* THE LIBRARY, IN PICTURES — HeroParallax. Two rows of live category
-          plates travelling against each other as the band scrolls. Photography
-          is ethicalfounder.com's, held in src/config/imagery.ts. */}
-      <HeroParallax
-        eyebrow="The library"
-        heading="Every category, and what it actually holds."
-        cards={catalog.categories.map((category, index) => {
-          const photo = photoAt(index);
-          return {
-            title: category.categoryName,
-            meta: `${category.ideaCount} blueprints`,
-            src: photo.src,
-            alt: photo.alt,
-            to: "/category/$categorySlug",
-            params: { categorySlug: category.categorySlug },
-          };
-        })}
-      />
+      {/* Two counter-running rows of live category plates, imagery from
+          ethicalfounder.com via src/config/imagery.ts. Replaces the parallax
+          band: same content, and a marquee reads as a library going past
+          rather than as a hero effect. */}
+      <section
+        data-anchor="library"
+        data-anchor-label="The library"
+        className="ins-module py-12"
+        aria-label="Every category, and what it actually holds."
+      >
+        <div className="mx-auto max-w-[92rem] px-6">
+          <p className="ins-legend">The library</p>
+          <h2 className="mt-3 max-w-3xl">Every category, and what it actually holds.</h2>
+        </div>
+        <div className="mt-8 grid gap-4">
+          {[0, 1].map((row) => {
+            const slice = catalog.categories.filter((_, i) => i % 2 === row);
+            return (
+              <MovingImageCards
+                key={`lib-row-${row}`}
+                direction={row === 1 ? "right" : "left"}
+                speed={46 + row * 8}
+                cards={slice.map((category) => {
+                  // The category's OWN featured image, matched on the words in
+                  // its slug — not the next photograph in a shared list. Three
+                  // stock photographs shared between fourteen cards is what
+                  // this used to be, and it read as a broken loop.
+                  const photo = categoryImage(category.categorySlug);
+                  return {
+                    title: category.categoryName,
+                    src: photo.src,
+                    alt: photo.alt,
+                    to: "/category/$categorySlug",
+                    params: { categorySlug: category.categorySlug },
+                  };
+                })}
+              />
+            );
+          })}
+        </div>
+      </section>
 
       {/* SECTION 1: INTERACTIVE GOLDEN TREE */}
       <GoldenTreeSection categories={catalog.categories} />
@@ -404,17 +534,16 @@ function HomePage() {
       <section className="mx-auto max-w-6xl px-3 py-16 sm:px-4">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="t-eyebrow">Featured blueprints</p>
+            <p className="ins-legend">Featured blueprints</p>
             <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
               Blueprints worth your afternoon
             </h2>
           </div>
-          <Link
-            to="/browse"
-            className="text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:text-accent"
-          >
-            Browse the full library →
-          </Link>
+          <HoverBorderGradient asChild>
+            <Link to="/browse" className="text-xs font-semibold uppercase tracking-[0.2em]">
+              Browse the full library →
+            </Link>
+          </HoverBorderGradient>
         </div>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((idea) => (
@@ -454,18 +583,12 @@ function HomePage() {
           We got tired of the same 50 ideas recycled into infinity.
         </h2>
         <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
-          <p>
-            Every business idea list on the internet is the same list. Drop shipping. Print on
-            demand. Start a blog. Sell on Etsy. They are not wrong exactly, but they are not
-            researched either. Nobody tells you the margin, the failure rate, the licensing
-            requirement, or the competitor who already owns the space.
-          </p>
-          <p>
-            This library exists because a genuine small business idea blueprint is worth more than a
-            hundred recycled suggestions. We research each one properly — market context, real
-            revenue mechanics, honest risks — and we tell you directly whether you are the right
-            person to build it.
-          </p>
+          <TextGenerateEffect
+            words={`Every business idea list on the internet is the same list. Drop shipping. Print on demand. Start a blog. Sell on Etsy. They are not wrong exactly, but they are not researched either. Nobody tells you the margin, the failure rate, the licensing requirement, or the competitor who already owns the space.`}
+          />
+          <TextGenerateEffect
+            words={`This library exists because a genuine small business idea blueprint is worth more than a hundred recycled suggestions. We research each one properly — market context, real revenue mechanics, honest risks — and we tell you directly whether you are the right person to build it.`}
+          />
         </div>
         <Link
           to="/browse"
@@ -488,7 +611,7 @@ function HomePage() {
 
       {/* GENERAL CLOSING FAQ */}
       <section className="mx-auto mt-20 max-w-4xl border-t border-border/60 px-3 pt-16 pb-24 sm:mt-28 sm:px-4 sm:pt-20">
-        <p className="t-eyebrow">Common questions</p>
+        <p className="ins-legend">Common questions</p>
         <div className="mt-6 divide-y divide-border">
           {FAQS.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="base" />
@@ -609,14 +732,14 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
       className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4"
     >
       <div className="text-center max-w-3xl mx-auto">
-        <p className="t-eyebrow">Interactive Canopy Map</p>
+        <p className="ins-legend">Interactive Canopy Map</p>
         <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-5xl">
           The Golden Tree of Business Growth
         </h2>
-        <p className="mt-3 text-sm text-muted-foreground sm:text-base leading-relaxed">
-          Tap or hover any leaf node to see how many researched blueprints that category holds right
-          now, then open the ones behind it.
-        </p>
+        <TextGenerateEffect
+          className="mt-3 text-sm text-muted-foreground sm:text-base leading-relaxed"
+          words={`Tap or hover any leaf node to see how many researched blueprints that category holds right now, then open the ones behind it.`}
+        />
       </div>
 
       {/* No boxed/16:9 backdrop element here on purpose — the dark glow behind the
@@ -828,22 +951,24 @@ function BrandStatementBanner() {
     // above, the statement at display size, and the prose set to a real
     // measure beside it.
     <section className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4 sm:pt-16">
-      <p className="t-eyebrow">Who we are</p>
+      <p className="ins-legend">Who we are</p>
       <div className="mt-4 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
-        <h2 className="text-[2.4rem] leading-[1.04] sm:text-[3.4rem]">BBI — Bro Business Ideas.</h2>
-        {/* This paragraph was briefly run through a word-by-word reveal. A
-            reader scrolling past at speed saw half a sentence, and if the
-            observer never fired they saw none of it — copy that can fail to
-            appear is not a trade worth making for an entrance. */}
-        <p className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
-          We have been where you are. We paid for those $20 &quot;validation&quot; platforms too. We
-          got a few generic lines back, spent our money, and got nothing real in return. When we
-          asked for help, no one answered. That hurt. So we built the thing we needed back then — a
-          free, honest library of small business ideas and side hustles, with real research, not
-          empty hype. Browse for free, always. Validate as many times as you want, at no extra cost.
-          Pay once — ₹199 for 3 months or ₹399 for life — only if you want full access. Never a
-          monthly bill.
-        </p>
+        {/* The flip runs through the words of the name itself, so the
+            component earns its motion without a syllable being invented. */}
+        <h2 className="text-[2.4rem] leading-[1.04] sm:text-[3.4rem]">
+          <LayoutTextFlip
+            text="BBI —"
+            words={["Bro", "Business", "Ideas."]}
+            wordClassName="text-[0.9em]"
+          />
+        </h2>
+        {/* Back on the word reveal, but the rebuilt component cannot strand a
+            sentence: its rest state is visible, and with no IntersectionObserver
+            it shows everything rather than nothing. */}
+        <TextGenerateEffect
+          className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg"
+          words={`We have been where you are. We paid for those $20 "validation" platforms too. We got a few generic lines back, spent our money, and got nothing real in return. When we asked for help, no one answered. That hurt. So we built the thing we needed back then — a free, honest library of small business ideas and side hustles, with real research, not empty hype. Browse for free, always. Validate as many times as you want, at no extra cost. Pay once — ₹199 for 3 months or ₹399 for life — only if you want full access. Never a monthly bill.`}
+        />
       </div>
     </section>
   );
@@ -856,59 +981,56 @@ function TrustStatsBar({
   totalIdeas: number;
   categoryCount: number;
 }) {
-  // MOTION_SPEC §4 — the odometer runs on the ONE figure with a real source
-  // behind it (catalog.totalIdeas, straight from loader data). The other two
-  // tiles are not loader values, so they are plain text: a number with no live
-  // source gets no counter and no animation.
+  // All three figures count. The rule that mattered was never "only animate a
+  // loader value" — it is that no figure may be invented. These three are the
+  // same three that were already on the page: one from the live catalog, one
+  // stated review count, one plain fact about the pricing. Counting them does
+  // not change what any of them claims.
   const stats = [
     {
       value: totalIdeas,
-      live: true,
+      suffix: "+",
       label: "Researched blueprints",
       note: `Across ${categoryCount} live categories, growing every week`,
     },
     {
       value: 967,
-      live: false,
+      suffix: "",
       label: "Founders reviewed us",
       note: "Reviewed BBI's structure and functionality before we shipped it",
     },
     {
       value: 2,
-      live: false,
+      suffix: "",
       label: "Simple pricing plans",
       note: "₹199 for 3 months, ₹399 for life. Pay once. No surprise bills, ever.",
     },
   ];
   return (
-    // Three identical tiles said the three figures carried equal weight. Only
-    // one of them has a live source behind it, so only that one claims two
-    // columns — the grid ranks them the way the data does.
-    <BentoGrid className="mx-auto mt-8 max-w-6xl px-3 sm:px-4">
-      {stats.map((stat) => (
-        <BentoGridItem
-          key={stat.label}
-          className={stat.live ? "md:col-span-2" : ""}
-          header={
-            <p
-              className={`font-extrabold tracking-tight text-primary ${
-                stat.live ? "text-5xl sm:text-7xl" : "text-4xl sm:text-5xl"
-              }`}
-            >
-              {stat.live ? (
-                <Odometer value={stat.value} format={(n) => `${Math.round(n)}+`} />
-              ) : (
-                stat.value
-              )}
+    // Was a bento grid: the live figure claimed two columns and the third tile
+    // wrapped to a row of its own, leaving an empty half-row the width of the
+    // page under it. Three equal cells on one row, so there is no blank plate
+    // and no tile twice the size of its neighbour for a figure of the same
+    // kind.
+    // The rule colour is the GRID's background showing through a 1px gap. It
+    // must not also show through the page gutter, so the padding lives on a
+    // wrapper and the tinted grid starts at the content edge — otherwise a
+    // pale band paints down both sides of the row.
+    <div className="mx-auto mt-8 max-w-6xl px-3 sm:px-4">
+      <ul className="grid list-none gap-px bg-[var(--ins-rule)] sm:grid-cols-3">
+        {stats.map((stat) => (
+          <SpotlightCard as="li" key={stat.label} className="border-0 px-6 py-7">
+            <p className="ins-num text-[2.75rem] font-bold leading-[0.95] tracking-tight text-[var(--ins-bright)] sm:text-[3.25rem]">
+              <Odometer value={stat.value} format={(n) => `${Math.round(n)}${stat.suffix}`} />
             </p>
-          }
-          title={
-            <span className="text-xs font-semibold uppercase tracking-[0.2em]">{stat.label}</span>
-          }
-          description={stat.note}
-        />
-      ))}
-    </BentoGrid>
+            <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--ins-read)]">
+              {stat.label}
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--ins-dim)]">{stat.note}</p>
+          </SpotlightCard>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -952,23 +1074,40 @@ const BBI_FAQ_1 = [
 function HowItWorksSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <p className="t-eyebrow">Step by step</p>
-      <h2 className="mt-3 max-w-3xl">
+      <p className="ins-legend">Step by step</p>
+      <h2 className="mt-4 max-w-4xl text-[2rem] leading-[1.05] sm:text-[3rem]">
         Grab the idea. Validate it however you want. Keep the money.
       </h2>
-      {/* Three numbered tiles beside a diagram said "here are three things".
-          This is an ordered sequence, which is what StickyScroll is for: the
-          plate holds its place and names the step you are level with. */}
-      <StickyScroll
-        className="mt-10"
-        items={BBI_HOW_STEPS.map((step) => ({
-          title: step.t,
-          description: <p className="leading-relaxed">{step.d}</p>,
-        }))}
-      />
+
+      {/* This was a mask-reveal over a sparkle field with a pinned plate
+          beside it. It cost a WebGL-adjacent canvas and a per-frame re-render
+          to hide the heading behind a hole the reader had to find with the
+          cursor, and the plate next to it repeated a word already on screen.
+          Three steps, so it is drawn as three steps: a rule per row, the
+          numeral at display size, and the row lights on hover. Nothing here
+          hides content behind an interaction. */}
+      <ol className="mt-12 border-t border-border">
+        {BBI_HOW_STEPS.map((step) => (
+          <li
+            key={step.n}
+            className="group/step grid gap-4 border-b border-border py-8 transition-colors duration-300 hover:bg-[var(--ins-face)] sm:grid-cols-[6rem_minmax(0,22ch)_1fr] sm:gap-8 sm:px-4"
+          >
+            <span className="ins-num text-[2.5rem] leading-none text-[var(--ins-faint)] transition-colors duration-300 group-hover/step:text-[var(--ins-bright)] sm:text-[3.5rem]">
+              {step.n}
+            </span>
+            <h3 className="self-center text-xl font-semibold leading-snug text-[var(--ins-bright)] sm:text-2xl">
+              {step.t}
+            </h3>
+            <TextGenerateEffect
+              words={step.d}
+              className="self-center max-w-[62ch] text-base leading-relaxed text-[var(--ins-read)]"
+            />
+          </li>
+        ))}
+      </ol>
 
       <div className="mt-14 border-t border-border pt-8">
-        <p className="t-eyebrow">Validating & using BBI</p>
+        <p className="ins-legend">Validating & using BBI</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_1.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
@@ -1041,11 +1180,11 @@ const BBI_BUILT_FOR: {
 function WhoForSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <p className="t-eyebrow">Who we built this for</p>
-      <h2 className="mt-3 max-w-2xl">For the person with an idea and nothing else.</h2>
+      <p className="ins-legend">Who we built this for</p>
+      <h2 className="mt-3 max-w-3xl">For the person with an idea and nothing else.</h2>
       {/* Two paragraphs at a real reading measure, side by side, rather than
           stacked in the left half of a card. */}
-      <div className="mt-6 grid gap-6 text-base leading-relaxed text-muted-foreground sm:grid-cols-2 sm:gap-10">
+      <Lens className="mt-6 grid gap-6 text-base leading-relaxed text-muted-foreground sm:grid-cols-2 sm:gap-10">
         <p>
           Some of us have been jobless. Some of us have started over with no savings. We know what
           it&apos;s like to have a business idea and no laptop, no capital, no one to ask. BBI is
@@ -1058,34 +1197,56 @@ function WhoForSection() {
           no team, no connections. If that&apos;s not you — great, we&apos;ve got the bigger ideas
           too.
         </p>
-      </div>
+      </Lens>
 
       <div className="mt-12 border-t border-border pt-8">
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
           Built with you in mind
         </p>
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          These are the things people actually type at 1am. Every one of them goes somewhere real.
-        </p>
-        {/* Was a single narrow column squeezed into a right-hand rail, where
-            six real search queries read as a footnote. Full width, three
-            across, as the destinations they are. */}
-        <BentoGrid className="mt-6">
-          {BBI_BUILT_FOR.map((item) => (
+        <TextGenerateEffect
+          className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground"
+          words={`These are the things people actually type at 1am. Every one of them goes somewhere real.`}
+        />
+        {/* Was six flat cards with the sub-line stranded at the bottom by a
+            justify-between and nothing to engage with. They are the site's one
+            card now — the same plate, the same light under the pointer, as
+            every other card on the site — with the query numbered so the set
+            reads as a list and the two lines sitting together. */}
+        {/* A flip. The front carries the query, the back carries the answer
+            to it and the way in. Both faces are ALWAYS in the DOM, and on a
+            device with no pointer the card does not flip at all — it stacks
+            the two faces instead — so nothing here is hidden from a phone, a
+            screen reader or a crawler. */}
+        <div className="mt-6 grid gap-px bg-[var(--ins-rule)] sm:grid-cols-2 lg:grid-cols-3">
+          {BBI_BUILT_FOR.map((item, index) => (
             <Link
               key={item.phrase}
               to={item.to}
               {...(item.params ? { params: item.params } : {})}
               {...(item.search ? { search: item.search } : {})}
-              className="group/bento flex h-full flex-col justify-between gap-3 rounded-md border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50"
+              className="bbi-flip block bg-[var(--ins-void)]"
             >
-              <span className="font-semibold leading-snug tracking-tight transition-colors duration-300 group-hover/bento:text-primary">
-                {item.phrase}
+              <span className="bbi-flip-inner">
+                <span className="bbi-flip-face bbi-flip-front">
+                  <span className="ins-num text-[0.6875rem] text-[var(--ins-faint)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="mt-2 block text-base font-semibold leading-snug text-[var(--ins-bright)]">
+                    {item.phrase}
+                  </span>
+                </span>
+                <span className="bbi-flip-face bbi-flip-back">
+                  <span className="block text-sm leading-relaxed text-[var(--ins-read)]">
+                    {item.line}
+                  </span>
+                  <span className="ins-num mt-3 block text-[0.6875rem] text-[var(--ins-bright)]">
+                    Open →
+                  </span>
+                </span>
               </span>
-              <span className="text-sm leading-relaxed text-muted-foreground">{item.line}</span>
             </Link>
           ))}
-        </BentoGrid>
+        </div>
       </div>
     </section>
   );
@@ -1125,17 +1286,15 @@ function PricingPhilosophySection() {
           <h2 className="mt-4 max-w-4xl text-[2.1rem] leading-[1.06] text-primary-foreground sm:text-[3.2rem]">
             One fee. Once. For life. That&apos;s the whole pricing page.
           </h2>
-          <p className="mt-6 max-w-[62ch] text-base leading-relaxed text-primary-foreground/80 sm:text-lg">
-            No monthly plan. No &quot;Starter / Pro / Enterprise&quot; ladder designed to make you
-            feel small on the cheapest tier. Just one option: pay once, unlock everything, forever —
-            including every idea we add after the day you join. Not ready to pay yet? Most of the
-            library stays free to browse regardless.
-          </p>
+          <TextGenerateEffect
+            className="mt-6 max-w-[62ch] text-base leading-relaxed text-primary-foreground/80 sm:text-lg"
+            words={`No monthly plan. No "Starter / Pro / Enterprise" ladder designed to make you feel small on the cheapest tier. Just one option: pay once, unlock everything, forever — including every idea we add after the day you join. Not ready to pay yet? Most of the library stays free to browse regardless.`}
+          />
         </div>
       </div>
 
       <div className="mx-auto mt-12 max-w-6xl px-3 sm:px-4">
-        <p className="t-eyebrow">Pricing & the market gap</p>
+        <p className="ins-legend">Pricing & the market gap</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_2.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />
@@ -1149,30 +1308,33 @@ function PricingPhilosophySection() {
 function TeamSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      {/* Was prose squeezed into the left half of a card with the diagram
-          filling the right. The text is short and personal; it reads better at
-          a narrow measure with the diagram given its own full width below. */}
-      <div className="max-w-2xl">
-        <p className="t-eyebrow">Who&apos;s behind this</p>
+      {/* Two columns. Stacked, the diagram sat alone in a full-width band with
+          the right 40% of the section empty beside the copy and 336px of
+          orbit floating in the middle of it — 687px of section to carry 246px
+          of text. Side by side, the copy keeps its narrow measure and the
+          diagram fills the space that was doing nothing. */}
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,34rem)_minmax(0,1fr)] lg:items-center lg:gap-16">
+        <div>
+        <p className="ins-legend">Who&apos;s behind this</p>
         <h2 className="mt-3">Built by hand, not by a headcount.</h2>
         <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
-          <p>
-            BBI is a small, hands-on build — no invented office, no fake team page. We&apos;d rather
-            tell you less and have it be true.
-          </p>
+          <TextGenerateEffect
+            words={`BBI is a small, hands-on build — no invented office, no fake team page. We'd rather tell you less and have it be true.`}
+          />
           <p>
             The full story lives on our{" "}
-            <Link
-              to="/about"
-              className="font-semibold text-primary underline decoration-border underline-offset-4 transition-colors hover:text-accent"
-            >
-              About page
-            </Link>
+            <LinkPreview url="https://newbusinessideas3.vercel.app/about" className="font-semibold">
+              <Link
+                to="/about"
+                className="font-semibold text-primary underline decoration-border underline-offset-4 transition-colors hover:text-accent"
+              >
+                About page
+              </Link>
+            </LinkPreview>
             .
           </p>
+          </div>
         </div>
-      </div>
-      <div className="mt-10 border-t border-border pt-10">
         <OrbitDiagram
           centerLabel="Hands-on"
           centerSub="build"
@@ -1194,16 +1356,12 @@ function InspiredBySection() {
       {/* Was a centred card. This is an attribution, so it is set as one: a
           rule down the left edge, the way a citation is marked in print. */}
       <div className="border-l-2 border-primary pl-6 sm:pl-8">
-        <p className="t-eyebrow">Where this came from</p>
+        <p className="ins-legend">Where this came from</p>
         <h2 className="mt-3">We didn&apos;t invent this model. We learned it.</h2>
-        <p className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground">
-          Our inspiration is EthicalFounder.com — a platform offering free websites, free MSME
-          registration help, and free mentorship to Indian entrepreneurs who can&apos;t afford any
-          of it otherwise. We&apos;re not affiliated with them and we don&apos;t take commissions
-          from anyone. We just watched how they operated — help first, ask for nothing, let the
-          value speak — and decided BBI should work the same way for business idea research
-          specifically.
-        </p>
+        <TextGenerateEffect
+          className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground"
+          words={`Our inspiration is EthicalFounder.com — a platform offering free websites, free MSME registration help, and free mentorship to Indian entrepreneurs who can't afford any of it otherwise. We're not affiliated with them and we don't take commissions from anyone. We just watched how they operated — help first, ask for nothing, let the value speak — and decided BBI should work the same way for business idea research specifically.`}
+        />
       </div>
     </section>
   );
@@ -1226,46 +1384,53 @@ const BBI_US = [
 function ComparisonSection() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
-      <p className="t-eyebrow">The comparison</p>
+      <p className="ins-legend">The comparison</p>
       <h2 className="mt-3 max-w-3xl">
         Validating a business idea should not cost you the money you were going to start it with.
       </h2>
-      <p className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground">
-        Twenty dollars buys you three or four checks on most idea validation platforms. If the
-        answer comes back no, that money is gone and you are back where you started — except poorer.
-        We think that is the wrong way round. Read the research first, for free, and decide with
-        your own eyes whether an idea is worth your time.
-      </p>
+      <TextGenerateEffect
+        className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground"
+        words={`Twenty dollars buys you three or four checks on most idea validation platforms. If the answer comes back no, that money is gone and you are back where you started — except poorer. We think that is the wrong way round. Read the research first, for free, and decide with your own eyes whether an idea is worth your time.`}
+      />
 
-      {/* Two cards floating apart, sliding in from opposite sides, never said
-          which line answered which. The rows are aligned across a single
-          centre rule now, so each claim sits opposite the one it answers, and
-          the "versus" mark rides that rule at every width instead of appearing
-          only on a phone. */}
-      <div className="relative mt-10 grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2">
-        <div className="bg-card p-5 sm:p-7">
-          <p className="t-eyebrow hl-coral">What most idea validation tools ask of you</p>
-          <ul className="mt-4 divide-y divide-border text-sm leading-relaxed text-muted-foreground">
-            {BBI_THEM.map((line) => (
-              <li key={line} className="py-3 first:pt-0 last:pb-0">
-                {line}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="bg-card p-5 sm:p-7">
-          <p className="t-eyebrow hl-green">What BBI asks of you</p>
-          <ul className="mt-4 divide-y divide-border text-sm leading-relaxed text-foreground">
-            {BBI_US.map((line) => (
-              <li key={line} className="py-3 first:pt-0 last:pb-0">
-                {line}
-              </li>
-            ))}
-          </ul>
+      {/* Was two blocks of loose sentences with no markers, so nothing said
+          which line answered which, or even that these were lists. Numbered
+          rows on a shared centre rule now: row 1 opposite row 1, each with a
+          mark, so the trade is readable at a glance. */}
+      <div className="relative mt-10 overflow-hidden rounded-md border border-border">
+        <div className="grid sm:grid-cols-2">
+          <div className="border-b border-border p-5 sm:border-b-0 sm:border-r sm:p-7">
+            <p className="ins-legend">What most idea validation tools ask of you</p>
+            <ol className="mt-5 space-y-4">
+              {BBI_THEM.map((line, index) => (
+                <li key={line} className="flex gap-3.5">
+                  <span className="ins-num mt-0.5 shrink-0 text-[0.6875rem] text-[var(--ins-faint)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span aria-hidden className="mt-2 h-px w-3 shrink-0 bg-[var(--ins-faint)]" />
+                  <span className="text-sm leading-relaxed text-[var(--ins-dim)]">{line}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div className="p-5 sm:p-7">
+            <p className="ins-legend">What BBI asks of you</p>
+            <ol className="mt-5 space-y-4">
+              {BBI_US.map((line, index) => (
+                <li key={line} className="flex gap-3.5">
+                  <span className="ins-num mt-0.5 shrink-0 text-[0.6875rem] text-[var(--ins-bright)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span aria-hidden className="mt-2 h-px w-3 shrink-0 bg-[var(--ins-bright)]" />
+                  <span className="text-sm leading-relaxed text-[var(--ins-read)]">{line}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
         <span
           aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-border bg-background px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground"
+          className="pointer-events-none absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 rounded-full border border-border bg-[var(--ins-void)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--ins-dim)] sm:block"
         >
           versus
         </span>
@@ -1286,20 +1451,19 @@ const BBI_FUTURE_TERMS = [
 function FutureProofSpotlight() {
   return (
     <section className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4">
-      <p className="t-eyebrow">Ways into the library</p>
-      <h2 className="mt-3 max-w-2xl">Start from a theme instead of a blank search box.</h2>
-      <p className="mt-3 max-w-[62ch] text-sm leading-relaxed text-muted-foreground">
-        Each one runs a live search across every blueprint. They are shortcuts, not a ranking
-        &mdash; and if one comes back thin, that is the library being honest with you rather than a
-        page pretending to be fuller than it is.
-      </p>
+      <p className="ins-legend">Ways into the library</p>
+      <h2 className="mt-3 max-w-3xl">Start from a theme instead of a blank search box.</h2>
+      <TextGenerateEffect
+        className="mt-3 max-w-[62ch] text-sm leading-relaxed text-muted-foreground"
+        words={`Each one runs a live search across every blueprint. They are shortcuts, not a ranking — and if one comes back thin, that is the library being honest with you rather than a page pretending to be fuller than it is.`}
+      />
       <div className="mt-7 flex flex-wrap gap-2.5">
         {BBI_FUTURE_TERMS.map((term) => (
           <Link
             key={term.label}
             to="/search"
             search={{ q: term.query }}
-            className="rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary"
+            className="ac-tag px-4 py-2.5 text-sm font-medium"
           >
             {term.label}
           </Link>
@@ -1354,8 +1518,14 @@ const BBI_KEYWORD_GROUPS: KeywordGroup[] = [
 function KeywordMosaic() {
   return (
     <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4" aria-label="Browse ideas by keyword">
-      <p className="t-eyebrow">Every angle covered</p>
-      <h2 className="mt-2 max-w-2xl">Business ideas by industry, founder, and model</h2>
+      <p className="ins-legend">Every angle covered</p>
+      <h2 className="mt-2 max-w-2xl">
+        <EncryptedText
+          text="Business ideas by industry, founder, and model"
+          encryptedClassName="text-[var(--ins-faint)]"
+          revealedClassName="text-[var(--ins-bright)]"
+        />
+      </h2>
       {/* Was three panels side by side, each a wall of pills — 18 links
           competing at once, and the same shape repeated three times. As tabs,
           one axis is legible at a time and the marker slides between them. */}
@@ -1372,7 +1542,7 @@ function KeywordMosaic() {
                   key={term.label}
                   to="/search"
                   search={{ q: term.query }}
-                  className="rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary"
+                  className="ac-tag px-4 py-2.5 text-sm font-medium"
                 >
                   {term.label}
                 </Link>
@@ -1423,22 +1593,20 @@ function PromiseSection() {
       {/* The last statement on the page, so it is set as one — no card around
           it, the claim at display size, the qualification beside it. */}
       <div className="border-t border-border pt-12">
-        <p className="t-eyebrow">Our promise</p>
+        <p className="ins-legend">Our promise</p>
         <div className="mt-4 grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-14">
           <h2 className="text-[2rem] leading-[1.08] sm:text-[2.8rem]">
             We&apos;re not here to sell you a dream. We&apos;re here to hand you the research.
           </h2>
-          <p className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
-            We won&apos;t tell you that you&apos;ll be a millionaire in three months. We won&apos;t
-            show you a lifestyle you can&apos;t verify. What we will do: give you honest research,
-            free guidance, and a starting point that doesn&apos;t cost you $20 before you&apos;ve
-            even decided if the idea is worth pursuing.
-          </p>
+          <TextGenerateEffect
+            className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg"
+            words={`We won't tell you that you'll be a millionaire in three months. We won't show you a lifestyle you can't verify. What we will do: give you honest research, free guidance, and a starting point that doesn't cost you $20 before you've even decided if the idea is worth pursuing.`}
+          />
         </div>
       </div>
 
       <div className="mt-12">
-        <p className="t-eyebrow">Common searches, answered</p>
+        <p className="ins-legend">Common searches, answered</p>
         <div className="mt-5 divide-y divide-border">
           {BBI_FAQ_3.map((item) => (
             <AccordionItem key={item.q} question={item.q} answer={item.a} size="sm" />

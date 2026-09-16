@@ -25,7 +25,7 @@ export default function InfiniteMovingCards({
 }: {
   items: MovingItem[];
   direction?: "left" | "right";
-  /** Seconds for one full pass. */
+  /** Seconds for one full pass. Lower is faster. */
   speed?: number;
   className?: string;
 }) {
@@ -40,7 +40,13 @@ export default function InfiniteMovingCards({
     return () => query.removeEventListener("change", sync);
   }, []);
 
-  const doubled = [...items, ...items];
+  // A row whose items do not fill the viewport leaves a visible blank stretch
+  // at one end: translating -50% of a track narrower than the screen exposes
+  // the gap behind it. Repeat the set until one half is comfortably wider than
+  // any viewport, THEN duplicate that for the seamless loop.
+  const perHalf = Math.max(1, Math.ceil(18 / Math.max(items.length, 1)));
+  const half = Array.from({ length: perHalf }, () => items).flat();
+  const doubled = [...half, ...half];
 
   return (
     <div

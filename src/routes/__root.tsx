@@ -15,6 +15,7 @@ import { PointerChannelProvider, PageTransition } from "../motion";
 import { SiteTextMotion } from "@/components/site-text-motion";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { catalogQuery } from "../lib/ideas.functions";
+import { JsonLd, organisationSchema } from "@/lib/schema";
 
 function NotFoundComponent() {
   return (
@@ -102,7 +103,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700;800&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
@@ -118,6 +119,10 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en" className="light">
       <head>
         <HeadContent />
+        {/* The publishing entity, declared once for the whole site rather than
+            per route. Every page already said what it was about; none said who
+            stands behind it, which is the E-E-A-T signal that was missing. */}
+        <JsonLd schema={organisationSchema()} />
       </head>
       <body>
         {children}

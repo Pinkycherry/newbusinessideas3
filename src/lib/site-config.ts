@@ -26,3 +26,27 @@ export function wordpressSiteUrl(): string {
 export function wordpressApiBase(): string {
   return `${wordpressSiteUrl()}/wp-json/wp/v2`;
 }
+
+/**
+ * SINGLE SOURCE OF TRUTH for the publishing entity behind this site.
+ *
+ * Every page asserts what it is about; none of them asserted who stands behind
+ * it. `Organization` as `publisher` is the signal search engines and AI
+ * crawlers use to attach authorship and accountability to content, and it was
+ * absent from the whole codebase.
+ *
+ * `sameAs` is deliberately empty. It is meant to list profiles the same
+ * organisation genuinely controls, and inventing URLs there is worse than
+ * omitting it -- a broken or wrong profile is a trust signal pointing the
+ * wrong way. Fill it in when the real accounts exist.
+ */
+export const ORGANISATION_NAME = "BBI";
+export const ORGANISATION_LEGAL_NAME = "Bro Business Ideas";
+
+export function organisationSameAs(): string[] {
+  const fromEnv = typeof process !== "undefined" ? process.env?.["SITE_SAME_AS"] : undefined;
+  return (fromEnv ?? "")
+    .split(",")
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+}

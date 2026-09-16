@@ -1,50 +1,31 @@
-import { useMotionValue, useMotionTemplate, motion } from "framer-motion";
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import SpotlightCard from "@/components/aceternity/spotlight-card";
 
 /**
- * CardSpotlight — Aceternity UI, ported to this stack.
+ * CardSpotlight — kept as a name, not as a second implementation.
  *
- * A plate that lights where the pointer is. The wash is brand ink at low
- * strength over paper, so it reads as the card noticing you rather than as a
- * glow. Touch and keyboard users get the plain plate, which is the whole card.
+ * The site had three different card treatments running at once: this one
+ * (a brand-ink wash driven by framer motion values), the Evervault plates
+ * (a character field behind a pointer window), and plain bordered divs. Three
+ * answers to the same gesture on one page reads as three sites.
+ *
+ * Every card is a SpotlightCard now. This file stays so the call sites that
+ * already say `CardSpotlight` — the idea card, which is most of the site —
+ * keep working without a rename sweep across every route.
+ *
+ * @deprecated Import SpotlightCard directly in new code.
  */
 export default function CardSpotlight({
   children,
   className,
-  radius = 380,
 }: {
   children: React.ReactNode;
   className?: string;
+  /** Accepted and ignored: the spotlight radius is a CSS concern now. */
   radius?: number;
 }) {
-  const x = useMotionValue(-radius);
-  const y = useMotionValue(-radius);
-  const background = useMotionTemplate`radial-gradient(${radius}px circle at ${x}px ${y}px, color-mix(in oklab, var(--primary) 14%, transparent), transparent 72%)`;
-
-  return (
-    <div
-      onMouseMove={(event) => {
-        const rect = event.currentTarget.getBoundingClientRect();
-        x.set(event.clientX - rect.left);
-        y.set(event.clientY - rect.top);
-      }}
-      onMouseLeave={() => {
-        x.set(-radius);
-        y.set(-radius);
-      }}
-      className={cn(
-        "group relative overflow-hidden rounded-md border border-border bg-card transition-colors duration-300 hover:border-primary/50",
-        className,
-      )}
-    >
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{ background }}
-      />
-      <div className="relative z-10 h-full">{children}</div>
-    </div>
-  );
+  // `exactOptionalPropertyTypes` is on: an explicit `undefined` is not the
+  // same as an absent prop, so the prop is spread in only when it has a value.
+  return <SpotlightCard {...(className ? { className } : {})}>{children}</SpotlightCard>;
 }
