@@ -77,10 +77,10 @@ function FounderStoryDetailPage() {
         schema={[
           articleSchema({
             path: `/founder-stories/${study.slug}`,
-            title: study.title,
-            description: `How $"Verified Operator" built a profitable ${study.story_theme}.`,
-            publishedAt: "2026-09-14",
-            author: "Verified Operator",
+            headline: study.title,
+            description: `How a verified operator built a profitable ${study.story_theme}.`,
+            datePublished: "2026-09-14",
+            categoryName: study.story_theme,
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },

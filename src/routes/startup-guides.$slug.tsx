@@ -66,10 +66,10 @@ function StartupGuideDetailPage() {
         schema={[
           articleSchema({
             path: `/startup-guides/${guide.slug}`,
-            title: guide.title,
+            headline: guide.title,
             description: guide.description,
-            publishedAt: guide.publishedDate,
-            author: guide.author,
+            datePublished: guide.publishedDate,
+            categoryName: guide.category,
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
