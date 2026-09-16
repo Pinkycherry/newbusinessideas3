@@ -1,5 +1,6 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { ArrowRight } from "lucide-react";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
@@ -126,6 +127,16 @@ function BlogPostPage() {
           {post.title}
         </h1>
 
+        {/* The lede. Nothing on this template said "read me first" before --
+            the excerpt existed only in the meta description, invisible on
+            the page itself, so the article opened cold straight into the
+            same body copy as everything after it. */}
+        {post.excerpt && (
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+            {post.excerpt}
+          </p>
+        )}
+
         {post.image && (
           // Keeps the page's own corner radius — the media slot supplies the
           // clip and the scale, not a new shape.
@@ -141,35 +152,66 @@ function BlogPostPage() {
         )}
 
         {/* Content comes from our own CMS and is sanitized server-side
-            (scripts, iframes, inline handlers and theme classes stripped). */}
-        <div className="wp-prose glass mt-8 rounded-3xl px-5 py-8 sm:px-8">
-          <div dangerouslySetInnerHTML={{ __html: firstBlock }} />
-          <AdSlot position="blog-post-after-first-paragraph" size="banner" className="my-6" />
-          <div dangerouslySetInnerHTML={{ __html: secondBlock }} />
-          <AdSlot position="blog-post-mid-article" size="rectangle" className="my-6" />
-          <div dangerouslySetInnerHTML={{ __html: thirdBlock }} />
+            (scripts, iframes, inline handlers and theme classes stripped).
+
+            Three cards, not one. The single continuous card this replaced
+            had the two ad slots sitting inside its own padding, so an ad
+            rendered on the article's own card background instead of reading
+            as a break between sections -- and a post with no ad configured
+            (AdSlot renders nothing until adCode is set) was one undivided
+            wall of text from the image straight through to "More reading."
+            Splitting on the same first-paragraph / mid-article boundaries
+            the ad slots already used gives the piece actual section breaks
+            whether or not an ad is there to mark them. */}
+        <div className="mt-8 space-y-6">
+          <div className="wp-prose glass rounded-3xl px-5 py-8 sm:px-8">
+            <div dangerouslySetInnerHTML={{ __html: firstBlock }} />
+          </div>
+          <AdSlot position="blog-post-after-first-paragraph" size="banner" />
+          <div className="wp-prose glass rounded-3xl px-5 py-8 sm:px-8">
+            <div dangerouslySetInnerHTML={{ __html: secondBlock }} />
+          </div>
+          <AdSlot position="blog-post-mid-article" size="rectangle" />
+          <div className="wp-prose glass rounded-3xl px-5 py-8 sm:px-8">
+            <div dangerouslySetInnerHTML={{ __html: thirdBlock }} />
+          </div>
         </div>
 
-        <AdSlot position="blog-post-after-last-paragraph" size="banner" className="mt-8" />
+        <AdSlot position="blog-post-after-last-paragraph" size="banner" className="mt-6" />
 
         {related.length > 0 && (
-          <section className="mt-14">
-            <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-              More reading
-            </h2>
+          <section className="mt-14 border-t border-border/70 pt-10">
+            <div className="flex items-center gap-3">
+              <h2 className="shrink-0 text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                More reading
+              </h2>
+              <span aria-hidden className="h-px flex-1 bg-border" />
+            </div>
             <div
               ref={relatedRef}
-              className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-4"
+              className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-4"
             >
               {related.map((r) => (
                 <Link
                   key={r.id}
                   to="/blog/$slug"
                   params={{ slug: r.slug }}
-                  className="glass mo-card rounded-2xl p-4"
+                  className="mo-card group glass flex flex-col justify-between rounded-2xl p-5"
                 >
-                  <p className="text-sm font-semibold leading-snug">{r.title}</p>
-                  <p className="mt-2 text-xs text-muted-foreground">{formatDate(r.date)}</p>
+                  <div>
+                    {r.categories[0] && (
+                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent">
+                        {r.categories[0]}
+                      </p>
+                    )}
+                    <p className="mt-2 text-sm font-semibold leading-snug text-foreground">
+                      {r.title}
+                    </p>
+                  </div>
+                  <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+                    <span>{formatDate(r.date)}</span>
+                    <ArrowRight className="h-3.5 w-3.5 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
+                  </div>
                 </Link>
               ))}
             </div>
