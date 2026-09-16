@@ -3693,10 +3693,17 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
 .bbi-instrument .glass-pill:hover,
 .bbi-instrument .glass-pill[data-state="open"],
 .bbi-instrument .ac-tag:hover {
-  animation: none;
+  animation: none !important;
   background:
     linear-gradient(var(--act-fill), var(--act-fill)) padding-box,
     linear-gradient(var(--act-fill), var(--act-fill)) border-box !important;
+  color: var(--act-ink) !important;
+}
+/* Belt and suspenders for the keyword-tag pills specifically: same rule,
+   restated on the anchor element directly, so nothing between here and the
+   end of the file can win a specificity tie on the tag's hover ink. */
+.bbi-instrument a.ac-tag:hover,
+.bbi-instrument a.ac-tag:hover * {
   color: var(--act-ink) !important;
 }
 .bbi-instrument .ac-action:hover *,

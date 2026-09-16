@@ -132,6 +132,11 @@ const navLinks = [{ to: "/pricing", label: "Pricing" }];
 
 const EXPLORE_ITEMS = [
   { to: "/browse", label: "Browse all ideas" },
+  { to: "/calculator", label: "Calculators & Tools" },
+  { to: "/startup-guides", label: "Startup Guides" },
+  { to: "/founder-stories", label: "Founder Stories" },
+  { to: "/founder-glossary", label: "Startup Glossary" },
+  { to: "/learning-resources", label: "Learning Resources" },
   { to: "/search", label: "Search" },
   { to: "/blog", label: "Blog" },
   { to: "/services", label: "Services" },
