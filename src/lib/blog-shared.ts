@@ -33,7 +33,9 @@ export function decodeEntities(input: string): string {
 }
 
 export function stripHtml(input: string): string {
-  return decodeEntities(input.replace(/<[^>]*>/g, " ")).replace(/\s+/g, " ").trim();
+  return decodeEntities(input.replace(/<[^>]*>/g, " "))
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 /** Cuts on a word boundary — never mid-word. */
@@ -45,9 +47,9 @@ export function excerpt(text: string, max = 180): string {
   return `${slice.slice(0, cut > 60 ? cut : max).replace(/[.,;:—–-]$/, "")}…`;
 }
 
-/** Removes executable/embedded markup and WordPress theme classes so the post
- *  inherits this site's typography instead of WordPress's default look. */
-export function sanitizeWordPressHtml(html: string): string {
+/** Removes executable and embedded markup, and the theme classes a generated
+ *  post can carry, so the body inherits this site's own typography. */
+export function sanitizeHtml(html: string): string {
   return html
     .replace(/<!--[\s\S]*?-->/g, "")
     .replace(BLOCK_TAGS, "")

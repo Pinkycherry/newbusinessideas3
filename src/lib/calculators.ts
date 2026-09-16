@@ -1,3 +1,4 @@
+import { GENERATED_CALCULATORS } from "./generated-calculators";
 /**
  * SINGLE SOURCE OF TRUTH for the calculator template (brief section 6.8).
  *
@@ -965,8 +966,9 @@ export const CALCULATORS: readonly Calculator[] = [
         monthsToCover: at(v, "monthsToCover"),
       }),
   },
+  ...GENERATED_CALCULATORS,
 ];
 
 export function findCalculator(slug: string): Calculator | undefined {
-  return CALCULATORS.find((calculator) => calculator.slug === slug);
+  return CALCULATORS.find((calculator) => calculator && calculator.slug === slug);
 }
