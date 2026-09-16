@@ -15,8 +15,15 @@ export function FloatingDock() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    // Back-to-top must work on every route, anchors or not.
-    const onScroll = () => setScrolled(window.scrollY > 400);
+    // Back-to-top must work on every route, anchors or not. A fixed pixel
+    // threshold (400px) meant it appeared almost immediately on a short page
+    // and barely ever on a long one -- scroll depth as a percentage of the
+    // page's own scrollable height is consistent across every page.
+    const onScroll = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const depth = scrollable > 0 ? window.scrollY / scrollable : 0;
+      setScrolled(depth > 0.15);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-anchor]"));

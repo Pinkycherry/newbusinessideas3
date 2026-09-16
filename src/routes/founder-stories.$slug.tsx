@@ -132,7 +132,13 @@ function FounderStoryDetailPage() {
               Financial & Velocity Scorecard
             </p>
 
-            <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            {/* Was lg:grid-cols-6: six columns of a two/three-word label plus
+                a value fit at 768px (3 columns) but not at 1024-1280px,
+                where six across left the last column pressed against the
+                panel's own padding with no breathing room. Three columns,
+                two rows, at every width from sm up reads clean everywhere
+                measured. */}
+            <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
               <div className="rounded-xl border border-border/70 bg-background/50 p-3.5 text-center">
                 <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                   Monthly Run Rate
@@ -341,12 +347,12 @@ function FounderStoryDetailPage() {
               <Link
                 to="/founder-stories/$slug"
                 params={{ slug: prevStudy.slug }}
-                className="glass flex flex-col rounded-xl p-4 transition-colors hover:border-primary/50"
+                className="glass flex min-w-0 flex-col rounded-xl p-4 transition-colors hover:border-primary/50"
               >
                 <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                   ← Previous Story
                 </span>
-                <span className="mt-1 font-semibold text-foreground truncate">
+                <span className="mt-1 w-full font-semibold text-foreground truncate">
                   {prevStudy.title}
                 </span>
               </Link>
@@ -358,12 +364,12 @@ function FounderStoryDetailPage() {
               <Link
                 to="/founder-stories/$slug"
                 params={{ slug: nextStudy.slug }}
-                className="glass flex flex-col items-end rounded-xl p-4 text-right transition-colors hover:border-primary/50"
+                className="glass flex min-w-0 flex-col items-end rounded-xl p-4 text-right transition-colors hover:border-primary/50"
               >
                 <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                   Next Story →
                 </span>
-                <span className="mt-1 font-semibold text-foreground truncate">
+                <span className="mt-1 w-full font-semibold text-foreground truncate">
                   {nextStudy.title}
                 </span>
               </Link>

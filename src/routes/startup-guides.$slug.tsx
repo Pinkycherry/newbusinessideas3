@@ -176,12 +176,12 @@ function StartupGuideDetailPage() {
               <Link
                 to="/startup-guides/$slug"
                 params={{ slug: prevGuide.slug }}
-                className="glass flex flex-col rounded-xl p-4 transition-colors hover:border-primary/50"
+                className="glass flex min-w-0 flex-col rounded-xl p-4 transition-colors hover:border-primary/50"
               >
                 <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                   ← Previous Guide
                 </span>
-                <span className="mt-1 font-semibold text-foreground truncate">
+                <span className="mt-1 w-full font-semibold text-foreground truncate">
                   {prevGuide.title}
                 </span>
               </Link>
@@ -193,12 +193,12 @@ function StartupGuideDetailPage() {
               <Link
                 to="/startup-guides/$slug"
                 params={{ slug: nextGuide.slug }}
-                className="glass flex flex-col items-end rounded-xl p-4 text-right transition-colors hover:border-primary/50"
+                className="glass flex min-w-0 flex-col items-end rounded-xl p-4 text-right transition-colors hover:border-primary/50"
               >
                 <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                   Next Guide →
                 </span>
-                <span className="mt-1 font-semibold text-foreground truncate">
+                <span className="mt-1 w-full font-semibold text-foreground truncate">
                   {nextGuide.title}
                 </span>
               </Link>

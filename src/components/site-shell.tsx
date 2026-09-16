@@ -23,7 +23,7 @@ import { FloatingDock } from "@/components/floating-dock";
 import { CategoryBadge } from "@/components/category-badge";
 import { catalogQuery } from "@/lib/ideas.functions";
 import { usePageScrollProgress } from "@/motion";
-import { topCategories, typeGroups } from "@/lib/catalog-display";
+import { topCategories, typeGroups, type TypeGroup } from "@/lib/catalog-display";
 import { subscribeToNewsletter } from "@/lib/newsletter.functions";
 import { prefersReducedMotion } from "@/lib/motion";
 
@@ -423,6 +423,22 @@ function CategoryMega() {
  * means a new category joins a group on its own and a wrong slug is not
  * possible to type.
  */
+const TYPE_COLUMN_ROWS = 3;
+
+/** One group's categories, split into fixed-height columns rather than one
+ * column that grows as tall as the group does. A group past its first chunk
+ * repeats no heading -- an empty spacer of the same height keeps every
+ * column's list starting at the same baseline. */
+function typeColumns(groups: TypeGroup[]) {
+  return groups.flatMap((group) =>
+    Array.from({ length: Math.ceil(group.categories.length / TYPE_COLUMN_ROWS) }, (_, i) => ({
+      key: `${group.title}-${i}`,
+      title: i === 0 ? group.title : null,
+      categories: group.categories.slice(i * TYPE_COLUMN_ROWS, (i + 1) * TYPE_COLUMN_ROWS),
+    })),
+  );
+}
+
 function BrowseByTypeDropdown() {
   const { data } = useCatalog();
   const groups = typeGroups(data?.categories ?? []);
@@ -432,17 +448,20 @@ function BrowseByTypeDropdown() {
   return (
     <NavDropdown
       label="Browse by type"
-      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 max-h-[70vh] w-[min(46rem,92vw)] overflow-y-auto rounded-3xl p-6"
+      // Fixed at TYPE_COLUMN_ROWS rows tall, so this grows wider as more
+      // categories arrive rather than taller -- a hundred categories reads as
+      // more columns at the same height, not a panel that needs to scroll.
+      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 max-h-[80vh] w-[min(64rem,94vw)] overflow-x-auto overflow-y-hidden rounded-3xl p-6"
     >
       {(close) => (
-        <div className="grid gap-6 sm:grid-cols-3">
-          {groups.map((group) => (
-            <div key={group.title}>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
-                {group.title}
+        <div className="flex gap-8">
+          {typeColumns(groups).map((column) => (
+            <div key={column.key} className="w-40 shrink-0">
+              <p className="h-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
+                {column.title}
               </p>
               <ul className="mt-3 grid gap-0.5">
-                {group.categories.map((c) => (
+                {column.categories.map((c) => (
                   <li key={c.categorySlug}>
                     <Link
                       to="/category/$categorySlug"
