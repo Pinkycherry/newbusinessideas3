@@ -3145,11 +3145,12 @@ html.light .bbi-instrument .divide-border > * { border-color: var(--ins-rule) !i
   html.light .bbi-instrument .ins-legend .ins-read {
     color: var(--ins-signal) !important;
   }
-  /* Links brighten on hover. A `.glass-pill` must NOT be in this list: its
-     hover state fills the plate white, so brightening the label too printed
-     white on white. That rule is printed above and this one used to undo it
-     at equal specificity purely by coming later. */
-  html.light .bbi-instrument a:not(.glass-pill):hover {
+  /* Links brighten on hover. `.glass-pill`, `.ac-tag`, `.ac-action`, `.ac-cta`
+     and `.glass-btn` must NOT be in this list: each already fills its own
+     plate light on hover and inverts to dark ink (the THREE TIERS rule
+     above) -- brightening the label on top of that printed pale-on-pale,
+     same bug the `.glass-pill` exclusion already existed to prevent. */
+  html.light .bbi-instrument a:not(.glass-pill):not(.ac-tag):not(.ac-action):not(.ac-cta):not(.glass-btn):hover {
     color: var(--ins-signal-hot) !important;
   }
   /* The logo stamp inverts: signal ground, housing ink. */
@@ -3697,13 +3698,6 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
   background:
     linear-gradient(var(--act-fill), var(--act-fill)) padding-box,
     linear-gradient(var(--act-fill), var(--act-fill)) border-box !important;
-  color: var(--act-ink) !important;
-}
-/* Belt and suspenders for the keyword-tag pills specifically: same rule,
-   restated on the anchor element directly, so nothing between here and the
-   end of the file can win a specificity tie on the tag's hover ink. */
-.bbi-instrument a.ac-tag:hover,
-.bbi-instrument a.ac-tag:hover * {
   color: var(--act-ink) !important;
 }
 .bbi-instrument .ac-action:hover *,

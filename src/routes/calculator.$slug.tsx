@@ -226,24 +226,24 @@ function CalculatorPage({ calculator }: { calculator: Calculator }) {
 
           <div className="glass mt-10 rounded-2xl px-5 py-6 sm:px-7">
             <h2 className="font-display text-lg font-bold tracking-tight">Other calculators</h2>
-            <ul className="mt-3 space-y-1">
+            {/* Was a single-column list -- 59 full-width rows, each with a
+                title and a two-line description, made this the longest
+                scroll on the page for what is really just a set of links.
+                A dense grid of short cards gets the same 59 options into a
+                fraction of the height, and drops the description (already
+                on each calculator's own page) rather than truncate it. */}
+            <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
               {others.map((other) => (
-                <li key={other.slug}>
-                  <Link
-                    to="/calculator/$slug"
-                    params={{ slug: other.slug }}
-                    className="mo-row -mx-2 flex flex-col gap-0.5 rounded-lg px-2 py-2"
-                  >
-                    <span className="text-sm font-semibold">
-                      {other.title} {other.highlight}
-                    </span>
-                    <span className="text-xs leading-relaxed text-muted-foreground">
-                      {other.answers}
-                    </span>
-                  </Link>
-                </li>
+                <Link
+                  key={other.slug}
+                  to="/calculator/$slug"
+                  params={{ slug: other.slug }}
+                  className="rounded-lg border border-border/70 bg-card/50 px-3 py-2.5 text-xs font-semibold leading-snug transition-colors duration-200 hover:border-primary/60 hover:text-primary"
+                >
+                  {other.title} {other.highlight}
+                </Link>
               ))}
-            </ul>
+            </div>
           </div>
           {/* EDITABLE SECTION END */}
         </div>
