@@ -39,3 +39,7 @@ LOGIN_CREDENTIALS_AND_API_KEYS.md
 
 # scrollcraft local workspace (tool-generated, not app source)
 /scrollcraft/
+
+# Local Supabase stand-in for sandbox verification. Holds mock idea data, so it
+# stays out of version control — nothing here may become a source of truth.
+.localdev/
