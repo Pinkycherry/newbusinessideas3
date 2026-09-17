@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -16,6 +17,7 @@ import { SiteTextMotion } from "@/components/site-text-motion";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { catalogQuery } from "../lib/ideas.functions";
 import { JsonLd, organisationSchema } from "@/lib/schema";
+import { canonicalUrl } from "../lib/site-config";
 
 function NotFoundComponent() {
   return (
@@ -114,11 +116,32 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+/**
+ * One canonical tag for the whole site.
+ *
+ * Before this, exactly one route out of thirty-two declared a canonical. Every
+ * other page type — the homepage, categories, the blog, all sixty calculators,
+ * the guides, the glossary, founder stories — declared none, so the preview
+ * deployments and every host serving this repo each published a full,
+ * unattributed copy of the site.
+ *
+ * It lives in the root rather than in each route because React 19 hoists a
+ * `link` element rendered anywhere in the tree into `head`, on the server as
+ * well as in the browser. One component therefore covers every route that
+ * exists and every route added later — which a per-route tag cannot promise,
+ * and is exactly how thirty-one of them came to be missing.
+ */
+function CanonicalLink() {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  return <link rel="canonical" href={canonicalUrl(pathname)} />;
+}
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="light">
       <head>
         <HeadContent />
+        <CanonicalLink />
         {/* The publishing entity, declared once for the whole site rather than
             per route. Every page already said what it was about; none said who
             stands behind it, which is the E-E-A-T signal that was missing. */}

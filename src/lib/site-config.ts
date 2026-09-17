@@ -1,11 +1,32 @@
 /**
  * SINGLE SOURCE OF TRUTH for this site's own canonical origin (schema.org
- * markup, sitemaps, absolute URLs). Set SITE_URL in the environment once the
- * businessidea.io domain is live; falls back to the current Lovable domain.
+ * markup, sitemaps, absolute URLs). SITE_URL must be set in the environment at
+ * BOTH build time and runtime; the fallback is the production domain so that a
+ * missing variable degrades to the right site rather than an old preview one.
  */
 export function siteUrl(): string {
   const fromEnv = typeof process !== "undefined" ? process.env?.["SITE_URL"] : undefined;
-  return (fromEnv?.trim() || "https://newbusinessideas3.lovable.app").replace(/\/+$/, "");
+  return (fromEnv?.trim() || "https://businessidea.io").replace(/\/+$/, "");
+}
+
+/**
+ * The canonical URL for a path on THIS site.
+ *
+ * Every public absolute URL is built from `siteUrl()`, so moving domains is one
+ * environment variable and nothing else. A hand-typed domain anywhere in the
+ * codebase survives a domain change silently and points crawlers at the old
+ * site, which is what this exists to prevent.
+ *
+ * Query strings and fragments are dropped deliberately: `/browse?page=2` and
+ * `/browse` are one page to a crawler, and a canonical that varies by query
+ * parameter splits a single page into many in the index.
+ */
+export function canonicalUrl(pathname: string): string {
+  const path = (pathname || "/").split("?")[0]!.split("#")[0]!;
+  const trimmed = path.replace(/^\/+|\/+$/g, "");
+  // The homepage keeps its trailing slash so the canonical matches the URL the
+  // server actually serves rather than a bare origin.
+  return trimmed === "" ? `${siteUrl()}/` : `${siteUrl()}/${trimmed}`;
 }
 
 /**
