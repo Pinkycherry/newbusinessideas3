@@ -1,8 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
-import { SiteShell, Breadcrumbs } from "@/components/site-shell";
-import { JsonLd, breadcrumbSchema } from "@/lib/schema";
+import { ContentPage, Section, metaFor } from "@/components/page-layout";
 import { CALCULATORS } from "@/lib/calculators";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
 import { CASE_STUDIES } from "@/lib/case-studies-data";
@@ -22,29 +21,32 @@ import { fetchIdeasForHub, type HubIdea } from "@/lib/sitemap.server";
  * an idea from a page a crawler would already have, so the only route in was
  * the sitemap. This puts all of them one hop from a page that is itself
  * indexed, which is the single cheapest thing that can be done for crawl
- * coverage at this scale — and it is what the most structurally mature site in
- * this space does with its own five thousand pages.
+ * coverage at this scale.
  *
  * It renders the full list in one document on purpose. At ten thousand ideas
  * that is a large page but a crawlable one. Past roughly twenty thousand it
  * should be tranched the way the XML sitemaps are.
+ *
+ * ## Why it renders through ContentPage
+ *
+ * This page first shipped with `SiteShell` plus its own hand-rolled section,
+ * list and row components — including a local `Section` that shadowed the
+ * shared one. It therefore had the right header and footer with the wrong
+ * inside: different spacing scale, different heading treatment, no eyebrow, no
+ * section chrome, and none of the reveal grammar the other templates use. Ten
+ * pages render through `ContentPage`; this is now the eleventh, so the layout
+ * has one owner and this page cannot drift from the rest again.
  */
 const getSitemapData = createServerFn({ method: "GET" }).handler(async (): Promise<HubIdea[]> =>
   fetchIdeasForHub(),
 );
 
 export const Route = createFileRoute("/sitemap")({
-  head: () => ({
-    meta: [
-      { title: "Site Map — Every Page on BBI" },
-      {
-        name: "description",
-        content:
-          "Every page on BBI in one place: business idea blueprints by category, calculators, startup guides, founder stories and reference pages.",
-      },
-      { property: "og:title", content: "Site Map — Every Page on BBI" },
-    ],
-  }),
+  head: () =>
+    metaFor(
+      "Site Map — Every Page on BBI",
+      "Every page on BBI in one place: business idea blueprints by category, calculators, startup guides, founder stories and reference pages.",
+    ),
   loader: () => getSitemapData(),
   component: SitemapPage,
 });
@@ -52,7 +54,7 @@ export const Route = createFileRoute("/sitemap")({
 /** Static destinations, grouped the way a reader would look for them. */
 const PAGE_GROUPS: { heading: string; links: { to: string; label: string }[] }[] = [
   {
-    heading: "Browse",
+    heading: "Browse the library",
     links: [
       { to: "/", label: "Home" },
       { to: "/browse", label: "Browse all ideas" },
@@ -92,36 +94,25 @@ const PAGE_GROUPS: { heading: string; links: { to: string; label: string }[] }[]
   },
 ];
 
-function Section({
-  heading,
-  count,
-  children,
-}: {
-  heading: string;
-  count?: number;
-  children: React.ReactNode;
-}) {
-  return (
-    <section className="border-t border-border pt-8">
-      <h2 className="text-lg font-semibold tracking-tight text-foreground">
-        {heading}
-        {typeof count === "number" && (
-          <span className="ml-2 text-sm font-normal text-muted-foreground">{count}</span>
-        )}
-      </h2>
-      <div className="mt-4">{children}</div>
-    </section>
-  );
+/**
+ * Column counts are literal class names on purpose. Tailwind generates
+ * utilities by scanning source text, so an interpolated `lg:grid-cols-$n`
+ * appears in no file and is never compiled.
+ */
+function LinkGrid({ children }: { children: React.ReactNode }) {
+  return <ul className="grid gap-x-6 gap-y-0.5 sm:grid-cols-2 lg:grid-cols-3">{children}</ul>;
 }
 
-function LinkList({ children }: { children: React.ReactNode }) {
-  return <ul className="grid gap-x-8 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">{children}</ul>;
-}
-
-/* `params as never` follows the same convention as `Breadcrumbs` in
-   site-shell.tsx: one generic link row cannot carry the per-route param types,
-   and every call below supplies the params its own route declares. */
-function Item({
+/**
+ * One link row. `params as never` follows the same convention as `Breadcrumbs`
+ * in site-shell.tsx: a single generic row cannot carry every route's param
+ * types, and each call below supplies the params its own route declares.
+ *
+ * The row grammar — `mo-row`, the negative inset, `hover:bg-secondary`,
+ * `hover:text-foreground` — is the same one the header's category dropdown and
+ * `Bullets` in page-layout.tsx use, rather than a bespoke underline.
+ */
+function LinkRow({
   to,
   params,
   label,
@@ -135,7 +126,7 @@ function Item({
       <Link
         to={to}
         params={params as never}
-        className="block truncate text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
+        className="mo-row -mx-2 block truncate rounded-lg px-2 py-1.5 transition-colors hover:bg-secondary hover:text-foreground"
       >
         {label}
       </Link>
@@ -157,101 +148,95 @@ function SitemapPage() {
   const categories = [...byCategory.entries()].sort((a, b) => a[0].localeCompare(b[0]));
 
   return (
-    <SiteShell>
-      <JsonLd
-        schema={breadcrumbSchema([
-          { name: "Home", path: "/" },
-          { name: "Site map", path: "/sitemap" },
-        ])}
-      />
-      <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-        <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Site map" }]} />
+    <ContentPage
+      wide
+      tone="brief"
+      eyebrow="Site map"
+      title="Every page on"
+      highlight="BBI"
+      intro={`${ideas.length} idea blueprints across ${categories.length} categories, plus ${CALCULATORS.length} calculators, ${STARTUP_GUIDES.length} startup guides and ${CASE_STUDIES.length} founder stories — every one of them linked from this page.`}
+    >
+      {PAGE_GROUPS.map((group) => (
+        <Section key={group.heading} heading={group.heading}>
+          <LinkGrid>
+            {group.links.map((link) => (
+              <LinkRow key={link.to} to={link.to} label={link.label} />
+            ))}
+          </LinkGrid>
+        </Section>
+      ))}
 
-        <header className="mt-6 max-w-2xl">
-          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Site map
-          </h1>
-          <p className="mt-3 text-base text-muted-foreground">
-            Every page on BBI in one place — {ideas.length} idea blueprints across{" "}
-            {categories.length} categories, plus {CALCULATORS.length} calculators,{" "}
-            {STARTUP_GUIDES.length} startup guides and {CASE_STUDIES.length} founder stories.
-          </p>
-        </header>
-
-        <div className="mt-10 space-y-10">
-          {PAGE_GROUPS.map((group) => (
-            <Section key={group.heading} heading={group.heading}>
-              <LinkList>
-                {group.links.map((link) => (
-                  <Item key={link.to} to={link.to} label={link.label} />
-                ))}
-              </LinkList>
-            </Section>
+      <Section heading={`Calculators (${CALCULATORS.length})`}>
+        <LinkGrid>
+          {CALCULATORS.map((calculator) => (
+            <LinkRow
+              key={calculator.slug}
+              to="/calculator/$slug"
+              params={{ slug: calculator.slug }}
+              label={calculator.title}
+            />
           ))}
+        </LinkGrid>
+      </Section>
 
-          <Section heading="Calculators" count={CALCULATORS.length}>
-            <LinkList>
-              {CALCULATORS.map((calculator) => (
-                <Item
-                  key={calculator.slug}
-                  to="/calculator/$slug"
-                  params={{ slug: calculator.slug }}
-                  label={calculator.title}
-                />
-              ))}
-            </LinkList>
-          </Section>
+      <Section heading={`Startup guides (${STARTUP_GUIDES.length})`}>
+        <LinkGrid>
+          {STARTUP_GUIDES.map((guide) => (
+            <LinkRow
+              key={guide.slug}
+              to="/startup-guides/$slug"
+              params={{ slug: guide.slug }}
+              label={guide.title}
+            />
+          ))}
+        </LinkGrid>
+      </Section>
 
-          <Section heading="Startup guides" count={STARTUP_GUIDES.length}>
-            <LinkList>
-              {STARTUP_GUIDES.map((guide) => (
-                <Item key={guide.slug} to={`/startup-guides/${guide.slug}`} label={guide.title} />
-              ))}
-            </LinkList>
-          </Section>
+      <Section heading={`Founder stories (${CASE_STUDIES.length})`}>
+        <LinkGrid>
+          {CASE_STUDIES.map((study) => (
+            <LinkRow
+              key={study.slug}
+              to="/founder-stories/$slug"
+              params={{ slug: study.slug }}
+              label={study.title}
+            />
+          ))}
+        </LinkGrid>
+      </Section>
 
-          <Section heading="Founder stories" count={CASE_STUDIES.length}>
-            <LinkList>
-              {CASE_STUDIES.map((study) => (
-                <Item key={study.slug} to={`/founder-stories/${study.slug}`} label={study.title} />
-              ))}
-            </LinkList>
-          </Section>
-
-          <Section heading="Idea blueprints" count={ideas.length}>
-            <div className="space-y-8">
-              {categories.map(([categoryName, group]) => (
-                <div key={categoryName}>
-                  <h3 className="text-sm font-semibold tracking-tight text-foreground">
-                    <Link
-                      to="/category/$categorySlug"
-                      params={{ categorySlug: group.slug }}
-                      className="underline-offset-4 hover:underline"
-                    >
-                      {categoryName}
-                    </Link>
-                    <span className="ml-2 text-xs font-normal text-muted-foreground">
-                      {group.ideas.length}
-                    </span>
-                  </h3>
-                  <div className="mt-3">
-                    <LinkList>
-                      {group.ideas.map((idea) => (
-                        <Item
-                          key={idea.slug}
-                          to="/idea/$slug"
-                          params={{ slug: idea.slug }}
-                          label={idea.title}
-                        />
-                      ))}
-                    </LinkList>
-                  </div>
-                </div>
-              ))}
+      <Section heading={`Idea blueprints (${ideas.length})`}>
+        <div className="space-y-6">
+          {categories.map(([categoryName, group]) => (
+            <div key={categoryName}>
+              <h3 className="font-display text-sm font-bold tracking-tight text-foreground">
+                <Link
+                  to="/category/$categorySlug"
+                  params={{ categorySlug: group.slug }}
+                  className="transition-colors hover:text-primary"
+                >
+                  {categoryName}
+                </Link>
+                <span className="ml-2 text-xs font-normal tabular-nums text-muted-foreground">
+                  {group.ideas.length}
+                </span>
+              </h3>
+              <div className="mt-2">
+                <LinkGrid>
+                  {group.ideas.map((idea) => (
+                    <LinkRow
+                      key={idea.slug}
+                      to="/idea/$slug"
+                      params={{ slug: idea.slug }}
+                      label={idea.title}
+                    />
+                  ))}
+                </LinkGrid>
+              </div>
             </div>
-          </Section>
+          ))}
         </div>
-      </div>
-    </SiteShell>
+      </Section>
+    </ContentPage>
   );
 }
