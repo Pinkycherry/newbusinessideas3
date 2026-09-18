@@ -215,12 +215,14 @@ always will be.
 | RSS feed                                        | `src/routes/feed[.]xml.ts`               | Yes — correct envelope, honours the flag      |
 | `internal_link_anchors` carried to the page     | `src/lib/ideas-shared.ts`                | Typechecks (but see §11.2)                    |
 
-**Honest limit on verification:** this container's network policy blocks
-`*.supabase.co`, so the database-backed routes could not be exercised
-end-to-end locally. Their queries were instead verified directly against the
-live database with SQL, and the non-database routes (`robots.txt`,
-`sitemap-pages.xml`, `feed.xml`) were exercised for real. **Every
-database-backed route must be re-checked against the live domain in Phase 3.**
+**Verification, and its limit at the time:** this container's network policy
+blocks `*.supabase.co`, so the database-backed routes could not be exercised
+end-to-end locally. Their queries were verified directly against the live
+database with SQL, and the non-database routes (`robots.txt`,
+`sitemap-pages.xml`, `feed.xml`) were exercised for real.
+
+**That gap is now closed.** Every database-backed route was checked against the
+live domain on 2026-09-18 and behaved as designed — see §14.
 
 Checks that did pass: `eslint` clean on all changed files (68 pre-existing
 problems elsewhere, unchanged), `npm run build` succeeds, TypeScript errors went
@@ -476,6 +478,8 @@ in the deployed Worker, so it is not launch-blocking.
 
 ### 11.1c Google sign-in redirects to the wrong site unless the domain is allow-listed
 
+**Status: RESOLVED on bbusiness.online (2026-09-18), tested working. Still to do for `businessidea.io` — see §10.3 step 7e.**
+
 Signing in sent the user to the BBI-With-ChatGPT deployment instead of back to
 this site. **This is a Supabase dashboard setting, not a code defect.**
 
@@ -590,3 +594,92 @@ curl -s $B/ | grep -o '<meta name="robots"[^>]*>'
 # no stray references to the other domain
 curl -s $B/sitemap-pages.xml | grep -c 'businessidea\.io'        # expect 0
 ```
+
+---
+
+## 14. Deployment record — bbusiness.online, 2026-09-18
+
+Kept verbatim as the record of how the trial domain was brought up, including
+the DNS records that were deleted, in case any of it has to be restored or
+repeated for `businessidea.io`.
+
+### 14.1 Worker
+
+|        |                                           |
+| ------ | ----------------------------------------- |
+| Name   | `pinkycherry-newbusinessideas3`           |
+| Repo   | `Pinkycherry/newbusinessideas3`           |
+| Branch | `main`                                    |
+| Build  | `#610c1d8d`, commit `4c26b6a` — succeeded |
+
+Two commits landed after that build and deployed on their own: `231e942` (this
+document's sign-in finding) and `ddf55c5` (the `/sitemap` layout fix noted as
+open in 14.4).
+
+### 14.2 Environment — the runtime/build distinction that cost an hour
+
+Both sets carry the same six names. **Values are never recorded here.**
+
+- **Build variables** (build-time, plain text) — all six set.
+- **Runtime Secrets** — all six set. **This is what fixed the SSR error.**
+  Stored as Secrets rather than plain-text variables because `npx wrangler
+deploy` runs against a generated config with no `vars` block, so dashboard
+  plain-text variables can be cleared by a future git deploy. Secrets are
+  managed separately and survive.
+
+`SITE_INDEXABLE` = `false`, deliberately.
+
+The six: `SITE_URL`, `SITE_INDEXABLE`, `IDEAVAULT_DB_URL`,
+`IDEAVAULT_DB_ANON_KEY`, `VITE_IDEAVAULT_DB_URL`, `VITE_IDEAVAULT_DB_ANON_KEY`.
+
+### 14.3 Domain
+
+- `bbusiness.online` (apex) attached as a **Custom Domain**; certificate active,
+  site serves over HTTPS.
+- `www.bbusiness.online` — **not attached.** Only the apex is in the list.
+
+**DNS records deleted to free the apex — restore values if ever needed:**
+
+```
+A      bbusiness.online   →  2.57.91.91        (Hostinger)
+CNAME  www                →  bbusiness.online
+```
+
+### 14.4 Live checks, all passed
+
+| Check                | Result                                                                          |
+| -------------------- | ------------------------------------------------------------------------------- |
+| Homepage             | Renders fully — 409 blueprints across 16 categories                             |
+| `/robots.txt`        | `User-agent: *` / `Disallow: /`                                                 |
+| `/sitemap-pages.xml` | Empty urlset                                                                    |
+| `/sitemap-index.xml` | Empty                                                                           |
+| `/browse`            | Lists ideas, 409 across 16 categories                                           |
+| `/sitemap`           | HTML, 409 idea links + 16 categories                                            |
+| Idea page            | Renders fully — blueprint, who pays, money, risks, verdict, costs, how to start |
+| Homepage `<head>`    | `<link rel="canonical" href="https://bbusiness.online/"/>`                      |
+| Homepage `<head>`    | `<meta name="robots" content="noindex,nofollow"/>`                              |
+
+**The last three rows are the ones that matter most.** `Disallow: /`, empty
+sitemaps and a `noindex` meta tag together confirm `SITE_INDEXABLE=false` works
+on a real deployment, which is what makes the teardown in §10 trustworthy. The
+canonical naming `bbusiness.online` confirms `SITE_URL` drives every absolute
+URL, which is what makes the domain switch a single variable.
+
+### 14.5 Problems hit, and what each turned out to be
+
+| Symptom                                                 | Actual cause                                                                                                                                                                              | Fix                                                                                                                                                            |
+| ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| First build failed                                      | `bun install --frozen-lockfile` — `bun.lock` missing `ogl`, `react-markdown`, `rehype-raw`, which were in `package-lock.json`. Build command never ran                                    | Both lockfiles regenerated — commit `4c26b6a`. See §11.1b                                                                                                      |
+| Homepage SSR-errored on every route                     | Runtime env empty; the six variables were build-time only. The root loader hits the database before anything renders, so every route showed the app's own error page                      | Six runtime Secrets added                                                                                                                                      |
+| Google sign-in bounced to the old BBI-With-ChatGPT site | Supabase honours `redirectTo` only if allow-listed, else falls back to the project's Site URL, which named the other deployment                                                           | Added `bbusiness.online/**`, `www.bbusiness.online/**` and the workers.dev `/**` to the Supabase redirect allow-list. **Site URL left untouched** — see §11.1c |
+| Domain attach blocked                                   | Existing Hostinger `A` and `CNAME` records held the apex                                                                                                                                  | Both deleted (values in §14.3), apex attached                                                                                                                  |
+| `/sitemap` inner layout looked dated                    | The page used `SiteShell` plus its own hand-rolled components, including a local `Section` shadowing the shared one, instead of the `ContentPage` layout the other ten content routes use | Commit `ddf55c5`                                                                                                                                               |
+
+### 14.6 Open items from the bring-up
+
+- [ ] `www.bbusiness.online` not attached — add it if www should resolve.
+- [ ] One leftover Supabase redirect entry, `https://bbusiness.online/` with no
+      wildcard. Harmless; optional to remove.
+- [ ] §7.2 content and trust checks not yet walked — do these before Phase 4.
+
+---
