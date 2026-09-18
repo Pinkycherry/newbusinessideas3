@@ -123,12 +123,24 @@ function PillRow({ children }: { children: React.ReactNode }) {
 }
 
 /**
- * One link, as a compact capsule. Left-aligned and sized to its text — see
- * the note at the top of this file for why it does not use `.glass-pill`.
+ * One link, as a capsule.
  *
- * `params as never` follows the same convention as `Breadcrumbs` in
- * site-shell.tsx: one generic chip cannot carry every route's param types, and
- * each call site supplies the params its own route declares.
+ * Styling lives in `.bbi-sitemap-chip` in styles.css rather than in Tailwind
+ * utilities here, for two reasons. First, the utilities lost: `.glass-pill`
+ * and its neighbours are UNLAYERED, and an unlayered rule beats every
+ * `@layer` utility regardless of specificity. Second, `bg-secondary/30` and
+ * `text-muted-foreground` inside `.bbi-instrument` resolve to #262626 on
+ * #141414 with #b2b2b2 text, which is why the first attempt rendered as grey
+ * boxes nobody could read.
+ *
+ * `ins-action` is a marker, not a style. Several `.bbi-instrument` rules
+ * force `color` with `!important` on links and buttons, and `!important`
+ * beats an inline style; `:not(.ins-action)` is how the primary action opts
+ * out of them. These chips need the same exemption to keep their own hover.
+ *
+ * `params as never` follows the convention in `Breadcrumbs` in
+ * site-shell.tsx: one generic chip cannot carry every route's param types,
+ * and each call site supplies the params its own route declares.
  */
 function Chip({
   to,
@@ -140,14 +152,24 @@ function Chip({
   label: string;
 }) {
   return (
-    <Link
-      to={to}
-      params={params as never}
-      className="inline-flex max-w-full items-center rounded-full border border-border/60 bg-secondary/30 px-2.5 py-1 text-xs leading-snug text-muted-foreground transition-colors hover:border-primary/50 hover:bg-secondary hover:text-foreground"
-    >
+    <Link to={to} params={params as never} className="ins-action bbi-sitemap-chip">
       {label}
     </Link>
   );
+}
+
+/**
+ * Pack a row of chips so the ragged right edge closes up.
+ *
+ * Alphabetical order puts a 30-character label next to a 9-character one, so
+ * every row breaks early and leaves a gap the width of the next label. Sorting
+ * by length instead groups similar widths together, which lets each row fill
+ * to the edge before wrapping. Nothing here is a navigational order a reader
+ * relies on — it is a link index, and the category headings carry the
+ * structure — so packing beats sorting by name.
+ */
+function packByWidth<T>(items: readonly T[], label: (item: T) => string): T[] {
+  return [...items].sort((a, b) => label(a).length - label(b).length);
 }
 
 function SitemapPage() {
@@ -161,7 +183,10 @@ function SitemapPage() {
     if (existing) existing.ideas.push(idea);
     else byCategory.set(idea.categoryName, { slug: idea.categorySlug, ideas: [idea] });
   }
-  const categories = [...byCategory.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+  // Insertion order, not alphabetical. The rows are packed by width below,
+  // and re-sorting the groups by name on top of that only shuffles blocks
+  // around without helping anyone find anything.
+  const categories = [...byCategory.entries()];
 
   return (
     <ContentPage
@@ -184,7 +209,7 @@ function SitemapPage() {
 
       <Section heading={`Calculators (${CALCULATORS.length})`}>
         <PillRow>
-          {CALCULATORS.map((calculator) => (
+          {packByWidth(CALCULATORS, (c) => c.title).map((calculator) => (
             <Chip
               key={calculator.slug}
               to="/calculator/$slug"
@@ -197,7 +222,7 @@ function SitemapPage() {
 
       <Section heading={`Startup guides (${STARTUP_GUIDES.length})`}>
         <PillRow>
-          {STARTUP_GUIDES.map((guide) => (
+          {packByWidth(STARTUP_GUIDES, (g) => g.title).map((guide) => (
             <Chip
               key={guide.slug}
               to="/startup-guides/$slug"
@@ -210,7 +235,7 @@ function SitemapPage() {
 
       <Section heading={`Founder stories (${CASE_STUDIES.length})`}>
         <PillRow>
-          {CASE_STUDIES.map((study) => (
+          {packByWidth(CASE_STUDIES, (c) => c.title).map((study) => (
             <Chip
               key={study.slug}
               to="/founder-stories/$slug"
@@ -225,12 +250,12 @@ function SitemapPage() {
         <div className="space-y-5">
           {categories.map(([categoryName, group]) => (
             <div key={categoryName}>
-              {/* Every category heading is the same element at the same size,
-                  so the section reads as one list rather than sixteen
-                  differently-shaped blocks. It was a capsule, which wrapped
-                  long names across two centred lines and pushed its count out
-                  to the side. */}
-              <h3 className="mb-2 font-display text-sm font-bold tracking-tight text-foreground">
+              {/* Same element, same size, every category. No `font-display`
+                  class: the global `h1, h2, h3, h4` rule in styles.css already
+                  sets `--font-sans`, which is what the homepage and category
+                  headings use, so overriding it here is what made this page
+                  look like a different site. */}
+              <h3 className="mb-2.5 text-base font-semibold tracking-tight text-foreground">
                 <Link
                   to="/category/$categorySlug"
                   params={{ categorySlug: group.slug }}
@@ -243,7 +268,7 @@ function SitemapPage() {
                 </span>
               </h3>
               <PillRow>
-                {group.ideas.map((idea) => (
+                {packByWidth(group.ideas, (i) => i.title).map((idea) => (
                   <Chip
                     key={idea.slug}
                     to="/idea/$slug"

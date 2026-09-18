@@ -4002,3 +4002,47 @@ html.light .bbi-instrument .ac-action:disabled:hover {
   position: fixed;
   z-index: 80;
 }
+
+/* ============================================================
+   /sitemap link chip — SCOPED and ADDITIVE.
+
+   A new class rather than an edit to `.glass-pill`, per BUTTERFLY_EFFECT.md:
+   styles.css is high blast radius and only scoped additions are allowed here.
+   `.bbi-sitemap-chip` appears on exactly one route, so nothing else can move.
+
+   Unlayered on purpose, so it beats Tailwind utilities the same way the rest
+   of this file's component classes do. The earlier attempt styled these chips
+   with `bg-secondary/30` and `text-muted-foreground`, which inside
+   `.bbi-instrument` resolve to #262626 on #141414 with #b2b2b2 text — grey
+   boxes with barely-readable labels. This states the pair explicitly.
+
+   Rest and hover mirror the primary action (the Surprise Me button): the face
+   sits one step up from the housing at rest, and inverts to signal white with
+   housing-dark text on hover, which in a five-value greyscale is the only way
+   left to carry emphasis.
+   ============================================================ */
+.bbi-sitemap-chip {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  border-radius: 9999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--ins-read, #e0e0e0);
+  background: var(--ins-face-2, #262626);
+  border: 1px solid var(--ins-rule-strong, rgb(224 224 224 / 0.32));
+  transition:
+    background 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease,
+    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.bbi-sitemap-chip:hover {
+  color: var(--ins-void, #141414);
+  background: var(--ins-signal, #ffffff);
+  border-color: var(--ins-signal, #ffffff);
+  transform: translateY(-1px);
+}
