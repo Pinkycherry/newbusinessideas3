@@ -507,10 +507,15 @@ function IdeaPage() {
                 <p className="mt-4 text-lg text-muted-foreground">{idea.businessDescription}</p>
 
                 <div className="mt-5">
-                  <ShareLinks
-                    url={typeof window === "undefined" ? "" : window.location.href}
-                    title={idea.title}
-                  />
+                  {/* Deterministic on server and client (pure function of the
+                      known idea path) — the previous `window.location.href`
+                      branch rendered "" server-side and the real URL
+                      client-side, a guaranteed hydration mismatch on every
+                      idea page. React answering that mismatch by re-rendering
+                      the subtree is what silently stripped the `.revealed`
+                      class SiteTextMotion had already added to headings
+                      already in view at load, leaving them stuck invisible. */}
+                  <ShareLinks url={absoluteUrl(ideaPath)} title={idea.title} />
                 </div>
               </div>
 

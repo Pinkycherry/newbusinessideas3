@@ -45,6 +45,7 @@ export function SiteTextMotion() {
     root.classList.add("bbi-motion");
 
     const seen = new WeakSet<Element>();
+    const fallbackTimers = new Set<ReturnType<typeof setTimeout>>();
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -60,11 +61,26 @@ export function SiteTextMotion() {
       { threshold: [0, 0.15], rootMargin: "0px 0px -5% 0px" },
     );
 
+    // Belt and braces: `.revealed` is a raw classList mutation, outside
+    // React's own model of the DOM. If anything downstream ever re-renders
+    // one of these elements before the observer has fired again — a
+    // hydration mismatch elsewhere on the page forcing React to reconcile
+    // the subtree is the one that actually happened, confirmed live on
+    // /idea/$slug — React writes its own JSX-computed className back over
+    // the DOM's, silently erasing `.revealed` with nothing left to restore
+    // it for an element that never leaves the viewport again. No content
+    // gets to stay invisible forever waiting for a reveal that will never
+    // re-fire: give the real thing a fair window, then force it.
     const scan = () => {
       document.querySelectorAll(SEL).forEach((el) => {
         if (seen.has(el)) return;
         seen.add(el);
         io.observe(el);
+        const t = setTimeout(() => {
+          fallbackTimers.delete(t);
+          el.classList.add("revealed");
+        }, 1800);
+        fallbackTimers.add(t);
       });
     };
     scan();
@@ -83,6 +99,8 @@ export function SiteTextMotion() {
 
     return () => {
       if (pending) cancelAnimationFrame(pending);
+      fallbackTimers.forEach((t) => clearTimeout(t));
+      fallbackTimers.clear();
       mo.disconnect();
       io.disconnect();
       root.classList.remove("bbi-motion");
