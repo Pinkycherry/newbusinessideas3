@@ -102,6 +102,16 @@ export function FloatingDock() {
               whileTap={{ scale: 0.96 }}
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               aria-label="Back to top"
+              /* `rounded-full` alone does not win here. The unlayered
+                 `.glass-btn, .glass-pill, …` block in styles.css sets
+                 `border-radius: 0.375rem`, and an unlayered rule beats every
+                 Tailwind utility regardless of specificity -- so this rendered
+                 as a rounded square, and the pill-shaped `::before` specular
+                 highlight (border-radius 9999px, height 46%, drawn for wide
+                 capsules) sat inside it as a separate floating blob. An inline
+                 style is the one thing that wins without editing the shared
+                 block, which every button on the site depends on. */
+              style={{ borderRadius: "9999px" }}
               className="glass-btn grid h-11 w-11 place-items-center rounded-full"
             >
               <ArrowUp className="h-4 w-4" />
@@ -117,6 +127,8 @@ export function FloatingDock() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label="Jump to a section"
+            /* Same override as the back-to-top button above. */
+            style={{ borderRadius: "9999px" }}
             className="glass-btn grid h-11 w-11 place-items-center rounded-full"
           >
             <motion.span

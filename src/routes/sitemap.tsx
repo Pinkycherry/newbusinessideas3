@@ -1,7 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
-import { CategoryBadge } from "@/components/category-badge";
 import { ContentPage, Section, metaFor } from "@/components/page-layout";
 import { CALCULATORS } from "@/lib/calculators";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
@@ -38,14 +37,25 @@ import { fetchIdeasForHub, type HubIdea } from "@/lib/sitemap.server";
  * pages render through `ContentPage`; this is now the eleventh, so the layout
  * has one owner and this page cannot drift from the rest again.
  *
- * ## Why every link is a capsule
+ * ## Why the capsules are local and not `CategoryBadge`
  *
- * Inside that shell the links were a three-column grid, which is the wrong
- * shape for 500 links of wildly differing length — see the note on `PillRow`.
- * They are now `CategoryBadge`, the same capsule the header dropdown, the
- * Golden Tree and the footer already use, so this page borrows the site's
- * existing pill grammar and its spring interaction rather than defining a
- * third link treatment of its own.
+ * The links were a three-column grid first, which is the wrong shape for 500
+ * labels of wildly differing length — a grid gives every cell the width of its
+ * widest sibling, so short names were padded out and every short section had a
+ * column of dead space down its right.
+ *
+ * `CategoryBadge` was the next attempt and was worse at this density. It
+ * carries `.glass-pill`, and that block in styles.css is UNLAYERED, so its
+ * `padding: 0.45rem 0.95rem` and `justify-content: center` beat every Tailwind
+ * utility passed in — `size="sm"` never actually applied. Add
+ * `text-wrap: balance` on the label and a long category name split across two
+ * centred lines. The result was fat, centre-aligned buttons that fit one or
+ * two per row on a phone.
+ *
+ * So the chip here is local and deliberately does NOT use `.glass-pill`:
+ * nothing unlayered is fighting it, so its padding is actually its padding.
+ * Editing `.glass-pill` instead would have been the wrong trade — every
+ * button on the site depends on it.
  */
 const getSitemapData = createServerFn({ method: "GET" }).handler(async (): Promise<HubIdea[]> =>
   fetchIdeasForHub(),
@@ -105,18 +115,39 @@ const PAGE_GROUPS: { heading: string; links: { to: string; label: string }[] }[]
 ];
 
 /**
- * A wrapping row of capsules.
- *
- * This replaced a three-column grid, which was the wrong shape for the
- * content: a grid gives every cell the width of the longest label and the
- * height of the tallest row, so a ten-item section rendered as four rows with
- * two empty cells, and a page of 500 links became a wall of evenly spaced text
- * with dead space down the right of every short section. Capsules size to
- * their own label and wrap, so the same ten items take two rows instead of
- * four and nothing is padded out to match its neighbour.
+ * A wrapping row of capsules. Chips size to their own label and wrap, so a
+ * ten-item section takes two rows rather than the four a grid forced.
  */
 function PillRow({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-wrap gap-1.5">{children}</div>;
+}
+
+/**
+ * One link, as a compact capsule. Left-aligned and sized to its text — see
+ * the note at the top of this file for why it does not use `.glass-pill`.
+ *
+ * `params as never` follows the same convention as `Breadcrumbs` in
+ * site-shell.tsx: one generic chip cannot carry every route's param types, and
+ * each call site supplies the params its own route declares.
+ */
+function Chip({
+  to,
+  params,
+  label,
+}: {
+  to: string;
+  params?: Record<string, string>;
+  label: string;
+}) {
+  return (
+    <Link
+      to={to}
+      params={params as never}
+      className="inline-flex max-w-full items-center rounded-full border border-border/60 bg-secondary/30 px-2.5 py-1 text-xs leading-snug text-muted-foreground transition-colors hover:border-primary/50 hover:bg-secondary hover:text-foreground"
+    >
+      {label}
+    </Link>
+  );
 }
 
 function SitemapPage() {
@@ -145,7 +176,7 @@ function SitemapPage() {
         <Section key={group.heading} heading={group.heading}>
           <PillRow>
             {group.links.map((link) => (
-              <CategoryBadge key={link.to} to={link.to} label={link.label} size="sm" />
+              <Chip key={link.to} to={link.to} label={link.label} />
             ))}
           </PillRow>
         </Section>
@@ -154,11 +185,11 @@ function SitemapPage() {
       <Section heading={`Calculators (${CALCULATORS.length})`}>
         <PillRow>
           {CALCULATORS.map((calculator) => (
-            <CategoryBadge
+            <Chip
               key={calculator.slug}
-              to={`/calculator/${calculator.slug}`}
+              to="/calculator/$slug"
+              params={{ slug: calculator.slug }}
               label={calculator.title}
-              size="sm"
             />
           ))}
         </PillRow>
@@ -167,11 +198,11 @@ function SitemapPage() {
       <Section heading={`Startup guides (${STARTUP_GUIDES.length})`}>
         <PillRow>
           {STARTUP_GUIDES.map((guide) => (
-            <CategoryBadge
+            <Chip
               key={guide.slug}
-              to={`/startup-guides/${guide.slug}`}
+              to="/startup-guides/$slug"
+              params={{ slug: guide.slug }}
               label={guide.title}
-              size="sm"
             />
           ))}
         </PillRow>
@@ -180,11 +211,11 @@ function SitemapPage() {
       <Section heading={`Founder stories (${CASE_STUDIES.length})`}>
         <PillRow>
           {CASE_STUDIES.map((study) => (
-            <CategoryBadge
+            <Chip
               key={study.slug}
-              to={`/founder-stories/${study.slug}`}
+              to="/founder-stories/$slug"
+              params={{ slug: study.slug }}
               label={study.title}
-              size="sm"
             />
           ))}
         </PillRow>
@@ -193,22 +224,31 @@ function SitemapPage() {
       <Section heading={`Idea blueprints (${ideas.length})`}>
         <div className="space-y-5">
           {categories.map(([categoryName, group]) => (
-            <div key={categoryName} className="border-l border-border/60 pl-4">
-              {/* The category stays an h3 so the document outline a crawler
-                  reads is unchanged; the capsule is only how it looks. */}
-              <h3 className="mb-2 flex items-center gap-2">
-                <CategoryBadge slug={group.slug} label={categoryName} dot />
-                <span className="text-[11px] font-semibold tabular-nums text-muted-foreground">
+            <div key={categoryName}>
+              {/* Every category heading is the same element at the same size,
+                  so the section reads as one list rather than sixteen
+                  differently-shaped blocks. It was a capsule, which wrapped
+                  long names across two centred lines and pushed its count out
+                  to the side. */}
+              <h3 className="mb-2 font-display text-sm font-bold tracking-tight text-foreground">
+                <Link
+                  to="/category/$categorySlug"
+                  params={{ categorySlug: group.slug }}
+                  className="transition-colors hover:text-primary"
+                >
+                  {categoryName}
+                </Link>
+                <span className="ml-2 text-xs font-normal tabular-nums text-muted-foreground">
                   {group.ideas.length}
                 </span>
               </h3>
               <PillRow>
                 {group.ideas.map((idea) => (
-                  <CategoryBadge
+                  <Chip
                     key={idea.slug}
-                    to={`/idea/${idea.slug}`}
+                    to="/idea/$slug"
+                    params={{ slug: idea.slug }}
                     label={idea.title}
-                    size="sm"
                   />
                 ))}
               </PillRow>
