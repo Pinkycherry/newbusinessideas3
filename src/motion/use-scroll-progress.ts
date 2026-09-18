@@ -96,6 +96,13 @@ export function useScrollProgress<T extends HTMLElement = HTMLElement>(
         start: pinned ? "top top" : "top bottom",
         end: pinned ? `+=${Math.max(spanVh, 1.2) * 100}%` : "bottom top",
         pin: pinned,
+        // GSAP pins via `position: fixed` by default, which computes against
+        // the nearest ancestor with a `perspective`/`transform` — `.cx-scene`
+        // sets `perspective` for its parallax layers (motion.css) and wraps
+        // every pinned section on this page, so a fixed-position pin lands
+        // relative to that narrower, non-viewport box instead of the screen.
+        // `transform`-based pinning ignores that containing-block change.
+        ...(pinned ? { pinType: "transform" as const } : {}),
         pinSpacing: pinned,
         anticipatePin: pinned ? 1 : 0,
         scrub,
