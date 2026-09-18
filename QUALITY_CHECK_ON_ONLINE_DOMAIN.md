@@ -445,6 +445,30 @@ Measured: 409 completed ideas, 409 distinct subcategory paths, so every
 Revisit only if AdSense or Search Console gives a specific signal about these
 pages. Not before.
 
+### 11.1b Two lockfiles at the repo root — the cause of the first failed deploy
+
+`bun.lock` and `package-lock.json` both sit at the root. Cloudflare detects bun
+and runs `bun install --frozen-lockfile`, so `bun.lock` is the one that decides
+whether a deploy happens at all.
+
+They drifted: `ogl`, `react-markdown` and `rehype-raw` were added to
+`package.json` and reached `package-lock.json`, but never `bun.lock`. The frozen
+install refused, and the build stopped before the build command ever ran.
+
+Both are now regenerated and agree. **The hazard remains:** installing a package
+with `npm` updates only one of them, and the next deploy fails the same way.
+Until one is removed, always run `bun install` after changing `package.json`,
+and check `bun install --frozen-lockfile` passes before pushing.
+
+The old `bun.lock` also pinned every `@supabase/*` tarball to a private Lovable
+npm cache (`europe-west1-npm.pkg.dev/lovable-core-prod/...`), which returns 403
+outside that sandbox. The regenerated lockfile resolves from the public registry
+and carries none of those URLs.
+
+Unrelated and not fixed: `npm audit` reports one high-severity advisory in
+`js-yaml` (4.0.0–4.3.1), reached only through build and lint tooling. It is not
+in the deployed Worker, so it is not launch-blocking.
+
 ### 11.2 `internal_link_anchors` is populated on only 11 of 409 rows
 
 The field is now carried through to the page, so the plumbing is done. But
