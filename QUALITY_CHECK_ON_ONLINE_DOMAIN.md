@@ -222,7 +222,7 @@ database with SQL, and the non-database routes (`robots.txt`,
 `sitemap-pages.xml`, `feed.xml`) were exercised for real.
 
 **That gap is now closed.** Every database-backed route was checked against the
-live domain on 2026-09-18 and behaved as designed — see §14.
+live domain on 2026-09-18 and behaved as designed — see §15.
 
 Checks that did pass: `eslint` clean on all changed files (68 pre-existing
 problems elsewhere, unchanged), `npm run build` succeeds, TypeScript errors went
@@ -278,6 +278,49 @@ line must pass before Phase 4.
 - [ ] Flip `SITE_INDEXABLE=true`
 - [ ] Re-check `robots.txt` now reads `Allow: /` and names the sitemap index
 - [ ] Re-check the `noindex` meta tag is **gone**
+
+---
+
+### 7.4 Pre-submission gate — DO NOT submit a sitemap before this passes
+
+**`SITE_INDEXABLE=false` makes every sitemap return an empty `urlset`.** It is
+not only a `noindex` tag. Five things gate on it:
+
+| Gated                               | Where                           |
+| ----------------------------------- | ------------------------------- |
+| Every `urlset` returns empty        | `src/lib/sitemap.ts:31`         |
+| The sitemap index returns empty     | `src/lib/sitemap.ts:53`         |
+| `robots.txt` becomes `Disallow: /`  | `src/routes/robots[.]txt.ts:23` |
+| Every page emits `noindex,nofollow` | `src/routes/__root.tsx:149`     |
+| The RSS feed returns no items       | `src/routes/feed[.]xml.ts:34`   |
+
+Submitting while it is `false` hands Google four empty files behind a blanket
+disallow. Search Console will accept them and report success, and nothing will
+ever index.
+
+**Order of operations:**
+
+- [ ] 1. Cloudflare → Worker → Variables and Secrets → set `SITE_INDEXABLE` to `true`
+- [ ] 2. Redeploy, or wait for the next deployment to pick it up
+- [ ] 3. Confirm `robots.txt` now reads `Allow: /` and names the sitemap index
+- [ ] 4. Confirm the `noindex` meta tag is **gone** from the homepage source
+- [ ] 5. Confirm the counts below
+- [ ] 6. Only then submit
+
+**Expected counts once indexable** (measured against the live database):
+
+| URL                       | Expect                                                      |
+| ------------------------- | ----------------------------------------------------------- |
+| `/sitemap-pages.xml`      | 105 URLs                                                    |
+| `/sitemap-categories.xml` | ~441 URLs (16 categories + 409 subcategories + 16 validate) |
+| `/sitemap-ideas/1`        | 409 URLs                                                    |
+| `/sitemap-ideas/2`        | **404** — there is only one tranche at 409 ideas            |
+| `/sitemap-index.xml`      | 3 children, each with a `<lastmod>`                         |
+| `/feed.xml`               | 50 items                                                    |
+| **Total**                 | **~955 URLs**                                               |
+
+**Submit only `sitemap-index.xml`.** It names the children itself. Submitting
+the children separately as well only makes the coverage report harder to read.
 
 ---
 
@@ -554,7 +597,86 @@ table the n8n pipeline writes to, so it needs an explicit go-ahead.
 
 ---
 
-## 12. Log
+## 12. Competitor layout and metrics — what IdeaProof does that we do not
+
+From screenshots of their validate flow. Recorded because it is the clearest
+picture yet of the gap, and because three of the four ASAP items already in
+this document are the same problem wearing different clothes.
+
+### 12.1 What their page actually does
+
+**A live progress readout.** "Validating your idea… 15s · 100-pt · GO/NO-GO ·
+Risks · ICP", a percentage bar, and a stage checklist that ticks off as it
+goes: researching market data, analysing competitors, evaluating industry
+trends, processing insights (≈25s), calculating success score, generating
+report. Each stage names its sources as chips — Reddit, X, HackerNews, YC
+threads.
+
+**The wait is converted into browsing.** "EXPLORE WHILE YOU WAIT — 73/73
+resources", with tabs for All, Calculators, Lists, Guides, AI Tools,
+Templates, Databases, Reports, Q&A, and a scrollable rail of real items
+(Market Size Calculator, Startup Cost Calculator, CAC Calculator, ROI
+Calculator), each with an icon, a one-line description and an open-in-new
+affordance.
+
+**A visible upgrade ladder.** "YOUR JOURNEY — Step 1 of 6 starts now":
+Validation FREE → Market → Plan → Brand → Visual → Ads, each priced in
+credits, with "1st validation FREE", a signup bonus, and "Unlock more steps
+after validation". A credit balance sits in the header and visibly decrements.
+
+**Trust microcopy at the point of hesitation:** "No card required · Your idea
+is safe".
+
+### 12.2 Why it works, and which parts are actually about SEO
+
+| What it is                   | Why it works                                                                                                                                                                                     |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Stage checklist with timings | Makes a slow call read as work being done rather than a hang. The honesty about ≈25s is what buys the patience                                                                                   |
+| Named sources as chips       | Substantiates the output before the output exists                                                                                                                                                |
+| 73 resources during the wait | **This is internal linking sold as a feature.** Every one of those chips is a link from a page the visitor is already on to a deep page — the exact mechanism in §11.2 that we have switched off |
+| Credit ladder                | Monetises without a subscription, and each rung is its own page to rank                                                                                                                          |
+| Trust line                   | Removes the two objections a first-time visitor actually has                                                                                                                                     |
+
+### 12.3 What we can copy, and what we cannot
+
+**Can, and should:**
+
+- **The resource rail.** We already have 60 calculators, ~22 guides, founder
+  stories and a glossary — more than enough to fill it. It needs no AI and no
+  credits, and it is the same internal-linking fix as §11.2 and the HTML
+  sitemap, just surfaced where a visitor already is.
+- **The stage checklist and trust line.** Presentation only.
+- **A visible ladder.** Ours would be free tiers rather than credits, but the
+  principle — show the next step and what it costs — holds.
+
+**Cannot, honestly:**
+
+- **The live AI validation.** `CLAUDE.md` is explicit: the Anthropic API is
+  not part of a Pro or Max subscription, and any feature needing it ships
+  switched off. A flow like theirs is a per-call cost we do not have. Ours has
+  to stay a prompt the visitor runs themselves, which is the honest version and
+  also the one the homepage copy already argues for.
+- **Their source chips as-is.** Naming Reddit or HackerNews is fine. Naming an
+  AI vendor is not — see §11.5, which is still open in
+  `src/lib/validate-shared.ts`.
+
+### 12.4 Where this sits against the ASAP list
+
+Ranked by what actually moves indexing, which is the thing the trial is
+testing:
+
+1. **`seo_title`** (§11.1) — still the top item. It is what Google prints.
+2. **Internal linking** (§11.2) — `internal_link_anchors` on 11 of 409 rows.
+   The resource rail above is the same fix with a visible payoff.
+3. **`updated_at`** (§11.3) — needed before the enrichment run means anything.
+4. **The resource rail and ladder** — real, but presentation. It earns
+   attention once pages are indexed; it does not get them indexed.
+
+The order does not change. This is a reason to finish 1–3, not to start 4.
+
+---
+
+## 13. Log
 
 Record what actually happened, with dates. This is the part worth having in six
 weeks.
@@ -572,7 +694,7 @@ weeks.
 
 ---
 
-## 13. Verification commands
+## 14. Verification commands
 
 Against the live domain once it is up. Replace the host for `businessidea.io` later.
 
@@ -597,13 +719,13 @@ curl -s $B/sitemap-pages.xml | grep -c 'businessidea\.io'        # expect 0
 
 ---
 
-## 14. Deployment record — bbusiness.online, 2026-09-18
+## 15. Deployment record — bbusiness.online, 2026-09-18
 
 Kept verbatim as the record of how the trial domain was brought up, including
 the DNS records that were deleted, in case any of it has to be restored or
 repeated for `businessidea.io`.
 
-### 14.1 Worker
+### 15.1 Worker
 
 |        |                                           |
 | ------ | ----------------------------------------- |
@@ -616,7 +738,7 @@ Two commits landed after that build and deployed on their own: `231e942` (this
 document's sign-in finding) and `ddf55c5` (the `/sitemap` layout fix noted as
 open in 14.4).
 
-### 14.2 Environment — the runtime/build distinction that cost an hour
+### 15.2 Environment — the runtime/build distinction that cost an hour
 
 Both sets carry the same six names. **Values are never recorded here.**
 
@@ -632,7 +754,7 @@ deploy` runs against a generated config with no `vars` block, so dashboard
 The six: `SITE_URL`, `SITE_INDEXABLE`, `IDEAVAULT_DB_URL`,
 `IDEAVAULT_DB_ANON_KEY`, `VITE_IDEAVAULT_DB_URL`, `VITE_IDEAVAULT_DB_ANON_KEY`.
 
-### 14.3 Domain
+### 15.3 Domain
 
 - `bbusiness.online` (apex) attached as a **Custom Domain**; certificate active,
   site serves over HTTPS.
@@ -645,7 +767,7 @@ A      bbusiness.online   →  2.57.91.91        (Hostinger)
 CNAME  www                →  bbusiness.online
 ```
 
-### 14.4 Live checks, all passed
+### 15.4 Live checks, all passed
 
 | Check                | Result                                                                          |
 | -------------------- | ------------------------------------------------------------------------------- |
@@ -665,17 +787,17 @@ on a real deployment, which is what makes the teardown in §10 trustworthy. The
 canonical naming `bbusiness.online` confirms `SITE_URL` drives every absolute
 URL, which is what makes the domain switch a single variable.
 
-### 14.5 Problems hit, and what each turned out to be
+### 15.5 Problems hit, and what each turned out to be
 
 | Symptom                                                 | Actual cause                                                                                                                                                                              | Fix                                                                                                                                                            |
 | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | First build failed                                      | `bun install --frozen-lockfile` — `bun.lock` missing `ogl`, `react-markdown`, `rehype-raw`, which were in `package-lock.json`. Build command never ran                                    | Both lockfiles regenerated — commit `4c26b6a`. See §11.1b                                                                                                      |
 | Homepage SSR-errored on every route                     | Runtime env empty; the six variables were build-time only. The root loader hits the database before anything renders, so every route showed the app's own error page                      | Six runtime Secrets added                                                                                                                                      |
 | Google sign-in bounced to the old BBI-With-ChatGPT site | Supabase honours `redirectTo` only if allow-listed, else falls back to the project's Site URL, which named the other deployment                                                           | Added `bbusiness.online/**`, `www.bbusiness.online/**` and the workers.dev `/**` to the Supabase redirect allow-list. **Site URL left untouched** — see §11.1c |
-| Domain attach blocked                                   | Existing Hostinger `A` and `CNAME` records held the apex                                                                                                                                  | Both deleted (values in §14.3), apex attached                                                                                                                  |
+| Domain attach blocked                                   | Existing Hostinger `A` and `CNAME` records held the apex                                                                                                                                  | Both deleted (values in §15.3), apex attached                                                                                                                  |
 | `/sitemap` inner layout looked dated                    | The page used `SiteShell` plus its own hand-rolled components, including a local `Section` shadowing the shared one, instead of the `ContentPage` layout the other ten content routes use | Commit `ddf55c5`                                                                                                                                               |
 
-### 14.6 Open items from the bring-up
+### 15.6 Open items from the bring-up
 
 - [ ] `www.bbusiness.online` not attached — add it if www should resolve.
 - [ ] One leftover Supabase redirect entry, `https://bbusiness.online/` with no
