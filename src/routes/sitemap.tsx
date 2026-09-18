@@ -1,6 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
+import { CategoryBadge } from "@/components/category-badge";
 import { ContentPage, Section, metaFor } from "@/components/page-layout";
 import { CALCULATORS } from "@/lib/calculators";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
@@ -36,6 +37,15 @@ import { fetchIdeasForHub, type HubIdea } from "@/lib/sitemap.server";
  * section chrome, and none of the reveal grammar the other templates use. Ten
  * pages render through `ContentPage`; this is now the eleventh, so the layout
  * has one owner and this page cannot drift from the rest again.
+ *
+ * ## Why every link is a capsule
+ *
+ * Inside that shell the links were a three-column grid, which is the wrong
+ * shape for 500 links of wildly differing length — see the note on `PillRow`.
+ * They are now `CategoryBadge`, the same capsule the header dropdown, the
+ * Golden Tree and the footer already use, so this page borrows the site's
+ * existing pill grammar and its spring interaction rather than defining a
+ * third link treatment of its own.
  */
 const getSitemapData = createServerFn({ method: "GET" }).handler(async (): Promise<HubIdea[]> =>
   fetchIdeasForHub(),
@@ -95,43 +105,18 @@ const PAGE_GROUPS: { heading: string; links: { to: string; label: string }[] }[]
 ];
 
 /**
- * Column counts are literal class names on purpose. Tailwind generates
- * utilities by scanning source text, so an interpolated `lg:grid-cols-$n`
- * appears in no file and is never compiled.
- */
-function LinkGrid({ children }: { children: React.ReactNode }) {
-  return <ul className="grid gap-x-6 gap-y-0.5 sm:grid-cols-2 lg:grid-cols-3">{children}</ul>;
-}
-
-/**
- * One link row. `params as never` follows the same convention as `Breadcrumbs`
- * in site-shell.tsx: a single generic row cannot carry every route's param
- * types, and each call below supplies the params its own route declares.
+ * A wrapping row of capsules.
  *
- * The row grammar — `mo-row`, the negative inset, `hover:bg-secondary`,
- * `hover:text-foreground` — is the same one the header's category dropdown and
- * `Bullets` in page-layout.tsx use, rather than a bespoke underline.
+ * This replaced a three-column grid, which was the wrong shape for the
+ * content: a grid gives every cell the width of the longest label and the
+ * height of the tallest row, so a ten-item section rendered as four rows with
+ * two empty cells, and a page of 500 links became a wall of evenly spaced text
+ * with dead space down the right of every short section. Capsules size to
+ * their own label and wrap, so the same ten items take two rows instead of
+ * four and nothing is padded out to match its neighbour.
  */
-function LinkRow({
-  to,
-  params,
-  label,
-}: {
-  to: string;
-  params?: Record<string, string>;
-  label: string;
-}) {
-  return (
-    <li className="min-w-0">
-      <Link
-        to={to}
-        params={params as never}
-        className="mo-row -mx-2 block truncate rounded-lg px-2 py-1.5 transition-colors hover:bg-secondary hover:text-foreground"
-      >
-        {label}
-      </Link>
-    </li>
-  );
+function PillRow({ children }: { children: React.ReactNode }) {
+  return <div className="flex flex-wrap gap-1.5">{children}</div>;
 }
 
 function SitemapPage() {
@@ -158,81 +143,75 @@ function SitemapPage() {
     >
       {PAGE_GROUPS.map((group) => (
         <Section key={group.heading} heading={group.heading}>
-          <LinkGrid>
+          <PillRow>
             {group.links.map((link) => (
-              <LinkRow key={link.to} to={link.to} label={link.label} />
+              <CategoryBadge key={link.to} to={link.to} label={link.label} size="sm" />
             ))}
-          </LinkGrid>
+          </PillRow>
         </Section>
       ))}
 
       <Section heading={`Calculators (${CALCULATORS.length})`}>
-        <LinkGrid>
+        <PillRow>
           {CALCULATORS.map((calculator) => (
-            <LinkRow
+            <CategoryBadge
               key={calculator.slug}
-              to="/calculator/$slug"
-              params={{ slug: calculator.slug }}
+              to={`/calculator/${calculator.slug}`}
               label={calculator.title}
+              size="sm"
             />
           ))}
-        </LinkGrid>
+        </PillRow>
       </Section>
 
       <Section heading={`Startup guides (${STARTUP_GUIDES.length})`}>
-        <LinkGrid>
+        <PillRow>
           {STARTUP_GUIDES.map((guide) => (
-            <LinkRow
+            <CategoryBadge
               key={guide.slug}
-              to="/startup-guides/$slug"
-              params={{ slug: guide.slug }}
+              to={`/startup-guides/${guide.slug}`}
               label={guide.title}
+              size="sm"
             />
           ))}
-        </LinkGrid>
+        </PillRow>
       </Section>
 
       <Section heading={`Founder stories (${CASE_STUDIES.length})`}>
-        <LinkGrid>
+        <PillRow>
           {CASE_STUDIES.map((study) => (
-            <LinkRow
+            <CategoryBadge
               key={study.slug}
-              to="/founder-stories/$slug"
-              params={{ slug: study.slug }}
+              to={`/founder-stories/${study.slug}`}
               label={study.title}
+              size="sm"
             />
           ))}
-        </LinkGrid>
+        </PillRow>
       </Section>
 
       <Section heading={`Idea blueprints (${ideas.length})`}>
-        <div className="space-y-6">
+        <div className="space-y-5">
           {categories.map(([categoryName, group]) => (
-            <div key={categoryName}>
-              <h3 className="font-display text-sm font-bold tracking-tight text-foreground">
-                <Link
-                  to="/category/$categorySlug"
-                  params={{ categorySlug: group.slug }}
-                  className="transition-colors hover:text-primary"
-                >
-                  {categoryName}
-                </Link>
-                <span className="ml-2 text-xs font-normal tabular-nums text-muted-foreground">
+            <div key={categoryName} className="border-l border-border/60 pl-4">
+              {/* The category stays an h3 so the document outline a crawler
+                  reads is unchanged; the capsule is only how it looks. */}
+              <h3 className="mb-2 flex items-center gap-2">
+                <CategoryBadge slug={group.slug} label={categoryName} dot />
+                <span className="text-[11px] font-semibold tabular-nums text-muted-foreground">
                   {group.ideas.length}
                 </span>
               </h3>
-              <div className="mt-2">
-                <LinkGrid>
-                  {group.ideas.map((idea) => (
-                    <LinkRow
-                      key={idea.slug}
-                      to="/idea/$slug"
-                      params={{ slug: idea.slug }}
-                      label={idea.title}
-                    />
-                  ))}
-                </LinkGrid>
-              </div>
+              <PillRow>
+                {group.ideas.map((idea) => (
+                  <CategoryBadge
+                    key={idea.slug}
+                    to={`/idea/${idea.slug}`}
+                    label={idea.title}
+                    size="sm"
+                  />
+                ))}
+              </PillRow>
             </div>
           ))}
         </div>
