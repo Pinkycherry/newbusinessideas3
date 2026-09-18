@@ -268,6 +268,8 @@ line must pass before Phase 4.
 - [ ] Spot-check 3 category pages: each lists its ideas
 - [ ] No page shows a raw error, an empty state, or placeholder text
 - [ ] No AI vendor is named anywhere in public copy — see §11.4
+- [ ] **Sign in with Google, and confirm you land back on bbusiness.online** —
+      not on any other deployment. See §11.1c if it redirects elsewhere.
 
 ### 7.3 Then
 
@@ -356,8 +358,11 @@ months**, and does not delete anything. `noindex` is what actually removes.
 - [ ] **7b.** Set `SITE_URL=https://businessidea.io`, `SITE_INDEXABLE=false`
 - [ ] **7c.** Run the whole §7 checklist again against the new domain
 - [ ] **7d.** Flip `SITE_INDEXABLE=true`
-- [ ] **7e.** Add the GSC property, submit `sitemap-index.xml` and `feed.xml`
-- [ ] **7f.** Apply to add it as a second site in the same AdSense account
+- [ ] **7e.** Supabase → Authentication → URL Configuration → Redirect URLs:
+      add `https://businessidea.io/**` and `https://www.businessidea.io/**`.
+      Without it, Google sign-in lands on the wrong site — see §11.1c.
+- [ ] **7f.** Add the GSC property, submit `sitemap-index.xml` and `feed.xml`
+- [ ] **7g.** Apply to add it as a second site in the same AdSense account
 
 **No content moves. No database changes. No code changes.** Both domains read
 the same Supabase project; only `SITE_URL` differs. There is nothing to sync.
@@ -468,6 +473,41 @@ and carries none of those URLs.
 Unrelated and not fixed: `npm audit` reports one high-severity advisory in
 `js-yaml` (4.0.0–4.3.1), reached only through build and lint tooling. It is not
 in the deployed Worker, so it is not launch-blocking.
+
+### 11.1c Google sign-in redirects to the wrong site unless the domain is allow-listed
+
+Signing in sent the user to the BBI-With-ChatGPT deployment instead of back to
+this site. **This is a Supabase dashboard setting, not a code defect.**
+
+The code is correct. `src/routes/sign-in.tsx:26` builds
+`window.location.origin + path`, and `src/lib/auth-client.ts:31` passes it to
+`signInWithOAuth` as `redirectTo` — so from this domain it correctly asks to
+return to `https://bbusiness.online/`.
+
+But Supabase honours a `redirectTo` **only if it matches the project's Redirect
+URLs allow-list**. Anything else is discarded and the user is sent to the
+project's **Site URL** instead. Both sites share Supabase project
+`jqzadwobnfypmytcbpkw` ("BBI"), whose Site URL names the other deployment — so
+the sign-in completes and lands on the wrong site.
+
+**Fix: add to the allow-list only. Do not change Site URL.** Because this app
+always sends an explicit `redirectTo`, an allow-list entry is sufficient, and
+Site URL then never applies here. Changing Site URL would move where the OTHER
+project's sign-ins land, since it is the same Supabase project.
+
+Supabase → Authentication → URL Configuration → Redirect URLs, add:
+
+```
+https://bbusiness.online/**
+https://www.bbusiness.online/**
+https://pinkycherry-newbusinessideas3.spandhana1212.workers.dev/**
+```
+
+Keep every existing entry. No Google Cloud change is needed — Google's
+authorised redirect URI points at Supabase's own `/auth/v1/callback`, which does
+not vary per site.
+
+**This will need doing again for `businessidea.io`** at Phase 7. Added to §10.3.
 
 ### 11.2 `internal_link_anchors` is populated on only 11 of 409 rows
 
