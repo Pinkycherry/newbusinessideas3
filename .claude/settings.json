@@ -1,0 +1,45 @@
+{
+  "enabledPlugins": {
+    "frontend-design@claude-code-plugins": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
+    "gsap-skills@gsap-skills": true,
+    "core-3d-animation@claude-design-skillstack": true,
+    "animation-components@claude-design-skillstack": true,
+    "meta-skills@claude-design-skillstack": true,
+    "extended-3d-scroll@claude-design-skillstack": true,
+    "authoring-motion@claude-design-skillstack": true,
+    "impeccable@impeccable": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-code-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-code"
+      }
+    },
+    "ui-ux-pro-max-skill": {
+      "source": {
+        "source": "github",
+        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
+      }
+    },
+    "gsap-skills": {
+      "source": {
+        "source": "github",
+        "repo": "greensock/gsap-skills"
+      }
+    },
+    "claude-design-skillstack": {
+      "source": {
+        "source": "github",
+        "repo": "freshtechbro/claudedesignskills"
+      }
+    },
+    "impeccable": {
+      "source": {
+        "source": "github",
+        "repo": "pbakaus/impeccable"
+      }
+    }
+  }
+}
