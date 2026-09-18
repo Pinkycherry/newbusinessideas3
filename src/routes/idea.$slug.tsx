@@ -433,12 +433,15 @@ function IdeaPage() {
           ref={mastheadRef}
           className="cx-scene mx-auto grid max-w-6xl gap-10 px-4 py-12 lg:grid-cols-[minmax(0,1fr)_20rem]"
         >
-          <article
-            className="idea-shell cx-layer min-w-0"
-            style={{ "--z": 0.12 } as CSSProperties}
-            data-variant={variant}
-            data-gradient={gradient}
-          >
+          {/* No `cx-layer` here on purpose: this article hosts StickyScroll's
+              `position: sticky` plate, and a `transform` on any ancestor of a
+              sticky element breaks its stickiness (it stops tracking scroll
+              and renders wherever it first computed, disconnected from its
+              matching content). The pointer-parallax this cost was
+              imperceptible anyway — its scroll term only fires when
+              something sets `--sc-p` on this element, which nothing here
+              does. */}
+          <article className="idea-shell min-w-0" data-variant={variant} data-gradient={gradient}>
             {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
             <Breadcrumbs
               items={[
@@ -887,9 +890,16 @@ function IdeaPage() {
             {/* EDITABLE SECTION END */}
           </article>
 
-          {/* Sticky right column — desktop only. Add or reorder blocks freely. */}
-          <aside className="cx-layer hidden lg:block" style={{ "--z": 0.42 } as CSSProperties}>
-            <div className="sticky top-28 space-y-5">
+          {/* Sticky right column — desktop only. Add or reorder blocks freely.
+              `cx-layer` sits on the sticky div itself, not this wrapper — a
+              `transform` on an ANCESTOR of a `position: sticky` element
+              breaks its stickiness, same reasoning as the article above. A
+              transform on the sticky element itself composes fine. */}
+          <aside className="hidden lg:block">
+            <div
+              className="cx-layer sticky top-28 space-y-5"
+              style={{ "--z": 0.42 } as CSSProperties}
+            >
               <AdSlot position="idea-detail-right-affiliate" size="rectangle" />
 
               {sidebarRelated.length > 0 && (
