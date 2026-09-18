@@ -30,6 +30,44 @@ export function canonicalUrl(pathname: string): string {
 }
 
 /**
+ * SINGLE SOURCE OF TRUTH for the contact-address domain.
+ *
+ * Eight addresses were typed across `contact.tsx` and the policy pages, so
+ * the trial deployment served `hello@businessidea.io` on bbusiness.online — a
+ * domain the visitor was not on, naming a mailbox nobody reads. A domain is
+ * infrastructure, not a brand name; the brand is BBI and Bro Business Ideas,
+ * and the host follows the deployment.
+ *
+ * `import.meta.env`, NOT `process.env`. These addresses render in the browser,
+ * and `process` does not exist there — `siteUrl()` guards for that and falls
+ * back, which is correct for a server-rendered canonical but would make the
+ * server and the client disagree here and throw a hydration mismatch. A
+ * `VITE_`-prefixed variable is inlined at build time and reads identically on
+ * both sides.
+ */
+export function contactEmailDomain(): string {
+  const fromEnv = import.meta.env["VITE_CONTACT_EMAIL_DOMAIN"] as string | undefined;
+  return (fromEnv?.trim() || "bbusiness.online").replace(/^@+/, "");
+}
+
+/**
+ * The ONE public address. `contact@` and nothing else.
+ *
+ * There were four — hello@, research@, privacy@ and security@ — and none of
+ * them was a mailbox anyone reads. A contact page that lists addresses which
+ * bounce is worse than one that lists a single address that works, and on an
+ * AdSense review a dead contact route is exactly the kind of thing that reads
+ * as an unmaintained site.
+ *
+ * The local part is fixed and only the domain is configurable, so switching
+ * deployments cannot silently invent `research@` on a host that has no such
+ * mailbox.
+ */
+export function contactEmail(): string {
+  return `contact@${contactEmailDomain()}`;
+}
+
+/**
  * SINGLE SOURCE OF TRUTH for whether this deployment may be indexed.
  *
  * Defaults to TRUE so the production site behaves normally with no variable

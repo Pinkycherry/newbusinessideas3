@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { ContentPage, Section, metaFor } from "@/components/page-layout";
+import { contactEmail } from "@/lib/site-config";
 
 export const Route = createFileRoute("/refund-policy")({
   head: () =>
@@ -31,8 +32,8 @@ function RefundPage() {
       <Section heading="Questions">
         <p>
           Write to{" "}
-          <a href="mailto:hello@businessidea.io" className="mo-link font-semibold text-accent">
-            hello@businessidea.io
+          <a href={`mailto:${contactEmail()}`} className="mo-link font-semibold text-accent">
+            {contactEmail()}
           </a>{" "}
           and ask. Our{" "}
           <Link to="/terms" className="mo-link font-semibold text-accent">

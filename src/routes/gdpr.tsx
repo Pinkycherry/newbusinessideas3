@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout";
+import { contactEmail } from "@/lib/site-config";
 
 export const Route = createFileRoute("/gdpr")({
   head: () =>
@@ -37,8 +38,8 @@ function GdprPage() {
       <Section heading="How to ask">
         <p>
           Write to{" "}
-          <a href="mailto:privacy@businessidea.io" className="mo-link font-semibold text-accent">
-            privacy@businessidea.io
+          <a href={`mailto:${contactEmail()}`} className="mo-link font-semibold text-accent">
+            {contactEmail()}
           </a>{" "}
           and tell us which right you are using and the email address you used with us. We reply
           within 30 days. If the request is complicated we can take one extension, and we will tell

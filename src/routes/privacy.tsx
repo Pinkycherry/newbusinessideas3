@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout";
+import { contactEmail } from "@/lib/site-config";
 
 export const Route = createFileRoute("/privacy")({
   head: () =>
@@ -80,8 +81,8 @@ function PrivacyPage() {
             GDPR page
           </Link>{" "}
           explains how to do each one, or write straight to{" "}
-          <a href="mailto:privacy@businessidea.io" className="mo-link font-semibold text-accent">
-            privacy@businessidea.io
+          <a href={`mailto:${contactEmail()}`} className="mo-link font-semibold text-accent">
+            {contactEmail()}
           </a>
           .
         </p>

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout";
+import { contactEmail } from "@/lib/site-config";
 
 export const Route = createFileRoute("/terms")({
   head: () =>
@@ -88,8 +89,8 @@ function TermsPage() {
       <Section heading="Questions">
         <p>
           Anything about these terms, write to{" "}
-          <a href="mailto:hello@businessidea.io" className="mo-link font-semibold text-accent">
-            hello@businessidea.io
+          <a href={`mailto:${contactEmail()}`} className="mo-link font-semibold text-accent">
+            {contactEmail()}
           </a>
           .
         </p>

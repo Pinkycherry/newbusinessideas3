@@ -202,7 +202,9 @@ function SignInAction({ onNavigate, full }: { onNavigate?: () => void; full: boo
         backgroundColor: hovered
           ? "var(--ins-signal, var(--primary))"
           : "var(--ins-face, var(--card))",
-        borderColor: hovered ? "var(--ins-signal, var(--primary))" : "var(--ins-rule, var(--border))",
+        borderColor: hovered
+          ? "var(--ins-signal, var(--primary))"
+          : "var(--ins-rule, var(--border))",
       }}
     >
       Sign In
@@ -976,7 +978,7 @@ export function SiteShell({
                 count is on /browse, where someone is actually looking for it. */}
             <div className="pr-24 sm:pr-0 sm:text-right">
               <p className="text-muted-foreground">
-                © {new Date().getFullYear()} Bro Business Ideas · businessidea.io
+                © {new Date().getFullYear()} Bro Business Ideas
               </p>
               <p className="mt-1 text-muted-foreground/80">
                 Made in India, for everyone starting from zero. We were there too.

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { ContentPage, Section, metaFor } from "@/components/page-layout";
+import { contactEmail } from "@/lib/site-config";
 
 export const Route = createFileRoute("/contact")({
   head: () =>
@@ -11,25 +12,29 @@ export const Route = createFileRoute("/contact")({
   component: ContactPage,
 });
 
-const channels = [
+/**
+ * What to write about, not where to write.
+ *
+ * These were four cards each showing a DIFFERENT address — hello@, research@,
+ * privacy@ and security@ — none of which was a mailbox anyone reads. There is
+ * one address now, shown once, and these are the topics it covers. Keying the
+ * cards on the address would also have collided the moment they shared one.
+ */
+const topics = [
   {
     label: "General & support",
-    value: "hello@businessidea.io",
     note: "Access questions, corrections, anything at all about the library.",
   },
   {
     label: "Custom research",
-    value: "research@businessidea.io",
     note: "Bespoke blueprints and validation sprints. Include the market you care about.",
   },
   {
     label: "Privacy & data requests",
-    value: "privacy@businessidea.io",
     note: "Access, correction, deletion and other GDPR requests.",
   },
   {
     label: "Security reports",
-    value: "security@businessidea.io",
     note: "Responsible disclosure. Please do not test against live user data.",
   },
 ];
@@ -41,22 +46,24 @@ function ContactPage() {
       eyebrow="Contact"
       title="Talk to a"
       highlight="real person"
-      intro="Pick the right channel and you will get a faster, more useful answer. We reply to most messages within two business days."
+      intro="One address, read by a person. Say which of the below your message is about and you will get a faster, more useful answer. We reply to most messages within two business days."
     >
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
+      <div className="glass rounded-2xl px-5 py-6 sm:px-7">
+        <p className="t-eyebrow">Email us</p>
+        <a
+          href={`mailto:${contactEmail()}`}
+          className="mo-link mt-2 inline-block text-lg font-semibold text-accent sm:text-xl"
+        >
+          {contactEmail()}
+        </a>
+      </div>
+
       <div className="grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-4">
-        {channels.map((c) => (
-          <div key={c.value} className="glass glass-hover rounded-2xl px-5 py-6">
-            <p className="t-eyebrow">
-              {c.label}
-            </p>
-            <a
-              href={`mailto:${c.value}`}
-              className="mo-link mt-2 inline-block text-base font-semibold text-accent"
-            >
-              {c.value}
-            </a>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.note}</p>
+        {topics.map((t) => (
+          <div key={t.label} className="glass glass-hover rounded-2xl px-5 py-6">
+            <p className="t-eyebrow">{t.label}</p>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t.note}</p>
           </div>
         ))}
       </div>

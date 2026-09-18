@@ -308,7 +308,7 @@ export function VoidFooter({
 
       <div className="vs-footer-base">
         <p>
-          © {year} Bro Business Ideas · businessidea.io · {totalIdeas} researched blueprints, free
+          © {year} Bro Business Ideas · {totalIdeas} researched blueprints, free
         </p>
         <p className="vs-footer-note">
           Made in India, for everyone starting from zero. We were there too.
