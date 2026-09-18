@@ -1,6 +1,6 @@
 # Quality Check on .ONLINE domain
 
-Working document for the `bbusinessidea.online` trial run: SEO, sitemaps,
+Working document for the `bbusiness.online` trial run: SEO, sitemaps,
 indexing, AdSense, and the switch to `businessidea.io`.
 
 Everything here is either a measured fact or a procedure. Where a number could
@@ -83,11 +83,27 @@ rebuild:
 **Verified on 2026-09-18** by running the app locally with the flag set. All
 three behaved as described.
 
+### Database credentials must be set on the Worker
+
+`src/lib/ideas.functions.ts:14` reads **unprefixed** names from `process.env`:
+
+```
+IDEAVAULT_DB_URL
+IDEAVAULT_DB_ANON_KEY
+```
+
+The repo's local `.env` only carries the `VITE_`-prefixed versions, which are
+build-time and client-side. A deployment with only those set builds fine and
+then fails at request time on every database-backed route with "BBI database
+credentials are not configured." Set **all four** on the Worker — the two above
+for the server, and `VITE_IDEAVAULT_DB_URL` / `VITE_IDEAVAULT_DB_ANON_KEY` for
+the build — and set them for the Production environment.
+
 ### Settings for each domain
 
 ```
-# bbusinessidea.online — the trial
-SITE_URL=https://bbusinessidea.online
+# bbusiness.online — the trial
+SITE_URL=https://bbusiness.online
 SITE_INDEXABLE=true          # false during Phase 3, true from Phase 4
 
 # businessidea.io — the real one
@@ -229,17 +245,17 @@ line must pass before Phase 4.
 
 ### 7.1 Plumbing
 
-- [ ] `https://bbusinessidea.online/` loads over HTTPS, valid certificate
+- [ ] `https://bbusiness.online/` loads over HTTPS, valid certificate
 - [ ] `robots.txt` reads `Disallow: /` (flag still off)
 - [ ] `sitemap-index.xml` returns XML, not an error page
-- [ ] `sitemap-pages.xml` returns **105** URLs, all on `bbusinessidea.online`
+- [ ] `sitemap-pages.xml` returns **105** URLs, all on `bbusiness.online`
 - [ ] `sitemap-categories.xml` returns ~441 URLs
 - [ ] `sitemap-ideas/1` returns **409** URLs
 - [ ] `sitemap-ideas/2` returns **404** (only one tranche at 409 ideas)
 - [ ] `sitemap-ideas/abc` returns **404**
 - [ ] `feed.xml` returns valid RSS
 - [ ] No URL anywhere in any sitemap says `businessidea.io`
-- [ ] View source on any page: canonical is `bbusinessidea.online`
+- [ ] View source on any page: canonical is `bbusiness.online`
 - [ ] View source: `<meta name="robots" content="noindex,nofollow">` is present
 
 ### 7.2 Content and trust
@@ -263,10 +279,10 @@ line must pass before Phase 4.
 
 ## 8. Phase 4 — indexing
 
-- [ ] Add `bbusinessidea.online` to Search Console as a **Domain** property
+- [ ] Add `bbusiness.online` to Search Console as a **Domain** property
 - [ ] Verify by DNS TXT record (add it in Cloudflare — same account as Phase 1)
-- [ ] Submit **one** URL: `https://bbusinessidea.online/sitemap-index.xml`
-- [ ] Submit `https://bbusinessidea.online/feed.xml` in the same field
+- [ ] Submit **one** URL: `https://bbusiness.online/sitemap-index.xml`
+- [ ] Submit `https://bbusiness.online/feed.xml` in the same field
 - [ ] Record the discovered URL count per child sitemap
 - [ ] Request indexing manually for `/`, `/browse`, `/sitemap`, and 3 idea pages
 - [ ] Wait. Then watch these numbers weekly:
@@ -329,7 +345,7 @@ months**, and does not delete anything. `noindex` is what actually removes.
 - [ ] **6a.** Cloudflare → `.online` Worker → `SITE_INDEXABLE=false`.
       Whole site goes `noindex` immediately. Sitemaps go empty.
 - [ ] **6b.** GSC → Removals → **"Remove all URLs with this prefix"** →
-      `https://bbusinessidea.online/`. One entry covers every URL. This is the
+      `https://bbusiness.online/`. One entry covers every URL. This is the
       one-click removal — not one URL at a time.
 - [ ] **6c.** Wait. Watch the indexed count in GSC fall toward zero. Weeks, not days.
 - [ ] **6d.** Only once it has fallen: block or retire the domain if you want to.
@@ -440,7 +456,7 @@ weeks.
 Against the live domain once it is up. Replace the host for `businessidea.io` later.
 
 ```sh
-B=https://bbusinessidea.online
+B=https://bbusiness.online
 
 curl -s $B/robots.txt
 curl -s $B/sitemap-index.xml
