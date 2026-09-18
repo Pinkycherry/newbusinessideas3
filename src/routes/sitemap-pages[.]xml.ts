@@ -35,6 +35,7 @@ const STATIC_PAGES = [
   "/learning-resources",
   "/list",
   "/faq",
+  "/sitemap",
   "/about",
   "/services",
   "/contact",

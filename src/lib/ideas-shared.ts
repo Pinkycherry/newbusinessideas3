@@ -80,6 +80,12 @@ export type IdeaDetail = IdeaCard & {
   toolsNeeded: string[];
   faq: FaqItem[];
   externalLinks: ExternalLink[];
+  /* Slugs of related ideas, for on-page cross-links. Declared on `IdeaRow`
+     since the v2 pipeline began writing it, but never carried through to the
+     page -- so every idea was a crawl dead end, reachable from a sitemap and
+     from nothing else. Sitemaps advertise a URL; links are what get it
+     crawled and indexed. */
+  internalLinkAnchors: string[];
 };
 
 /** jsonb arrays of objects (faq, external links) — parsed defensively like toStringList. */
@@ -88,7 +94,9 @@ function toObjectList<T>(value: unknown, pick: (o: Record<string, unknown>) => T
   for (let i = 0; i < 3; i += 1) {
     if (Array.isArray(current)) {
       return current
-        .map((item) => (item && typeof item === "object" ? pick(item as Record<string, unknown>) : null))
+        .map((item) =>
+          item && typeof item === "object" ? pick(item as Record<string, unknown>) : null,
+        )
         .filter((item): item is T => item !== null);
     }
     if (typeof current !== "string") return [];
@@ -167,8 +175,12 @@ export function toIdeaDetail(row: IdeaRow): IdeaDetail {
     ),
     externalLinks: toObjectList(row.external_links, (o) =>
       typeof o["url"] === "string"
-        ? { label: typeof o["label"] === "string" && o["label"] ? o["label"] : o["url"], url: o["url"] }
+        ? {
+            label: typeof o["label"] === "string" && o["label"] ? o["label"] : o["url"],
+            url: o["url"],
+          }
         : null,
     ),
+    internalLinkAnchors: toStringList(row.internal_link_anchors),
   };
 }

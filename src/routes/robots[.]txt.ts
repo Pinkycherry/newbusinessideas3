@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { siteUrl } from "@/lib/site-config";
+import { siteUrl, siteIndexable } from "@/lib/site-config";
 
 /**
  * robots.txt, served from the app so the sitemap line follows the domain.
@@ -13,17 +13,24 @@ import { siteUrl } from "@/lib/site-config";
  *
  * `/search` is excluded because search result pages are infinite, thin, and
  * generate crawl traffic that finds nothing worth indexing.
+ *
+ * When `SITE_INDEXABLE=false` this becomes a blanket disallow. Note that on a
+ * domain being TORN DOWN that is the wrong move on its own: a crawler that
+ * cannot fetch a page cannot read the `noindex` that removes it. See the note
+ * on `siteIndexable` for the order that actually de-indexes a site.
  */
-
 const BODY = () =>
-  [
-    "User-agent: *",
-    "Allow: /",
-    "Disallow: /search",
-    "",
-    `Sitemap: ${siteUrl()}/sitemap-index.xml`,
-    "",
-  ].join("\n");
+  (siteIndexable()
+    ? [
+        "User-agent: *",
+        "Allow: /",
+        "Disallow: /search",
+        "",
+        `Sitemap: ${siteUrl()}/sitemap-index.xml`,
+        "",
+      ]
+    : ["User-agent: *", "Disallow: /", ""]
+  ).join("\n");
 
 export const Route = createFileRoute("/robots.txt")({
   server: {

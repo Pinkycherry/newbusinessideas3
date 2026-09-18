@@ -17,7 +17,7 @@ import { SiteTextMotion } from "@/components/site-text-motion";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { catalogQuery } from "../lib/ideas.functions";
 import { JsonLd, organisationSchema } from "@/lib/schema";
-import { canonicalUrl } from "../lib/site-config";
+import { canonicalUrl, siteIndexable } from "../lib/site-config";
 
 function NotFoundComponent() {
   return (
@@ -136,12 +136,27 @@ function CanonicalLink() {
   return <link rel="canonical" href={canonicalUrl(pathname)} />;
 }
 
+/**
+ * The staging guard, rendered next to the canonical for the same reason: React
+ * 19 hoists it into `head` from anywhere in the tree, so ONE component covers
+ * all thirty-two routes and every route added later.
+ *
+ * Emitted only when `SITE_INDEXABLE=false`, which is how a deployment of this
+ * exact code becomes un-indexable without a branch, a build flag or a content
+ * change. Nothing else in the tree needs to know.
+ */
+function RobotsMeta() {
+  if (siteIndexable()) return null;
+  return <meta name="robots" content="noindex,nofollow" />;
+}
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="light">
       <head>
         <HeadContent />
         <CanonicalLink />
+        <RobotsMeta />
         {/* The publishing entity, declared once for the whole site rather than
             per route. Every page already said what it was about; none said who
             stands behind it, which is the E-E-A-T signal that was missing. */}

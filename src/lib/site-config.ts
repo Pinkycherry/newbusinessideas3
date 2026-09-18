@@ -30,6 +30,31 @@ export function canonicalUrl(pathname: string): string {
 }
 
 /**
+ * SINGLE SOURCE OF TRUTH for whether this deployment may be indexed.
+ *
+ * Defaults to TRUE so the production site behaves normally with no variable
+ * set. Setting `SITE_INDEXABLE=false` on a deployment turns the whole site
+ * into a staging site in one move, read at request time with no rebuild:
+ *
+ *   - `robots.txt` becomes `Disallow: /`
+ *   - every page emits `<meta name="robots" content="noindex,nofollow">`
+ *   - every sitemap returns an empty urlset
+ *
+ * All three matter together. A `noindex` tag alone still lets crawlers walk
+ * the site, and a `Disallow` alone is worse than nothing: a blocked page can
+ * still be indexed from a link elsewhere, and because the crawler may not
+ * fetch it, it never reads the `noindex` that would have removed it. The
+ * teardown order that follows from this is deliberate -- serve `noindex` with
+ * crawling still ALLOWED until the URLs have dropped out, and only then
+ * block. Doing both at once is the usual reason a de-indexed domain stays in
+ * the index for months.
+ */
+export function siteIndexable(): boolean {
+  const raw = typeof process !== "undefined" ? process.env?.["SITE_INDEXABLE"] : undefined;
+  return (raw ?? "").trim().toLowerCase() !== "false";
+}
+
+/**
  * SINGLE SOURCE OF TRUTH for the WordPress blog.
  *
  * To point the blog at a different WordPress instance, change this ONE line

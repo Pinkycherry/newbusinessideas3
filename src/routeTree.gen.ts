@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as FeedDotxmlRouteImport } from './routes/feed[.]xml'
 import { Route as GdprRouteImport } from './routes/gdpr'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -22,8 +23,8 @@ import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as SitemapCategoriesDotxmlRouteImport } from './routes/sitemap-categories[.]xml'
-import { Route as SitemapIdeasDotxmlRouteImport } from './routes/sitemap-ideas[.]xml'
 import { Route as SitemapIndexDotxmlRouteImport } from './routes/sitemap-index[.]xml'
 import { Route as SitemapPagesDotxmlRouteImport } from './routes/sitemap-pages[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
@@ -41,6 +42,7 @@ import { Route as IdeaSlugRouteImport } from './routes/idea.$slug'
 import { Route as LearningResourcesIndexRouteImport } from './routes/learning-resources.index'
 import { Route as ListIndexRouteImport } from './routes/list.index'
 import { Route as ListSlugRouteImport } from './routes/list.$slug'
+import { Route as SitemapIdeasPageRouteImport } from './routes/sitemap-ideas.$page'
 import { Route as StartupGuidesIndexRouteImport } from './routes/startup-guides.index'
 import { Route as StartupGuidesSlugRouteImport } from './routes/startup-guides.$slug'
 import { Route as UsefulToolsIndexRouteImport } from './routes/useful-tools.index'
@@ -71,6 +73,11 @@ const ContactRoute = ContactRouteImport.update({
 const DisclaimerRoute = DisclaimerRouteImport.update({
   id: '/disclaimer',
   path: '/disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeedDotxmlRoute = FeedDotxmlRouteImport.update({
+  id: '/feed.xml',
+  path: '/feed.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GdprRoute = GdprRouteImport.update({
@@ -113,14 +120,14 @@ const SignInRoute = SignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapRoute = SitemapRouteImport.update({
+  id: '/sitemap',
+  path: '/sitemap',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapCategoriesDotxmlRoute = SitemapCategoriesDotxmlRouteImport.update({
   id: '/sitemap-categories.xml',
   path: '/sitemap-categories.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapIdeasDotxmlRoute = SitemapIdeasDotxmlRouteImport.update({
-  id: '/sitemap-ideas.xml',
-  path: '/sitemap-ideas.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapIndexDotxmlRoute = SitemapIndexDotxmlRouteImport.update({
@@ -208,6 +215,11 @@ const ListSlugRoute = ListSlugRouteImport.update({
   path: '/list/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapIdeasPageRoute = SitemapIdeasPageRouteImport.update({
+  id: '/sitemap-ideas/$page',
+  path: '/sitemap-ideas/$page',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StartupGuidesIndexRoute = StartupGuidesIndexRouteImport.update({
   id: '/startup-guides/',
   path: '/startup-guides/',
@@ -247,6 +259,7 @@ export interface FileRoutesByFullPath {
   '/browse': typeof BrowseRoute
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
+  '/feed.xml': typeof FeedDotxmlRoute
   '/gdpr': typeof GdprRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -255,8 +268,8 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/services': typeof ServicesRoute
   '/sign-in': typeof SignInRoute
+  '/sitemap': typeof SitemapRoute
   '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
-  '/sitemap-ideas.xml': typeof SitemapIdeasDotxmlRoute
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
@@ -267,6 +280,7 @@ export interface FileRoutesByFullPath {
   '/founder-stories/$slug': typeof FounderStoriesSlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
   '/list/$slug': typeof ListSlugRoute
+  '/sitemap-ideas/$page': typeof SitemapIdeasPageRoute
   '/startup-guides/$slug': typeof StartupGuidesSlugRoute
   '/validate/$industrySlug': typeof ValidateIndustrySlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -287,6 +301,7 @@ export interface FileRoutesByTo {
   '/browse': typeof BrowseRoute
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
+  '/feed.xml': typeof FeedDotxmlRoute
   '/gdpr': typeof GdprRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -295,8 +310,8 @@ export interface FileRoutesByTo {
   '/search': typeof SearchRoute
   '/services': typeof ServicesRoute
   '/sign-in': typeof SignInRoute
+  '/sitemap': typeof SitemapRoute
   '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
-  '/sitemap-ideas.xml': typeof SitemapIdeasDotxmlRoute
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
@@ -306,6 +321,7 @@ export interface FileRoutesByTo {
   '/founder-stories/$slug': typeof FounderStoriesSlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
   '/list/$slug': typeof ListSlugRoute
+  '/sitemap-ideas/$page': typeof SitemapIdeasPageRoute
   '/startup-guides/$slug': typeof StartupGuidesSlugRoute
   '/validate/$industrySlug': typeof ValidateIndustrySlugRoute
   '/blog': typeof BlogIndexRoute
@@ -327,6 +343,7 @@ export interface FileRoutesById {
   '/browse': typeof BrowseRoute
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
+  '/feed.xml': typeof FeedDotxmlRoute
   '/gdpr': typeof GdprRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -335,8 +352,8 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/services': typeof ServicesRoute
   '/sign-in': typeof SignInRoute
+  '/sitemap': typeof SitemapRoute
   '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
-  '/sitemap-ideas.xml': typeof SitemapIdeasDotxmlRoute
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
@@ -347,6 +364,7 @@ export interface FileRoutesById {
   '/founder-stories/$slug': typeof FounderStoriesSlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
   '/list/$slug': typeof ListSlugRoute
+  '/sitemap-ideas/$page': typeof SitemapIdeasPageRoute
   '/startup-guides/$slug': typeof StartupGuidesSlugRoute
   '/validate/$industrySlug': typeof ValidateIndustrySlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -369,6 +387,7 @@ export interface FileRouteTypes {
     | '/browse'
     | '/contact'
     | '/disclaimer'
+    | '/feed.xml'
     | '/gdpr'
     | '/pricing'
     | '/privacy'
@@ -377,8 +396,8 @@ export interface FileRouteTypes {
     | '/search'
     | '/services'
     | '/sign-in'
+    | '/sitemap'
     | '/sitemap-categories.xml'
-    | '/sitemap-ideas.xml'
     | '/sitemap-index.xml'
     | '/sitemap-pages.xml'
     | '/terms'
@@ -389,6 +408,7 @@ export interface FileRouteTypes {
     | '/founder-stories/$slug'
     | '/idea/$slug'
     | '/list/$slug'
+    | '/sitemap-ideas/$page'
     | '/startup-guides/$slug'
     | '/validate/$industrySlug'
     | '/blog/'
@@ -409,6 +429,7 @@ export interface FileRouteTypes {
     | '/browse'
     | '/contact'
     | '/disclaimer'
+    | '/feed.xml'
     | '/gdpr'
     | '/pricing'
     | '/privacy'
@@ -417,8 +438,8 @@ export interface FileRouteTypes {
     | '/search'
     | '/services'
     | '/sign-in'
+    | '/sitemap'
     | '/sitemap-categories.xml'
-    | '/sitemap-ideas.xml'
     | '/sitemap-index.xml'
     | '/sitemap-pages.xml'
     | '/terms'
@@ -428,6 +449,7 @@ export interface FileRouteTypes {
     | '/founder-stories/$slug'
     | '/idea/$slug'
     | '/list/$slug'
+    | '/sitemap-ideas/$page'
     | '/startup-guides/$slug'
     | '/validate/$industrySlug'
     | '/blog'
@@ -448,6 +470,7 @@ export interface FileRouteTypes {
     | '/browse'
     | '/contact'
     | '/disclaimer'
+    | '/feed.xml'
     | '/gdpr'
     | '/pricing'
     | '/privacy'
@@ -456,8 +479,8 @@ export interface FileRouteTypes {
     | '/search'
     | '/services'
     | '/sign-in'
+    | '/sitemap'
     | '/sitemap-categories.xml'
-    | '/sitemap-ideas.xml'
     | '/sitemap-index.xml'
     | '/sitemap-pages.xml'
     | '/terms'
@@ -468,6 +491,7 @@ export interface FileRouteTypes {
     | '/founder-stories/$slug'
     | '/idea/$slug'
     | '/list/$slug'
+    | '/sitemap-ideas/$page'
     | '/startup-guides/$slug'
     | '/validate/$industrySlug'
     | '/blog/'
@@ -489,6 +513,7 @@ export interface RootRouteChildren {
   BrowseRoute: typeof BrowseRoute
   ContactRoute: typeof ContactRoute
   DisclaimerRoute: typeof DisclaimerRoute
+  FeedDotxmlRoute: typeof FeedDotxmlRoute
   GdprRoute: typeof GdprRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -497,8 +522,8 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   ServicesRoute: typeof ServicesRoute
   SignInRoute: typeof SignInRoute
+  SitemapRoute: typeof SitemapRoute
   SitemapCategoriesDotxmlRoute: typeof SitemapCategoriesDotxmlRoute
-  SitemapIdeasDotxmlRoute: typeof SitemapIdeasDotxmlRoute
   SitemapIndexDotxmlRoute: typeof SitemapIndexDotxmlRoute
   SitemapPagesDotxmlRoute: typeof SitemapPagesDotxmlRoute
   TermsRoute: typeof TermsRoute
@@ -509,6 +534,7 @@ export interface RootRouteChildren {
   FounderStoriesSlugRoute: typeof FounderStoriesSlugRoute
   IdeaSlugRoute: typeof IdeaSlugRoute
   ListSlugRoute: typeof ListSlugRoute
+  SitemapIdeasPageRoute: typeof SitemapIdeasPageRoute
   StartupGuidesSlugRoute: typeof StartupGuidesSlugRoute
   ValidateIndustrySlugRoute: typeof ValidateIndustrySlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -557,6 +583,13 @@ declare module '@tanstack/react-router' {
       path: '/disclaimer'
       fullPath: '/disclaimer'
       preLoaderRoute: typeof DisclaimerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feed.xml': {
+      id: '/feed.xml'
+      path: '/feed.xml'
+      fullPath: '/feed.xml'
+      preLoaderRoute: typeof FeedDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gdpr': {
@@ -615,18 +648,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignInRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap': {
+      id: '/sitemap'
+      path: '/sitemap'
+      fullPath: '/sitemap'
+      preLoaderRoute: typeof SitemapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap-categories.xml': {
       id: '/sitemap-categories.xml'
       path: '/sitemap-categories.xml'
       fullPath: '/sitemap-categories.xml'
       preLoaderRoute: typeof SitemapCategoriesDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap-ideas.xml': {
-      id: '/sitemap-ideas.xml'
-      path: '/sitemap-ideas.xml'
-      fullPath: '/sitemap-ideas.xml'
-      preLoaderRoute: typeof SitemapIdeasDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap-index.xml': {
@@ -748,6 +781,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ListSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap-ideas/$page': {
+      id: '/sitemap-ideas/$page'
+      path: '/sitemap-ideas/$page'
+      fullPath: '/sitemap-ideas/$page'
+      preLoaderRoute: typeof SitemapIdeasPageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/startup-guides/': {
       id: '/startup-guides/'
       path: '/startup-guides'
@@ -813,6 +853,7 @@ const rootRouteChildren: RootRouteChildren = {
   BrowseRoute: BrowseRoute,
   ContactRoute: ContactRoute,
   DisclaimerRoute: DisclaimerRoute,
+  FeedDotxmlRoute: FeedDotxmlRoute,
   GdprRoute: GdprRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
@@ -821,8 +862,8 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   ServicesRoute: ServicesRoute,
   SignInRoute: SignInRoute,
+  SitemapRoute: SitemapRoute,
   SitemapCategoriesDotxmlRoute: SitemapCategoriesDotxmlRoute,
-  SitemapIdeasDotxmlRoute: SitemapIdeasDotxmlRoute,
   SitemapIndexDotxmlRoute: SitemapIndexDotxmlRoute,
   SitemapPagesDotxmlRoute: SitemapPagesDotxmlRoute,
   TermsRoute: TermsRoute,
@@ -833,6 +874,7 @@ const rootRouteChildren: RootRouteChildren = {
   FounderStoriesSlugRoute: FounderStoriesSlugRoute,
   IdeaSlugRoute: IdeaSlugRoute,
   ListSlugRoute: ListSlugRoute,
+  SitemapIdeasPageRoute: SitemapIdeasPageRoute,
   StartupGuidesSlugRoute: StartupGuidesSlugRoute,
   ValidateIndustrySlugRoute: ValidateIndustrySlugRoute,
   BlogIndexRoute: BlogIndexRoute,
