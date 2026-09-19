@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { ExploreRail } from "@/components/explore-rail";
 import { getCategoryFaqCounts } from "@/lib/faqs.functions";
 import { getCatalog } from "@/lib/ideas.functions";
 import { JsonLd, breadcrumbSchema, webPageSchema } from "@/lib/schema";
@@ -123,6 +124,8 @@ function FaqIndexPage() {
             );
           })}
         </div>
+
+        <ExploreRail exclude="faq" heading="Keep exploring" />
       </main>
     </SiteShell>
   );

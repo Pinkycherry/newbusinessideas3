@@ -1,6 +1,7 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { ExploreRail } from "@/components/explore-rail";
 import { FaqList, FaqSchema, FaqEmptyState } from "@/components/faq-list";
 import { getRandomCategoryFaqs } from "@/lib/faqs.functions";
 import { getCatalog } from "@/lib/ideas.functions";
@@ -138,6 +139,8 @@ function FaqCategoryPage() {
             Browse all {category.ideaCount} {category.categoryName} blueprints
           </Link>
         </div>
+
+        <ExploreRail exclude={["faq", "ideas"]} heading="Keep exploring" />
       </main>
     </SiteShell>
   );

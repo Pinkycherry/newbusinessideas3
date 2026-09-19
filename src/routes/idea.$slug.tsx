@@ -9,6 +9,7 @@ import { IdeaCard } from "@/components/idea-card";
 import { ValidateButton } from "@/components/validate-button";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
+import { ExploreRail } from "@/components/explore-rail";
 import { categoryImage } from "@/config/category-imagery";
 import {
   getIdeaBySlug,
@@ -1048,6 +1049,13 @@ function IdeaPage() {
               </Link>
             </section>
             {/* EDITABLE SECTION END */}
+
+            {/* Cross-link to the rest of the site (see explore-rail.tsx) --
+                placed after the validate CTA above, which is the page's real
+                ending, so it never competes with it. A reader who finishes
+                here without validating still lands somewhere else on the
+                site instead of a dead end. */}
+            <ExploreRail exclude="ideas" heading="Keep exploring" />
           </article>
 
           {/* Sticky right column — desktop only. Add or reorder blocks freely.

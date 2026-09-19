@@ -31,6 +31,7 @@ import Lens from "@/components/aceternity/lens";
 import Tabs from "@/components/aceternity/tabs";
 import { categoryImage } from "@/config/category-imagery";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
+import { ExploreRail } from "@/components/explore-rail";
 import {
   Select,
   SelectContent,
@@ -618,6 +619,15 @@ function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Every other template on the site, one tap away -- a first-time
+          visitor who lands on the homepage and never scrolls past it never
+          discovers the calculators, guides, founder stories, glossary, blog,
+          FAQ or tools pages exist. `exclude="ideas"` since /browse is already
+          the whole point of this page. */}
+      <div className="px-3 sm:px-4">
+        <ExploreRail exclude="ideas" heading="Keep exploring the library" />
+      </div>
 
       <div className="px-3 pb-10 sm:px-4">
         <AdSlot position="homepage-above-footer" size="banner" />

@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { ExploreRail } from "@/components/explore-rail";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
 import { CALCULATORS } from "@/lib/calculators";
@@ -310,6 +311,9 @@ function LearningResourcesIndexPage() {
               </Link>
             </div>
           </div>
+
+          {/* Browse and Calculators are already linked directly above. */}
+          <ExploreRail exclude={["learningResources", "ideas", "calculators"]} heading="Keep exploring" />
         </div>
       </SiteShell>
     </>

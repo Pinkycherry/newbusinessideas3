@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import { Search, BookOpen, Calculator, Sparkles, Tag, ArrowRight } from "lucide-react";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { ExploreRail } from "@/components/explore-rail";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { GLOSSARY_DATA, GLOSSARY_CATEGORIES, type GlossaryTerm } from "@/lib/glossary-data";
 
@@ -317,6 +318,8 @@ export function FounderGlossaryPage() {
               </button>
             </div>
           )}
+
+          <ExploreRail exclude="glossary" heading="Keep exploring" />
         </div>
       </SiteShell>
     </>

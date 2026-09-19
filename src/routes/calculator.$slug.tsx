@@ -2,6 +2,7 @@ import { useId, useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { ExploreRail } from "@/components/explore-rail";
 import {
   CALCULATORS,
   defaultInputs,
@@ -246,6 +247,8 @@ function CalculatorPage({ calculator }: { calculator: Calculator }) {
             </div>
           </div>
           {/* EDITABLE SECTION END */}
+
+          <ExploreRail exclude="calculators" heading="Keep exploring" />
         </div>
       </SiteShell>
     </>

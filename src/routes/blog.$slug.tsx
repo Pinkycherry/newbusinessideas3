@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
+import { ExploreRail } from "@/components/explore-rail";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPost } from "@/lib/blog.functions";
 import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
@@ -218,6 +219,8 @@ function BlogPostPage() {
           </section>
         )}
         {/* EDITABLE SECTION END */}
+
+        <ExploreRail exclude="blog" heading="Keep exploring" />
       </article>
     </SiteShell>
   );

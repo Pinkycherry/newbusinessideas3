@@ -5,6 +5,7 @@ import { Fragment, useCallback, type CSSProperties } from "react";
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
+import { ExploreBanner, EXPLORE_BANNER_ROTATION } from "@/components/explore-rail";
 import { categoryImage } from "@/config/category-imagery";
 import { getCategoryPage } from "@/lib/ideas.functions";
 import { JsonLd, absoluteUrl, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
@@ -178,16 +179,34 @@ function CategoryPage() {
             ref={gridRef}
             className="bbi-depth-front mt-8 grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-3"
           >
-            {data.ideas.map((idea, i) => (
-              <Fragment key={idea.ideaId}>
-                <IdeaCard idea={idea} featured={idea.ideaId === leadIdeaId} />
-                {(i + 1) % 6 === 0 && i + 1 < data.ideas.length && (
-                  <div className="[grid-column:1/-1]">
-                    <AdSlot position={`category-in-grid-${(i + 1) / 6}`} size="banner" />
-                  </div>
-                )}
-              </Fragment>
-            ))}
+            {data.ideas.map((idea, i) => {
+              const n = i + 1;
+              const interstitial = n % 6 === 0 && n < data.ideas.length;
+              // Every 6th slot alternates ad / cross-link so a long category
+              // page interleaves both without cutting ad inventory: slot 6,
+              // 18, 30... is an AdSlot; slot 12, 24, 36... is an ExploreBanner
+              // pointing at another template, rotating through
+              // EXPLORE_BANNER_ROTATION so the 2nd, 3rd... banner on one page
+              // doesn't repeat the same destination.
+              const isBannerSlot = interstitial && (n / 6) % 2 === 0;
+              const bannerPick = isBannerSlot
+                ? EXPLORE_BANNER_ROTATION[(n / 6 / 2 - 1) % EXPLORE_BANNER_ROTATION.length]
+                : null;
+              return (
+                <Fragment key={idea.ideaId}>
+                  <IdeaCard idea={idea} featured={idea.ideaId === leadIdeaId} />
+                  {interstitial && (
+                    <div className="[grid-column:1/-1]">
+                      {isBannerSlot && bannerPick ? (
+                        <ExploreBanner pick={bannerPick} exclude="ideas" />
+                      ) : (
+                        <AdSlot position={`category-in-grid-${n / 6}`} size="banner" />
+                      )}
+                    </div>
+                  )}
+                </Fragment>
+              );
+            })}
           </div>
           {/* EDITABLE SECTION END */}
         </div>

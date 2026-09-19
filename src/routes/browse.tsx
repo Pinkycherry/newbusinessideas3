@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { ExploreRail } from "@/components/explore-rail";
 import { getCatalog } from "@/lib/ideas.functions";
 import FocusCards from "@/components/aceternity/focus-cards";
 import { categoryImage } from "@/config/category-imagery";
@@ -127,6 +128,8 @@ function BrowsePage() {
               };
             })}
           />
+
+          <ExploreRail exclude="ideas" heading="Keep exploring" />
         </div>
       </SiteShell>
     </>
