@@ -3,6 +3,7 @@ import { useState } from "react";
 import { BookOpen, Clock, ArrowRight, CheckCircle2, Sparkles, Compass } from "lucide-react";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { ExploreRail } from "@/components/explore-rail";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { STARTUP_GUIDES, type StartupGuideMeta } from "@/lib/guides-data";
 
@@ -190,6 +191,10 @@ function StartupGuidesIndexPage() {
               </Link>
             </div>
           </div>
+
+          {/* This page already points at /calculator directly above, so the
+              rail excludes it too and doesn't repeat the same link twice. */}
+          <ExploreRail exclude={["guides", "calculators"]} heading="Keep exploring" />
         </div>
       </SiteShell>
     </>
