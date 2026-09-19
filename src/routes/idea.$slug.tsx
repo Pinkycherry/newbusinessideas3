@@ -592,17 +592,18 @@ function KeepExploringRail({
       data-anchor-label="Keep exploring"
     >
       <p className="t-eyebrow">Keep exploring</p>
-      {/* `grid-cols-[repeat(auto-fit,minmax(15rem,1fr))]` instead of a flex-wrap
-          row: this rail's item count depends on how many contextual links this
-          particular idea actually has (subcategory/category/related idea can
-          each be missing), so a fixed 2- or 3-column split left an odd count
-          stranding one card alone on its own row with a wide dead gap beside
-          it. auto-fit stretches whatever count shows up to fill every row
-          completely instead. */}
-      <ul
-        ref={railRef}
-        className="stack-row mt-4 grid grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-4"
-      >
+      {/* Flexbox, not CSS Grid: this rail's item count depends on how many
+          contextual links this particular idea actually has (subcategory /
+          category / related idea can each be missing), so a fixed column
+          count leaves an odd count -- 5 is the common case -- stranding one
+          card alone with a dead gap beside it. Grid's `auto-fit` still has
+          this problem: its column tracks are shared across every row, so a
+          shorter last row leaves an empty, unfilled track rather than
+          reflowing. Flexbox rows are independent -- each `stack-item` grows
+          to share whatever width its own row actually has, so a lone last
+          card stretches to fill the row instead of sitting next to empty
+          space. */}
+      <ul ref={railRef} className="stack-row mt-4 flex flex-wrap gap-4">
         {nodes.map((node, i) => {
           const Icon = node.Icon;
           const inner = (
@@ -627,11 +628,11 @@ function KeepExploringRail({
             </>
           );
           const cardClass =
-            "mo-card glass glass-hover group flex h-full items-start gap-3 rounded-2xl p-4";
+            "mo-card glass glass-hover group flex h-full w-full items-start gap-3 rounded-2xl p-4";
           return (
             <li
               key={node.key}
-              className="stack-item h-full"
+              className="stack-item h-full min-w-60 flex-1 basis-60"
               style={{ "--i": i + 1 } as CSSProperties}
             >
               {node.href ? (
