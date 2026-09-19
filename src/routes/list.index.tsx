@@ -3,6 +3,7 @@ import { queryOptions } from "@tanstack/react-query";
 import { useCallback } from "react";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { ExploreRail } from "@/components/explore-rail";
 import { getListicleIndex, type ListicleSummary } from "@/lib/lists.functions";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { siteUrl } from "@/lib/site-config";
@@ -162,6 +163,8 @@ function ListIndexPage() {
             </div>
           )}
           {/* EDITABLE SECTION END */}
+
+          <ExploreRail exclude={["lists", "ideas"]} heading="Keep exploring" />
         </div>
       </SiteShell>
     </>
