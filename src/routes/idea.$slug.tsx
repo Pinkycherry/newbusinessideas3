@@ -493,9 +493,22 @@ function LockedSection({
  * category, a calculator, and one related idea -- five real destinations, in
  * priority order, not a random three.
  *
- * `.stack-row` (motion.css) -- the horizontal sibling of the `.stack-list`
- * deck already used twice below on this same page -- was defined months ago
- * and never used anywhere. This is its first real caller.
+ * NOT `.stack-row` (motion.css): that class was tried here first and pulled
+ * in the `.stack-list` deck's full hover-to-fan behaviour -- `perspective` +
+ * `transform-style: preserve-3d` on the row, `translateZ`/`translateX` +
+ * opacity + blur on every non-first card until the whole row is hovered.
+ * That's the right effect for a "flip through related ideas" deck; it's the
+ * wrong one for five permanent nav destinations that must read and click
+ * correctly from the first paint. Worse, it broke clicking outright: with
+ * `preserve-3d` in play, a card sitting at `translateZ(-84px)` foreshortens
+ * under `elementFromPoint` at exactly the coordinates its own
+ * `getBoundingClientRect()` reports, so a click landed on the parent `<ul>`
+ * instead of the card's `<a>` -- confirmed live (ref-clicking "Run the
+ * numbers" left the URL unchanged). This rail is a plain flex row instead:
+ * every card fully opaque, sharp, and clickable at rest, with its own
+ * explicit hover lift (`hover:-translate-y-1`) so the elevation feedback
+ * doesn't depend on `.glass-hover`'s light-theme-only `:hover` rule in
+ * styles.css.
  */
 function KeepExploringRail({
   contextualLinks,
@@ -516,7 +529,10 @@ function KeepExploringRail({
         }
       : undefined);
 
-  const railRef = useStaggerReveal<HTMLUListElement>({ selector: ".stack-item", stagger: 0.05 });
+  const railRef = useStaggerReveal<HTMLUListElement>({
+    selector: ".keep-explore-item",
+    stagger: 0.05,
+  });
 
   const nodes: {
     key: string;
@@ -599,12 +615,12 @@ function KeepExploringRail({
           card alone with a dead gap beside it. Grid's `auto-fit` still has
           this problem: its column tracks are shared across every row, so a
           shorter last row leaves an empty, unfilled track rather than
-          reflowing. Flexbox rows are independent -- each `stack-item` grows
+          reflowing. Flexbox rows are independent -- each card grows
           to share whatever width its own row actually has, so a lone last
           card stretches to fill the row instead of sitting next to empty
           space. */}
-      <ul ref={railRef} className="stack-row mt-4 flex flex-wrap gap-4">
-        {nodes.map((node, i) => {
+      <ul ref={railRef} className="mt-4 flex flex-wrap gap-4">
+        {nodes.map((node) => {
           const Icon = node.Icon;
           const inner = (
             <>
@@ -628,13 +644,9 @@ function KeepExploringRail({
             </>
           );
           const cardClass =
-            "mo-card glass glass-hover group flex h-full w-full items-start gap-3 rounded-2xl p-4";
+            "mo-card glass glass-hover group flex h-full w-full items-start gap-3 rounded-2xl p-4 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg";
           return (
-            <li
-              key={node.key}
-              className="stack-item h-full min-w-60 flex-1 basis-60"
-              style={{ "--i": i + 1 } as CSSProperties}
-            >
+            <li key={node.key} className="keep-explore-item h-full min-w-60 flex-1 basis-60">
               {node.href ? (
                 <a href={node.href} className={cardClass}>
                   {inner}
