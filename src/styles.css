@@ -1634,7 +1634,29 @@ html.light .idea-shell::before { opacity: 0.42; }
   .idea-shell[data-variant="stat-forward"] .idea-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); align-items: start; }
   .idea-shell[data-variant="stat-forward"] .idea-hero-aside { order: -1; }
 }
-.idea-shell[data-variant="editorial"] .idea-hero { grid-template-columns: 1fr; max-width: 46rem; }
+/* `max-width` + auto-margin added 2026-09-19: these two asides are a single
+   small stat card (a "Momentum 87/100" readout plus a few keyword pills) --
+   a fixed amount of content with no reason to grow. The grid track it sits
+   in is a bare fr-share of the article's own width, so once that width grew
+   past a laptop this card stretched with it, turning one short number into
+   a wide, mostly-empty rectangle -- the same complaint as the editorial
+   hero fix above, just on the sidebar instead of the article column.
+   Capping the card's width and letting the spare track space collapse to a
+   margin next to the main text column (not floating out at the page's
+   outer edge) keeps the two columns reading as one connected hero at any
+   width. */
+.idea-shell[data-variant="hero-left"] .idea-hero-aside { max-width: 22rem; margin-inline-end: auto; }
+.idea-shell[data-variant="stat-forward"] .idea-hero-aside { max-width: 22rem; margin-inline-start: auto; }
+/* `margin-inline: auto` added 2026-09-19: this cap made sense as a narrow
+   magazine column inside the old max-w-6xl page (736px inside an ~800px
+   content track leaves a normal-looking margin). Once the article's own
+   outer width changed, an un-centered 736px block left flush against the
+   grid track's start edge, with the rest of that edge's spare width as one
+   giant void trailing off to the right -- confirmed live as the single
+   biggest empty patch on the page. Centering it turns that same spare width
+   into a symmetric margin on both sides, which reads as the intentional
+   narrow editorial column it was meant to be. */
+.idea-shell[data-variant="editorial"] .idea-hero { grid-template-columns: 1fr; max-width: 46rem; margin-inline: auto; }
 .idea-shell[data-variant="editorial"] .idea-hero-aside { max-width: none; }
 
 /* Demand gauge (Section 6.1 item 3). The fill is a composited scaleX driven

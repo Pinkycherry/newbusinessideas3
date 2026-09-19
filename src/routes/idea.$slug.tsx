@@ -329,12 +329,31 @@ function BlueprintCards({ entries }: { entries: BlueprintEntry[] }) {
           >
             <div
               aria-hidden
-              className="flex shrink-0 items-center justify-center p-10 md:w-2/5"
+              // `md:max-w-sm` added 2026-09-19: this panel's width was a bare
+              // percentage (`md:w-2/5`) of the card, which itself now spans
+              // the article's new, much wider max-width -- on a large screen
+              // that turned into a huge flat color field around one small
+              // centered icon, exactly the "90% empty space" the founder
+              // flagged. Capping the panel's own width keeps it a fixed,
+              // reasonable size at any container width. The big faded icon
+              // behind the crisp one fills the panel with texture instead of
+              // just enlarging the icon itself, which would have looked
+              // like a mistake rather than a design choice.
+              className="relative flex shrink-0 items-center justify-center overflow-hidden p-10 md:w-2/5 md:max-w-sm"
               style={{
                 background: `color-mix(in oklab, var(${item.tint}) 16%, var(--card))`,
               }}
             >
-              <Icon className="h-16 w-16 sm:h-20 sm:w-20" style={{ color: `var(${item.tint})` }} strokeWidth={1.25} />
+              <Icon
+                className="absolute h-40 w-40 -rotate-12 sm:h-56 sm:w-56"
+                style={{ color: `var(${item.tint})`, opacity: 0.12 }}
+                strokeWidth={1}
+              />
+              <Icon
+                className="relative h-16 w-16 sm:h-20 sm:w-20"
+                style={{ color: `var(${item.tint})` }}
+                strokeWidth={1.25}
+              />
             </div>
             <div className="glass flex flex-1 flex-col justify-center gap-3 p-8 sm:p-10">
               <span
@@ -498,15 +517,22 @@ function IdeaPage() {
       <SiteShell tone="instrument">
         <div
           ref={mastheadRef}
-          // Was `max-w-6xl` -- the same cap the header's own nav card carries.
-          // That's fine on the header, which is meant to read as a bounded
-          // pill floating over a wider page, but it meant this whole article
-          // (and its sticky sidebar) sat flush inside those same edges, so
-          // the page content never spanned any wider than that one nav bar.
-          // Founder confirmed live: full width, no cap. This is now fluid, so
-          // it fills the viewport at any size, with padding that scales up
-          // on wider screens instead of a fixed max-width boxing it in.
-          className="cx-scene mx-auto grid w-full gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:px-10 xl:px-16 2xl:px-24"
+          // Was `max-w-6xl` -- the same cap the header's own nav card
+          // carries, which sat this whole article flush inside those same
+          // narrow edges. Dropping the cap to `w-full` (no bound at all) was
+          // the wrong fix: on anything wider than a laptop it stretched the
+          // hero's own fixed-ratio grid columns and the "More in category" /
+          // "Trending" stack-lists across the entire monitor, and none of
+          // that inner content was ever designed to scale past a normal
+          // reading width -- confirmed live on a 3840px display as acres of
+          // dead black space with a sliver of actual content pinned to the
+          // left edge. `max-w-[100rem]` (1600px) is comfortably wider than
+          // the header's 1152px pill -- the page no longer looks "stuck" next
+          // to it -- while still bounded enough that every fixed-ratio grid
+          // and card list inside this article stays a sane, filled-in width
+          // instead of stretching into empty space on wide and ultra-wide
+          // monitors alike.
+          className="cx-scene mx-auto grid max-w-[100rem] gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:px-10 xl:px-16 2xl:px-24"
         >
           {/* No `cx-layer` here on purpose: the sticky right-column aside
               below is a `position: sticky` element, and a `transform` on any
@@ -888,26 +914,91 @@ function IdeaPage() {
               <AdSlot position="idea-detail-above-related" size="banner" />
             </div>
 
-            {bottomRelated.length > 0 && (
-              <section className="mt-16" data-anchor="related" data-anchor-label="Related">
-                <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                  More in {idea.categoryName}
-                </h2>
-                {/* `.mo-card` for these cells lives on IdeaCard itself, which
-                    is the listing agent's file — this rail supplies the single
-                    delegated pointer listener the sheen reads from.
-                    `.stack-list`/`.stack-item` (motion.css) layer a CSS-only
-                    depth stack on top: a shallow perspective deck at rest,
-                    fanned into an open column on hover or keyboard focus. */}
-                <ul ref={relatedRailRef} className="stack-list mt-4 max-w-xl">
-                  {bottomRelated.map((r, i) => (
-                    <li key={r.ideaId} className="stack-item" style={{ "--i": i + 1 } as CSSProperties}>
-                      <IdeaCard idea={r} />
-                    </li>
-                  ))}
-                </ul>
-              </section>
+            {/* Was two full-width <section>s stacked vertically, each holding
+                only a `max-w-xl` (36rem) stack-list -- 36rem made sense as a
+                column inside the old max-w-6xl page, but once the article
+                went full-width (see the masthead div's className below) each
+                one turned into a narrow list floating in a sea of empty
+                space beside it, one after another. Side by side in a
+                two-column row, the same two narrow lists fill a normal-width
+                row instead of each claiming (and mostly wasting) a full one.
+                `relatedCategories` moves after this row rather than between
+                the two lists, since it's a flex-wrap pill cluster that
+                already fills whatever width it's given and doesn't need a
+                column of its own. */}
+            {(bottomRelated.length > 0 || trending.length > 0) && (
+              <div className="mt-16 grid gap-10 sm:grid-cols-2">
+                {bottomRelated.length > 0 && (
+                  <section data-anchor="related" data-anchor-label="Related">
+                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                      More in {idea.categoryName}
+                    </h2>
+                    {/* `.mo-card` for these cells lives on IdeaCard itself,
+                        which is the listing agent's file — this rail supplies
+                        the single delegated pointer listener the sheen reads
+                        from. `.stack-list`/`.stack-item` (motion.css) layer a
+                        CSS-only depth stack on top: a shallow perspective
+                        deck at rest, fanned into an open column on hover or
+                        keyboard focus. */}
+                    <ul ref={relatedRailRef} className="stack-list mt-4">
+                      {bottomRelated.map((r, i) => (
+                        <li
+                          key={r.ideaId}
+                          className="stack-item"
+                          style={{ "--i": i + 1 } as CSSProperties}
+                        >
+                          <IdeaCard idea={r} />
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+
+                {trending.length > 0 && (
+                  <section>
+                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                      Trending across the library
+                    </h2>
+                    {/* `.stack-list`/`.stack-item` (motion.css) — the same
+                        CSS-only depth stack used above: a shallow perspective
+                        deck at rest, fanned into an open column on hover or
+                        keyboard focus. Was `.stack-row` with a horizontal
+                        snap-scroll strip layered under the fan — kept the old
+                        swipeable rail alive alongside the new effect, but that
+                        meant the section still scrolled sideways instead of
+                        just fanning open, which reads as broken next to the
+                        other two lists on this page. Matching them: one
+                        consistent effect, no scrollbar. */}
+                    <ul ref={trendingRailRef} className="stack-list mt-4">
+                      {trending.map((t, i) => (
+                        <li
+                          key={t.ideaId}
+                          className="stack-item"
+                          style={{ "--i": i + 1 } as CSSProperties}
+                        >
+                          <Link
+                            to="/idea/$slug"
+                            params={{ slug: t.slug }}
+                            className="mo-card glass glass-hover block h-full rounded-2xl p-4"
+                          >
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
+                              {t.categoryName}
+                            </p>
+                            <p className="mt-2 text-sm font-bold leading-snug">{t.title}</p>
+                            {t.trendScore !== null && (
+                              <p className="mt-2 text-[10px] uppercase tracking-widest text-muted-foreground">
+                                Trend {t.trendScore}
+                              </p>
+                            )}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+              </div>
             )}
+
             {relatedCategories.length > 0 && (
               <section className="mt-16">
                 <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
@@ -926,45 +1017,6 @@ function IdeaPage() {
                     </Link>
                   ))}
                 </div>
-              </section>
-            )}
-
-            {trending.length > 0 && (
-              <section className="mt-16">
-                <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                  Trending across the library
-                </h2>
-                {/* `.stack-list`/`.stack-item` (motion.css) — the same
-                    CSS-only depth stack used above: a shallow perspective
-                    deck at rest, fanned into an open column on hover or
-                    keyboard focus. Was `.stack-row` with a horizontal
-                    snap-scroll strip layered under the fan — kept the old
-                    swipeable rail alive alongside the new effect, but that
-                    meant the section still scrolled sideways instead of
-                    just fanning open, which reads as broken next to the
-                    other two lists on this page. Matching them: one
-                    consistent effect, no scrollbar. */}
-                <ul ref={trendingRailRef} className="stack-list mt-4 max-w-xl">
-                  {trending.map((t, i) => (
-                    <li key={t.ideaId} className="stack-item" style={{ "--i": i + 1 } as CSSProperties}>
-                      <Link
-                        to="/idea/$slug"
-                        params={{ slug: t.slug }}
-                        className="mo-card glass glass-hover block h-full rounded-2xl p-4"
-                      >
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
-                          {t.categoryName}
-                        </p>
-                        <p className="mt-2 text-sm font-bold leading-snug">{t.title}</p>
-                        {t.trendScore !== null && (
-                          <p className="mt-2 text-[10px] uppercase tracking-widest text-muted-foreground">
-                            Trend {t.trendScore}
-                          </p>
-                        )}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
               </section>
             )}
 
