@@ -474,3 +474,135 @@
     transform: none;
   }
 }
+
+/* ---------------------------------------------------------------
+   Card list stack — CSS-only, adapted from the "User List Stack"
+   pen (freefrontend.com/css-card-hover-effects, credited there to
+   Ethan / pleasedonotdisturb on CodePen). Upstream is four items at
+   a fixed width, offset by hand-written nth-child rules. Here every
+   offset reads off one inline custom property — --i, the item's
+   1-based position, set per <li> — through calc()/clamp(), so the
+   same two classes drive a list of any length instead of four
+   hand-authored steps, and never runs away on a longer list.
+
+   At rest the items sit in a shallow perspective deck: each one a
+   notch further back, dimmer and softer than the item in front of
+   it. Hovering or focusing the list fans it out into a normal
+   spaced column with a short per-item delay, so the fan reads as a
+   cascade rather than one snap. :focus-within is included alongside
+   :hover so a keyboard visitor tabbing through the links gets the
+   same reveal a mouse does.
+
+   Gated to a real pointer: a coarse/touch visitor cannot trigger a
+   hover, so under (hover: none) — the default here, since this
+   block only runs inside (hover: hover) and (pointer: fine) — the
+   list stays a plain open column, same call as .cx-layer above. */
+.stack-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.stack-item {
+  position: relative;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stack-list {
+    perspective: 900px;
+    transform-style: preserve-3d;
+    gap: 0;
+    transition: gap var(--mo-dur-3) var(--mo-ease-out);
+  }
+
+  .stack-list:hover,
+  .stack-list:focus-within {
+    gap: 0.75rem;
+  }
+
+  .stack-item {
+    transform: translateZ(clamp(-160px, calc((var(--i, 1) - 1) * -28px), 0px))
+      translateY(clamp(-64px, calc((var(--i, 1) - 1) * -12px), 0px));
+    opacity: clamp(0.35, calc(1 - (var(--i, 1) - 1) * 0.14), 1);
+    filter: blur(clamp(0px, calc((var(--i, 1) - 1) * 1px), 4px));
+    transition:
+      transform var(--mo-dur-3) var(--mo-ease-out),
+      opacity var(--mo-dur-3) var(--mo-ease-out),
+      filter var(--mo-dur-3) var(--mo-ease-out);
+    transition-delay: calc((var(--i, 1) - 1) * 45ms);
+  }
+
+  .stack-list:hover .stack-item,
+  .stack-list:focus-within .stack-item {
+    transform: translateZ(0) translateY(0);
+    opacity: 1;
+    filter: blur(0);
+    transition-delay: calc((var(--i, 1) - 1) * 45ms);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-list {
+    gap: 0.75rem;
+  }
+
+  .stack-item {
+    transform: none;
+    opacity: 1;
+    filter: none;
+    transition: none;
+  }
+}
+
+/* Horizontal sibling of .stack-list, for a rail that has to stay a
+   swipeable row on touch (the trending strip) rather than become a
+   column: same deck-then-fan idea, along X instead of Y. It only
+   ever sets gap on itself and transform/opacity/filter on its
+   .stack-item children — the row's own scroll-snap and overflow
+   classes are the caller's, untouched here. */
+.stack-row {
+  gap: 1rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stack-row {
+    gap: 0;
+    transition: gap var(--mo-dur-3) var(--mo-ease-out);
+  }
+
+  .stack-row:hover,
+  .stack-row:focus-within {
+    gap: 1rem;
+  }
+
+  .stack-row .stack-item {
+    transform: translateZ(clamp(-160px, calc((var(--i, 1) - 1) * -28px), 0px))
+      translateX(clamp(-40px, calc((var(--i, 1) - 1) * -18px), 0px));
+    opacity: clamp(0.35, calc(1 - (var(--i, 1) - 1) * 0.14), 1);
+    filter: blur(clamp(0px, calc((var(--i, 1) - 1) * 1px), 4px));
+    transition:
+      transform var(--mo-dur-3) var(--mo-ease-out),
+      opacity var(--mo-dur-3) var(--mo-ease-out),
+      filter var(--mo-dur-3) var(--mo-ease-out);
+    transition-delay: calc((var(--i, 1) - 1) * 45ms);
+  }
+
+  .stack-row:hover .stack-item,
+  .stack-row:focus-within .stack-item {
+    transform: translateZ(0) translateX(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-row .stack-item {
+    transform: none;
+    opacity: 1;
+    filter: none;
+    transition: none;
+  }
+}
