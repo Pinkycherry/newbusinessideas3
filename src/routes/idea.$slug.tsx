@@ -1,9 +1,8 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import ShareLinks from "@/components/effects/share-links";
-import StickyScroll from "@/components/aceternity/sticky-scroll";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
 import { queryOptions } from "@tanstack/react-query";
-import { Lock } from "lucide-react";
+import { Lock, Lightbulb, Users, Wallet, Shield, type LucideIcon } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
@@ -292,6 +291,73 @@ function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
   );
 }
 
+type BlueprintEntry = {
+  title: string;
+  body: string | null | undefined;
+  Icon: LucideIcon;
+  /** A CSS custom-property name already defined in styles.css, e.g. "--hl-teal". */
+  tint: string;
+};
+
+/**
+ * The four "Blueprint" fields (opportunity / who pays / how the money works /
+ * your edge), styled as an alternating left-right stack -- the layout the
+ * founder pasted a reference for. The reference used a stock photo on one
+ * side of each row; these four are plain text fields with no image attached
+ * to any of them, so a big themed icon stands in for the photo instead of a
+ * random unrelated stock shot. Colors come from the site's own hl- and
+ * primary tokens (never the reference's raw red-100/blue-100/etc.) so this reads as
+ * part of the same design system as everything else on the page.
+ */
+function BlueprintCards({ entries }: { entries: BlueprintEntry[] }) {
+  const items = entries.filter((entry): entry is BlueprintEntry & { body: string } =>
+    Boolean(entry.body),
+  );
+  if (items.length === 0) return null;
+
+  return (
+    <div className="mt-6 grid gap-6">
+      {items.map((item, i) => {
+        const Icon = item.Icon;
+        const reversed = i % 2 === 1;
+        return (
+          <div
+            key={item.title}
+            className={`flex flex-col overflow-hidden rounded-3xl border border-border md:flex-row${
+              reversed ? " md:flex-row-reverse" : ""
+            }`}
+          >
+            <div
+              aria-hidden
+              className="flex shrink-0 items-center justify-center p-10 md:w-2/5"
+              style={{
+                background: `color-mix(in oklab, var(${item.tint}) 16%, var(--card))`,
+              }}
+            >
+              <Icon className="h-16 w-16 sm:h-20 sm:w-20" style={{ color: `var(${item.tint})` }} strokeWidth={1.25} />
+            </div>
+            <div className="glass flex flex-1 flex-col justify-center gap-3 p-8 sm:p-10">
+              <span
+                className="w-fit rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em]"
+                style={{
+                  color: `var(${item.tint})`,
+                  background: `color-mix(in oklab, var(${item.tint}) 14%, transparent)`,
+                }}
+              >
+                0{i + 1}
+              </span>
+              <h3 className="text-xl font-bold text-foreground sm:text-2xl">{item.title}</h3>
+              <p className="whitespace-pre-line leading-relaxed text-muted-foreground">
+                {item.body}
+              </p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 /** A plain prose block that renders only when the field has content. */
 function RichSection({ title, body }: { title: string; body: string }) {
   if (!body) return null;
@@ -432,16 +498,24 @@ function IdeaPage() {
       <SiteShell tone="instrument">
         <div
           ref={mastheadRef}
-          className="cx-scene mx-auto grid max-w-6xl gap-10 px-4 py-12 lg:grid-cols-[minmax(0,1fr)_20rem]"
+          // Was `max-w-6xl` -- the same cap the header's own nav card carries.
+          // That's fine on the header, which is meant to read as a bounded
+          // pill floating over a wider page, but it meant this whole article
+          // (and its sticky sidebar) sat flush inside those same edges, so
+          // the page content never spanned any wider than that one nav bar.
+          // Founder confirmed live: full width, no cap. This is now fluid, so
+          // it fills the viewport at any size, with padding that scales up
+          // on wider screens instead of a fixed max-width boxing it in.
+          className="cx-scene mx-auto grid w-full gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:px-10 xl:px-16 2xl:px-24"
         >
-          {/* No `cx-layer` here on purpose: this article hosts StickyScroll's
-              `position: sticky` plate, and a `transform` on any ancestor of a
-              sticky element breaks its stickiness (it stops tracking scroll
-              and renders wherever it first computed, disconnected from its
-              matching content). The pointer-parallax this cost was
-              imperceptible anyway — its scroll term only fires when
-              something sets `--sc-p` on this element, which nothing here
-              does. */}
+          {/* No `cx-layer` here on purpose: the sticky right-column aside
+              below is a `position: sticky` element, and a `transform` on any
+              ancestor of a sticky element breaks its stickiness (it stops
+              tracking scroll and renders wherever it first computed,
+              disconnected from its matching content). The pointer-parallax
+              this cost was imperceptible anyway -- its scroll term only fires
+              when something sets `--sc-p` on this element, which nothing
+              here does. */}
           <article className="idea-shell min-w-0" data-variant={variant} data-gradient={gradient}>
             {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
             <Breadcrumbs
@@ -563,24 +637,41 @@ function IdeaPage() {
             {/* PROJECT_BRIEF.md Section 3.3 — three panels, always locked,
                 for everyone, at every tier. See LockedSection's own comment
                 for why. Each wraps an existing, unmodified component/block
-                so none of their internal scroll-linked devices (StickyScroll,
-                ComputedVerdictPanel's scroll-driven crossfade) need to
-                change shape. */}
+                so ComputedVerdictPanel's scroll-linked crossfade doesn't need
+                to change shape.
+
+                The four fields below used to render through StickyScroll (a
+                left-list + right-sticky-plate layout). Founder asked for
+                these four specifically in an alternating left/right "team
+                member" card style instead -- see BlueprintCards above. */}
             <LockedSection title="The Blueprint" anchorId="blueprint" anchorLabel="The Blueprint">
-              <StickyScroll
-                items={[
-                  { title: "The opportunity", body: idea.marketOpportunity },
-                  { title: "Who actually pays you", body: idea.targetCustomer },
-                  { title: "How the money works", body: idea.howYouMakeMoney },
-                  { title: "Your edge", body: idea.competitionEdge },
-                ]
-                  .filter((entry) => Boolean(entry.body))
-                  .map((entry) => ({
-                    title: entry.title,
-                    description: (
-                      <p className="whitespace-pre-line leading-relaxed">{entry.body}</p>
-                    ),
-                  }))}
+              <BlueprintCards
+                entries={[
+                  {
+                    title: "The opportunity",
+                    body: idea.marketOpportunity,
+                    Icon: Lightbulb,
+                    tint: "--hl-teal",
+                  },
+                  {
+                    title: "Who actually pays you",
+                    body: idea.targetCustomer,
+                    Icon: Users,
+                    tint: "--hl-coral",
+                  },
+                  {
+                    title: "How the money works",
+                    body: idea.howYouMakeMoney,
+                    Icon: Wallet,
+                    tint: "--primary",
+                  },
+                  {
+                    title: "Your edge",
+                    body: idea.competitionEdge,
+                    Icon: Shield,
+                    tint: "--hl-green",
+                  },
+                ]}
               />
               <ComputedVerdictPanel idea={idea} />
             </LockedSection>
