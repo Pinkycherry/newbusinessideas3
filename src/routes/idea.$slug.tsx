@@ -2,14 +2,25 @@ import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import ShareLinks from "@/components/effects/share-links";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
 import { queryOptions } from "@tanstack/react-query";
-import { Lock, Lightbulb, Users, Wallet, Shield, type LucideIcon } from "lucide-react";
+import {
+  Lock,
+  Lightbulb,
+  Users,
+  Wallet,
+  Shield,
+  Sparkles,
+  Compass,
+  LayoutGrid,
+  Calculator,
+  TrendingUp,
+  type LucideIcon,
+} from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { ValidateButton } from "@/components/validate-button";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
-import { ExploreRail } from "@/components/explore-rail";
 import { categoryImage } from "@/config/category-imagery";
 import {
   getIdeaBySlug,
@@ -20,7 +31,14 @@ import {
 import { type IdeaCard as IdeaCardType, type IdeaDetail } from "@/lib/ideas-shared";
 import { JsonLd, absoluteUrl, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { hideImgIfBroken } from "@/lib/utils";
-import { useDepthScene, useElementPointerGroup, useScrollProgress, useTextReveal } from "@/motion";
+import {
+  Odometer,
+  useDepthScene,
+  useElementPointerGroup,
+  useScrollProgress,
+  useStaggerReveal,
+  useTextReveal,
+} from "@/motion";
 
 type IdeaDetailData = {
   idea: IdeaDetail;
@@ -182,7 +200,12 @@ function DemandBlock({ score }: { score: number | null }) {
   const pct = Math.max(0, Math.min(100, score));
   const band = pct >= 85 ? "Strong momentum" : pct >= 70 ? "Steady demand" : "Niche, but real";
   return (
-    <section ref={sectionRef} className="mt-10 rounded-lg border border-border bg-card p-5">
+    <section
+      ref={sectionRef}
+      data-anchor="demand"
+      data-anchor-label="Demand"
+      className="mt-10 rounded-lg border border-border bg-card p-5"
+    >
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
           Demand signal
@@ -314,17 +337,26 @@ function BlueprintCards({ entries }: { entries: BlueprintEntry[] }) {
   const items = entries.filter((entry): entry is BlueprintEntry & { body: string } =>
     Boolean(entry.body),
   );
+  // Reveals the four rows one at a time top-to-bottom on the way down, and
+  // fades them back out on the way up (useStaggerReveal's own both-directions
+  // behaviour, per the founder's overruled decision in its own file comment)
+  // instead of all four appearing at once.
+  const rowsRef = useStaggerReveal<HTMLDivElement>({
+    selector: ".blueprint-row",
+    stagger: 0.08,
+    distance: 16,
+  });
   if (items.length === 0) return null;
 
   return (
-    <div className="mt-6 grid gap-6">
+    <div ref={rowsRef} className="mt-6 grid gap-6">
       {items.map((item, i) => {
         const Icon = item.Icon;
         const reversed = i % 2 === 1;
         return (
           <div
             key={item.title}
-            className={`flex flex-col overflow-hidden rounded-3xl border border-border md:flex-row${
+            className={`blueprint-row flex flex-col overflow-hidden rounded-3xl border border-border md:flex-row${
               reversed ? " md:flex-row-reverse" : ""
             }`}
           >
@@ -445,6 +477,162 @@ function LockedSection({
           </div>
         )}
       </div>
+    </section>
+  );
+}
+
+/**
+ * The bottom cross-link module, rebuilt 2026-09-19 after direct feedback that
+ * the generic ExploreRail block here (flat 3-card grid, same fixed registry
+ * on every template) read as bolted-on rather than considered. ideaproof.io's
+ * own pattern isn't a card row -- it's a chain of specific next steps (their
+ * homepage roadmap: numbered nodes, dashed connector, always another one to
+ * take). This is that same idea, built from data this page already has
+ * (contextualLinks, trending) instead of a page-agnostic registry: Validate
+ * first (the page's own real conversion action), then the subcategory, the
+ * category, a calculator, and one related idea -- five real destinations, in
+ * priority order, not a random three.
+ *
+ * `.stack-row` (motion.css) -- the horizontal sibling of the `.stack-list`
+ * deck already used twice below on this same page -- was defined months ago
+ * and never used anywhere. This is its first real caller.
+ */
+function KeepExploringRail({
+  contextualLinks,
+  trendingPick,
+}: {
+  contextualLinks: ContextualLink[];
+  trendingPick: IdeaCardType | undefined;
+}) {
+  const [subcategoryLink, categoryLink, matchedIdeaLink] = contextualLinks;
+  const relatedPick =
+    matchedIdeaLink ??
+    (trendingPick
+      ? {
+          key: trendingPick.ideaId,
+          label: trendingPick.title,
+          to: "/idea/$slug" as const,
+          params: { slug: trendingPick.slug },
+        }
+      : undefined);
+
+  const railRef = useStaggerReveal<HTMLUListElement>({ selector: ".stack-item", stagger: 0.05 });
+
+  const nodes: {
+    key: string;
+    label: string;
+    blurb: string;
+    Icon: LucideIcon;
+    tint: string;
+    href?: string;
+    to?: string;
+    params?: Record<string, string>;
+  }[] = [
+    {
+      key: "validate",
+      label: "Validate this idea",
+      blurb: "Free, run it through your own AI account, as many times as you want.",
+      Icon: Sparkles,
+      tint: "--primary",
+      href: "#validate",
+    },
+    ...(subcategoryLink
+      ? [
+          {
+            key: subcategoryLink.key,
+            label: `More in ${subcategoryLink.label}`,
+            blurb: "The rest of this exact subcategory.",
+            Icon: Compass,
+            tint: "--hl-teal",
+            to: subcategoryLink.to,
+            params: subcategoryLink.params,
+          },
+        ]
+      : []),
+    ...(categoryLink
+      ? [
+          {
+            key: categoryLink.key,
+            label: `The wider ${categoryLink.label} lineup`,
+            blurb: "Every blueprint in this category.",
+            Icon: LayoutGrid,
+            tint: "--hl-coral",
+            to: categoryLink.to,
+            params: categoryLink.params,
+          },
+        ]
+      : []),
+    {
+      key: "calculator",
+      label: "Run the numbers",
+      blurb: "Free startup calculators — cost, break-even, runway.",
+      Icon: Calculator,
+      tint: "--hl-green",
+      to: "/calculator",
+    },
+    ...(relatedPick
+      ? [
+          {
+            key: relatedPick.key,
+            label: relatedPick.label,
+            blurb: "A nearby idea worth a look.",
+            Icon: TrendingUp,
+            tint: "--hl-gold",
+            to: relatedPick.to,
+            params: relatedPick.params,
+          },
+        ]
+      : []),
+  ];
+
+  return (
+    <section
+      className="mt-12 border-t border-border pt-8"
+      data-anchor="explore"
+      data-anchor-label="Keep exploring"
+    >
+      <p className="t-eyebrow">Keep exploring</p>
+      <ul ref={railRef} className="stack-row mt-4 flex flex-wrap">
+        {nodes.map((node, i) => {
+          const Icon = node.Icon;
+          const inner = (
+            <>
+              <span
+                className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-[10px] font-bold"
+                style={{
+                  color: `var(${node.tint})`,
+                  background: `color-mix(in oklab, var(${node.tint}) 16%, transparent)`,
+                }}
+              >
+                <Icon aria-hidden className="h-4 w-4" strokeWidth={1.75} />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-sm font-semibold text-foreground transition-colors duration-300 group-hover:text-accent">
+                  {node.label}
+                </span>
+                <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
+                  {node.blurb}
+                </span>
+              </span>
+            </>
+          );
+          const cardClass =
+            "mo-card glass glass-hover group flex h-full min-w-[15rem] max-w-xs flex-1 items-start gap-3 rounded-2xl p-4";
+          return (
+            <li key={node.key} className="stack-item" style={{ "--i": i + 1 } as CSSProperties}>
+              {node.href ? (
+                <a href={node.href} className={cardClass}>
+                  {inner}
+                </a>
+              ) : (
+                <Link to={node.to as never} params={node.params as never} className={cardClass}>
+                  {inner}
+                </Link>
+              )}
+            </li>
+          );
+        })}
+      </ul>
     </section>
   );
 }
@@ -630,9 +818,17 @@ function IdeaPage() {
                     <div className="w-full">
                       <dt>Momentum</dt>
                       <dd className="!ml-0 block">
-                        <span className="font-mono text-4xl font-bold leading-none tabular-nums text-foreground">
-                          {idea.trendScore ?? "—"}
-                        </span>
+                        {idea.trendScore !== null ? (
+                          <Odometer
+                            value={idea.trendScore}
+                            duration={1.2}
+                            className="font-mono text-4xl font-bold leading-none tabular-nums text-foreground"
+                          />
+                        ) : (
+                          <span className="font-mono text-4xl font-bold leading-none tabular-nums text-foreground">
+                            —
+                          </span>
+                        )}
                         <span className="ml-1 text-xs text-muted-foreground">/ 100</span>
                       </dd>
                     </div>
@@ -1050,12 +1246,11 @@ function IdeaPage() {
             </section>
             {/* EDITABLE SECTION END */}
 
-            {/* Cross-link to the rest of the site (see explore-rail.tsx) --
-                placed after the validate CTA above, which is the page's real
-                ending, so it never competes with it. A reader who finishes
-                here without validating still lands somewhere else on the
-                site instead of a dead end. */}
-            <ExploreRail exclude="ideas" heading="Keep exploring" />
+            {/* The page's own cross-link module -- see KeepExploringRail's
+                comment above for why this replaced the generic ExploreRail
+                block. Placed after the validate CTA above, which is the
+                page's real ending, so it never competes with it. */}
+            <KeepExploringRail contextualLinks={contextualLinks} trendingPick={trending[0]} />
           </article>
 
           {/* Sticky right column — desktop only. Add or reorder blocks freely.
