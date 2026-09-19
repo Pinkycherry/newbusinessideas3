@@ -100,7 +100,15 @@ export function FloatingDock() {
               exit={{ opacity: 0, scale: 0.7 }}
               whileHover={{ scale: 1.045, y: -2 }}
               whileTap={{ scale: 0.96 }}
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              // Was window.scrollTo({ top: 0, behavior: "smooth" }). Confirmed
+              // live: on routes with active GSAP ScrollTrigger instances (every
+              // idea page has several), the native smooth-scroll animation
+              // fights the trigger recalculations those instances run on their
+              // own scroll listeners -- caught it outright stalling mid-flight,
+              // and once caught it reversing direction partway through. An
+              // instant jump finishes inside one frame, before any trigger gets
+              // a chance to react, so there is nothing left to fight it.
+              onClick={() => window.scrollTo(0, 0)}
               aria-label="Back to top"
               /* `rounded-full` alone does not win here. The unlayered
                  `.glass-btn, .glass-pill, …` block in styles.css sets
