@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { ExploreRail } from "@/components/explore-rail";
 import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { getGuideBySlug, STARTUP_GUIDES } from "@/lib/guides-data";
 
@@ -206,6 +207,8 @@ function StartupGuideDetailPage() {
               <div />
             )}
           </nav>
+
+          <ExploreRail exclude="guides" heading="Keep exploring" />
         </div>
       </SiteShell>
     </>
