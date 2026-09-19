@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { ExploreRail } from "@/components/explore-rail";
 import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { getCaseStudyBySlug, CASE_STUDIES } from "@/lib/case-studies-data";
 
@@ -377,6 +378,8 @@ function FounderStoryDetailPage() {
               <div />
             )}
           </nav>
+
+          <ExploreRail exclude="founderStories" heading="Keep exploring" />
         </div>
       </SiteShell>
     </>
