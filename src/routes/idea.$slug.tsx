@@ -381,8 +381,8 @@ function IdeaPage() {
   // MOTION_SPEC §2.3 — the page's single headline reveal, on the idea title.
   const titleRef = useTextReveal<HTMLHeadingElement>();
   // One delegated pointer listener per rail rather than one per card.
-  const relatedRailRef = useElementPointerGroup<HTMLDivElement>("a");
-  const trendingRailRef = useElementPointerGroup<HTMLDivElement>("a");
+  const relatedRailRef = useElementPointerGroup<HTMLUListElement>("a");
+  const trendingRailRef = useElementPointerGroup<HTMLUListElement>("a");
   // The blueprint masthead is a depth scene: the title plane and the sidebar
   // plane sit at different depths, so the page has somewhere to stand rather
   // than reading as one flat column of panels.
@@ -802,15 +802,17 @@ function IdeaPage() {
                 </h2>
                 {/* `.mo-card` for these cells lives on IdeaCard itself, which
                     is the listing agent's file — this rail supplies the single
-                    delegated pointer listener the sheen reads from. */}
-                <div
-                  ref={relatedRailRef}
-                  className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-4"
-                >
-                  {bottomRelated.map((r) => (
-                    <IdeaCard key={r.ideaId} idea={r} />
+                    delegated pointer listener the sheen reads from.
+                    `.stack-list`/`.stack-item` (motion.css) layer a CSS-only
+                    depth stack on top: a shallow perspective deck at rest,
+                    fanned into an open column on hover or keyboard focus. */}
+                <ul ref={relatedRailRef} className="stack-list mt-4 max-w-xl">
+                  {bottomRelated.map((r, i) => (
+                    <li key={r.ideaId} className="stack-item" style={{ "--i": i + 1 } as CSSProperties}>
+                      <IdeaCard idea={r} />
+                    </li>
                   ))}
-                </div>
+                </ul>
               </section>
             )}
             {relatedCategories.length > 0 && (
@@ -839,29 +841,39 @@ function IdeaPage() {
                 <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                   Trending across the library
                 </h2>
-                <div
+                {/* .stack-row (motion.css) — the horizontal sibling of
+                    .stack-list: cards deck edge-to-edge at rest and fan open
+                    along the scroll axis on hover or keyboard focus. The
+                    snap-scroll row itself is unchanged, so touch keeps the
+                    same swipeable strip it always had. */}
+                <ul
                   ref={trendingRailRef}
-                  className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3"
+                  className="stack-row mt-4 flex list-none snap-x snap-mandatory overflow-x-auto pb-3"
                 >
-                  {trending.map((t) => (
-                    <Link
+                  {trending.map((t, i) => (
+                    <li
                       key={t.ideaId}
-                      to="/idea/$slug"
-                      params={{ slug: t.slug }}
-                      className="mo-card glass glass-hover w-64 shrink-0 snap-start rounded-2xl p-4"
+                      className="stack-item w-64 shrink-0 snap-start"
+                      style={{ "--i": i + 1 } as CSSProperties}
                     >
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
-                        {t.categoryName}
-                      </p>
-                      <p className="mt-2 text-sm font-bold leading-snug">{t.title}</p>
-                      {t.trendScore !== null && (
-                        <p className="mt-2 text-[10px] uppercase tracking-widest text-muted-foreground">
-                          Trend {t.trendScore}
+                      <Link
+                        to="/idea/$slug"
+                        params={{ slug: t.slug }}
+                        className="mo-card glass glass-hover block h-full rounded-2xl p-4"
+                      >
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
+                          {t.categoryName}
                         </p>
-                      )}
-                    </Link>
+                        <p className="mt-2 text-sm font-bold leading-snug">{t.title}</p>
+                        {t.trendScore !== null && (
+                          <p className="mt-2 text-[10px] uppercase tracking-widest text-muted-foreground">
+                            Trend {t.trendScore}
+                          </p>
+                        )}
+                      </Link>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </section>
             )}
 
@@ -912,15 +924,30 @@ function IdeaPage() {
                   <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent">
                     More in {idea.categoryName}
                   </p>
-                  <ul className="mt-4 space-y-3">
-                    {sidebarRelated.map((r) => (
-                      <li key={r.ideaId}>
+                  {/* CSS-only depth stack (motion.css: .stack-list/.stack-item) —
+                      a shallow perspective deck at rest, fans into an open
+                      column on hover or keyboard focus. --i is each item's
+                      1-based position; the deck and the fan both read off it. */}
+                  <ul className="stack-list mt-4">
+                    {sidebarRelated.map((r, i) => (
+                      <li
+                        key={r.ideaId}
+                        className="stack-item"
+                        style={{ "--i": i + 1 } as CSSProperties}
+                      >
                         <Link
                           to="/idea/$slug"
                           params={{ slug: r.slug }}
-                          className="block text-sm font-semibold leading-snug text-muted-foreground transition-colors hover:text-primary"
+                          className="block rounded-xl border border-border bg-card px-3.5 py-3 transition-colors hover:border-primary/40"
                         >
-                          {r.title}
+                          <span className="block text-sm font-semibold leading-snug text-foreground">
+                            {r.title}
+                          </span>
+                          {r.trendScore !== null && (
+                            <span className="mt-1.5 block text-[10px] uppercase tracking-widest text-hl-teal">
+                              Trend {r.trendScore}
+                            </span>
+                          )}
                         </Link>
                       </li>
                     ))}
