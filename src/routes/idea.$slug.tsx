@@ -217,22 +217,23 @@ function DemandBlock({ score }: { score: number | null }) {
 
 /**
  * The blueprint's real pros/cons/verdict, computed state advancing while the
- * frame holds — the `pin` device (devices.md §2), the one leaned on hardest
- * by the Live Surface grammar. Three real panels, not a fake sequence: pros
- * and cons are both visible from the start (nothing here is hidden to force
- * a reveal), the verdict crossfades in as `--sc-p` passes its threshold. No
- * invented copy — every word is the idea's own `pros`/`cons`/`verdict` data.
+ * reader scrolls past it: pros and cons are both visible from the start
+ * (nothing here is hidden to force a reveal), the verdict crossfades in as
+ * `--sc-p` passes its threshold. No invented copy — every word is the idea's
+ * own `pros`/`cons`/`verdict` data.
  *
- * Migrated from `lib/scroll-devices`' `usePinProgress` to `@/motion`'s
- * `useScrollProgress({ mode: "pinned" })` — the same device, same `--sc-p`
- * contract, so the calc()-driven verdict cue below is untouched. One real
- * behaviour change came with it: the old hook parked `--sc-p` at 0 under
- * reduced motion, which drove this panel's own `clamp()` to zero opacity and
- * hid the verdict outright for those readers. The shared hook parks at its
- * settled value instead, so the verdict is simply there.
+ * This used to run `useScrollProgress({ mode: "pinned", spanVh: 1.6 })` —
+ * holding the viewport for 1.6 screen-heights so the crossfade had scroll
+ * distance to play out against. Live, that reserved far more scroll than
+ * this panel's actual (short) height ever used, so the pin held, the
+ * crossfade finished almost immediately, and the reader kept scrolling
+ * through 2000px+ of nothing before the next section arrived. `"unpinned"`
+ * drives the same `--sc-p` custom property off the section's own natural
+ * position instead (0 as it enters the viewport, 1 as it leaves) — same
+ * crossfade, zero reserved dead space, page keeps its real length.
  */
 function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
-  const stageRef = useScrollProgress<HTMLElement>({ mode: "pinned", spanVh: 1.6 });
+  const stageRef = useScrollProgress<HTMLElement>({ mode: "unpinned" });
 
   return (
     <section
@@ -563,7 +564,8 @@ function IdeaPage() {
                 for everyone, at every tier. See LockedSection's own comment
                 for why. Each wraps an existing, unmodified component/block
                 so none of their internal scroll-linked devices (StickyScroll,
-                ComputedVerdictPanel's pin) need to change shape. */}
+                ComputedVerdictPanel's scroll-driven crossfade) need to
+                change shape. */}
             <LockedSection title="The Blueprint" anchorId="blueprint" anchorLabel="The Blueprint">
               <StickyScroll
                 items={[
@@ -841,21 +843,19 @@ function IdeaPage() {
                 <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                   Trending across the library
                 </h2>
-                {/* .stack-row (motion.css) — the horizontal sibling of
-                    .stack-list: cards deck edge-to-edge at rest and fan open
-                    along the scroll axis on hover or keyboard focus. The
-                    snap-scroll row itself is unchanged, so touch keeps the
-                    same swipeable strip it always had. */}
-                <ul
-                  ref={trendingRailRef}
-                  className="stack-row mt-4 flex list-none snap-x snap-mandatory overflow-x-auto pb-3"
-                >
+                {/* `.stack-list`/`.stack-item` (motion.css) — the same
+                    CSS-only depth stack used above: a shallow perspective
+                    deck at rest, fanned into an open column on hover or
+                    keyboard focus. Was `.stack-row` with a horizontal
+                    snap-scroll strip layered under the fan — kept the old
+                    swipeable rail alive alongside the new effect, but that
+                    meant the section still scrolled sideways instead of
+                    just fanning open, which reads as broken next to the
+                    other two lists on this page. Matching them: one
+                    consistent effect, no scrollbar. */}
+                <ul ref={trendingRailRef} className="stack-list mt-4 max-w-xl">
                   {trending.map((t, i) => (
-                    <li
-                      key={t.ideaId}
-                      className="stack-item w-64 shrink-0 snap-start"
-                      style={{ "--i": i + 1 } as CSSProperties}
-                    >
+                    <li key={t.ideaId} className="stack-item" style={{ "--i": i + 1 } as CSSProperties}>
                       <Link
                         to="/idea/$slug"
                         params={{ slug: t.slug }}
