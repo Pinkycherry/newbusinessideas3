@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { ExploreRail } from "@/components/explore-rail";
 import { CALCULATORS } from "@/lib/calculators";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import {
@@ -142,6 +143,8 @@ function CalculatorIndex() {
             </ul>
           </div>
           {/* EDITABLE SECTION END */}
+
+          <ExploreRail exclude="calculators" heading="Keep exploring" />
         </div>
       </SiteShell>
     </>
