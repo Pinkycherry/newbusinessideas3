@@ -1,9 +1,10 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { useCallback, type CSSProperties } from "react";
+import { Fragment, useCallback, type CSSProperties } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { ExploreBanner, ExploreRail, EXPLORE_BANNER_ROTATION } from "@/components/explore-rail";
 import { categoryImage } from "@/config/category-imagery";
 import { getSubcategoryPage } from "@/lib/ideas.functions";
 import { JsonLd, absoluteUrl, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
@@ -148,10 +149,32 @@ function SubcategoryPage() {
             ref={gridRef}
             className="bbi-depth-front mt-8 grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-3"
           >
-            {data.ideas.map((idea) => (
-              <IdeaCard key={idea.ideaId} idea={idea} featured={idea.ideaId === leadIdeaId} />
-            ))}
+            {/* This page had no interstitial mechanism at all -- unlike the
+                parent category grid (see category.$categorySlug.index.tsx),
+                a long subcategory list never once pointed anywhere else on
+                the site. Every 6th card is a cross-link instead, rotating
+                through EXPLORE_BANNER_ROTATION so a subcategory with several
+                interstitials doesn't repeat the same destination. */}
+            {data.ideas.map((idea, i) => {
+              const n = i + 1;
+              const showBanner = n % 6 === 0 && n < data.ideas.length;
+              const bannerPick = showBanner
+                ? EXPLORE_BANNER_ROTATION[(n / 6 - 1) % EXPLORE_BANNER_ROTATION.length]
+                : null;
+              return (
+                <Fragment key={idea.ideaId}>
+                  <IdeaCard idea={idea} featured={idea.ideaId === leadIdeaId} />
+                  {showBanner && bannerPick && (
+                    <div className="[grid-column:1/-1]">
+                      <ExploreBanner pick={bannerPick} exclude="ideas" />
+                    </div>
+                  )}
+                </Fragment>
+              );
+            })}
           </div>
+
+          <ExploreRail exclude="ideas" heading="Keep exploring" />
         </div>
       </SiteShell>
     </>
