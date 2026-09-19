@@ -1631,7 +1631,7 @@ html.light .idea-shell::before { opacity: 0.42; }
 .idea-shell[data-variant="hero-banner"] .idea-hero-aside { margin-inline: auto; max-width: 34rem; width: 100%; }
 .idea-shell[data-variant="stat-forward"] .idea-hero { grid-template-columns: 1fr; }
 @media (min-width: 900px) {
-  .idea-shell[data-variant="stat-forward"] .idea-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); }
+  .idea-shell[data-variant="stat-forward"] .idea-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); align-items: start; }
   .idea-shell[data-variant="stat-forward"] .idea-hero-aside { order: -1; }
 }
 .idea-shell[data-variant="editorial"] .idea-hero { grid-template-columns: 1fr; max-width: 46rem; }
