@@ -592,7 +592,17 @@ function KeepExploringRail({
       data-anchor-label="Keep exploring"
     >
       <p className="t-eyebrow">Keep exploring</p>
-      <ul ref={railRef} className="stack-row mt-4 flex flex-wrap">
+      {/* `grid-cols-[repeat(auto-fit,minmax(15rem,1fr))]` instead of a flex-wrap
+          row: this rail's item count depends on how many contextual links this
+          particular idea actually has (subcategory/category/related idea can
+          each be missing), so a fixed 2- or 3-column split left an odd count
+          stranding one card alone on its own row with a wide dead gap beside
+          it. auto-fit stretches whatever count shows up to fill every row
+          completely instead. */}
+      <ul
+        ref={railRef}
+        className="stack-row mt-4 grid grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-4"
+      >
         {nodes.map((node, i) => {
           const Icon = node.Icon;
           const inner = (
@@ -617,9 +627,13 @@ function KeepExploringRail({
             </>
           );
           const cardClass =
-            "mo-card glass glass-hover group flex h-full min-w-[15rem] max-w-xs flex-1 items-start gap-3 rounded-2xl p-4";
+            "mo-card glass glass-hover group flex h-full items-start gap-3 rounded-2xl p-4";
           return (
-            <li key={node.key} className="stack-item" style={{ "--i": i + 1 } as CSSProperties}>
+            <li
+              key={node.key}
+              className="stack-item h-full"
+              style={{ "--i": i + 1 } as CSSProperties}
+            >
               {node.href ? (
                 <a href={node.href} className={cardClass}>
                   {inner}
