@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { AdSlot } from "@/components/AdSlot";
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { ExploreRail } from "@/components/explore-rail";
 import { getListicle, type ListicleEntry, type ListiclePage } from "@/lib/lists.functions";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { siteUrl } from "@/lib/site-config";
@@ -382,6 +383,8 @@ function ListiclePageRoute() {
             </section>
           )}
           {/* EDITABLE SECTION END */}
+
+          <ExploreRail exclude={["lists", "ideas"]} heading="Keep exploring" />
         </div>
       </SiteShell>
     </>
