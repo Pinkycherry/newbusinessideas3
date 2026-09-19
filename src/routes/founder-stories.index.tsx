@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { DollarSign, TrendingUp, Clock, ArrowRight, ShieldCheck, Zap } from "lucide-react";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
+import { ExploreRail } from "@/components/explore-rail";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { CASE_STUDIES, type CaseStudy } from "@/lib/case-studies-data";
 
@@ -180,6 +181,8 @@ function FounderStoriesIndexPage() {
               </article>
             ))}
           </div>
+
+          <ExploreRail exclude="founderStories" heading="Keep exploring" />
         </div>
       </SiteShell>
     </>
