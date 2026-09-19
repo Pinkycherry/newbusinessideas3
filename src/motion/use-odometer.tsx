@@ -64,7 +64,7 @@ export function useOdometer<T extends HTMLElement = HTMLElement>(
     let cancelled = false;
     let tween: gsap.core.Tween | null = null;
 
-    loadGsap().then(({ gsap }) => {
+    loadGsap().then(({ gsap, ScrollTrigger }) => {
       if (cancelled || !ref.current) return;
       const counter = { n: from };
       tween = gsap.to(counter, {
@@ -88,6 +88,18 @@ export function useOdometer<T extends HTMLElement = HTMLElement>(
         // And never let the tween paint `from` before it actually runs.
         immediateRender: false,
       });
+
+      // For a counter that's already on-screen at load (the common case --
+      // a hero stat, this Momentum card), ScrollTrigger's very first
+      // position measurement can land before a late web-font swap or an
+      // image below it finishes and shifts the layout. When that happens
+      // the trigger's start point is measured wrong, decides the reader
+      // hasn't reached it yet, and then only re-checks on an actual scroll
+      // event -- so a visitor who never scrolls sees "0" forever. One
+      // `refresh()` right after creation re-measures against the settled
+      // layout and fires the already-satisfied trigger immediately instead
+      // of waiting on a scroll that may never come.
+      ScrollTrigger.refresh();
     });
 
     return () => {
