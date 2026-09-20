@@ -140,16 +140,31 @@ function AboutPage() {
           ))}
         </div>
         <p className="mt-5">
-          Chandini also runs a curry point she started herself, which means she is the only one of
-          us currently running a business with actual customers, and she does not let anybody forget
-          it. Muthuraj Iyer grew up in Kerala, moved to Tamil Nadu for school, is married with two
-          children, and joined because he wanted to help — he has never taken a rupee for any of it.
+          <strong className="text-foreground">Kartik</strong> is the son of Veerabhadra Swami and
+          Manikyamba. He grew up in Tamil Nadu, studied computer science and then an MBA at the
+          Madurai campus, and now works a corporate job in Delhi. The library you are reading was
+          built around that job — evenings, weekends, and the hours nobody else wanted.
         </p>
         <p>
-          Prathap Purohit graduated in 2022 and is the newest. He answers roughly half the email
-          that reaches us and is learning the rest on the job. His girlfriend calls him Honey, and
-          he made the mistake of letting the rest of us find that out, so now it is on the About
-          page of a website. He is taking it well.
+          <strong className="text-foreground">Chandini</strong> is his co-founder and his fiancée.
+          They met at the same campus doing the same MBA, and they are getting married on{" "}
+          <strong className="text-foreground">26 October 2026</strong>. She also runs a curry point
+          she started herself, near his office — which makes her the only one of us currently
+          running a business with real customers, real margins and real days when nobody turns up.
+          She does not let the rest of us forget it, and she is right not to. A lot of what this
+          site says about first customers comes from her, not from a spreadsheet.
+        </p>
+        <p>
+          <strong className="text-foreground">Muthuraj Iyer</strong> grew up in Kerala and moved to
+          Tamil Nadu after his tenth, finished his engineering and MBA at the same campus, and is
+          married with two children. He joined because he wanted to help. He has never taken a rupee
+          for any of it and has never asked.
+        </p>
+        <p>
+          <strong className="text-foreground">Prathap Purohit</strong> graduated in 2022 and is the
+          newest. He answers roughly half the email that reaches us and is learning the rest on the
+          job. His girlfriend calls him Honey, and he made the mistake of letting the rest of us
+          find that out, so now it is on the About page of a website. He is taking it well.
         </p>
       </Section>
 
