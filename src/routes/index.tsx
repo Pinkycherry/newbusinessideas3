@@ -638,10 +638,26 @@ function HomePage() {
    ================================================================ */
 
 // The only two tree asset URLs in the app — do not add or swap in others.
-const DESKTOP_TREE_SRC =
-  "https://ethicalfounder.in/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg";
-const MOBILE_TREE_SRC =
-  "https://ethicalfounder.in/wp-content/uploads/2026/08/new-business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg";
+/**
+ * The Golden Tree, served from our own domain.
+ *
+ * Both sources used to be hotlinked from ethicalfounder, which is why the
+ * render below is written around a cross-origin constraint that no longer
+ * applies. The artwork is now committed here: a 1661x941 PNG on transparency,
+ * re-encoded to WebP because the alpha channel and the fine branch detail —
+ * not lossy quality — are what make the file heavy. Dropping quality from 82
+ * to 52 saved 99 KB; dropping the width from 1400 to 1000 saved 263 KB, so
+ * the width is what was cut.
+ *
+ * Mobile draws the same landscape artwork at a smaller size rather than the
+ * portrait file, which sits on a textured light backdrop that cannot be keyed
+ * out cleanly — its edge ring runs 143 to 232 in luminance with real colour
+ * in it, so a threshold knockout would halo and eat the tree's own highlights.
+ * A portrait version exported WITH transparency can be dropped in here later.
+ */
+const DESKTOP_TREE_SRC = "/images/golden-tree.webp";
+const DESKTOP_TREE_SRCSET = "/images/golden-tree.webp 1000w, /images/golden-tree@2x.webp 1400w";
+const MOBILE_TREE_SRC = "/images/golden-tree-mobile.webp";
 
 function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
   // Real blueprint counts, straight from the live catalog. This block used to
@@ -753,18 +769,23 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
           tree lives entirely in .tree-asset-container::before in styles.css, as a
           large, heavily-blurred radial glow with no hard edge or rectangle. */}
       <div className="relative mt-8 flex w-full items-center justify-center py-10 sm:mt-12 sm:py-16">
-        {/* DESKTOP TREE ASSET — this is a hotlinked cross-origin JPG (lives on
-            ethicalfounder.in, not our domain), so any technique that needs
-            to read its actual pixel data (a CSS mask-image, an SVG luminance
-            filter) is blocked by the browser unless that domain sends CORS
-            headers, which it doesn't — the previous attempt at this made the
-            whole tree invisible. mix-blend-mode is a pure rendering
-            composite, not a pixel read, so it's the only cross-origin-safe
-            option here; see .tree-asset-container img in styles.css. */}
+        {/* DESKTOP TREE ASSET — now same-origin. It was a hotlinked
+            cross-origin JPG, which blocked every technique that reads pixel
+            data (CSS mask-image, SVG luminance filters) because the other
+            domain sent no CORS headers; an earlier attempt at masking made
+            the whole tree invisible. mix-blend-mode was the only composite
+            that worked. That constraint is gone, so masking and filters are
+            available again if this section ever wants them. The artwork is
+            also transparent PNG re-encoded to WebP, so the mix-blend trick is
+            no longer load-bearing either. */}
         <div className="hidden sm:block relative w-full max-w-5xl aspect-[16/9] group tree-asset-container">
           <img
             ref={hideImgIfBroken}
             src={DESKTOP_TREE_SRC}
+            srcSet={DESKTOP_TREE_SRCSET}
+            sizes="(min-width: 1024px) 64rem, 100vw"
+            width={1000}
+            height={567}
             alt="The Golden Tree of Business Growth"
             fetchPriority="high"
             className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(27,42,107,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(27,42,107,0.5)]"
@@ -790,13 +811,14 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
           ))}
         </div>
 
-        {/* MOBILE TREE ASSET — same cross-origin constraint as desktop, so no
-            mask-image here either. Organic floating liquid capsules for the
-            node pills below. */}
+        {/* MOBILE TREE ASSET — same-origin now, like desktop. Organic
+            floating liquid capsules for the node pills below. */}
         <div className="block sm:hidden relative w-full max-w-xs aspect-[9/16] tree-asset-container">
           <img
             ref={hideImgIfBroken}
             src={MOBILE_TREE_SRC}
+            width={640}
+            height={363}
             alt="The Golden Tree of Business Growth (Mobile)"
             fetchPriority="high"
             className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(27,42,107,0.35)]"
