@@ -278,7 +278,7 @@ Do not present payment or AI-audit features as functional unless they are genuin
 
 This project was built with [Lovable](https://lovable.dev).
 
-**Live app**: https://newbusinessideas3.lovable.app
+**Live app**: https://bbusiness.online
 
 ## Build with Lovable
 

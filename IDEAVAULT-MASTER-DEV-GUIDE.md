@@ -9,7 +9,7 @@ Start every new Claude session by sharing this file first.
 ## 1. PROJECT IDENTITY
 
 **Working name:** IdeaVault AI (brand name TBD, replace everywhere when finalized)
-**Live site (Lovable hosting):** https://newbusinessideas3.lovable.app
+**Live site:** https://bbusiness.online
 **GitHub repo:** https://github.com/Pinkycherry/V2-business
 **Vercel deployment:** https://v2-business.vercel.app
 **Supabase project ID:** hmusfenydgyitwgiseti
