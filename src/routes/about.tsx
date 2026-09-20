@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout";
-import { contactEmail, TEAM } from "@/lib/site-config";
+import { COMMUNITY, communityMembers, contactEmail, TEAM } from "@/lib/site-config";
 
 /**
  * The who, how and why.
@@ -87,10 +87,20 @@ function AboutPage() {
 
       <Section heading="It turned out not to be just him">
         <p>
-          Kartik and Chandini — his co-founder, who he met doing an MBA at the same campus — run
-          WhatsApp groups with several thousand members between them. Side hustlers. People in
-          corporate jobs trying to build a second income. Small shop owners. A lot of people with an
-          idea and no capital at all.
+          Kartik and Chandini — his co-founder, who he met doing an MBA at the same campus — run two
+          WhatsApp communities between them. Side hustlers. People in corporate jobs trying to build
+          a second income. Small shop owners. A lot of people with an idea and no capital at all.
+        </p>
+        <p className="glass rounded-2xl px-5 py-4 text-base leading-relaxed">
+          <strong className="text-foreground">
+            {communityMembers()} members across {COMMUNITY.groups} communities
+          </strong>
+          <span className="text-muted-foreground">
+            {" "}
+            — counted on {COMMUNITY.countedOnLabel}. The date is published because a membership
+            count is true on the day it is taken and stale the day after, and a number without a
+            date is just a claim.
+          </span>
         </p>
         <p>
           When they started asking, the same story came back from all directions. People had paid.

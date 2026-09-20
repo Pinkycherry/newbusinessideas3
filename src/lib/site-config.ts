@@ -125,6 +125,30 @@ export function wordpressApiBase(): string {
  * wrong way. Fill it in when the real accounts exist.
  */
 /**
+ * SINGLE SOURCE OF TRUTH for the community figure.
+ *
+ * The house rule is that every number traces to a real source. This one does
+ * — it is the founder's own count of groups he owns — but a membership count
+ * is true on the day it is taken and wrong the day after, so it is published
+ * WITH the date it was counted. A dated snapshot stays honest forever; a bare
+ * figure quietly becomes a false claim the moment someone joins.
+ *
+ * Update both fields together, or not at all.
+ */
+export const COMMUNITY = {
+  members: 5737,
+  groups: 2,
+  /** ISO date the count was taken. */
+  countedOn: "2026-09-20",
+  countedOnLabel: "20 September 2026",
+} as const;
+
+/** `5,737` — grouped the way a reader expects, not the way JS prints it. */
+export function communityMembers(): string {
+  return COMMUNITY.members.toLocaleString("en-IN");
+}
+
+/**
  * The people behind the content, declared once.
  *
  * This is the half of E-E-A-T the site had no answer for. Every page named
