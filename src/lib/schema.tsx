@@ -1,4 +1,6 @@
 import {
+  CO_FOUNDER,
+  FOUNDER,
   ORGANISATION_LEGAL_NAME,
   ORGANISATION_NAME,
   organisationSameAs,
@@ -29,7 +31,22 @@ export function organisationSchema() {
     name: ORGANISATION_NAME,
     legalName: ORGANISATION_LEGAL_NAME,
     url: siteUrl(),
+    founder: [personRef(FOUNDER.name), personRef(CO_FOUNDER.name)],
     ...(sameAs.length > 0 ? { sameAs } : {}),
+  };
+}
+
+/**
+ * A named human, pointing at the page that backs the name up.
+ *
+ * A name with no page behind it is a weaker signal than no name at all, so
+ * every reference here resolves to `/about`, where the credential sits.
+ */
+function personRef(name: string) {
+  return {
+    "@type": "Person",
+    name,
+    url: `${siteUrl()}/about`,
   };
 }
 
@@ -90,6 +107,10 @@ export function articleSchema(input: {
     ...(input.image ? { image: absoluteUrl(input.image) } : {}),
     about: input.categoryName,
     mainEntityOfPage: `${siteUrl()}${input.path}`,
+    /* The founder researches and signs off every blueprint, so he is the
+       author of record. Publisher alone said a company stood behind the page
+       without ever saying who wrote it. */
+    author: personRef(FOUNDER.name),
     publisher: publisherRef(),
   };
 }

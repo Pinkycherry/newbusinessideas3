@@ -124,6 +124,51 @@ export function wordpressApiBase(): string {
  * omitting it -- a broken or wrong profile is a trust signal pointing the
  * wrong way. Fill it in when the real accounts exist.
  */
+/**
+ * The people behind the content, declared once.
+ *
+ * This is the half of E-E-A-T the site had no answer for. Every page named
+ * its publisher and none of them named a human, so 409 researched blueprints
+ * published with nobody accountable for them. Google's guidance on
+ * AI-assisted content asks who, how and why; this is the who, and `/about`
+ * is the how and the why.
+ *
+ * Every credential here is checkable. Nothing is added that cannot be.
+ */
+export type TeamMember = {
+  name: string;
+  /** What they actually do here, not a title for its own sake. */
+  role: string;
+  credential: string;
+};
+
+export const FOUNDER: TeamMember = {
+  name: "Kartik Ramaswamy",
+  role: "Founder. Researches and signs off every blueprint published here.",
+  credential: "B.E. Computer Science and MBA, Anna University Regional Campus, Madurai",
+};
+
+export const CO_FOUNDER: TeamMember = {
+  name: "Chandini",
+  role: "Co-founder. Editorial and quality review, and the first reader of every idea.",
+  credential: "B.E. Electronics and MBA, Anna University Regional Campus, Madurai",
+};
+
+export const TEAM: TeamMember[] = [
+  FOUNDER,
+  CO_FOUNDER,
+  {
+    name: "Muthuraj Iyer",
+    role: "Research and verification. Volunteers his time and takes nothing for it.",
+    credential: "B.E. Computer Science and MBA, Anna University Regional Campus, Madurai",
+  },
+  {
+    name: "Prathap Purohit",
+    role: "Replies to roughly half the email that reaches us, and is learning the rest of it as he goes.",
+    credential: "B.E. Computer Science, Anna University Regional Campus, Madurai",
+  },
+];
+
 export const ORGANISATION_NAME = "BBI";
 export const ORGANISATION_LEGAL_NAME = "Bro Business Ideas";
 
