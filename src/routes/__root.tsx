@@ -107,7 +107,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700;800&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      /* The .ico carries 16 through 256 so the tab strip, the bookmark bar
+         and Windows each get a bitmap made for their size rather than one
+         downscaled on the fly. The 32px PNG is what modern browsers prefer
+         when offered both. */
+      { rel: "icon", href: "/favicon.ico", sizes: "any" },
+      { rel: "icon", href: "/images/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { rel: "apple-touch-icon", href: "/images/apple-touch-icon.png", sizes: "180x180" },
     ],
   }),
   shellComponent: RootShell,

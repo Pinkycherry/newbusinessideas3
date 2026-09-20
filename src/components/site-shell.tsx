@@ -834,9 +834,23 @@ export function SiteShell({
             onClick={() => setMobileOpen(false)}
             className="flex shrink-0 items-baseline gap-2"
           >
-            <span className="shrink-0 rounded-[3px] bg-primary px-2.5 py-1 text-sm font-black uppercase tracking-[0.18em] text-primary-foreground sm:text-base">
-              BBI
-            </span>
+            {/* The wordmark is near-white, drawn for the instrument shell.
+                Every SiteShell in this codebase passes tone="instrument", so
+                the header is always the dark treatment and the mark always
+                reads. A SiteShell without that tone would render it white on
+                light glass — check this if one is ever added.
+
+                Intrinsic width/height are the real pixel dimensions so the
+                browser reserves the right box before the file arrives; height
+                is set in CSS and width follows from the ratio. */}
+            <img
+              src="/images/bbi-logo.png"
+              srcSet="/images/bbi-logo.png 1x, /images/bbi-logo@2x.png 2x"
+              width={328}
+              height={95}
+              alt="BBI — Bro Business Ideas"
+              className="h-8 w-auto shrink-0 sm:h-9"
+            />
           </Link>
 
           <nav className="hidden shrink-0 items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground lg:flex xl:gap-4">
