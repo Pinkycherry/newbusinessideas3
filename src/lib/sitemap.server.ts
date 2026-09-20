@@ -22,16 +22,18 @@ export const IDEA_TRANCHE_SIZE = 1000;
 export type IdeaSitemapRow = { slug: string; lastmod: string | null };
 
 /**
- * `lastmod` currently reads `created_at`, because the `ideas` table has no
- * `updated_at` column. That makes it truthful for a new idea and a lie for an
- * edited one: after an enrichment pass rewrites a row, the sitemap still
- * reports the original creation date and Google sees no reason to re-crawl.
+ * `lastmod` reads `updated_at`, added to `ideas` on 2026-09-20 together with a
+ * `before update` trigger. Before that the column did not exist and this read
+ * `created_at`, which was truthful for a new idea and a lie for an edited one:
+ * an enrichment pass rewrote the row and the sitemap still reported the
+ * original creation date, so Google saw no reason to re-crawl.
  *
- * Fixing that needs an `updated_at` column with a trigger on the table, which
- * the n8n pipeline also writes to. When it exists, change this one constant
- * and every sitemap becomes honest at once.
+ * The trigger carries a `when (old.* is distinct from new.*)` guard on purpose.
+ * The n8n pipeline upserts every row on each run; without the guard a no-op
+ * upsert would stamp the current date on all of them and tell Google the whole
+ * library changed when nothing did. An unchanged row keeps its old timestamp.
  */
-const LASTMOD_COLUMN = "created_at";
+const LASTMOD_COLUMN = "updated_at";
 
 /** How many completed ideas exist. Counted by Postgres, not fetched. */
 export async function countCompletedIdeas(): Promise<number> {
