@@ -410,10 +410,7 @@ function HomePage() {
         <div className="mx-auto max-w-[92rem]">
           <div className="ins-grid border-t border-[var(--ins-rule)] sm:grid-cols-2">
             {HERO_PANELS.map((panel) => (
-              <SpotlightCard
-                key={panel.label}
-                className="ins-cell border-0 px-6 py-7"
-              >
+              <SpotlightCard key={panel.label} className="ins-cell border-0 px-6 py-7">
                 <h3 className="text-base font-semibold text-[var(--ins-bright)]">{panel.label}</h3>
                 <TextGenerateEffect
                   words={panel.body}
@@ -470,7 +467,7 @@ function HomePage() {
       </section>
 
       {/* Two counter-running rows of live category plates, imagery from
-          ethicalfounder.com via src/config/imagery.ts. Replaces the parallax
+          ethicalfounder.in via src/config/imagery.ts. Replaces the parallax
           band: same content, and a marquee reads as a library going past
           rather than as a hero effect. */}
       <section
@@ -642,9 +639,9 @@ function HomePage() {
 
 // The only two tree asset URLs in the app — do not add or swap in others.
 const DESKTOP_TREE_SRC =
-  "https://ethicalfounder.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg";
+  "https://ethicalfounder.in/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg";
 const MOBILE_TREE_SRC =
-  "https://ethicalfounder.com/wp-content/uploads/2026/08/new-business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg";
+  "https://ethicalfounder.in/wp-content/uploads/2026/08/new-business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg";
 
 function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
   // Real blueprint counts, straight from the live catalog. This block used to
@@ -757,7 +754,7 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
           large, heavily-blurred radial glow with no hard edge or rectangle. */}
       <div className="relative mt-8 flex w-full items-center justify-center py-10 sm:mt-12 sm:py-16">
         {/* DESKTOP TREE ASSET — this is a hotlinked cross-origin JPG (lives on
-            ethicalfounder.com, not our domain), so any technique that needs
+            ethicalfounder.in, not our domain), so any technique that needs
             to read its actual pixel data (a CSS mask-image, an SVG luminance
             filter) is blocked by the browser unless that domain sends CORS
             headers, which it doesn't — the previous attempt at this made the
@@ -1325,24 +1322,27 @@ function TeamSection() {
           diagram fills the space that was doing nothing. */}
       <div className="grid gap-10 lg:grid-cols-[minmax(0,34rem)_minmax(0,1fr)] lg:items-center lg:gap-16">
         <div>
-        <p className="ins-legend">Who&apos;s behind this</p>
-        <h2 className="mt-3">Built by hand, not by a headcount.</h2>
-        <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
-          <TextGenerateEffect
-            words={`BBI is a small, hands-on build — no invented office, no fake team page. We'd rather tell you less and have it be true.`}
-          />
-          <p>
-            The full story lives on our{" "}
-            <LinkPreview url="https://newbusinessideas3.vercel.app/about" className="font-semibold">
-              <Link
-                to="/about"
-                className="font-semibold text-primary underline decoration-border underline-offset-4 transition-colors hover:text-accent"
+          <p className="ins-legend">Who&apos;s behind this</p>
+          <h2 className="mt-3">Built by hand, not by a headcount.</h2>
+          <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
+            <TextGenerateEffect
+              words={`BBI is a small, hands-on build — no invented office, no fake team page. We'd rather tell you less and have it be true.`}
+            />
+            <p>
+              The full story lives on our{" "}
+              <LinkPreview
+                url="https://newbusinessideas3.vercel.app/about"
+                className="font-semibold"
               >
-                About page
-              </Link>
-            </LinkPreview>
-            .
-          </p>
+                <Link
+                  to="/about"
+                  className="font-semibold text-primary underline decoration-border underline-offset-4 transition-colors hover:text-accent"
+                >
+                  About page
+                </Link>
+              </LinkPreview>
+              .
+            </p>
           </div>
         </div>
         <OrbitDiagram

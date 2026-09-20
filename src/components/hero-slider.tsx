@@ -9,17 +9,17 @@ import { hideImgIfBroken } from "@/lib/utils";
  */
 const SLIDES = [
   {
-    src: "https://ethicalfounder.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg",
+    src: "https://ethicalfounder.in/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg",
     alt: "The Golden Tree of Business Growth — business ideas mapped across branches",
     caption: "The Golden Tree — every branch is a live category",
   },
   {
-    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-16.jpg.webp",
+    src: "https://ethicalfounder.in/wp-content/uploads/2025/10/image-16.jpg.webp",
     alt: "Founder working at a laptop in a warmly lit workspace",
     caption: "Blueprints written for the person who has to build it",
   },
   {
-    src: "https://ethicalfounder.com/wp-content/uploads/2025/10/image-37.jpg.webp",
+    src: "https://ethicalfounder.in/wp-content/uploads/2025/10/image-37.jpg.webp",
     alt: "Close-up of hands typing on a laptop keyboard",
     caption: "Free validation on every blueprint",
   },

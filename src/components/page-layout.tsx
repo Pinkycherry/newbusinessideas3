@@ -9,9 +9,10 @@ import {
 } from "react";
 import { useRouterState } from "@tanstack/react-router";
 
+import SpotlightCard from "@/components/aceternity/spotlight-card";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { JsonLd, breadcrumbSchema, webPageSchema } from "@/lib/schema";
-import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
+import { useDepthScene, useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
 
 /**
  * Ten pages used to render through this component with nothing but the text
@@ -76,27 +77,27 @@ type SectionTone = {
 
 const SECTION_TONES: Record<ContentTone, SectionTone> = {
   default: {
-    shell: "glass rounded-2xl px-5 py-6 sm:px-7",
+    shell: "px-5 py-6 sm:px-7",
     heading: "font-display text-lg font-bold tracking-tight",
     body: "mt-3 space-y-3 text-sm leading-relaxed text-muted-foreground",
   },
   brief: {
-    shell: "glass rounded-2xl px-5 py-7 sm:px-8 sm:py-8",
+    shell: "px-5 py-7 sm:px-8 sm:py-8",
     heading: "font-display text-xl font-bold tracking-tight",
     body: "mt-4 space-y-3 text-[0.95rem] leading-relaxed text-muted-foreground",
   },
   document: {
-    shell: "glass rounded-xl px-5 py-5 sm:px-6",
+    shell: "px-5 py-5 sm:px-6",
     heading: "font-display text-base font-bold tracking-tight",
     body: "mt-2.5 space-y-3 text-sm leading-relaxed text-muted-foreground",
   },
   notice: {
-    shell: "glass rounded-3xl px-5 py-6 sm:px-8 sm:py-7",
+    shell: "px-5 py-6 sm:px-8 sm:py-7",
     heading: "text-xs font-semibold uppercase tracking-[0.28em] text-accent",
     body: "mt-3.5 space-y-3 text-[0.95rem] leading-relaxed text-muted-foreground",
   },
   focus: {
-    shell: "glass rounded-2xl px-5 py-6 sm:px-7",
+    shell: "px-5 py-6 sm:px-7",
     heading: "font-display text-lg font-bold tracking-tight",
     body: "mt-3 space-y-3 text-sm leading-relaxed text-muted-foreground",
   },
@@ -176,6 +177,8 @@ export function ContentPage({
   const t = PAGE_TONES[tone];
   const titleRef = useTextReveal<HTMLHeadingElement>();
   const sectionsRef = useStaggerReveal<HTMLDivElement>({ distance: 14, stagger: 0.05 });
+  // Publishes --el-ptr-* on each section so they light and tilt one at a time.
+  const sectionsPointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
   // One depth scene per content page — the masthead. Ten templates render
   // through here, so this is the single place the grammar is applied to all
   // of them. Cursor depth on fine pointers, scroll depth on touch.
@@ -216,8 +219,10 @@ export function ContentPage({
           </h1>
           <p className={`cx-layer cx-z1 ${t.intro}`}>{intro}</p>
           <ToneContext.Provider value={tone}>
-            <div ref={sectionsRef} className={t.stack}>
-              {t.numbered ? numberSections(children) : children}
+            <div ref={sectionsPointerRef}>
+              <div ref={sectionsRef} className={t.stack}>
+                {t.numbered ? numberSections(children) : children}
+              </div>
             </div>
           </ToneContext.Provider>
         </div>
@@ -238,10 +243,20 @@ export function Section({ heading, children, index }: SectionProps) {
   const t = SECTION_TONES[tone];
   const numbered = PAGE_TONES[tone].numbered && index !== undefined;
 
+  /* `mo-card` is what `useElementPointerGroup` in ContentPage looks for, so a
+     section reports its own pointer position and can move independently of
+     the ones beside it. `cx-layer`/`cx-z*` put the heading and the body on
+     different depth planes inside the masthead's scene, so a stack of
+     sections parallaxes instead of sitting flat.
+
+     SpotlightCard is the site's one card: plate, rule, and a light that
+     follows the cursor. Using it here means these sections answer a pointer
+     the same way every other card does, rather than being the one place that
+     invented a flat rectangle. */
   return (
-    <section className={t.shell}>
+    <SpotlightCard as="section" className={`mo-card cx-depth ${t.shell}`}>
       {numbered ? (
-        <div className="flex items-baseline gap-3">
+        <div className="cx-layer cx-z2 flex items-baseline gap-3">
           <span
             aria-hidden
             className="text-[11px] font-semibold tabular-nums tracking-[0.2em] text-accent"
@@ -251,10 +266,10 @@ export function Section({ heading, children, index }: SectionProps) {
           <h2 className={t.heading}>{heading}</h2>
         </div>
       ) : (
-        <h2 className={t.heading}>{heading}</h2>
+        <h2 className={`cx-layer cx-z2 ${t.heading}`}>{heading}</h2>
       )}
-      <div className={t.body}>{children}</div>
-    </section>
+      <div className={`cx-layer cx-z1 ${t.body}`}>{children}</div>
+    </SpotlightCard>
   );
 }
 

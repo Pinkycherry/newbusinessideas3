@@ -14,9 +14,9 @@ import type { CategoryNode } from "@/lib/ideas.functions";
  */
 // The only two tree asset URLs in the app — do not add or swap in others.
 const DESKTOP_TREE_SRC =
-  "https://ethicalfounder.com/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg";
+  "https://ethicalfounder.in/wp-content/uploads/2026/08/business-ideas-tree-for-startup-invention-low-cost-business-ideas-latest-zero-investement.jpg";
 const MOBILE_TREE_SRC =
-  "https://ethicalfounder.com/wp-content/uploads/2026/08/new-business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg";
+  "https://ethicalfounder.in/wp-content/uploads/2026/08/new-business-ideas-tree-for-small-and-low-upfront-business-or-startups.svg";
 
 export function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
   // Real blueprint counts, straight from the live catalog. This block used to
@@ -132,7 +132,7 @@ export function GoldenTreeSection({ categories }: { categories: CategoryNode[] }
         className="relative mt-8 sm:mt-12 flex w-full items-center justify-center py-10 sm:py-16"
       >
         {/* DESKTOP TREE ASSET — this is a hotlinked cross-origin JPG (lives on
-            ethicalfounder.com, not our domain), so any technique that needs
+            ethicalfounder.in, not our domain), so any technique that needs
             to read its actual pixel data (a CSS mask-image, an SVG luminance
             filter) is blocked by the browser unless that domain sends CORS
             headers, which it doesn't — the previous attempt at this made the
