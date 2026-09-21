@@ -723,6 +723,9 @@ function IdeaPage() {
   const { idea, related, relatedCategories, trending, variant, gradient } = data;
 
   const showSidebarList = related.length > 3;
+  // The aside's only real content. When it is empty the grid drops to one
+  // column rather than reserving a gutter for nothing.
+  const hasSidebar = showSidebarList;
   const sidebarRelated = showSidebarList ? related.slice(0, 3) : [];
   const bottomRelated = showSidebarList ? related.slice(3, 6) : related;
   const contextualLinks = pickContextualLinks(idea, related);
@@ -778,7 +781,18 @@ function IdeaPage() {
           // and card list inside this article stays a sane, filled-in width
           // instead of stretching into empty space on wide and ultra-wide
           // monitors alike.
-          className="cx-scene mx-auto grid max-w-[100rem] gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:px-10 xl:px-16 2xl:px-24"
+          /* max-w-6xl, matching the header and the other thirty-six pages.
+             This was max-w-[100rem] — 1600px against a 1152px header — so the
+             article started well left of the wordmark above it on any wide
+             screen, and the large lg/xl/2xl paddings existed only to tame that
+             box. The second column is conditional now: it holds an ad slot
+             that renders nothing until ad code is configured, and a related
+             list that only appears when there are more than three, so most
+             ideas were reserving 20rem of empty gutter and pushing the article
+             a further 10rem off centre. */
+          className={`cx-scene mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 ${
+            hasSidebar ? "lg:grid-cols-[minmax(0,1fr)_20rem]" : ""
+          }`}
         >
           {/* No `cx-layer` here on purpose: the sticky right-column aside
               below is a `position: sticky` element, and a `transform` on any
@@ -1331,50 +1345,52 @@ function IdeaPage() {
               `transform` on an ANCESTOR of a `position: sticky` element
               breaks its stickiness, same reasoning as the article above. A
               transform on the sticky element itself composes fine. */}
-          <aside className="hidden lg:block">
-            <div
-              className="cx-layer sticky top-28 space-y-5"
-              style={{ "--z": 0.42 } as CSSProperties}
-            >
-              <AdSlot position="idea-detail-right-affiliate" size="rectangle" />
+          {hasSidebar && (
+            <aside className="hidden lg:block">
+              <div
+                className="cx-layer sticky top-28 space-y-5"
+                style={{ "--z": 0.42 } as CSSProperties}
+              >
+                <AdSlot position="idea-detail-right-affiliate" size="rectangle" />
 
-              {sidebarRelated.length > 0 && (
-                <div className="glass rounded-2xl px-5 py-5">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent">
-                    More in {idea.categoryName}
-                  </p>
-                  {/* CSS-only depth stack (motion.css: .stack-list/.stack-item) —
+                {sidebarRelated.length > 0 && (
+                  <div className="glass rounded-2xl px-5 py-5">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent">
+                      More in {idea.categoryName}
+                    </p>
+                    {/* CSS-only depth stack (motion.css: .stack-list/.stack-item) —
                       a shallow perspective deck at rest, fans into an open
                       column on hover or keyboard focus. --i is each item's
                       1-based position; the deck and the fan both read off it. */}
-                  <ul className="stack-list mt-4">
-                    {sidebarRelated.map((r, i) => (
-                      <li
-                        key={r.ideaId}
-                        className="stack-item"
-                        style={{ "--i": i + 1 } as CSSProperties}
-                      >
-                        <Link
-                          to="/idea/$slug"
-                          params={{ slug: r.slug }}
-                          className="block rounded-xl border border-border bg-card px-3.5 py-3 transition-colors hover:border-primary/40"
+                    <ul className="stack-list mt-4">
+                      {sidebarRelated.map((r, i) => (
+                        <li
+                          key={r.ideaId}
+                          className="stack-item"
+                          style={{ "--i": i + 1 } as CSSProperties}
                         >
-                          <span className="block text-sm font-semibold leading-snug text-foreground">
-                            {r.title}
-                          </span>
-                          {r.trendScore !== null && (
-                            <span className="mt-1.5 block text-[10px] uppercase tracking-widest text-hl-teal">
-                              Trend {r.trendScore}
+                          <Link
+                            to="/idea/$slug"
+                            params={{ slug: r.slug }}
+                            className="block rounded-xl border border-border bg-card px-3.5 py-3 transition-colors hover:border-primary/40"
+                          >
+                            <span className="block text-sm font-semibold leading-snug text-foreground">
+                              {r.title}
                             </span>
-                          )}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          </aside>
+                            {r.trendScore !== null && (
+                              <span className="mt-1.5 block text-[10px] uppercase tracking-widest text-hl-teal">
+                                Trend {r.trendScore}
+                              </span>
+                            )}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </aside>
+          )}
         </div>
       </SiteShell>
     </>

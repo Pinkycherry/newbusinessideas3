@@ -876,12 +876,10 @@ export function SiteShell({
             ))}
           </nav>
 
-          {/* Nav labels cannot reflow and the two actions must stay on one
-              line, so the search field is what gives way: it appears from xl
-              up, where there is room for all three. Below lg the whole group
-              is replaced by the sheet menu, which carries the search itself. */}
+          {/* The header search field was removed at the founder's request.
+              Search is still reachable: the sheet menu carries a full
+              LiveSearch, and the category menu links to /search directly. */}
           <div className="hidden min-w-0 items-center gap-2 lg:flex">
-            <LiveSearch className="hidden xl:block xl:w-52" />
             <AuthButtons />
           </div>
 
