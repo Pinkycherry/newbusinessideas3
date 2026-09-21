@@ -12,7 +12,6 @@ import { BusinessIcons } from "@/components/business-icons";
 import { CardFan } from "@/components/card-fan";
 import HoverBorderGradient from "@/components/aceternity/hover-border-gradient";
 import TextGenerateEffect from "@/components/aceternity/text-generate-effect";
-import BlurText from "@/components/aceternity/blur-text";
 import SpotlightCard from "@/components/aceternity/spotlight-card";
 
 import Lens from "@/components/aceternity/lens";
@@ -30,7 +29,7 @@ import Lens from "@/components/aceternity/lens";
  * rather than blanking it, so the fallback is only ever seen on a client-side
  * navigation into the homepage — below the fold, where nothing is watching.
  *
- * What is NOT here matters as much as what is. `Lens`, `BlurText`,
+ * What is NOT here matters as much as what is. `Lens`,
  * `HoverBorderGradient`, `SpotlightCard` and `TextGenerateEffect` stay eager
  * because they render at or immediately below the fold; deferring those trades
  * a smaller bundle for a slower largest-contentful paint, which is the wrong
@@ -48,11 +47,11 @@ function belowFold<P extends object>(load: () => Promise<{ default: ComponentTyp
 }
 
 /* WebGL is not on the critical path. `ogl` was bundled into the shared routes
-   chunk — 169KB shipped to every visitor of every page for two decorative
-   canvases that only exist on the homepage hero. Lazy, they split into their
-   own chunk that is fetched after the page has painted, and a browser that
-   never gets there never pays for it. */
-const MoltenMetal = lazy(() => import("@/components/aceternity/molten-metal"));
+   chunk — 169KB shipped to every visitor of every page for a decorative
+   canvas that only exists on the homepage. Lazy, it splits into its own chunk
+   that is fetched after the page has painted, and a browser that never gets
+   there never pays for it. MoltenMetal used to sit beside this: it was the
+   hero's animated ground and is gone. */
 const GlowCursor = lazy(() => import("@/components/aceternity/glow-cursor"));
 
 const ContainerTextFlip = belowFold(() => import("@/components/aceternity/container-text-flip"));
@@ -93,17 +92,6 @@ import { Odometer, useScrollProgress, useStaggerReveal, useTwoWayReveal } from "
  * at the founder's instruction: brand ink travels the plate's border until the
  * pointer arrives, then fills it.
  */
-/** The mark that rides inside every action on this page, matching the
- * HoverBorderGradient reference: a glyph and a label, not a bare word. */
-function SearchGlyph() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden className="h-3.5 w-3.5 shrink-0">
-      <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="2" />
-      <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 function ArrowGlyph() {
   return (
     <svg viewBox="0 0 66 65" fill="none" aria-hidden className="h-3 w-3 shrink-0">
@@ -363,26 +351,26 @@ function HomePage() {
             of their own — so all the body copy and every heading sat on moving
             light bands. They measured #FFFFFF and still read grey, because the
             thing behind them was brighter than they were. */}
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <Suspense fallback={null}>
-            <MoltenMetal className="h-full w-full" brightness={1.15} speed={0.18} opacity={0.9} />
-          </Suspense>
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--ins-void)]/55 via-[var(--ins-void)]/62 to-[var(--ins-void)]" />
-        </div>
+        {/* The hero ground is a flat gradient now. The WebGL field that was
+            here ran a shader every frame behind the one block of copy the page
+            most needs read, and it was the reason the headline needed a blur
+            reveal to land on top of it. Removed at the founder's request; the
+            gradient keeps the same tonal fall without animating. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--ins-void)]/55 via-[var(--ins-void)]/62 to-[var(--ins-void)]"
+        />
         {/* Centred. The hero was a left column with two thirds of the fold
             empty beside it; with no image left to fill that space there was
             nothing holding the right-hand side. */}
         <div className="relative mx-auto flex max-w-[62rem] flex-col items-center px-6 py-12 text-center lg:py-16">
           <p className="ins-legend">The Truth About Business Ideas</p>
 
-          {/* The H1 is real type on every device now. The particle heading it
-              replaced resolved into readable letterforms only at desktop
-              display size — on a phone it rendered this line as a smear of
-              dots — and its pointer listener sat on the window, so a tap
-              anywhere scattered it. The blur reveal reads the same on a 390px
-              screen as on a 1440px one, and it is text the whole time. */}
+          {/* Plain type, no reveal. This line went from a particle heading, to
+              a blur reveal, to what it always should have been: the sentence,
+              legible the instant the page paints. Nothing animates it now. */}
           <h1 className="mt-5 max-w-[20ch]">
-            <BlurText text="Tired of paying just to check if your idea will work?" />
+            Tired of paying just to check if your idea will work?
           </h1>
 
           {/* The two figures, at display size. They are the fold's proof —
@@ -436,17 +424,10 @@ function HomePage() {
           </Lens>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            {/* One way in, not two. The search control that sat beside this
+                button duplicated the live search already in the header, and
+                split the fold's single call to action in half. */}
             <HeroCta />
-            <HoverBorderGradient asChild containerClassName="rounded-full">
-              <Link
-                to="/search"
-                search={{ q: "" }}
-                className="ins-num rounded-full text-[0.8125rem]"
-              >
-                <SearchGlyph />
-                <span>Search idea blueprints…</span>
-              </Link>
-            </HoverBorderGradient>
           </div>
 
           <p className="mt-4 text-xs uppercase tracking-[0.16em] text-[var(--ins-mute,var(--muted-foreground))]">
