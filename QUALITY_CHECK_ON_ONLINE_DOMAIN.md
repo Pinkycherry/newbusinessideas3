@@ -517,6 +517,83 @@ been seen in Search Console.
   `Work From Home` is now `Work from Home`. Say the word and `From`, `With` and
   `For` go back to capitals everywhere.
 
+### 11.1d `meta_description` — narrow defects fixed 2026-09-21, the template itself still open
+
+**Status: partly fixed.** 286 of 409 rows corrected on 2026-09-21. Rollback in
+`public.ideas_meta_desc_backup_20260921`.
+
+#### What was wrong, measured
+
+398 of 409 descriptions are one sentence with the keyword dropped in:
+
+```
+How to start a {keyword} business. Honest steps, the real work involved, and who it suits best.
+```
+
+Because the keyword often already ended in "business" or "idea", the result
+read `...a ai seo audit business business.` Counted before the fix: 188 rows
+ended `business business`, 83 ended `idea business` or `ideas business`,
+17 carried a lower-cased acronym, 36 needed `an` rather than `a`.
+
+#### What was fixed
+
+The trailing `business` / `idea` / `business idea` / plural forms are stripped
+from the keyword before ` business` is appended, acronyms are upper-cased
+(`ai` → `AI`, `saas` → `SaaS`, and eight more), and the article agrees with the
+word that follows it. Verified after the write: 0 duplications, 0 lower-cased
+acronyms, 0 over 160 characters among the rewritten rows.
+
+**The 9 rows over 160 characters were deliberately left alone.** They turned
+out to be the 11 hand-written descriptions — the best copy in the table, all
+front-loaded, e.g. *"Build a mobile knife sharpening business as a weekly
+restaurant and salon route — recurring per-blade fees, tiny overhead, and a moat
+built on relationships not walk-ins."* Google truncates the tail and the value
+survives. Mechanically cutting them would destroy real writing to satisfy a
+character count.
+
+#### A number of mine that was wrong
+
+An early count reported 400 rows carrying "claim words". That was a false
+positive: 398 of those hits were the word *best* inside "who it suits **best**",
+which is ordinary English, not an unsourceable claim. The real count is 3.
+
+#### Still open — the template itself
+
+The remaining problem is not the wording, it is that **398 pages share one
+sentence**. The obvious fix is to build each description from per-idea data, and
+the obvious source field does not work:
+
+> `target_customer` is itself boilerplate on **356 of 409 rows** —
+> *"The person who pays is already dealing with {keyword} in their daily
+> routine."*
+
+That is a thin-content problem **on the page**, not in the meta layer, and it
+outranks the snippet. The 53 real ones show what the field should look like:
+*"Your ideal client owns premium Goodyear-welted boots, high-end designer heels,
+or inherited leather bags that require delicate care."*
+
+What is genuinely per-idea, verified: `summary` (409 distinct, no boilerplate)
+and `verdict` (same). Those are the only safe sources for a rewrite, and
+`summary`'s first sentence averages 158 characters, so only 171 of 409 fit the
+120–160 band without truncation. This is **not** a mechanical fix the way
+`seo_title` was, and should not be attempted as one.
+
+### 11.1e Two ideas are duplicates of each other — keyword cannibalisation
+
+Found 2026-09-21 while checking why two descriptions collided.
+
+| | `IDEA-00010` | `IDEA-00350` |
+| --- | --- | --- |
+| slug | `niche-job-board-business-idea` | `niche-job-board-business-idea-2` |
+| title | The Focused Talent Ledger | Niche Job Board Business Idea |
+| `focus_keyword` | `niche job board business idea` | `niche job board business idea` |
+
+Same keyword, two indexable URLs. Google picks one and discounts the other, and
+neither ranks as well as a single page would. Needs a decision — merge them,
+`noindex` one, or re-target the second — not a mechanical fix. This is the only
+such pair in the table; `focus_keyword` is otherwise 408 distinct across 409
+rows.
+
 ### 11.1a Subcategory pages — DECIDED, keeping them
 
 Measured: 409 completed ideas, 409 distinct subcategory paths, so every
