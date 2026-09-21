@@ -103,10 +103,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700;800&display=swap",
-      },
+      /* The Google Fonts stylesheet itself is NOT declared here. As a plain
+         `rel="stylesheet"` it blocked first paint on every route for as long as
+         Google took to answer — measured at roughly 1.4 seconds. It is loaded
+         non-blocking from `FontStylesheet` below instead. */
       /* The .ico carries 16 through 256 so the tab strip, the bookmark bar
          and Windows each get a bitmap made for their size rather than one
          downscaled on the fly. The 32px PNG is what modern browsers prefer
@@ -156,11 +156,54 @@ function RobotsMeta() {
   return <meta name="robots" content="noindex,nofollow" />;
 }
 
+/**
+ * Google Fonts, loaded without blocking first paint.
+ *
+ * Declared as a normal `rel="stylesheet"` this cost roughly 1.4 seconds of
+ * blocked render on every route: the browser will not paint until it has the
+ * stylesheet, and the stylesheet comes from a third-party host we do not
+ * control the latency of.
+ *
+ * `media="print"` is the trick. The browser still fetches the file, but at low
+ * priority and without blocking, because the rules do not apply to the screen.
+ * The inline script below flips `media` to `all` once it has loaded, at which
+ * point the fonts apply normally.
+ *
+ * The flip is an inline script rather than React's `onLoad` on purpose: on a
+ * server-rendered page the stylesheet can finish loading before hydration, and
+ * a React handler attached afterwards would never fire, leaving the site in its
+ * fallback fonts forever. The script checks `.sheet` first for exactly that
+ * case and only falls back to listening.
+ *
+ * `<noscript>` restores the blocking version, because with no JavaScript there
+ * is nothing to flip the attribute.
+ */
+const FONT_CSS =
+  "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700" +
+  "&family=IBM+Plex+Sans+Condensed:wght@600;700" +
+  "&family=IBM+Plex+Mono:wght@400;500;600" +
+  "&family=Geist:wght@400;500;600;700;800&display=swap";
+
+const FONT_SWAP = `(function(){var l=document.getElementById("bbi-fonts");if(!l)return;var go=function(){l.media="all"};if(l.sheet){go()}else{l.addEventListener("load",go,{once:true})}})();`;
+
+function FontStylesheet() {
+  return (
+    <>
+      <link id="bbi-fonts" rel="stylesheet" href={FONT_CSS} media="print" />
+      <script dangerouslySetInnerHTML={{ __html: FONT_SWAP }} />
+      <noscript>
+        <link rel="stylesheet" href={FONT_CSS} />
+      </noscript>
+    </>
+  );
+}
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="light">
       <head>
         <HeadContent />
+        <FontStylesheet />
         <CanonicalLink />
         <RobotsMeta />
         {/* The publishing entity, declared once for the whole site rather than

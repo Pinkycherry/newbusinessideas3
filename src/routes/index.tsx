@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery, useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState, lazy, Suspense } from "react";
+import type { ComponentType } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { SiteShell } from "@/components/site-shell";
@@ -10,13 +11,41 @@ import { AdSlot } from "@/components/AdSlot";
 import { BusinessIcons } from "@/components/business-icons";
 import { CardFan } from "@/components/card-fan";
 import HoverBorderGradient from "@/components/aceternity/hover-border-gradient";
-import ContainerTextFlip from "@/components/aceternity/container-text-flip";
-import InfiniteMovingCards from "@/components/aceternity/infinite-moving-cards";
-import MovingImageCards from "@/components/aceternity/moving-image-cards";
-import LayoutTextFlip from "@/components/aceternity/layout-text-flip";
 import TextGenerateEffect from "@/components/aceternity/text-generate-effect";
 import BlurText from "@/components/aceternity/blur-text";
 import SpotlightCard from "@/components/aceternity/spotlight-card";
+
+import Lens from "@/components/aceternity/lens";
+
+/**
+ * Below-the-fold components, split out of the homepage bundle.
+ *
+ * `lazy()` alone is not enough here: every call site would need its own
+ * `<Suspense>`, and these render in sixteen places across a 1,650-line file.
+ * This wraps the boundary INTO the component, so a lazy component is a drop-in
+ * replacement for the eager one it replaces and no call site changes.
+ *
+ * The fallback is `null` on purpose. Server rendering still emits the real
+ * markup, and React keeps that server HTML in place while the chunk arrives
+ * rather than blanking it, so the fallback is only ever seen on a client-side
+ * navigation into the homepage — below the fold, where nothing is watching.
+ *
+ * What is NOT here matters as much as what is. `Lens`, `BlurText`,
+ * `HoverBorderGradient`, `SpotlightCard` and `TextGenerateEffect` stay eager
+ * because they render at or immediately below the fold; deferring those trades
+ * a smaller bundle for a slower largest-contentful paint, which is the wrong
+ * way round.
+ */
+function belowFold<P extends object>(load: () => Promise<{ default: ComponentType<P> }>) {
+  const Lazy = lazy(load);
+  return function BelowFold(props: P) {
+    return (
+      <Suspense fallback={null}>
+        <Lazy {...props} />
+      </Suspense>
+    );
+  };
+}
 
 /* WebGL is not on the critical path. `ogl` was bundled into the shared routes
    chunk — 169KB shipped to every visitor of every page for two decorative
@@ -25,10 +54,16 @@ import SpotlightCard from "@/components/aceternity/spotlight-card";
    never gets there never pays for it. */
 const MoltenMetal = lazy(() => import("@/components/aceternity/molten-metal"));
 const GlowCursor = lazy(() => import("@/components/aceternity/glow-cursor"));
-import EncryptedText from "@/components/aceternity/encrypted-text";
-import LinkPreview from "@/components/aceternity/link-preview";
-import Lens from "@/components/aceternity/lens";
-import Tabs from "@/components/aceternity/tabs";
+
+const ContainerTextFlip = belowFold(() => import("@/components/aceternity/container-text-flip"));
+const InfiniteMovingCards = belowFold(
+  () => import("@/components/aceternity/infinite-moving-cards"),
+);
+const MovingImageCards = belowFold(() => import("@/components/aceternity/moving-image-cards"));
+const LayoutTextFlip = belowFold(() => import("@/components/aceternity/layout-text-flip"));
+const EncryptedText = belowFold(() => import("@/components/aceternity/encrypted-text"));
+const LinkPreview = belowFold(() => import("@/components/aceternity/link-preview"));
+const Tabs = belowFold(() => import("@/components/aceternity/tabs"));
 import { categoryImage } from "@/config/category-imagery";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
 import { ExploreRail } from "@/components/explore-rail";
