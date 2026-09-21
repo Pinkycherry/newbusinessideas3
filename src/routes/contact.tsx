@@ -14,7 +14,7 @@ import { contactEmail, TEAM } from "@/lib/site-config";
 export const Route = createFileRoute("/contact")({
   head: () =>
     metaFor(
-      "Contact BBI — A Person Reads Every Email",
+      "Contact | BBI – Bro Business Ideas",
       "One address, answered by people. No chatbot, no automated replies. Free personalised help for students, people with disabilities, widows, single mothers and zero-investment founders.",
     ),
   component: ContactPage,

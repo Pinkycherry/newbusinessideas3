@@ -193,7 +193,13 @@ export const TEAM: TeamMember[] = [
   },
 ];
 
-export const ORGANISATION_NAME = "BBI";
+/**
+ * The brand is one name, everywhere: logo, titles, meta, footer and schema.
+ * "BBI" alone reads as an abbreviation with nothing behind it, and "BBusiness"
+ * came from the domain rather than the brand — a reader seeing three variants
+ * cannot form a stable idea of who this is, and neither can Google.
+ */
+export const ORGANISATION_NAME = "BBI – Bro Business Ideas";
 export const ORGANISATION_LEGAL_NAME = "Bro Business Ideas";
 
 export function organisationSameAs(): string[] {

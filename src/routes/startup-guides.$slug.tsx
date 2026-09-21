@@ -19,7 +19,7 @@ import { getGuideBySlug, STARTUP_GUIDES } from "@/lib/guides-data";
 export const Route = createFileRoute("/startup-guides/$slug")({
   head: ({ params }) => {
     const guide = getGuideBySlug(params.slug);
-    const title = guide ? `${guide.title} | BBI Guide` : "Startup Guide | BBI";
+    const title = guide ? `${guide.title} | BBI Guide` : "Startup Guide | BBI – Bro Business Ideas";
     const description = guide?.description ?? "Practical tactical playbook for startup founders.";
     return {
       meta: [

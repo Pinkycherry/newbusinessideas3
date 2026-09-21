@@ -7,12 +7,7 @@ import { ExploreRail } from "@/components/explore-rail";
 import { getListicleIndex, type ListicleSummary } from "@/lib/lists.functions";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { siteUrl } from "@/lib/site-config";
-import {
-  useDepthScene,
-  useElementPointerGroup,
-  useStaggerReveal,
-  useTextReveal,
-} from "@/motion";
+import { useDepthScene, useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
 
 /**
  * PROJECT_BRIEF.md Section 6.3 — the index of every listicle. One listicle per
@@ -39,9 +34,9 @@ export const Route = createFileRoute("/list/")({
       : "Ranked business idea lists, one per category, ordered by trend score.";
     return {
       meta: [
-        { title: "Business Idea Lists | BBI" },
+        { title: "Business Idea Lists | BBI – Bro Business Ideas" },
         { name: "description", content: description },
-        { property: "og:title", content: "Business Idea Lists | BBI" },
+        { property: "og:title", content: "Business Idea Lists | BBI – Bro Business Ideas" },
         { property: "og:description", content: description },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },

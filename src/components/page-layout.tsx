@@ -217,7 +217,11 @@ export function ContentPage({
               </>
             )}
           </h1>
-          <p className={`cx-layer cx-z1 ${t.intro}`}>{intro}</p>
+          {/* `whitespace-pre-line` so an intro can keep its own line breaks.
+              The pricing sub-head is four short lines whose rhythm is the
+              point; collapsing them into one paragraph loses it. Every other
+              page passes a single-line string, where this class does nothing. */}
+          <p className={`cx-layer cx-z1 whitespace-pre-line ${t.intro}`}>{intro}</p>
           <ToneContext.Provider value={tone}>
             <div ref={sectionsPointerRef}>
               <div ref={sectionsRef} className={t.stack}>

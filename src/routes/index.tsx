@@ -126,7 +126,7 @@ function HeroCta() {
         className="rounded-full text-xs font-extrabold uppercase tracking-[0.18em]"
       >
         <ArrowGlyph />
-        <span>Browse the library</span>
+        <span>Browse the library free</span>
       </Link>
     </HoverBorderGradient>
   );
@@ -239,7 +239,7 @@ const HERO_PANELS = [
   },
   {
     label: "How it works",
-    body: "Browse any category. Read the full blueprint. If it feels right, tap Validate — and get real research on your idea for free, using AI tools you already pay for. No extra charge. No monthly limit. Free to browse. Free to validate, again and again.",
+    body: "Browse any category. Read the full blueprint. If it feels right, tap Validate — and get real research on your idea for free, using AI tools you already pay for. No extra charge. No monthly limit. Free after one sign-in, to browse and to validate, again and again.",
   },
 ];
 
@@ -294,20 +294,20 @@ export const Route = createFileRoute("/")({
   },
   head: () => ({
     meta: [
-      { title: "BBI — Bro Business Ideas | Researched Startup Blueprints" },
+      { title: "BBI – Bro Business Ideas | Free Researched Startup Blueprints" },
       {
         name: "description",
         content:
-          "BBI (Bro Business Ideas) — researched small business ideas, startup blueprints, and work from home business opportunities. Every idea includes market context, pros, cons, a trend score, and a straight founder-fit verdict.",
+          "Business ideas researched, not guessed — free after one sign-in. Who actually pays you, how the money works, what hurts in year one, and an honest verdict, written for people who cannot afford to lose money on an idea that was never going to work.",
       },
       {
         property: "og:title",
-        content: "BBI — Bro Business Ideas | Researched Startup Blueprints",
+        content: "BBI – Bro Business Ideas | Free Researched Startup Blueprints",
       },
       {
         property: "og:description",
         content:
-          "Bro Business Ideas (BBI) — researched small business ideas, startup blueprints, and work from home business opportunities, with market context, pros, cons, trend scores and founder-fit verdicts.",
+          "Business ideas researched, not guessed — free after one sign-in. Who actually pays you, how the money works, what hurts in year one, and an honest verdict, written for people who cannot afford to lose money on an idea that was never going to work.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -409,13 +409,29 @@ function HomePage() {
               the way in — nothing else. The picture that used to sit here was
               the tallest thing above the fold, was hotlinked from another
               domain, and said nothing the headline had not already said. */}
-          <Lens className="mt-8 max-w-[62ch] text-base leading-relaxed text-[var(--ins-read)]">
+          {/* The sentence this replaced ended "Pay only once, if you ever
+              want full access" — a price that no longer exists. The site is
+              free, so the paragraph says why it is free, in the founder's own
+              terms, rather than describing a plan nobody can buy. */}
+          <Lens className="mt-8 max-w-[62ch] space-y-4 text-base leading-relaxed text-[var(--ins-read)] sm:text-[1.175rem]">
             <p>
               We built a free home for real business ideas — side hustles, zero investment ideas,
               work from home ideas, and low investment ideas. Every idea is researched, not guessed.
               We tell you who will actually pay you, how the money works, and what will hurt you in
-              year one. Then we give it to you straight — build it, or walk away. Browse for free.
-              Validate as many times as you want. Pay only once, if you ever want full access.
+              year one. Then we give it to you straight — build it, or walk away.
+            </p>
+            <p>
+              BBI is free because its founder paid three platforms to validate four business ideas
+              and lost money he could afford to lose. Most people reading this cannot. He had a
+              salary. He could absorb the loss. The people in his WhatsApp groups could not. The
+              people this site was built for cannot.
+            </p>
+            <p>
+              So the rule is simple. Sign in once. The whole library stays open. No credits that
+              disappear. No monthly fee that starts after a &ldquo;free trial&rdquo;. No expiry date
+              that turns your access into a memory. The research, the numbers, the honest
+              kill-verdicts — all of it stays free because the people who need it most start from
+              zero.
             </p>
           </Lens>
 
@@ -433,11 +449,8 @@ function HomePage() {
             </HoverBorderGradient>
           </div>
 
-          {/* Every clause here is already true elsewhere on the site — the
-              library is free to browse, nothing asks for a card, and the one
-              payment is optional. Nothing new is claimed. */}
-          <p className="mt-5 text-sm text-[var(--ins-dim)]">
-            100% free to browse · No credit card required · Pay only if you want full access
+          <p className="mt-4 text-xs uppercase tracking-[0.16em] text-[var(--ins-mute,var(--muted-foreground))]">
+            100% free after one sign-in · No credit card required · Pay nothing, ever
           </p>
         </div>
 
@@ -1031,7 +1044,7 @@ function BrandStatementBanner() {
             it shows everything rather than nothing. */}
         <TextGenerateEffect
           className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg"
-          words={`We have been where you are. We paid for those $20 "validation" platforms too. We got a few generic lines back, spent our money, and got nothing real in return. When we asked for help, no one answered. That hurt. So we built the thing we needed back then — a free, honest library of small business ideas and side hustles, with real research, not empty hype. Browse for free, always. Validate as many times as you want, at no extra cost. Pay once — ₹199 for 3 months or ₹399 for life — only if you want full access. Never a monthly bill.`}
+          words={`We have been where you are. We paid for those $20 "validation" platforms too. We got a few generic lines back, spent our money, and got nothing real in return. When we asked for help, no one answered. That hurt. So we built the thing we needed back then — a free, honest library of small business ideas and side hustles, with real research, not empty hype. Browse for free, always. Validate as many times as you want, at no extra cost. Free after one sign-in. Never a bill, ever.`}
         />
       </div>
     </section>
@@ -1066,8 +1079,8 @@ function TrustStatsBar({
     {
       value: 2,
       suffix: "",
-      label: "Simple pricing plans",
-      note: "₹199 for 3 months, ₹399 for life. Pay once. No surprise bills, ever.",
+      label: "Prices, both zero",
+      note: "₹0 for a month, ₹0 for life. Free after one sign-in. No card, no renewal, no expiry.",
     },
   ];
   return (
@@ -1111,8 +1124,8 @@ const BBI_HOW_STEPS = [
   },
   {
     n: "03",
-    t: "₹199 for 3 months, or ₹399 for life",
-    d: "Sign in with Google to unlock full blueprints and the Validate button. ₹199 gets you 3 months, ₹399 gets you lifetime access — no subscription, no renewal.",
+    t: "₹0 for a month, or ₹0 for life",
+    d: "Sign in with Google and the full blueprints and the Validate button open up. Free after one sign-in — no subscription, no renewal, no expiry.",
   },
 ];
 
@@ -1123,7 +1136,7 @@ const BBI_FAQ_1 = [
   },
   {
     q: "Do I have to pay to browse?",
-    a: "No. Browsing the library is free. Lifetime access is a one-time optional unlock, not a requirement to see ideas.",
+    a: "No. Everything is free after one sign-in — the full blueprints and the Validate button included. There is nothing to buy, now or later.",
   },
   {
     q: "Is there a limit on how many ideas I can validate?",
@@ -1348,11 +1361,11 @@ function PricingPhilosophySection() {
             Pricing, honestly
           </p>
           <h2 className="mt-4 max-w-4xl text-[2.1rem] leading-[1.06] text-primary-foreground sm:text-[3.2rem]">
-            One fee. Once. For life. That&apos;s the whole pricing page.
+            Two prices. Both are zero. That&apos;s the whole pricing page.
           </h2>
           <TextGenerateEffect
             className="mt-6 max-w-[62ch] text-base leading-relaxed text-primary-foreground/80 sm:text-lg"
-            words={`No monthly plan. No "Starter / Pro / Enterprise" ladder designed to make you feel small on the cheapest tier. Just one option: pay once, unlock everything, forever — including every idea we add after the day you join. Not ready to pay yet? Most of the library stays free to browse regardless.`}
+            words={`No monthly plan. No "Starter / Pro / Enterprise" ladder designed to make you feel small on the cheapest tier. No plan at all, in fact. Sign in once and everything opens — including every idea we add after the day you join. BBI is free because its founder paid three platforms to validate four business ideas and lost money he could afford to lose. Most people reading this cannot.`}
           />
         </div>
       </div>

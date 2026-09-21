@@ -6,7 +6,7 @@ import { contactEmail } from "@/lib/site-config";
 export const Route = createFileRoute("/gdpr")({
   head: () =>
     metaFor(
-      "GDPR & Your Data Rights | BBI",
+      "GDPR & Your Data Rights | BBI – Bro Business Ideas",
       "How to use your GDPR rights with BBI: access, correction, deletion, portability, restriction and objection.",
     ),
   component: GdprPage,

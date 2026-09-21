@@ -5,7 +5,7 @@ import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout
 export const Route = createFileRoute("/disclaimer")({
   head: () =>
     metaFor(
-      "Disclaimer | BBI",
+      "Disclaimer | BBI – Bro Business Ideas",
       "BBI blueprints and trend scores are research and opinion — not financial, legal or professional advice.",
     ),
   component: DisclaimerPage,

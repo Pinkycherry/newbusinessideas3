@@ -738,8 +738,8 @@ function NewsletterSignup() {
     <div>
       <h3 className="bbi-footer-heading">Newsletter</h3>
       <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-        New blueprints, and the occasional honest note about what is and is not working. No spam,
-        and one click to leave.
+        New blueprints, and the occasional honest note about what is and is not working. No spam.
+        One click to leave.
       </p>
 
       {state === "done" ? (
@@ -930,10 +930,14 @@ export function SiteShell({
                     </Link>
                   </li>
                 ))}
+                {/* Was "and N more", which reads as a list someone forgot to
+                    finish. The footer shows five categories on purpose — the
+                    rest have a page of their own, so the link says where it
+                    goes rather than counting what is missing. */}
                 {footerCategories.hasMore && (
                   <li>
                     <Link to="/browse" className="bbi-footer-link bbi-footer-more">
-                      and {footerCategories.hiddenCount} more
+                      All categories
                     </Link>
                   </li>
                 )}
@@ -992,7 +996,7 @@ export function SiteShell({
                 count is on /browse, where someone is actually looking for it. */}
             <div className="pr-24 sm:pr-0 sm:text-right">
               <p className="text-muted-foreground">
-                © {new Date().getFullYear()} Bro Business Ideas
+                © {new Date().getFullYear()} BBI – Bro Business Ideas
               </p>
               <p className="mt-1 text-muted-foreground/80">
                 Made in India, for everyone starting from zero. We were there too.

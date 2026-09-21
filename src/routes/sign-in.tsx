@@ -7,7 +7,11 @@ import { signInWithGoogle } from "@/lib/auth-client";
 
 export const Route = createFileRoute("/sign-in")({
   validateSearch: z.object({ redirect: z.string().optional() }),
-  head: () => metaFor("Sign In | BBI", "Sign in with Google to read full idea blueprints on BBI."),
+  head: () =>
+    metaFor(
+      "Sign In | BBI – Bro Business Ideas",
+      "Sign in with Google to read full idea blueprints on BBI.",
+    ),
   component: SignInPage,
 });
 

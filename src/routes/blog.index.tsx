@@ -16,13 +16,13 @@ export const Route = createFileRoute("/blog/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(postsQuery),
   head: () => ({
     meta: [
-      { title: "Blog — Founder Playbooks | BBI" },
+      { title: "Blog — Founder Playbooks | BBI – Bro Business Ideas" },
       {
         name: "description",
         content:
           "Long-form founder playbooks and market breakdowns from BBI — real research, no filler.",
       },
-      { property: "og:title", content: "Blog — Founder Playbooks | BBI" },
+      { property: "og:title", content: "Blog — Founder Playbooks | BBI – Bro Business Ideas" },
       {
         property: "og:description",
         content: "Long-form founder playbooks and market breakdowns from BBI.",
@@ -71,8 +71,8 @@ function BlogIndex() {
           </span>
         </h1>
         <p className="mt-4 max-w-2xl text-muted-foreground">
-          Long-form writing on markets, founders and what actually works — a different shelf from
-          the idea library, held to the same standard: real research, no filler.
+          Long-form writing on markets, founders and what actually works — held to the same standard
+          as the idea library: real research, no filler. Free after one sign-in.
         </p>
 
         {data.posts.length === 0 ? (

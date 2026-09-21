@@ -38,12 +38,12 @@ export const Route = createFileRoute("/category/$categorySlug/$subcategorySlug")
     const image = categoryImage(params.categorySlug);
     return {
       meta: [
-        { title: `${name} Ideas | BBI` },
+        { title: `${name} Ideas | BBI – Bro Business Ideas` },
         {
           name: "description",
           content: `Business idea blueprints in ${name}: what the business is, who it serves, pros, cons and a founder-fit verdict.`,
         },
-        { property: "og:title", content: `${name} Ideas | BBI` },
+        { property: "og:title", content: `${name} Ideas | BBI – Bro Business Ideas` },
         {
           property: "og:description",
           content: `Business idea blueprints in ${name} with pros, cons and a founder-fit verdict.`,

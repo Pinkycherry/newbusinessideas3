@@ -6,7 +6,7 @@ import { contactEmail } from "@/lib/site-config";
 export const Route = createFileRoute("/privacy")({
   head: () =>
     metaFor(
-      "Privacy Policy | BBI",
+      "Privacy Policy | BBI – Bro Business Ideas",
       "What data BBI collects, why we collect it, who else touches it and how you exercise your privacy rights.",
     ),
   component: PrivacyPage,

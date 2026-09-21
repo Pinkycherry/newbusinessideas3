@@ -64,7 +64,7 @@ const getSitemapData = createServerFn({ method: "GET" }).handler(async (): Promi
 export const Route = createFileRoute("/sitemap")({
   head: () =>
     metaFor(
-      "Site Map — Every Page on BBI",
+      "Site Map | BBI – Bro Business Ideas",
       "Every page on BBI in one place: business idea blueprints by category, calculators, startup guides, founder stories and reference pages.",
     ),
   loader: () => getSitemapData(),

@@ -374,9 +374,7 @@ export default function MoltenMetal({
     <div
       ref={containerRef}
       aria-hidden
-      className={
-        "pointer-events-none relative h-full w-full overflow-hidden " + (className ?? "")
-      }
+      className={"pointer-events-none relative h-full w-full overflow-hidden " + (className ?? "")}
     />
   );
 }

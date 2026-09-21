@@ -21,7 +21,9 @@ import { getCaseStudyBySlug, CASE_STUDIES } from "@/lib/case-studies-data";
 export const Route = createFileRoute("/founder-stories/$slug")({
   head: ({ params }) => {
     const study = getCaseStudyBySlug(params.slug);
-    const title = study ? `${study.title} | Founder Case Study` : "Founder Story | BBI";
+    const title = study
+      ? `${study.title} | Founder Case Study`
+      : "Founder Story | BBI – Bro Business Ideas";
     const description = study
       ? `How this founder scaled a ${study.story_theme} without venture capital.`
       : "In-depth case study on bootstrapped business execution.";

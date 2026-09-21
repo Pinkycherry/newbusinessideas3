@@ -23,13 +23,16 @@ import { GLOSSARY_DATA } from "@/lib/glossary-data";
 export const Route = createFileRoute("/learning-resources/")({
   head: () => ({
     meta: [
-      { title: "Founder Learning Resources & Operator Toolkit | BBI" },
+      { title: "Founder Learning Resources & Operator Toolkit | BBI – Bro Business Ideas" },
       {
         name: "description",
         content:
           "Curated learning materials, tactical playbooks, financial calculators, founder case studies, and business building frameworks.",
       },
-      { property: "og:title", content: "Founder Learning Resources & Operator Toolkit | BBI" },
+      {
+        property: "og:title",
+        content: "Founder Learning Resources & Operator Toolkit | BBI – Bro Business Ideas",
+      },
       {
         property: "og:description",
         content:
@@ -313,7 +316,10 @@ function LearningResourcesIndexPage() {
           </div>
 
           {/* Browse and Calculators are already linked directly above. */}
-          <ExploreRail exclude={["learningResources", "ideas", "calculators"]} heading="Keep exploring" />
+          <ExploreRail
+            exclude={["learningResources", "ideas", "calculators"]}
+            heading="Keep exploring"
+          />
         </div>
       </SiteShell>
     </>

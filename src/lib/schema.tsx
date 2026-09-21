@@ -3,6 +3,7 @@ import {
   FOUNDER,
   ORGANISATION_LEGAL_NAME,
   ORGANISATION_NAME,
+  type TeamMember,
   organisationSameAs,
   siteUrl,
 } from "@/lib/site-config";
@@ -47,6 +48,31 @@ function personRef(name: string) {
     "@type": "Person",
     name,
     url: `${siteUrl()}/about`,
+  };
+}
+
+/**
+ * The full Person record for a named member of the team.
+ *
+ * `personRef` is the short form used inside other objects. This is the one
+ * emitted on /about, where the claim is actually made: the role and the
+ * credential are the exact strings from site-config, which are the exact
+ * strings the About page prints. Nothing here is written for search engines
+ * that is not already written for readers.
+ */
+export function personSchema(member: TeamMember) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: member.name,
+    jobTitle: member.role,
+    description: member.credential,
+    url: `${siteUrl()}/about`,
+    worksFor: {
+      "@type": "Organization",
+      name: ORGANISATION_NAME,
+      url: siteUrl(),
+    },
   };
 }
 

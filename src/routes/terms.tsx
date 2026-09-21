@@ -6,7 +6,7 @@ import { contactEmail } from "@/lib/site-config";
 export const Route = createFileRoute("/terms")({
   head: () =>
     metaFor(
-      "Terms of Service | BBI",
+      "Terms of Service | BBI – Bro Business Ideas",
       "The terms that govern your use of the BBI idea library, in plain language.",
     ),
   component: TermsPage,

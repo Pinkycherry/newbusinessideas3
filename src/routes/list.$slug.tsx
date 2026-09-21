@@ -9,12 +9,7 @@ import { ExploreRail } from "@/components/explore-rail";
 import { getListicle, type ListicleEntry, type ListiclePage } from "@/lib/lists.functions";
 import { JsonLd, breadcrumbSchema } from "@/lib/schema";
 import { siteUrl } from "@/lib/site-config";
-import {
-  useDepthScene,
-  useElementPointerGroup,
-  useStaggerReveal,
-  useTextReveal,
-} from "@/motion";
+import { useDepthScene, useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
 
 /**
  * PROJECT_BRIEF.md Section 6.3 — the listicle template. One page per category,
@@ -43,8 +38,8 @@ export const Route = createFileRoute("/list/$slug")({
     return data;
   },
   head: ({ loaderData }) => {
-    if (!loaderData) return { meta: [{ title: "Business Idea List | BBI" }] };
-    const title = `${loaderData.title} | BBI`;
+    if (!loaderData) return { meta: [{ title: "Business Idea List | BBI – Bro Business Ideas" }] };
+    const title = `${loaderData.title} | BBI – Bro Business Ideas`;
     const description = `All ${loaderData.totalIdeas} ${loaderData.categoryName} blueprints, ordered by trend score — the top ${loaderData.entries.length} covered in detail, every one linked to its full page.`;
     return {
       meta: [
@@ -216,7 +211,6 @@ function ListiclePageRoute() {
   // for the whole header. Cursor depth on fine pointers, scroll depth on touch
   // (see motion.css, coarse-pointer block).
   const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
-
 
   const entriesPointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
   const entriesRevealRef = useStaggerReveal<HTMLDivElement>({

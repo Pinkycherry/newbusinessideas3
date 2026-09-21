@@ -10,13 +10,16 @@ import { STARTUP_GUIDES, type StartupGuideMeta } from "@/lib/guides-data";
 export const Route = createFileRoute("/startup-guides/")({
   head: () => ({
     meta: [
-      { title: "Tactical Startup & Validation Guides | BBI" },
+      { title: "Tactical Startup & Validation Guides | BBI – Bro Business Ideas" },
       {
         name: "description",
         content:
           "In-depth tactical playbooks on idea validation, TAM calculation, zero-investment business models, and PMF benchmarks.",
       },
-      { property: "og:title", content: "Tactical Startup & Validation Guides | BBI" },
+      {
+        property: "og:title",
+        content: "Tactical Startup & Validation Guides | BBI – Bro Business Ideas",
+      },
       {
         property: "og:description",
         content:

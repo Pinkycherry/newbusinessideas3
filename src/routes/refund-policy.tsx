@@ -6,7 +6,7 @@ import { contactEmail } from "@/lib/site-config";
 export const Route = createFileRoute("/refund-policy")({
   head: () =>
     metaFor(
-      "Refund Policy | BBI",
+      "Refund Policy | BBI – Bro Business Ideas",
       "BBI does not charge for anything right now, so there is nothing to refund.",
     ),
   component: RefundPage,

@@ -35,7 +35,7 @@ export const Route = createFileRoute("/faq/$categorySlug")({
     const n = loaderData?.faqs.length ?? 0;
     return {
       meta: [
-        { title: `${name} — Questions and Answers | BBI` },
+        { title: `${name} — Questions and Answers | BBI – Bro Business Ideas` },
         {
           name: "description",
           content:
@@ -43,7 +43,10 @@ export const Route = createFileRoute("/faq/$categorySlug")({
               ? `Straight answers to the questions people ask before starting a ${name.toLowerCase()} business in India.`
               : `Questions and answers for ${name.toLowerCase()} on BBI.`,
         },
-        { property: "og:title", content: `${name} — Questions and Answers | BBI` },
+        {
+          property: "og:title",
+          content: `${name} — Questions and Answers | BBI – Bro Business Ideas`,
+        },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },
       ],
@@ -95,9 +98,7 @@ function FaqCategoryPage() {
           ]}
         />
 
-        <p className="mt-8 t-eyebrow">
-          Questions
-        </p>
+        <p className="mt-8 t-eyebrow">Questions</p>
         <h1
           ref={headingRef}
           className="cx-layer cx-z3 mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl"
@@ -121,10 +122,7 @@ function FaqCategoryPage() {
             >
               Read the {category.ideaCount} blueprints instead
             </Link>
-            <Link
-              to="/browse"
-              className="mo-link t-eyebrow"
-            >
+            <Link to="/browse" className="mo-link t-eyebrow">
               The full library
             </Link>
           </FaqEmptyState>

@@ -7,6 +7,7 @@ import { AdSlot } from "@/components/AdSlot";
 import { ExploreRail } from "@/components/explore-rail";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPost } from "@/lib/blog.functions";
+import { CO_FOUNDER, FOUNDER } from "@/lib/site-config";
 import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
 
 /**
@@ -33,11 +34,14 @@ export const Route = createFileRoute("/blog/$slug")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Article not found | BBI" }, { name: "robots", content: "noindex" }],
+        meta: [
+          { title: "Article not found | BBI – Bro Business Ideas" },
+          { name: "robots", content: "noindex" },
+        ],
       };
     }
     const { post } = loaderData;
-    const title = `${post.title} | BBI`;
+    const title = `${post.title} | BBI – Bro Business Ideas`;
     return {
       meta: [
         { title },
@@ -127,6 +131,21 @@ function BlogPostPage() {
         >
           {post.title}
         </h1>
+
+        {/* Who wrote it and who checked it, on the page that makes the claims.
+            The names come from site-config, which is what /about prints, so
+            they cannot drift apart. Posts were running anonymously while the
+            About page said real people write everything here. */}
+        <p className="mt-3 text-sm text-muted-foreground">
+          Written by{" "}
+          <Link to="/about" className="mo-link text-accent underline underline-offset-4">
+            {FOUNDER.name}
+          </Link>{" "}
+          · Reviewed by{" "}
+          <Link to="/about" className="mo-link text-accent underline underline-offset-4">
+            {CO_FOUNDER.name}
+          </Link>
+        </p>
 
         {/* The lede. Nothing on this template said "read me first" before --
             the excerpt existed only in the meta description, invisible on

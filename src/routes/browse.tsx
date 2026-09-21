@@ -16,13 +16,16 @@ export const Route = createFileRoute("/browse")({
   loader: ({ context }) => context.queryClient.ensureQueryData(catalogQuery),
   head: () => ({
     meta: [
-      { title: "Browse Business Idea Categories | BBI" },
+      { title: "Browse Business Idea Categories | BBI – Bro Business Ideas" },
       {
         name: "description",
         content:
           "Browse every business idea category and subcategory in the BBI library, from AI automation to fintech and creator media.",
       },
-      { property: "og:title", content: "Browse Business Idea Categories | BBI" },
+      {
+        property: "og:title",
+        content: "Browse Business Idea Categories | BBI – Bro Business Ideas",
+      },
       {
         property: "og:description",
         content: "Every category and subcategory in the BBI business idea library.",

@@ -9,13 +9,16 @@ import { CASE_STUDIES, type CaseStudy } from "@/lib/case-studies-data";
 export const Route = createFileRoute("/founder-stories/")({
   head: () => ({
     meta: [
-      { title: "Founder Stories & Lean Case Studies | BBI" },
+      { title: "Founder Stories & Lean Case Studies | BBI – Bro Business Ideas" },
       {
         name: "description",
         content:
           "Real, transparent breakdowns of bootstrapped businesses: revenues, margins, initial outlays, and execution timelines.",
       },
-      { property: "og:title", content: "Founder Stories & Lean Case Studies | BBI" },
+      {
+        property: "og:title",
+        content: "Founder Stories & Lean Case Studies | BBI – Bro Business Ideas",
+      },
       {
         property: "og:description",
         content:
@@ -66,8 +69,9 @@ function FounderStoriesIndexPage() {
                 </span>
               </h1>
               <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
-                Examine real unit economics, startup capital, customer acquisition funnels, and
-                fatal bottlenecks overcome by bootstrapped founders. No vanity metrics.
+                Real operator breakdowns. Examine real unit economics, startup capital, customer
+                acquisition funnels, and fatal bottlenecks overcome by bootstrapped founders. No
+                vanity metrics. No made-up numbers. Free after one sign-in.
               </p>
             </div>
             <div className="flex shrink-0 items-center gap-2">
@@ -80,6 +84,30 @@ function FounderStoriesIndexPage() {
               </Link>
             </div>
           </div>
+
+          {/* Every story that existed here was an illustrative composite, and
+              it said so on its own badge. They are filtered out in
+              case-studies-data.ts until the numbers in them are real. This
+              page says that plainly rather than showing an empty grid. */}
+          {CASE_STUDIES.length === 0 && (
+            <div className="glass mt-10 rounded-2xl p-7 sm:p-9">
+              <h2 className="font-display text-xl font-bold tracking-tight">
+                Nothing here yet, and that is deliberate.
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                The breakdowns that used to sit on this page were illustrative — written to show the
+                shape of a story, not drawn from a real operator&apos;s books. A page that promises
+                no vanity metrics has no business publishing invented ones, so they are gone. Real
+                stories go up here when the numbers in them are real and checkable, and not before.
+              </p>
+              <Link
+                to="/browse"
+                className="mt-6 inline-block text-xs font-semibold uppercase tracking-widest text-primary underline decoration-border underline-offset-4 hover:text-accent"
+              >
+                Browse the idea library instead
+              </Link>
+            </div>
+          )}
 
           {/* Stories Grid */}
           <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -95,7 +123,7 @@ function FounderStoriesIndexPage() {
                     </span>
                     <span className="flex items-center gap-1 text-[11px] font-semibold text-emerald-600">
                       <ShieldCheck className="h-3.5 w-3.5" />
-                      Placeholder
+                      Verified
                     </span>
                   </div>
 

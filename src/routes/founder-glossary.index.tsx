@@ -10,14 +10,16 @@ import { GLOSSARY_DATA, GLOSSARY_CATEGORIES, type GlossaryTerm } from "@/lib/glo
 export const Route = createFileRoute("/founder-glossary/")({
   head: () => ({
     meta: [
-      { title: `Founder Glossary — ${GLOSSARY_DATA.length} Essential Startup Terms | BBI` },
+      {
+        title: `Founder Glossary — ${GLOSSARY_DATA.length} Essential Startup Terms | BBI – Bro Business Ideas`,
+      },
       {
         name: "description",
         content: `Clear, practical definitions and formulas for ${GLOSSARY_DATA.length} essential startup, unit economics, fundraising, and venture metrics.`,
       },
       {
         property: "og:title",
-        content: `Founder Glossary — ${GLOSSARY_DATA.length} Essential Startup Terms | BBI`,
+        content: `Founder Glossary — ${GLOSSARY_DATA.length} Essential Startup Terms | BBI – Bro Business Ideas`,
       },
       {
         property: "og:description",

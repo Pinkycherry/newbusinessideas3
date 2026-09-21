@@ -8,25 +8,20 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
 import { searchIdeas } from "@/lib/ideas.functions";
 import type { IdeaCard as IdeaCardData } from "@/lib/ideas-shared";
-import {
-  useDepthScene,
-  useElementPointerGroup,
-  useStaggerReveal,
-  useTextReveal,
-} from "@/motion";
+import { useDepthScene, useElementPointerGroup, useStaggerReveal, useTextReveal } from "@/motion";
 
 export const Route = createFileRoute("/search")({
   validateSearch: z.object({ q: z.string().optional() }),
   head: () => ({
     meta: [
-      { title: "Search Business Ideas | BBI" },
+      { title: "Search Business Ideas | BBI – Bro Business Ideas" },
       { name: "robots", content: "noindex,follow" },
       {
         name: "description",
         content:
           "Search the BBI library by keyword, market or model to find the business idea blueprint that fits you.",
       },
-      { property: "og:title", content: "Search Business Ideas | BBI" },
+      { property: "og:title", content: "Search Business Ideas | BBI – Bro Business Ideas" },
       {
         property: "og:description",
         content: "Search the BBI library by keyword, market or business model.",
@@ -89,7 +84,6 @@ function SearchPage() {
   // for the whole header. Cursor depth on fine pointers, scroll depth on touch
   // (see motion.css, coarse-pointer block).
   const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
-
 
   const query = useQuery({
     queryKey: ["search", q ?? ""],

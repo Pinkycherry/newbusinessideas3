@@ -19,6 +19,7 @@ import type { CSSProperties, ReactNode } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { ValidateButton } from "@/components/validate-button";
+import { CO_FOUNDER, FOUNDER } from "@/lib/site-config";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
 import { categoryImage } from "@/config/category-imagery";
@@ -127,7 +128,9 @@ export const Route = createFileRoute("/idea/$slug")({
     const idea = loaderData?.idea;
     // Prefer the researched SEO fields when the pipeline has filled them;
     // fall back to the previous behaviour for un-enriched ideas.
-    const title = idea ? idea.seoTitle || `${idea.title} | BBI` : "Business Idea | BBI";
+    const title = idea
+      ? idea.seoTitle || `${idea.title} | BBI – Bro Business Ideas`
+      : "Business Idea | BBI – Bro Business Ideas";
     const description =
       idea?.metaDescription ||
       idea?.businessDescription?.slice(0, 155) ||
@@ -439,6 +442,33 @@ function RichSection({ title, body }: { title: string; body: string }) {
 // the permanent lock from PROJECT_BRIEF.md Section 3.3. Nothing else about
 // LockedSection changes: same sections, same structure, blur switched off.
 const LOCK_ENABLED = false;
+
+/**
+ * The signature that closes every blueprint.
+ *
+ * `FOUNDER.name` and `CO_FOUNDER.name` come from site-config, which is what
+ * the About page prints, so a name can never drift between the two pages.
+ */
+function IdeaSignature() {
+  return (
+    <section className="mt-12 border-t border-border pt-6 text-xs leading-relaxed text-muted-foreground motion-safe:animate-none">
+      <p>
+        Researched and signed off by {FOUNDER.name}.
+        <br />
+        Reviewed by {CO_FOUNDER.name}.
+      </p>
+      <p className="mt-3">
+        This blueprint is free forever after one sign-in.
+        <br />
+        No credits. No monthly fee. No expiry.
+      </p>
+      <p className="mt-3">
+        BBI exists because its founder paid three platforms and lost money he could afford to lose.
+        Most people cannot. That is why this stays free.
+      </p>
+    </section>
+  );
+}
 
 function LockedSection({
   title,
@@ -1279,6 +1309,14 @@ function IdeaPage() {
                 Browse more blueprints
               </Link>
             </section>
+
+            {/* Who stands behind the research, on the page that makes the
+                claims, rather than only on /about. The names, roles and the
+                reason the site is free are the ones already written there —
+                nothing is invented per idea, and the block is identical on
+                every blueprint by design. Deliberately quiet type and no
+                button: this signs the work, it does not sell anything. */}
+            <IdeaSignature />
             {/* EDITABLE SECTION END */}
 
             {/* The page's own cross-link module -- see KeepExploringRail's

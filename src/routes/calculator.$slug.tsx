@@ -36,10 +36,13 @@ export const Route = createFileRoute("/calculator/$slug")({
     const calculator = loaderData ? findCalculator(loaderData.slug) : undefined;
     if (!calculator) {
       return {
-        meta: [{ title: "Calculator not found | BBI" }, { name: "robots", content: "noindex" }],
+        meta: [
+          { title: "Calculator not found | BBI – Bro Business Ideas" },
+          { name: "robots", content: "noindex" },
+        ],
       };
     }
-    const title = `${calculator.title} ${calculator.highlight} — India, in rupees | BBI`;
+    const title = `${calculator.title} ${calculator.highlight} — India, in rupees | BBI – Bro Business Ideas`;
     return {
       meta: [
         { title },
@@ -126,9 +129,7 @@ function CalculatorPage({ calculator }: { calculator: Calculator }) {
               { label: pageName },
             ]}
           />
-          <p className="mt-6 t-eyebrow">
-            Calculator
-          </p>
+          <p className="mt-6 t-eyebrow">Calculator</p>
           <h1
             ref={titleRef}
             className="cx-layer cx-z3 mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl"
@@ -163,9 +164,7 @@ function CalculatorPage({ calculator }: { calculator: Calculator }) {
               <div ref={fieldsRef} className="mt-6 space-y-7">
                 {fieldGroups(calculator).map(({ group, fields }) => (
                   <fieldset key={group} className="border-0 p-0">
-                    <legend className="t-eyebrow">
-                      {group}
-                    </legend>
+                    <legend className="t-eyebrow">{group}</legend>
                     <div className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-5">
                       {fields.map((field) => (
                         <FieldInput

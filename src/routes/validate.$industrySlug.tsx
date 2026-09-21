@@ -50,11 +50,11 @@ export const Route = createFileRoute("/validate/$industrySlug")({
     // No loaderData means the route 404'd; titling that page "How to validate
     // a Business business idea" is worse than saying nothing useful.
     if (!loaderData?.categoryName) {
-      return { meta: [{ title: "Validate a business idea | BBI" }] };
+      return { meta: [{ title: "Validate a business idea | BBI – Bro Business Ideas" }] };
     }
     const name = subject(loaderData.categoryName);
     const n = loaderData.ideas.length;
-    const title = `How to validate a ${name} business idea | BBI`;
+    const title = `How to validate a ${name} business idea | BBI – Bro Business Ideas`;
     const desc = `Validate a ${name} idea before you spend on it. Work through ${n} researched ${name} blueprints — who pays, how the money moves, what hurts in year one — free.`;
     return {
       meta: [
@@ -206,7 +206,10 @@ function ValidateIndustryPage() {
         <section className="mt-14">
           <p className="t-eyebrow">The four checks</p>
           <h2 className="mt-3">What validating one of these actually involves.</h2>
-          <div ref={stepsRef} className="mt-7 grid grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-4">
+          <div
+            ref={stepsRef}
+            className="mt-7 grid grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-4"
+          >
             {STEPS.map((s) => (
               <div key={s.n} className="mo-card glass flex gap-4 rounded-2xl p-5 sm:p-6">
                 <span className="t-meta shrink-0 text-hl-gold">{s.n}</span>
