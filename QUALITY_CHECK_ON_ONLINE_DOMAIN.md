@@ -594,6 +594,37 @@ neither ranks as well as a single page would. Needs a decision — merge them,
 such pair in the table; `focus_keyword` is otherwise 408 distinct across 409
 rows.
 
+### 11.1f H1 titles rewritten 2026-09-21 — one weak batch flagged
+
+**Status: done, with a known soft spot.** All 409 H1s (`ideas.title`) replaced.
+Rollback in `ideas_title_backup_20260921`.
+
+Before, the H1 was an invented brand name — *NightShift Hood Log*, *Sector
+Sentinel*, *The Focused Talent Ledger*. Measured: average 4.3 words, 73 of 409
+were three words or fewer, and **223 of 409 shared no keyword at all with the
+page's own focus keyword**. The H1 is the strongest on-page signal after the
+title tag, and it was contradicting the title tag on more than half the library.
+
+New rule: focus keyword first, then a hook taken from that idea's own summary.
+No pool, because each hook comes from its own page and is unique by
+construction. After: 409/409 distinct, average 9.8 words, 53–74 characters,
+**0 rows with zero keyword overlap**, 0 invented numbers.
+
+**The flagged batch.** Exactly 75 rows have a boilerplate `summary` —
+*"The idea centers on solving the everyday friction around {keyword}"* — so
+there was no researched detail to draw a hook from. Their H1s are built from
+what the trade self-evidently involves, e.g. *"Part Time Dog Walking Business
+Around a Full-Time Job"*. They read correctly and invent nothing, but they are
+thinner than the other 334 and should be rewritten once those rows carry real
+summaries. They are findable with:
+
+```sql
+select idea_id from ideas
+where summary ~* 'the idea centers on solving the everyday friction'
+   or summary ~* 'offers a practical way to handle'
+   or summary ~* 'can build around the clear need for better';
+```
+
 ### 11.1a Subcategory pages — DECIDED, keeping them
 
 Measured: 409 completed ideas, 409 distinct subcategory paths, so every
