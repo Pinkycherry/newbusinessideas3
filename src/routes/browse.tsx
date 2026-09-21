@@ -28,7 +28,8 @@ export const Route = createFileRoute("/browse")({
       },
       {
         property: "og:description",
-        content: "Every category and subcategory in the BBI business idea library.",
+        content:
+          "Every category and subcategory in the BBI library — free after one sign-in, with honest research for people who cannot afford to lose money on an idea that was never going to work.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -108,6 +109,11 @@ function BrowsePage() {
               as many subcategories as ideas and the number said nothing. */}
             <p className="mt-2 text-sm text-muted-foreground">
               {data.totalIdeas} researched blueprints across {data.totalCategories} categories
+            </p>
+            {/* Someone landing on the library from search has no idea what it
+                costs, and the answer is the most persuasive thing on the page. */}
+            <p className="mt-1 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+              Free after one sign-in · No credit card · Pay nothing, ever
             </p>
           </div>
           {/* Was `space-y-6`: fourteen full-width bars, each holding a single

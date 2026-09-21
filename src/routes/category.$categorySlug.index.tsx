@@ -146,6 +146,11 @@ function CategoryPage() {
               {data.categoryName}
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
+            {/* Category pages are the most common organic landing point after
+                an idea page, and they said nothing about the price. */}
+            <p className="mt-1 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+              Free after one sign-in · No credit card · Pay nothing, ever
+            </p>
             {/* The category's featured image, served from this domain. File
                 name, alt text and caption all follow IMAGE_SEO.md. `.mo-media`
                 gives it the same subtle hover zoom every other media slot on

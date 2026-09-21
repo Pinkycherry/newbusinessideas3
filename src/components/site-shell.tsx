@@ -834,23 +834,30 @@ export function SiteShell({
             onClick={() => setMobileOpen(false)}
             className="flex shrink-0 items-baseline gap-2"
           >
-            {/* The wordmark is near-white, drawn for the instrument shell.
-                Every SiteShell in this codebase passes tone="instrument", so
-                the header is always the dark treatment and the mark always
-                reads. A SiteShell without that tone would render it white on
-                light glass — check this if one is ever added.
-
-                Intrinsic width/height are the real pixel dimensions so the
-                browser reserves the right box before the file arrives; height
-                is set in CSS and width follows from the ratio. */}
-            <img
-              src="/images/bbi-logo.png"
-              srcSet="/images/bbi-logo.png 1x, /images/bbi-logo@2x.png 2x"
-              width={328}
-              height={95}
-              alt="BBI — Bro Business Ideas"
-              className="h-8 w-auto shrink-0 sm:h-9"
-            />
+            {/* The wordmark is set in type, not drawn.
+    
+                The image that was here read "B Business — Beyond the Bright
+                Idea", while the title tags said BBI, the footer said Bro
+                Business Ideas and the domain said bbusiness. Four names for
+                one company: a reader cannot form a stable idea of who this is,
+                and neither can a search engine. A picture of a name is also
+                the one place a name can silently drift out of sync with the
+                rest of the site, because nothing type-checks a PNG.
+    
+                Set as text it is correct by construction, matches
+                ORGANISATION_NAME, scales on any screen, reads to a screen
+                reader without an alt attribute to maintain, and costs no
+                request. The brush mark itself is untouched — it is the
+                favicon and the touch icon, where it does the job it is good
+                at. */}
+            <span className="font-display text-lg font-extrabold leading-none tracking-tight sm:text-xl">
+              BBI
+            </span>
+            <span aria-hidden className="hidden h-4 w-px shrink-0 self-center bg-border sm:block" />
+            <span className="hidden text-[0.7rem] font-semibold uppercase leading-none tracking-[0.16em] text-muted-foreground sm:block">
+              Bro Business Ideas
+            </span>
+            <span className="sr-only">Bro Business Ideas</span>
           </Link>
 
           <nav className="hidden shrink-0 items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground lg:flex xl:gap-4">

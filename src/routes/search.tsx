@@ -19,7 +19,7 @@ export const Route = createFileRoute("/search")({
       {
         name: "description",
         content:
-          "Search the BBI library by keyword, market or model to find the business idea blueprint that fits you.",
+          "Search the BBI library by keyword, market or model to find the business idea blueprint that fits you — free after one sign-in, with an honest verdict on every idea, including the ones we tell you not to build.",
       },
       { property: "og:title", content: "Search Business Ideas | BBI – Bro Business Ideas" },
       {
@@ -99,6 +99,12 @@ function SearchPage() {
         <h1 ref={headingRef} className="cx-layer cx-z3 mt-4 text-3xl font-bold tracking-tight">
           Search the vault
         </h1>
+        {/* Search is often the first page a visitor lands on. It said nothing
+            about what any of this costs, which is the one question behind the
+            search box. */}
+        <p className="mt-2 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+          Free after one sign-in · No credit card · Pay nothing, ever
+        </p>
         <form
           className="mt-6 flex gap-2"
           onSubmit={(e) => {

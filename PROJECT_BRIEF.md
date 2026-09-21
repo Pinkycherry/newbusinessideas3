@@ -42,13 +42,13 @@ This section describes how I am personally running this project day-to-day. It i
 
 **2. What this product is**
 
-BusinessIdea.io is a searchable library of business ideas for the Indian market. Each idea has its own page with a detailed blueprint. The core differentiator (see Section 3) is that idea validation is free — we don't charge for AI analysis, we charge a small platform fee for access, curation, and the data layer. The user runs their own validation using their own Claude or Perplexity account, for free, through a one-click handoff from our site.
+BusinessIdea.io is a searchable library of business ideas for the Indian market. Each idea has its own page with a detailed blueprint. The core differentiator (see Section 3) is that the whole thing is free — we don't charge for the AI analysis and we don't charge for access either (superseded 2026-09-21; this line previously described a platform fee). The user runs their own validation using their own Claude or Perplexity account, for free, through a one-click handoff from our site.
 
 **3. Unique selling point (do not dilute this in any copy or messaging)**
 
 Every competing "validate your business idea" tool charges $20–$70/month and markets itself as if it has some proprietary validation engine. In reality, they are calling the same public AI APIs (Claude, GPT-4, Gemini) that anyone can access directly. The user paying $20/month usually has no idea their "validation" is just an API call wrapped in a UI.
 
-Our position: we are transparent about this. We don't charge for validation — validation is free, because the user runs it themselves on their own AI account. We charge a small platform fee (₹ pricing, India-first) for:
+Our position: we are transparent about this. We don't charge for validation — the user runs it themselves on their own AI account — and as of 2026-09-21 we don't charge for access either. What we provide, free after one sign-in:
 - The curated idea database itself (structured blueprints, not raw AI output)
 - Platform access, search, and organization
 - The one-click handoff that saves the user from writing their own research prompts
@@ -57,43 +57,50 @@ Our position: we are transparent about this. We don't charge for validation — 
 
 This is a deliberate, structural part of the strategy, not a side thought: as the category system scales past a handful of demographics into hundreds, we are the ones building dedicated idea libraries for audiences nobody else serves — zero-budget business ideas for blind entrepreneurs, for deaf entrepreneurs, for physically disabled founders, for senior citizens, and similar genuinely underserved groups. No competitor studied in Section 4 has anything like this. These categories should be priced accessibly (low or no premium) and should be planned into the category taxonomy from the start, not bolted on later, since retrofitting category infrastructure is far more expensive than designing for hundreds of categories up front.
 
-This should come through in copy: honest, India-first, "why pay $20 to validate one idea when you can pay us a small platform fee and validate as many as you want using your own AI subscription."
+This should come through in copy: honest, India-first, "why pay $20 to validate one idea when you can do it here for nothing, as many times as you want, using your own AI subscription."
 
 ---
 
-**3.2 Access, login, and pricing (new — read before touching Section 8, auth, or any pricing/payment code)**
+**3.2 Access, login, and pricing (SUPERSEDED 2026-09-21 — the site is free)**
 
-RESOLVED 2026-08-08 — this replaces any prior pricing/access assumption, including the Pro Pass model that was removed from the codebase. This is now the confirmed source of truth for pricing and access tiers.
+RESOLVED 2026-09-21. This replaces every prior pricing and access assumption in
+this file, including the ₹199 / ₹399 tiers that used to live in this section and
+the Pro Pass model before them. Anything elsewhere in this document that implies
+a payment is stale; this section wins.
 
-Pricing — only two tiers exist:
-- ₹199 — 3-month access
-- ₹399 — Lifetime access
+**Pricing — one number only: ₹0.**
 
-No other plans, trials, or price points exist unless explicitly added later. Whatever pricing currently lives in the code should be checked against these two numbers specifically, not assumed correct.
+The Pricing page shows two cards, both ₹0 — "1 month" and "Lifetime" — because
+the two shapes people expect to choose between are both free. There is no
+checkout, no payment gateway, no plan record to hold, and nothing to buy now or
+later.
 
-Login method: Google/Gmail sign-in only. No email/password signup, no other OAuth providers (no Facebook, no phone-number login, nothing else) — Gmail is the single, deliberate choice.
+**Why.** The founder paid three platforms to validate four business ideas and
+lost money he could afford to lose. He had a corporate salary in Delhi. The
+people in the WhatsApp groups he and Chandini run could not absorb the same
+loss, and they are who this was built for. ₹0 is not a launch offer; it is the
+rule. The full account is on the About page, which is the source of truth for
+this narrative — do not rewrite it here.
 
-Three levels of access, not two:
-1. No login required — every page type except gated idea content is fully visible to any anonymous visitor: homepage, `/browse`, category pages, blog, static pages, the FAQ hub, listicles. Nothing about these should be blurred or locked.
-2. Logged in (free Gmail account, no payment yet) — idea page content unlocks and displays normally. Before login, idea cards and idea detail pages show a blurred preview with a lock icon overlay instead of the real content.
-3. Active paid plan holder (₹199 or ₹399) — required specifically to use the Validate button (Section 8). Being logged in is not enough on its own to validate — the account must have an active plan.
+**Access tiers — two, not three:**
 
-Open question, not yet resolved — confirm with the founder before building: whether pillar/guide-style long-form pages (Section 6.7) sit in tier 1 (public) or get grouped with idea pages under tier 2 (login-gated). Everything else above is unambiguous. Section 6.7 has not been built yet, so this does not block anything currently in progress — resolve it before that template is built.
+1. **Anonymous** — every page type is fully visible: homepage, `/browse`,
+   category pages, blog, static pages, the FAQ hub, listicles. Nothing blurred,
+   nothing locked.
+2. **Signed in** (Google or email, free) — everything else, including the
+   Validate button. Signing in is the only gate the site has.
 
-Amendment to Section 8 (Validate button): insert a new precondition as Step 0, before the existing Step 1 — check whether the logged-in user has an active paid plan. If not, do not proceed to the platform-picker flow; show the paywall popup described below instead.
+There is no third tier. There is no "active plan" check anywhere in the code and
+none should be added: `PAYWALL_ENABLED` and the paywall popup were removed on
+2026-09-21, and `hasActivePlan` is inert plumbing, not a gate.
 
-The paywall popup — tone and content requirements:
-Warm, a little playful, emotionally direct — not a cold "upgrade required" dialog. Follows the same brand voice as Section 11.1 (honest, India-first, confident). Structure: a short emotional heading, then a short paragraph contrasting competitor pricing with ours, ending in a clear call to action showing both prices.
+**Section 8 has no Step 0.** The paid-plan precondition that used to sit in
+front of the platform picker is gone. Anonymous visitors go to `/sign-in`;
+everyone else goes straight to the platform picker.
 
-Heading: "Hold on — this one's worth doing right."
-Body: "Everywhere else, someone's charging you $20 to $100 a month just to validate a handful of ideas. We're not charging you a rupee for the AI part — that's free, forever, on your own account. This small fee is just for our time and effort building this for you. ₹199 gets you 3 months. ₹399 gets you lifetime access, every future update, and unlimited validations. No subscriptions, no surprises."
-Buttons: "Get 3 Months — ₹199" / "Get Lifetime — ₹399"
-
-(Wording can be adjusted freely — keep the contrast and the honesty.)
-
-Build order note: Gmail-only login, the blur/lock UI on idea cards, and the pricing/payment integration need to exist before or alongside Step 3 (Validate button) in Section 13 — the button's behavior now depends on plan status, so it cannot be finished in isolation.
-
-Implementation note (added by Claude Code): actually charging ₹199/₹399 requires a real payment gateway account (e.g. Razorpay, the standard for one-time INR payments) with live API keys, plus Google OAuth credentials configured in the Supabase Auth dashboard. Neither exists in this session — both need the founder to set up externally before checkout or Google sign-in can go live end to end. Per this brief's own validation culture (Section 1, README "Validation Culture" / "WHAT NOT TO DO"), no payment or login flow will be presented as working until it genuinely is. Frontend/schema groundwork that does not require those credentials is safe to build now; the checkout call and the Google OAuth handshake itself are blocked on the founder's setup.
+**Do not reinstate a price.** If a future session finds pricing language
+anywhere in this repository, it is a leftover and should be removed, not
+restored.
 
 ---
 
@@ -106,11 +113,11 @@ The 2026-08-08 note under Section 8 said gating was removed and all ideas are fu
   - **The Blueprint** — target customer, revenue mechanics, competitive edge, downside risks, and the verdict (the "honest no").
   - **Tactical Playbooks** — the getting-started steps, tools needed, and time to first customer.
   - **Real Numbers** — market opportunity, startup cost, and income potential. (TAM/SAM/SOM, CAC and LTV are not yet real columns in `ideas` — see the n8n automation thread for closing that gap. Nothing under this heading is ever a fabricated figure; where a metric doesn't exist yet, it's simply not shown, never invented.)
-- **The Validate button is the actual unlock, and it is the only one.** A user does not pay to read the locked sections on our own page — they never become readable here, for anyone, at any tier. Paying unlocks the Validate button itself. Clicking it takes the locked data server-side, builds a structured prompt from it, and redirects the user to their chosen external LLM with that prompt pre-loaded. The user reads and explores the premium research inside that external LLM, not on businessidea.io.
+- **The Validate button is the actual unlock, and it is the only one.** A user never reads the locked sections on our own page — they do not become readable here, for anyone. **Signing in unlocks the Validate button; nothing is paid for.** Clicking it takes the locked data server-side, builds a structured prompt from it, and redirects the user to their chosen external LLM with that prompt pre-loaded. The user reads and explores the premium research inside that external LLM, not on our site.
 - **The four validation platforms:** Claude, Perplexity, Gemini, and Grok. ChatGPT is deliberately excluded. (This replaces the earlier Claude+Perplexity-only list in Section 8.)
-- **Pricing stays exactly as it is** — ₹199 for 3 months, ₹399 for lifetime. Prices may go down in the future; they will never go up.
+- **Pricing is ₹0** (superseded 2026-09-21 — this line previously read ₹199 / ₹399). There is no price to raise or lower.
 
-Read Section 8 below with this note in mind: its flow description (pick a platform, backend builds the prompt, redirect with it pre-loaded) is still accurate and unchanged. Only its Step 0 framing and the "no gating" resolution above it are superseded — the precondition is still "does the user have an active paid plan," it just now also governs whether the Blueprint/Playbooks/Numbers sections are worth showing in their locked state at all (they always are, regardless of plan).
+Read Section 8 below with this note in mind: its flow description (pick a platform, backend builds the prompt, redirect with it pre-loaded) is still accurate and unchanged. Its Step 0 is gone — **the only precondition is that the visitor is signed in.** The Blueprint, Playbooks and Numbers sections always render in their locked state, for everyone.
 
 ---
 
@@ -259,7 +266,7 @@ Industry-specific landing pages — e.g. validate a SaaS idea, validate a D2C br
 
 **6.11 Comparison template (/compare/[slug])**
 
-Comparison-style pages framed around honest value (Section 3), not attacking competitors by name in ways that could be seen as disparaging — e.g. "validating a business idea: platform fee vs $20/month tools" framed generically rather than as a direct competitor callout, to keep this defensible and evergreen.
+Comparison-style pages framed around honest value (Section 3), not attacking competitors by name in ways that could be seen as disparaging — e.g. "validating a business idea: free vs $20/month tools" framed generically rather than as a direct competitor callout, to keep this defensible and evergreen.
 
 ---
 
@@ -285,17 +292,17 @@ Do this work first, before new templates, since it retroactively fixes all exist
 
 **8. Validate button — exact confirmed behavior**
 
-RESOLVED 2026-08-08 — this section is now the sole source of truth for idea validation. The codebase previously had a different, undocumented mechanism live: a "Pro Pass" ($49 one-time, Stripe checkout never actually wired up) gating "premium" ideas, plus a "Live AI Audit" that called Gemini directly from our own server (via a Lovable AI gateway) and rendered the result in our UI. That entire mechanism has been removed — no more locked/Pro/tier gating on any idea, no more server-side AI audit call, no more Pro Pass plan, checkout stub, or Stripe reference anywhere in the codebase. All ideas are fully readable. The Validate button below is the only validation mechanism now, implemented exactly as this section describes (free, handoff to the user's own Claude/Perplexity account, nothing generated or stored on our servers). Pricing, terms, privacy, refund-policy, services and homepage copy referencing the old Pro Pass/AI-audit mechanism were updated to match. Platform-access pricing is now decided — see Section 3.2 (₹199 / 3 months, ₹399 / lifetime) — and Section 3.2 adds a Step 0 precondition below: an active paid plan is required before the platform-picker flow runs.
+RESOLVED 2026-08-08 — this section is now the sole source of truth for idea validation. The codebase previously had a different, undocumented mechanism live: a "Pro Pass" ($49 one-time, Stripe checkout never actually wired up) gating "premium" ideas, plus a "Live AI Audit" that called Gemini directly from our own server (via a Lovable AI gateway) and rendered the result in our UI. That entire mechanism has been removed — no more locked/Pro/tier gating on any idea, no more server-side AI audit call, no more Pro Pass plan, checkout stub, or Stripe reference anywhere in the codebase. All ideas are fully readable. The Validate button below is the only validation mechanism now, implemented exactly as this section describes (free, handoff to the user's own Claude/Perplexity account, nothing generated or stored on our servers). Pricing, terms, privacy, refund-policy, services and homepage copy referencing the old Pro Pass/AI-audit mechanism were updated to match. Platform access is free — see Section 3.2, superseded 2026-09-21 to ₹0. Signing in is the only precondition before the platform-picker flow runs.
 
 This has been tested live and works. Implement exactly as follows, no copy/paste UI element anywhere.
 
 Flow:
-0. Precondition (added by Section 3.2): check whether the logged-in user has an active paid plan (₹199 3-month or ₹399 lifetime). If not, do not proceed to Step 1 — show the paywall popup from Section 3.2 instead.
+0. Precondition: the visitor is signed in. If they are anonymous, send them to `/sign-in` and return to the idea afterwards. There is no plan check and no paywall popup — both were removed on 2026-09-21.
 1. User is on any idea page, clicks Validate for Free.
 2. User picks a platform. Per Section 3.3 (2026-09-16), this list is now Claude, Perplexity, Gemini, and Grok — ChatGPT deliberately excluded. (Superseded: this line originally read "Claude, Perplexity — no ChatGPT, no Grok.")
 3. Backend builds a URL for the chosen platform with the idea's specific validation prompt attached as a query parameter (e.g. https://claude.ai/new?q=<encoded prompt>). This happens invisibly — no prompt text is ever shown or copyable in our UI.
 
-   The prompt itself must be a fully engineered, detailed instruction — not a casual one-liner. The user is about to spend one of their own daily uses on their own AI account, so this needs to be worth it. The backend prompt template should explicitly instruct the destination AI to: (a) produce a complete, structured markdown-file-style output covering the idea's market analysis, target buyer, revenue model, key risks, and a launch roadmap; and (b) generate an accompanying visual (a chart, diagram, or similar) where the platform supports it, not just plain paragraphs. This prompt template lives once in the backend, is applied to every idea via variable substitution (idea title, category, key facts), and should be treated as one of the highest-leverage pieces of copy in the whole product — it's effectively doing the job a $20/month competitor charges for. If the user's daily platform limit is already used up when they land there, that's expected and outside our control — the platform fee they paid us covers curation and access, not their AI provider's usage limits, and no messaging on our site needs to apologize for or explain that.
+   The prompt itself must be a fully engineered, detailed instruction — not a casual one-liner. The user is about to spend one of their own daily uses on their own AI account, so this needs to be worth it. The backend prompt template should explicitly instruct the destination AI to: (a) produce a complete, structured markdown-file-style output covering the idea's market analysis, target buyer, revenue model, key risks, and a launch roadmap; and (b) generate an accompanying visual (a chart, diagram, or similar) where the platform supports it, not just plain paragraphs. This prompt template lives once in the backend, is applied to every idea via variable substitution (idea title, category, key facts), and should be treated as one of the highest-leverage pieces of copy in the whole product — it's effectively doing the job a $20/month competitor charges for. If the user's daily platform limit is already used up when they land there, that's expected and outside our control — our side of it costs them nothing, and their AI provider's usage limits are not ours to control, and no messaging on our site needs to apologize for or explain that.
 4. New tab opens directly to that platform.
    - If the user is already logged into that platform (in-browser or via their installed app), the prompt appears pre-filled in the input box. It does not auto-submit — the user presses enter themselves, which is expected and fine.
    - If the user is not logged in, they go through that platform's own login flow, then click Validate again on our site — this re-triggers the flow now that they're authenticated.
@@ -361,7 +368,7 @@ Model change — read carefully, this replaces the earlier Claude API plan: all 
 
 Ideaproof.io publishes an llms.txt at their root — a plain-text manifest aimed at helping AI assistants and chatbots cite them accurately (key pages, one-line summaries, FAQ patterns, citation preferences). This is a legitimate and increasingly common practice, in scope for this build. Build it toward the end of the month once category counts, idea counts, and pricing are stable enough to publish real numbers — sequence it after Section 13's core steps, not as a separate future project.
 
-Important distinction to hold onto: several of the numeric claims in competitor manifests (accuracy percentages, user counts, "verified" savings figures) read as marketing copy dressed as data rather than independently audited facts. When we eventually write our own llms.txt, only include numbers we can actually stand behind — real idea count, real category count, actual platform fee, honest description of what the free validation flow does. Do not fabricate accuracy percentages, user testimonials, or "verified" statistics we haven't measured.
+Important distinction to hold onto: several of the numeric claims in competitor manifests (accuracy percentages, user counts, "verified" savings figures) read as marketing copy dressed as data rather than independently audited facts. When we eventually write our own llms.txt, only include numbers we can actually stand behind — real idea count, real category count, and an honest description of what the free validation flow does. Do not fabricate accuracy percentages, user testimonials, or "verified" statistics we haven't measured.
 
 ---
 
@@ -433,7 +440,7 @@ Custom domain (businessidea.io) is intentionally not connected yet — that's St
    - DONE 2026-08-08 — Section 8 flow live; old Pro Pass/Stripe/server-side Gemini audit mechanism fully removed (confirmed by repo-wide grep, not just memory).
    - DONE 2026-08-08 — Section 3.2 access tiers live and confirmed: Google sign-in creates real sessions (verified in Supabase auth.users/profiles), redirect-destination bug fixed, blur/lock gating and Step 0 plan-check working, expiry enforced read-side.
    - DONE 2026-08-08 — closed a real RLS hole found during audit: profiles had a client-writable UPDATE policy, meaning any signed-in user could have self-granted a paid plan via the browser console. Policy dropped; plan changes now only possible via direct DB access. See PENDING.md.
-   - PENDING — real checkout. ₹199/₹399 buttons route to /pricing, charge nothing. Razorpay deprioritized by founder (2026-08-08, not urgent). Manual activation (Claude running SQL via Supabase MCP) is the working fallback — no self-serve admin UI exists yet. See PENDING.md.
+   - CLOSED 2026-09-21 — there is no checkout to build. The site is free; the ₹199/₹399 cards, the disabled checkout button and the paywall popup were all removed. Razorpay is not needed.
    - PENDING — no visible signed-in state anywhere in the UI (no name/account indicator). Flagged by founder 2026-08-08, not urgent, deferred behind Step 4.
 4. Homepage rebuild — new banner with the mandatory two-ring hero visual (12.1), brand voice (Section 11.1), and the Surprise Me interactive section (Section 8.1).
    - DECISION 2026-08-08 (founder-confirmed, closed) — pre-existing homepage audit turned up fabricated "11 people, 11 states" team copy and a fabricated "767 founders reviewed us / WhatsApp group" stat; both replaced with an honest short line (no headcount/location claims) and a real reviewer count (967, rephrased around functionality/structure, no channel mentioned). Hotlinked ethicalfounder.com/upcomingtools.com images confirmed as the founder's own other properties — left as-is, migration to our own storage is low-priority (see PENDING.md). Brand name standardized site-wide to "BBI — Bharat Business Ideas" (short form "BBI" in body copy/titles), replacing the "IdeaVault AI" name used everywhere and the homepage-only "BBI — Best Business Ideas" variant. Domain stays businessidea.io — display name only. Twin-ring hero visual (12.1) already existed and already met spec (one large ring, one small, paired with the hero image) — preserved as-is. Surprise Me (8.1) built: category dropdown + button, pulls from a new get_random_ideas Postgres function (ORDER BY random() LIMIT n), placed directly below the hero before any other content.
@@ -447,7 +454,7 @@ Custom domain (businessidea.io) is intentionally not connected yet — that's St
 
      **How it works** (hero panel 2, mechanism hidden) — "Browse any category. Read the full blueprint. If it feels right, tap Validate — and get real research on your idea for free, using AI tools you already pay for. No extra charge. No monthly limit. Free to browse. Free to validate, again and again."
 
-     **Who we are** (`BrandStatementBanner`) — "We have been where you are. We paid for those $20 'validation' platforms too. We got a few generic lines back, spent our money, and got nothing real in return. When we asked for help, no one answered. That hurt. So we built the thing we needed back then — a free, honest library of small business ideas and side hustles, with real research, not empty hype. Browse for free, always. Validate as many times as you want, on your own account, at no extra cost. Pay once — ₹199 for 3 months or ₹399 for life — only if you want full access. Never a monthly bill."
+     **Who we are** (`BrandStatementBanner`) — "We have been where you are. We paid for those $20 'validation' platforms too. We got a few generic lines back, spent our money, and got nothing real in return. When we asked for help, no one answered. That hurt. So we built the thing we needed back then — a free, honest library of small business ideas and side hustles, with real research, not empty hype. Browse for free, always. Validate as many times as you want, on your own account, at no extra cost. Free after one sign-in. Never a bill, ever." (updated 2026-09-21; the last two sentences previously quoted ₹199 / ₹399.)
 
      **The problem we found** (`MarketGapSection`) — H2: "Why is everyone still charging you $20 to check one idea?"; para 1: "Before we built BBI, we went looking for a place to check our own business ideas. Every place we found charged at least $20 for three or four 'validations.' It sounded like deep research. It wasn't. It was really just one AI call — the same kind of call you could run yourself, a hundred times over, for the price of one month of Claude or Perplexity."; para 2: "We are regular people. Most of us have full-time jobs and build BBI at night and on weekends, because we know what it feels like to stare at a $20 paywall with nothing left to spend. So we built the thing we wished someone had built for us."
 
@@ -455,7 +462,7 @@ Custom domain (businessidea.io) is intentionally not connected yet — that's St
 
      **Why this exists** — H2: "A list of ideas is not research. And it can cost you money."; para 1: "Most '100 business ideas' pages are written in one afternoon by someone who never actually sold anything. They just say 'the market is growing' and stop there. Finding an idea was never the hard part. The hard part is knowing who will really pay you, how often, and what happens when a bigger company copies you for free."; para 2: "That is why every blueprint here answers those questions first. We name your exact customer. We show you the real numbers. We tell you the risks most people only find out after they've already spent their money."; para 3: "Sometimes the honest answer is: don't build this one. That's the whole point. Research that only ever agrees with you isn't research — it's marketing wearing a lab coat." Sidebar 4 rows simplified too: "A named buyer" — "Not 'small businesses.' The real person, their budget, and why they need this now."; "Working money mechanics" — "What you charge, what it costs you, and the point where this stops being a side job and becomes a real business."; "The unglamorous risks" — "The platform risks, slow seasons, and the competitor who's already halfway there."; "A founder-fit verdict" — "Who should build this — and who should walk away."
 
-     **Pricing** (stat tile note) — "₹199 for 3 months, ₹399 for life. Pay once. No surprise bills, ever."
+     **Pricing** (stat tile note) — "₹0 for a month, ₹0 for life. Free after one sign-in. No card, no renewal, no expiry." (updated 2026-09-21.)
 
      **Bonus — 3 more mechanism-leak spots found beyond what the founder flagged, same fix applied**: (1) "Validation is free" feature card → "Every blueprint has a Validate button. Tap it, and get real research on your idea — market size, your ideal buyer, the money model, and the risks — free, using AI tools you already pay for. No extra cost. No limit."; (2) FAQ "Is the whole library free?" → "Yes. Every blueprint is free to read, start to finish. Validating an idea is free too — you use AI tools you already pay for, so it costs you nothing extra, ever."; (3) FAQ "Is this useful if I already have a business idea?" → "Yes. Find the closest matching idea and tap Validate. You'll get real research — market size, competitors, and a launch plan — shaped around your own version of the idea, at no extra cost."
 
