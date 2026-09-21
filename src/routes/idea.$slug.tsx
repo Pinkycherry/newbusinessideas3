@@ -957,56 +957,64 @@ function IdeaPage() {
               )}
             </LockedSection>
 
-            <LockedSection
-              title="Tactical Playbooks"
-              anchorId="playbooks"
-              anchorLabel="Tactical Playbooks"
-            >
-              {idea.gettingStartedSteps.length > 0 && (
-                <div>
-                  <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                    How to start
-                  </h2>
-                  <ol className="mt-4 space-y-3">
-                    {idea.gettingStartedSteps.map((step, i) => (
-                      <li key={step} className="flex gap-3 text-sm leading-relaxed">
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">
-                          {i + 1}
-                        </span>
-                        <span>{step}</span>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              )}
-              {idea.toolsNeeded.length > 0 && (
-                <div className="mt-8">
-                  <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                    What you need
-                  </h2>
-                  <ul className="mt-3 flex flex-wrap gap-2">
-                    {idea.toolsNeeded.map((tool) => (
-                      <li
-                        key={tool}
-                        className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
-                      >
-                        {tool}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {idea.timeToFirstCustomer && (
-                <div className="mt-8">
-                  <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                    Time to first customer
-                  </h2>
-                  <p className="mt-3 whitespace-pre-line leading-relaxed">
-                    {idea.timeToFirstCustomer}
-                  </p>
-                </div>
-              )}
-            </LockedSection>
+            {/* All three of these can be empty at once: the pipeline's generic
+                steps, tools and timeline are stripped in toIdeaDetail, because
+                356 of 409 rows held the same ones byte-for-byte. Without this
+                guard the section would render as a heading over nothing. */}
+            {idea.gettingStartedSteps.length > 0 ||
+            idea.toolsNeeded.length > 0 ||
+            idea.timeToFirstCustomer ? (
+              <LockedSection
+                title="Tactical Playbooks"
+                anchorId="playbooks"
+                anchorLabel="Tactical Playbooks"
+              >
+                {idea.gettingStartedSteps.length > 0 && (
+                  <div>
+                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                      How to start
+                    </h2>
+                    <ol className="mt-4 space-y-3">
+                      {idea.gettingStartedSteps.map((step, i) => (
+                        <li key={step} className="flex gap-3 text-sm leading-relaxed">
+                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">
+                            {i + 1}
+                          </span>
+                          <span>{step}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
+                {idea.toolsNeeded.length > 0 && (
+                  <div className="mt-8">
+                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                      What you need
+                    </h2>
+                    <ul className="mt-3 flex flex-wrap gap-2">
+                      {idea.toolsNeeded.map((tool) => (
+                        <li
+                          key={tool}
+                          className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
+                        >
+                          {tool}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {idea.timeToFirstCustomer && (
+                  <div className="mt-8">
+                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                      Time to first customer
+                    </h2>
+                    <p className="mt-3 whitespace-pre-line leading-relaxed">
+                      {idea.timeToFirstCustomer}
+                    </p>
+                  </div>
+                )}
+              </LockedSection>
+            ) : null}
 
             {/* FAQ and citations are not part of the locked research — they
                 stay free, same as the teaser above. */}

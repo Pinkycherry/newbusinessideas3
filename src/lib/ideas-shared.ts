@@ -1,3 +1,5 @@
+import { realProse, realList } from "./filler";
+
 export type IdeaRow = {
   idea_id: string;
   category_id: string;
@@ -162,14 +164,14 @@ export function toIdeaDetail(row: IdeaRow): IdeaDetail {
     seoTitle: row.seo_title ?? "",
     metaDescription: row.meta_description ?? "",
     marketOpportunity: row.market_opportunity ?? "",
-    targetCustomer: row.target_customer ?? "",
-    howYouMakeMoney: row.how_you_make_money ?? "",
-    startupCost: row.startup_cost ?? "",
-    incomePotential: row.income_potential ?? "",
-    competitionEdge: row.competition_edge ?? "",
-    timeToFirstCustomer: row.time_to_first_customer ?? "",
-    gettingStartedSteps: toStringList(row.getting_started_steps),
-    toolsNeeded: toStringList(row.tools_needed),
+    targetCustomer: realProse(row.target_customer ?? ""),
+    howYouMakeMoney: realProse(row.how_you_make_money ?? ""),
+    startupCost: realProse(row.startup_cost ?? ""),
+    incomePotential: realProse(row.income_potential ?? ""),
+    competitionEdge: realProse(row.competition_edge ?? ""),
+    timeToFirstCustomer: realProse(row.time_to_first_customer ?? ""),
+    gettingStartedSteps: realList(toStringList(row.getting_started_steps)),
+    toolsNeeded: realList(toStringList(row.tools_needed)),
     faq: toObjectList(row.faq_json, (o) =>
       typeof o["q"] === "string" && typeof o["a"] === "string" ? { q: o["q"], a: o["a"] } : null,
     ),
