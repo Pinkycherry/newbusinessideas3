@@ -6,25 +6,35 @@ import { useStaggerReveal } from "@/motion";
 export const Route = createFileRoute("/pricing")({
   head: () =>
     metaFor(
-      "Pricing | BBI",
-      "₹199 for 3 months or ₹399 for lifetime access. Validation itself is always free, on every idea, every time.",
+      "Pricing — ₹0 | BBI – Bro Business Ideas",
+      "Everything on BBI is free. Two plans, both ₹0. Sign in once and every blueprint, the Validate button and every future update stay open. No card, no renewal, no expiry.",
     ),
   component: PricingPage,
 });
 
+/**
+ * Both plans are ₹0, and that is the whole page.
+ *
+ * This replaced a ₹199 / ₹399 pair whose only call to action was a disabled
+ * button reading "Checkout not live yet". A price you cannot pay is worse than
+ * no price: it tells a reader the site is a prototype at the exact moment they
+ * had decided to trust it. The founder's decision is that the site is free, so
+ * the prices are gone rather than hidden, and the button now does the one thing
+ * the site actually asks for.
+ */
 const plans = [
   {
-    name: "3 months",
-    price: "₹199",
-    cadence: "one-time",
-    body: "Full access for 90 days — every blueprint and the Validate button, unlocked.",
+    name: "1 month",
+    price: "₹0",
+    cadence: "one-time sign-in",
+    body: "Full access for 30 days — every blueprint and the Validate button, unlocked. No card. No trial ending. Just sign in.",
     highlighted: false,
   },
   {
     name: "Lifetime",
-    price: "₹399",
-    cadence: "one-time, forever",
-    body: "Pay once. Every blueprint, the Validate button, and every future update — no renewal, ever.",
+    price: "₹0",
+    cadence: "one-time sign-in, forever",
+    body: "Pay nothing. Every blueprint, the Validate button, and every future update — no renewal, ever. Sign in once. It stays yours.",
     highlighted: true,
   },
 ];
@@ -38,8 +48,8 @@ function PricingPage() {
     <ContentPage
       eyebrow="Pricing"
       title="Two prices."
-      highlight="No subscription."
-      intro="Browsing is free, no account needed. Sign in with Google (free) to read full blueprints. ₹199 or ₹399 unlocks the Validate button — validation itself stays free, forever."
+      highlight="Both are zero."
+      intro="The founder paid three platforms and lost money he could afford to lose. Most people reading this cannot. So BBI is free. Sign in once. Everything stays open."
       wide
     >
       {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
@@ -53,9 +63,7 @@ function PricingPage() {
                 : ""
             }`}
           >
-            <p className="t-eyebrow">
-              {plan.name}
-            </p>
+            <p className="t-eyebrow">{plan.name}</p>
             <p className="mt-4 flex items-baseline gap-2">
               <span className="text-5xl font-extrabold tracking-tight">{plan.price}</span>
               <span className="text-xs uppercase tracking-widest text-muted-foreground">
@@ -63,38 +71,29 @@ function PricingPage() {
               </span>
             </p>
             <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">{plan.body}</p>
-            {/* Deliberately inert, and deliberately un-animated. Checkout does
-                not exist yet, so this button gets no magnet, no hover travel
-                and no urgency treatment — motion here would promise a
-                transaction the page cannot complete. The magnet belongs on
-                this button (the primary plan's CTA) the day it can take
-                money, and not one day earlier. */}
-            <button
-              type="button"
-              disabled
-              className="ac-cta mt-7 w-full cursor-not-allowed px-6 py-3 text-sm opacity-60"
-            >
-              Checkout not live yet
-            </button>
+            {/* A real control, at last. The button this replaced was disabled
+                and said so, because checkout did not exist. Sign-in does
+                exist, it is the only gate left, and it is what this page is
+                asking for — so the call to action goes there. */}
+            <Link to="/sign-in" className="ac-cta mt-7 block w-full px-6 py-3 text-center text-sm">
+              Sign in free
+            </Link>
           </div>
         ))}
       </div>
-      <Section heading="Why validation is free">
+      <Section heading="Why everything is free">
         <p>
-          Validation is the part most tools bill a monthly fee for. We don&apos;t charge for it at
-          all. Tap Validate on any idea, free, every single time. ₹199 or ₹399 pays for something
-          else entirely: our time building and keeping this library alive.
+          Validation is the part most tools charge a monthly fee for. We do not charge for it at
+          all.
         </p>
-      </Section>
-      <Section heading="Checkout status">
-        <p>
-          Payment processing isn&apos;t wired up yet, so this button does nothing on purpose rather
-          than pretending to take your money. This page will be updated the moment checkout is real
-          — see our{" "}
-          <Link to="/refund-policy" className="mo-link text-accent underline underline-offset-4">
-            refund policy
-          </Link>{" "}
-          for what happens once it is.
+        <p className="mt-4">
+          The founder decided this after watching people in his WhatsApp groups lose money they
+          could not get back. ₹0 is not a launch offer. It is the rule.
+        </p>
+        <p className="mt-4">
+          Sign in with Google (or email). That is the only step. The library, the research, the
+          honest kill-verdicts — all of it stays free because the people this was built for start
+          from zero.
         </p>
       </Section>
       {/* EDITABLE SECTION END */}

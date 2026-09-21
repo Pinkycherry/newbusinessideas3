@@ -9,7 +9,6 @@ import { Sparkles } from "lucide-react";
 import { getValidateUrl } from "@/lib/validate.functions";
 import { VALIDATE_PLATFORMS, type ValidatePlatform } from "@/lib/validate-shared";
 import { useAuth } from "@/hooks/use-auth";
-import { PaywallPopup } from "@/components/paywall-popup";
 import { Spotlight } from "@/components/spotlight";
 import { usePillInteraction } from "@/hooks/use-pill-interaction";
 import { ValidateContextInput } from "@/components/validate-context-input";
@@ -93,18 +92,17 @@ function PlatformButton({
   );
 }
 
-// TEMPORARY — founder asked to test the actual validation flow (prompt
-// content, pros/cons, per-platform behavior) without the paid-plan check
-// getting in the way. Flip back to `true` to restore the Step 0 precondition
-// from PROJECT_BRIEF.md Section 3.2/3.3. Nothing else about the gate logic
-// changes; anonymous visitors still go to sign-in first either way.
-const PAYWALL_ENABLED = false;
+// There is no paid-plan check any more, and no flag to flip back on. The
+// founder's decision is that the whole site is free, so signing in is the only
+// gate the Validate button has. What was here was a `PAYWALL_ENABLED` constant
+// already set to false, guarding a popup that argued a ₹199 / ₹399 case the
+// site no longer makes — unreachable code carrying prices that contradict the
+// pricing page.
 
 export function ValidateButton({ slug }: { slug: string }) {
   const ideaPath = `/idea/${slug}`;
   const auth = useAuth();
   const navigate = useNavigate();
-  const [paywallOpen, setPaywallOpen] = useState(false);
   const [context, setContext] = useState("");
   const [activePlatform, setActivePlatform] = useState<ValidatePlatform | null>(null);
 
@@ -127,12 +125,8 @@ export function ValidateButton({ slug }: { slug: string }) {
       navigate({ to: "/sign-in", search: { redirect: ideaPath } });
       return;
     }
-    if (!PAYWALL_ENABLED || (auth.status === "authenticated" && auth.hasActivePlan)) {
-      setActivePlatform(platform);
-      go.mutate(platform);
-      return;
-    }
-    setPaywallOpen(true);
+    setActivePlatform(platform);
+    go.mutate(platform);
   };
 
   const buttonsDisabled = auth.status === "loading" || go.isPending;
@@ -173,8 +167,6 @@ export function ValidateButton({ slug }: { slug: string }) {
         Pick one above and your research opens in a new tab with everything filled in — just hit
         enter. Not signed in there yet? Sign in, then tap Validate again.
       </p>
-
-      <PaywallPopup open={paywallOpen} onOpenChange={setPaywallOpen} />
     </section>
   );
 }
