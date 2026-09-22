@@ -9,7 +9,7 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPost } from "@/lib/blog.functions";
-import { CO_FOUNDER, FOUNDER } from "@/lib/site-config";
+import { CO_FOUNDER, FOUNDER, founderProfile } from "@/lib/site-config";
 import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
 
 /**
@@ -29,6 +29,13 @@ const postQuery = (slug: string) =>
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ context, params }) => {
+    // Two independent fetches, so both go in flight at once rather than the
+    // resource picks waiting on the post. `getPageResources()` is a server
+    // function — see resources.server.ts for why the randomisation has to
+    // happen there and not inside a component.
+    //
+    // The result is SPREAD onto the post data rather than nesting it, so
+    // `head` below still reads `loaderData.post` unchanged.
     const [data, resources] = await Promise.all([
       context.queryClient.ensureQueryData(postQuery(params.slug)),
       getPageResources(),
@@ -84,7 +91,10 @@ export const Route = createFileRoute("/blog/$slug")({
 
 function BlogPostPage() {
   const { slug } = Route.useParams();
-  // Loader data, not a second query — the picks are random per request.
+  // Loader data, NOT a second query. The guide/glossary/blog picks are drawn
+  // fresh per request, so a `useSuspenseQuery` here would re-draw them in the
+  // browser and disagree with the markup the server already sent. The router
+  // serialises the loader's single server-computed result across instead.
   const { resources } = Route.useLoaderData();
   const { data } = useSuspenseQuery(postQuery(slug));
   const titleRef = useTextReveal<HTMLHeadingElement>();
@@ -142,14 +152,29 @@ function BlogPostPage() {
         {/* Who wrote it and who checked it, on the page that makes the claims.
             The names come from site-config, which is what /about prints, so
             they cannot drift apart. Posts were running anonymously while the
-            About page said real people write everything here. */}
+            About page said real people write everything here.
+
+            Both names now resolve to their own profile on /founders rather
+            than to the top of /about. That is the same destination
+            `personUrl()` in schema.tsx gives the machine-readable author, and
+            a byline whose visible link and `author.url` disagree is a worse
+            signal than either on its own. The anchors come from
+            FOUNDER_PROFILES, so a renamed slug moves both at once. */}
         <p className="mt-3 text-sm text-muted-foreground">
           Written by{" "}
-          <Link to="/about" className="mo-link text-accent underline underline-offset-4">
+          <Link
+            to="/founders"
+            hash={founderProfile(FOUNDER.name).slug}
+            className="mo-link text-accent underline underline-offset-4"
+          >
             {FOUNDER.name}
           </Link>{" "}
           · Reviewed by{" "}
-          <Link to="/about" className="mo-link text-accent underline underline-offset-4">
+          <Link
+            to="/founders"
+            hash={founderProfile(CO_FOUNDER.name).slug}
+            className="mo-link text-accent underline underline-offset-4"
+          >
             {CO_FOUNDER.name}
           </Link>
         </p>
@@ -246,6 +271,12 @@ function BlogPostPage() {
         )}
         {/* EDITABLE SECTION END */}
 
+        {/* Was `ExploreRail` — a fixed registry of three destinations, the
+            same three under every post on the site. This is the real library
+            instead: ten calculators, five guides, ten glossary terms and six
+            other posts, with everything but the calculators redrawn on each
+            request so the internal links spread across the catalogue rather
+            than pointing every article at the same handful of URLs. */}
         <ResourceHub resources={resources} />
       </article>
     </SiteShell>

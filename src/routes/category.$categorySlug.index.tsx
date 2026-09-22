@@ -29,8 +29,14 @@ const categoryQuery = (categorySlug: string) =>
 
 export const Route = createFileRoute("/category/$categorySlug/")({
   loader: async ({ context, params }) => {
-    // The resource picks do not depend on the category, so both go in flight
-    // at once rather than one after the other.
+    // Two independent fetches, so both go in flight at once rather than the
+    // resource picks waiting on the category. `getPageResources()` is a
+    // server function — see resources.server.ts for why the randomisation
+    // has to happen there and not inside a component.
+    //
+    // The result is SPREAD onto the category data rather than nested, so
+    // `head` below still reads `loaderData.categoryName` and
+    // `loaderData.ideas` unchanged.
     const [data, resources] = await Promise.all([
       context.queryClient.ensureQueryData(categoryQuery(params.categorySlug)),
       getPageResources(),
@@ -79,8 +85,10 @@ export const Route = createFileRoute("/category/$categorySlug/")({
 
 function CategoryPage() {
   const { categorySlug } = Route.useParams();
-  // Loader data, not a second query: the picks are random per request, and
-  // re-running them in the browser would disagree with the server's markup.
+  // Loader data, NOT a second query. The guide/glossary/blog picks are drawn
+  // fresh per request, so a `useSuspenseQuery` here would re-draw them in the
+  // browser and disagree with the markup the server already sent. The router
+  // serialises the loader's single server-computed result across instead.
   const { resources } = Route.useLoaderData();
   const { data } = useSuspenseQuery(categoryQuery(categorySlug));
   const categoryName = data.categoryName ?? categorySlug;
@@ -226,6 +234,12 @@ function CategoryPage() {
           </div>
           {/* EDITABLE SECTION END */}
 
+          {/* A category page used to end on its last idea card. This closes
+              it with the rest of what the site owns — ten calculators, five
+              guides, ten glossary terms, six blog posts — so a reader who
+              has scrolled a whole category has somewhere to go that is not
+              the back button. Everything but the calculators is redrawn per
+              request. */}
           <ResourceHub resources={resources} />
         </div>
       </SiteShell>

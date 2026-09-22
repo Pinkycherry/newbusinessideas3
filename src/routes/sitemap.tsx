@@ -97,6 +97,8 @@ const PAGE_GROUPS: { heading: string; links: { to: string; label: string }[] }[]
     heading: "About BBI",
     links: [
       { to: "/about", label: "About" },
+      // Listed beside About rather than under it: /about is the story and all
+      // four people, /founders is the two who sign the research off.
       { to: "/founders", label: "Founders" },
       { to: "/services", label: "Services" },
       { to: "/pricing", label: "Pricing" },

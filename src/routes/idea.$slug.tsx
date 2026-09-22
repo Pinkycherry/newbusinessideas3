@@ -2,6 +2,10 @@ import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import ShareLinks from "@/components/effects/share-links";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
 import { queryOptions } from "@tanstack/react-query";
+// Five icons, down from ten. Sparkles/Compass/LayoutGrid/Calculator/TrendingUp
+// belonged to `KeepExploringRail`, which ResourceHub replaced at the foot of
+// this page; leaving the imports behind would keep pulling them into the
+// idea-page chunk for nothing.
 import { Lock, Lightbulb, Users, Wallet, Shield, type LucideIcon } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 
@@ -122,7 +126,14 @@ const ideaDetailQuery = (slug: string) =>
 export const Route = createFileRoute("/idea/$slug")({
   loader: async ({ context, params }) => {
     // Both in flight together: the resource picks do not depend on the idea,
-    // and awaiting them in sequence would add their latency to every page.
+    // and awaiting them in sequence would add their latency to every one of
+    // the 409 pages. `getPageResources()` is a server function — see
+    // resources.server.ts for why the per-request shuffle has to happen
+    // there and not inside a component.
+    //
+    // The picks are SPREAD onto the query result rather than nested, so
+    // `head` below still reads `loaderData.idea` unchanged. The joined shape
+    // is `IdeaPageData`; `IdeaDetailData` stays the query's own contract.
     const [data, resources] = await Promise.all([
       context.queryClient.ensureQueryData(ideaDetailQuery(params.slug)),
       getPageResources(),
@@ -466,6 +477,16 @@ const LOCK_ENABLED = false;
  *
  * Literal class names, never interpolated: Tailwind generates utilities by
  * scanning source text, so a class assembled at runtime is never compiled.
+ * These constants are safe because the literal strings themselves appear
+ * here, in a file Tailwind scans.
+ *
+ * The headings that carry a colour of their own — "Why it works" (hl-green),
+ * "What will hurt" (hl-coral), "Verdict" (primary), and the two Real Numbers
+ * cards — deliberately do NOT use `SECTION_HEADING`. Each is that same scale
+ * with one token swapped, and folding the colour in would mean either five
+ * near-identical constants or a runtime-built class Tailwind never compiles.
+ * They are written out in place, at the same size and tracking as this one;
+ * changing the scale means changing them too.
  */
 const SECTION_HEADING =
   "text-base font-semibold uppercase tracking-[0.14em] text-muted-foreground sm:text-lg";
@@ -1191,7 +1212,11 @@ function IdeaPage() {
                 This is that block replaced with the real library — and
                 three quarters of it rotates per request, so the internal
                 links spread across the catalogue instead of pointing 409
-                pages at the same five URLs. */}
+                pages at the same five URLs.
+
+                It sits after the validate CTA and the signature, which are
+                the page's real ending, so it never competes with them — the
+                same placement rule the old rail followed. */}
             <ResourceHub resources={resources} />
           </article>
 

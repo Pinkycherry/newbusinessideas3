@@ -142,6 +142,13 @@ const EXPLORE_ITEMS = [
   { to: "/services", label: "Services" },
 ];
 
+/**
+ * `/founders` sits between About and Contact on purpose: it is the page the
+ * byline on all 409 blueprints links to, and a page that every idea page
+ * points at but no menu does is one a reader can only reach by clicking a
+ * name they may not have noticed. It is in the footer, /sitemap and
+ * sitemap-pages.xml for the same reason.
+ */
 const COMPANY_ITEMS = [
   { to: "/about", label: "About" },
   { to: "/founders", label: "Founders" },

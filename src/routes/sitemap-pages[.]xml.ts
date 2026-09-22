@@ -37,6 +37,10 @@ const STATIC_PAGES = [
   "/faq",
   "/sitemap",
   "/about",
+  // The destination of the author link on every idea page and every blog
+  // post. Left out of here it would be crawled only through those bylines,
+  // which is the weakest way for the page backing 409 authorship claims to
+  // be found.
   "/founders",
   "/services",
   "/contact",
