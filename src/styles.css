@@ -4715,3 +4715,38 @@ html.light .bbi-instrument .ac-action:disabled:hover {
     animation: none;
   }
 }
+
+/* ============================================================
+   CAPSULE ACTION — the footer's Subscribe control
+   ============================================================
+   The founder asked for the footer button to BE the capsule, not a
+   rectangle with a light around it.
+
+   Why this needs a rule at all, rather than Tailwind's `rounded-full`:
+   `.bbi-instrument .ac-action` above pins `border-radius: 0.375rem`
+   and is UNLAYERED, and an unlayered rule beats every `@layer`
+   including Tailwind's utilities, whatever the specificity. A
+   `rounded-full` class on the button would have been compiled,
+   matched, and silently lost.
+
+   So the selector is repeated at the instrument's own specificity
+   (0,2,0) and printed after it, which is what actually wins. The bare
+   class carries the pages that are not instrument-toned.
+
+   `.bbi-aura::before` takes `border-radius: inherit`, so the
+   travelling light follows the capsule's curve with nothing further
+   to set.
+
+   The input is capsuled to match. A square field feeding a capsule
+   button is a worse result than either shape used consistently, and
+   the two are one control.
+   ============================================================ */
+.bbi-instrument .bbi-capsule-action,
+.bbi-capsule-action {
+  border-radius: 9999px;
+}
+.bbi-instrument .bbi-capsule-field,
+.bbi-capsule-field {
+  border-radius: 9999px;
+  padding-inline: 1.15rem;
+}

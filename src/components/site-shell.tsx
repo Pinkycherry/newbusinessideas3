@@ -812,7 +812,7 @@ function NewsletterSignup() {
               if (state === "error") setState("idle");
             }}
             placeholder="Enter your email address"
-            className="bbi-footer-input"
+            className="bbi-footer-input bbi-capsule-field"
           />
           {/* Was a fourth button treatment on a site that now has one. It is
               the footer tier of the shared action: the same travelling band,
@@ -827,11 +827,21 @@ function NewsletterSignup() {
               one thing is moving at any moment, and the moment the pointer
               lands is the one that changes. It also applies on every page,
               not only the instrument-toned ones, because it is its own class
-              rather than part of the `.bbi-instrument` cascade. */}
+              rather than part of the `.bbi-instrument` cascade.
+
+              `bbi-capsule-action` is what makes it a capsule rather than a
+              rectangle with a light around it. It cannot be Tailwind's
+              `rounded-full`: `.bbi-instrument .ac-action` pins
+              `border-radius: 0.375rem` UNLAYERED, and an unlayered rule
+              beats every `@layer` including Tailwind's utilities whatever
+              the specificity — the class would have compiled, matched and
+              silently lost. The field above it is capsuled to match, since
+              the two are one control and a square input feeding a capsule
+              button is worse than either shape used consistently. */}
           <button
             type="submit"
             disabled={state === "sending"}
-            className="ac-action bbi-aura w-full justify-center px-4 py-2.5 text-sm font-semibold disabled:cursor-wait disabled:opacity-70"
+            className="ac-action bbi-aura bbi-capsule-action w-full justify-center px-6 py-3 text-sm font-semibold disabled:cursor-wait disabled:opacity-70"
           >
             {state === "sending" ? "Signing you up…" : "Subscribe"}
           </button>
