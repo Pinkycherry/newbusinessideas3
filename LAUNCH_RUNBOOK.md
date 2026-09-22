@@ -1,5 +1,13 @@
 # Quality Check on .ONLINE domain
 
+> **Renamed 2026-09-22** from `QUALITY_CHECK_ON_ONLINE_DOMAIN.md`. This is the
+> launch runbook — AdSense phases, sitemap design, the domain-flip order and the
+> deploy gotchas. It is reference, not a to-do list: **open work lives only in
+> `PENDING.md`.** Section 11 below is the background for several PENDING items;
+> the idea count it quotes (409) was true when written and is 589 as of
+> 2026-09-22.
+
+
 Working document for the `bbusiness.online` trial run: SEO, sitemaps,
 indexing, AdSense, and the switch to `businessidea.io`.
 

@@ -276,17 +276,11 @@ Do not claim anything is fixed, working, or verified without real proof (see Val
 
 Do not present payment or AI-audit features as functional unless they are genuinely, actually working end to end.
 
-This project was built with [Lovable](https://lovable.dev).
+**Live app**: https://bbusiness.online — deployed on Cloudflare Workers from `main`.
 
-**Live app**: https://bbusiness.online
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/34db85a7-5f81-41f9-ab09-f0125616be27).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+The build still uses `@lovable.dev/vite-tanstack-config` (see `vite.config.ts`),
+because the project was first scaffolded in Lovable. That package is build
+tooling only — nothing from it reaches a visitor.
 
 ## Development
 

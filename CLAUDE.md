@@ -13,8 +13,10 @@ agreed explicitly; it is not an open question to re-litigate each session.
 
 ## What BBI is
 
-A free library of researched business ideas at **businessidea.io**. Every idea
-page answers four things:
+A free library of researched business ideas, live at **bbusiness.online**
+(businessidea.io is the planned permanent domain — `LAUNCH_RUNBOOK.md` §10).
+The library holds 589 ideas as of 2026-09-22 and grows with every pipeline
+run, so never hardcode the count. Every idea page answers four things:
 
 1. Who specifically will pay you
 2. How the money actually works
@@ -41,35 +43,17 @@ honest about limits.
 - **The custom cursor was removed at the founder's request.** Do not reinstate
   it.
 - Report work with **full URLs**, never bare commit hashes.
-- **Every theme change gets a new version number**, in all four places at once:
-  `wp-theme/bbi/style.css`, `BBI_VERSION` in `functions.php`, each
-  `blocks/*/index.asset.php`, and `wp-theme/bbi-update.json`.
 
-## The two codebases
+## The codebase
 
 | | Where | What |
 |---|---|---|
-| Live site | `src/` | TanStack Start + Supabase, deployed to Vercel |
-| WordPress theme | `wp-theme/bbi/` | Block theme, self-updating from this repo |
+| Live site | `src/` | TanStack Start + Supabase, deployed to **Cloudflare Workers** from `main` |
+| Idea pipeline | n8n (see `PIPELINE.md`) | Writes ideas into the Supabase `ideas` table |
 
-They are separate. Changing one does not change the other.
-
-### The theme updates itself
-
-`wp-theme/bbi/inc/updater.php` reads `wp-theme/bbi-update.json` from this repo
-over raw GitHub and offers a normal WordPress update. So the workflow is:
-push a version bump here, the founder clicks Update in wp-admin. Do not send
-zip files unless the installed version predates the updater.
-
-`wp-theme/build-zip.sh` rebuilds `bbi-theme.zip`. It compiles the stylesheet
-first, on purpose — packaging before compiling ships a stale one silently.
-
-### Compile the theme CSS from `build/theme.css`, never `src/styles.css`
-
-`src/styles.css` declares `@source "../src"`, so compiling it directly scans
-only the TypeScript and silently omits every utility used in a PHP or HTML
-template. `src/motion.css` is also a separate import and would be missed
-entirely. `build/theme.css` pulls in both and adds the theme's own files.
+A WordPress block theme (`wp-theme/`) used to be described here with its own
+versioning and build rules. It is not in this repository — ignore any old
+instruction that refers to it.
 
 ## Three cascade facts that have caused real bugs here
 
@@ -87,7 +71,13 @@ compiled. Always map through a lookup of literal class names.
 
 ## Standing constraints
 
-- Develop, commit and push **only** on `claude/bbi-continuation-sj6nbr`.
+- Develop, commit and push on **`main`**. It is what deploys. The old
+  `claude/bbi-continuation-sj6nbr` branch is 150+ commits behind and dead —
+  work there never reaches the live site, whatever a session harness says.
+- **Open work lives only in `PENDING.md`.** Do not start a second to-do list
+  in any other file.
+- **Numbers in idea content:** the pipeline currently strips every digit from
+  what it writes. Read `PIPELINE.md` before touching idea data.
 - Read `BUTTERFLY_EFFECT.md` before touching anything shared. `styles.css`,
   `site-shell.tsx` and `ideas.functions.ts` are high blast radius.
 - `LOGIN_CREDENTIALS_AND_API_KEYS.md` is gitignored. Never commit a key.
@@ -122,12 +112,11 @@ and all three stay switched off under the free-tiers rule above.
 ## Designing and building UI
 
 Standing workflow for any request to design, redesign or touch UI. It does not
-need to be restated each time. Full version, including the install commands, is
-in `DESIGN_WORKFLOW.md` — that file is the portable copy for other projects.
+need to be restated each time.
 
 - **Lead with Impeccable.** `/impeccable init` for a new page, `audit` to
-  review, `animate` for motion. Init writes `PRODUCT.md` and the skill blocks
-  new-surface work until it exists — this repo does not have one yet.
+  review, `animate` for motion. `PRODUCT.md` and `DESIGN.md` exist at the
+  repo root and are what it reads.
 - **`frontend-design` loads itself.** Do not invoke it manually.
 - **Refero, Godly, Landbook, Awwwards, Dribbble, Mobbin are inspiration only.**
   Never reproduce a design as-is, never lift branded UI.
@@ -144,4 +133,19 @@ workflow, including anything these skills generate.
 
 ## Where things stand
 
-See `wp-theme/bbi/README.md` for the theme, and PR #22 for the full history.
+Ten docs at the root, each with one job:
+
+| File | What it is for |
+|---|---|
+| `PENDING.md` | **The only list of open work.** Check it first. |
+| `CLAUDE.md` | This file — rules and working notes |
+| `BUTTERFLY_EFFECT.md` | Blast-radius check before touching shared code |
+| `PROJECT_BRIEF.md` | The original product brief (code comments cite its sections) |
+| `PIPELINE.md` | The n8n idea pipeline, its prompt, and the digit-stripping bug |
+| `LAUNCH_RUNBOOK.md` | AdSense phases, sitemaps, domain flip, deploy gotchas |
+| `MOTION_SPEC.md` | Motion rules (code comments cite it) |
+| `DESIGN.md`, `PRODUCT.md` | Design context the design skill reads |
+| `README.md` | Setup and development |
+
+Seven project skills in `.claude/skills/` (SEO, schema, programmatic SEO,
+copywriting, content strategy, site architecture) — see `SOURCES.md` there.
