@@ -1,4 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
+
+import { ResourceHub } from "@/components/resource-hub";
+import { getPageResources } from "@/lib/resources.functions";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { Fragment, useCallback, type CSSProperties } from "react";
 
@@ -26,9 +29,14 @@ const categoryQuery = (categorySlug: string) =>
 
 export const Route = createFileRoute("/category/$categorySlug/")({
   loader: async ({ context, params }) => {
-    const data = await context.queryClient.ensureQueryData(categoryQuery(params.categorySlug));
+    // The resource picks do not depend on the category, so both go in flight
+    // at once rather than one after the other.
+    const [data, resources] = await Promise.all([
+      context.queryClient.ensureQueryData(categoryQuery(params.categorySlug)),
+      getPageResources(),
+    ]);
     if (!data.categoryName) throw notFound();
-    return data;
+    return { ...data, resources };
   },
   head: ({ loaderData, params }) => {
     const name = loaderData?.categoryName ?? "Category";
@@ -71,6 +79,9 @@ export const Route = createFileRoute("/category/$categorySlug/")({
 
 function CategoryPage() {
   const { categorySlug } = Route.useParams();
+  // Loader data, not a second query: the picks are random per request, and
+  // re-running them in the browser would disagree with the server's markup.
+  const { resources } = Route.useLoaderData();
   const { data } = useSuspenseQuery(categoryQuery(categorySlug));
   const categoryName = data.categoryName ?? categorySlug;
   const categoryPath = `/category/${categorySlug}`;
@@ -214,6 +225,8 @@ function CategoryPage() {
             })}
           </div>
           {/* EDITABLE SECTION END */}
+
+          <ResourceHub resources={resources} />
         </div>
       </SiteShell>
     </>

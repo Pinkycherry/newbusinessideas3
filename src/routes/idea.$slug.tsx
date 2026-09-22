@@ -2,22 +2,11 @@ import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import ShareLinks from "@/components/effects/share-links";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
 import { queryOptions } from "@tanstack/react-query";
-import {
-  Lock,
-  Lightbulb,
-  Users,
-  Wallet,
-  Shield,
-  Sparkles,
-  Compass,
-  LayoutGrid,
-  Calculator,
-  TrendingUp,
-  type LucideIcon,
-} from "lucide-react";
+import { Lock, Lightbulb, Users, Wallet, Shield, type LucideIcon } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
+import { ResourceHub } from "@/components/resource-hub";
 import { ValidateButton } from "@/components/validate-button";
 import { FOUNDER, founderProfile } from "@/lib/site-config";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
@@ -30,6 +19,9 @@ import {
   type RelatedCategory,
 } from "@/lib/ideas.functions";
 import { type IdeaCard as IdeaCardType, type IdeaDetail } from "@/lib/ideas-shared";
+import { toParagraphs } from "@/lib/prose";
+import { getPageResources } from "@/lib/resources.functions";
+import type { PageResources } from "@/lib/resources.server";
 import { JsonLd, absoluteUrl, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { hideImgIfBroken } from "@/lib/utils";
 import {
@@ -49,6 +41,15 @@ type IdeaDetailData = {
   variant: IdeaVariant;
   gradient: IdeaGradient;
 } | null;
+
+/**
+ * What the LOADER returns — the query's own result plus the resource picks.
+ *
+ * Kept separate from `IdeaDetailData` on purpose: that type is the query's
+ * contract, and `getIdeaBySlug` knows nothing about calculators or guides.
+ * The loader is where the two are joined.
+ */
+type IdeaPageData = NonNullable<IdeaDetailData> & { resources: PageResources };
 
 type ContextualLink = { key: string; label: string; to: string; params: Record<string, string> };
 
@@ -120,9 +121,14 @@ const ideaDetailQuery = (slug: string) =>
 
 export const Route = createFileRoute("/idea/$slug")({
   loader: async ({ context, params }) => {
-    const data = await context.queryClient.ensureQueryData(ideaDetailQuery(params.slug));
+    // Both in flight together: the resource picks do not depend on the idea,
+    // and awaiting them in sequence would add their latency to every page.
+    const [data, resources] = await Promise.all([
+      context.queryClient.ensureQueryData(ideaDetailQuery(params.slug)),
+      getPageResources(),
+    ]);
     if (!data) throw notFound();
-    return data;
+    return { ...data, resources };
   },
   head: ({ loaderData }) => {
     const idea = loaderData?.idea;
@@ -210,10 +216,8 @@ function DemandBlock({ score }: { score: number | null }) {
       className="mt-10 rounded-lg border border-border bg-card p-5"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-          Demand signal
-        </h2>
-        <span className="text-xs font-semibold uppercase tracking-widest text-hl-teal">{band}</span>
+        <h2 className={SECTION_HEADING}>Demand signal</h2>
+        <span className="text-sm font-semibold uppercase tracking-widest text-hl-teal">{band}</span>
       </div>
       <div
         className="demand-gauge-track mt-4"
@@ -233,7 +237,7 @@ function DemandBlock({ score }: { score: number | null }) {
           }}
         />
       </div>
-      <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
         Trend score {pct} of 100, based on current demand signals for this specific micro-niche
         rather than its broader category.
       </p>
@@ -270,10 +274,10 @@ function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
     >
       <div className="grid grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-4">
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-green">
+          <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-hl-green sm:text-lg">
             Why it works
           </h2>
-          <ul className="mt-3 space-y-3 text-sm">
+          <ul className="mt-4 space-y-4 text-[1.0625rem] leading-[1.75]">
             {idea.pros.map((pro) => (
               <li key={pro} className="flex gap-2">
                 <span aria-hidden className="text-hl-green">
@@ -285,10 +289,10 @@ function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
           </ul>
         </div>
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-coral">
+          <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-hl-coral sm:text-lg">
             What will hurt
           </h2>
-          <ul className="mt-3 space-y-3 text-sm">
+          <ul className="mt-4 space-y-4 text-[1.0625rem] leading-[1.75]">
             {idea.cons.map((con) => (
               <li key={con} className="flex gap-2">
                 <span aria-hidden className="text-hl-coral">
@@ -310,8 +314,10 @@ function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
               "translateY(calc((1 - clamp(0, calc((var(--sc-p, 1) - 0.55) * 4), 1)) * 10px))",
           }}
         >
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-primary">Verdict</h2>
-          <p className="mt-2 leading-relaxed">{idea.verdict}</p>
+          <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-primary sm:text-lg">
+            Verdict
+          </h2>
+          <p className={`mt-3 ${BODY_PROSE}`}>{idea.verdict}</p>
         </div>
       )}
     </section>
@@ -401,10 +407,12 @@ function BlueprintCards({ entries }: { entries: BlueprintEntry[] }) {
               >
                 0{i + 1}
               </span>
-              <h3 className="text-xl font-bold text-foreground sm:text-2xl">{item.title}</h3>
-              <p className="whitespace-pre-line leading-relaxed text-muted-foreground">
-                {item.body}
-              </p>
+              <h3 className="text-2xl font-bold text-foreground sm:text-3xl">{item.title}</h3>
+              <div className="space-y-4 text-[1.0625rem] leading-[1.75] text-muted-foreground">
+                {toParagraphs(item.body).map((paragraph) => (
+                  <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                ))}
+              </div>
             </div>
           </div>
         );
@@ -418,10 +426,12 @@ function RichSection({ title, body }: { title: string; body: string }) {
   if (!body) return null;
   return (
     <section className="mt-10">
-      <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-        {title}
-      </h2>
-      <p className="mt-3 whitespace-pre-line leading-relaxed">{body}</p>
+      <h2 className={SECTION_HEADING}>{title}</h2>
+      <div className={`mt-4 space-y-5 ${BODY_PROSE}`}>
+        {toParagraphs(body).map((paragraph) => (
+          <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+        ))}
+      </div>
     </section>
   );
 }
@@ -442,6 +452,25 @@ function RichSection({ title, body }: { title: string; body: string }) {
 // the permanent lock from PROJECT_BRIEF.md Section 3.3. Nothing else about
 // LockedSection changes: same sections, same structure, blur switched off.
 const LOCK_ENABLED = false;
+
+/**
+ * The page's type scale, declared once.
+ *
+ * Every section heading on this template was `text-sm` (14px) uppercase and
+ * every body block was the browser's 16px default with `leading-relaxed` —
+ * the founder's word for the result was "totally worse", and he is right:
+ * a research page that people read end to end on a phone was set smaller
+ * than the navigation above it. Headings step up to 16/18px, body to
+ * 17/18px with an 1.8 line height, and both live here rather than being
+ * typed into thirty separate className strings where they drift apart.
+ *
+ * Literal class names, never interpolated: Tailwind generates utilities by
+ * scanning source text, so a class assembled at runtime is never compiled.
+ */
+const SECTION_HEADING =
+  "text-base font-semibold uppercase tracking-[0.14em] text-muted-foreground sm:text-lg";
+const BODY_PROSE = "text-[1.0625rem] leading-[1.8] sm:text-lg";
+const CARD_PROSE = "text-[1.0625rem] leading-[1.75]";
 
 /**
  * The signature that closes every blueprint.
@@ -488,10 +517,10 @@ function LockedSection({
 }) {
   return (
     <section className="relative mt-10" data-anchor={anchorId} data-anchor-label={anchorLabel}>
-      <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-accent">
+      <p className="text-xs font-bold uppercase tracking-[0.25em] text-accent sm:text-sm">
         Premium research
       </p>
-      <h2 className="mt-1 text-xl font-bold tracking-tight">{title}</h2>
+      <h2 className="mt-1.5 text-2xl font-bold tracking-tight sm:text-3xl">{title}</h2>
       <div className="relative mt-4">
         <div
           aria-hidden={LOCK_ENABLED}
@@ -516,189 +545,6 @@ function LockedSection({
   );
 }
 
-/**
- * The bottom cross-link module, rebuilt 2026-09-19 after direct feedback that
- * the generic ExploreRail block here (flat 3-card grid, same fixed registry
- * on every template) read as bolted-on rather than considered. ideaproof.io's
- * own pattern isn't a card row -- it's a chain of specific next steps (their
- * homepage roadmap: numbered nodes, dashed connector, always another one to
- * take). This is that same idea, built from data this page already has
- * (contextualLinks, trending) instead of a page-agnostic registry: Validate
- * first (the page's own real conversion action), then the subcategory, the
- * category, a calculator, and one related idea -- five real destinations, in
- * priority order, not a random three.
- *
- * NOT `.stack-row` (motion.css): that class was tried here first and pulled
- * in the `.stack-list` deck's full hover-to-fan behaviour -- `perspective` +
- * `transform-style: preserve-3d` on the row, `translateZ`/`translateX` +
- * opacity + blur on every non-first card until the whole row is hovered.
- * That's the right effect for a "flip through related ideas" deck; it's the
- * wrong one for five permanent nav destinations that must read and click
- * correctly from the first paint. Worse, it broke clicking outright: with
- * `preserve-3d` in play, a card sitting at `translateZ(-84px)` foreshortens
- * under `elementFromPoint` at exactly the coordinates its own
- * `getBoundingClientRect()` reports, so a click landed on the parent `<ul>`
- * instead of the card's `<a>` -- confirmed live (ref-clicking "Run the
- * numbers" left the URL unchanged). This rail is a plain flex row instead:
- * every card fully opaque, sharp, and clickable at rest, with its own
- * explicit hover lift (`hover:-translate-y-1`) so the elevation feedback
- * doesn't depend on `.glass-hover`'s light-theme-only `:hover` rule in
- * styles.css.
- */
-function KeepExploringRail({
-  contextualLinks,
-  trendingPick,
-}: {
-  contextualLinks: ContextualLink[];
-  trendingPick: IdeaCardType | undefined;
-}) {
-  const [subcategoryLink, categoryLink, matchedIdeaLink] = contextualLinks;
-  const relatedPick =
-    matchedIdeaLink ??
-    (trendingPick
-      ? {
-          key: trendingPick.ideaId,
-          label: trendingPick.title,
-          to: "/idea/$slug" as const,
-          params: { slug: trendingPick.slug },
-        }
-      : undefined);
-
-  const railRef = useStaggerReveal<HTMLUListElement>({
-    selector: ".keep-explore-item",
-    stagger: 0.05,
-  });
-
-  const nodes: {
-    key: string;
-    label: string;
-    blurb: string;
-    Icon: LucideIcon;
-    tint: string;
-    href?: string;
-    to?: string;
-    params?: Record<string, string>;
-  }[] = [
-    {
-      key: "validate",
-      label: "Validate this idea",
-      blurb: "Free, run it through your own AI account, as many times as you want.",
-      Icon: Sparkles,
-      tint: "--primary",
-      href: "#validate",
-    },
-    ...(subcategoryLink
-      ? [
-          {
-            key: subcategoryLink.key,
-            label: `More in ${subcategoryLink.label}`,
-            blurb: "The rest of this exact subcategory.",
-            Icon: Compass,
-            tint: "--hl-teal",
-            to: subcategoryLink.to,
-            params: subcategoryLink.params,
-          },
-        ]
-      : []),
-    ...(categoryLink
-      ? [
-          {
-            key: categoryLink.key,
-            label: `The wider ${categoryLink.label} lineup`,
-            blurb: "Every blueprint in this category.",
-            Icon: LayoutGrid,
-            tint: "--hl-coral",
-            to: categoryLink.to,
-            params: categoryLink.params,
-          },
-        ]
-      : []),
-    {
-      key: "calculator",
-      label: "Run the numbers",
-      blurb: "Free startup calculators — cost, break-even, runway.",
-      Icon: Calculator,
-      tint: "--hl-green",
-      to: "/calculator",
-    },
-    ...(relatedPick
-      ? [
-          {
-            key: relatedPick.key,
-            label: relatedPick.label,
-            blurb: "A nearby idea worth a look.",
-            Icon: TrendingUp,
-            tint: "--hl-gold",
-            to: relatedPick.to,
-            params: relatedPick.params,
-          },
-        ]
-      : []),
-  ];
-
-  return (
-    <section
-      className="mt-12 border-t border-border pt-8"
-      data-anchor="explore"
-      data-anchor-label="Keep exploring"
-    >
-      <p className="t-eyebrow">Keep exploring</p>
-      {/* Flexbox, not CSS Grid: this rail's item count depends on how many
-          contextual links this particular idea actually has (subcategory /
-          category / related idea can each be missing), so a fixed column
-          count leaves an odd count -- 5 is the common case -- stranding one
-          card alone with a dead gap beside it. Grid's `auto-fit` still has
-          this problem: its column tracks are shared across every row, so a
-          shorter last row leaves an empty, unfilled track rather than
-          reflowing. Flexbox rows are independent -- each card grows
-          to share whatever width its own row actually has, so a lone last
-          card stretches to fill the row instead of sitting next to empty
-          space. */}
-      <ul ref={railRef} className="mt-4 flex flex-wrap gap-4">
-        {nodes.map((node) => {
-          const Icon = node.Icon;
-          const inner = (
-            <>
-              <span
-                className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-[10px] font-bold"
-                style={{
-                  color: `var(${node.tint})`,
-                  background: `color-mix(in oklab, var(${node.tint}) 16%, transparent)`,
-                }}
-              >
-                <Icon aria-hidden className="h-4 w-4" strokeWidth={1.75} />
-              </span>
-              <span className="min-w-0">
-                <span className="block text-sm font-semibold text-foreground transition-colors duration-300 group-hover:text-accent">
-                  {node.label}
-                </span>
-                <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
-                  {node.blurb}
-                </span>
-              </span>
-            </>
-          );
-          const cardClass =
-            "mo-card glass glass-hover group flex h-full w-full items-start gap-3 rounded-2xl p-4 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg";
-          return (
-            <li key={node.key} className="keep-explore-item h-full min-w-60 flex-1 basis-60">
-              {node.href ? (
-                <a href={node.href} className={cardClass}>
-                  {inner}
-                </a>
-              ) : (
-                <Link to={node.to as never} params={node.params as never} className={cardClass}>
-                  {inner}
-                </Link>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-    </section>
-  );
-}
-
 function IdeaPage() {
   // Reads the router's own loaderData rather than re-running the query via
   // useSuspenseQuery. router.tsx creates a fresh, empty QueryClient on both
@@ -714,7 +560,7 @@ function IdeaPage() {
   // loader's single server-computed result to the client once.
   // Non-null by construction: the loader throws notFound() when the query
   // returns null, so this component never renders without data.
-  const data = Route.useLoaderData() as NonNullable<IdeaDetailData>;
+  const data = Route.useLoaderData() as IdeaPageData;
   // MOTION_SPEC §2.3 — the page's single headline reveal, on the idea title.
   const titleRef = useTextReveal<HTMLHeadingElement>();
   // One delegated pointer listener per rail rather than one per card.
@@ -725,7 +571,7 @@ function IdeaPage() {
   // than reading as one flat column of panels.
   const mastheadRef = useDepthScene<HTMLDivElement>({ strength: 0.5, weight: 0.14 });
   if (!data) return null;
-  const { idea, related, relatedCategories, trending, variant, gradient } = data;
+  const { idea, related, relatedCategories, trending, variant, gradient, resources } = data;
 
   const showSidebarList = related.length > 3;
   // The aside's only real content. When it is empty the grid drops to one
@@ -867,10 +713,15 @@ function IdeaPage() {
                   <span className="text-muted-foreground">{idea.subcategoryName}</span>
                 </div>
 
-                <h1 ref={titleRef} className="mt-3 text-4xl font-bold leading-tight tracking-tight">
+                <h1
+                  ref={titleRef}
+                  className="mt-3 text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
+                >
                   {idea.title}
                 </h1>
-                <p className="mt-4 text-lg text-muted-foreground">{idea.businessDescription}</p>
+                <p className="mt-4 text-lg leading-relaxed text-muted-foreground sm:text-xl">
+                  {idea.businessDescription}
+                </p>
 
                 <div className="mt-5">
                   {/* Deterministic on server and client (pure function of the
@@ -925,12 +776,21 @@ function IdeaPage() {
               </div>
             </div>
 
-            {/* The free teaser. Anyone, signed in or not, reads this. */}
+            {/* The free teaser. Anyone, signed in or not, reads this.
+
+                `summary` is stored as one unbroken run of text — no row of
+                the 409 contains a newline — so this used to render as a
+                twenty-four sentence wall in a single <p>. `toParagraphs`
+                breaks it into 5-to-8-sentence paragraphs at render time
+                (src/lib/prose.ts holds the rule); nothing is added, removed
+                or reordered, and nothing is written back to Supabase. */}
             <section className="mt-10" data-anchor="breakdown" data-anchor-label="Breakdown">
-              <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                The breakdown
-              </h2>
-              <p className="mt-3 whitespace-pre-line leading-relaxed">{idea.summary}</p>
+              <h2 className={SECTION_HEADING}>The breakdown</h2>
+              <div className={`mt-4 space-y-5 ${BODY_PROSE}`}>
+                {toParagraphs(idea.summary).map((paragraph) => (
+                  <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                ))}
+              </div>
             </section>
 
             {/* PROJECT_BRIEF.md Section 3.3 — three panels, always locked,
@@ -984,23 +844,23 @@ function IdeaPage() {
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-4">
                   {idea.startupCost && (
                     <CardSpotlight className="p-5">
-                      <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-coral">
+                      <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-hl-coral sm:text-lg">
                         What it costs to start
                       </h2>
-                      <p className="mt-2 text-sm leading-relaxed">{idea.startupCost}</p>
+                      <p className={`mt-3 ${CARD_PROSE}`}>{idea.startupCost}</p>
                     </CardSpotlight>
                   )}
                   {idea.incomePotential && (
                     <CardSpotlight className="p-5">
-                      <h2 className="text-sm font-semibold uppercase tracking-widest text-hl-green">
+                      <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-hl-green sm:text-lg">
                         What you can earn
                       </h2>
-                      <p className="mt-2 text-sm leading-relaxed">{idea.incomePotential}</p>
+                      <p className={`mt-3 ${CARD_PROSE}`}>{idea.incomePotential}</p>
                     </CardSpotlight>
                   )}
                 </div>
               ) : (
-                <p className="text-sm leading-relaxed">
+                <p className={CARD_PROSE}>
                   The real-numbers research for this idea is still in progress.
                 </p>
               )}
@@ -1020,12 +880,10 @@ function IdeaPage() {
               >
                 {idea.gettingStartedSteps.length > 0 && (
                   <div>
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                      How to start
-                    </h2>
+                    <h2 className={SECTION_HEADING}>How to start</h2>
                     <ol className="mt-4 space-y-3">
                       {idea.gettingStartedSteps.map((step, i) => (
-                        <li key={step} className="flex gap-3 text-sm leading-relaxed">
+                        <li key={step} className="flex gap-3 text-[1.0625rem] leading-[1.75]">
                           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">
                             {i + 1}
                           </span>
@@ -1037,14 +895,12 @@ function IdeaPage() {
                 )}
                 {idea.toolsNeeded.length > 0 && (
                   <div className="mt-8">
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                      What you need
-                    </h2>
+                    <h2 className={SECTION_HEADING}>What you need</h2>
                     <ul className="mt-3 flex flex-wrap gap-2">
                       {idea.toolsNeeded.map((tool) => (
                         <li
                           key={tool}
-                          className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
+                          className="rounded-full border border-border px-3 py-1 text-sm text-muted-foreground"
                         >
                           {tool}
                         </li>
@@ -1054,10 +910,8 @@ function IdeaPage() {
                 )}
                 {idea.timeToFirstCustomer && (
                   <div className="mt-8">
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                      Time to first customer
-                    </h2>
-                    <p className="mt-3 whitespace-pre-line leading-relaxed">
+                    <h2 className={SECTION_HEADING}>Time to first customer</h2>
+                    <p className={`mt-3 whitespace-pre-line ${BODY_PROSE}`}>
                       {idea.timeToFirstCustomer}
                     </p>
                   </div>
@@ -1069,17 +923,19 @@ function IdeaPage() {
                 stay free, same as the teaser above. */}
             {faqAbove.length > 0 && (
               <section className="mt-10">
-                <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                  Questions people ask
-                </h2>
+                <h2 className={SECTION_HEADING}>Questions people ask</h2>
                 <div className="mt-4 space-y-3">
                   {faqAbove.map((item) => (
                     <details
                       key={item.q}
-                      className="rounded-lg border border-border bg-card p-4 text-sm"
+                      className="rounded-lg border border-border bg-card p-4 text-base"
                     >
-                      <summary className="cursor-pointer font-semibold">{item.q}</summary>
-                      <p className="mt-2 leading-relaxed text-muted-foreground">{item.a}</p>
+                      <summary className="cursor-pointer text-[1.0625rem] font-semibold">
+                        {item.q}
+                      </summary>
+                      <p className="mt-2.5 text-[1.0625rem] leading-[1.75] text-muted-foreground">
+                        {item.a}
+                      </p>
                     </details>
                   ))}
                 </div>
@@ -1088,10 +944,8 @@ function IdeaPage() {
 
             {idea.externalLinks.length > 0 && (
               <section className="mt-10">
-                <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                  Useful resources
-                </h2>
-                <ul className="mt-3 space-y-2 text-sm">
+                <h2 className={SECTION_HEADING}>Useful resources</h2>
+                <ul className="mt-3 space-y-2 text-base">
                   {idea.externalLinks.map((link) => (
                     <li key={link.url}>
                       <a
@@ -1116,17 +970,19 @@ function IdeaPage() {
 
             {faqBelow.length > 0 && (
               <section className="mt-10" data-anchor="faq" data-anchor-label="FAQ">
-                <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                  More questions
-                </h2>
+                <h2 className={SECTION_HEADING}>More questions</h2>
                 <div className="mt-4 space-y-3">
                   {faqBelow.map((item) => (
                     <details
                       key={item.q}
-                      className="rounded-lg border border-border bg-card p-4 text-sm"
+                      className="rounded-lg border border-border bg-card p-4 text-base"
                     >
-                      <summary className="cursor-pointer font-semibold">{item.q}</summary>
-                      <p className="mt-2 leading-relaxed text-muted-foreground">{item.a}</p>
+                      <summary className="cursor-pointer text-[1.0625rem] font-semibold">
+                        {item.q}
+                      </summary>
+                      <p className="mt-2.5 text-[1.0625rem] leading-[1.75] text-muted-foreground">
+                        {item.a}
+                      </p>
                     </details>
                   ))}
                 </div>
@@ -1148,10 +1004,8 @@ function IdeaPage() {
 
             {subcategoryLink && (
               <section className="mt-8 rounded-lg border border-border bg-card p-5">
-                <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                  Keep exploring
-                </h2>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                <h2 className={SECTION_HEADING}>Keep exploring</h2>
+                <p className="mt-3 text-[1.0625rem] leading-[1.75] text-muted-foreground">
                   This blueprint sits inside{" "}
                   <Link
                     to={subcategoryLink.to}
@@ -1211,9 +1065,7 @@ function IdeaPage() {
               <div className="mt-16 grid gap-10 sm:grid-cols-2">
                 {bottomRelated.length > 0 && (
                   <section data-anchor="related" data-anchor-label="Related">
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                      More in {idea.categoryName}
-                    </h2>
+                    <h2 className={SECTION_HEADING}>More in {idea.categoryName}</h2>
                     {/* `.mo-card` for these cells lives on IdeaCard itself,
                         which is the listing agent's file — this rail supplies
                         the single delegated pointer listener the sheen reads
@@ -1237,9 +1089,7 @@ function IdeaPage() {
 
                 {trending.length > 0 && (
                   <section>
-                    <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                      Trending across the library
-                    </h2>
+                    <h2 className={SECTION_HEADING}>Trending across the library</h2>
                     {/* `.stack-list`/`.stack-item` (motion.css) — the same
                         CSS-only depth stack used above: a shallow perspective
                         deck at rest, fanned into an open column on hover or
@@ -1282,9 +1132,7 @@ function IdeaPage() {
 
             {relatedCategories.length > 0 && (
               <section className="mt-16">
-                <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                  Other categories worth a look
-                </h2>
+                <h2 className={SECTION_HEADING}>Other categories worth a look</h2>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {relatedCategories.map((c) => (
                     <Link
@@ -1312,10 +1160,8 @@ function IdeaPage() {
               data-anchor-label="Validate"
               className="mt-16 rounded-2xl border border-border bg-card p-6 sm:p-9"
             >
-              <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                Run it before you commit
-              </h2>
-              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+              <h2 className={SECTION_HEADING}>Run it before you commit</h2>
+              <p className="mt-2 max-w-xl text-[1.0625rem] leading-[1.75] text-muted-foreground">
                 Free, on your own account, as many times as you want.
               </p>
               <div className="mt-6">
@@ -1338,11 +1184,15 @@ function IdeaPage() {
             <IdeaSignature />
             {/* EDITABLE SECTION END */}
 
-            {/* The page's own cross-link module -- see KeepExploringRail's
-                comment above for why this replaced the generic ExploreRail
-                block. Placed after the validate CTA above, which is the
-                page's real ending, so it never competes with it. */}
-            <KeepExploringRail contextualLinks={contextualLinks} trendingPick={trending[0]} />
+            {/* What used to close the page was a five-card "Keep exploring"
+                rail: the same two or three generic destinations on all 409
+                blueprints, while sixty calculators, twenty guides, 159
+                glossary terms and the whole blog sat unlinked from anywhere.
+                This is that block replaced with the real library — and
+                three quarters of it rotates per request, so the internal
+                links spread across the catalogue instead of pointing 409
+                pages at the same five URLs. */}
+            <ResourceHub resources={resources} />
           </article>
 
           {/* Sticky right column — desktop only. Add or reorder blocks freely.

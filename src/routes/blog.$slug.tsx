@@ -1,10 +1,12 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+
+import { ResourceHub } from "@/components/resource-hub";
+import { getPageResources } from "@/lib/resources.functions";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowRight } from "lucide-react";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
-import { ExploreRail } from "@/components/explore-rail";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPost } from "@/lib/blog.functions";
 import { CO_FOUNDER, FOUNDER } from "@/lib/site-config";
@@ -27,9 +29,12 @@ const postQuery = (slug: string) =>
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ context, params }) => {
-    const data = await context.queryClient.ensureQueryData(postQuery(params.slug));
+    const [data, resources] = await Promise.all([
+      context.queryClient.ensureQueryData(postQuery(params.slug)),
+      getPageResources(),
+    ]);
     if (!data) throw notFound();
-    return data;
+    return { ...data, resources };
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
@@ -79,6 +84,8 @@ export const Route = createFileRoute("/blog/$slug")({
 
 function BlogPostPage() {
   const { slug } = Route.useParams();
+  // Loader data, not a second query — the picks are random per request.
+  const { resources } = Route.useLoaderData();
   const { data } = useSuspenseQuery(postQuery(slug));
   const titleRef = useTextReveal<HTMLHeadingElement>();
   // Masthead depth scene: one shared observer + one shared frame callback
@@ -239,7 +246,7 @@ function BlogPostPage() {
         )}
         {/* EDITABLE SECTION END */}
 
-        <ExploreRail exclude="blog" heading="Keep exploring" />
+        <ResourceHub resources={resources} />
       </article>
     </SiteShell>
   );
