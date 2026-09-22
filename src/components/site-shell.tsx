@@ -144,6 +144,7 @@ const EXPLORE_ITEMS = [
 
 const COMPANY_ITEMS = [
   { to: "/about", label: "About" },
+  { to: "/founders", label: "Founders" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -692,6 +693,7 @@ const footerColumns: { title: string; links: { to: string; label: string }[] }[]
     title: "Company",
     links: [
       { to: "/about", label: "About" },
+      { to: "/founders", label: "Founders" },
       { to: "/contact", label: "Contact" },
     ],
   },

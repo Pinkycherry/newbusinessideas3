@@ -19,7 +19,7 @@ import type { CSSProperties, ReactNode } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
 import { ValidateButton } from "@/components/validate-button";
-import { CO_FOUNDER, FOUNDER } from "@/lib/site-config";
+import { FOUNDER, founderProfile } from "@/lib/site-config";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
 import { categoryImage } from "@/config/category-imagery";
@@ -446,25 +446,30 @@ const LOCK_ENABLED = false;
 /**
  * The signature that closes every blueprint.
  *
- * `FOUNDER.name` and `CO_FOUNDER.name` come from site-config, which is what
- * the About page prints, so a name can never drift between the two pages.
+ * One name now, not four lines. The founder asked for the block trimmed to
+ * the person who is actually accountable for the page, and that is the one
+ * claim worth making: he researches and signs off every blueprint.
+ *
+ * The name is a link, and it is the SAME destination the page's JSON-LD
+ * author already resolves to (`personUrl()` in schema.tsx) — a byline whose
+ * visible link and machine-readable `author.url` disagree is a worse signal
+ * than either alone. `FOUNDER.name` and the profile both come from
+ * site-config, so the name here can never drift from the name on /founders.
  */
 function IdeaSignature() {
+  const profile = founderProfile(FOUNDER.name);
   return (
-    <section className="mt-12 border-t border-border pt-6 text-xs leading-relaxed text-muted-foreground motion-safe:animate-none">
+    <section className="mt-12 border-t border-border pt-6 text-sm leading-relaxed text-muted-foreground motion-safe:animate-none">
       <p>
-        Researched and signed off by {FOUNDER.name}.
-        <br />
-        Reviewed by {CO_FOUNDER.name}.
-      </p>
-      <p className="mt-3">
-        This blueprint is free forever after one sign-in.
-        <br />
-        No credits. No monthly fee. No expiry.
-      </p>
-      <p className="mt-3">
-        BBI exists because its founder paid three platforms and lost money he could afford to lose.
-        Most people cannot. That is why this stays free.
+        Researched and signed off by{" "}
+        <Link
+          to="/founders"
+          hash={profile.slug}
+          className="font-semibold text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary"
+        >
+          {FOUNDER.name}
+        </Link>
+        .
       </p>
     </section>
   );

@@ -97,6 +97,7 @@ const PAGE_GROUPS: { heading: string; links: { to: string; label: string }[] }[]
     heading: "About BBI",
     links: [
       { to: "/about", label: "About" },
+      { to: "/founders", label: "Founders" },
       { to: "/services", label: "Services" },
       { to: "/pricing", label: "Pricing" },
       { to: "/contact", label: "Contact" },

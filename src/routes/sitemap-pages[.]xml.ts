@@ -37,6 +37,7 @@ const STATIC_PAGES = [
   "/faq",
   "/sitemap",
   "/about",
+  "/founders",
   "/services",
   "/contact",
   "/pricing",

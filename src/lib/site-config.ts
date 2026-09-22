@@ -209,3 +209,58 @@ export function organisationSameAs(): string[] {
     .map((entry) => entry.trim())
     .filter(Boolean);
 }
+
+/**
+ * The two founder profiles, for `/founders`.
+ *
+ * Every sentence below is already published on `/about` — the corporate job
+ * in Delhi, the three platforms and four ideas, the campus and the year, the
+ * curry point, the wedding date, the WhatsApp communities. Nothing is added
+ * here that is not already written there, because a second page making a
+ * larger claim than the first is exactly the drift this file exists to stop.
+ *
+ * `slug` is the anchor on `/founders` AND the fragment every author link and
+ * every `Person` reference resolves to, so a byline always lands on the
+ * paragraph that backs it up rather than at the top of a long page.
+ *
+ * Two profiles now, four later: `FOUNDER_PROFILES` is the whole list and the
+ * page renders whatever it finds, so adding Muthuraj and Prathap is one entry
+ * each and no layout work.
+ */
+export type FounderProfile = TeamMember & {
+  slug: string;
+  /** One line under the name — what they are, not a job title. */
+  standfirst: string;
+  /** The bio, one string per paragraph. */
+  bio: string[];
+};
+
+export const FOUNDER_PROFILES: FounderProfile[] = [
+  {
+    ...FOUNDER,
+    slug: "kartik-ramaswamy",
+    standfirst: "Founder. Every blueprint on this site carries his sign-off.",
+    bio: [
+      "Kartik Ramaswamy is an engineer. He is from Tamil Nadu, he works a corporate job in Delhi, and like a few million other people he spent years quietly wanting to start something of his own. He is the son of Veerabhadra Swami and Manikyamba. He studied computer science and then an MBA at Anna University Regional Campus, Madurai, passing out in 2012.",
+      "BBI exists because of what happened when he finally tried. He paid a platform twenty dollars plus tax to validate a business idea, wrote his prompts properly, and got a generic answer back. He assumed the platform was the problem rather than the pattern, so he tried a second at twenty euros plus tax, and a third at five to nine dollars with add-on credits. Four ideas, three platforms, the same shape of answer every time, and the credits spent the moment he pressed the button. One had no refund policy at all. Another, several emails in, offered half the money back.",
+      "He could absorb it. That was the part that stayed with him — if this is what it costs someone with a salary to find out an answer is useless, what happens to someone with nothing to spend in the first place? He and Chandini run two WhatsApp communities between them, and when they started asking, the same story came back from all directions.",
+      "So the rule was set on day one and has not moved since: someone starting from zero gets the whole thing. Not a preview, not three free credits. He researches, checks and signs off every blueprint published here, which is why his name and not a company name sits in the byline. The library was built around the corporate job — evenings, weekends, and the hours nobody else wanted.",
+    ],
+  },
+  {
+    ...CO_FOUNDER,
+    slug: "chandini",
+    standfirst:
+      "Co-founder. The first reader of every idea, and the only one of us with real customers.",
+    bio: [
+      "Chandini is the co-founder. She and Kartik met at Anna University Regional Campus, Madurai, doing the same MBA; her engineering is in electronics. They are getting married on 26 October 2026.",
+      "She runs a curry point she started herself, near his office — which makes her the only one of the team currently running a business with real customers, real margins and real days when nobody turns up. She does not let the rest of us forget it, and she is right not to.",
+      "A lot of what this site says about first customers comes from her rather than from a spreadsheet. She does the editorial and quality review here and reads every idea before anyone else does, which is the check that keeps a blueprint from going out sounding confident about something nobody has actually done.",
+    ],
+  },
+];
+
+/** The profile a byline points at. Falls back to the founder, who signs off. */
+export function founderProfile(name: string): FounderProfile {
+  return FOUNDER_PROFILES.find((profile) => profile.name === name) ?? FOUNDER_PROFILES[0]!;
+}

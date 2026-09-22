@@ -1,6 +1,7 @@
 import {
   CO_FOUNDER,
   FOUNDER,
+  FOUNDER_PROFILES,
   ORGANISATION_LEGAL_NAME,
   ORGANISATION_NAME,
   type TeamMember,
@@ -38,16 +39,25 @@ export function organisationSchema() {
 }
 
 /**
- * A named human, pointing at the page that backs the name up.
+ * The canonical URL for a named human on this site.
  *
- * A name with no page behind it is a weaker signal than no name at all, so
- * every reference here resolves to `/about`, where the credential sits.
+ * A name with no page behind it is a weaker signal than no name at all. The
+ * two founders now have profile pages of their own, so their references
+ * resolve to `/founders#<slug>` — the paragraph that backs the byline up,
+ * not the top of a page the reader then has to search. Anyone without a
+ * profile still resolves to `/about`, which is where their credential sits.
  */
+export function personUrl(name: string): string {
+  const profile = FOUNDER_PROFILES.find((entry) => entry.name === name);
+  return profile ? `${siteUrl()}/founders#${profile.slug}` : `${siteUrl()}/about`;
+}
+
+/** A named human, pointing at the page that backs the name up. */
 function personRef(name: string) {
   return {
     "@type": "Person",
     name,
-    url: `${siteUrl()}/about`,
+    url: personUrl(name),
   };
 }
 
@@ -67,7 +77,7 @@ export function personSchema(member: TeamMember) {
     name: member.name,
     jobTitle: member.role,
     description: member.credential,
-    url: `${siteUrl()}/about`,
+    url: personUrl(member.name),
     worksFor: {
       "@type": "Organization",
       name: ORGANISATION_NAME,

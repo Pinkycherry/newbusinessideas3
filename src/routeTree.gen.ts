@@ -15,6 +15,7 @@ import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as FeedDotxmlRouteImport } from './routes/feed[.]xml'
+import { Route as FoundersRouteImport } from './routes/founders'
 import { Route as GdprRouteImport } from './routes/gdpr'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -78,6 +79,11 @@ const DisclaimerRoute = DisclaimerRouteImport.update({
 const FeedDotxmlRoute = FeedDotxmlRouteImport.update({
   id: '/feed.xml',
   path: '/feed.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FoundersRoute = FoundersRouteImport.update({
+  id: '/founders',
+  path: '/founders',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GdprRoute = GdprRouteImport.update({
@@ -260,6 +266,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
   '/feed.xml': typeof FeedDotxmlRoute
+  '/founders': typeof FoundersRoute
   '/gdpr': typeof GdprRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -302,6 +309,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
   '/feed.xml': typeof FeedDotxmlRoute
+  '/founders': typeof FoundersRoute
   '/gdpr': typeof GdprRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -344,6 +352,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
   '/feed.xml': typeof FeedDotxmlRoute
+  '/founders': typeof FoundersRoute
   '/gdpr': typeof GdprRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -388,6 +397,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/disclaimer'
     | '/feed.xml'
+    | '/founders'
     | '/gdpr'
     | '/pricing'
     | '/privacy'
@@ -430,6 +440,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/disclaimer'
     | '/feed.xml'
+    | '/founders'
     | '/gdpr'
     | '/pricing'
     | '/privacy'
@@ -471,6 +482,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/disclaimer'
     | '/feed.xml'
+    | '/founders'
     | '/gdpr'
     | '/pricing'
     | '/privacy'
@@ -514,6 +526,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DisclaimerRoute: typeof DisclaimerRoute
   FeedDotxmlRoute: typeof FeedDotxmlRoute
+  FoundersRoute: typeof FoundersRoute
   GdprRoute: typeof GdprRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -590,6 +603,13 @@ declare module '@tanstack/react-router' {
       path: '/feed.xml'
       fullPath: '/feed.xml'
       preLoaderRoute: typeof FeedDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/founders': {
+      id: '/founders'
+      path: '/founders'
+      fullPath: '/founders'
+      preLoaderRoute: typeof FoundersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gdpr': {
@@ -854,6 +874,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DisclaimerRoute: DisclaimerRoute,
   FeedDotxmlRoute: FeedDotxmlRoute,
+  FoundersRoute: FoundersRoute,
   GdprRoute: GdprRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
