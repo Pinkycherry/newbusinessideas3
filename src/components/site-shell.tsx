@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "@tanstack/react-router";
+import { Link, useLoaderData, useRouterState } from "@tanstack/react-router";
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User } from "lucide-react";
@@ -22,6 +22,7 @@ import { LiveSearch } from "@/components/live-search";
 import { FloatingDock } from "@/components/floating-dock";
 import { CategoryBadge } from "@/components/category-badge";
 import { catalogQuery } from "@/lib/ideas.functions";
+import { ResourceHub } from "@/components/resource-hub";
 import { usePageScrollProgress } from "@/motion";
 import { topCategories, typeGroups, type TypeGroup } from "@/lib/catalog-display";
 import { subscribeToNewsletter } from "@/lib/newsletter.functions";
@@ -177,8 +178,47 @@ const isDesktop = () =>
  * a client-side fetch per page visit.
  */
 function useCatalog() {
-  const data = useLoaderData({ from: "__root__" });
-  return { data };
+  // The root loader returns `{ catalog, resources }` now, not the catalogue
+  // itself. This is the only reader of that shape.
+  const { catalog } = useLoaderData({ from: "__root__" });
+  return { data: catalog };
+}
+
+/**
+ * Pages that do NOT get the resource block, per the founder: the homepage
+ * and the policy pages.
+ *
+ * The homepage has its own closing sections and its own motion grammar, and
+ * a policy page is a legal document — a reader on /refund-policy is looking
+ * for one clause, not twelve calculators. `/sign-in` is here for the same
+ * reason: it is a form with one job.
+ *
+ * Everything else on the site gets it, including any route added later,
+ * which is the point of listing the exceptions rather than the inclusions.
+ */
+const NO_RESOURCE_HUB = new Set([
+  "/",
+  "/terms",
+  "/privacy",
+  "/disclaimer",
+  "/gdpr",
+  "/refund-policy",
+  "/sign-in",
+]);
+
+/**
+ * The resource block, and whether this page should show one.
+ *
+ * Read from the ROOT LOADER, never re-drawn here: the guide, glossary and
+ * blog picks are random per request, and picking them in this component
+ * would run once on the server and again in the browser, return different
+ * lists, and make React throw the server's markup away.
+ */
+function useSiteResources() {
+  const { resources } = useLoaderData({ from: "__root__" });
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const normalised = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
+  return NO_RESOURCE_HUB.has(normalised) ? null : resources;
 }
 
 /** Same reasoning as HoverBorderGradient: the rest/hover pair is React state
@@ -821,6 +861,7 @@ export function SiteShell({
   // that reads it here, and it does so with a composited scaleX.
   usePageScrollProgress();
   const { data: catalog } = useCatalog();
+  const siteResources = useSiteResources();
   const allCategories = catalog?.categories ?? [];
   // Capped by design. See src/lib/catalog-display.ts for the measurements —
   // uncapped, this block was 3,300px of footer per page at 200 categories.
@@ -909,6 +950,22 @@ export function SiteShell({
         {mobileOpen && <MobileMenu onClose={() => setMobileOpen(false)} />}
       </AnimatePresence>
       <main className="flex-1">{children}</main>
+      {/* Twelve calculators, six guides, twelve glossary terms and six blog
+          posts, on every page but the homepage and the policy pages.
+
+          It lives in the shell rather than in each template because that is
+          what "on every page" means: three routes had it wired by hand and
+          the other twenty did not, which is exactly the gap the founder
+          found on /calculator/break-even. Here it is one mount, and a route
+          added tomorrow gets it with no wiring at all.
+
+          Inside the page column, above the footer — it is page content that
+          closes the reading, not chrome. */}
+      {siteResources && (
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+          <ResourceHub resources={siteResources} />
+        </div>
+      )}
       <FloatingDock />
       <BuiltWithSection />
       {/* Footer, built to the reference the founder supplied: a light card,

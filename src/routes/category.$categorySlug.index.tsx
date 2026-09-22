@@ -1,7 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
-import { ResourceHub } from "@/components/resource-hub";
-import { getPageResources } from "@/lib/resources.functions";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { Fragment, useCallback, type CSSProperties } from "react";
 
@@ -29,20 +27,9 @@ const categoryQuery = (categorySlug: string) =>
 
 export const Route = createFileRoute("/category/$categorySlug/")({
   loader: async ({ context, params }) => {
-    // Two independent fetches, so both go in flight at once rather than the
-    // resource picks waiting on the category. `getPageResources()` is a
-    // server function — see resources.server.ts for why the randomisation
-    // has to happen there and not inside a component.
-    //
-    // The result is SPREAD onto the category data rather than nested, so
-    // `head` below still reads `loaderData.categoryName` and
-    // `loaderData.ideas` unchanged.
-    const [data, resources] = await Promise.all([
-      context.queryClient.ensureQueryData(categoryQuery(params.categorySlug)),
-      getPageResources(),
-    ]);
+    const data = await context.queryClient.ensureQueryData(categoryQuery(params.categorySlug));
     if (!data.categoryName) throw notFound();
-    return { ...data, resources };
+    return data;
   },
   head: ({ loaderData, params }) => {
     const name = loaderData?.categoryName ?? "Category";
@@ -85,11 +72,6 @@ export const Route = createFileRoute("/category/$categorySlug/")({
 
 function CategoryPage() {
   const { categorySlug } = Route.useParams();
-  // Loader data, NOT a second query. The guide/glossary/blog picks are drawn
-  // fresh per request, so a `useSuspenseQuery` here would re-draw them in the
-  // browser and disagree with the markup the server already sent. The router
-  // serialises the loader's single server-computed result across instead.
-  const { resources } = Route.useLoaderData();
   const { data } = useSuspenseQuery(categoryQuery(categorySlug));
   const categoryName = data.categoryName ?? categorySlug;
   const categoryPath = `/category/${categorySlug}`;
@@ -234,13 +216,11 @@ function CategoryPage() {
           </div>
           {/* EDITABLE SECTION END */}
 
-          {/* A category page used to end on its last idea card. This closes
-              it with the rest of what the site owns — ten calculators, five
-              guides, ten glossary terms, six blog posts — so a reader who
-              has scrolled a whole category has somewhere to go that is not
-              the back button. Everything but the calculators is redrawn per
-              request. */}
-          <ResourceHub resources={resources} />
+          {/* A category page used to end on its last idea card. It now
+              closes with the site's resource block — twelve calculators, six
+              guides, twelve glossary terms, six blog posts — rendered by
+              SiteShell above the footer, on every page but the homepage and
+              the policy pages, so it is no longer wired here by hand. */}
         </div>
       </SiteShell>
     </>

@@ -14,6 +14,7 @@ import "../styles.css";
 import "../motion.css";
 import { PointerChannelProvider, PageTransition } from "../motion";
 import { catalogQuery } from "../lib/ideas.functions";
+import { getPageResources } from "../lib/resources.functions";
 import { JsonLd, organisationSchema } from "@/lib/schema";
 import { canonicalUrl, siteIndexable } from "../lib/site-config";
 
@@ -75,7 +76,30 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  loader: ({ context }) => context.queryClient.ensureQueryData(catalogQuery),
+  /**
+   * The catalogue the header and footer read, AND the resource picks the
+   * block above the footer renders on every page.
+   *
+   * The resources live here rather than in each route's own loader because
+   * they belong to the SHELL now, not to one template — the founder asked
+   * for them on every page but Home and the policy pages. Loading them once
+   * at the root is one fetch per page load instead of one per route file,
+   * and it means a route added tomorrow gets the block with no wiring.
+   *
+   * It has to be a LOADER and not a query: the guide, glossary and blog
+   * picks are drawn fresh per request, and a query would re-draw them in the
+   * browser and disagree with the markup the server already sent.
+   *
+   * Shape change: this used to return the catalogue itself. `useCatalog()`
+   * in site-shell.tsx is the only reader and is updated in the same commit.
+   */
+  loader: async ({ context }) => {
+    const [catalog, resources] = await Promise.all([
+      context.queryClient.ensureQueryData(catalogQuery),
+      getPageResources(),
+    ]);
+    return { catalog, resources };
+  },
   head: () => ({
     meta: [
       { charSet: "utf-8" },

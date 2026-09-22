@@ -10,7 +10,6 @@ import { Lock, Lightbulb, Users, Wallet, Shield, type LucideIcon } from "lucide-
 import type { CSSProperties, ReactNode } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
-import { ResourceHub } from "@/components/resource-hub";
 import { ValidateButton } from "@/components/validate-button";
 import { FOUNDER, founderProfile } from "@/lib/site-config";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
@@ -24,8 +23,6 @@ import {
 } from "@/lib/ideas.functions";
 import { type IdeaCard as IdeaCardType, type IdeaDetail } from "@/lib/ideas-shared";
 import { toParagraphs } from "@/lib/prose";
-import { getPageResources } from "@/lib/resources.functions";
-import type { PageResources } from "@/lib/resources.server";
 import { JsonLd, absoluteUrl, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { hideImgIfBroken } from "@/lib/utils";
 import {
@@ -45,15 +42,6 @@ type IdeaDetailData = {
   variant: IdeaVariant;
   gradient: IdeaGradient;
 } | null;
-
-/**
- * What the LOADER returns — the query's own result plus the resource picks.
- *
- * Kept separate from `IdeaDetailData` on purpose: that type is the query's
- * contract, and `getIdeaBySlug` knows nothing about calculators or guides.
- * The loader is where the two are joined.
- */
-type IdeaPageData = NonNullable<IdeaDetailData> & { resources: PageResources };
 
 type ContextualLink = { key: string; label: string; to: string; params: Record<string, string> };
 
@@ -125,21 +113,9 @@ const ideaDetailQuery = (slug: string) =>
 
 export const Route = createFileRoute("/idea/$slug")({
   loader: async ({ context, params }) => {
-    // Both in flight together: the resource picks do not depend on the idea,
-    // and awaiting them in sequence would add their latency to every one of
-    // the 409 pages. `getPageResources()` is a server function — see
-    // resources.server.ts for why the per-request shuffle has to happen
-    // there and not inside a component.
-    //
-    // The picks are SPREAD onto the query result rather than nested, so
-    // `head` below still reads `loaderData.idea` unchanged. The joined shape
-    // is `IdeaPageData`; `IdeaDetailData` stays the query's own contract.
-    const [data, resources] = await Promise.all([
-      context.queryClient.ensureQueryData(ideaDetailQuery(params.slug)),
-      getPageResources(),
-    ]);
+    const data = await context.queryClient.ensureQueryData(ideaDetailQuery(params.slug));
     if (!data) throw notFound();
-    return { ...data, resources };
+    return data;
   },
   head: ({ loaderData }) => {
     const idea = loaderData?.idea;
@@ -581,7 +557,7 @@ function IdeaPage() {
   // loader's single server-computed result to the client once.
   // Non-null by construction: the loader throws notFound() when the query
   // returns null, so this component never renders without data.
-  const data = Route.useLoaderData() as IdeaPageData;
+  const data = Route.useLoaderData() as NonNullable<IdeaDetailData>;
   // MOTION_SPEC §2.3 — the page's single headline reveal, on the idea title.
   const titleRef = useTextReveal<HTMLHeadingElement>();
   // One delegated pointer listener per rail rather than one per card.
@@ -592,7 +568,7 @@ function IdeaPage() {
   // than reading as one flat column of panels.
   const mastheadRef = useDepthScene<HTMLDivElement>({ strength: 0.5, weight: 0.14 });
   if (!data) return null;
-  const { idea, related, relatedCategories, trending, variant, gradient, resources } = data;
+  const { idea, related, relatedCategories, trending, variant, gradient } = data;
 
   const showSidebarList = related.length > 3;
   // The aside's only real content. When it is empty the grid drops to one
@@ -1205,19 +1181,14 @@ function IdeaPage() {
             <IdeaSignature />
             {/* EDITABLE SECTION END */}
 
-            {/* What used to close the page was a five-card "Keep exploring"
-                rail: the same two or three generic destinations on all 409
-                blueprints, while sixty calculators, twenty guides, 159
-                glossary terms and the whole blog sat unlinked from anywhere.
-                This is that block replaced with the real library — and
-                three quarters of it rotates per request, so the internal
-                links spread across the catalogue instead of pointing 409
-                pages at the same five URLs.
-
-                It sits after the validate CTA and the signature, which are
-                the page's real ending, so it never competes with them — the
-                same placement rule the old rail followed. */}
-            <ResourceHub resources={resources} />
+            {/* The resource block that closes this page (twelve calculators, six
+                guides, twelve glossary terms, six blog posts) is rendered by
+                SiteShell now, above the footer, on every page but the
+                homepage and the policy pages. It used to be mounted here by
+                hand, which is why it appeared on three templates and not the
+                other twenty. What used to be here before that was a
+                five-card "Keep exploring" rail pointing at the same two or
+                three destinations on all 409 blueprints. */}
           </article>
 
           {/* Sticky right column — desktop only. Add or reorder blocks freely.

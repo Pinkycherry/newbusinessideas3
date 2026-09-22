@@ -1,7 +1,5 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 
-import { ResourceHub } from "@/components/resource-hub";
-import { getPageResources } from "@/lib/resources.functions";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowRight } from "lucide-react";
 
@@ -29,19 +27,9 @@ const postQuery = (slug: string) =>
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ context, params }) => {
-    // Two independent fetches, so both go in flight at once rather than the
-    // resource picks waiting on the post. `getPageResources()` is a server
-    // function — see resources.server.ts for why the randomisation has to
-    // happen there and not inside a component.
-    //
-    // The result is SPREAD onto the post data rather than nesting it, so
-    // `head` below still reads `loaderData.post` unchanged.
-    const [data, resources] = await Promise.all([
-      context.queryClient.ensureQueryData(postQuery(params.slug)),
-      getPageResources(),
-    ]);
+    const data = await context.queryClient.ensureQueryData(postQuery(params.slug));
     if (!data) throw notFound();
-    return { ...data, resources };
+    return data;
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
@@ -91,11 +79,6 @@ export const Route = createFileRoute("/blog/$slug")({
 
 function BlogPostPage() {
   const { slug } = Route.useParams();
-  // Loader data, NOT a second query. The guide/glossary/blog picks are drawn
-  // fresh per request, so a `useSuspenseQuery` here would re-draw them in the
-  // browser and disagree with the markup the server already sent. The router
-  // serialises the loader's single server-computed result across instead.
-  const { resources } = Route.useLoaderData();
   const { data } = useSuspenseQuery(postQuery(slug));
   const titleRef = useTextReveal<HTMLHeadingElement>();
   // Masthead depth scene: one shared observer + one shared frame callback
@@ -271,13 +254,11 @@ function BlogPostPage() {
         )}
         {/* EDITABLE SECTION END */}
 
-        {/* Was `ExploreRail` — a fixed registry of three destinations, the
-            same three under every post on the site. This is the real library
-            instead: ten calculators, five guides, ten glossary terms and six
-            other posts, with everything but the calculators redrawn on each
-            request so the internal links spread across the catalogue rather
-            than pointing every article at the same handful of URLs. */}
-        <ResourceHub resources={resources} />
+        {/* This used to end on `ExploreRail` — a fixed registry of three
+            destinations, the same three under every post. The site's resource
+            block replaced it and is rendered by SiteShell above the footer
+            now, on every page but the homepage and the policy pages, so
+            nothing is mounted here. */}
       </article>
     </SiteShell>
   );
