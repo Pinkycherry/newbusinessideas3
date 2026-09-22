@@ -4606,3 +4606,112 @@ html.light .bbi-instrument .ac-action:disabled:hover {
   border-color: var(--ins-signal, #ffffff);
   transform: translateY(-1px);
 }
+
+/* ============================================================
+   HOME RESOURCE SHOWCASE
+   Scoped to `home-resource-showcase.tsx` and nothing else. New
+   classes only — no token, no element and no existing rule is
+   touched, per BUTTERFLY_EFFECT.md's rule for this file.
+
+   The homepage runs a different treatment of the same four pools
+   the rest of the site shows as plain cards, at the founder's
+   request: the homepage must not look like every other page. The
+   calculator strip reuses `.bbi-built-ticker` (already defined
+   above, for the "Built with" row) and needs nothing here. These
+   are the two effects that do.
+   ============================================================ */
+
+/* --- Flip cards: glossary term on the face, definition behind -- */
+.bbi-flip {
+  perspective: 1100px;
+}
+.bbi-flip-inner {
+  position: relative;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+/* `:focus-within` as well as `:hover`, so the card opens for a keyboard
+   the same way it opens for a cursor. Without it the definition is
+   reachable by tab but never visible. */
+.bbi-flip:hover .bbi-flip-inner,
+.bbi-flip:focus-within .bbi-flip-inner {
+  transform: rotateY(180deg);
+}
+.bbi-flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.bbi-flip-back {
+  transform: rotateY(180deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-flip-inner {
+    transition: none;
+  }
+}
+
+/* --- Aura: a light travelling the border of a guide card --------
+   Drawn as a conic gradient on a 1px inset pseudo-element, masked
+   so only the ring shows and the card's own surface stays clean.
+   `@property` is what makes the angle animatable; where it is not
+   supported the gradient simply sits still, which is a static
+   highlight rather than a broken card. */
+@property --bbi-aura-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.bbi-aura {
+  position: relative;
+  isolation: isolate;
+}
+.bbi-aura::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--bbi-aura-angle),
+    transparent 0deg 200deg,
+    color-mix(in oklab, var(--primary) 85%, transparent) 280deg,
+    color-mix(in oklab, var(--accent) 95%, transparent) 330deg,
+    transparent 360deg
+  );
+  /* Ring only: the mask keeps the padding box and drops the content box,
+     so the gradient never washes over the text inside. */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+.bbi-aura:hover::before,
+.bbi-aura:focus-within::before {
+  opacity: 1;
+  animation: bbi-aura-spin 3.4s linear infinite;
+}
+@keyframes bbi-aura-spin {
+  to {
+    --bbi-aura-angle: 360deg;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-aura:hover::before,
+  .bbi-aura:focus-within::before {
+    animation: none;
+  }
+}

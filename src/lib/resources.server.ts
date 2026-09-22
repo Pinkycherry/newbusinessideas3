@@ -25,7 +25,20 @@ import { fetchPosts } from "./blog.server";
  * loader data and both sides render the identical list.
  */
 
-export type ResourceLink = { slug: string; label: string; blurb: string; meta?: string };
+export type ResourceLink = {
+  slug: string;
+  label: string;
+  blurb: string;
+  meta?: string;
+  /**
+   * Only blog posts carry one, and only when the row has it. The homepage
+   * showcase runs its blog row through the same image-card marquee the
+   * category library uses, which falls back to a typographic plate when this
+   * is absent — so posts without a featured image today start showing one
+   * the moment `blog_posts.image` is filled in, with no code change.
+   */
+  image?: string | null;
+};
 
 export type PageResources = {
   calculators: ResourceLink[];
@@ -101,6 +114,7 @@ export async function buildPageResources(): Promise<PageResources> {
       label: post.title,
       blurb: trim(post.excerpt, 130),
       meta: `${post.readingMinutes} min read`,
+      image: post.image,
     }));
   } catch {
     posts = [];

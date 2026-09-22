@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useLoaderData } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery, useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState, lazy, Suspense } from "react";
@@ -65,7 +65,7 @@ const LinkPreview = belowFold(() => import("@/components/aceternity/link-preview
 const Tabs = belowFold(() => import("@/components/aceternity/tabs"));
 import { categoryImage } from "@/config/category-imagery";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
-import { ExploreRail } from "@/components/explore-rail";
+import { HomeResourceShowcase } from "@/components/home-resource-showcase";
 import {
   Select,
   SelectContent,
@@ -311,6 +311,10 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const { data: catalog } = useSuspenseQuery(catalogQuery);
+  // From the ROOT loader, drawn once per request. Not a query and not picked
+  // here: the guide, glossary and blog choices are random, and re-drawing
+  // them in the browser would disagree with the server's markup.
+  const { resources } = useLoaderData({ from: "__root__" });
   const { data: highlights } = useSuspenseQuery(featuredQuery);
   const { data: trending } = useSuspenseQuery(trendingQuery);
   const featured = highlights.slice(0, 6);
@@ -646,14 +650,19 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Every other template on the site, one tap away -- a first-time
-          visitor who lands on the homepage and never scrolls past it never
-          discovers the calculators, guides, founder stories, glossary, blog,
-          FAQ or tools pages exist. `exclude="ideas"` since /browse is already
-          the whole point of this page. */}
-      <div className="px-3 sm:px-4">
-        <ExploreRail exclude="ideas" heading="Keep exploring the library" />
-      </div>
+      {/* The homepage's own treatment of the four resource pools — the
+          ticker, the travelling border, the flip cards and the image
+          marquee. See home-resource-showcase.tsx.
+
+          It replaces `<ExploreRail exclude="ideas" heading="Keep exploring
+          the library" />`, which was three cards pointing at three section
+          indexes. This does the same job — a first-time visitor who never
+          scrolls past the homepage still finds the calculators, guides,
+          glossary and blog — with thirty-six real destinations instead of
+          three, and it is the reason SiteShell skips the homepage in its own
+          resource block: the two must not both render, and they must not
+          look alike. */}
+      <HomeResourceShowcase resources={resources} />
 
       <div className="px-3 pb-10 sm:px-4">
         <AdSlot position="homepage-above-footer" size="banner" />
