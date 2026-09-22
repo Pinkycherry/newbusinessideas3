@@ -13,7 +13,6 @@ import { type ReactNode } from "react";
 import "../styles.css";
 import "../motion.css";
 import { PointerChannelProvider, PageTransition } from "../motion";
-import { SiteTextMotion } from "@/components/site-text-motion";
 import { catalogQuery } from "../lib/ideas.functions";
 import { JsonLd, organisationSchema } from "@/lib/schema";
 import { canonicalUrl, siteIndexable } from "../lib/site-config";
@@ -228,8 +227,25 @@ function RootComponent() {
           Renders no DOM of its own and holds no React state. */}
       <PointerChannelProvider />
       {/* Desktop-only custom pointer; refuses to run on touch or reduced motion. */}
-      {/* Wave word-reveal on every heading, and anything with data-wave. */}
-      <SiteTextMotion />
+      {/* The sitewide heading reveal is OFF, 2026-09-22, at the founder's
+          request: every h1/h2/h3 on the site is static.
+
+          `<SiteTextMotion />` used to mount here and toggle `.revealed` on
+          every heading as it crossed the viewport. Not rendering it is the
+          whole removal — the hidden state in styles.css is gated behind
+          `html.bbi-motion`, a class only that component ever added, so with
+          it gone nothing is ever hidden and every heading simply renders.
+          That is the component's own documented no-JS failure mode, which
+          is why switching it off this way cannot leave text stuck at
+          opacity 0.
+
+          `site-text-motion.tsx` and its stylesheet rules are left on disk
+          untouched, so restoring this is re-adding the import and the one
+          element below — nothing else.
+
+          It is the second of the two heading effects to go. The first was
+          the GSAP SplitText headline reveal in use-text-reveal.ts, switched
+          off for breaking layout on any heading that wrapped to two lines. */}
       <PageTransition>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
