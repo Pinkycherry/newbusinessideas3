@@ -5,8 +5,12 @@ import type { LucideIcon } from "lucide-react";
 import type { PageResources, ResourceLink } from "@/lib/resources.server";
 
 /**
- * The block that closes a long page: ten calculators, five guides, ten
+ * The block that closes a long page: twelve calculators, six guides, twelve
  * glossary terms and six blog posts, each under its own heading.
+ *
+ * The counts are set in resources.server.ts, not here — this file only
+ * renders what it is handed, so changing "five guides" to six is one number
+ * in one place and the copy below.
  *
  * What it replaces was a thin one: a single "Keep exploring" row of two or
  * three generic links, identical on all 409 idea pages, on a site that
@@ -94,7 +98,7 @@ export function ResourceHub({ resources }: { resources: PageResources | null | u
       <Block
         id="rh-calculators"
         heading="Free startup calculators"
-        standfirst="Ten of them. Each one does arithmetic on the numbers you type and shows its working — no industry averages, no benchmarks, nothing invented."
+        standfirst="Twelve of them. Each one does arithmetic on the numbers you type and shows its working — no industry averages, no benchmarks, nothing invented."
         Icon={Calculator}
         tint="--hl-green"
         items={calculators}
@@ -112,7 +116,7 @@ export function ResourceHub({ resources }: { resources: PageResources | null | u
       <Block
         id="rh-guides"
         heading="Startup guides"
-        standfirst="Five, drawn from the library at random — refresh for five more."
+        standfirst="Six, drawn from the library at random — refresh for six more."
         Icon={BookOpen}
         tint="--hl-teal"
         items={guides}
@@ -131,7 +135,7 @@ export function ResourceHub({ resources }: { resources: PageResources | null | u
       <Block
         id="rh-glossary"
         heading="Startup glossary"
-        standfirst="Ten terms from the 159 defined on this site, in plain words. These rotate too."
+        standfirst="Twelve terms from the 159 defined on this site, in plain words. These rotate too."
         Icon={SpellCheck}
         tint="--hl-gold"
         items={glossary}

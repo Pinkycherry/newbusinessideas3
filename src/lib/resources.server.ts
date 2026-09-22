@@ -52,14 +52,18 @@ function trim(text: string, max: number): string {
 }
 
 /**
- * Ten calculators, and the same ten every time.
+ * Twelve calculators, and the same twelve every time.
  *
  * Only guides, glossary and blog rotate — the founder named those three. A
  * calculator strip that reshuffles on every refresh makes the tools feel like
  * a feed rather than a fixed set of things this site has, and a reader who
  * came back for the break-even calculator should find it where it was.
+ *
+ * Twelve, not ten, at the founder's request 2026-09-22. It also divides
+ * cleanly into the three-column grid the hub renders it in, where ten left a
+ * short last row.
  */
-const CALCULATOR_PICKS = CALCULATORS.filter(Boolean).slice(0, 10);
+const CALCULATOR_PICKS = CALCULATORS.filter(Boolean).slice(0, 12);
 
 export async function buildPageResources(): Promise<PageResources> {
   const calculators: ResourceLink[] = CALCULATOR_PICKS.map((calculator) => ({
@@ -68,14 +72,16 @@ export async function buildPageResources(): Promise<PageResources> {
     blurb: trim(calculator.answers || calculator.highlight || "", 96),
   }));
 
-  const guides: ResourceLink[] = sample(STARTUP_GUIDES, 5).map((guide) => ({
+  // Six of the twenty written guides, redrawn per request.
+  const guides: ResourceLink[] = sample(STARTUP_GUIDES, 6).map((guide) => ({
     slug: guide.slug,
     label: guide.title,
     blurb: trim(guide.description, 130),
     meta: guide.readTime,
   }));
 
-  const glossary: ResourceLink[] = sample(GLOSSARY_DATA, 10).map((term) => ({
+  // Twelve of the 159 defined terms, redrawn per request.
+  const glossary: ResourceLink[] = sample(GLOSSARY_DATA, 12).map((term) => ({
     slug: term.slug,
     label: term.term,
     blurb: trim(term.definition, 110),
