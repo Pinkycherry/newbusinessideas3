@@ -1,20 +1,34 @@
 /**
- * Text reveal — line-by-line masked reveal using GSAP SplitText.
+ * Text reveal — REMOVED at the founder's request, 2026-09-22.
  *
- * Uses `mask: "lines"` so each line slides up from a clean edge with room for
- * descenders (a naive line-box clip cuts the tails off "g" and "y"),
- * `autoSplit: true` so lines re-split correctly when the container resizes or
- * a webfont finishes loading, and `aria: "auto"` so screen readers still get
- * one continuous, unbroken string.
+ * This used to run GSAP SplitText over a page's single headline with
+ * `mask: "lines"`, sliding each line up from a clean edge. It is switched
+ * off, and the hook now does nothing but hand back the ref it is given.
  *
- * At most one kinetic headline per section. Two competing is noise.
+ * WHY IT IS A NO-OP RATHER THAN DELETED: twenty routes call it, each one
+ * holding the returned ref on its `<h1>`. Deleting the hook means editing
+ * all twenty in one pass, and an effect the founder may want back is not
+ * worth that blast radius. Every call site keeps working, unchanged, and
+ * renders the heading exactly as it is authored.
  *
- * Under reduced motion the element is left exactly as authored — no split, no
- * tween, no risk of a half-revealed line if something goes wrong.
+ * WHY IT WENT: two reasons, and the second is the one that forced it.
+ *
+ * 1. The founder has been stripping motion from this site section by
+ *    section — the hero background, the hero text reveal, the search pill.
+ *    A headline that animates on arrival is the same class of thing.
+ *
+ * 2. It broke the page. SplitText wraps each line in its own masking
+ *    element, and on a heading that wraps to two lines the wrappers stopped
+ *    contributing the second line's height to the `<h1>` — so whatever
+ *    followed was laid out as though the heading were one line tall and
+ *    rendered straight over it. Confirmed live on a blog post, where the
+ *    byline sat on top of the second line of the title. Every template with
+ *    a headline long enough to wrap had the same bug waiting in it.
+ *
+ * To bring it back: restore the SplitText effect in this file. Nothing at
+ * any call site has to change. Fix the height collapse first.
  */
-import { useEffect, useRef, type RefObject } from "react";
-
-import { loadGsap, prefersReducedMotion } from "./gsap";
+import { useRef, type RefObject } from "react";
 
 export type TextRevealOptions = {
   /** "lines" (default) or "words" for shorter, punchier labels. */
@@ -28,57 +42,12 @@ export type TextRevealOptions = {
   start?: string;
 };
 
+/**
+ * Returns a ref and nothing else. The options are still accepted so no call
+ * site needs touching, and are deliberately unused.
+ */
 export function useTextReveal<T extends HTMLElement = HTMLElement>(
-  options: TextRevealOptions = {},
+  _options: TextRevealOptions = {},
 ): RefObject<T | null> {
-  const ref = useRef<T | null>(null);
-  const { type = "lines", stagger = 0.08, duration = 0.7, delay = 0, start = "top 85%" } = options;
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || prefersReducedMotion()) return;
-    if (!el.textContent?.trim()) return;
-
-    let cancelled = false;
-    // `SplitText` is declared as a class, so the bare type is already the
-    // instance type — wrapping it in InstanceType<> does not typecheck.
-    let split: import("gsap/SplitText").SplitText | null = null;
-
-    loadGsap().then(({ gsap, SplitText }) => {
-      if (cancelled || !ref.current) return;
-      split = SplitText.create(el, {
-        type,
-        mask: type,
-        autoSplit: true,
-        aria: "auto",
-        onSplit(self) {
-          const targets = type === "lines" ? self.lines : self.words;
-          return gsap.fromTo(
-            targets,
-            { yPercent: 108, opacity: 0 },
-            {
-              yPercent: 0,
-              opacity: 1,
-              duration,
-              delay,
-              stagger,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: el,
-                start,
-                toggleActions: "restart reverse restart reverse",
-              },
-            },
-          );
-        },
-      });
-    });
-
-    return () => {
-      cancelled = true;
-      split?.revert();
-    };
-  }, [type, stagger, duration, delay, start]);
-
-  return ref;
+  return useRef<T | null>(null);
 }
