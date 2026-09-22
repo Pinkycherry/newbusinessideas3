@@ -816,11 +816,22 @@ function NewsletterSignup() {
           />
           {/* Was a fourth button treatment on a site that now has one. It is
               the footer tier of the shared action: the same travelling band,
-              at the quietest weight of the three. */}
+              at the quietest weight of the three.
+
+              `bbi-aura` is the homepage guide cards' hover effect — a light
+              running the border — brought down here at the founder's request.
+              The two do not fight, they hand over: the tier-3 band travels at
+              REST and stops dead on hover (`animation: none`, the plate
+              resolves solid — see the THREE TIERS block in styles.css), while
+              the aura is invisible at rest and only runs on hover. So exactly
+              one thing is moving at any moment, and the moment the pointer
+              lands is the one that changes. It also applies on every page,
+              not only the instrument-toned ones, because it is its own class
+              rather than part of the `.bbi-instrument` cascade. */}
           <button
             type="submit"
             disabled={state === "sending"}
-            className="ac-action w-full justify-center px-4 py-2.5 text-sm font-semibold disabled:cursor-wait disabled:opacity-70"
+            className="ac-action bbi-aura w-full justify-center px-4 py-2.5 text-sm font-semibold disabled:cursor-wait disabled:opacity-70"
           >
             {state === "sending" ? "Signing you up…" : "Subscribe"}
           </button>
