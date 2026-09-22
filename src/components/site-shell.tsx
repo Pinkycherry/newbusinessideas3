@@ -14,7 +14,7 @@ import {
   SiTanstack,
   SiNodedotjs,
   SiSupabase,
-  SiVercel,
+  SiCloudflare,
   SiGithub,
 } from "react-icons/si";
 
@@ -71,7 +71,14 @@ const BUILT_WITH: BuiltWithItem[] = [
   { name: "TanStack", href: "https://tanstack.com", Icon: SiTanstack, color: "#FF4154" },
   { name: "Node.js", href: "https://nodejs.org", Icon: SiNodedotjs, color: "#5FA04E" },
   { name: "Supabase", href: "https://supabase.com", Icon: SiSupabase, color: "#3FCF8E" },
-  { name: "Vercel", href: "https://vercel.com", Icon: SiVercel, color: INK },
+  // Was Vercel. The site is deployed on Cloudflare Workers, so crediting Vercel
+  // was a false statement on every page's footer.
+  {
+    name: "Cloudflare",
+    href: "https://workers.cloudflare.com",
+    Icon: SiCloudflare,
+    color: "#F38020",
+  },
   { name: "GitHub", href: "https://github.com", Icon: SiGithub, color: INK },
 ];
 
