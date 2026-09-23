@@ -19,6 +19,8 @@ Owner: **You** = needs the founder (an account, a decision, a click).
 | 2 | **Copy the 2026-09-22 repair into the Google Sheet** | The sheet still holds the stripped text. If the pipeline re-syncs an old row, it overwrites the repair. Every fix is in `public.ideas_narrative_fixes_20260922` (old → new). Do after #1. | Claude, with approval |
 | 4 | **AI vendor names shown on the site** | `src/lib/validate-shared.ts` prints ChatGPT, Claude, Gemini, Grok and Perplexity in the Validate UI — against the rule in `CLAUDE.md`. | **You** decide how Validate should name its destinations; Claude fixes |
 | 5 | **Glossary claims verified data it does not have** | `data/glossary.json` says `"data_level": "ACTUAL"` with zero source URLs. Either source it or change the label. | Claude |
+| 31 | **11 ideas have `research_facts` stored as a JSON string, not a JSON array** | Found in the 2026-09-24 DB check. Anything that iterates the field as an array can break on these rows. Re-run `jsonb_typeof(research_facts)` to get the exact 11 slugs before fixing. | Claude |
+| 32 | **Stray `updated_ideas` table (10 rows, IDEA-00599 to IDEA-00608) sitting outside `ideas`** | Never merged into the main table. Its numbering overlaps the range the next pipeline import will likely use — a future run could collide or duplicate IDs. | **You** decide: merge into `ideas` or drop; Claude executes |
 
 ## P1 — visible on the site, or blocks AdSense
 
@@ -37,7 +39,8 @@ of the column before writing — the same way the 2026-09-22 repair was done.
 
 | # | What | Measured 2026-09-22 | Owner |
 |---|---|---|---|
-| 13a | **Premium sections missing on the 180 newest ideas** | IDEA-00410 to IDEA-00589 (village, women, agriculture, small town) were imported on 2026-09-22 with nine columns empty, so FAQ, How to start, What you need, Who pays, How the money works, Competition edge, Startup cost and Income potential do not show. Cowork filled 00410 to 00450; five Claude Code research agents are filling 00451 to 00589 in parallel (80 of 139 done, 59 left, as of this checkpoint — live count: `faq_json null` in the session brief). Full backup from before the fill: `ideas_backup_20260923`. When the count reaches 0, delete this row. The four new categories also have no category FAQs (every older one has six). | Claude (in progress) |
+| 13a | **Premium sections missing on the 180 newest ideas** | IDEA-00410 to IDEA-00589 (village, women, agriculture, small town) were imported on 2026-09-22 with nine columns empty, so FAQ, How to start, What you need, Who pays, How the money works, Competition edge, Startup cost and Income potential do not show. Cowork filled 00410 to 00450; five Claude Code research agents are filling 00451 to 00589 in parallel (56 of 139 left as of 2026-09-24 — live count: `faq_json null` in the session brief). Full backup from before the fill: `ideas_backup_20260923`. When the count reaches 0, delete this row. **6 categories have no category-level FAQ** (every older category has six) — corrected 2026-09-24; previously recorded as four. | Claude (in progress) |
+| 33 | **IDEA-00565 has no digits anywhere in its cost, income or time-to-first-customer fields** | Found in the 2026-09-24 DB check. Same root cause as #1 (digit stripper) — a concrete example to check against once #1 is fixed. | Claude, after #1 |
 | 13 | **Research facts still being added** | 537 of 589 rows had no `research_facts` on 2026-09-23 (578 on 2026-09-22). The founder is adding them — do not touch or re-raise. Missing facts are the root cause of #1: with no sourced numbers, the writer invented them. | **You** (in progress) |
 | 14 | **"What it costs to start" is the same paragraph on 356 ideas** | `startup_cost` has only 54 distinct values across 589 rows; 356 read "Getting started costs very little beyond basic tools…" | Claude, with approval |
 | 15 | **`target_customer` boilerplate on 356 old rows** | New rows from the pipeline are fine — only the old ones. | Claude, with approval |
@@ -57,6 +60,8 @@ of the column before writing — the same way the 2026-09-22 repair was done.
 | 24 | Drop `ideas_backup_20260923` (full copy of `ideas`, taken 2026-09-23) once the research fill on IDEA-00451 to 00589 has been checked on the site, and the fix log `ideas_narrative_fixes_20260922` after #2. The older partial backups were dropped on 2026-09-23. | Claude, with approval |
 | 25 | The blog branch of the pipeline has a placeholder sheet ID (`REPLACE_WITH_YOUR_SHEET_ID`) per `PIPELINE.md`. Check whether it is still unset. | Claude, after #1 |
 | 26 | Some images are hotlinked from ethicalfounder.com (same owner). They depend on that site staying up. | Low |
+| 34 | `idea_research` table (72 rows) untouched since 2026-09-10 — looks idle/orphaned. Confirm whether the pipeline still writes to it; drop if not. | Claude, with approval |
+| 35 | Category IDs are inconsistently zero-padded (3-digit vs 4-digit) across rows. Check whether it affects sorting or URLs before treating as cosmetic. | Claude |
 
 ## Decisions waiting on you
 
