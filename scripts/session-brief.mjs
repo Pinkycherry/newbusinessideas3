@@ -157,14 +157,20 @@ async function count(filter) {
   return r.headers?.get?.("content-range")?.split("/")[1] ?? `? (${r.status})`;
 }
 if (DB && KEY) {
-  const [total, done, noFacts, metaTpl] = await Promise.all([
+  const [total, done, noFacts, metaTpl, noPremium] = await Promise.all([
     count(""),
     count("status=eq.completed"),
     count("or=(research_facts.is.null,research_facts.eq.%22%5C%22%5C%22%22)"),
     count("meta_description=like.*Honest%20steps,%20the%20real%20work%20involved*"),
+    count("faq_json=is.null"),
   ]);
   out(`ideas ${total} · completed (visible) ${done}`);
   out(`research_facts empty: ${noFacts} (founder is filling these — do not touch)`);
+  // The 2026-09-22 import (IDEA-00410..00589) arrived without the nine premium
+  // columns; a Cowork research run is filling them. faq_json stands in for all nine.
+  out(
+    `premium sections missing (faq_json null): ${noPremium} (Cowork research run — do not touch)`,
+  );
   out(
     `meta_description using the "Honest steps, the real work involved…" template: ${metaTpl} (each one is still unique)`,
   );

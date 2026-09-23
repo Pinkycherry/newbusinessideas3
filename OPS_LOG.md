@@ -8,6 +8,7 @@ One line per change: `- YYYY-MM-DD · where · what · who`. Add yours at the to
 in the same session you made the change. `scripts/session-brief.mjs` prints the
 latest eight lines at the start of every session.
 
+- 2026-09-23 · Supabase · IDEA-00410 to IDEA-00589 (the 180 ideas imported 2026-09-22) arrived with nine premium columns NULL: target_customer, how_you_make_money, startup_cost, income_potential, competition_edge, time_to_first_customer, getting_started_steps, tools_needed, faq_json. Empty state backed up to `public.ideas_detail_backup_20260923`. A Cowork research run is filling them with sourced facts, batch by batch (41 of 180 done at 12:30 UTC). · Claude + Founder (Cowork)
 - 2026-09-23 · Google Search Console · Founder removed and re-added the bbusiness.online property. Search still shows the old Lovable favicon: Google's favicon cache, not the site (the site serves the Bro-B mark). Fix is time plus one "Request indexing" on the homepage. · Founder
 - 2026-09-23 · Cloudflare SSL/TLS · "Always Use HTTPS" switched ON for bbusiness.online. · Claude (Cowork)
 - 2026-09-23 · Cloudflare Rules · Single Redirect "www to apex, http and https": `http*://www.bbusiness.online/*` → `https://bbusiness.online/${2}`, 301, query string kept. Verified: http apex, http www, https www each reach the https apex in one 301. · Claude (Cowork)

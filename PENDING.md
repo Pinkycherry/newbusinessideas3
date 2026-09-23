@@ -37,6 +37,7 @@ of the column before writing — the same way the 2026-09-22 repair was done.
 
 | # | What | Measured 2026-09-22 | Owner |
 |---|---|---|---|
+| 13a | **Premium sections missing on the 180 newest ideas** | IDEA-00410 to IDEA-00589 (village, women, agriculture, small town) were imported on 2026-09-22 with nine columns empty, so FAQ, How to start, What you need, Who pays, How the money works, Competition edge, Startup cost and Income potential do not show. A Cowork run is researching and filling them (live count: `faq_json null` in the session brief). Backup of the empty state: `ideas_detail_backup_20260923`. When the count reaches 0, delete this row. The four new categories also have no category FAQs (every older one has six). | **You** (Cowork, in progress) |
 | 13 | **Research facts still being added** | 537 of 589 rows had no `research_facts` on 2026-09-23 (578 on 2026-09-22). The founder is adding them — do not touch or re-raise. Missing facts are the root cause of #1: with no sourced numbers, the writer invented them. | **You** (in progress) |
 | 14 | **"What it costs to start" is the same paragraph on 356 ideas** | `startup_cost` has only 54 distinct values across 589 rows; 356 read "Getting started costs very little beyond basic tools…" | Claude, with approval |
 | 15 | **`target_customer` boilerplate on 356 old rows** | New rows from the pipeline are fine — only the old ones. | Claude, with approval |
