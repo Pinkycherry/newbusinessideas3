@@ -49,6 +49,7 @@
   --color-hl-green: var(--hl-green);
   --color-hl-coral: var(--hl-coral);
   --color-hl-teal: var(--hl-teal);
+  --color-hl-saffron: var(--hl-saffron);
   --color-amber-glow: var(--amber-glow);
   --color-warm: var(--warm);
   --color-glass-border: var(--glass-border);
@@ -125,6 +126,8 @@
   --hl-green: #4fbf8b;
   --hl-coral: #f0876b;
   --hl-teal: #5fb6d1;
+  --hl-saffron: #ff9933;
+  --hl-saffron-hover: #ffd23f;
 }
 @layer base {
   html {
@@ -1384,6 +1387,17 @@ html.light {
   --hl-green: #0f6e44;
   --hl-coral: #b0442c;
   --hl-teal: #10627a;
+  /* Saffron — measured against paper #F7F6FB: 4.53:1, clears AA for normal
+     text. Reserved for one job only: an inline link to another idea page
+     inside body prose (never a badge, never decorative). No other hl-*
+     token carries this meaning; do not reuse saffron for anything else.
+     Hover goes darker, not lighter/yellow — a light yellow fails AA on
+     white paper. The bright yellow hover (--hl-saffron-hover below the
+     .bbi-instrument block) is the founder-approved treatment; it only
+     applies there, against that scope's dark ground, where it actually
+     reads. */
+  --hl-saffron: #b45900;
+  --hl-saffron-hover: #7a3900;
 }
 html.light body {
   background-color: #f7f6fb !important;
@@ -3359,6 +3373,15 @@ html.light .bbi-instrument,
   --hl-coral: var(--ins-faint);
   --hl-teal: var(--ins-bright);
   --warm: var(--ins-bright);
+  /* Saffron is the ONE deliberate exception to "removed rather than
+     dimmed" above — founder-approved 2026-09-24, for inline links to
+     another idea page inside body prose only. Not neutralised to
+     greyscale like the other four hl-* hues. Values are tuned for THIS
+     scope's dark --ins-void ground (#141414), not the light-paper values
+     above the .bbi-instrument block: saffron #FF9933 measures 8.6:1 here,
+     hover yellow #FFD23F measures 12.8:1 — both comfortably clear AA. */
+  --hl-saffron: #ff9933;
+  --hl-saffron-hover: #ffd23f;
   --radius: 0;
 
   /* And the @theme aliases, which is the part that actually reaches a Tailwind
@@ -3380,6 +3403,31 @@ html.light .bbi-instrument,
   --color-accent-foreground: var(--ins-void);
   --color-ring: var(--ins-signal);
   --color-warm: var(--ins-bright);
+}
+
+/* Inline internal links — an idea page linking to another idea page from
+   inside a sentence of real prose (never a card, never a bare "related"
+   rail). Saffron at rest, brightening to yellow on hover/focus with the
+   underline easing in under it, all via --ease-glass so it matches every
+   other hover transition on the site. transform/opacity/color only, per
+   MOTION_SPEC — nothing here moves layout. */
+.bbi-instrument .bbi-inline-link {
+  color: var(--hl-saffron);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--hl-saffron) 45%, transparent);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition:
+    color 220ms var(--ease-glass),
+    text-decoration-color 220ms var(--ease-glass),
+    text-underline-offset 220ms var(--ease-glass);
+}
+.bbi-instrument .bbi-inline-link:hover,
+.bbi-instrument .bbi-inline-link:focus-visible {
+  color: var(--hl-saffron-hover);
+  text-decoration-color: currentColor;
+  text-underline-offset: 4px;
 }
 
 /* Display is condensed. That is the density signal, and it gives the
