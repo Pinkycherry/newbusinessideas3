@@ -475,24 +475,22 @@ function FriendTalkSection({ picks }: { picks: IdeaCardType[] }) {
       <h2 className={SECTION_HEADING}>One more thing, from us to you</h2>
       <div className={`mt-4 space-y-4 ${BODY_PROSE}`}>
         <p>
-          Arre listen na, don't just read this and close the tab, that's exactly
-          how most people stay stuck forever. If this idea is speaking to you,
-          go have a quick look at{" "}
+          Arre listen na, don't just read this and close the tab, that's exactly how most people
+          stay stuck forever. If this idea is speaking to you, go have a quick look at{" "}
           <Link to="/idea/$slug" params={{ slug: first.slug }} className="bbi-inline-link">
             {first.title}
           </Link>{" "}
-          also, same hustle energy, and honestly it might suit your situation
-          even better than this one.
+          also, same hustle energy, and honestly it might suit your situation even better than this
+          one.
         </p>
         <p>
-          And if budget is the only thing stopping you right now, no tension
-          yaar,{" "}
+          And if budget is the only thing stopping you right now, no tension yaar,{" "}
           <Link to="/idea/$slug" params={{ slug: second.slug }} className="bbi-inline-link">
             {second.title}
           </Link>{" "}
-          is the smaller, easier cousin of this idea, perfect to start small
-          and grow slowly. Bottom line: just start, keep learning as you go,
-          nobody ever became an expert by sitting around and overthinking.
+          is the smaller, easier cousin of this idea, perfect to start small and grow slowly. Bottom
+          line: just start, keep learning as you go, nobody ever became an expert by sitting around
+          and overthinking.
         </p>
       </div>
     </section>
@@ -671,9 +669,17 @@ function IdeaPage() {
   const [subcategoryLink, categoryLink, matchedIdeaLink] = contextualLinks;
   const linkForPosition = (position: InternalLink["position"]) =>
     idea.internalLinkAnchors.find((l) => l.position === position);
-  // Approved 2026-09-24 (PENDING #34) to go out to every idea page — no
-  // manual data entry needed, it's computed from related/trending.
-  const friendTalkPicks = pickFriendTalkLinks(idea, related, trending);
+  // PULLED 2026-09-24 (see PENDING): related/trending are ORDER BY random()
+  // at the DB level, re-rolled on every page load, with zero topical or
+  // tone filtering. That produced real, live, bad pairings -- e.g. this
+  // page recommending "Part Time Obituary Writing Business for Families
+  // With No Words Left" in the cheerful "no tension yaar" voice. It also
+  // directly contradicted the founder's original instruction: internal
+  // links must not be random. Off until it's rebuilt on a real match
+  // (shared category/tags/keywords, same as pickContextualLinks already
+  // does) with sensitive-topic exclusion and dedup against the other two
+  // link systems on this page.
+  const friendTalkPicks: IdeaCardType[] = [];
 
   // Section 6.1 item 5 — 5 FAQs above the additional content, 5 below.
   const faqAbove = idea.faq.slice(0, 5);
