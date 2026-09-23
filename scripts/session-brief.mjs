@@ -167,9 +167,9 @@ if (DB && KEY) {
   out(`ideas ${total} · completed (visible) ${done}`);
   out(`research_facts empty: ${noFacts} (founder is filling these — do not touch)`);
   // The 2026-09-22 import (IDEA-00410..00589) arrived without the nine premium
-  // columns; a Cowork research run is filling them. faq_json stands in for all nine.
+  // columns; research agents are filling them. faq_json stands in for all nine.
   out(
-    `premium sections missing (faq_json null): ${noPremium} (Cowork research run — do not touch)`,
+    `premium sections missing (faq_json null): ${noPremium} (research run in progress — do not touch)`,
   );
   out(
     `meta_description using the "Honest steps, the real work involved…" template: ${metaTpl} (each one is still unique)`,
