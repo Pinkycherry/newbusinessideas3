@@ -14,7 +14,6 @@ Owner: **You** = needs the founder (an account, a decision, a click).
 |---|---|---|---|
 | 1 | **Find and remove the digit stripper in the pipeline** | Every new idea still arrives with all digits, `$`, `₹`, `%`, `:` and `+` deleted. The 589 existing rows were repaired on 2026-09-22; the next pipeline run breaks new ones. It is not in the repo's workflow export or in Supabase — it is in the live n8n workflow or the Google Sheet. Full detail and the fix plan: `PIPELINE.md`. | **You**: n8n → ⋯ → Download the live workflow and give Claude the file. Then Claude. |
 | 2 | **Copy the 2026-09-22 repair into the Google Sheet** | The sheet still holds the stripped text. If the pipeline re-syncs an old row, it overwrites the repair. Every fix is in `public.ideas_narrative_fixes_20260922` (old → new). Do after #1. | Claude, with approval |
-| 3 | **Two lockfiles at the repo root** | `bun.lock` and `package-lock.json` both exist. Cloudflare runs `bun install --frozen-lockfile`; an `npm install` updates only one and the next deploy fails before building. It has already happened once. | Claude |
 | 4 | **AI vendor names shown on the site** | `src/lib/validate-shared.ts` prints ChatGPT, Claude, Gemini, Grok and Perplexity in the Validate UI — against the rule in `CLAUDE.md`. | **You** decide how Validate should name its destinations; Claude fixes |
 | 5 | **Glossary claims verified data it does not have** | `data/glossary.json` says `"data_level": "ACTUAL"` with zero source URLs. Either source it or change the label. | Claude |
 
@@ -25,9 +24,7 @@ Owner: **You** = needs the founder (an account, a decision, a click).
 | 6 | **Old "Keep exploring" block on 17 pages** | `ExploreRail` (three generic cards) still renders directly above the new resource block on 17 routes. Remove the mounts, then delete the component. | Claude |
 | 7 | **Google still shows the Lovable icon** | The site's favicon has been the Bro-B mark since 2026-09-20 and meets Google's rules (includes 48×48, not blocked by robots). Google is showing its old cached copy. | **You**: Search Console → URL Inspection → `https://bbusiness.online/` → Request indexing |
 | 8 | **No `ads.txt`, no AdSense publisher ID** | Hard requirement for AdSense. | **You** supply the publisher ID |
-| 9 | **Confirm `SITE_URL` is set on the Cloudflare Worker** | If it is missing, every canonical URL and sitemap falls back to `businessidea.io` — the wrong domain. Not checkable from a session (the live site is blocked by egress policy). | **You** check the Worker's variables |
 | 10 | **`sameAs` is empty** | Organization schema lists no social profiles. Deliberately empty — inventing them is worse. | **You** supply the real profile URLs |
-| 11 | **`www.bbusiness.online` is not attached** | `www` does not resolve. | **You** |
 | 12 | **Look at the 2026-09-22 changes on the live site** | Nothing from that day was seen rendered from a session. Worth a look: one idea page, `/founders`, `/calculator/break-even`, a category page, a blog post, the homepage, and the footer's Built With strip (now credits Cloudflare, not Vercel). | **You** |
 
 ## P2 — content quality across the library

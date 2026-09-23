@@ -78,6 +78,10 @@ compiled. Always map through a lookup of literal class names.
   in any other file.
 - **Numbers in idea content:** the pipeline currently strips every digit from
   what it writes. Read `PIPELINE.md` before touching idea data.
+- **Packages: bun only.** `bun add` / `bun remove`, never `npm install`.
+  `bun.lock` is the only lockfile; Cloudflare builds with
+  `bun install --frozen-lockfile`, so a package missing from it stops the
+  deploy. `package-lock.json` was removed on 2026-09-23 and is gitignored.
 - Read `BUTTERFLY_EFFECT.md` before touching anything shared. `styles.css`,
   `site-shell.tsx` and `ideas.functions.ts` are high blast radius.
 - `LOGIN_CREDENTIALS_AND_API_KEYS.md` is gitignored. Never commit a key.

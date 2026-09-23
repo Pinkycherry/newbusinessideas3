@@ -657,6 +657,10 @@ pages. Not before.
 
 ### 11.1b Two lockfiles at the repo root — the cause of the first failed deploy
 
+**Resolved 2026-09-23:** `package-lock.json` deleted and gitignored; `bun.lock`
+is the only lockfile. Frozen install and production build both pass. Use
+`bun add`, never `npm install`. The history below is kept for the record.
+
 `bun.lock` and `package-lock.json` both sit at the root. Cloudflare detects bun
 and runs `bun install --frozen-lockfile`, so `bun.lock` is the one that decides
 whether a deploy happens at all.
@@ -941,7 +945,8 @@ The six: `SITE_URL`, `SITE_INDEXABLE`, `IDEAVAULT_DB_URL`,
 
 - `bbusiness.online` (apex) attached as a **Custom Domain**; certificate active,
   site serves over HTTPS.
-- `www.bbusiness.online` — **not attached.** Only the apex is in the list.
+- `www.bbusiness.online` — not a Worker domain. Redirected to the apex by a
+  Cloudflare rule since 2026-09-23 (see 15.6).
 
 **DNS records deleted to free the apex — restore values if ever needed:**
 
@@ -982,7 +987,13 @@ URL, which is what makes the domain switch a single variable.
 
 ### 15.6 Open items from the bring-up
 
-- [ ] `www.bbusiness.online` not attached — add it if www should resolve.
+- [x] `www.bbusiness.online` — done 2026-09-23. Proxied `A www 192.0.2.1`
+      placeholder record plus a Single Redirect rule "www to apex, http and
+      https": `http*://www.bbusiness.online/*` → `https://bbusiness.online/${2}`,
+      301, query string kept. **Always Use HTTPS** switched on. Checked: http
+      apex, http www and https www each reach `https://bbusiness.online` in one
+      301. `SITE_URL` also confirmed live the same day: canonical, og:url,
+      schema, robots.txt, sitemaps and RSS all name bbusiness.online.
 - [ ] One leftover Supabase redirect entry, `https://bbusiness.online/` with no
       wildcard. Harmless; optional to remove.
 - [ ] §7.2 content and trust checks not yet walked — do these before Phase 4.

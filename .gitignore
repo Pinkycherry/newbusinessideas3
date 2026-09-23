@@ -8,6 +8,12 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+
+# bun is the only package manager (Cloudflare runs bun install --frozen-lockfile).
+# Other lockfiles drift from bun.lock and break the deploy.
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 dist
 dist-ssr
 .output
