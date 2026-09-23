@@ -671,12 +671,9 @@ function IdeaPage() {
   const [subcategoryLink, categoryLink, matchedIdeaLink] = contextualLinks;
   const linkForPosition = (position: InternalLink["position"]) =>
     idea.internalLinkAnchors.find((l) => l.position === position);
-  // Trial-gated the same way the 3 curated slots above are (see PENDING):
-  // the founder wants to review this on the one sample page before it goes
-  // out to every idea. Drop this check once it's approved for all ideas.
-  const TRIAL_SLUG = "part-time-podcast-guest-pitch-writing-business";
-  const friendTalkPicks =
-    idea.slug === TRIAL_SLUG ? pickFriendTalkLinks(idea, related, trending) : [];
+  // Approved 2026-09-24 (PENDING #34) to go out to every idea page — no
+  // manual data entry needed, it's computed from related/trending.
+  const friendTalkPicks = pickFriendTalkLinks(idea, related, trending);
 
   // Section 6.1 item 5 — 5 FAQs above the additional content, 5 below.
   const faqAbove = idea.faq.slice(0, 5);
