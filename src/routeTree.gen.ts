@@ -29,6 +29,7 @@ import { Route as SitemapCategoriesDotxmlRouteImport } from './routes/sitemap-ca
 import { Route as SitemapIndexDotxmlRouteImport } from './routes/sitemap-index[.]xml'
 import { Route as SitemapPagesDotxmlRouteImport } from './routes/sitemap-pages[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as VersionDotjsonRouteImport } from './routes/version[.]json'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CalculatorIndexRouteImport } from './routes/calculator.index'
@@ -149,6 +150,11 @@ const SitemapPagesDotxmlRoute = SitemapPagesDotxmlRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VersionDotjsonRoute = VersionDotjsonRouteImport.update({
+  id: '/version.json',
+  path: '/version.json',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -280,6 +286,7 @@ export interface FileRoutesByFullPath {
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
+  '/version.json': typeof VersionDotjsonRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
@@ -323,6 +330,7 @@ export interface FileRoutesByTo {
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
+  '/version.json': typeof VersionDotjsonRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/faq/$categorySlug': typeof FaqCategorySlugRoute
@@ -366,6 +374,7 @@ export interface FileRoutesById {
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
+  '/version.json': typeof VersionDotjsonRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
@@ -411,6 +420,7 @@ export interface FileRouteTypes {
     | '/sitemap-index.xml'
     | '/sitemap-pages.xml'
     | '/terms'
+    | '/version.json'
     | '/blog/$slug'
     | '/calculator/$slug'
     | '/category/$categorySlug'
@@ -454,6 +464,7 @@ export interface FileRouteTypes {
     | '/sitemap-index.xml'
     | '/sitemap-pages.xml'
     | '/terms'
+    | '/version.json'
     | '/blog/$slug'
     | '/calculator/$slug'
     | '/faq/$categorySlug'
@@ -496,6 +507,7 @@ export interface FileRouteTypes {
     | '/sitemap-index.xml'
     | '/sitemap-pages.xml'
     | '/terms'
+    | '/version.json'
     | '/blog/$slug'
     | '/calculator/$slug'
     | '/category/$categorySlug'
@@ -540,6 +552,7 @@ export interface RootRouteChildren {
   SitemapIndexDotxmlRoute: typeof SitemapIndexDotxmlRoute
   SitemapPagesDotxmlRoute: typeof SitemapPagesDotxmlRoute
   TermsRoute: typeof TermsRoute
+  VersionDotjsonRoute: typeof VersionDotjsonRoute
   BlogSlugRoute: typeof BlogSlugRoute
   CalculatorSlugRoute: typeof CalculatorSlugRoute
   CategoryCategorySlugRoute: typeof CategoryCategorySlugRouteWithChildren
@@ -701,6 +714,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/version.json': {
+      id: '/version.json'
+      path: '/version.json'
+      fullPath: '/version.json'
+      preLoaderRoute: typeof VersionDotjsonRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -888,6 +908,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapIndexDotxmlRoute: SitemapIndexDotxmlRoute,
   SitemapPagesDotxmlRoute: SitemapPagesDotxmlRoute,
   TermsRoute: TermsRoute,
+  VersionDotjsonRoute: VersionDotjsonRoute,
   BlogSlugRoute: BlogSlugRoute,
   CalculatorSlugRoute: CalculatorSlugRoute,
   CategoryCategorySlugRoute: CategoryCategorySlugRouteWithChildren,
