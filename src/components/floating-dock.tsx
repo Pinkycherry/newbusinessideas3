@@ -120,7 +120,7 @@ export function FloatingDock() {
                  style is the one thing that wins without editing the shared
                  block, which every button on the site depends on. */
               style={{ borderRadius: "9999px" }}
-              className="glass-btn grid h-11 w-11 place-items-center rounded-full"
+              className="glass-btn bbi-dock-btn grid h-11 w-11 place-items-center rounded-full"
             >
               <ArrowUp className="h-4 w-4" />
             </motion.button>
@@ -137,7 +137,7 @@ export function FloatingDock() {
             aria-label="Jump to a section"
             /* Same override as the back-to-top button above. */
             style={{ borderRadius: "9999px" }}
-            className="glass-btn grid h-11 w-11 place-items-center rounded-full"
+            className="glass-btn bbi-dock-btn grid h-11 w-11 place-items-center rounded-full"
           >
             <motion.span
               animate={{ rotate: open ? 135 : 0 }}

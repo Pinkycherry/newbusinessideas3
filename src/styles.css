@@ -3991,7 +3991,10 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
   /* `.ins-num` at 0.6875rem is 11px, and it is the single most common size in
      the page's body copy — 70 elements of it on the homepage alone, all of
      them labels next to a figure. Measured, not guessed. */
-  html.light .bbi-instrument .ins-num,
+  /* `.ins-num` that sets its own size is a display figure, not a label —
+     the hero's "589" and "20" are `text-[3.25rem]` and were being cut to
+     13px here, smaller than the words under them. */
+  html.light .bbi-instrument .ins-num:not([class*="text-"]),
   html.light .bbi-instrument .text-\[0\.6875rem\],
   html.light .bbi-instrument .text-\[11px\],
   html.light .bbi-instrument .text-xs {
@@ -4012,7 +4015,15 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
     font-size: clamp(2.05rem, 9vw, 2.75rem) !important;
     line-height: 1.08;
   }
-  html.light .bbi-instrument h2 {
+  /* Display headings only. A heading that states its own small size —
+     the uppercase section labels on the idea page ("The breakdown",
+     "Keep exploring", "More in …") — keeps it; forcing every h2 to ~30px
+     turned those labels into shouting banners on a phone. */
+  html.light
+    .bbi-instrument
+    h2:not([class*="text-xs"]):not([class*="text-sm"]):not([class*="text-base"]):not(
+      [class*="text-lg"]
+    ):not([class*="text-xl"]) {
     font-size: clamp(1.7rem, 7.2vw, 2.2rem) !important;
     line-height: 1.12;
   }
@@ -4044,8 +4055,21 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
   .bbi-instrument [role="option"] {
     min-height: 44px;
   }
-  .bbi-instrument a[class*="rounded"],
-  .bbi-instrument button:not([aria-label="Open navigation menu"]) {
+  /* Only elements that do not declare their own layout. This used to force
+     `inline-flex` onto every rounded link and every button, unlayered, so it
+     beat Tailwind's `block`, `flex flex-col`, `grid` and even `hidden` on
+     phones: a card link whose children are absolutely positioned collapsed
+     to 0px wide, flex-column cards were re-aligned, and `hidden sm:block`
+     controls reappeared on mobile. The 44px floor above still applies to
+     all of them; only the display override is now opt-out by class. */
+  .bbi-instrument
+    a[class*="rounded"]:not([class*="flex"]):not([class*="grid"]):not([class*="block"]):not(
+      [class*="hidden"]
+    ),
+  .bbi-instrument
+    button:not([aria-label="Open navigation menu"]):not([class*="flex"]):not([class*="grid"]):not(
+      [class*="block"]
+    ):not([class*="hidden"]) {
     display: inline-flex;
     align-items: center;
   }
@@ -4223,10 +4247,10 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
     linear-gradient(var(--ins-face), var(--ins-face)) padding-box,
     conic-gradient(
         from var(--bbi-edge),
-        transparent 0deg,
+        var(--act-rest, var(--ins-rule)) 0deg,
         var(--act-band) 40deg,
-        transparent 90deg,
-        transparent 360deg
+        var(--act-rest, var(--ins-rule)) 90deg,
+        var(--act-rest, var(--ins-rule)) 360deg
       )
       border-box !important;
   animation: bbi-edge-travel 4.4s linear infinite;
@@ -4249,10 +4273,10 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
     linear-gradient(var(--ins-face), var(--ins-face)) padding-box,
     conic-gradient(
         from var(--bbi-edge),
-        transparent 0deg,
+        var(--act-rest, var(--ins-rule)) 0deg,
         var(--act-band) 40deg,
-        transparent 90deg,
-        transparent 360deg
+        var(--act-rest, var(--ins-rule)) 90deg,
+        var(--act-rest, var(--ins-rule)) 360deg
       )
       border-box !important;
   animation: bbi-edge-travel 5.6s linear infinite;
@@ -4621,11 +4645,17 @@ html.light .bbi-instrument .ac-action:disabled:hover {
    are the two effects that do.
    ============================================================ */
 
-/* --- Flip cards: glossary term on the face, definition behind -- */
-.bbi-flip {
+/* --- Turn cards: glossary term on the face, definition behind ---
+   Named `.bbi-turn`, NOT `.bbi-flip`. This block first shipped as
+   `.bbi-flip*`, which is also the name of the homepage's older
+   "Built with you in mind" card component (defined further up). Being
+   later in the file, these rules overrode that one — its cards collapsed
+   to zero height and stacked on top of each other, and its rules in turn
+   squashed these cards to a sliver. Unique names, no shared selectors. */
+.bbi-turn {
   perspective: 1100px;
 }
-.bbi-flip-inner {
+.bbi-turn-inner {
   position: relative;
   height: 100%;
   transform-style: preserve-3d;
@@ -4634,11 +4664,11 @@ html.light .bbi-instrument .ac-action:disabled:hover {
 /* `:focus-within` as well as `:hover`, so the card opens for a keyboard
    the same way it opens for a cursor. Without it the definition is
    reachable by tab but never visible. */
-.bbi-flip:hover .bbi-flip-inner,
-.bbi-flip:focus-within .bbi-flip-inner {
+.bbi-turn:hover .bbi-turn-inner,
+.bbi-turn:focus-within .bbi-turn-inner {
   transform: rotateY(180deg);
 }
-.bbi-flip-face {
+.bbi-turn-face {
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
@@ -4647,11 +4677,11 @@ html.light .bbi-instrument .ac-action:disabled:hover {
   flex-direction: column;
   justify-content: center;
 }
-.bbi-flip-back {
+.bbi-turn-back {
   transform: rotateY(180deg);
 }
 @media (prefers-reduced-motion: reduce) {
-  .bbi-flip-inner {
+  .bbi-turn-inner {
     transition: none;
   }
 }
@@ -4749,4 +4779,39 @@ html.light .bbi-instrument .ac-action:disabled:hover {
 .bbi-capsule-field {
   border-radius: 9999px;
   padding-inline: 1.15rem;
+}
+
+/* ============================================================
+   MOBILE REPAIR, 2026-09-23 — corrections to the button system
+   Printed last on purpose: each rule here has to come after the
+   unlayered rule it corrects, at least as specific.
+   ============================================================ */
+
+/* The button system sets `position: relative` on every button so its
+   travelling band has something to anchor to. Unlayered, that beat
+   Tailwind's `absolute`, which dropped every floating control into the
+   normal flow — the glossary's "Clear" landed under the search box and
+   pushed the search icon out of it. A button that declares its own
+   positioning keeps it. */
+.bbi-instrument button.absolute:not(.bbi-bare):not(.bbi-x) {
+  position: absolute;
+}
+.bbi-instrument button.fixed:not(.bbi-bare):not(.bbi-x) {
+  position: fixed;
+}
+
+/* The footer's Subscribe capsule. `.bbi-capsule-action` alone lost to
+   `.bbi-instrument button:not(.bbi-bare):not([aria-label=…])` (0,3,1),
+   which pins a 0.375rem radius, so the capsule never rendered. This is
+   (0,4,1) and printed after it. */
+.bbi-instrument .bbi-footer button.bbi-capsule-action:not(.bbi-bare) {
+  border-radius: 9999px;
+}
+
+/* The floating back-to-top and section buttons. `.glass-btn::before` draws a
+   pill-shaped specular highlight sized for wide capsules; on a 44px circle it
+   read as a pale half-moon smudge across the top of each button. Round dock
+   buttons are flat. */
+.glass-btn.bbi-dock-btn::before {
+  display: none;
 }

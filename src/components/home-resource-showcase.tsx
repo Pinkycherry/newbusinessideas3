@@ -145,7 +145,7 @@ export function HomeResourceShowcase({ resources }: { resources: PageResources |
           <Heading legend="Say it properly" title="Twelve terms. Turn one over." />
           <ul className="mx-auto mt-6 grid max-w-6xl gap-4 px-6 sm:grid-cols-2 lg:grid-cols-3">
             {glossary.map((term) => (
-              <li key={term.slug} className="bbi-flip h-40">
+              <li key={term.slug} className="bbi-turn h-40">
                 {/* The link wraps BOTH faces, so the whole card is one target
                     and `:focus-within` on the outer element turns it for a
                     keyboard exactly as hover does for a cursor. */}
@@ -155,8 +155,8 @@ export function HomeResourceShowcase({ resources }: { resources: PageResources |
                   className="block h-full rounded-2xl"
                   aria-label={`${term.label}: ${term.blurb}`}
                 >
-                  <span className="bbi-flip-inner block rounded-2xl">
-                    <span className="bbi-flip-face glass rounded-2xl border border-border p-5">
+                  <span className="bbi-turn-inner block rounded-2xl">
+                    <span className="bbi-turn-face rounded-2xl border border-border bg-card p-5">
                       <span className="text-lg font-bold leading-snug text-foreground">
                         {term.label}
                       </span>
@@ -166,7 +166,7 @@ export function HomeResourceShowcase({ resources }: { resources: PageResources |
                         </span>
                       )}
                     </span>
-                    <span className="bbi-flip-face bbi-flip-back rounded-2xl border border-primary/40 bg-card p-5">
+                    <span className="bbi-turn-face bbi-turn-back rounded-2xl border border-primary/40 bg-card p-5">
                       {/* `aria-hidden`: the link's own label already reads the
                           term and its definition, so the back face would say
                           the same sentence a second time. */}

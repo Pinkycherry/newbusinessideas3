@@ -117,19 +117,22 @@ export function FounderGlossaryPage() {
           {/* Search & Filter Bar */}
           <div className="mt-8 grid gap-4 sm:grid-cols-12">
             <div className="relative sm:col-span-8 lg:col-span-9">
-              <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className="pointer-events-none absolute left-3.5 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by term (e.g. CAC, LTV, TAM, ARR, Safe Note, Churn)..."
-                className="glass w-full rounded-xl py-3 pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                className="glass w-full rounded-xl py-3 pl-10 pr-16 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
+              {/* `bbi-bare`: this is a text control inside the search box, not a
+                  button in its own right, so it opts out of the site-wide
+                  button plate and band. */}
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground hover:text-foreground"
+                  className="bbi-bare absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground hover:text-foreground"
                 >
                   Clear
                 </button>

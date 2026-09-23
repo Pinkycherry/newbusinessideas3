@@ -1058,8 +1058,12 @@ function IdeaPage() {
                 the two lists, since it's a flex-wrap pill cluster that
                 already fills whatever width it's given and doesn't need a
                 column of its own. */}
+            {/* `grid-cols-1` and `[&>*]:min-w-0`: a grid item's default minimum
+                width is its content's, so on a phone the idea cards (long
+                unbroken tag rows) pushed this column to 483px on a 412px
+                screen. Everything below it was dragged sideways with it. */}
             {(bottomRelated.length > 0 || trending.length > 0) && (
-              <div className="mt-16 grid gap-10 sm:grid-cols-2">
+              <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-2 [&>*]:min-w-0">
                 {bottomRelated.length > 0 && (
                   <section data-anchor="related" data-anchor-label="Related">
                     <h2 className={SECTION_HEADING}>More in {idea.categoryName}</h2>
