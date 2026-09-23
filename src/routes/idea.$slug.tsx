@@ -21,7 +21,11 @@ import {
   type IdeaGradient,
   type RelatedCategory,
 } from "@/lib/ideas.functions";
-import { type IdeaCard as IdeaCardType, type IdeaDetail } from "@/lib/ideas-shared";
+import {
+  type IdeaCard as IdeaCardType,
+  type IdeaDetail,
+  type InternalLink,
+} from "@/lib/ideas-shared";
 import { toParagraphs } from "@/lib/prose";
 import { JsonLd, absoluteUrl, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { hideImgIfBroken } from "@/lib/utils";
@@ -89,6 +93,30 @@ function pickContextualLinks(idea: IdeaDetail, related: IdeaCardType[]): Context
   }
 
   return links.slice(0, 3);
+}
+
+/**
+ * A fourth, friend-to-friend section — separate from the 3 curated
+ * InternalLink slots (those wait on hand-written per-idea Supabase copy,
+ * paused for now per the founder). This one is fully automatic: it reuses
+ * 2 distinct ideas from the `related`/`trending` pools already fetched for
+ * this page, so it needs zero manual data entry and works on every idea
+ * page today.
+ */
+function pickFriendTalkLinks(
+  idea: IdeaDetail,
+  related: IdeaCardType[],
+  trending: IdeaCardType[],
+): IdeaCardType[] {
+  const seen = new Set<string>([idea.slug]);
+  const picks: IdeaCardType[] = [];
+  for (const candidate of [...related, ...trending]) {
+    if (seen.has(candidate.slug)) continue;
+    seen.add(candidate.slug);
+    picks.push(candidate);
+    if (picks.length === 2) break;
+  }
+  return picks;
 }
 
 const ideaDetailQuery = (slug: string) =>
@@ -408,6 +436,69 @@ function BlueprintCards({ entries }: { entries: BlueprintEntry[] }) {
   );
 }
 
+/**
+ * One inline internal link, as a natural sentence rather than a card or a
+ * bolted-on "related" rail. `link.anchor` must be an exact substring of
+ * `link.sentence` (enforced by toObjectList's picker in ideas-shared.ts) —
+ * that phrase becomes the link, the rest stays plain text. Saffron/yellow
+ * styling lives in styles.css under `.bbi-inline-link`, the one deliberate
+ * exception to this page's five-value greyscale rule.
+ */
+function InternalLinkLine({ link }: { link: InternalLink | undefined }) {
+  if (!link) return null;
+  const i = link.sentence.indexOf(link.anchor);
+  if (i === -1) return null;
+  const before = link.sentence.slice(0, i);
+  const after = link.sentence.slice(i + link.anchor.length);
+  return (
+    <p className={`mt-5 ${BODY_PROSE}`}>
+      {before}
+      <Link to="/idea/$slug" params={{ slug: link.slug }} className="bbi-inline-link">
+        {link.anchor}
+      </Link>
+      {after}
+    </p>
+  );
+}
+
+/**
+ * The "friend talking to a friend" section: plain Indian-English, motivating,
+ * not a corporate recommendation block. Two inline links woven into two
+ * short sentences, styled the same saffron/yellow as the other inline links.
+ */
+function FriendTalkSection({ picks }: { picks: IdeaCardType[] }) {
+  if (picks.length < 2) return null;
+  const first = picks[0]!;
+  const second = picks[1]!;
+  return (
+    <section className="mt-10 rounded-lg border border-border bg-card p-5">
+      <h2 className={SECTION_HEADING}>One more thing, from us to you</h2>
+      <div className={`mt-4 space-y-4 ${BODY_PROSE}`}>
+        <p>
+          Arre listen na, don't just read this and close the tab, that's exactly
+          how most people stay stuck forever. If this idea is speaking to you,
+          go have a quick look at{" "}
+          <Link to="/idea/$slug" params={{ slug: first.slug }} className="bbi-inline-link">
+            {first.title}
+          </Link>{" "}
+          also, same hustle energy, and honestly it might suit your situation
+          even better than this one.
+        </p>
+        <p>
+          And if budget is the only thing stopping you right now, no tension
+          yaar,{" "}
+          <Link to="/idea/$slug" params={{ slug: second.slug }} className="bbi-inline-link">
+            {second.title}
+          </Link>{" "}
+          is the smaller, easier cousin of this idea, perfect to start small
+          and grow slowly. Bottom line: just start, keep learning as you go,
+          nobody ever became an expert by sitting around and overthinking.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 /** A plain prose block that renders only when the field has content. */
 function RichSection({ title, body }: { title: string; body: string }) {
   if (!body) return null;
@@ -578,6 +669,14 @@ function IdeaPage() {
   const bottomRelated = showSidebarList ? related.slice(3, 6) : related;
   const contextualLinks = pickContextualLinks(idea, related);
   const [subcategoryLink, categoryLink, matchedIdeaLink] = contextualLinks;
+  const linkForPosition = (position: InternalLink["position"]) =>
+    idea.internalLinkAnchors.find((l) => l.position === position);
+  // Trial-gated the same way the 3 curated slots above are (see PENDING):
+  // the founder wants to review this on the one sample page before it goes
+  // out to every idea. Drop this check once it's approved for all ideas.
+  const TRIAL_SLUG = "part-time-podcast-guest-pitch-writing-business";
+  const friendTalkPicks =
+    idea.slug === TRIAL_SLUG ? pickFriendTalkLinks(idea, related, trending) : [];
 
   // Section 6.1 item 5 — 5 FAQs above the additional content, 5 below.
   const faqAbove = idea.faq.slice(0, 5);
@@ -788,6 +887,7 @@ function IdeaPage() {
                   <p key={paragraph.slice(0, 48)}>{paragraph}</p>
                 ))}
               </div>
+              <InternalLinkLine link={linkForPosition("breakdown")} />
             </section>
 
             {/* PROJECT_BRIEF.md Section 3.3 — three panels, always locked,
@@ -916,6 +1016,11 @@ function IdeaPage() {
               </LockedSection>
             ) : null}
 
+            {/* Outside the LockedSection on purpose: a real navigational
+                link should never sit behind the blur treatment, even
+                though LOCK_ENABLED is currently false. */}
+            <InternalLinkLine link={linkForPosition("playbooks")} />
+
             {/* FAQ and citations are not part of the locked research — they
                 stay free, same as the teaser above. */}
             {faqAbove.length > 0 && (
@@ -998,6 +1103,10 @@ function IdeaPage() {
                 ))}
               </div>
             )}
+
+            <InternalLinkLine link={linkForPosition("closing")} />
+
+            <FriendTalkSection picks={friendTalkPicks} />
 
             {subcategoryLink && (
               <section className="mt-8 rounded-lg border border-border bg-card p-5">
