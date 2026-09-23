@@ -57,6 +57,19 @@ export type IdeaCard = {
 
 export type ExternalLink = { label: string; url: string };
 export type FaqItem = { q: string; a: string };
+/**
+ * One inline internal link, embedded inside a natural sentence rather than
+ * bolted on as a card. `sentence` is the full sentence as written; `anchor`
+ * must be an exact substring of it — the page turns just that phrase into
+ * a link to /idea/$slug. `position` says which of the up-to-three natural
+ * breakpoints on the idea page it belongs at (see idea.$slug.tsx).
+ */
+export type InternalLink = {
+  sentence: string;
+  anchor: string;
+  slug: string;
+  position: "breakdown" | "playbooks" | "closing";
+};
 
 export type IdeaDetail = IdeaCard & {
   businessDescription: string;
@@ -85,7 +98,7 @@ export type IdeaDetail = IdeaCard & {
      page -- so every idea was a crawl dead end, reachable from a sitemap and
      from nothing else. Sitemaps advertise a URL; links are what get it
      crawled and indexed. */
-  internalLinkAnchors: string[];
+  internalLinkAnchors: InternalLink[];
 };
 
 /** jsonb arrays of objects (faq, external links) — parsed defensively like toStringList. */
@@ -181,6 +194,26 @@ export function toIdeaDetail(row: IdeaRow): IdeaDetail {
           }
         : null,
     ),
-    internalLinkAnchors: toStringList(row.internal_link_anchors),
+    // Only the new {sentence, anchor, slug, position} shape renders. The
+    // 11 legacy rows holding a bare array of anchor phrases (no sentence,
+    // no target slug — dead data nothing ever rendered) fail this picker
+    // and correctly resolve to []; so does the "" empty-placeholder string
+    // 398 other rows carry. See PENDING for the migration of the legacy 11.
+    internalLinkAnchors: toObjectList(row.internal_link_anchors, (o) =>
+      typeof o["sentence"] === "string" &&
+      typeof o["anchor"] === "string" &&
+      typeof o["slug"] === "string" &&
+      (o["position"] === "breakdown" ||
+        o["position"] === "playbooks" ||
+        o["position"] === "closing") &&
+      o["sentence"].includes(o["anchor"])
+        ? {
+            sentence: o["sentence"],
+            anchor: o["anchor"],
+            slug: o["slug"],
+            position: o["position"],
+          }
+        : null,
+    ),
   };
 }
