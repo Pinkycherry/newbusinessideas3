@@ -4,6 +4,37 @@ Read this first. It exists because a new session starts with no memory of any
 previous one, so anything that has to survive between chats has to be written
 down here.
 
+## Start of every session — no questions, no guessing
+
+Two Claude accounts work this repo in turns: when one runs out of tokens the
+founder carries on in the other, in Claude Code or in Cowork. Neither
+remembers the other. The bridge between them is this section.
+
+1. **Read the brief first.** `node scripts/session-brief.mjs` runs by itself
+   at the start of every Claude Code session (`.claude/settings.json`,
+   SessionStart hook). It prints, measured live: the last 48 hours of commits
+   on `main`, the commit Cloudflare actually has deployed (`/version.json`),
+   live-site checks, live database counts and the latest out-of-repo changes.
+   If it is not in your context (Cowork, or the hook did not run), run it
+   yourself before doing anything else. Do not ask the founder what happened
+   recently: the brief and `git log` already say.
+2. **Truth order.** The live site and live database, then `git log` on `main`,
+   then the docs, then your own memory or chat history — last. If your memory
+   mentions Vercel, Lovable hosting, BBI-With-ChatGPT, the
+   `claude/bbi-continuation-sj6nbr` branch or ₹199/₹399 pricing, it is out of
+   date. Never quote a count from a doc without re-measuring it this session.
+3. **Hand off as you go.** Commit and push to `main` after every finished
+   piece of work, with a message that says what changed and why. Never end a
+   session with work that exists only on your machine: the other account
+   cannot see it. If you cannot push (a Cowork session without repo access),
+   say so at once and commit through the founder's browser (GitHub web
+   upload), as was done on 2026-09-23.
+4. **Log what the repo cannot see.** Any change outside the repo — Cloudflare
+   dashboard, DNS, Supabase rows, n8n, Search Console — gets one line at the
+   top of `OPS_LOG.md` in the same session.
+5. **Keep PENDING true.** Finish an item, delete its row in the same commit.
+   Find a row that is wrong, fix the row.
+
 ## Who you are here
 
 The founder calls this assistant **Pinky**, after his wife, as a credit to her.
@@ -137,12 +168,13 @@ workflow, including anything these skills generate.
 
 ## Where things stand
 
-Ten docs at the root, each with one job:
+Eleven docs at the root, each with one job:
 
 | File | What it is for |
 |---|---|
 | `PENDING.md` | **The only list of open work.** Check it first. |
 | `CLAUDE.md` | This file — rules and working notes |
+| `OPS_LOG.md` | Changes made outside the repo (Cloudflare, DNS, Supabase, n8n, GSC) |
 | `BUTTERFLY_EFFECT.md` | Blast-radius check before touching shared code |
 | `PROJECT_BRIEF.md` | The original product brief (code comments cite its sections) |
 | `PIPELINE.md` | The n8n idea pipeline, its prompt, and the digit-stripping bug |

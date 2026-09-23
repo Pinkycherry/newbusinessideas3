@@ -5,6 +5,9 @@ database or the code on **2026-09-22** — none is copied forward from an older
 doc. When something is done, delete its row; when something new comes up, add
 one. The previous running log (97 entries, Aug–Sep 2026) is in git history.
 
+Counts below are snapshots, dated. Before quoting one, re-measure:
+`node scripts/session-brief.mjs` prints the common ones live.
+
 Owner: **You** = needs the founder (an account, a decision, a click).
 **Claude** = code or data work a session can do, with approval where noted.
 
@@ -34,10 +37,10 @@ of the column before writing — the same way the 2026-09-22 repair was done.
 
 | # | What | Measured 2026-09-22 | Owner |
 |---|---|---|---|
-| 13 | **Research facts missing on almost every idea** | 578 of 589 rows have no `research_facts`. This is the root cause of #1: with no sourced numbers, the writer invented them. | Pipeline |
+| 13 | **Research facts still being added** | 537 of 589 rows had no `research_facts` on 2026-09-23 (578 on 2026-09-22). The founder is adding them — do not touch or re-raise. Missing facts are the root cause of #1: with no sourced numbers, the writer invented them. | **You** (in progress) |
 | 14 | **"What it costs to start" is the same paragraph on 356 ideas** | `startup_cost` has only 54 distinct values across 589 rows; 356 read "Getting started costs very little beyond basic tools…" | Claude, with approval |
 | 15 | **`target_customer` boilerplate on 356 old rows** | New rows from the pipeline are fine — only the old ones. | Claude, with approval |
-| 16 | **398 meta descriptions share one sentence** | Only `summary` and `verdict` are genuinely per-idea; not a mechanical fix. Background: `LAUNCH_RUNBOOK.md` §11.1d. | Claude, with approval |
+| 16 | **398 meta descriptions use one template** | Measured live 2026-09-23: all 589 have a meta description and 588 are unique. 398 follow "How to start a … business. Honest steps, the real work involved, and who it suits best." — unique, but templated. The one exact duplicate is the niche-job-board pair (#20). The founder has reviewed meta: **low priority, do not raise again** unless asked. | **You** decide if ever |
 | 17 | **The line under each idea's title reads like an internal brief** | 292 `business_description`s follow the seed format "The customer is… Money is… The hint: …" and show under the H1. | **You** decide the format; Claude rewrites |
 | 18 | **398 of 589 ideas cite no sources** | `external_links` empty. | Pipeline |
 | 19 | **Internal-link anchors on 11 of 589** | The page already renders them; the field is just empty. | Pipeline |
