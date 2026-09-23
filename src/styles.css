@@ -3790,10 +3790,15 @@ html.light .bbi-instrument .divide-border > * {
      and `.glass-btn` must NOT be in this list: each already fills its own
      plate light on hover and inverts to dark ink (the THREE TIERS rule
      above) -- brightening the label on top of that printed pale-on-pale,
-     same bug the `.glass-pill` exclusion already existed to prevent. */
+     same bug the `.glass-pill` exclusion already existed to prevent.
+     `.bbi-inline-link` is excluded too, for the same reason: it has its own
+     saffron-to-yellow hover transition (see the inline-internal-link rule
+     below), and this layered !important was silently overriding it back to
+     `--ins-signal-hot` (greyscale white in this scope) -- caught visually
+     testing the internal-linking trial page. */
   html.light
     .bbi-instrument
-    a:not(.glass-pill):not(.ac-tag):not(.ac-action):not(.ac-cta):not(.glass-btn):hover {
+    a:not(.glass-pill):not(.ac-tag):not(.ac-action):not(.ac-cta):not(.glass-btn):not(.bbi-inline-link):hover {
     color: var(--ins-signal-hot) !important;
   }
   /* The logo stamp inverts: signal ground, housing ink. */
