@@ -5002,40 +5002,80 @@ html.light .bbi-instrument .ac-action:disabled:hover {
   display: none;
 }
 
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecg.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2") format("woff2");
+}
+
 /* CRIMSON NOIR TRIAL — all presentation lives here. The route opts in only
    the two existing trial slugs. No global palette or default component changes.
-   References: #02060e / #c50337, soft glass rims, bold type and sculptural red.
-   Backup: pre-crimson-noir-2026-09-24. */
+   Reference: Poppins 400/500/600/700; #ca0808, #120404, #270a0a, white and black.
+   Previous presentation: d0c84cf; backup: pre-crimson-noir-2026-09-24. */
 html.light .bbi-instrument.bbi-noir-page,
 .bbi-instrument.bbi-noir-page {
-  --noir-ink: #02060e;
-  --noir-crimson: #c50337;
-  --noir-bright: #ff7599;
-  --noir-surface: #0e1019;
+  --noir-ink: #120404;
+  --noir-crimson: #ca0808;
+  --noir-bright: #efa0a0;
+  --noir-surface: #270a0a;
   --noir-rim: rgb(255 255 255 / 0.15);
   --ins-void: var(--noir-ink);
   --ins-face: var(--noir-surface);
-  --ins-face-2: #21101c;
-  --ins-read: #e6e2e8;
-  --ins-dim: #b8b4c0;
+  --ins-face-2: #270a0a;
+  --ins-read: #f3e7e7;
+  --ins-dim: #cbbbbb;
   --ins-rule: var(--noir-rim);
   --hl-saffron: var(--noir-bright);
-  --hl-saffron-hover: #ffb3c7;
-  background: var(--noir-ink);
+  --hl-saffron-hover: #ffd6d6;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  background:
+    radial-gradient(ellipse 48vw 48vh at 100% 0, #ffffffa6 0, #ca08088c 32%, transparent 75%),
+    radial-gradient(ellipse 48vw 55vh at 0 100%, #ffffff99 0, #ca0808b3 36%, transparent 78%),
+    linear-gradient(135deg, #120404, #270a0a 52%, #120404);
+  background-attachment: fixed;
 }
+.bbi-instrument.bbi-noir-page > main { background: transparent; }
+.bbi-noir-page :is(button, input, textarea, select) { font-family: "Poppins", ui-sans-serif, system-ui, sans-serif; }
+.bbi-noir-page :is(h1, h2, h3, h4) { font-weight: 600; }
 .bbi-noir-page .bbi-noir {
   padding-top: 2rem;
   --radius: 1.15rem;
 }
 .bbi-noir-page .bbi-noir::before {
   inset: 0;
-  background: radial-gradient(ellipse 40rem 32rem at 100% 0, #c503371c, transparent 80%);
+  background: transparent;
 }
 .bbi-noir-page .idea-shell::before {
   display: none;
 }
-.bbi-noir-page :is(h1, h2, h3) {
-  font-family: "IBM Plex Sans", ui-sans-serif, sans-serif;
+.bbi-noir-page :is(h1, h2, h3, h4) {
+  font-family: "Poppins", ui-sans-serif, sans-serif;
   text-wrap: balance;
 }
 .bbi-noir-page [data-anchor] {
@@ -5063,8 +5103,8 @@ html.light .bbi-instrument.bbi-noir-page,
   border: 1px solid rgb(255 255 255 / 0.24);
   border-radius: 2rem;
   background:
-    radial-gradient(ellipse at 96% 20%, #630c2b 0%, transparent 54%),
-    linear-gradient(135deg, #ffffff0c, #ffffff02 38%, #c503370c);
+    radial-gradient(ellipse at 100% 0, #ffffff3d, #ca080866 25%, transparent 65%),
+    linear-gradient(120deg, #120404f5 12%, #120404e6 58%, #270a0ae8);
   box-shadow:
     inset 0 1px 0 #ffffff24,
     0 24px 80px #00000045;
@@ -5084,23 +5124,23 @@ html.light .bbi-instrument.bbi-noir-page,
   font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: #e6e2e8;
+  color: #f3e7e7;
 }
 .bbi-noir-page .bbi-noir-dot {
   width: 0.45rem;
   height: 0.45rem;
   border-radius: 50%;
-  background: #ff3765;
-  box-shadow: 0 0 14px #ff376580;
+  background: #ca0808;
+  box-shadow: 0 0 14px #ca080880;
 }
 .bbi-noir-page .bbi-noir-id {
   margin-left: auto;
-  font-family: "IBM Plex Mono", monospace;
-  color: #b8b4c0;
+  font-family: "Poppins", monospace;
+  color: #cbbbbb;
 }
 .bbi-noir-page .bbi-noir-category {
   margin-top: 2rem;
-  color: #ff9cb6;
+  color: #ffd2d2;
   font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -5108,16 +5148,16 @@ html.light .bbi-instrument.bbi-noir-page,
 .bbi-noir-page .bbi-noir-hero h1 {
   margin-top: 0.85rem;
   font-size: clamp(2rem, 4.1vw, 3.4rem);
-  line-height: 1.07;
-  letter-spacing: -0.045em;
-  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  font-weight: 600;
   color: #fff;
   overflow-wrap: anywhere;
 }
 .bbi-noir-page .bbi-noir-lead {
   margin-top: 1.4rem;
   max-width: 39rem;
-  color: #c9c4ce;
+  color: #d9cccc;
   font-size: 1rem;
   line-height: 1.75;
 }
@@ -5136,24 +5176,24 @@ html.light .bbi-instrument.bbi-noir-page,
   border-radius: 0.8rem;
   padding: 0.85rem 1.1rem;
   background: var(--noir-crimson);
-  border: 1px solid #ff7a9b70;
+  border: 1px solid #ef969670;
   color: #fff;
   font-size: 0.875rem;
   font-weight: 600;
-  box-shadow: 0 6px 24px #c5033733;
+  box-shadow: 0 6px 24px #ca080833;
   transition:
     background 140ms,
     transform 140ms;
 }
 .bbi-noir-page .bbi-noir-cta:hover {
-  background: #e60846;
+  background: #a70606;
   transform: translateY(-2px);
 }
 .bbi-noir-page .bbi-noir-text-link {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: #eee9ef;
+  color: #fff5f5;
   font-size: 0.85rem;
 }
 .bbi-noir-page .bbi-noir-hero-visual {
@@ -5173,10 +5213,9 @@ html.light .bbi-instrument.bbi-noir-page,
   right: -9rem;
   z-index: -1;
   border-radius: 50%;
-  background: radial-gradient(circle at 27% 26%, #ff2d5b, #c50337 27%, #5a001b 60%, #0c0710 78%);
-  box-shadow:
-    inset 2px 2px 5px #ff739850,
-    0 0 100px #c5033733;
+  background: radial-gradient(circle at 70% 18%, #ffffffb3, #ca0808b3 30%, #270a0a66 58%, transparent 74%);
+  filter: blur(18px);
+  box-shadow: none;
 }
 .bbi-noir-page .bbi-noir-signal-card {
   width: 100%;
@@ -5185,7 +5224,7 @@ html.light .bbi-instrument.bbi-noir-page,
   border: 1px solid #ffffff47;
   border-radius: 1.6rem;
   padding: 1.35rem;
-  background: linear-gradient(145deg, #ffffff16, #070910bd 48%, #370b20bf);
+  background: linear-gradient(145deg, #ffffff16, #120404bd 48%, #270a0abf);
   backdrop-filter: blur(22px);
   box-shadow:
     inset 0 1px 0 #ffffff44,
@@ -5199,7 +5238,7 @@ html.light .bbi-instrument.bbi-noir-page,
 .bbi-noir-page .bbi-noir-signal-top > span:last-child {
   font-size: 0.58rem;
   letter-spacing: 0.12em;
-  color: #f0dbe4;
+  color: #ffe5e5;
 }
 .bbi-noir-page .bbi-noir-icon {
   display: inline-grid;
@@ -5208,9 +5247,9 @@ html.light .bbi-instrument.bbi-noir-page,
   height: 2.8rem;
   flex-shrink: 0;
   border-radius: 50%;
-  color: #ff99b4;
-  background: #c5033726;
-  border: 1px solid #ff83a336;
+  color: #f4b5b5;
+  background: #ca080826;
+  border: 1px solid #efa0a036;
 }
 .bbi-noir-page .bbi-noir-score {
   position: relative;
@@ -5229,7 +5268,7 @@ html.light .bbi-instrument.bbi-noir-page,
   stroke: #ffffff1a;
 }
 .bbi-noir-page .bbi-noir-ring-value {
-  stroke: #ff6e98;
+  stroke: #f3b5b5;
   stroke-linecap: round;
 }
 .bbi-noir-page .bbi-noir-score > div {
@@ -5249,7 +5288,7 @@ html.light .bbi-instrument.bbi-noir-page,
 }
 .bbi-noir-page .bbi-noir-score span {
   font-size: 0.65rem;
-  color: #cfc4d1;
+  color: #e0cccc;
   margin-top: 0.65rem;
 }
 .bbi-noir-page .bbi-noir-signal-card > p {
@@ -5265,13 +5304,13 @@ html.light .bbi-instrument.bbi-noir-page,
   font-size: 0.72rem;
   line-height: 1.6;
   text-align: center;
-  color: #c6b8c6;
+  color: #d8bfbf;
 }
 .bbi-noir-page .bbi-noir-visual-caption {
   font-size: 0.55rem;
   letter-spacing: 0.2em;
   margin-top: 1.2rem;
-  color: #c5a2b3;
+  color: #d2aaaa;
 }
 .bbi-noir-page .bbi-noir-hero-foot {
   grid-column: 1 / -1;
@@ -5290,7 +5329,7 @@ html.light .bbi-instrument.bbi-noir-page,
 }
 .bbi-noir-page .bbi-noir-overview summary {
   cursor: pointer;
-  color: #c6becb;
+  color: #dacaca;
   padding: 0.5rem 0;
 }
 .bbi-noir-page .bbi-noir-overview p {
@@ -5317,12 +5356,12 @@ html.light .bbi-instrument.bbi-noir-page,
 }
 .bbi-noir-page .bbi-noir .bbi-spot:hover,
 .bbi-noir-page .bbi-noir .bbi-spot[data-lit="on"] {
-  border-color: #ff759969;
-  box-shadow: 0 12px 35px #c5033720;
+  border-color: #efa0a069;
+  box-shadow: 0 12px 35px #ca080820;
 }
 .bbi-noir-page [data-anchor="breakdown"] {
   padding: clamp(1.5rem, 4vw, 2.4rem);
-  background: radial-gradient(ellipse at 100% 0, #c5033715, transparent 65%), #0e1019;
+  background: radial-gradient(ellipse at 100% 0, #ca080815, transparent 65%), #270a0a;
 }
 .bbi-noir-page [data-anchor="breakdown"] > h2::before {
   content: "";
@@ -5336,7 +5375,7 @@ html.light .bbi-instrument.bbi-noir-page,
 }
 .bbi-noir-page [data-anchor="breakdown"] > div {
   max-width: 56rem;
-  color: #c9c4ce;
+  color: #d9cccc;
 }
 .bbi-noir-page .bbi-noir-blueprint-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -5354,9 +5393,9 @@ html.light .bbi-instrument.bbi-noir-page,
   margin-bottom: 1.4rem;
 }
 .bbi-noir-page .bbi-noir-card-index {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "Poppins", monospace;
   font-size: 0.7rem;
-  color: #bc9aab;
+  color: #cbaaaa;
 }
 .bbi-noir-page .bbi-noir-blueprint-card h3 {
   margin-bottom: 0.8rem;
@@ -5368,17 +5407,17 @@ html.light .bbi-instrument.bbi-noir-page,
 .bbi-noir-page .bbi-noir-blueprint-card p {
   font-size: 1rem;
   line-height: 1.8;
-  color: #bfb9c7;
+  color: #d4c4c4;
 }
 .bbi-noir-page .bbi-noir-blueprint-card p + p {
   margin-top: 1rem;
 }
 .bbi-noir-page .bbi-noir-featured {
-  background: linear-gradient(145deg, #c50337, #850327);
-  border-color: #f5719350;
+  background: linear-gradient(145deg, #ca0808, #270a0a 95%);
+  border-color: #efa0a050;
   box-shadow:
     inset 0 1px 0 #ffffff20,
-    0 15px 45px #c503371c;
+    0 15px 45px #ca08081c;
 }
 .bbi-noir-page .bbi-noir-featured .bbi-noir-icon {
   background: #ffffff15;
@@ -5386,7 +5425,7 @@ html.light .bbi-instrument.bbi-noir-page,
   border-color: #ffffff3b;
 }
 .bbi-noir-page .bbi-noir-featured :is(p, .bbi-noir-card-index) {
-  color: #ffe2e9;
+  color: #ffe2e2;
 }
 .bbi-noir-page .bbi-noir [data-anchor="verdict"].bg-card {
   padding: 0;
@@ -5402,7 +5441,7 @@ html.light .bbi-instrument.bbi-noir-page,
   border: 1px solid #ffffff22;
   border-radius: 1.4rem;
   padding: 1.8rem;
-  background: radial-gradient(ellipse at 100% 100%, #c503371b, transparent 60%), #0d1018;
+  background: radial-gradient(ellipse at 100% 100%, #ca08081b, transparent 60%), #270a0a;
 }
 .bbi-noir-page [data-anchor="verdict"] h2,
 .bbi-noir-page [data-anchor="numbers"] .bbi-spot h2,
@@ -5418,11 +5457,11 @@ html.light .bbi-instrument.bbi-noir-page,
   margin-bottom: 1rem;
 }
 .bbi-noir-page [data-anchor="verdict"] > div:last-child:not(:first-child) {
-  border: 1px solid #c5033750;
-  border-left: 3px solid #c50337;
+  border: 1px solid #ca080850;
+  border-left: 3px solid #ca0808;
   border-radius: 1rem;
   padding: 1.5rem 1.8rem;
-  background: #c503370a;
+  background: #ca08080a;
 }
 .bbi-noir-page [data-anchor="numbers"] .grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -5457,12 +5496,12 @@ html.light .bbi-instrument.bbi-noir-page,
   border-bottom: 0;
 }
 .bbi-noir-page [data-anchor="playbooks"] ol > li > span:first-child {
-  background: #c5033726;
-  color: #ff98b2;
+  background: #ca080826;
+  color: #f4b5b5;
   width: 1.8rem;
   height: 1.8rem;
   line-height: 1.8rem;
-  border: 1px solid #ff759930;
+  border: 1px solid #efa0a030;
 }
 .bbi-noir-page [data-anchor="playbooks"] ul > li {
   border-radius: 0.6rem;
@@ -5475,15 +5514,15 @@ html.light .bbi-instrument.bbi-noir-page,
   border-radius: 1rem;
 }
 .bbi-noir-page .idea-shell details.bg-card[open] {
-  border-color: #ff759966;
-  background: #170e1a;
+  border-color: #efa0a066;
+  background: #270a0a;
 }
 .bbi-noir-page .idea-shell details.bg-card summary {
   line-height: 1.5;
   padding-right: 0.5rem;
 }
 .bbi-noir-page .idea-shell details.bg-card summary::marker {
-  color: #ff7599;
+  color: #efa0a0;
 }
 .bbi-noir-page [data-anchor="demand"] {
   padding: 1.8rem;
@@ -5493,11 +5532,11 @@ html.light .bbi-instrument.bbi-noir-page,
   background: #ffffff13;
 }
 .bbi-noir-page [data-anchor="demand"] .demand-gauge-track > div {
-  background: #e9134d;
+  background: #ca0808;
 }
 .bbi-noir-page #validate {
-  background: radial-gradient(ellipse at 100% 0, #c5033738, transparent 65%), #101019;
-  border-color: #ff75993d;
+  background: radial-gradient(ellipse at 100% 0, #ca080838, transparent 65%), #270a0a;
+  border-color: #efa0a03d;
 }
 .bbi-noir-page .stack-list {
   perspective: none;
@@ -5518,7 +5557,7 @@ html.light .bbi-instrument.bbi-noir-page,
   margin-bottom: 0.65rem;
 }
 .bbi-noir-page .bbi-noir-arrow {
-  color: #ff98b2;
+  color: #f4b5b5;
 }
 .bbi-noir-page .bbi-noir-idea-card h3 {
   font-size: 1.2rem;
@@ -5531,19 +5570,19 @@ html.light .bbi-instrument.bbi-noir-page,
 /* ResourceHub lives beside main. The optional SiteShell root class reaches
    these panels without a global selector or duplicating the resource list. */
 .bbi-noir-page [data-anchor="resources"] {
-  border-top-color: #ff759929;
+  border-top-color: #efa0a029;
   padding-top: 2.8rem;
 }
 .bbi-noir-page [data-anchor="resources"] > section {
   padding: 1.8rem;
   border: 1px solid #ffffff15;
   border-radius: 1.5rem;
-  background: linear-gradient(140deg, #c503370a, transparent 55%), #080b13;
+  background: linear-gradient(140deg, #ca08080a, transparent 55%), #120404;
 }
 .bbi-noir-page [data-anchor="resources"] section > div > span {
   border-radius: 50%;
-  background: #c5033726 !important;
-  color: #ff99b4 !important;
+  background: #ca080826 !important;
+  color: #f4b5b5 !important;
 }
 .bbi-noir-page [data-anchor="resources"] .mo-card {
   border-radius: 1rem;
@@ -5572,9 +5611,9 @@ html.light .bbi-instrument.bbi-noir-page,
   left: 1.2rem;
   top: 1.4rem;
   font:
-    0.75rem "IBM Plex Mono",
+    0.75rem "Poppins",
     monospace;
-  color: #ff7599;
+  color: #efa0a0;
 }
 
 /* Existing instrument rules use layered !important. A narrowly scoped base
@@ -5582,7 +5621,7 @@ html.light .bbi-instrument.bbi-noir-page,
 @layer base {
   html .bbi-instrument.bbi-noir-page .bbi-noir :is(.glass, .glass-pill),
   html .bbi-instrument.bbi-noir-page [data-anchor="resources"] .glass {
-    background: linear-gradient(145deg, #ffffff07, transparent 70%), #0e1019 !important;
+    background: linear-gradient(145deg, #ffffff07, transparent 70%), #270a0a !important;
     border-color: #ffffff24 !important;
     box-shadow:
       inset 0 1px 0 #ffffff0b,
@@ -5596,32 +5635,32 @@ html.light .bbi-instrument.bbi-noir-page,
   }
   html .bbi-instrument.bbi-noir-page .bbi-noir a.glass:hover,
   html .bbi-instrument.bbi-noir-page [data-anchor="resources"] a.glass:hover {
-    background: #1b101e !important;
-    border-color: #ff759969 !important;
+    background: #270a0a !important;
+    border-color: #efa0a069 !important;
   }
   html .bbi-instrument.bbi-noir-page .bbi-noir-hero :is(.bbi-noir-cta, .bbi-noir-cta:hover) {
     color: #fff !important;
   }
   html .bbi-instrument.bbi-noir-page .bbi-noir-featured :is(p, .bbi-noir-card-index) {
-    color: #ffe2e9 !important;
+    color: #ffe2e2 !important;
   }
   html .bbi-instrument.bbi-noir-page .bbi-noir-icon,
   html .bbi-instrument.bbi-noir-page .bbi-noir-icon svg {
-    color: #ff99b4 !important;
+    color: #f4b5b5 !important;
   }
   html .bbi-instrument.bbi-noir-page .bbi-noir-featured .bbi-noir-icon {
     color: #fff !important;
   }
   html .bbi-instrument.bbi-noir-page .bbi-noir-category {
-    color: #ff9cb6 !important;
+    color: #ffd2d2 !important;
   }
   html .bbi-instrument.bbi-noir-page [data-anchor="playbooks"] ol > li > span:first-child {
-    background: #c5033726 !important;
-    color: #ff98b2 !important;
+    background: #ca080826 !important;
+    color: #f4b5b5 !important;
   }
 }
 .bbi-noir-page :is(a, button, summary, textarea):focus-visible {
-  outline: 2px solid #ff8bae;
+  outline: 2px solid #efa0a0;
   outline-offset: 4px;
 }
 @media (max-width: 767px) {
@@ -5714,5 +5753,21 @@ html.light .bbi-instrument.bbi-noir-page,
   .bbi-noir-page .bbi-noir :is(a, button, .bbi-spot):hover,
   .bbi-noir-page [data-anchor="resources"] a:hover {
     transform: none;
+  }
+}
+
+/* White-to-muted-white display type, with a solid accessible fallback. */
+@supports (background-clip: text) {
+  .bbi-noir-page .bbi-noir-hero h1 {
+    background: linear-gradient(115deg, #ffffff 18%, #ffffff 45%, #d9bcbc 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+@media (forced-colors: active) {
+  .bbi-noir-page .bbi-noir-hero h1 {
+    background: none;
+    -webkit-text-fill-color: currentColor;
   }
 }
