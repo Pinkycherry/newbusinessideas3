@@ -4357,12 +4357,18 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
     0 6px 16px rgb(0 0 0 / 0.3);
 }
 /* The small icon/share buttons (`rounded-md bg-card`) each carry their own
-   literal 0.375rem border-radius a few hundred lines up this file (button
-   plate rules, not the `--radius` token chain), so the scope override above
-   never reaches them. Pinned directly here rather than touching those
-   shared button rules, which other pages still depend on as-is. */
+   literal 0.375rem border-radius a few hundred lines up this file, via
+   `.bbi-instrument button:not(.bbi-bare):not([aria-label="Open navigation
+   menu"])` -- confirmed live via a matched-rules dump, not a guess: that
+   selector's 3 classes + 1 element type beats this rule's 3 classes on
+   specificity alone (equal class count, its extra `button` type selector
+   is the tiebreaker), even though it reads as the less specific rule at a
+   glance. `!important` is the documented way this file already breaks that
+   exact tie (see the `html.light .bbi-instrument a:hover` fix, same cascade
+   family, earlier in this file) -- scoped to these two trial pages only,
+   not a site-wide `!important`. */
 .bbi-card-smooth .rounded-md.bg-card {
-  border-radius: 0.85rem;
+  border-radius: 0.85rem !important;
 }
 @media (prefers-reduced-motion: reduce) {
   .bbi-card-smooth .bg-card,
