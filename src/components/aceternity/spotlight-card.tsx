@@ -1,6 +1,7 @@
 import { useRef, useState, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
+import { isLegacyMotionPage } from "@/motion/legacy-page";
 
 /**
  * SpotlightCard — React Bits, ported to this stack.
@@ -40,6 +41,7 @@ export default function SpotlightCard({
   const [lit, setLit] = useState(false);
 
   const track = (e: React.MouseEvent<HTMLElement>) => {
+    if (!isLegacyMotionPage()) return;
     const node = ref.current;
     if (!node) return;
     const rect = node.getBoundingClientRect();
@@ -53,10 +55,18 @@ export default function SpotlightCard({
     <Tag
       ref={ref as never}
       onMouseMove={track}
-      onMouseEnter={() => setLit(true)}
-      onMouseLeave={() => setLit(false)}
-      onFocus={() => setLit(true)}
-      onBlur={() => setLit(false)}
+      onMouseEnter={() => {
+        if (isLegacyMotionPage()) setLit(true);
+      }}
+      onMouseLeave={() => {
+        if (isLegacyMotionPage()) setLit(false);
+      }}
+      onFocus={() => {
+        if (isLegacyMotionPage()) setLit(true);
+      }}
+      onBlur={() => {
+        if (isLegacyMotionPage()) setLit(false);
+      }}
       className={cn("bbi-spot", className)}
       style={{ "--spot-color": spotlightColor } as React.CSSProperties}
       data-lit={lit ? "on" : undefined}

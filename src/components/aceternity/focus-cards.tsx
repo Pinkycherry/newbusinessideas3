@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { memo, useState } from "react";
 
 import { cn, hideImgIfBroken } from "@/lib/utils";
+import { isLegacyMotionPage } from "@/motion/legacy-page";
 
 export type FocusCard = {
   title: string;
@@ -37,12 +38,20 @@ const Card = memo(function Card({
     <Link
       to={card.to}
       params={card.params}
-      onMouseEnter={() => setFocused(index)}
-      onMouseLeave={() => setFocused(null)}
-      onFocus={() => setFocused(index)}
-      onBlur={() => setFocused(null)}
+      onMouseEnter={() => {
+        if (isLegacyMotionPage()) setFocused(index);
+      }}
+      onMouseLeave={() => {
+        if (isLegacyMotionPage()) setFocused(null);
+      }}
+      onFocus={() => {
+        if (isLegacyMotionPage()) setFocused(index);
+      }}
+      onBlur={() => {
+        if (isLegacyMotionPage()) setFocused(null);
+      }}
       className={cn(
-        "group relative block h-56 w-full overflow-hidden rounded-md border border-border bg-card transition-all duration-300 ease-out sm:h-64",
+        "cm-focus-card group relative block h-56 w-full overflow-hidden rounded-md border border-border bg-card transition-all duration-300 ease-out sm:h-64",
         dimmed && "scale-[0.985] opacity-60 blur-[1px]",
       )}
     >
@@ -56,11 +65,13 @@ const Card = memo(function Card({
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       ) : null}
-      <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/35 to-transparent" />
+      <div className="cm-focus-shade absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/35 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-5">
-        <span className="text-lg font-semibold leading-snug text-background">{card.title}</span>
+        <span className="cm-focus-title text-lg font-semibold leading-snug text-background">
+          {card.title}
+        </span>
         {card.meta ? (
-          <span className="text-[11px] uppercase tracking-[0.18em] text-background/70">
+          <span className="cm-focus-meta text-[11px] uppercase tracking-[0.18em] text-background/70">
             {card.meta}
           </span>
         ) : null}

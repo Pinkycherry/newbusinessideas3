@@ -8,18 +8,17 @@ import { InternalLinkLine, IdeaSignature, LockedBody } from "@/components/idea-b
 import { ValidateButton } from "@/components/validate-button";
 import type { RelatedCategory } from "@/lib/ideas.functions";
 import type { IdeaCard, IdeaDetail, InternalLink } from "@/lib/ideas-shared";
-import { toParagraphs } from "@/lib/prose";
+import { splitSentences, toParagraphs } from "@/lib/prose";
 import { absoluteUrl } from "@/lib/schema";
 
 import { CinemaContents, useTrackSections, type CinemaSection } from "./cinema-contents";
-import { CinemaIcon } from "./cinema-icons";
+import { CinemaIcon, type CinemaIconName } from "./cinema-icons";
 import { useCinemaStage } from "./use-cinema-stage";
 import "./cinema.css";
 
 /**
- * The idea-page cinema trial. Rendered only for the slugs in
- * CINEMA_TRIAL_SLUGS in `routes/idea.$slug.tsx`; every other idea page keeps
- * the standard template.
+ * The shared idea-page presentation. The route supplies the existing data;
+ * this component changes only how the research is arranged and read.
  *
  * Same content, links, ads, lock state and disabled features as the standard
  * template. Round two (2026-09-24, afternoon) reorders it so the page reads
@@ -55,10 +54,21 @@ type Props = {
 
 const TRENDING_SHOWN = 3;
 
-/** Section heading: an optional plain label, then the heading. */
-function CineHead({ eyebrow, children }: { eyebrow?: string; children: ReactNode }) {
+/** Section heading with an original, semantic mark; text carries its meaning. */
+function CineHead({
+  eyebrow,
+  icon,
+  children,
+}: {
+  eyebrow?: string;
+  icon: CinemaIconName;
+  children: ReactNode;
+}) {
   return (
     <div className="cm-head">
+      <span className="cm-head-icon" aria-hidden="true">
+        <CinemaIcon name={icon} size={24} />
+      </span>
       <div className="min-w-0">
         {eyebrow && <p className="cm-eyebrow">{eyebrow}</p>}
         {/* `text-xl` states the heading's size, which exempts it from the
@@ -71,11 +81,66 @@ function CineHead({ eyebrow, children }: { eyebrow?: string; children: ReactNode
 }
 
 /** A sub-heading inside a section (h3). */
-function CineSubHead({ children }: { children: ReactNode }) {
+function CineSubHead({ icon, children }: { icon: CinemaIconName; children: ReactNode }) {
   return (
     <div className="cm-subhead">
+      <span className="cm-subhead-icon" aria-hidden="true">
+        <CinemaIcon name={icon} size={20} />
+      </span>
       <h3>{children}</h3>
     </div>
+  );
+}
+
+/** Shorter reading measures, without changing any research words or punctuation. */
+function readingParagraphs(text: string | null | undefined): string[] {
+  const authored = (text ?? "")
+    .trim()
+    .split(/\n\s*\n+/)
+    .filter(Boolean);
+  if (authored.length > 1) return authored;
+
+  return toParagraphs(text).flatMap((paragraph) => {
+    const result: string[] = [];
+    let pending: string[] = [];
+    let words = 0;
+    for (const sentence of splitSentences(paragraph)) {
+      const nextWords = sentence.split(/\s+/).length;
+      // Break nearest 90 words, always at a complete sentence. A single long
+      // sentence remains intact, and a short final paragraph stays readable.
+      if (words >= 60 && words + nextWords > 100) {
+        result.push(pending.join(" "));
+        pending = [];
+        words = 0;
+      }
+      pending.push(sentence);
+      words += nextWords;
+      if (words >= 90) {
+        result.push(pending.join(" "));
+        pending = [];
+        words = 0;
+      }
+    }
+    if (pending.length > 0) result.push(pending.join(" "));
+    return result;
+  });
+}
+
+function CineParagraphs({
+  text,
+  className,
+}: {
+  text: string | null | undefined;
+  className?: string;
+}) {
+  return (
+    <>
+      {readingParagraphs(text).map((paragraph, index) => (
+        <p key={`${index}-${paragraph.slice(0, 48)}`} className={className}>
+          {paragraph}
+        </p>
+      ))}
+    </>
   );
 }
 
@@ -287,7 +352,7 @@ function FaqList({ items }: { items: IdeaDetail["faq"] }) {
             <span className="cm-faq-mark" aria-hidden="true" />
           </summary>
           <div className="cm-faq-a">
-            <p>{item.a}</p>
+            <CineParagraphs text={item.a} />
           </div>
         </details>
       ))}
@@ -376,10 +441,10 @@ export function IdeaCinemaPage({
 
   const blueprint = (
     [
-      { title: "The opportunity", body: idea.marketOpportunity },
-      { title: "Who actually pays you", body: idea.targetCustomer },
-      { title: "How the money works", body: idea.howYouMakeMoney },
-      { title: "Your edge", body: idea.competitionEdge },
+      { title: "The opportunity", body: idea.marketOpportunity, icon: "opportunity" },
+      { title: "Who actually pays you", body: idea.targetCustomer, icon: "customer" },
+      { title: "How the money works", body: idea.howYouMakeMoney, icon: "revenue" },
+      { title: "Your edge", body: idea.competitionEdge, icon: "edge" },
     ] as const
   ).filter((entry): entry is typeof entry & { body: string } => Boolean(entry.body));
   const hasVerdict = idea.pros.length > 0 || idea.cons.length > 0 || Boolean(idea.verdict);
@@ -434,7 +499,7 @@ export function IdeaCinemaPage({
                   <span className="cm-faq-mark" aria-hidden="true" />
                 </summary>
                 <div className="cm-dossier-body">
-                  <p>{rest}</p>
+                  <CineParagraphs text={rest} />
                 </div>
               </details>
             )}
@@ -456,11 +521,9 @@ export function IdeaCinemaPage({
       </header>
 
       <section id="breakdown" className="cm-open-edge cm-section" data-reveal="wipe">
-        <CineHead>The breakdown</CineHead>
+        <CineHead icon="journal">The breakdown</CineHead>
         <div className="cm-prose cm-measure">
-          {toParagraphs(idea.summary).map((paragraph) => (
-            <p key={paragraph.slice(0, 48)}>{paragraph}</p>
-          ))}
+          <CineParagraphs text={idea.summary} />
         </div>
         <InternalLinkLine
           link={linkFor("breakdown")}
@@ -469,21 +532,28 @@ export function IdeaCinemaPage({
       </section>
 
       <section id="blueprint" className="cm-section">
-        <CineHead eyebrow="Premium research">The Blueprint</CineHead>
+        <CineHead eyebrow="Premium research" icon="guide">
+          The Blueprint
+        </CineHead>
         <LockedBody>
           {blueprint.length > 0 && (
             <div className="cm-blueprint" data-reveal="stagger">
               {blueprint.map((item, i) => (
                 <article
                   key={item.title}
-                  className={i === 0 ? "cm-card cm-stepped" : "cm-card cm-open-edge"}
+                  className={`cm-card cm-blueprint-panel cm-blueprint-${item.icon} ${
+                    i === 0 ? "cm-stepped cm-blueprint-lead" : "cm-open-edge"
+                  }`}
                   style={{ "--i": i } as CSSProperties}
                 >
-                  <h3>{item.title}</h3>
+                  <div className="cm-panel-heading">
+                    <span className="cm-panel-index" aria-hidden="true">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <CineSubHead icon={item.icon}>{item.title}</CineSubHead>
+                  </div>
                   <div className="cm-prose">
-                    {toParagraphs(item.body).map((paragraph) => (
-                      <p key={paragraph.slice(0, 48)}>{paragraph}</p>
-                    ))}
+                    <CineParagraphs text={item.body} />
                   </div>
                 </article>
               ))}
@@ -500,7 +570,7 @@ export function IdeaCinemaPage({
           <LockedBody>
             <div className="cm-oppose" data-reveal="oppose">
               <div className="cm-side cm-side-pro">
-                <CineSubHead>Why it works</CineSubHead>
+                <CineSubHead icon="strength">Why it works</CineSubHead>
                 <ul>
                   {idea.pros.map((pro) => (
                     <li key={pro}>{pro}</li>
@@ -508,7 +578,7 @@ export function IdeaCinemaPage({
                 </ul>
               </div>
               <div className="cm-side cm-side-con">
-                <CineSubHead>What will hurt</CineSubHead>
+                <CineSubHead icon="risk">What will hurt</CineSubHead>
                 <ul>
                   {idea.cons.map((con) => (
                     <li key={con}>{con}</li>
@@ -518,8 +588,8 @@ export function IdeaCinemaPage({
             </div>
             {idea.verdict && (
               <div className="cm-verdict" data-reveal="impact">
-                <CineSubHead>Verdict</CineSubHead>
-                <p>{idea.verdict}</p>
+                <CineSubHead icon="verdict">Verdict</CineSubHead>
+                <CineParagraphs text={idea.verdict} />
               </div>
             )}
           </LockedBody>
@@ -531,7 +601,9 @@ export function IdeaCinemaPage({
       </div>
 
       <section id="numbers" className="cm-section">
-        <CineHead eyebrow="Premium research">{moneyTitle}</CineHead>
+        <CineHead eyebrow="Premium research" icon="calculator">
+          {moneyTitle}
+        </CineHead>
         <LockedBody>
           {hasMoney ? (
             <div
@@ -539,24 +611,24 @@ export function IdeaCinemaPage({
               data-reveal="ledger"
             >
               {idea.startupCost && (
-                <div className="cm-ledger-side">
+                <div className="cm-ledger-side cm-ledger-cost">
                   <div className="cm-ledger-rail">
-                    <CineSubHead>
+                    <CineSubHead icon="cost">
                       {hasFigures ? "What it costs to start" : "Startup inputs"}
                     </CineSubHead>
                   </div>
-                  <p>{idea.startupCost}</p>
+                  <CineParagraphs text={idea.startupCost} className="cm-ledger-prose" />
                 </div>
               )}
               <span className="cm-ledger-axis" aria-hidden="true" />
               {idea.incomePotential && (
-                <div className="cm-ledger-side">
+                <div className="cm-ledger-side cm-ledger-income">
                   <div className="cm-ledger-rail">
-                    <CineSubHead>
+                    <CineSubHead icon="income">
                       {hasFigures ? "What you can earn" : "Revenue model and capacity"}
                     </CineSubHead>
                   </div>
-                  <p>{idea.incomePotential}</p>
+                  <CineParagraphs text={idea.incomePotential} className="cm-ledger-prose" />
                 </div>
               )}
               <p className="cm-ledger-note">
@@ -575,14 +647,16 @@ export function IdeaCinemaPage({
 
       {hasPlaybooks && (
         <section id="playbooks" className="cm-section">
-          <CineHead eyebrow="Premium research">Tactical Playbooks</CineHead>
+          <CineHead eyebrow="Premium research" icon="launch">
+            Tactical Playbooks
+          </CineHead>
           <LockedBody>
             <div
               className={`cm-playbook${idea.gettingStartedSteps.length > 0 ? "" : " is-single"}`}
             >
               {idea.gettingStartedSteps.length > 0 && (
                 <div className="cm-mission" data-reveal="rise">
-                  <CineSubHead>How to start</CineSubHead>
+                  <CineSubHead icon="launch">How to start</CineSubHead>
                   <div className="cm-mission-track">
                     <ol className="cm-ribbons">
                       {idea.gettingStartedSteps.map((step, i) => (
@@ -590,7 +664,9 @@ export function IdeaCinemaPage({
                           <span className="cm-ribbon-idx" aria-hidden="true">
                             {i + 1}
                           </span>
-                          <span>{step}</span>
+                          <div className="cm-ribbon-copy">
+                            <CineParagraphs text={step} />
+                          </div>
                         </li>
                       ))}
                     </ol>
@@ -601,7 +677,7 @@ export function IdeaCinemaPage({
                 <div className="cm-playbook-side">
                   {idea.toolsNeeded.length > 0 && (
                     <div className="cm-dock" data-reveal="rise">
-                      <CineSubHead>What you need</CineSubHead>
+                      <CineSubHead icon="tools">What you need</CineSubHead>
                       <ul className="cm-tools">
                         {idea.toolsNeeded.map((tool) => {
                           const [name, use] = splitTool(tool);
@@ -617,8 +693,11 @@ export function IdeaCinemaPage({
                   )}
                   {idea.timeToFirstCustomer && (
                     <div className="cm-timeline" data-reveal="lock">
-                      <CineSubHead>Time to first customer</CineSubHead>
-                      <p className="whitespace-pre-line">{idea.timeToFirstCustomer}</p>
+                      <CineSubHead icon="timeline">Time to first customer</CineSubHead>
+                      <CineParagraphs
+                        text={idea.timeToFirstCustomer}
+                        className="whitespace-pre-line"
+                      />
                     </div>
                   )}
                 </div>
@@ -633,7 +712,7 @@ export function IdeaCinemaPage({
 
       {faqAbove.length > 0 && (
         <section id="questions" className="cm-section" data-reveal="rise">
-          <CineHead>Questions people ask</CineHead>
+          <CineHead icon="glossary">Questions people ask</CineHead>
           <FaqList items={faqAbove} />
           {faqBelow.length > 0 && (
             <div className="cm-faq-more">
@@ -645,7 +724,7 @@ export function IdeaCinemaPage({
 
       {idea.externalLinks.length > 0 && (
         <section className="cm-section" data-reveal="rise">
-          <CineHead>Useful resources</CineHead>
+          <CineHead icon="tools">Useful resources</CineHead>
           <ul className="cm-sources">
             {idea.externalLinks.map((link) => (
               <li key={link.url}>
@@ -683,7 +762,7 @@ export function IdeaCinemaPage({
       {/* The page's conclusion, before the library: the existing validate
           flow, same controls, same disabled and sign-in behaviour. */}
       <section id="validate" className="cm-console cm-section" data-reveal="rise">
-        <CineHead>Run it before you commit</CineHead>
+        <CineHead icon="verdict">Run it before you commit</CineHead>
         <p className="cm-console-sub">Free, on your own account, as many times as you want.</p>
         <ValidateButton slug={idea.slug} cinema />
         <Link to="/browse" className="cm-trace-link cm-console-browse">
@@ -700,7 +779,7 @@ export function IdeaCinemaPage({
 
       {hasExplore && (
         <section id="explore" className="cm-section cm-explore" data-reveal="rise">
-          <CineHead>Keep exploring</CineHead>
+          <CineHead icon="opportunity">Keep exploring</CineHead>
           {subcategoryLink && (
             <p className="cm-prose cm-measure">
               This blueprint sits inside{" "}

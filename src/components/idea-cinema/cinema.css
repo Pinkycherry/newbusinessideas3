@@ -1,4 +1,4 @@
-/* The plain site system (2026-09-24 site-wide rollout).
+/* Crimson glass interior system (2026-09-24).
 
    Imported once in routes/__root.tsx, after styles.css and motion.css, so
    every rule here outranks the rule it replaces at equal specificity. Every
@@ -9,12 +9,11 @@
    Started as the approved idea-page trial and was promoted to the whole site
    unchanged; the idea-page markup is components/idea-cinema/idea-cinema.tsx.
 
-   Direction (founder, 2026-09-24): flat panels with a hairline border, plain
-   white headings, one type family on a dark ground, red kept for the primary
-   button and a few small accents. No gradient headline text, icon plates,
-   red dashes, letter-spaced capitals, decorative arcs, counters, side
-   stripes, notches or cut corners. Motion: one-time reveals, short control
-   feedback, native smooth anchor scrolling, all off under reduced motion. */
+   Direction: Poppins, warm black, opposed red/pale corner illumination,
+   sculpted translucent surfaces and small responsive movements. Surface
+   depth is painted with static gradients, not live backdrop blur. The
+   homepage never receives .cm-page and retains its existing presentation.
+   Existing calm-motion and keyboard fixes are preserved. */
 
 .bbi-instrument.cm-page,
 html.light .bbi-instrument.cm-page {
@@ -37,17 +36,28 @@ html.light .bbi-instrument.cm-page {
   --cm-text-2: #e7dada;
   --cm-text-3: #c6adad;
   --cm-red-text: #f0a8a8;
-  --cm-surface: #220909;
-  --cm-radius: 0.5rem;
+  --cm-surface: #1b080a;
+  --cm-radius: 1.65rem;
+  --cm-glass:
+    radial-gradient(ellipse at 100% 100%, #ca08082e, transparent 65%),
+    linear-gradient(135deg, #ffffff0e, #16080de8 48%, #24090cea);
+  --cm-shadow: inset 0 1px 0 #ffffff21, inset 0 -1px 0 #ca080840, 0 16px 32px -24px #000c;
 
-  /* Two faint, static corner glows; the reading area stays dark. */
-  background:
-    radial-gradient(ellipse at 100% 0%, rgb(202 8 8 / 0.14), transparent 45%),
-    radial-gradient(ellipse at 0% 100%, rgb(202 8 8 / 0.1), transparent 45%), var(--bbi-bg);
+  background: var(--bbi-bg);
 }
-/* Round one's fixed backdrop layer is replaced by the background above. */
+/* One stationary painted layer. No moving blur or background-position loop. */
 .bbi-instrument.cm-page::before {
-  display: none !important;
+  display: block !important;
+  background:
+    radial-gradient(
+      ellipse 46vw 56vh at 105% -8%,
+      #ffd8d888 0%,
+      #e9393970 27%,
+      #ca080838 48%,
+      transparent 78%
+    ),
+    radial-gradient(ellipse 44vw 58vh at -12% 100%, #ffb5b573 0%, #ca080855 34%, transparent 75%),
+    linear-gradient(125deg, #120404, #190606 50%, #120404);
 }
 
 /* ---- Header: opaque, one contents control, no floating dock ------------- */
@@ -294,13 +304,34 @@ html.light .bbi-instrument.cm-page {
 /* ---- Type: plain white headings, sentence-case labels ------------------- */
 .cm-page :is(.cm-h1, .cm-head h2) {
   background: none;
-  -webkit-background-clip: border-box;
-  background-clip: border-box;
   -webkit-text-fill-color: currentColor;
   color: var(--bbi-white);
 }
 .cm-page .cm-head {
   margin-bottom: 1rem;
+  align-items: center;
+  gap: 0.85rem;
+}
+.cm-page .cm-head-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 2.9rem;
+  width: 2.9rem;
+  height: 2.9rem;
+  color: #ffd5d5;
+  border: 1px solid #ffffff26;
+  border-radius: 50% 50% 8px 50%;
+  background: linear-gradient(145deg, #ca08086b, #270a0a);
+  box-shadow: inset 0 1px #ffffff2b;
+}
+.cm-page .cm-head-icon svg {
+  width: 24px;
+  height: 24px;
+}
+.cm-page .cm-subhead-icon {
+  color: #e99191;
+  display: inline-flex;
+  flex-shrink: 0;
 }
 .bbi-instrument.cm-page :is(.cm-kicker, .cm-eyebrow, .cm-signal-label) {
   margin: 0;
@@ -320,23 +351,26 @@ html.light .bbi-instrument.cm-page {
 /* ---- Hero ------------------------------------------------------------------ */
 .cm-page .cm-hero {
   margin-top: 0.75rem;
-  padding: clamp(1.25rem, 0.9rem + 1.5vw, 2.25rem) var(--cm-pad);
+  padding: clamp(1.25rem, 0.9rem + 1.5vw, 2.25rem) 0 2.8rem;
+  overflow: visible;
 }
-/* A plain panel: the round-one cut corner and stage animation are off. */
+/* Open masthead. The offer and the demand instrument have distinct shapes. */
 .cm-page .cm-hero::before,
 .cm-page .cm-hero::after {
   clip-path: none;
-  border-radius: var(--cm-radius);
+  border-radius: 0;
   animation: none;
 }
 .cm-page .cm-hero::before {
-  background: var(--cm-line-2);
+  display: none;
 }
 .cm-page .cm-hero::after {
-  background: var(--bbi-surface);
+  inset: auto 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ed3939bb 30%, #ffd2d273 65%, transparent);
 }
 .cm-page .cm-hero-grid {
-  grid-template-columns: minmax(0, 1.75fr) minmax(16rem, 1fr);
+  grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 1fr);
   gap: clamp(1.25rem, 1rem + 2vw, 2.75rem);
   padding-top: 0;
 }
@@ -344,17 +378,18 @@ html.light .bbi-instrument.cm-page {
    column sets the measure. */
 .cm-page .cm-h1 {
   margin-top: 0.6rem;
-  font-size: clamp(1.875rem, 1.1rem + 2.4vw, 3.15rem);
-  line-height: 1.1;
-  letter-spacing: -0.025em;
+  font-size: clamp(1.875rem, 1.1rem + 2.4vw, 3rem);
+  line-height: 1.14;
+  font-weight: 600;
+  letter-spacing: -0.045em;
   animation: cm-aperture var(--motion-scene) var(--ease-out) both;
 }
 /* The heading enters once, as one block. The server markup is final, so
    with no script the text is simply there. */
 @keyframes cm-aperture {
   from {
-    opacity: 0;
-    transform: translateY(12px);
+    opacity: 0.65;
+    transform: translateY(8px);
   }
 }
 .bbi-instrument.cm-page .cm-lead {
@@ -463,7 +498,7 @@ html.light .bbi-instrument.cm-page {
     .cm-more > summary,
     .cm-btn
   ) {
-  border-radius: 0.375rem;
+  border-radius: 999px;
 }
 
 /* ---- Share: a popover under the button, so the page never moves -------- */
@@ -494,7 +529,7 @@ html.light .bbi-instrument.cm-page {
 
 /* ---- Demand score, compact -------------------------------------------------- */
 .cm-page .cm-signal {
-  padding: 1rem 1.1rem;
+  padding: 1.35rem 1.4rem;
 }
 .cm-page .cm-signal-top {
   display: flex;
@@ -528,7 +563,7 @@ html.light .bbi-instrument.cm-page {
   font-weight: 600;
 }
 
-/* ---- Content surfaces: one flat panel with a hairline border ------------ */
+/* ---- Surface family: sculpted glass, open reading, connected sequences --- */
 .cm-page
   :is(
     .cm-open-edge,
@@ -546,12 +581,61 @@ html.light .bbi-instrument.cm-page {
     .cm-editorial-item,
     .cm-tool
   ) {
-  background: var(--cm-surface);
-  border: 1px solid var(--cm-line);
-  border-radius: var(--cm-radius);
+  background: var(--cm-glass);
+  border: 1px solid #ffffff23;
+  border-top-color: #ffffff40;
+  border-radius: 1.9rem 0.65rem 1.9rem 0.65rem;
+  box-shadow: var(--cm-shadow);
 }
 .cm-page .cm-deck > li:nth-child(n) .cm-deck-card {
-  border-radius: var(--cm-radius);
+  border-radius: 1.5rem 0.45rem 1.5rem 0.45rem;
+}
+.cm-page .cm-deck > li:nth-child(2n) .cm-deck-card {
+  border-radius: 0.45rem 1.5rem 0.45rem 1.5rem;
+}
+.cm-page .cm-signal {
+  border-radius: 2.3rem 2.3rem 0.55rem 2.3rem;
+  background:
+    radial-gradient(ellipse at 100% 0, #e8373742, transparent 62%),
+    linear-gradient(135deg, #ffffff13, #14070beb 58%);
+}
+.cm-page #breakdown.cm-open-edge {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1.75rem 0;
+}
+.cm-page #breakdown .cm-prose {
+  max-width: 68ch;
+}
+.cm-page .cm-prose {
+  line-height: 1.8;
+}
+.cm-page .cm-prose p + p {
+  margin-top: 1em;
+}
+.cm-page :is(.cm-faq-item, .cm-tool, .cm-source, .cm-editorial-item) {
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ffffff25;
+}
+.cm-page .cm-faq-item {
+  padding-inline: 0;
+}
+.cm-page .cm-mission {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+.cm-page .cm-dock {
+  border-radius: 0.65rem 2.2rem 0.65rem 2.2rem;
+}
+.cm-page .cm-timeline {
+  border-radius: 1.8rem 0.6rem 0.6rem 0.6rem;
 }
 .cm-page .cm-open-edge {
   padding: var(--cm-pad);
@@ -568,6 +652,37 @@ html.light .bbi-instrument.cm-page {
 /* Cards size to their own text: no equal-height empty panels. */
 .cm-page .cm-blueprint {
   align-items: start;
+  gap: 1.25rem;
+}
+.cm-page .cm-panel-heading {
+  display: flex;
+  align-items: start;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+.cm-page .cm-panel-index {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  line-height: 1.6;
+  color: #d99b9b;
+  padding-top: 0.3rem;
+}
+.cm-page .cm-blueprint-panel .cm-subhead {
+  align-items: center;
+  gap: 0.6rem;
+}
+.cm-page .cm-blueprint-opportunity {
+  border-radius: 2.6rem 0.7rem 2.6rem 0.7rem;
+  background: radial-gradient(ellipse at 0 0, #ca08082b, transparent 75%), var(--cm-glass);
+}
+.cm-page .cm-blueprint-customer {
+  border-radius: 0.7rem 2.4rem 0.7rem 2.4rem;
+}
+.cm-page .cm-blueprint-revenue {
+  border-radius: 2.4rem 0.7rem 2.4rem 0.7rem;
+}
+.cm-page .cm-blueprint-edge {
+  border-radius: 0.7rem 0.7rem 2.4rem 0.7rem;
 }
 .cm-page .cm-stepped {
   margin-top: 0;
@@ -614,9 +729,12 @@ html.light .bbi-instrument.cm-page {
 .cm-page .cm-verdict::before {
   -webkit-mask: none;
   mask: none;
-  background: var(--bbi-surface);
-  border: 1px solid var(--cm-line-2);
-  border-radius: var(--cm-radius);
+  background:
+    radial-gradient(ellipse at 100% 100%, #ca080850, transparent 60%),
+    linear-gradient(130deg, #ffffff15, #140709e8);
+  border: 1px solid #ffffff38;
+  border-radius: 0.6rem 2.7rem 0.6rem 2.7rem;
+  box-shadow: var(--cm-shadow);
 }
 .cm-page .cm-verdict::after {
   display: none;
@@ -642,12 +760,15 @@ html.light .bbi-instrument.cm-page {
 
 /* ---- Steps: plain numbers ---------------------------------------------------- */
 .cm-page .cm-ribbon-idx {
-  display: block;
-  height: auto;
-  border: 0;
-  background: none;
-  color: var(--cm-text-3);
-  font-size: 0.9375rem;
+  display: grid;
+  place-items: center;
+  height: 2.2rem;
+  width: 2.2rem;
+  border: 1px solid #ffffff33;
+  border-radius: 50% 50% 4px 50%;
+  background: linear-gradient(145deg, #ca080852, #140709);
+  color: #ffdada;
+  font-size: 0.7rem;
   font-weight: 600;
   text-align: left;
 }
@@ -812,11 +933,14 @@ html.light .bbi-instrument.cm-page {
 /* ---- Mapping: panels ------------------------------------------------------ */
 @layer base {
   html .cm-page :is(.glass, .glass-hover, .glass-hover:hover) {
-    background: var(--cm-surface) !important;
+    background: var(--cm-glass) !important;
     backdrop-filter: none !important;
-    border: 1px solid var(--cm-line) !important;
-    box-shadow: none !important;
-    transition: border-color var(--motion-control) var(--ease-out) !important;
+    border: 1px solid #ffffff28 !important;
+    border-top-color: #ffffff45 !important;
+    box-shadow: var(--cm-shadow) !important;
+    transition:
+      transform 220ms var(--ease-out),
+      border-color 180ms ease-out !important;
   }
   html .cm-page :is(a, button).glass-hover:is(:hover, :focus-visible),
   html .cm-page a.glass:is(:hover, :focus-visible) {
@@ -824,7 +948,7 @@ html.light .bbi-instrument.cm-page {
   }
 }
 .cm-page .glass:is(.rounded-xl, .rounded-2xl, .rounded-3xl, .rounded-md, .rounded-lg) {
-  border-radius: var(--cm-radius);
+  border-radius: 1.7rem 0.6rem 1.7rem 0.6rem;
 }
 .cm-page :is(.glass, .bbi-aura, .glass-btn, .glass-pill)::before,
 .cm-page .glass::after,
@@ -832,7 +956,9 @@ html.light .bbi-instrument.cm-page {
   display: none !important;
 }
 .cm-page :is(.bg-card, .bbi-spot) {
-  background: var(--cm-surface);
+  background: var(--cm-glass);
+  border-radius: 1.7rem 0.6rem 1.7rem 0.6rem;
+  box-shadow: var(--cm-shadow);
 }
 
 /* ---- Mapping: buttons ----------------------------------------------------- */
@@ -848,10 +974,10 @@ html.light .bbi-instrument.cm-page {
     .glass-pill,
     button:not(.bbi-bare):not([aria-label="Open navigation menu"]):not([aria-haspopup])
   ) {
-  background: var(--cm-surface) !important;
+  background: linear-gradient(135deg, #ffffff12, #270a0ad9) !important;
   border: 1px solid var(--cm-line-2) !important;
-  border-radius: 0.375rem;
-  box-shadow: none !important;
+  border-radius: 999px;
+  box-shadow: inset 0 1px #ffffff1a !important;
   animation: none !important;
   color: var(--cm-text-2) !important;
   transition:
@@ -901,10 +1027,12 @@ html.light .bbi-instrument.cm-page {
 }
 
 /* ---- Mapping: type -------------------------------------------------------- */
-/* No gradient headline text anywhere. */
+/* White-to-rose light catches display text; body copy stays a solid colour. */
 .cm-page .bg-clip-text {
-  background: none !important;
-  -webkit-text-fill-color: currentColor;
+  background: linear-gradient(110deg, #fff 35%, #e6b5b5 80%, #bd8383) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent;
   color: var(--bbi-white);
 }
 /* No letter-spaced capitals: eyebrows, labels and nav read in sentence
@@ -943,7 +1071,7 @@ html.light .bbi-instrument.cm-page {
   ) {
   background: color-mix(in srgb, var(--bbi-bg) 70%, var(--bbi-surface)) !important;
   border: 1px solid var(--cm-line-2) !important;
-  border-radius: 0.375rem;
+  border-radius: 0.85rem;
   box-shadow: none !important;
   color: var(--bbi-white);
   transition: border-color var(--motion-fast) var(--ease-out);
@@ -1036,4 +1164,248 @@ html.light .bbi-instrument.cm-page {
 }
 .cm-page .mo-card::after {
   display: none;
+}
+
+/* Interior finish: opt-in scope is owned by SiteShell, never the homepage. */
+.cm-page .cm-focus-card {
+  border-radius: 2rem 0.6rem 2rem 0.6rem;
+  border-color: #ffffff38;
+  box-shadow: var(--cm-shadow);
+  transition:
+    transform 220ms var(--ease-out),
+    border-color 180ms;
+}
+.cm-page .cm-focus-card:nth-child(2n) {
+  border-radius: 0.6rem 2rem 0.6rem 2rem;
+}
+.cm-page .cm-focus-card > img {
+  opacity: 0.65;
+}
+.cm-page .cm-focus-card .cm-focus-shade {
+  background: linear-gradient(0deg, #120404fa, #270a0a77 55%, #ca080810);
+}
+.cm-page .cm-focus-card .cm-focus-title {
+  color: #fff !important;
+  font-weight: 500;
+}
+.cm-page .cm-focus-card .cm-focus-meta {
+  color: #dec5c5 !important;
+}
+.cm-page .glass-nav :is(a[href="/sign-in"], a[href="/browse"]) {
+  border-radius: 999px;
+}
+.cm-page .cm-frame {
+  max-width: 75rem;
+}
+.cm-page :is(.cm-section, .cm-panel) {
+  min-width: 0;
+}
+.cm-page .cm-head h2 {
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+.cm-page .cm-section {
+  margin-top: 2.5rem;
+}
+.cm-page .cm-blueprint .cm-stepped {
+  display: block;
+  padding: 1.6rem;
+}
+.cm-page .cm-blueprint .cm-card {
+  padding: 1.6rem;
+}
+.cm-page .cm-blueprint .cm-panel-heading h3 {
+  margin: 0;
+}
+.cm-page .cm-blueprint .cm-stepped .cm-prose {
+  margin-top: 0.85rem;
+}
+.cm-page .cm-blueprint-lead .cm-prose {
+  max-width: 68ch;
+}
+.cm-page .cm-ledger {
+  border-radius: 2rem 0.6rem 2rem 0.6rem;
+}
+.cm-page .cm-ribbon-copy > p + p {
+  margin-top: 0.65rem;
+}
+.cm-page .cm-console {
+  border-radius: 2.7rem 0.7rem 2.7rem 0.7rem;
+  background: radial-gradient(ellipse at 100% 100%, #ca080836, transparent 65%), var(--cm-glass);
+}
+.cm-page .cm-console .cm-validate {
+  background: transparent;
+}
+.cm-page .cm-gauge {
+  border-radius: 999px;
+}
+.cm-page .cm-gauge-fill {
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ca0808, #f36c6c);
+}
+.cm-page .ci-accent {
+  stroke: #ec7575;
+}
+.cm-page .cm-btn {
+  border-radius: 999px;
+}
+.cm-page .cm-btn-primary {
+  background: linear-gradient(135deg, #e92b2b, #ca0808 55%, #930909);
+  border-color: #ff939373;
+  box-shadow:
+    inset 0 1px #ffc2c266,
+    0 8px 20px -14px #f54c4c;
+}
+.cm-page .cm-icon-btn {
+  border-radius: 50%;
+}
+.cm-page :is(.cm-share-fan, .cm-contents-panel) {
+  border-radius: 1.1rem;
+  background: #1c080a;
+}
+.cm-page .cm-contents-toggle {
+  border-radius: 999px;
+  background: linear-gradient(145deg, #ffffff0f, #270a0a);
+}
+.cm-page .cm-capsule {
+  border-radius: 999px;
+}
+.cm-page .cm-capsule-link {
+  background: #ffffff08;
+}
+.cm-page .bbi-footer {
+  background: linear-gradient(150deg, #ffffff09, #120404 65%, #ca080815);
+  border: 1px solid #ffffff20;
+  border-radius: 2rem 2rem 0.6rem 0.6rem;
+  box-shadow: inset 0 1px #ffffff18;
+}
+.cm-page .bbi-spot {
+  border: 1px solid #ffffff2c;
+  overflow: hidden;
+}
+.cm-page .bbi-spot.mo-card {
+  transition:
+    transform 220ms var(--ease-out),
+    border-color 180ms ease;
+}
+.cm-page .bbi-spot.mo-card:nth-child(2n) {
+  border-radius: 0.6rem 1.7rem 0.6rem 1.7rem;
+}
+.cm-page .bbi-spot > span > a {
+  padding: 1.4rem;
+}
+.cm-page .bbi-spot :is(h2, h3) {
+  font-weight: 600;
+}
+.cm-page .bbi-spot .text-hl-teal {
+  color: #f0b6b6;
+}
+.cm-page .cm-editorial-item {
+  padding: 1rem 0;
+}
+.cm-page .cm-term {
+  border-radius: 1.3rem 0.5rem 1.3rem 0.5rem;
+  background: var(--cm-glass);
+}
+.cm-page .cm-index-row {
+  border-radius: 0.6rem;
+}
+.cm-page .cm-status-card {
+  background: var(--cm-glass);
+  box-shadow: var(--cm-shadow);
+  border-radius: 2rem 0.6rem 2rem 0.6rem;
+}
+@supports (background-clip: text) {
+  .cm-page main h1:not(.cm-status-title),
+  .cm-page .cm-h1 {
+    background-image: linear-gradient(110deg, #fff 38%, #f3d9d9 70%, #cfaaaa);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .cm-page :is(.bbi-spot.mo-card, a.glass, a.glass-hover, .cm-deck-card):hover {
+    transform: translateY(-3px);
+    border-color: #ffffff55;
+  }
+  .cm-page .cm-blueprint-panel {
+    transition:
+      transform 240ms var(--ease-out),
+      border-color 180ms;
+  }
+  .cm-page .cm-blueprint-panel:hover {
+    transform: translateY(-2px);
+    border-color: #f5898966;
+  }
+  .cm-page .cm-head-icon svg {
+    transition: transform 220ms var(--ease-out);
+  }
+  .cm-page .cm-section:hover > .cm-head .cm-head-icon svg {
+    transform: rotate(-7deg);
+  }
+}
+@media (max-width: 767px) {
+  .cm-page .cm-head-icon {
+    flex-basis: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .cm-page .cm-head-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+  .cm-page .cm-head h2 {
+    font-size: 1.45rem;
+    line-height: 1.25;
+  }
+  .cm-page .cm-section {
+    margin-top: 1.75rem;
+  }
+  .cm-page .cm-blueprint .cm-card {
+    padding: 1.25rem;
+  }
+  .cm-page .cm-blueprint {
+    gap: 1rem;
+  }
+  .cm-page .cm-signal {
+    padding: 1.15rem;
+    border-radius: 1.6rem 1.6rem 0.5rem 1.6rem;
+  }
+  .bbi-instrument.cm-page .cm-signal-note {
+    font-size: 0.8rem;
+  }
+  .bbi-instrument.cm-page .cm-prose {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+  .cm-page .cm-console {
+    border-radius: 1.8rem 0.6rem 1.8rem 0.6rem;
+  }
+  .cm-page .cm-verdict::before {
+    border-radius: 0.5rem 1.8rem 0.5rem 1.8rem;
+  }
+  .cm-page .bbi-spot > span > a {
+    padding: 1.15rem;
+  }
+  .cm-page .glass:is(input, select, textarea) {
+    border-radius: 0.85rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cm-page :is(.cm-blueprint-panel, .cm-deck-card, .bbi-spot.mo-card) {
+    transition: none;
+    transform: none;
+  }
+}
+@media (forced-colors: active) {
+  .cm-page main h1,
+  .cm-page .cm-h1,
+  .cm-page .bg-clip-text {
+    background: none !important;
+    -webkit-text-fill-color: currentColor;
+  }
+  .cm-page :is(.glass, .cm-card, .cm-signal, .bbi-spot) {
+    border: 1px solid CanvasText !important;
+  }
 }
