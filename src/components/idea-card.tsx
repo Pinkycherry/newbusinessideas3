@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { ArrowUpRight, Lightbulb } from "lucide-react";
 
 import CardSpotlight from "@/components/aceternity/card-spotlight";
 
@@ -7,6 +8,7 @@ import type { IdeaCard as IdeaCardData } from "@/lib/ideas-shared";
 export function IdeaCard({
   idea,
   featured = false,
+  visualTrial = false,
 }: {
   idea: IdeaCardData;
   /** Section 12.7 — no repetitive same-size card walls. Pass true for exactly
@@ -18,6 +20,8 @@ export function IdeaCard({
    * that broke left-to-right comparison without telling the reader anything,
    * so the emphasis is now earned by real data or not given at all. */
   featured?: boolean;
+  /** Enables the scoped Crimson Noir treatment on the /ideas trial page. */
+  visualTrial?: boolean;
 }) {
   // PROJECT_BRIEF.md Section 3.2, as rewritten on 2026-09-21: an anonymous
   // visitor sees every page type in full. Nothing blurred, nothing locked.
@@ -29,13 +33,30 @@ export function IdeaCard({
   // know who is looking at it.
 
   return (
-    <CardSpotlight className={`mo-card h-full ${featured ? "sm:col-span-2" : ""}`}>
+    <CardSpotlight
+      className={`mo-card h-full ${featured ? "sm:col-span-2" : ""}${
+        visualTrial ? ` bbi-noir-idea-card${featured ? " bbi-noir-featured" : ""}` : ""
+      }`}
+    >
       <Link
         to="/idea/$slug"
         params={{ slug: idea.slug }}
         className="group relative flex h-full min-w-0 flex-col p-4 sm:p-5"
       >
         <div className="flex h-full flex-col gap-2.5">
+          {visualTrial && (
+            <div className="bbi-noir-card-top flex items-center justify-between">
+              <span className="bbi-noir-icon">
+                <Lightbulb size={22} strokeWidth={1.8} aria-hidden="true" />
+              </span>
+              <ArrowUpRight
+                className="bbi-noir-arrow"
+                size={20}
+                strokeWidth={1.8}
+                aria-hidden="true"
+              />
+            </div>
+          )}
           <div className="flex items-center justify-between gap-3 text-[11px] uppercase tracking-widest text-muted-foreground">
             <span className="truncate">{idea.subcategoryName}</span>
             {idea.trendScore !== null && (

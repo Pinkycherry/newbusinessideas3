@@ -866,12 +866,15 @@ function NewsletterSignup() {
 export function SiteShell({
   children,
   tone,
+  visualTrial = false,
 }: {
   children: ReactNode;
   /** "instrument" swaps the shell into the dark panel world. Scoped rather
    * than global so a template that has not been redesigned yet keeps the
    * light treatment instead of half-inheriting this one. */
   tone?: "instrument";
+  /** Opt-in visual treatment for the two idea-page trials only. */
+  visualTrial?: boolean;
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   // Radix renders selects, dialogs and tooltips through a PORTAL on
@@ -898,7 +901,7 @@ export function SiteShell({
     <div
       className={`relative flex min-h-screen flex-col text-foreground${
         tone === "instrument" ? " bbi-instrument" : ""
-      }`}
+      }${visualTrial ? " bbi-noir-page" : ""}`}
     >
       <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">
         {/* Reading position for the whole document. One composited transform

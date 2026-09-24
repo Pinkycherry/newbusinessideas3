@@ -6,7 +6,20 @@ import { queryOptions } from "@tanstack/react-query";
 // belonged to `KeepExploringRail`, which ResourceHub replaced at the foot of
 // this page; leaving the imports behind would keep pulling them into the
 // idea-page chunk for nothing.
-import { Lock, Lightbulb, Users, Wallet, Shield, type LucideIcon } from "lucide-react";
+import {
+  Lock,
+  Lightbulb,
+  Users,
+  Wallet,
+  Shield,
+  Rocket,
+  Wrench,
+  Clock,
+  Check,
+  X,
+  type LucideIcon,
+} from "lucide-react";
+import { IdeaTrialHero, TrialIcon } from "@/components/idea-visual-trial";
 import type { CSSProperties, ReactNode } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
@@ -277,7 +290,13 @@ function DemandBlock({ score }: { score: number | null }) {
  * position instead (0 as it enters the viewport, 1 as it leaves) — same
  * crossfade, zero reserved dead space, page keeps its real length.
  */
-function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
+function ComputedVerdictPanel({
+  idea,
+  visualTrial = false,
+}: {
+  idea: IdeaDetail;
+  visualTrial?: boolean;
+}) {
   const stageRef = useScrollProgress<HTMLElement>({ mode: "unpinned" });
 
   return (
@@ -289,6 +308,7 @@ function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
     >
       <div className="grid grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-4">
         <div>
+          {visualTrial && <TrialIcon icon={Check} />}
           <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-hl-green sm:text-lg">
             Why it works
           </h2>
@@ -304,6 +324,7 @@ function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
           </ul>
         </div>
         <div>
+          {visualTrial && <TrialIcon icon={X} />}
           <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-hl-coral sm:text-lg">
             What will hurt
           </h2>
@@ -323,11 +344,15 @@ function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
       {idea.verdict && (
         <div
           className="mt-6 border-t border-primary/30 pt-5"
-          style={{
-            opacity: "clamp(0, calc((var(--sc-p, 1) - 0.55) * 4), 1)",
-            transform:
-              "translateY(calc((1 - clamp(0, calc((var(--sc-p, 1) - 0.55) * 4), 1)) * 10px))",
-          }}
+          style={
+            visualTrial
+              ? undefined
+              : {
+                  opacity: "clamp(0, calc((var(--sc-p, 1) - 0.55) * 4), 1)",
+                  transform:
+                    "translateY(calc((1 - clamp(0, calc((var(--sc-p, 1) - 0.55) * 4), 1)) * 10px))",
+                }
+          }
         >
           <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-primary sm:text-lg">
             Verdict
@@ -357,7 +382,13 @@ type BlueprintEntry = {
  * primary tokens (never the reference's raw red-100/blue-100/etc.) so this reads as
  * part of the same design system as everything else on the page.
  */
-function BlueprintCards({ entries }: { entries: BlueprintEntry[] }) {
+function BlueprintCards({
+  entries,
+  visualTrial = false,
+}: {
+  entries: BlueprintEntry[];
+  visualTrial?: boolean;
+}) {
   const items = entries.filter((entry): entry is BlueprintEntry & { body: string } =>
     Boolean(entry.body),
   );
@@ -373,10 +404,31 @@ function BlueprintCards({ entries }: { entries: BlueprintEntry[] }) {
   if (items.length === 0) return null;
 
   return (
-    <div ref={rowsRef} className="mt-6 grid gap-6">
+    <div
+      ref={rowsRef}
+      className={`mt-6 grid gap-6${visualTrial ? " bbi-noir-blueprint-grid" : ""}`}
+    >
       {items.map((item, i) => {
         const Icon = item.Icon;
         const reversed = i % 2 === 1;
+        if (visualTrial)
+          return (
+            <section
+              key={item.title}
+              className={`bbi-noir-blueprint-card${i === 0 ? " bbi-noir-featured" : ""}`}
+            >
+              <div className="bbi-noir-card-top">
+                <TrialIcon icon={Icon} />
+                <span className="bbi-noir-card-index">0{i + 1}</span>
+              </div>
+              <h3>{item.title}</h3>
+              <div>
+                {toParagraphs(item.body).map((paragraph) => (
+                  <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                ))}
+              </div>
+            </section>
+          );
         return (
           <div
             key={item.title}
@@ -602,7 +654,12 @@ function LockedSection({
   children: ReactNode;
 }) {
   return (
-    <section className="relative mt-10" data-anchor={anchorId} data-anchor-label={anchorLabel}>
+    <section
+      id={anchorId}
+      className="relative mt-10"
+      data-anchor={anchorId}
+      data-anchor-label={anchorLabel}
+    >
       <p className="text-xs font-bold uppercase tracking-[0.25em] text-accent sm:text-sm">
         Premium research
       </p>
@@ -659,6 +716,13 @@ function IdeaPage() {
   if (!data) return null;
   const { idea, related, relatedCategories, trending, variant, gradient } = data;
 
+  // The complete visual experiment is opt-in, including SiteShell resources.
+  // Remove a slug here to return that page to its original presentation.
+  const isVisualTrial = [
+    "part-time-podcast-guest-pitch-writing-business",
+    "solar-fencing-business-for-farms",
+  ].includes(idea.slug);
+
   const showSidebarList = related.length > 3;
   // The aside's only real content. When it is empty the grid drops to one
   // column rather than reserving a gutter for nothing.
@@ -713,7 +777,7 @@ function IdeaPage() {
           breadcrumbSchema(breadcrumbItems),
         ]}
       />
-      <SiteShell tone="instrument">
+      <SiteShell tone="instrument" visualTrial={isVisualTrial}>
         <div
           ref={mastheadRef}
           // Was `max-w-6xl` -- the same cap the header's own nav card
@@ -750,12 +814,7 @@ function IdeaPage() {
             // reference screenshots before deciding whether to roll it out.
             // Removing this ternary (or a slug from the list) reverts
             // instantly, page by page.
-            [
-              "part-time-podcast-guest-pitch-writing-business",
-              "solar-fencing-business-for-farms",
-            ].includes(idea.slug)
-              ? "bbi-card-smooth"
-              : ""
+            isVisualTrial ? "bbi-card-smooth bbi-noir" : ""
           }`}
         >
           {/* No `cx-layer` here on purpose: the sticky right-column aside
@@ -795,49 +854,52 @@ function IdeaPage() {
                 "validate" action lives at the page's actual close instead). The
                 wrapper classes let the chosen layout variant genuinely restructure
                 this block (see styles.css). */}
-            <div className="idea-hero mt-5" data-anchor="top" data-anchor-label="Top">
-              <div className="min-w-0">
-                <div className="idea-hero-meta flex flex-wrap items-center gap-3 text-xs uppercase tracking-widest">
-                  <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-secondary-foreground">
-                    {idea.ideaId}
-                  </span>
-                  {/* The category's own featured image, small, riding along
+            {isVisualTrial ? (
+              <IdeaTrialHero idea={idea} />
+            ) : (
+              <div className="idea-hero mt-5" data-anchor="top" data-anchor-label="Top">
+                <div className="min-w-0">
+                  <div className="idea-hero-meta flex flex-wrap items-center gap-3 text-xs uppercase tracking-widest">
+                    <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-secondary-foreground">
+                      {idea.ideaId}
+                    </span>
+                    {/* The category's own featured image, small, riding along
                       next to its name -- the same image the category page
                       runs as a full hero. Decorative here (the text right
                       next to it already names the category), so alt is
                       empty rather than repeating that description across
                       every idea in the category: the full alt text already
                       does its SEO job once, on the category page itself. */}
-                  <span className="mo-media relative h-6 w-6 shrink-0 overflow-hidden rounded-full border border-border">
-                    <img
-                      ref={hideImgIfBroken}
-                      src={categoryFeatured.src}
-                      alt=""
-                      aria-hidden="true"
-                      width={24}
-                      height={24}
-                      loading="lazy"
-                      decoding="async"
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                  </span>
-                  <span className="text-accent">{idea.categoryName}</span>
-                  <span className="text-muted-foreground">/</span>
-                  <span className="text-muted-foreground">{idea.subcategoryName}</span>
-                </div>
+                    <span className="mo-media relative h-6 w-6 shrink-0 overflow-hidden rounded-full border border-border">
+                      <img
+                        ref={hideImgIfBroken}
+                        src={categoryFeatured.src}
+                        alt=""
+                        aria-hidden="true"
+                        width={24}
+                        height={24}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                    </span>
+                    <span className="text-accent">{idea.categoryName}</span>
+                    <span className="text-muted-foreground">/</span>
+                    <span className="text-muted-foreground">{idea.subcategoryName}</span>
+                  </div>
 
-                <h1
-                  ref={titleRef}
-                  className="mt-3 text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
-                >
-                  {idea.title}
-                </h1>
-                <p className="mt-4 text-lg leading-relaxed text-muted-foreground sm:text-xl">
-                  {idea.businessDescription}
-                </p>
+                  <h1
+                    ref={titleRef}
+                    className="mt-3 text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
+                  >
+                    {idea.title}
+                  </h1>
+                  <p className="mt-4 text-lg leading-relaxed text-muted-foreground sm:text-xl">
+                    {idea.businessDescription}
+                  </p>
 
-                <div className="mt-5">
-                  {/* Deterministic on server and client (pure function of the
+                  <div className="mt-5">
+                    {/* Deterministic on server and client (pure function of the
                       known idea path) — the previous `window.location.href`
                       branch rendered "" server-side and the real URL
                       client-side, a guaranteed hydration mismatch on every
@@ -845,49 +907,50 @@ function IdeaPage() {
                       the subtree is what silently stripped the `.revealed`
                       class SiteTextMotion had already added to headings
                       already in view at load, leaving them stuck invisible. */}
-                  <ShareLinks url={absoluteUrl(ideaPath)} title={idea.title} />
+                    <ShareLinks url={absoluteUrl(ideaPath)} title={idea.title} />
+                  </div>
                 </div>
-              </div>
 
-              {/* A real telemetry readout, not a decorative visual: the idea's
+                {/* A real telemetry readout, not a decorative visual: the idea's
                   own trend_score, already computed, with the verdict's status
                   read alongside it. */}
-              <div className="idea-hero-aside">
-                <div className="glass rounded-2xl p-5">
-                  <dl className="sc-spec-label !text-[10px]">
-                    <div className="w-full">
-                      <dt>Momentum</dt>
-                      <dd className="!ml-0 block">
-                        {idea.trendScore !== null ? (
-                          <Odometer
-                            value={idea.trendScore}
-                            duration={1.2}
-                            className="font-mono text-4xl font-bold leading-none tabular-nums text-foreground"
-                          />
-                        ) : (
-                          <span className="font-mono text-4xl font-bold leading-none tabular-nums text-foreground">
-                            —
+                <div className="idea-hero-aside">
+                  <div className="glass rounded-2xl p-5">
+                    <dl className="sc-spec-label !text-[10px]">
+                      <div className="w-full">
+                        <dt>Momentum</dt>
+                        <dd className="!ml-0 block">
+                          {idea.trendScore !== null ? (
+                            <Odometer
+                              value={idea.trendScore}
+                              duration={1.2}
+                              className="font-mono text-4xl font-bold leading-none tabular-nums text-foreground"
+                            />
+                          ) : (
+                            <span className="font-mono text-4xl font-bold leading-none tabular-nums text-foreground">
+                              —
+                            </span>
+                          )}
+                          <span className="ml-1 text-xs text-muted-foreground">/ 100</span>
+                        </dd>
+                      </div>
+                    </dl>
+                    {idea.keywords.length > 0 && (
+                      <div className="mt-4 flex flex-wrap gap-1.5">
+                        {idea.keywords.slice(0, 3).map((k) => (
+                          <span
+                            key={k}
+                            className="rounded-full border border-border px-2 py-0.5 text-[10px] text-muted-foreground"
+                          >
+                            {k}
                           </span>
-                        )}
-                        <span className="ml-1 text-xs text-muted-foreground">/ 100</span>
-                      </dd>
-                    </div>
-                  </dl>
-                  {idea.keywords.length > 0 && (
-                    <div className="mt-4 flex flex-wrap gap-1.5">
-                      {idea.keywords.slice(0, 3).map((k) => (
-                        <span
-                          key={k}
-                          className="rounded-full border border-border px-2 py-0.5 text-[10px] text-muted-foreground"
-                        >
-                          {k}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* The free teaser. Anyone, signed in or not, reads this.
 
@@ -919,6 +982,7 @@ function IdeaPage() {
                 member" card style instead -- see BlueprintCards above. */}
             <LockedSection title="The Blueprint" anchorId="blueprint" anchorLabel="The Blueprint">
               <BlueprintCards
+                visualTrial={isVisualTrial}
                 entries={[
                   {
                     title: "The opportunity",
@@ -946,7 +1010,7 @@ function IdeaPage() {
                   },
                 ]}
               />
-              <ComputedVerdictPanel idea={idea} />
+              <ComputedVerdictPanel idea={idea} visualTrial={isVisualTrial} />
             </LockedSection>
 
             <div className="mt-8">
@@ -958,6 +1022,7 @@ function IdeaPage() {
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-4">
                   {idea.startupCost && (
                     <CardSpotlight className="p-5">
+                      {isVisualTrial && <TrialIcon icon={Wallet} />}
                       <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-hl-coral sm:text-lg">
                         What it costs to start
                       </h2>
@@ -966,6 +1031,7 @@ function IdeaPage() {
                   )}
                   {idea.incomePotential && (
                     <CardSpotlight className="p-5">
+                      {isVisualTrial && <TrialIcon icon={Lightbulb} />}
                       <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-hl-green sm:text-lg">
                         What you can earn
                       </h2>
@@ -994,6 +1060,7 @@ function IdeaPage() {
               >
                 {idea.gettingStartedSteps.length > 0 && (
                   <div>
+                    {isVisualTrial && <TrialIcon icon={Rocket} />}
                     <h2 className={SECTION_HEADING}>How to start</h2>
                     <ol className="mt-4 space-y-3">
                       {idea.gettingStartedSteps.map((step, i) => (
@@ -1009,6 +1076,7 @@ function IdeaPage() {
                 )}
                 {idea.toolsNeeded.length > 0 && (
                   <div className="mt-8">
+                    {isVisualTrial && <TrialIcon icon={Wrench} />}
                     <h2 className={SECTION_HEADING}>What you need</h2>
                     <ul className="mt-3 flex flex-wrap gap-2">
                       {idea.toolsNeeded.map((tool) => (
@@ -1024,6 +1092,7 @@ function IdeaPage() {
                 )}
                 {idea.timeToFirstCustomer && (
                   <div className="mt-8">
+                    {isVisualTrial && <TrialIcon icon={Clock} />}
                     <h2 className={SECTION_HEADING}>Time to first customer</h2>
                     <p className={`mt-3 whitespace-pre-line ${BODY_PROSE}`}>
                       {idea.timeToFirstCustomer}
@@ -1207,7 +1276,7 @@ function IdeaPage() {
                           className="stack-item"
                           style={{ "--i": i + 1 } as CSSProperties}
                         >
-                          <IdeaCard idea={r} />
+                          <IdeaCard idea={r} visualTrial={isVisualTrial} />
                         </li>
                       ))}
                     </ul>

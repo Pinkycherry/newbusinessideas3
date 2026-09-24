@@ -3798,7 +3798,9 @@ html.light .bbi-instrument .divide-border > * {
      testing the internal-linking trial page. */
   html.light
     .bbi-instrument
-    a:not(.glass-pill):not(.ac-tag):not(.ac-action):not(.ac-cta):not(.glass-btn):not(.bbi-inline-link):hover {
+    a:not(.glass-pill):not(.ac-tag):not(.ac-action):not(.ac-cta):not(.glass-btn):not(
+      .bbi-inline-link
+    ):hover {
     color: var(--ins-signal-hot) !important;
   }
   /* The logo stamp inverts: signal ground, housing ink. */
@@ -4998,4 +5000,719 @@ html.light .bbi-instrument .ac-action:disabled:hover {
    buttons are flat. */
 .glass-btn.bbi-dock-btn::before {
   display: none;
+}
+
+/* CRIMSON NOIR TRIAL — all presentation lives here. The route opts in only
+   the two existing trial slugs. No global palette or default component changes.
+   References: #02060e / #c50337, soft glass rims, bold type and sculptural red.
+   Backup: pre-crimson-noir-2026-09-24. */
+html.light .bbi-instrument.bbi-noir-page,
+.bbi-instrument.bbi-noir-page {
+  --noir-ink: #02060e;
+  --noir-crimson: #c50337;
+  --noir-bright: #ff7599;
+  --noir-surface: #0e1019;
+  --noir-rim: rgb(255 255 255 / 0.15);
+  --ins-void: var(--noir-ink);
+  --ins-face: var(--noir-surface);
+  --ins-face-2: #21101c;
+  --ins-read: #e6e2e8;
+  --ins-dim: #b8b4c0;
+  --ins-rule: var(--noir-rim);
+  --hl-saffron: var(--noir-bright);
+  --hl-saffron-hover: #ffb3c7;
+  background: var(--noir-ink);
+}
+.bbi-noir-page .bbi-noir {
+  padding-top: 2rem;
+  --radius: 1.15rem;
+}
+.bbi-noir-page .bbi-noir::before {
+  inset: 0;
+  background: radial-gradient(ellipse 40rem 32rem at 100% 0, #c503371c, transparent 80%);
+}
+.bbi-noir-page .idea-shell::before {
+  display: none;
+}
+.bbi-noir-page :is(h1, h2, h3) {
+  font-family: "IBM Plex Sans", ui-sans-serif, sans-serif;
+  text-wrap: balance;
+}
+.bbi-noir-page [data-anchor] {
+  scroll-margin-top: 7rem;
+}
+.bbi-noir-page .idea-shell > section:not(.bbi-noir-hero),
+.bbi-noir-page .idea-shell > div.mt-16 {
+  margin-top: 3.5rem;
+}
+.bbi-noir-page .idea-shell > section > h2,
+.bbi-noir-page .idea-shell > div > section > h2 {
+  font-size: clamp(1.25rem, 2.1vw, 1.8rem);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  text-transform: none;
+  color: #fff;
+}
+.bbi-noir-page .bbi-noir-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(15rem, 1fr);
+  position: relative;
+  isolation: isolate;
+  margin-top: 1.7rem;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.24);
+  border-radius: 2rem;
+  background:
+    radial-gradient(ellipse at 96% 20%, #630c2b 0%, transparent 54%),
+    linear-gradient(135deg, #ffffff0c, #ffffff02 38%, #c503370c);
+  box-shadow:
+    inset 0 1px 0 #ffffff24,
+    0 24px 80px #00000045;
+}
+.bbi-noir-page .bbi-noir-hero-copy {
+  padding: clamp(1.5rem, 4vw, 3rem);
+  padding-right: 0.5rem;
+  min-width: 0;
+  z-index: 1;
+}
+.bbi-noir-page .bbi-noir-eyebrow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #e6e2e8;
+}
+.bbi-noir-page .bbi-noir-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: #ff3765;
+  box-shadow: 0 0 14px #ff376580;
+}
+.bbi-noir-page .bbi-noir-id {
+  margin-left: auto;
+  font-family: "IBM Plex Mono", monospace;
+  color: #b8b4c0;
+}
+.bbi-noir-page .bbi-noir-category {
+  margin-top: 2rem;
+  color: #ff9cb6;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.bbi-noir-page .bbi-noir-hero h1 {
+  margin-top: 0.85rem;
+  font-size: clamp(2rem, 4.1vw, 3.4rem);
+  line-height: 1.07;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+  color: #fff;
+  overflow-wrap: anywhere;
+}
+.bbi-noir-page .bbi-noir-lead {
+  margin-top: 1.4rem;
+  max-width: 39rem;
+  color: #c9c4ce;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+.bbi-noir-page .bbi-noir-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1.8rem;
+}
+.bbi-noir-page .bbi-noir-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  border-radius: 0.8rem;
+  padding: 0.85rem 1.1rem;
+  background: var(--noir-crimson);
+  border: 1px solid #ff7a9b70;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: 0 6px 24px #c5033733;
+  transition:
+    background 140ms,
+    transform 140ms;
+}
+.bbi-noir-page .bbi-noir-cta:hover {
+  background: #e60846;
+  transform: translateY(-2px);
+}
+.bbi-noir-page .bbi-noir-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #eee9ef;
+  font-size: 0.85rem;
+}
+.bbi-noir-page .bbi-noir-hero-visual {
+  min-width: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.8rem;
+}
+.bbi-noir-page .bbi-noir-orb {
+  position: absolute;
+  width: 25rem;
+  aspect-ratio: 1;
+  top: -3rem;
+  right: -9rem;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 27% 26%, #ff2d5b, #c50337 27%, #5a001b 60%, #0c0710 78%);
+  box-shadow:
+    inset 2px 2px 5px #ff739850,
+    0 0 100px #c5033733;
+}
+.bbi-noir-page .bbi-noir-signal-card {
+  width: 100%;
+  max-width: 19rem;
+  position: relative;
+  border: 1px solid #ffffff47;
+  border-radius: 1.6rem;
+  padding: 1.35rem;
+  background: linear-gradient(145deg, #ffffff16, #070910bd 48%, #370b20bf);
+  backdrop-filter: blur(22px);
+  box-shadow:
+    inset 0 1px 0 #ffffff44,
+    0 24px 55px #00000060;
+}
+.bbi-noir-page .bbi-noir-signal-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.bbi-noir-page .bbi-noir-signal-top > span:last-child {
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  color: #f0dbe4;
+}
+.bbi-noir-page .bbi-noir-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: #ff99b4;
+  background: #c5033726;
+  border: 1px solid #ff83a336;
+}
+.bbi-noir-page .bbi-noir-score {
+  position: relative;
+  width: min(100%, 13rem);
+  margin: 1.25rem auto;
+  aspect-ratio: 1;
+}
+.bbi-noir-page .bbi-noir-score svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke-width: 3;
+  transform: rotate(-90deg);
+}
+.bbi-noir-page .bbi-noir-ring-track {
+  stroke: #ffffff1a;
+}
+.bbi-noir-page .bbi-noir-ring-value {
+  stroke: #ff6e98;
+  stroke-linecap: round;
+}
+.bbi-noir-page .bbi-noir-score > div {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.bbi-noir-page .bbi-noir-score strong {
+  font-size: 4.6rem;
+  font-weight: 600;
+  letter-spacing: -0.065em;
+  line-height: 1;
+  color: #fff;
+}
+.bbi-noir-page .bbi-noir-score span {
+  font-size: 0.65rem;
+  color: #cfc4d1;
+  margin-top: 0.65rem;
+}
+.bbi-noir-page .bbi-noir-signal-card > p {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  color: #fff;
+}
+.bbi-noir-page .bbi-noir-signal-note {
+  display: block;
+  margin: 0.55rem auto 0;
+  max-width: 13rem;
+  font-size: 0.72rem;
+  line-height: 1.6;
+  text-align: center;
+  color: #c6b8c6;
+}
+.bbi-noir-page .bbi-noir-visual-caption {
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  margin-top: 1.2rem;
+  color: #c5a2b3;
+}
+.bbi-noir-page .bbi-noir-hero-foot {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  justify-content: space-between;
+  margin: 0 2.5rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid #ffffff1c;
+}
+.bbi-noir-page .bbi-noir-overview {
+  min-width: 0;
+  flex: 1;
+  font-size: 0.85rem;
+}
+.bbi-noir-page .bbi-noir-overview summary {
+  cursor: pointer;
+  color: #c6becb;
+  padding: 0.5rem 0;
+}
+.bbi-noir-page .bbi-noir-overview p {
+  padding: 1rem 0;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+.bbi-noir-page .bbi-noir-hero-foot > div {
+  flex-shrink: 0;
+}
+
+/* Shared content surfaces. Explicit hooks keep the experiment out of the
+   other idea pages, while applying it to every section of both trial pages. */
+.bbi-noir-page .bbi-noir :is(.bg-card, .glass, .bbi-spot),
+.bbi-noir-page .bbi-noir-blueprint-card,
+.bbi-noir-page [data-anchor="breakdown"],
+.bbi-noir-page [data-anchor="playbooks"] > div > div > div {
+  border: 1px solid var(--noir-rim);
+  border-radius: 1.35rem;
+  background: linear-gradient(145deg, #ffffff07, transparent 60%), var(--noir-surface);
+  box-shadow:
+    inset 0 1px 0 #ffffff0c,
+    0 15px 35px #00000020;
+}
+.bbi-noir-page .bbi-noir .bbi-spot:hover,
+.bbi-noir-page .bbi-noir .bbi-spot[data-lit="on"] {
+  border-color: #ff759969;
+  box-shadow: 0 12px 35px #c5033720;
+}
+.bbi-noir-page [data-anchor="breakdown"] {
+  padding: clamp(1.5rem, 4vw, 2.4rem);
+  background: radial-gradient(ellipse at 100% 0, #c5033715, transparent 65%), #0e1019;
+}
+.bbi-noir-page [data-anchor="breakdown"] > h2::before {
+  content: "";
+  display: inline-block;
+  width: 0.4rem;
+  height: 1.15rem;
+  background: var(--noir-crimson);
+  border-radius: 0.25rem;
+  margin-right: 0.7rem;
+  vertical-align: -0.02em;
+}
+.bbi-noir-page [data-anchor="breakdown"] > div {
+  max-width: 56rem;
+  color: #c9c4ce;
+}
+.bbi-noir-page .bbi-noir-blueprint-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+}
+.bbi-noir-page .bbi-noir-blueprint-card {
+  padding: 1.8rem;
+  min-width: 0;
+}
+.bbi-noir-page .bbi-noir-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+.bbi-noir-page .bbi-noir-card-index {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.7rem;
+  color: #bc9aab;
+}
+.bbi-noir-page .bbi-noir-blueprint-card h3 {
+  margin-bottom: 0.8rem;
+  font-size: 1.35rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.bbi-noir-page .bbi-noir-blueprint-card p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #bfb9c7;
+}
+.bbi-noir-page .bbi-noir-blueprint-card p + p {
+  margin-top: 1rem;
+}
+.bbi-noir-page .bbi-noir-featured {
+  background: linear-gradient(145deg, #c50337, #850327);
+  border-color: #f5719350;
+  box-shadow:
+    inset 0 1px 0 #ffffff20,
+    0 15px 45px #c503371c;
+}
+.bbi-noir-page .bbi-noir-featured .bbi-noir-icon {
+  background: #ffffff15;
+  color: white;
+  border-color: #ffffff3b;
+}
+.bbi-noir-page .bbi-noir-featured :is(p, .bbi-noir-card-index) {
+  color: #ffe2e9;
+}
+.bbi-noir-page .bbi-noir [data-anchor="verdict"].bg-card {
+  padding: 0;
+  background: transparent !important;
+  border: 0;
+  box-shadow: none;
+}
+.bbi-noir-page [data-anchor="verdict"] > div:first-child {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+}
+.bbi-noir-page [data-anchor="verdict"] > div:first-child > div {
+  border: 1px solid #ffffff22;
+  border-radius: 1.4rem;
+  padding: 1.8rem;
+  background: radial-gradient(ellipse at 100% 100%, #c503371b, transparent 60%), #0d1018;
+}
+.bbi-noir-page [data-anchor="verdict"] h2,
+.bbi-noir-page [data-anchor="numbers"] .bbi-spot h2,
+.bbi-noir-page [data-anchor="playbooks"] h2 {
+  font-size: 1.2rem;
+  letter-spacing: -0.015em;
+  text-transform: none;
+  line-height: 1.3;
+}
+.bbi-noir-page [data-anchor="verdict"] .bbi-noir-icon,
+.bbi-noir-page [data-anchor="numbers"] .bbi-noir-icon,
+.bbi-noir-page [data-anchor="playbooks"] .bbi-noir-icon {
+  margin-bottom: 1rem;
+}
+.bbi-noir-page [data-anchor="verdict"] > div:last-child:not(:first-child) {
+  border: 1px solid #c5033750;
+  border-left: 3px solid #c50337;
+  border-radius: 1rem;
+  padding: 1.5rem 1.8rem;
+  background: #c503370a;
+}
+.bbi-noir-page [data-anchor="numbers"] .grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.bbi-noir-page [data-anchor="numbers"] .bbi-spot {
+  padding: 1.8rem;
+}
+.bbi-noir-page [data-anchor="playbooks"] > div > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+  align-items: start;
+}
+.bbi-noir-page [data-anchor="playbooks"] > div > div > div {
+  padding: 1.8rem;
+  margin-top: 0;
+}
+.bbi-noir-page [data-anchor="playbooks"] > div > div > div:first-child {
+  grid-row: span 2;
+}
+.bbi-noir-page [data-anchor="playbooks"] ol {
+  counter-reset: none;
+}
+.bbi-noir-page [data-anchor="playbooks"] ol > li {
+  border-bottom: 1px solid #ffffff12;
+  padding: 0.7rem 0;
+  margin: 0;
+  align-items: baseline;
+  font-size: 1rem;
+}
+.bbi-noir-page [data-anchor="playbooks"] ol > li:last-child {
+  border-bottom: 0;
+}
+.bbi-noir-page [data-anchor="playbooks"] ol > li > span:first-child {
+  background: #c5033726;
+  color: #ff98b2;
+  width: 1.8rem;
+  height: 1.8rem;
+  line-height: 1.8rem;
+  border: 1px solid #ff759930;
+}
+.bbi-noir-page [data-anchor="playbooks"] ul > li {
+  border-radius: 0.6rem;
+  padding: 0.45rem 0.75rem;
+  background: #ffffff05;
+  line-height: 1.5;
+}
+.bbi-noir-page .idea-shell details.bg-card {
+  padding: 1.3rem 1.5rem;
+  border-radius: 1rem;
+}
+.bbi-noir-page .idea-shell details.bg-card[open] {
+  border-color: #ff759966;
+  background: #170e1a;
+}
+.bbi-noir-page .idea-shell details.bg-card summary {
+  line-height: 1.5;
+  padding-right: 0.5rem;
+}
+.bbi-noir-page .idea-shell details.bg-card summary::marker {
+  color: #ff7599;
+}
+.bbi-noir-page [data-anchor="demand"] {
+  padding: 1.8rem;
+}
+.bbi-noir-page [data-anchor="demand"] .demand-gauge-track {
+  height: 0.4rem;
+  background: #ffffff13;
+}
+.bbi-noir-page [data-anchor="demand"] .demand-gauge-track > div {
+  background: #e9134d;
+}
+.bbi-noir-page #validate {
+  background: radial-gradient(ellipse at 100% 0, #c5033738, transparent 65%), #101019;
+  border-color: #ff75993d;
+}
+.bbi-noir-page .stack-list {
+  perspective: none;
+}
+.bbi-noir-page .stack-list .stack-item,
+.bbi-noir-page .stack-list:hover .stack-item,
+.bbi-noir-page .stack-list:focus-within .stack-item {
+  position: relative;
+  transform: none;
+  filter: none;
+  opacity: 1;
+  margin-top: 0.8rem;
+}
+.bbi-noir-page .bbi-noir-idea-card > span > a {
+  padding: 1.5rem;
+}
+.bbi-noir-page .bbi-noir-idea-card .bbi-noir-card-top {
+  margin-bottom: 0.65rem;
+}
+.bbi-noir-page .bbi-noir-arrow {
+  color: #ff98b2;
+}
+.bbi-noir-page .bbi-noir-idea-card h3 {
+  font-size: 1.2rem;
+}
+.bbi-noir-page .bbi-noir-idea-card .bbi-noir-icon {
+  width: 2.3rem;
+  height: 2.3rem;
+}
+
+/* ResourceHub lives beside main. The optional SiteShell root class reaches
+   these panels without a global selector or duplicating the resource list. */
+.bbi-noir-page [data-anchor="resources"] {
+  border-top-color: #ff759929;
+  padding-top: 2.8rem;
+}
+.bbi-noir-page [data-anchor="resources"] > section {
+  padding: 1.8rem;
+  border: 1px solid #ffffff15;
+  border-radius: 1.5rem;
+  background: linear-gradient(140deg, #c503370a, transparent 55%), #080b13;
+}
+.bbi-noir-page [data-anchor="resources"] section > div > span {
+  border-radius: 50%;
+  background: #c5033726 !important;
+  color: #ff99b4 !important;
+}
+.bbi-noir-page [data-anchor="resources"] .mo-card {
+  border-radius: 1rem;
+  padding: 1.3rem;
+}
+.bbi-noir-page [data-anchor="resources"] [aria-labelledby="rh-calculators"] > ul {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  counter-reset: calculator;
+  border: 1px solid #ffffff17;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.bbi-noir-page [aria-labelledby="rh-calculators"] li {
+  counter-increment: calculator;
+  border-bottom: 1px solid #ffffff12;
+}
+.bbi-noir-page [data-anchor="resources"] [aria-labelledby="rh-calculators"] a.mo-card {
+  padding-left: 3.6rem;
+  position: relative;
+  border-radius: 0;
+}
+.bbi-noir-page [aria-labelledby="rh-calculators"] a::after {
+  content: counter(calculator, decimal-leading-zero);
+  position: absolute;
+  left: 1.2rem;
+  top: 1.4rem;
+  font:
+    0.75rem "IBM Plex Mono",
+    monospace;
+  color: #ff7599;
+}
+
+/* Existing instrument rules use layered !important. A narrowly scoped base
+   layer wins those rules in both saved themes; no theme preference is changed. */
+@layer base {
+  html .bbi-instrument.bbi-noir-page .bbi-noir :is(.glass, .glass-pill),
+  html .bbi-instrument.bbi-noir-page [data-anchor="resources"] .glass {
+    background: linear-gradient(145deg, #ffffff07, transparent 70%), #0e1019 !important;
+    border-color: #ffffff24 !important;
+    box-shadow:
+      inset 0 1px 0 #ffffff0b,
+      0 8px 25px #0000001a !important;
+  }
+  html .bbi-instrument.bbi-noir-page [aria-labelledby="rh-calculators"] a.glass {
+    border: 0 !important;
+    border-radius: 0;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  html .bbi-instrument.bbi-noir-page .bbi-noir a.glass:hover,
+  html .bbi-instrument.bbi-noir-page [data-anchor="resources"] a.glass:hover {
+    background: #1b101e !important;
+    border-color: #ff759969 !important;
+  }
+  html .bbi-instrument.bbi-noir-page .bbi-noir-hero :is(.bbi-noir-cta, .bbi-noir-cta:hover) {
+    color: #fff !important;
+  }
+  html .bbi-instrument.bbi-noir-page .bbi-noir-featured :is(p, .bbi-noir-card-index) {
+    color: #ffe2e9 !important;
+  }
+  html .bbi-instrument.bbi-noir-page .bbi-noir-icon,
+  html .bbi-instrument.bbi-noir-page .bbi-noir-icon svg {
+    color: #ff99b4 !important;
+  }
+  html .bbi-instrument.bbi-noir-page .bbi-noir-featured .bbi-noir-icon {
+    color: #fff !important;
+  }
+  html .bbi-instrument.bbi-noir-page .bbi-noir-category {
+    color: #ff9cb6 !important;
+  }
+  html .bbi-instrument.bbi-noir-page [data-anchor="playbooks"] ol > li > span:first-child {
+    background: #c5033726 !important;
+    color: #ff98b2 !important;
+  }
+}
+.bbi-noir-page :is(a, button, summary, textarea):focus-visible {
+  outline: 2px solid #ff8bae;
+  outline-offset: 4px;
+}
+@media (max-width: 767px) {
+  .bbi-noir-page .bbi-noir {
+    padding-top: 1.25rem;
+  }
+  .bbi-noir-page .bbi-noir-hero {
+    grid-template-columns: 1fr;
+    border-radius: 1.5rem;
+  }
+  .bbi-noir-page .bbi-noir-hero-copy {
+    padding: 1.6rem;
+  }
+  .bbi-noir-page .bbi-noir-hero h1 {
+    font-size: clamp(2rem, 7.5vw, 3rem);
+  }
+  .bbi-noir-page .bbi-noir-category {
+    margin-top: 1.5rem;
+  }
+  .bbi-noir-page .bbi-noir-hero-visual {
+    padding: 0.5rem 1.5rem 2rem;
+  }
+  .bbi-noir-page .bbi-noir-orb {
+    top: -1rem;
+    right: -2rem;
+    width: 20rem;
+  }
+  .bbi-noir-page .bbi-noir-signal-card {
+    max-width: 24rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 0.5rem 1rem;
+  }
+  .bbi-noir-page .bbi-noir-signal-top {
+    grid-column: 1 / -1;
+  }
+  .bbi-noir-page .bbi-noir-score {
+    grid-row: span 2;
+    margin: 0.5rem 0;
+    width: 100%;
+    max-width: 9rem;
+  }
+  .bbi-noir-page .bbi-noir-score strong {
+    font-size: 3rem;
+  }
+  .bbi-noir-page .bbi-noir-signal-card > p {
+    align-self: end;
+    text-align: left;
+  }
+  .bbi-noir-page .bbi-noir-signal-note {
+    align-self: start;
+    text-align: left;
+    font-size: 0.68rem;
+  }
+  .bbi-noir-page .bbi-noir-visual-caption {
+    display: none;
+  }
+  .bbi-noir-page .bbi-noir-hero-foot {
+    margin: 0 1.6rem;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .bbi-noir-page .bbi-noir-hero-foot > div {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+  .bbi-noir-page .bbi-noir-blueprint-grid,
+  .bbi-noir-page [data-anchor="verdict"] > div:first-child,
+  .bbi-noir-page [data-anchor="numbers"] .grid,
+  .bbi-noir-page [data-anchor="playbooks"] > div > div,
+  .bbi-noir-page [data-anchor="resources"] [aria-labelledby="rh-calculators"] > ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .bbi-noir-page .bbi-noir-blueprint-card,
+  .bbi-noir-page [data-anchor="verdict"] > div:first-child > div,
+  .bbi-noir-page [data-anchor="numbers"] .bbi-spot,
+  .bbi-noir-page [data-anchor="playbooks"] > div > div > div {
+    padding: 1.5rem;
+  }
+  .bbi-noir-page [data-anchor="resources"] > section {
+    padding: 1.2rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-noir-page .bbi-noir :is(a, button, .bbi-spot),
+  .bbi-noir-page [data-anchor="resources"] a {
+    transition: none;
+  }
+  .bbi-noir-page .bbi-noir :is(a, button, .bbi-spot):hover,
+  .bbi-noir-page [data-anchor="resources"] a:hover {
+    transform: none;
+  }
 }
