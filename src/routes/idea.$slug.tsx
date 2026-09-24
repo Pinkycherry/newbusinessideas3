@@ -744,11 +744,18 @@ function IdeaPage() {
             hasSidebar ? "lg:grid-cols-[minmax(0,1fr)_20rem]" : ""
           } ${
             // TRIAL 2026-09-24 (see styles.css "TRIAL: smoother card
-            // geometry"): rounder corners + saffron hover-lift on this one
-            // page's cards only, so the founder can compare against
+            // geometry" + "TRIAL, round 2"): rounder corners, saffron
+            // hover-lift and a tinted background glow across every panel on
+            // these two pages only, so the founder can compare against
             // reference screenshots before deciding whether to roll it out.
-            // Removing this ternary reverts the page instantly.
-            idea.slug === "part-time-podcast-guest-pitch-writing-business" ? "bbi-card-smooth" : ""
+            // Removing this ternary (or a slug from the list) reverts
+            // instantly, page by page.
+            [
+              "part-time-podcast-guest-pitch-writing-business",
+              "solar-fencing-business-for-farms",
+            ].includes(idea.slug)
+              ? "bbi-card-smooth"
+              : ""
           }`}
         >
           {/* No `cx-layer` here on purpose: the sticky right-column aside
