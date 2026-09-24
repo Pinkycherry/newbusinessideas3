@@ -4263,10 +4263,10 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
   border-radius: 1.25rem;
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.28);
   transition:
-    border-color 260ms cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 260ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+    border-color 120ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 120ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 160ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .bbi-card-smooth .bbi-spot:hover,
 .bbi-card-smooth .bbi-spot[data-lit="on"] {
@@ -4323,16 +4323,20 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
   inset: -3rem -1.5rem;
   z-index: -1;
   pointer-events: none;
+  /* Round 3: the first pass (12%/7%) was too faint to read as a deliberate
+     background shade against near-black -- founder couldn't see it at all
+     on first load. Bumped so it's unmistakable at the top of the page
+     without needing to scroll or hover anything. */
   background:
     radial-gradient(
-      44rem 26rem at 12% -4%,
-      color-mix(in oklab, var(--hl-saffron, #ff9933) 12%, transparent),
-      transparent 60%
+      50rem 32rem at 15% -6%,
+      color-mix(in oklab, var(--hl-saffron, #ff9933) 24%, transparent),
+      transparent 62%
     ),
     radial-gradient(
-      38rem 24rem at 100% 30%,
-      color-mix(in oklab, var(--hl-saffron, #ff9933) 7%, transparent),
-      transparent 65%
+      42rem 30rem at 100% 22%,
+      color-mix(in oklab, var(--hl-saffron, #ff9933) 15%, transparent),
+      transparent 68%
     );
 }
 .bbi-card-smooth .bg-card,
@@ -4342,8 +4346,8 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
     0 16px 40px -26px rgb(0 0 0 / 0.55);
   border-color: color-mix(in oklab, var(--hl-saffron, #ff9933) 16%, var(--border));
   transition:
-    border-color 280ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1);
+    border-color 130ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 130ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .bbi-card-smooth a.rounded-xl.bg-card:hover,
 .bbi-card-smooth a.rounded-2xl.bg-card:hover {
@@ -4351,6 +4355,14 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
   box-shadow:
     0 18px 44px -18px rgb(255 153 51 / 0.25),
     0 6px 16px rgb(0 0 0 / 0.3);
+}
+/* The small icon/share buttons (`rounded-md bg-card`) each carry their own
+   literal 0.375rem border-radius a few hundred lines up this file (button
+   plate rules, not the `--radius` token chain), so the scope override above
+   never reaches them. Pinned directly here rather than touching those
+   shared button rules, which other pages still depend on as-is. */
+.bbi-card-smooth .rounded-md.bg-card {
+  border-radius: 0.85rem;
 }
 @media (prefers-reduced-motion: reduce) {
   .bbi-card-smooth .bg-card,
