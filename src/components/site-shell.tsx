@@ -1,13 +1,5 @@
 import { Link, useLoaderData, useRouterState } from "@tanstack/react-router";
-import {
-  Fragment,
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User } from "lucide-react";
 import type { IconType } from "react-icons";
@@ -31,8 +23,9 @@ import { FloatingDock } from "@/components/floating-dock";
 import { CategoryBadge } from "@/components/category-badge";
 import { catalogQuery } from "@/lib/ideas.functions";
 import { ResourceHub } from "@/components/resource-hub";
+import { useSiteStage } from "@/components/site-stage";
 import { usePageScrollProgress } from "@/motion";
-import { topCategories, typeGroups, type TypeGroup } from "@/lib/catalog-display";
+import { topCategories } from "@/lib/catalog-display";
 import { subscribeToNewsletter } from "@/lib/newsletter.functions";
 import { prefersReducedMotion } from "@/lib/motion";
 
@@ -105,8 +98,9 @@ function BuiltWithItemLink({ item }: { item: BuiltWithItem }) {
   );
 }
 
-/** `still`: the idea-page cinema trial closes quietly, so the row renders
- * static and wrapped there instead of as an endless marquee. */
+/** `still`: the plain site system closes quietly, so the row renders static
+ * and wrapped instead of as an endless marquee. Passed on every page but the
+ * homepage. */
 function BuiltWithSection({ still = false }: { still?: boolean }) {
   const [looping, setLooping] = useState(!still);
 
@@ -337,10 +331,9 @@ function AuthButtons({
 
 /** Desktop mega-menu. Categories are never hardcoded — live from the `ideas` table. */
 /**
- * True inside the idea-page cinema trial. The header reads it to swap its
- * dropdown motion (a short 8px drop and fade instead of a blurred spring and
- * a travelling plate) and to close on Escape. False everywhere else, so every
- * other page's header is unchanged.
+ * True in the plain site system (every page but the homepage). The
+ * header reads it to use a short 8px drop and fade (instead of a blurred
+ * spring and a travelling plate) and to close on Escape.
  */
 const CinemaChrome = createContext(false);
 
@@ -425,7 +418,9 @@ function NavDropdown({
         type="button"
         aria-expanded={open}
         aria-haspopup="menu"
-        onFocus={() => isDesktop() && openNow()}
+        // Plain pages: keyboard focus no longer opens the menu, because
+        // Enter then toggled it straight back shut. Enter or Space opens it.
+        onFocus={cinema ? undefined : () => isDesktop() && openNow()}
         onClick={() => setOpen((v) => !v)}
         className="relative flex items-center gap-1 rounded-[calc(var(--radius)-2px)] px-1.5 py-1 uppercase tracking-[0.18em] transition-colors duration-300 hover:text-foreground"
       >
@@ -516,78 +511,6 @@ function CategoryMega() {
               Search every field
             </Link>
           </div>
-        </div>
-      )}
-    </NavDropdown>
-  );
-}
-
-/**
- * "Browse by type" — the same real categories, grouped by the question a reader
- * is actually asking.
- *
- * Groups are DERIVED from live data (see `typeGroups`). The previous version
- * matched against fourteen hand-typed slugs, two of which were wrong, so two
- * columns silently rendered short on every page of the site. Deriving them
- * means a new category joins a group on its own and a wrong slug is not
- * possible to type.
- */
-const TYPE_COLUMN_ROWS = 3;
-
-/** One group's categories, split into fixed-height columns rather than one
- * column that grows as tall as the group does. A group past its first chunk
- * repeats no heading -- an empty spacer of the same height keeps every
- * column's list starting at the same baseline. */
-function typeColumns(groups: TypeGroup[]) {
-  return groups.flatMap((group) =>
-    Array.from({ length: Math.ceil(group.categories.length / TYPE_COLUMN_ROWS) }, (_, i) => ({
-      key: `${group.title}-${i}`,
-      title: i === 0 ? group.title : null,
-      categories: group.categories.slice(i * TYPE_COLUMN_ROWS, (i + 1) * TYPE_COLUMN_ROWS),
-    })),
-  );
-}
-
-function BrowseByTypeDropdown() {
-  const { data } = useCatalog();
-  const groups = typeGroups(data?.categories ?? []);
-
-  if (groups.length === 0) return null;
-
-  return (
-    <NavDropdown
-      label="Browse by type"
-      // Fixed at TYPE_COLUMN_ROWS rows tall, so this grows wider as more
-      // categories arrive rather than taller -- a hundred categories reads as
-      // more columns at the same height, not a panel that needs to scroll.
-      panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 max-h-[80vh] w-[min(64rem,94vw)] scrollbar-hide overflow-x-auto overflow-y-hidden rounded-3xl p-6"
-    >
-      {(close) => (
-        <div className="flex gap-8">
-          {typeColumns(groups).map((column) => (
-            <div key={column.key} className="w-40 shrink-0">
-              <p className="h-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
-                {column.title}
-              </p>
-              <ul className="mt-3 grid gap-0.5">
-                {column.categories.map((c) => (
-                  <li key={c.categorySlug}>
-                    <Link
-                      to="/category/$categorySlug"
-                      params={{ categorySlug: c.categorySlug }}
-                      onClick={close}
-                      className="mo-row flex items-baseline justify-between gap-3 rounded-lg px-2 py-2 text-sm normal-case tracking-normal text-muted-foreground"
-                    >
-                      <span className="min-w-0 leading-snug">{c.categoryName}</span>
-                      <span className="shrink-0 text-[11px] tabular-nums opacity-70">
-                        {c.ideaCount}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
         </div>
       )}
     </NavDropdown>
@@ -717,29 +640,6 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
               </Link>
             </div>
           )}
-
-          <p className="mt-4 px-3 text-[10px] normal-case tracking-normal text-accent">
-            Browse by type
-          </p>
-          {typeGroups(categories).map((group) => (
-            <Fragment key={group.title}>
-              <p className="mt-2 px-3 text-[10px] normal-case tracking-normal text-muted-foreground/70">
-                {group.title}
-              </p>
-              {group.categories.map((c) => (
-                <Link
-                  key={c.categorySlug}
-                  to="/category/$categorySlug"
-                  params={{ categorySlug: c.categorySlug }}
-                  onClick={onClose}
-                  className="mo-row flex items-baseline justify-between gap-3 rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground"
-                >
-                  <span className="min-w-0 leading-snug">{c.categoryName}</span>
-                  <span className="shrink-0 tabular-nums opacity-70">{c.ideaCount}</span>
-                </Link>
-              ))}
-            </Fragment>
-          ))}
 
           <p className="mt-4 px-3 text-[10px] normal-case tracking-normal text-accent">Explore</p>
           {EXPLORE_ITEMS.map((item) => (
@@ -918,17 +818,17 @@ function NewsletterSignup() {
 export function SiteShell({
   children,
   tone,
-  visualTrial = false,
 }: {
   children: ReactNode;
-  /** "instrument" swaps the shell into the dark panel world. Scoped rather
-   * than global so a template that has not been redesigned yet keeps the
-   * light treatment instead of half-inheriting this one. */
+  /** "instrument" swaps the shell into the dark panel world. Every route
+   * passes it; kept as a prop so a future light template can opt out. */
   tone?: "instrument";
-  /** Opt-in visual treatment for the two idea-page trials only. */
-  visualTrial?: boolean;
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  // Every page runs the plain site system except the homepage, which the
+  // founder kept on its original design when the rest of the site moved over.
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const plain = pathname !== "/";
   // Radix renders selects, dialogs and tooltips through a PORTAL on
   // document.body, outside this subtree — which is why a `.bbi-instrument …`
   // selector never reached the open dropdown and it kept its light panel and
@@ -940,10 +840,14 @@ export function SiteShell({
       delete document.documentElement.dataset["tone"];
     };
   }, [tone]);
-  // Publishes --page-p on :root; the rail under the header is the only thing
-  // that reads it here, and it does so with a composited scaleX. The cinema
-  // trial skips it and drives the same rail from a CSS scroll timeline.
-  usePageScrollProgress(!visualTrial);
+  // The plain site system (components/idea-cinema/cinema.css): smooth anchor scrolling, the
+  // body backdrop switch-off and one-time reveals for every page. The
+  // reading rail under the header is a CSS scroll timeline; nothing here
+  // listens to scroll.
+  useSiteStage(plain);
+  // The homepage keeps its original design and motion (founder, 2026-09-24):
+  // there the reading rail still runs from --page-p.
+  usePageScrollProgress(!plain);
   const { data: catalog } = useCatalog();
   const siteResources = useSiteResources();
   const allCategories = catalog?.categories ?? [];
@@ -954,7 +858,7 @@ export function SiteShell({
     <div
       className={`relative flex min-h-screen flex-col text-foreground${
         tone === "instrument" ? " bbi-instrument" : ""
-      }${visualTrial ? " cm-page" : ""}`}
+      }${plain ? " cm-page" : ""}`}
     >
       <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">
         {/* Reading position for the whole document. One composited transform
@@ -995,9 +899,8 @@ export function SiteShell({
           </Link>
 
           <nav className="hidden shrink-0 items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground lg:flex xl:gap-4">
-            <CinemaChrome.Provider value={visualTrial}>
+            <CinemaChrome.Provider value={plain}>
               <CategoryMega />
-              <BrowseByTypeDropdown />
               <LinkListDropdown label="Explore" items={EXPLORE_ITEMS} />
               <LinkListDropdown label="Company" items={COMPANY_ITEMS} />
             </CinemaChrome.Provider>
@@ -1016,7 +919,7 @@ export function SiteShell({
               Search is still reachable: the sheet menu carries a full
               LiveSearch, and the category menu links to /search directly. */}
           <div className="hidden min-w-0 items-center gap-2 lg:flex">
-            <AuthButtons still={visualTrial} />
+            <AuthButtons still={plain} />
           </div>
 
           <button
@@ -1049,11 +952,11 @@ export function SiteShell({
           closes the reading, not chrome. */}
       {siteResources && (
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-          <ResourceHub resources={siteResources} cinema={visualTrial} />
+          <ResourceHub resources={siteResources} cinema={plain} />
         </div>
       )}
       <FloatingDock />
-      <BuiltWithSection still={visualTrial} />
+      <BuiltWithSection still={plain} />
       {/* Footer, built to the reference the founder supplied: a light card,
           four columns of plain link lists with a newsletter block, then a
           hairline and a thin bottom bar.

@@ -19,6 +19,8 @@
 import { useEffect, useRef, type RefObject } from "react";
 
 import { loadGsap, prefersReducedMotion } from "./gsap";
+import { isLegacyMotionPage } from "./legacy-page";
+import { calmStaggerReveal } from "./calm-reveal";
 
 export type StaggerRevealDirection = "up" | "down" | "left" | "right" | "none";
 
@@ -64,6 +66,13 @@ export function useStaggerReveal<T extends HTMLElement = HTMLElement>(
   } = options;
 
   useEffect(() => {
+    // Plain site system: everywhere but the homepage, a once-only reveal
+    // with no GSAP and no replay on scroll-back (./calm-reveal.ts).
+    if (!isLegacyMotionPage()) {
+      return ref.current
+        ? calmStaggerReveal(ref.current, { selector, distance, direction, stagger })
+        : undefined;
+    }
     const el = ref.current;
     if (!el) return;
 

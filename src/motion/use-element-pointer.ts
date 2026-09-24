@@ -22,6 +22,7 @@
 import { useCallback, useEffect, useRef, type RefObject } from "react";
 
 import { pointerMotionEnabled } from "./gsap";
+import { isLegacyMotionPage } from "./legacy-page";
 
 export type ElementPointerOptions = {
   mode?: "hover" | "window";
@@ -38,6 +39,8 @@ export function useElementPointer<T extends HTMLElement = HTMLElement>(
   const { mode = "hover", radius = 240, ease = 0.18 } = options;
 
   useEffect(() => {
+    // Plain site system: this layer is off everywhere but the homepage.
+    if (!isLegacyMotionPage()) return;
     const el = ref.current;
     if (!el || !pointerMotionEnabled()) return;
 
@@ -164,6 +167,8 @@ export function useElementPointerGroup<T extends HTMLElement = HTMLElement>(
   }, []);
 
   useEffect(() => {
+    // Plain site system: this layer is off everywhere but the homepage.
+    if (!isLegacyMotionPage()) return;
     const root = ref.current;
     if (!root || !pointerMotionEnabled()) return;
 

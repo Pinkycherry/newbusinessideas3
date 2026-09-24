@@ -12,6 +12,7 @@
 import { useEffect, useRef, type RefObject } from "react";
 
 import { pointerMotionEnabled } from "./gsap";
+import { isLegacyMotionPage } from "./legacy-page";
 
 export type TiltOptions = {
   /** Maximum rotation in degrees on each axis. Default 6. Keep under 9. */
@@ -29,6 +30,8 @@ export function useTilt<T extends HTMLElement = HTMLElement>(
   const { degrees = 6, perspective = 900, lift = 0 } = options;
 
   useEffect(() => {
+    // Plain site system: this layer is off everywhere but the homepage.
+    if (!isLegacyMotionPage()) return;
     const el = ref.current;
     if (!el || !pointerMotionEnabled()) return;
 

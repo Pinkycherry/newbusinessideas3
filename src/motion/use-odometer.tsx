@@ -20,6 +20,7 @@
 import { useEffect, useRef, type RefObject } from "react";
 
 import { loadGsap, prefersReducedMotion } from "./gsap";
+import { isLegacyMotionPage } from "./legacy-page";
 
 export type OdometerOptions = {
   /** Starting value. Default 0. */
@@ -44,6 +45,9 @@ export function useOdometer<T extends HTMLElement = HTMLElement>(
   formatRef.current = format;
 
   useEffect(() => {
+    // Plain site system: figures print at their real value and stay there;
+    // the count-up runs on the homepage only.
+    if (!isLegacyMotionPage()) return;
     const el = ref.current;
     if (!el) return;
     if (!Number.isFinite(value)) return;

@@ -11,6 +11,7 @@
 import { useEffect, useRef, type RefObject } from "react";
 
 import { pointerMotionEnabled } from "./gsap";
+import { isLegacyMotionPage } from "./legacy-page";
 
 export type MagnetOptions = {
   /** Fraction of the offset followed. 0.2 - 0.35 is the usable band. */
@@ -28,6 +29,8 @@ export function useMagnet<T extends HTMLElement = HTMLElement>(
   const { strength = 0.28, max = 10, radius = 90 } = options;
 
   useEffect(() => {
+    // Plain site system: this layer is off everywhere but the homepage.
+    if (!isLegacyMotionPage()) return;
     const el = ref.current;
     if (!el || !pointerMotionEnabled()) return;
 

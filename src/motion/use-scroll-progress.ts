@@ -22,6 +22,7 @@
 import { useEffect, useRef, type RefObject } from "react";
 
 import { loadGsap, prefersReducedMotion } from "./gsap";
+import { isLegacyMotionPage } from "./legacy-page";
 
 export type ScrollProgressOptions = {
   mode?: "pinned" | "unpinned";
@@ -59,6 +60,18 @@ export function useScrollProgress<T extends HTMLElement = HTMLElement>(
   cbRef.current = onProgress;
 
   useEffect(() => {
+    const el0 = ref.current;
+    // Plain site system: everywhere but the homepage the section is parked at
+    // its settled value, as under reduced motion. A property rewritten on
+    // every scroll frame restyled the section's whole subtree, and pinned
+    // sections added thousands of pixels of travel.
+    if (el0 && !isLegacyMotionPage()) {
+      el0.style.setProperty("--sc-p", String(reducedValue));
+      cbRef.current?.(reducedValue);
+      return () => {
+        el0.style.removeProperty("--sc-p");
+      };
+    }
     const el = ref.current;
     if (!el) return;
 

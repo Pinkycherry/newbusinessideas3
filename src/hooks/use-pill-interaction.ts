@@ -1,6 +1,7 @@
 import { useCallback, useRef } from "react";
 
 import { loadGsap, prefersReducedMotion } from "@/lib/motion";
+import { isLegacyMotionPage } from "@/motion/legacy-page";
 
 /**
  * Spring hover/press feedback for pill-shaped buttons — subtle scale +
@@ -9,6 +10,9 @@ import { loadGsap, prefersReducedMotion } from "@/lib/motion";
  * see styles.css) so hover and press never fight a competing transition.
  * gsap loads lazily on first interaction (see lib/motion.ts) so it never
  * sits in the initial page bundle.
+ *
+ * Homepage only since the 2026-09-24 rollout: every other page answers hover
+ * and press in CSS (components/idea-cinema/cinema.css), so the handlers return early.
  *
  * Usage: <button ref={usePillInteraction().ref}>...
  */
@@ -21,7 +25,7 @@ export function usePillInteraction<T extends HTMLElement = HTMLButtonElement>() 
 
   const onMouseEnter = useCallback(() => {
     const el = elRef.current;
-    if (!el || prefersReducedMotion()) return;
+    if (!el || prefersReducedMotion() || !isLegacyMotionPage()) return;
     loadGsap().then((gsap) =>
       gsap.to(el, { scale: 1.045, y: -2, duration: 0.35, ease: "power3.out" }),
     );
@@ -29,7 +33,7 @@ export function usePillInteraction<T extends HTMLElement = HTMLButtonElement>() 
 
   const onMouseLeave = useCallback(() => {
     const el = elRef.current;
-    if (!el || prefersReducedMotion()) return;
+    if (!el || prefersReducedMotion() || !isLegacyMotionPage()) return;
     loadGsap().then((gsap) =>
       gsap.to(el, { scale: 1, y: 0, duration: 0.4, ease: "elastic.out(1, 0.55)" }),
     );
@@ -37,13 +41,13 @@ export function usePillInteraction<T extends HTMLElement = HTMLButtonElement>() 
 
   const onPointerDown = useCallback(() => {
     const el = elRef.current;
-    if (!el || prefersReducedMotion()) return;
+    if (!el || prefersReducedMotion() || !isLegacyMotionPage()) return;
     loadGsap().then((gsap) => gsap.to(el, { scale: 0.96, duration: 0.15, ease: "power2.out" }));
   }, []);
 
   const onPointerUp = useCallback(() => {
     const el = elRef.current;
-    if (!el || prefersReducedMotion()) return;
+    if (!el || prefersReducedMotion() || !isLegacyMotionPage()) return;
     loadGsap().then((gsap) =>
       gsap.to(el, { scale: 1.045, duration: 0.5, ease: "elastic.out(1, 0.45)" }),
     );

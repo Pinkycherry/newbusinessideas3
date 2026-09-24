@@ -1,20 +1,20 @@
-/* Cinema trial, round two (2026-09-24).
+/* The plain site system (2026-09-24 site-wide rollout).
 
-   Imported by idea-cinema.tsx, so it ships in the idea route's chunk; every
-   rule is scoped under `.cm-page`, which only the trial slugs render, so no
-   other page is affected. It sits on top of the "CINEMA TRIAL (idea pages)"
-   block in src/styles.css and must come after it: every rule here uses the
-   same or a higher specificity than the rule it replaces. When the trial is
-   approved for the whole site, fold this file into that block (PENDING #37).
+   Imported once in routes/__root.tsx, after styles.css and motion.css, so
+   every rule here outranks the rule it replaces at equal specificity. Every
+   rule is scoped under `.cm-page`, which SiteShell puts on every page except
+   the homepage (kept on its original design at the founder's request). The
+   "CINEMA TRIAL" header comment in styles.css predates the rollout: the
+   block it heads now applies site-wide as this file's base layer.
+   Started as the approved idea-page trial and was promoted to the whole site
+   unchanged; the idea-page markup is components/idea-cinema/idea-cinema.tsx.
 
-   Direction after the founder's review ("AI slop"): no gradient headline
-   text, no icon plates on headings, no red dashes or letter-spaced capitals
-   on labels, no decorative arc, no "01 / 04" counters, no red side-stripes,
-   notches or cut corners. The dark ground and one type family stay; panels
-   are flat with a hairline border; red is kept for the primary button and a
-   few small accents. Also here: the hero order (business, who it helps, the
-   action), one contents control in the sticky header, an opaque header, and
-   a lighter lower page with "Show more" disclosures. */
+   Direction (founder, 2026-09-24): flat panels with a hairline border, plain
+   white headings, one type family on a dark ground, red kept for the primary
+   button and a few small accents. No gradient headline text, icon plates,
+   red dashes, letter-spaced capitals, decorative arcs, counters, side
+   stripes, notches or cut corners. Motion: one-time reveals, short control
+   feedback, native smooth anchor scrolling, all off under reduced motion. */
 
 .bbi-instrument.cm-page,
 html.light .bbi-instrument.cm-page {
@@ -794,4 +794,246 @@ html.light .bbi-instrument.cm-page {
       transition: none;
     }
   }
+}
+
+/* ==========================================================================
+   SITE-WIDE TEMPLATE MAPPING (2026-09-24 rollout)
+   The rules above were written for the idea page. These map the classes the
+   other templates already use (browse, category, calculators, guides,
+   glossary, pricing, about, auth, legal) onto the same plain system, so no
+   template needed its markup rewritten. Revert a section by deleting it.
+
+   Cascade notes: `glass` and `glass-hover` are Tailwind @utility rules that
+   carry !important inside the utilities layer, and a layered !important
+   beats an unlayered one, so their overrides live in `@layer base` with
+   !important. Everything else is unlayered and printed after styles.css.
+   ========================================================================== */
+
+/* ---- Mapping: panels ------------------------------------------------------ */
+@layer base {
+  html .cm-page :is(.glass, .glass-hover, .glass-hover:hover) {
+    background: var(--cm-surface) !important;
+    backdrop-filter: none !important;
+    border: 1px solid var(--cm-line) !important;
+    box-shadow: none !important;
+    transition: border-color var(--motion-control) var(--ease-out) !important;
+  }
+  html .cm-page :is(a, button).glass-hover:is(:hover, :focus-visible),
+  html .cm-page a.glass:is(:hover, :focus-visible) {
+    border-color: var(--cm-line-2) !important;
+  }
+}
+.cm-page .glass:is(.rounded-xl, .rounded-2xl, .rounded-3xl, .rounded-md, .rounded-lg) {
+  border-radius: var(--cm-radius);
+}
+.cm-page :is(.glass, .bbi-aura, .glass-btn, .glass-pill)::before,
+.cm-page .glass::after,
+.cm-page .bbi-spot-light {
+  display: none !important;
+}
+.cm-page :is(.bg-card, .bbi-spot) {
+  background: var(--cm-surface);
+}
+
+/* ---- Mapping: buttons ----------------------------------------------------- */
+/* The travelling conic border and the inverted hover plate become the idea
+   page's quiet control: flat surface, hairline border, white on hover.
+   Specificity (0,5,1) with !important beats the (0,3,1)/(0,4,1) originals. */
+.bbi-instrument.cm-page
+  :is(
+    .ac-action,
+    .ac-tag,
+    a.ac-cta,
+    .glass-btn,
+    .glass-pill,
+    button:not(.bbi-bare):not([aria-label="Open navigation menu"]):not([aria-haspopup])
+  ) {
+  background: var(--cm-surface) !important;
+  border: 1px solid var(--cm-line-2) !important;
+  border-radius: 0.375rem;
+  box-shadow: none !important;
+  animation: none !important;
+  color: var(--cm-text-2) !important;
+  transition:
+    color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    background-color var(--motion-fast) var(--ease-out) !important;
+}
+.bbi-instrument.cm-page
+  :is(
+    .ac-action,
+    .ac-tag,
+    a.ac-cta,
+    .glass-btn,
+    .glass-pill,
+    button:not(.bbi-bare):not([aria-label="Open navigation menu"]):not([aria-haspopup])
+  ):not(:disabled):is(:hover, :focus-visible) {
+  background: color-mix(in srgb, var(--bbi-surface) 80%, var(--bbi-white)) !important;
+  border-color: color-mix(in srgb, var(--bbi-white) 45%, transparent) !important;
+  color: var(--bbi-white) !important;
+  transform: none !important;
+  filter: none !important;
+}
+.bbi-instrument.cm-page :is(.ac-action, a.ac-cta, button):not(.bbi-bare) * {
+  color: inherit !important;
+}
+/* Primary calls to action keep the one red: the same plate as the idea
+   page's primary button. */
+/* Doubled classes: (0,6,1), one above the neutral button rule above. */
+.bbi-instrument.cm-page.cm-page :is(a, button).ac-cta.ac-cta.ac-cta {
+  background: var(--bbi-accent) !important;
+  border-color: color-mix(in srgb, var(--bbi-accent) 70%, var(--bbi-white)) !important;
+  color: var(--bbi-white) !important;
+  font-weight: 500;
+}
+.bbi-instrument.cm-page.cm-page
+  :is(a, button).ac-cta.ac-cta.ac-cta:not(:disabled):is(:hover, :focus-visible) {
+  background: color-mix(in srgb, var(--bbi-accent) 88%, var(--bbi-white)) !important;
+  border-color: color-mix(in srgb, var(--bbi-accent) 55%, var(--bbi-white)) !important;
+}
+.bbi-instrument.cm-page :is(a.ac-cta, button.ac-cta, .glass-btn, .ac-action):not(:disabled):active {
+  transform: translateY(1px) !important;
+}
+/* Legacy hover transforms (scale/lift utilities) are removed site-wide. */
+.cm-page [class*="hover:scale-"]:hover,
+.cm-page [class*="hover:-translate-y"]:hover {
+  transform: none;
+}
+
+/* ---- Mapping: type -------------------------------------------------------- */
+/* No gradient headline text anywhere. */
+.cm-page .bg-clip-text {
+  background: none !important;
+  -webkit-text-fill-color: currentColor;
+  color: var(--bbi-white);
+}
+/* No letter-spaced capitals: eyebrows, labels and nav read in sentence
+   case at normal tracking. Negative (tight) tracking on headings is kept. */
+.bbi-instrument.cm-page
+  :is(.uppercase, [class*="tracking-[0."], .tracking-wide, .tracking-wider, .tracking-widest),
+.bbi-instrument.cm-page header nav {
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+.bbi-instrument.cm-page .t-eyebrow {
+  text-transform: none;
+  letter-spacing: normal;
+  line-height: 1.4;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--cm-red-text);
+}
+
+/* One family: legacy mono and display utilities read in Poppins, figures
+   stay aligned with tabular numerals. Real code keeps a monospace face. */
+.cm-page :is(.font-mono, .font-display, .font-condensed, .font-serif, .ins-num) {
+  font-family: var(--cm-font) !important;
+  font-variant-numeric: tabular-nums;
+}
+.cm-page :is(code, kbd, samp, pre) {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* ---- Mapping: form fields ------------------------------------------------- */
+.bbi-instrument.cm-page
+  :is(
+    input:not([type="checkbox"], [type="radio"], [type="range"], .bg-transparent),
+    select,
+    textarea
+  ) {
+  background: color-mix(in srgb, var(--bbi-bg) 70%, var(--bbi-surface)) !important;
+  border: 1px solid var(--cm-line-2) !important;
+  border-radius: 0.375rem;
+  box-shadow: none !important;
+  color: var(--bbi-white);
+  transition: border-color var(--motion-fast) var(--ease-out);
+}
+.bbi-instrument.cm-page
+  :is(
+    input:not([type="checkbox"], [type="radio"], [type="range"], .bg-transparent),
+    select,
+    textarea
+  ):is(:hover, :focus) {
+  border-color: color-mix(in srgb, var(--bbi-white) 45%, transparent) !important;
+}
+.cm-page ::placeholder {
+  color: var(--cm-text-3);
+  opacity: 0.8;
+}
+.cm-page :is(input[type="checkbox"], input[type="radio"], input[type="range"]) {
+  accent-color: var(--bbi-accent);
+}
+
+/* ---- Status screens: 404 and error (routes/__root.tsx) ---------------------- */
+.cm-page.cm-status {
+  display: grid;
+  min-height: 100vh;
+  min-height: 100dvh;
+  place-items: center;
+  padding: 1.5rem 1rem;
+}
+.cm-page .cm-status-card {
+  width: min(34rem, 100%);
+  padding: var(--cm-pad);
+  background: var(--cm-surface);
+  border: 1px solid var(--cm-line);
+  border-radius: var(--cm-radius);
+}
+.bbi-instrument.cm-page .cm-status-brand {
+  margin: 0 0 1.5rem;
+  font-size: 0.875rem;
+  color: var(--cm-text-3);
+}
+.cm-page .cm-status-brand a {
+  font-weight: 700;
+  color: var(--bbi-white);
+  text-decoration: none;
+}
+.bbi-instrument.cm-page .cm-status-code {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--cm-red-text);
+}
+.cm-page .cm-status-title {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--bbi-white);
+}
+.bbi-instrument.cm-page .cm-status-body {
+  margin: 0.75rem 0 0;
+  line-height: 1.65;
+  color: var(--cm-text-2);
+}
+.cm-page .cm-status-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin-top: 1.5rem;
+}
+
+/* ---- Mapping: legacy motion layers ------------------------------------------ */
+/* Scroll-parallax planes and pointer-depth layers sit at rest. Their hooks
+   no longer publish progress (src/motion), and a settled `--sc-p` would
+   otherwise park the back plane 22px up, into the breadcrumb above it. */
+.cm-page :is(.bbi-depth-back, .bbi-depth-mid, .bbi-depth-front, .cx-layer, .mo-drift) {
+  transform: none !important;
+  will-change: auto;
+}
+/* Card hover lift from motion.css: panels answer hover with their border
+   only, like the idea page. */
+.cm-page :is(.mo-card, .mo-row):is(:hover, :focus-visible) {
+  transform: none;
+}
+.cm-page .cx-scene {
+  perspective: none;
+  transform-style: flat;
+}
+.cm-page .mo-card:hover {
+  border-color: var(--cm-line-2);
+}
+.cm-page .mo-card::after {
+  display: none;
 }

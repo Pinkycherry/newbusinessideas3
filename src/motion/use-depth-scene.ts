@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 
 import { approach, clamp01, onFrame, onScroll, onVisible } from "./engine";
 import { prefersReducedMotion, pointerMotionEnabled } from "./gsap";
+import { isLegacyMotionPage } from "./legacy-page";
 
 export type DepthSceneOptions = {
   /** How hard the scene leans toward the cursor. 1 is the house default. */
@@ -33,6 +34,8 @@ export function useDepthScene<T extends HTMLElement>(opts: DepthSceneOptions = {
   const ref = useRef<T | null>(null);
 
   useEffect(() => {
+    // Plain site system: this layer is off everywhere but the homepage.
+    if (!isLegacyMotionPage()) return;
     const el = ref.current;
     if (!el || prefersReducedMotion()) return;
 

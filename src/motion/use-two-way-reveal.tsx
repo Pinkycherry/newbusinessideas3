@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { isLegacyMotionPage } from "./legacy-page";
 
 /**
  * Two-way scroll reveal, for phones.
@@ -21,6 +22,8 @@ import { useEffect } from "react";
  */
 export function useTwoWayReveal(selector = "main section") {
   useEffect(() => {
+    // Plain site system: this layer is off everywhere but the homepage.
+    if (!isLegacyMotionPage()) return;
     if (typeof IntersectionObserver === "undefined") return;
     if (!window.matchMedia("(max-width: 1023px)").matches) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;

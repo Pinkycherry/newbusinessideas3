@@ -12,31 +12,62 @@ import { type ReactNode } from "react";
 
 import "../styles.css";
 import "../motion.css";
+import "../components/idea-cinema/cinema.css";
 import { PointerChannelProvider, PageTransition } from "../motion";
 import { catalogQuery } from "../lib/ideas.functions";
 import { getPageResources } from "../lib/resources.functions";
 import { JsonLd, organisationSchema } from "@/lib/schema";
 import { canonicalUrl, siteIndexable } from "../lib/site-config";
 
+/**
+ * The 404 and error screens render outside every route's SiteShell, so they
+ * carry the plain system's scope classes themselves and use its button and
+ * link classes (components/idea-cinema/cinema.css). Plain words, a way back, no art.
+ */
+function StatusScreen({
+  code,
+  title,
+  body,
+  children,
+}: {
+  code?: string;
+  title: string;
+  body: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="bbi-instrument cm-page cm-status">
+      <main className="cm-status-card">
+        <p className="cm-status-brand">
+          <a href="/">BBI</a>
+          <span aria-hidden="true"> · </span>Bro Business Ideas
+        </p>
+        {code && <p className="cm-status-code">{code}</p>}
+        <h1 className="cm-status-title text-3xl">{title}</h1>
+        <p className="cm-status-body">{body}</p>
+        <div className="cm-status-actions">{children}</div>
+      </main>
+    </div>
+  );
+}
+
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
-      </div>
-    </div>
+    <StatusScreen
+      code="Error 404"
+      title="This page does not exist"
+      body="The link may be old, or the page was moved. Every idea in the library is still one search away."
+    >
+      <Link to="/browse" className="cm-btn cm-btn-primary bbi-bare">
+        Browse the library
+      </Link>
+      <Link to="/search" className="cm-btn cm-btn-secondary bbi-bare">
+        Search ideas
+      </Link>
+      <Link to="/" className="cm-trace-link">
+        Home
+      </Link>
+    </StatusScreen>
   );
 }
 
@@ -45,33 +76,24 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter();
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <button
-            onClick={() => {
-              router.invalidate();
-              reset();
-            }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Try again
-          </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-          >
-            Go home
-          </a>
-        </div>
-      </div>
-    </div>
+    <StatusScreen
+      title="This page did not load"
+      body="Something went wrong on our side. Trying again usually fixes it; if not, the home page will."
+    >
+      <button
+        type="button"
+        onClick={() => {
+          router.invalidate();
+          reset();
+        }}
+        className="cm-btn cm-btn-primary bbi-bare"
+      >
+        Try again
+      </button>
+      <a href="/" className="cm-btn cm-btn-secondary bbi-bare">
+        Go home
+      </a>
+    </StatusScreen>
   );
 }
 
@@ -126,10 +148,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      /* The Google Fonts stylesheet itself is NOT declared here. As a plain
-         `rel="stylesheet"` it blocked first paint on every route for as long as
-         Google took to answer — measured at roughly 1.4 seconds. It is loaded
-         non-blocking from `FontStylesheet` below instead. */
+      /* The plain site system sets every page but the homepage in Poppins,
+         declared with @font-face in styles.css; the two weights the first
+         screen paints with are preloaded. The Google Fonts stylesheet below
+         (IBM Plex + Geist) is still loaded, non-blocking, for the homepage,
+         which keeps its original design. A browser only downloads a face
+         some element actually uses, so other pages fetch only that small
+         stylesheet. */
+      ...FONT_PRELOADS.map((href) => ({
+        rel: "preload",
+        as: "font",
+        type: "font/woff2",
+        href,
+        crossOrigin: "anonymous" as const,
+      })),
       /* The .ico carries 16 through 256 so the tab strip, the bookmark bar
          and Windows each get a bitmap made for their size rather than one
          downscaled on the fly. The 32px PNG is what modern browsers prefer
@@ -221,6 +253,12 @@ function FontStylesheet() {
   );
 }
 
+/** Poppins 400 and 600: body text and headings on the first screen. */
+const FONT_PRELOADS = [
+  "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecg.woff2",
+  "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2",
+];
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="light">
@@ -247,8 +285,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Publishes --ptr-x/y/v and --scroll-v on :root for the whole site.
-          Renders no DOM of its own and holds no React state. */}
+      {/* Publishes --ptr-x/y/v and --scroll-v on :root. Only the homepage
+          reads them now: SiteShell suspends the channel on every page that
+          runs the plain site system (components/site-stage.ts). */}
       <PointerChannelProvider />
       {/* Desktop-only custom pointer; refuses to run on touch or reduced motion. */}
       {/* The sitewide heading reveal is OFF, 2026-09-22, at the founder's
