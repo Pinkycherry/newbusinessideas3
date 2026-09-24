@@ -4291,6 +4291,74 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
   }
 }
 
+/* ---- TRIAL, round 2: every panel, not just the two card rails ----------
+   2026-09-24, same day. The founder's reference images round EVERY panel
+   (hero, feature blocks, pricing, stat cards) and give the page a tinted
+   background glow, not just a card grid at the bottom. First pass only hit
+   `.bbi-spot` (the related/trending rails); this covers the rest of the
+   page's panels -- the masthead, the breakdown/playbooks/FAQ blocks, the
+   sidebar -- which are plain Tailwind `rounded-lg/xl/2xl` + `bg-card`/`glass`
+   boxes, not `.bbi-spot`.
+
+   `--radius` is redefined on the scope instead of hand-patching each
+   className: every `rounded-*` utility on the page reads `var(--radius-*)`,
+   and each of those is itself `calc(var(--radius) + Npx)` (see the
+   `@theme inline` block near the top of this file), so one override cascades
+   through the whole chain to every rounded corner under this wrapper. No
+   component file touched.
+
+   Still gated to the same trial slugs in `idea.$slug.tsx` -- widened this
+   round to include the founder's own currently-open page
+   (solar-fencing-business-for-farms) alongside the original trial page, so
+   both show the full treatment. Every other idea page is untouched: no
+   `--radius` override, no glow, no shadow. */
+.bbi-card-smooth {
+  --radius: 1.125rem;
+  position: relative;
+  isolation: isolate;
+}
+.bbi-card-smooth::before {
+  content: "";
+  position: absolute;
+  inset: -3rem -1.5rem;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      44rem 26rem at 12% -4%,
+      color-mix(in oklab, var(--hl-saffron, #ff9933) 12%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      38rem 24rem at 100% 30%,
+      color-mix(in oklab, var(--hl-saffron, #ff9933) 7%, transparent),
+      transparent 65%
+    );
+}
+.bbi-card-smooth .bg-card,
+.bbi-card-smooth .glass {
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.26),
+    0 16px 40px -26px rgb(0 0 0 / 0.55);
+  border-color: color-mix(in oklab, var(--hl-saffron, #ff9933) 16%, var(--border));
+  transition:
+    border-color 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.bbi-card-smooth a.rounded-xl.bg-card:hover,
+.bbi-card-smooth a.rounded-2xl.bg-card:hover {
+  border-color: var(--hl-saffron, #ff9933);
+  box-shadow:
+    0 18px 44px -18px rgb(255 153 51 / 0.25),
+    0 6px 16px rgb(0 0 0 / 0.3);
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-card-smooth .bg-card,
+  .bbi-card-smooth .glass {
+    transition: none;
+  }
+}
+
 /* ---- the site's action treatment ---------------------------------------
    The founder asked for the "Surprise Me" button's effect on every clickable
    button on the site: a band of light travelling the border at rest, and a
