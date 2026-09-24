@@ -4246,6 +4246,51 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
   }
 }
 
+/* ---- TRIAL: smoother card geometry -------------------------------------
+   2026-09-24. Founder asked to compare the site's card look against a set of
+   reference screenshots (rounder corners, soft glow shadow, a hover lift) and
+   see it live on one page before any wider change. `.bbi-card-smooth` is an
+   opt-in class, applied only to the trial page's root
+   (`idea.$slug.tsx`, gated on one slug) -- every other page's `.bbi-spot`
+   keeps its current flat, square, zero-shadow look untouched. If this ships
+   site-wide later, the fix is deleting the slug gate in `idea.$slug.tsx` and
+   this comment -- the tokens below are already centralized in the one file
+   that owns every card on the site.
+   Rollback: `git revert` this commit, or delete this block plus the
+   conditional class in the route file. Nothing else references
+   `bbi-card-smooth`. */
+.bbi-card-smooth .bbi-spot {
+  border-radius: 1.25rem;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.28);
+  transition:
+    border-color 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.bbi-card-smooth .bbi-spot:hover,
+.bbi-card-smooth .bbi-spot[data-lit="on"] {
+  transform: translateY(-4px);
+  border-color: var(--hl-saffron, #ff9933);
+  box-shadow:
+    0 14px 32px -10px rgb(255 153 51 / 0.28),
+    0 6px 16px rgb(0 0 0 / 0.32);
+}
+@media (hover: none) and (pointer: coarse) {
+  .bbi-card-smooth .bbi-spot:hover {
+    transform: none;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.28);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bbi-card-smooth .bbi-spot,
+  .bbi-card-smooth .bbi-spot:hover,
+  .bbi-card-smooth .bbi-spot[data-lit="on"] {
+    transition: none;
+    transform: none;
+  }
+}
+
 /* ---- the site's action treatment ---------------------------------------
    The founder asked for the "Surprise Me" button's effect on every clickable
    button on the site: a band of light travelling the border at rest, and a
