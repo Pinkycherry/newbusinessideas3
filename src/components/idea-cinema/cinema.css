@@ -1,0 +1,797 @@
+/* Cinema trial, round two (2026-09-24).
+
+   Imported by idea-cinema.tsx, so it ships in the idea route's chunk; every
+   rule is scoped under `.cm-page`, which only the trial slugs render, so no
+   other page is affected. It sits on top of the "CINEMA TRIAL (idea pages)"
+   block in src/styles.css and must come after it: every rule here uses the
+   same or a higher specificity than the rule it replaces. When the trial is
+   approved for the whole site, fold this file into that block (PENDING #37).
+
+   Direction after the founder's review ("AI slop"): no gradient headline
+   text, no icon plates on headings, no red dashes or letter-spaced capitals
+   on labels, no decorative arc, no "01 / 04" counters, no red side-stripes,
+   notches or cut corners. The dark ground and one type family stay; panels
+   are flat with a hairline border; red is kept for the primary button and a
+   few small accents. Also here: the hero order (business, who it helps, the
+   action), one contents control in the sticky header, an opaque header, and
+   a lighter lower page with "Show more" disclosures. */
+
+.bbi-instrument.cm-page,
+html.light .bbi-instrument.cm-page {
+  --bbi-bg: #120404;
+  --bbi-surface: #270a0a;
+  --bbi-accent: #ca0808;
+  --bbi-white: #ffffff;
+  --bbi-black: #000000;
+
+  --motion-fast: 140ms;
+  --motion-control: 200ms;
+  --motion-panel: 360ms;
+  --motion-scene: 560ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-enter: var(--ease-out);
+
+  /* Measured contrast, worst case on #270a0a: #e7dada 13.6:1, #c6adad
+     8.8:1, #f0a8a8 9.6:1. The accent red is 3.1:1 there, so it never
+     carries text; white on the red button is 5.9:1. */
+  --cm-text-2: #e7dada;
+  --cm-text-3: #c6adad;
+  --cm-red-text: #f0a8a8;
+  --cm-surface: #220909;
+  --cm-radius: 0.5rem;
+
+  /* Two faint, static corner glows; the reading area stays dark. */
+  background:
+    radial-gradient(ellipse at 100% 0%, rgb(202 8 8 / 0.14), transparent 45%),
+    radial-gradient(ellipse at 0% 100%, rgb(202 8 8 / 0.1), transparent 45%), var(--bbi-bg);
+}
+/* Round one's fixed backdrop layer is replaced by the background above. */
+.bbi-instrument.cm-page::before {
+  display: none !important;
+}
+
+/* ---- Header: opaque, one contents control, no floating dock ------------- */
+.cm-page > header {
+  background: var(--bbi-bg);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.06);
+}
+@layer base {
+  html .cm-page .glass-nav {
+    background: var(--bbi-bg) !important;
+  }
+}
+/* The dock is the fixed bottom-right `.bbi-overlay`; the mobile menu shares
+   that class but is `inset-0`, so the selector names the dock's corner. */
+.cm-page > .bbi-overlay.bottom-5.right-4 {
+  display: none;
+}
+.cm-page .cm-header-slot {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+.cm-page .glass-nav > .cm-header-slot + button {
+  margin-left: 0.5rem;
+}
+/* Desktop: the shared nav tightens its tracking, and the contents control
+   is icon-only (its name stays "Contents") until the bar has room for the
+   label. Measured: no overlap at 1024, 1280, 1440 or 1920px. */
+@media (min-width: 1024px) {
+  .cm-page .cm-header-slot {
+    margin-left: 0;
+  }
+  .cm-page header nav {
+    gap: 0.5rem;
+    letter-spacing: 0.06em;
+  }
+  .cm-page header nav button[aria-haspopup] {
+    padding-inline: 0.3rem;
+    letter-spacing: 0.08em;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .cm-page .cm-contents-header .cm-contents-toggle {
+    width: 2.75rem;
+    justify-content: center;
+    padding: 0;
+  }
+  .cm-page .cm-contents-header :is(.cm-contents-label, .cm-contents-now) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* ---- Contents controls ---------------------------------------------------- */
+.cm-page .cm-contents {
+  position: relative;
+}
+.cm-page .cm-contents-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2.75rem;
+  max-width: 100%;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--cm-line-2);
+  border-radius: 0.375rem;
+  background: var(--cm-surface);
+  color: var(--bbi-white);
+  font: 500 0.875rem/1.2 var(--cm-font);
+  text-transform: none;
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-out);
+}
+.cm-page .cm-contents-toggle:is(:hover, :focus-visible, [aria-expanded="true"]) {
+  border-color: var(--bbi-white);
+}
+.cm-page .cm-contents-bars {
+  width: 0.9rem;
+  height: 0.7rem;
+  flex-shrink: 0;
+  border-top: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  background: linear-gradient(currentColor, currentColor) left center / 60% 2px no-repeat;
+}
+.cm-page .cm-contents-now {
+  max-width: 9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--cm-text-3);
+}
+.cm-page .cm-contents-panel {
+  position: absolute;
+  z-index: 70;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  width: min(18rem, calc(100vw - 2rem));
+  padding: 0.5rem;
+  border: 1px solid var(--cm-line-2);
+  border-radius: 0.375rem;
+  background: var(--bbi-bg);
+  box-shadow: 0 18px 40px -16px var(--bbi-black);
+  animation: cm-drop var(--motion-control) var(--ease-out) both;
+}
+.cm-page .cm-contents-hero .cm-contents-panel {
+  right: auto;
+  left: 0;
+}
+.cm-page .cm-contents-panel[hidden] {
+  display: none;
+}
+@keyframes cm-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+.cm-page .cm-contents-panel ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cm-page .cm-contents-panel a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.25rem;
+  color: var(--cm-text-2);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
+}
+.cm-page .cm-contents-panel a:is(:hover, :focus-visible) {
+  background: rgb(255 255 255 / 0.06);
+  color: var(--bbi-white);
+}
+/* The current section: a text marker and a white edge, not colour alone. */
+.cm-page .cm-contents-panel a[aria-current="location"] {
+  color: var(--bbi-white);
+  box-shadow: inset 2px 0 0 var(--bbi-white);
+}
+.cm-page .cm-contents-here {
+  font-size: 0.8125rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--cm-text-3);
+}
+.cm-page .cm-contents-top {
+  display: block;
+  margin-top: 0.25rem;
+  padding: 0.6rem;
+  border-top: 1px solid var(--cm-line);
+  color: var(--cm-text-3);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+.cm-page .cm-contents-top:is(:hover, :focus-visible) {
+  color: var(--bbi-white);
+}
+@media (max-width: 1023px) {
+  .cm-page .cm-contents-header .cm-contents-now {
+    display: none;
+  }
+}
+
+/* ---- Breadcrumb ------------------------------------------------------------ */
+.cm-page .cm-crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  color: var(--cm-text-3);
+}
+.cm-page .cm-crumbs li {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+.cm-page .cm-crumbs li + li::before {
+  content: "›";
+  padding: 0 0.45rem;
+  opacity: 0.7;
+}
+.cm-page .cm-crumbs a {
+  color: var(--cm-text-3);
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+  transition:
+    color var(--motion-fast) var(--ease-out),
+    background-size var(--motion-control) var(--ease-out);
+}
+.cm-page .cm-crumbs a:is(:hover, :focus-visible) {
+  color: var(--bbi-white);
+  background-size: 100% 1px;
+}
+.cm-page .cm-crumbs-last a {
+  display: inline-block;
+  max-width: 22rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+.cm-page .cm-crumbs li.cm-crumbs-more {
+  display: none;
+}
+.cm-page .cm-crumbs-more button {
+  min-width: 2.75rem;
+  min-height: 2rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--cm-line-2);
+  border-radius: 0.25rem;
+  background: transparent;
+  color: var(--cm-text-2);
+  cursor: pointer;
+}
+@media (max-width: 767px) {
+  .cm-page .cm-crumbs li.cm-crumbs-more {
+    display: inline-flex;
+  }
+  .cm-page .cm-crumbs:not([data-open]) .cm-crumbs-mid {
+    display: none;
+  }
+  .cm-page .cm-crumbs-last a {
+    max-width: 100%;
+    white-space: normal;
+  }
+}
+
+/* ---- Type: plain white headings, sentence-case labels ------------------- */
+.cm-page :is(.cm-h1, .cm-head h2) {
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
+  color: var(--bbi-white);
+}
+.cm-page .cm-head {
+  margin-bottom: 1rem;
+}
+.bbi-instrument.cm-page :is(.cm-kicker, .cm-eyebrow, .cm-signal-label) {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--cm-text-3);
+}
+.cm-page .cm-kicker::before {
+  display: none;
+}
+.cm-page .cm-subhead {
+  color: var(--bbi-white);
+}
+
+/* ---- Hero ------------------------------------------------------------------ */
+.cm-page .cm-hero {
+  margin-top: 0.75rem;
+  padding: clamp(1.25rem, 0.9rem + 1.5vw, 2.25rem) var(--cm-pad);
+}
+/* A plain panel: the round-one cut corner and stage animation are off. */
+.cm-page .cm-hero::before,
+.cm-page .cm-hero::after {
+  clip-path: none;
+  border-radius: var(--cm-radius);
+  animation: none;
+}
+.cm-page .cm-hero::before {
+  background: var(--cm-line-2);
+}
+.cm-page .cm-hero::after {
+  background: var(--bbi-surface);
+}
+.cm-page .cm-hero-grid {
+  grid-template-columns: minmax(0, 1.75fr) minmax(16rem, 1fr);
+  gap: clamp(1.25rem, 1rem + 2vw, 2.75rem);
+  padding-top: 0;
+}
+/* A long title should not make a tall hero: a narrower size range; the
+   column sets the measure. */
+.cm-page .cm-h1 {
+  margin-top: 0.6rem;
+  font-size: clamp(1.875rem, 1.1rem + 2.4vw, 3.15rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  animation: cm-aperture var(--motion-scene) var(--ease-out) both;
+}
+/* The heading enters once, as one block. The server markup is final, so
+   with no script the text is simply there. */
+@keyframes cm-aperture {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+.bbi-instrument.cm-page .cm-lead {
+  margin-top: 0.85rem;
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  line-height: 1.65;
+}
+.cm-page .cm-actions {
+  margin-top: 1.25rem;
+  gap: 0.75rem 1rem;
+}
+.cm-page .cm-dossier {
+  margin-top: 1.25rem;
+}
+.cm-page .cm-hero-aside {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+  min-width: 0;
+}
+.cm-page .cm-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 0.75rem;
+}
+.cm-page .cm-hero-id {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--cm-text-3);
+}
+.bbi-instrument.cm-page .cm-keywords {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--cm-text-3);
+}
+.cm-page .cm-keywords-label {
+  color: var(--cm-text-2);
+  font-weight: 500;
+}
+@media (max-width: 900px) {
+  .cm-page .cm-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .cm-page .cm-frame {
+    padding-top: 0.75rem;
+  }
+  .cm-page .cm-hero {
+    margin-top: 0.5rem;
+  }
+  .cm-page .cm-h1 {
+    font-size: 1.875rem;
+  }
+  .cm-page .cm-actions .cm-btn-primary {
+    flex: 1 1 100%;
+  }
+}
+@media (max-width: 359px) {
+  .cm-page .cm-h1 {
+    font-size: 1.625rem;
+  }
+}
+
+/* ---- Buttons and links ------------------------------------------------------ */
+/* The primary button's one highlight sweep, on hover or focus only. */
+.cm-page .cm-btn-primary:not(:disabled):is(:hover, :focus-visible)::after {
+  transition: transform 220ms var(--ease-out);
+}
+.cm-page
+  :is(.cm-btn, .cm-trace-link, .cm-trace, .cm-deck-card):is(:hover, :focus-visible)
+  .cm-arrow {
+  transform: translateX(3px);
+}
+.cm-page :is(.cm-btn, .cm-trace-link):is(:hover, :focus-visible) .cm-arrow-down {
+  transform: rotate(90deg) translateX(3px);
+}
+/* Secondary link: a full neutral underline that brightens on hover. */
+.cm-page .cm-trace-link::after {
+  right: 1.4rem;
+  background: var(--cm-text-3);
+  transform: scaleX(1);
+}
+.cm-page .cm-trace-link:is(:hover, :focus-visible)::after {
+  background: var(--bbi-white);
+}
+.cm-page .ci-accent {
+  transition: stroke 160ms var(--ease-out);
+}
+.cm-page
+  :is(.cm-deck-card, .cm-trace, .cm-trace-link, .cm-btn):is(:hover, :focus-visible)
+  .ci-accent {
+  stroke: var(--bbi-white);
+}
+.cm-page
+  :is(
+    .cm-capsule,
+    .cm-contents-toggle,
+    .cm-contents-panel,
+    .cm-share-fan,
+    .cm-icon-btn,
+    .cm-more > summary,
+    .cm-btn
+  ) {
+  border-radius: 0.375rem;
+}
+
+/* ---- Share: a popover under the button, so the page never moves -------- */
+.cm-page .cm-share {
+  position: relative;
+}
+.cm-page .cm-share-fan {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  flex-wrap: nowrap;
+  padding: 0.4rem;
+  border: 1px solid var(--cm-line-2);
+  background: var(--bbi-bg);
+  box-shadow: 0 14px 32px -14px var(--bbi-black);
+  animation: cm-drop var(--motion-control) var(--ease-out) both;
+}
+.cm-page .cm-share-fan > .cm-icon-btn {
+  animation: none;
+}
+@media (max-width: 420px) {
+  .cm-page .cm-share-fan {
+    left: auto;
+    right: 0;
+  }
+}
+
+/* ---- Demand score, compact -------------------------------------------------- */
+.cm-page .cm-signal {
+  padding: 1rem 1.1rem;
+}
+.cm-page .cm-signal-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.bbi-instrument.cm-page .cm-signal-value {
+  margin: 0;
+}
+.cm-page .cm-signal-value strong {
+  font-size: clamp(1.875rem, 1.5rem + 1vw, 2.5rem);
+  font-weight: 700;
+}
+.cm-page .cm-gauge {
+  margin-top: 0.6rem;
+}
+/* The bar fills to the real score once; the number is readable throughout. */
+.cm-page .cm-gauge-fill {
+  animation-duration: 520ms;
+  animation-delay: 200ms;
+}
+.bbi-instrument.cm-page .cm-signal-note {
+  margin-top: 0.7rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--cm-text-3);
+}
+.bbi-instrument.cm-page .cm-signal-note strong {
+  color: var(--bbi-white);
+  font-weight: 600;
+}
+
+/* ---- Content surfaces: one flat panel with a hairline border ------------ */
+.cm-page
+  :is(
+    .cm-open-edge,
+    .cm-stepped,
+    .cm-side,
+    .cm-ledger,
+    .cm-mission,
+    .cm-dock,
+    .cm-timeline,
+    .cm-console,
+    .cm-signal,
+    .cm-faq-item,
+    .cm-source,
+    .cm-deck-card,
+    .cm-editorial-item,
+    .cm-tool
+  ) {
+  background: var(--cm-surface);
+  border: 1px solid var(--cm-line);
+  border-radius: var(--cm-radius);
+}
+.cm-page .cm-deck > li:nth-child(n) .cm-deck-card {
+  border-radius: var(--cm-radius);
+}
+.cm-page .cm-open-edge {
+  padding: var(--cm-pad);
+}
+.cm-page :is(.cm-open-edge, .cm-deck-card, .cm-tool, .cm-trace)::before,
+.cm-page .cm-open-edge::after {
+  display: none;
+}
+.cm-page :is(.cm-source, .cm-editorial-item, .cm-deck-card):is(:hover, :focus-visible) {
+  border-color: var(--cm-line-2);
+}
+
+/* ---- Blueprint -------------------------------------------------------------- */
+/* Cards size to their own text: no equal-height empty panels. */
+.cm-page .cm-blueprint {
+  align-items: start;
+}
+.cm-page .cm-stepped {
+  margin-top: 0;
+}
+.bbi-instrument.cm-page .cm-stepped p {
+  color: var(--cm-text-2);
+}
+.cm-page .cm-card h3 {
+  margin-top: 0;
+}
+.cm-page .cm-stepped h3 {
+  font-size: clamp(1.2rem, 1.05rem + 0.5vw, 1.45rem);
+}
+.cm-page .cm-card .cm-prose > p + p {
+  margin-top: 0.85em;
+}
+
+/* ---- Pros, cons and verdict ------------------------------------------------- */
+.cm-page #verdict .cm-oppose {
+  margin-top: 0;
+}
+/* Distinguished by a plain "+" and "-", not colour. */
+.cm-page .cm-side-pro li::before,
+.cm-page .cm-side-con li::before {
+  top: 0;
+  width: auto;
+  height: auto;
+  border: 0;
+  background: none;
+  transform: none;
+  font-weight: 600;
+  color: var(--cm-text-3);
+}
+.cm-page .cm-side-pro li::before {
+  content: "+";
+}
+.cm-page .cm-side-con li::before {
+  content: "-";
+}
+/* The verdict: set apart by a stronger border and larger type. */
+.cm-page .cm-verdict {
+  padding: var(--cm-pad);
+}
+.cm-page .cm-verdict::before {
+  -webkit-mask: none;
+  mask: none;
+  background: var(--bbi-surface);
+  border: 1px solid var(--cm-line-2);
+  border-radius: var(--cm-radius);
+}
+.cm-page .cm-verdict::after {
+  display: none;
+}
+
+/* ---- Costs and earnings ------------------------------------------------------ */
+.cm-page .cm-ledger-rail::after {
+  height: 1px;
+  background: var(--cm-line);
+}
+.cm-page .cm-ledger-axis::before {
+  display: none;
+}
+.bbi-instrument.cm-page .cm-ledger-note {
+  grid-column: 1 / -1;
+  margin-top: 1.25rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--cm-line-2);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--cm-text-3);
+}
+
+/* ---- Steps: plain numbers ---------------------------------------------------- */
+.cm-page .cm-ribbon-idx {
+  display: block;
+  height: auto;
+  border: 0;
+  background: none;
+  color: var(--cm-text-3);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+/* ---- Disclosures: overview, FAQ, "Show more" --------------------------------- */
+.cm-page .cm-faq-mark::before,
+.cm-page .cm-faq-mark::after {
+  transition: transform 160ms var(--ease-out);
+}
+.cm-page .cm-faq-mark::after {
+  background: var(--bbi-white);
+}
+.cm-page :is(.cm-dossier, .cm-faq-item, .cm-more)[open] :is(.cm-dossier-body, .cm-faq-a) {
+  animation-duration: 200ms;
+}
+@supports selector(::details-content) {
+  .cm-page :is(.cm-dossier, .cm-faq-item, .cm-more)::details-content {
+    transition:
+      block-size 200ms var(--ease-out),
+      content-visibility 200ms allow-discrete;
+  }
+  .cm-page .cm-more {
+    interpolate-size: allow-keywords;
+  }
+  .cm-page .cm-more::details-content {
+    block-size: 0;
+    overflow: clip;
+  }
+  .cm-page .cm-more[open]::details-content {
+    block-size: auto;
+  }
+}
+.cm-page .cm-faq-more {
+  margin-top: 0.5rem;
+}
+.cm-page .cm-more {
+  margin-top: 0.75rem;
+}
+.cm-page .cm-more > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.4rem 0.35rem 0.9rem;
+  border: 1px solid var(--cm-line-2);
+  color: var(--bbi-white);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  list-style: none;
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-out);
+}
+.cm-page .cm-more > summary::-webkit-details-marker {
+  display: none;
+}
+.cm-page .cm-more > summary:is(:hover, :focus-visible) {
+  border-color: var(--bbi-white);
+}
+.cm-page .cm-more[open] > summary {
+  margin-bottom: 0.75rem;
+}
+
+/* ---- Keep exploring ----------------------------------------------------------- */
+.cm-page .cm-explore .cm-deck-heading {
+  margin: 1.75rem 0 0.75rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--bbi-white);
+}
+.cm-page .cm-deck-card {
+  transition:
+    transform 180ms var(--ease-out),
+    border-color 180ms var(--ease-out);
+}
+.cm-page .cm-deck-card:is(:hover, :focus-visible) {
+  transform: translateY(-2px);
+}
+
+/* ---- Free tools ----------------------------------------------------------------- */
+.cm-page .cm-hub-head {
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+.cm-page .cm-hub-head > .min-w-0 {
+  flex: 1 1 18rem;
+}
+.cm-page .cm-hub-all {
+  margin-left: auto;
+  align-self: center;
+  white-space: nowrap;
+}
+.cm-page .cm-hub-block + .cm-hub-block {
+  margin-top: 2.25rem;
+}
+.cm-page .cm-index-row {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.cm-page .cm-editorial-meta {
+  letter-spacing: 0;
+  text-transform: none;
+}
+/* Below-the-fold groups skip rendering work until they are near the view. */
+.cm-page .cm-hub-block,
+.cm-page .cm-explore {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 640px;
+}
+
+/* ---- Entrances: small, once, and only for blocks below the fold ---------- */
+.cm-page [data-reveal="stagger"].is-armed > * {
+  transform: translateY(10px);
+}
+.cm-page [data-reveal="stagger"].is-in > * {
+  transition:
+    opacity 380ms var(--ease-out) var(--stagger, 0ms),
+    transform 380ms var(--ease-out) var(--stagger, 0ms);
+}
+.cm-page [data-reveal="stagger"] > * {
+  --stagger: calc(var(--i, 0) * 60ms);
+}
+.cm-page [data-reveal="rise"].is-armed,
+.cm-page [data-reveal="wipe"].is-armed {
+  transform: translateY(8px);
+}
+.cm-page [data-reveal="ledger"].is-armed .cm-ledger-side > p {
+  transform: translateY(7px);
+}
+
+/* ---- Reduced motion --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .cm-page .cm-h1,
+  .cm-page .cm-contents-panel,
+  .cm-page .cm-share-fan {
+    animation: none !important;
+  }
+  .cm-page .cm-deck-card:is(:hover, :focus-visible) {
+    transform: none;
+  }
+  .cm-page .cm-btn-primary::after {
+    display: none;
+  }
+  @supports selector(::details-content) {
+    .cm-page .cm-more::details-content {
+      transition: none;
+    }
+  }
+}

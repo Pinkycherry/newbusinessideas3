@@ -3,7 +3,7 @@ import { BookOpen, Calculator, Newspaper, SpellCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import type { PageResources, ResourceLink } from "@/lib/resources.server";
-import { CinemaIcon, type CinemaIconName } from "@/components/idea-cinema/cinema-icons";
+import { CinemaIcon } from "@/components/idea-cinema/cinema-icons";
 
 /**
  * The block that closes a long page: twelve calculators, six guides, twelve
@@ -89,8 +89,8 @@ export function ResourceHub({
   cinema = false,
 }: {
   resources: PageResources | null | undefined;
-  /** The idea-page cinema trial's layout: the same links, rendered as an
-   * indexed rail, two editorial lists and a term register. */
+  /** The idea-page cinema trial's layout: the same links, as compact rows
+   * with "Show more" disclosures. */
   cinema?: boolean;
 }) {
   if (!resources) return null;
@@ -192,37 +192,84 @@ export function ResourceHub({
 }
 
 /* ---- Cinema trial layout -------------------------------------------------
-   Same four lists, same links and copy as above. Only the shapes change:
-   calculators become a numbered "Indexed Rail", guides and blog posts an
-   "Editorial" list, glossary terms a dense "Term Register". Rendered only
-   when SiteShell's `visualTrial` is on. */
+   Same four lists, same links and copy as above, as compact rows:
+   calculators as a two-column list, guides and blog posts as title-and-
+   summary rows, glossary terms as a dense register. Rendered only when
+   SiteShell's `visualTrial` is on.
+
+   Each list shows a short first set; the rest stay in the page behind an
+   accessible "Show more" disclosure, and every group links to its full
+   collection. Nothing is dropped. */
+
+const CINEMA_SHOWN = { calculators: 6, guides: 3, glossary: 6, posts: 3 };
 
 function CinemaBlock({
   id,
   heading,
   standfirst,
-  icon,
+  all,
   children,
 }: {
   id: string;
   heading: string;
   standfirst: string;
-  icon: CinemaIconName;
+  all: { to: string; label: string };
   children: React.ReactNode;
 }) {
   return (
-    <section className="cm-hub-block" aria-labelledby={id} data-reveal="rise">
+    <section className="cm-hub-block" aria-labelledby={id}>
       <div className="cm-hub-head">
-        <span className="cm-plate cm-plate-sm" aria-hidden="true">
-          <CinemaIcon name={icon} size={20} />
-        </span>
         <div className="min-w-0">
-          <h2 id={id}>{heading}</h2>
+          <h2 id={id} className="text-xl">
+            {heading}
+          </h2>
           <p>{standfirst}</p>
         </div>
+        <Link to={all.to} className="cm-trace-link cm-hub-all">
+          {all.label}
+          <CinemaIcon name="arrow" size={16} className="cm-arrow" />
+        </Link>
       </div>
       {children}
     </section>
+  );
+}
+
+/** First `shown` items in `wrap`, the rest in the same wrapper behind a disclosure. */
+function Split<T>({
+  items,
+  shown,
+  noun,
+  wrap,
+  render,
+}: {
+  items: T[];
+  shown: number;
+  noun: string;
+  wrap: (children: React.ReactNode, start: number) => React.ReactNode;
+  render: (item: T, index: number) => React.ReactNode;
+}) {
+  const head = items.slice(0, shown);
+  const tail = items.slice(shown);
+  return (
+    <>
+      {wrap(
+        head.map((item, i) => render(item, i)),
+        1,
+      )}
+      {tail.length > 0 && (
+        <details className="cm-more">
+          <summary>
+            Show {tail.length} more {noun}
+            <span className="cm-faq-mark" aria-hidden="true" />
+          </summary>
+          {wrap(
+            tail.map((item, i) => render(item, i + shown)),
+            shown + 1,
+          )}
+        </details>
+      )}
+    </>
   );
 }
 
@@ -236,27 +283,41 @@ function CinemaResourceHub({ resources }: { resources: PageResources }) {
   ) {
     return null;
   }
+  const editorial = (to: "/startup-guides/$slug" | "/blog/$slug") => (item: ResourceLink) => (
+    <li key={item.slug}>
+      <Link to={to} params={{ slug: item.slug }} className="cm-editorial-item cm-trace">
+        {item.meta && <span className="cm-editorial-meta">{item.meta}</span>}
+        <span className="cm-editorial-title">{item.label}</span>
+        {item.blurb && <span className="cm-editorial-blurb">{item.blurb}</span>}
+      </Link>
+    </li>
+  );
   return (
-    <div className="cm-hub" data-anchor="resources" data-anchor-label="Free tools">
+    <div id="resources" className="cm-hub" data-reveal="rise">
       <p className="cm-eyebrow">Everything below is free. No sign-in, no credits.</p>
       {calculators.length > 0 && (
         <CinemaBlock
           id="rh-calculators"
           heading="Free startup calculators"
           standfirst={STANDFIRST.calc}
-          icon="calculator"
+          all={{ to: "/calculator", label: "All calculators" }}
         >
-          <ol className="cm-index">
-            {calculators.map((item, i) => (
+          <Split
+            items={calculators}
+            shown={CINEMA_SHOWN.calculators}
+            noun="calculators"
+            wrap={(children, start) => (
+              <ol className="cm-index" start={start}>
+                {children}
+              </ol>
+            )}
+            render={(item) => (
               <li key={item.slug}>
                 <Link
                   to="/calculator/$slug"
                   params={{ slug: item.slug }}
                   className="cm-index-row cm-trace"
                 >
-                  <span className="cm-index-num" aria-hidden="true">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
                   <span className="cm-index-text">
                     <span className="cm-index-title">{item.label}</span>
                     {item.blurb && <span className="cm-index-blurb">{item.blurb}</span>}
@@ -264,8 +325,8 @@ function CinemaResourceHub({ resources }: { resources: PageResources }) {
                   <CinemaIcon name="arrow" size={18} className="cm-arrow" />
                 </Link>
               </li>
-            ))}
-          </ol>
+            )}
+          />
         </CinemaBlock>
       )}
       {guides.length > 0 && (
@@ -273,23 +334,15 @@ function CinemaResourceHub({ resources }: { resources: PageResources }) {
           id="rh-guides"
           heading="Startup guides"
           standfirst={STANDFIRST.guides}
-          icon="guide"
+          all={{ to: "/startup-guides", label: "All guides" }}
         >
-          <ul className="cm-editorial">
-            {guides.map((item) => (
-              <li key={item.slug}>
-                <Link
-                  to="/startup-guides/$slug"
-                  params={{ slug: item.slug }}
-                  className="cm-editorial-item cm-trace"
-                >
-                  {item.meta && <span className="cm-editorial-meta">{item.meta}</span>}
-                  <span className="cm-editorial-title">{item.label}</span>
-                  {item.blurb && <span className="cm-editorial-blurb">{item.blurb}</span>}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <Split
+            items={guides}
+            shown={CINEMA_SHOWN.guides}
+            noun="guides"
+            wrap={(children) => <ul className="cm-editorial">{children}</ul>}
+            render={editorial("/startup-guides/$slug")}
+          />
         </CinemaBlock>
       )}
       {glossary.length > 0 && (
@@ -297,10 +350,14 @@ function CinemaResourceHub({ resources }: { resources: PageResources }) {
           id="rh-glossary"
           heading="Startup glossary"
           standfirst={STANDFIRST.glossary}
-          icon="glossary"
+          all={{ to: "/founder-glossary", label: "Full glossary" }}
         >
-          <ul className="cm-register">
-            {glossary.map((item) => (
+          <Split
+            items={glossary}
+            shown={CINEMA_SHOWN.glossary}
+            noun="terms"
+            wrap={(children) => <ul className="cm-register">{children}</ul>}
+            render={(item) => (
               <li key={item.slug}>
                 <Link to="/founder-glossary" hash={item.slug} className="cm-register-row">
                   <span className="cm-register-term">{item.label}</span>
@@ -308,8 +365,8 @@ function CinemaResourceHub({ resources }: { resources: PageResources }) {
                   {item.meta && <span className="cm-register-meta">{item.meta}</span>}
                 </Link>
               </li>
-            ))}
-          </ul>
+            )}
+          />
         </CinemaBlock>
       )}
       {posts.length > 0 && (
@@ -317,23 +374,15 @@ function CinemaResourceHub({ resources }: { resources: PageResources }) {
           id="rh-blog"
           heading="From the blog"
           standfirst={STANDFIRST.blog}
-          icon="journal"
+          all={{ to: "/blog", label: "All posts" }}
         >
-          <ul className="cm-editorial">
-            {posts.map((item) => (
-              <li key={item.slug}>
-                <Link
-                  to="/blog/$slug"
-                  params={{ slug: item.slug }}
-                  className="cm-editorial-item cm-trace"
-                >
-                  {item.meta && <span className="cm-editorial-meta">{item.meta}</span>}
-                  <span className="cm-editorial-title">{item.label}</span>
-                  {item.blurb && <span className="cm-editorial-blurb">{item.blurb}</span>}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <Split
+            items={posts}
+            shown={CINEMA_SHOWN.posts}
+            noun="posts"
+            wrap={(children) => <ul className="cm-editorial">{children}</ul>}
+            render={editorial("/blog/$slug")}
+          />
         </CinemaBlock>
       )}
     </div>
