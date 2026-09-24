@@ -1,5 +1,13 @@
 import { Link, useLoaderData, useRouterState } from "@tanstack/react-router";
-import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  Fragment,
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User } from "lucide-react";
 import type { IconType } from "react-icons";
@@ -97,16 +105,19 @@ function BuiltWithItemLink({ item }: { item: BuiltWithItem }) {
   );
 }
 
-function BuiltWithSection() {
-  const [looping, setLooping] = useState(true);
+/** `still`: the idea-page cinema trial closes quietly, so the row renders
+ * static and wrapped there instead of as an endless marquee. */
+function BuiltWithSection({ still = false }: { still?: boolean }) {
+  const [looping, setLooping] = useState(!still);
 
   useEffect(() => {
+    if (still) return;
     setLooping(!prefersReducedMotion());
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const onChange = () => setLooping(!mq.matches);
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
-  }, []);
+  }, [still]);
 
   const items = looping ? [...BUILT_WITH, ...BUILT_WITH] : BUILT_WITH;
 
@@ -267,7 +278,16 @@ function SignInAction({ onNavigate, full }: { onNavigate?: () => void; full: boo
   );
 }
 
-function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boolean }) {
+function AuthButtons({
+  onNavigate,
+  full,
+  still = false,
+}: {
+  onNavigate?: () => void;
+  full?: boolean;
+  /** Passed to the Browse-free action: see HoverBorderGradient's `still`. */
+  still?: boolean;
+}) {
   const auth = useAuth();
 
   if (auth.status === "authenticated") {
@@ -302,7 +322,7 @@ function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boo
   return (
     <>
       <SignInAction {...(onNavigate ? { onNavigate } : {})} full={full ?? false} />
-      <HoverBorderGradient asChild containerClassName={full ? "w-full" : "shrink-0"}>
+      <HoverBorderGradient asChild containerClassName={full ? "w-full" : "shrink-0"} still={still}>
         <Link
           to="/browse"
           onClick={onNavigate}
@@ -316,6 +336,28 @@ function AuthButtons({ onNavigate, full }: { onNavigate?: () => void; full?: boo
 }
 
 /** Desktop mega-menu. Categories are never hardcoded — live from the `ideas` table. */
+/**
+ * True inside the idea-page cinema trial. The header reads it to swap its
+ * dropdown motion (a short 8px drop and fade instead of a blurred spring and
+ * a travelling plate) and to close on Escape. False everywhere else, so every
+ * other page's header is unchanged.
+ */
+const CinemaChrome = createContext(false);
+
+const SPRING_PANEL_MOTION = {
+  initial: { opacity: 0, y: -8, scale: 0.9, filter: "blur(8px)" },
+  animate: { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" },
+  exit: { opacity: 0, y: -8, scale: 0.9, filter: "blur(8px)" },
+  transition: { type: "spring" as const, stiffness: 260, damping: 26 },
+};
+/** --motion-control (200ms) on --ease-enter; transform and opacity only. */
+const CINEMA_PANEL_MOTION = {
+  initial: { opacity: 0, y: -8 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -6, transition: { duration: 0.14, ease: [0.4, 0, 1, 1] as const } },
+  transition: { duration: 0.2, ease: [0.16, 1, 0.3, 1] as const },
+};
+
 /**
  * Shared dropdown shell (hover-open with a close-delay gap fix, outside-click
  * close, keyboard focus support). Every header dropdown is built on this one
@@ -331,7 +373,9 @@ function NavDropdown({
   children: (close: () => void) => ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const cinema = useContext(CinemaChrome);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const cancelClose = () => {
@@ -365,8 +409,19 @@ function NavDropdown({
       className="relative"
       onMouseEnter={() => isDesktop() && openNow()}
       onMouseLeave={closeSoon}
+      onKeyDown={
+        cinema
+          ? (e) => {
+              if (e.key !== "Escape" || !open) return;
+              e.stopPropagation();
+              setOpen(false);
+              triggerRef.current?.focus();
+            }
+          : undefined
+      }
     >
       <button
+        ref={triggerRef}
         type="button"
         aria-expanded={open}
         aria-haspopup="menu"
@@ -376,7 +431,7 @@ function NavDropdown({
       >
         {/* One marker element shared across every dropdown trigger, so moving
             along the bar slides a single plate rather than fading N of them. */}
-        {open ? (
+        {open && !cinema ? (
           <motion.span
             layoutId="ac-nav-marker"
             transition={{ type: "spring", stiffness: 340, damping: 30 }}
@@ -395,10 +450,7 @@ function NavDropdown({
         {open && (
           <motion.div
             role="menu"
-            initial={{ opacity: 0, y: -8, scale: 0.9, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -8, scale: 0.9, filter: "blur(8px)" }}
-            transition={{ type: "spring", stiffness: 260, damping: 26 }}
+            {...(cinema ? CINEMA_PANEL_MOTION : SPRING_PANEL_MOTION)}
             onMouseEnter={openNow}
             onMouseLeave={closeSoon}
             className={`iv-nav-panel ${panelClassName}`}
@@ -889,8 +941,9 @@ export function SiteShell({
     };
   }, [tone]);
   // Publishes --page-p on :root; the rail under the header is the only thing
-  // that reads it here, and it does so with a composited scaleX.
-  usePageScrollProgress();
+  // that reads it here, and it does so with a composited scaleX. The cinema
+  // trial skips it and drives the same rail from a CSS scroll timeline.
+  usePageScrollProgress(!visualTrial);
   const { data: catalog } = useCatalog();
   const siteResources = useSiteResources();
   const allCategories = catalog?.categories ?? [];
@@ -901,7 +954,7 @@ export function SiteShell({
     <div
       className={`relative flex min-h-screen flex-col text-foreground${
         tone === "instrument" ? " bbi-instrument" : ""
-      }${visualTrial ? " bbi-noir-page" : ""}`}
+      }${visualTrial ? " cm-page" : ""}`}
     >
       <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">
         {/* Reading position for the whole document. One composited transform
@@ -942,10 +995,12 @@ export function SiteShell({
           </Link>
 
           <nav className="hidden shrink-0 items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground lg:flex xl:gap-4">
-            <CategoryMega />
-            <BrowseByTypeDropdown />
-            <LinkListDropdown label="Explore" items={EXPLORE_ITEMS} />
-            <LinkListDropdown label="Company" items={COMPANY_ITEMS} />
+            <CinemaChrome.Provider value={visualTrial}>
+              <CategoryMega />
+              <BrowseByTypeDropdown />
+              <LinkListDropdown label="Explore" items={EXPLORE_ITEMS} />
+              <LinkListDropdown label="Company" items={COMPANY_ITEMS} />
+            </CinemaChrome.Provider>
             {navLinks.map((link) => (
               <Link
                 key={link.to}
@@ -961,7 +1016,7 @@ export function SiteShell({
               Search is still reachable: the sheet menu carries a full
               LiveSearch, and the category menu links to /search directly. */}
           <div className="hidden min-w-0 items-center gap-2 lg:flex">
-            <AuthButtons />
+            <AuthButtons still={visualTrial} />
           </div>
 
           <button
@@ -994,11 +1049,11 @@ export function SiteShell({
           closes the reading, not chrome. */}
       {siteResources && (
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-          <ResourceHub resources={siteResources} />
+          <ResourceHub resources={siteResources} cinema={visualTrial} />
         </div>
       )}
       <FloatingDock />
-      <BuiltWithSection />
+      <BuiltWithSection still={visualTrial} />
       {/* Footer, built to the reference the founder supplied: a light card,
           four columns of plain link lists with a newsletter block, then a
           hairline and a thin bottom bar.

@@ -4248,137 +4248,6 @@ html.light .bbi-instrument nav[aria-label="Breadcrumb"] > span > span:not(:has(a
   }
 }
 
-/* ---- TRIAL: smoother card geometry -------------------------------------
-   2026-09-24. Founder asked to compare the site's card look against a set of
-   reference screenshots (rounder corners, soft glow shadow, a hover lift) and
-   see it live on one page before any wider change. `.bbi-card-smooth` is an
-   opt-in class, applied only to the trial page's root
-   (`idea.$slug.tsx`, gated on one slug) -- every other page's `.bbi-spot`
-   keeps its current flat, square, zero-shadow look untouched. If this ships
-   site-wide later, the fix is deleting the slug gate in `idea.$slug.tsx` and
-   this comment -- the tokens below are already centralized in the one file
-   that owns every card on the site.
-   Rollback: `git revert` this commit, or delete this block plus the
-   conditional class in the route file. Nothing else references
-   `bbi-card-smooth`. */
-.bbi-card-smooth .bbi-spot {
-  border-radius: 1.25rem;
-  box-shadow: 0 1px 2px rgb(0 0 0 / 0.28);
-  transition:
-    border-color 120ms cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 120ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 160ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.bbi-card-smooth .bbi-spot:hover,
-.bbi-card-smooth .bbi-spot[data-lit="on"] {
-  transform: translateY(-4px);
-  border-color: var(--hl-saffron, #ff9933);
-  box-shadow:
-    0 14px 32px -10px rgb(255 153 51 / 0.28),
-    0 6px 16px rgb(0 0 0 / 0.32);
-}
-@media (hover: none) and (pointer: coarse) {
-  .bbi-card-smooth .bbi-spot:hover {
-    transform: none;
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.28);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .bbi-card-smooth .bbi-spot,
-  .bbi-card-smooth .bbi-spot:hover,
-  .bbi-card-smooth .bbi-spot[data-lit="on"] {
-    transition: none;
-    transform: none;
-  }
-}
-
-/* ---- TRIAL, round 2: every panel, not just the two card rails ----------
-   2026-09-24, same day. The founder's reference images round EVERY panel
-   (hero, feature blocks, pricing, stat cards) and give the page a tinted
-   background glow, not just a card grid at the bottom. First pass only hit
-   `.bbi-spot` (the related/trending rails); this covers the rest of the
-   page's panels -- the masthead, the breakdown/playbooks/FAQ blocks, the
-   sidebar -- which are plain Tailwind `rounded-lg/xl/2xl` + `bg-card`/`glass`
-   boxes, not `.bbi-spot`.
-
-   `--radius` is redefined on the scope instead of hand-patching each
-   className: every `rounded-*` utility on the page reads `var(--radius-*)`,
-   and each of those is itself `calc(var(--radius) + Npx)` (see the
-   `@theme inline` block near the top of this file), so one override cascades
-   through the whole chain to every rounded corner under this wrapper. No
-   component file touched.
-
-   Still gated to the same trial slugs in `idea.$slug.tsx` -- widened this
-   round to include the founder's own currently-open page
-   (solar-fencing-business-for-farms) alongside the original trial page, so
-   both show the full treatment. Every other idea page is untouched: no
-   `--radius` override, no glow, no shadow. */
-.bbi-card-smooth {
-  --radius: 1.125rem;
-  position: relative;
-  isolation: isolate;
-}
-.bbi-card-smooth::before {
-  content: "";
-  position: absolute;
-  inset: -3rem -1.5rem;
-  z-index: -1;
-  pointer-events: none;
-  /* Round 3: the first pass (12%/7%) was too faint to read as a deliberate
-     background shade against near-black -- founder couldn't see it at all
-     on first load. Bumped so it's unmistakable at the top of the page
-     without needing to scroll or hover anything. */
-  background:
-    radial-gradient(
-      50rem 32rem at 15% -6%,
-      color-mix(in oklab, var(--hl-saffron, #ff9933) 24%, transparent),
-      transparent 62%
-    ),
-    radial-gradient(
-      42rem 30rem at 100% 22%,
-      color-mix(in oklab, var(--hl-saffron, #ff9933) 15%, transparent),
-      transparent 68%
-    );
-}
-.bbi-card-smooth .bg-card,
-.bbi-card-smooth .glass {
-  box-shadow:
-    0 1px 2px rgb(0 0 0 / 0.26),
-    0 16px 40px -26px rgb(0 0 0 / 0.55);
-  border-color: color-mix(in oklab, var(--hl-saffron, #ff9933) 16%, var(--border));
-  transition:
-    border-color 130ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 130ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.bbi-card-smooth a.rounded-xl.bg-card:hover,
-.bbi-card-smooth a.rounded-2xl.bg-card:hover {
-  border-color: var(--hl-saffron, #ff9933);
-  box-shadow:
-    0 18px 44px -18px rgb(255 153 51 / 0.25),
-    0 6px 16px rgb(0 0 0 / 0.3);
-}
-/* The small icon/share buttons (`rounded-md bg-card`) each carry their own
-   literal 0.375rem border-radius a few hundred lines up this file, via
-   `.bbi-instrument button:not(.bbi-bare):not([aria-label="Open navigation
-   menu"])` -- confirmed live via a matched-rules dump, not a guess: that
-   selector's 3 classes + 1 element type beats this rule's 3 classes on
-   specificity alone (equal class count, its extra `button` type selector
-   is the tiebreaker), even though it reads as the less specific rule at a
-   glance. `!important` is the documented way this file already breaks that
-   exact tie (see the `html.light .bbi-instrument a:hover` fix, same cascade
-   family, earlier in this file) -- scoped to these two trial pages only,
-   not a site-wide `!important`. */
-.bbi-card-smooth .rounded-md.bg-card {
-  border-radius: 0.85rem !important;
-}
-@media (prefers-reduced-motion: reduce) {
-  .bbi-card-smooth .bg-card,
-  .bbi-card-smooth .glass {
-    transition: none;
-  }
-}
-
 /* ---- the site's action treatment ---------------------------------------
    The founder asked for the "Surprise Me" button's effect on every clickable
    button on the site: a band of light travelling the border at rest, and a
@@ -5031,743 +4900,2210 @@ html.light .bbi-instrument .ac-action:disabled:hover {
   src: url("https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2") format("woff2");
 }
 
-/* CRIMSON NOIR TRIAL — all presentation lives here. The route opts in only
-   the two existing trial slugs. No global palette or default component changes.
-   Reference: Poppins 400/500/600/700; #ca0808, #120404, #270a0a, white and black.
-   Previous presentation: d0c84cf; backup: pre-crimson-noir-2026-09-24. */
-html.light .bbi-instrument.bbi-noir-page,
-.bbi-instrument.bbi-noir-page {
-  --noir-ink: #120404;
-  --noir-crimson: #ca0808;
-  --noir-bright: #efa0a0;
-  --noir-surface: #270a0a;
-  --noir-rim: rgb(255 255 255 / 0.15);
-  --ins-void: var(--noir-ink);
-  --ins-face: var(--noir-surface);
-  --ins-face-2: #270a0a;
-  --ins-read: #f3e7e7;
-  --ins-dim: #cbbbbb;
-  --ins-rule: var(--noir-rim);
-  --hl-saffron: var(--noir-bright);
-  --hl-saffron-hover: #ffd6d6;
-  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
-  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
-  font-weight: 400;
-  background:
-    radial-gradient(ellipse 48vw 48vh at 100% 0, #ffffffa6 0, #ca08088c 32%, transparent 75%),
-    radial-gradient(ellipse 48vw 55vh at 0 100%, #ffffff99 0, #ca0808b3 36%, transparent 78%),
-    linear-gradient(135deg, #120404, #270a0a 52%, #120404);
-  background-attachment: fixed;
-}
-.bbi-instrument.bbi-noir-page > main { background: transparent; }
-.bbi-noir-page :is(button, input, textarea, select) { font-family: "Poppins", ui-sans-serif, system-ui, sans-serif; }
-.bbi-noir-page :is(h1, h2, h3, h4) { font-weight: 600; }
-.bbi-noir-page .bbi-noir {
-  padding-top: 2rem;
-  --radius: 1.15rem;
-}
-.bbi-noir-page .bbi-noir::before {
-  inset: 0;
-  background: transparent;
-}
-.bbi-noir-page .idea-shell::before {
-  display: none;
-}
-.bbi-noir-page :is(h1, h2, h3, h4) {
-  font-family: "Poppins", ui-sans-serif, sans-serif;
-  text-wrap: balance;
-}
-.bbi-noir-page [data-anchor] {
-  scroll-margin-top: 7rem;
-}
-.bbi-noir-page .idea-shell > section:not(.bbi-noir-hero),
-.bbi-noir-page .idea-shell > div.mt-16 {
-  margin-top: 3.5rem;
-}
-.bbi-noir-page .idea-shell > section > h2,
-.bbi-noir-page .idea-shell > div > section > h2 {
-  font-size: clamp(1.25rem, 2.1vw, 1.8rem);
-  line-height: 1.2;
-  letter-spacing: -0.025em;
-  text-transform: none;
-  color: #fff;
-}
-.bbi-noir-page .bbi-noir-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(15rem, 1fr);
+/* ==========================================================================
+   CINEMA TRIAL (idea pages) — 2026-09-24
+   Applies only under `.cm-page`, which SiteShell adds when the idea route
+   renders a slug from CINEMA_TRIAL_SLUGS (routes/idea.$slug.tsx). Every
+   other page, idea pages included, never matches a rule in this block.
+   Markup: components/idea-cinema/idea-cinema.tsx. Motion owner:
+   components/idea-cinema/use-cinema-stage.ts (one observer, no scroll or
+   rAF loop). Replaces the "Crimson Noir" and "smoother card" trial blocks;
+   previous presentation is commit 8ae01b3.
+
+   Cascade notes, measured rather than guessed:
+   - `.bbi-instrument::before/::after` hide with unlayered !important, so the
+     backdrop layer below needs `.bbi-instrument.cm-page::before` + !important.
+   - `html.light .bbi-instrument p/li` sets text colour at (0,2,2), so rules
+     that colour a <p> or <li> use the `.bbi-instrument.cm-page` prefix.
+   - Controls carry `bbi-bare` to opt out of the site-wide travelling-border
+     button treatment instead of fighting its !important background.
+   ========================================================================== */
+
+.bbi-instrument.cm-page,
+html.light .bbi-instrument.cm-page {
+  --cinema-red: #ca0808;
+  --cinema-ink: #120404;
+  --cinema-panel: #270a0a;
+  --cinema-white: #ffffff;
+  --cinema-black: #000000;
+
+  --motion-fast: 140ms;
+  --motion-control: 200ms;
+  --motion-panel: 360ms;
+  --motion-scene: 650ms;
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-control: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /* White mixed into the red/ink palette: text, rules, lit edges. */
+  --cm-text: var(--cinema-white);
+  --cm-text-2: color-mix(in srgb, var(--cinema-white) 82%, var(--cinema-panel));
+  --cm-text-3: color-mix(in srgb, var(--cinema-white) 66%, var(--cinema-panel));
+  --cm-line: color-mix(in srgb, var(--cinema-white) 11%, transparent);
+  --cm-line-2: color-mix(in srgb, var(--cinema-white) 22%, transparent);
+  --cm-red-lit: color-mix(in srgb, var(--cinema-red) 78%, var(--cinema-white));
+  --cm-red-text: color-mix(in srgb, var(--cinema-red) 34%, var(--cinema-white));
+  --cm-surface: color-mix(in srgb, var(--cinema-panel) 88%, var(--cinema-black));
+  --cm-surface-2: var(--cinema-panel);
+  --cm-cut: 2.5rem;
+  --cm-notch: 0.75rem;
+  --cm-pad: clamp(1rem, 0.6rem + 1.6vw, 2rem);
+  --cm-font: "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+  /* The shell and shared components read these. */
+  --ins-void: var(--cinema-ink);
+  --ins-face: var(--cm-surface);
+  --ins-face-2: var(--cinema-panel);
+  --ins-read: var(--cm-text-2);
+  --ins-dim: var(--cm-text-3);
+  --ins-rule: var(--cm-line);
+  --ins-rule-strong: var(--cm-line-2);
+  --hl-saffron: var(--cm-red-text);
+  --hl-saffron-hover: var(--cinema-white);
+  --font-sans: var(--cm-font);
+  --font-display: var(--cm-font);
+
   position: relative;
   isolation: isolate;
-  margin-top: 1.7rem;
-  overflow: hidden;
-  border: 1px solid rgb(255 255 255 / 0.24);
-  border-radius: 2rem;
-  background:
-    radial-gradient(ellipse at 100% 0, #ffffff3d, #ca080866 25%, transparent 65%),
-    linear-gradient(120deg, #120404f5 12%, #120404e6 58%, #270a0ae8);
-  box-shadow:
-    inset 0 1px 0 #ffffff24,
-    0 24px 80px #00000045;
-}
-.bbi-noir-page .bbi-noir-hero-copy {
-  padding: clamp(1.5rem, 4vw, 3rem);
-  padding-right: 0.5rem;
-  min-width: 0;
-  z-index: 1;
-}
-.bbi-noir-page .bbi-noir-eyebrow {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: #f3e7e7;
-}
-.bbi-noir-page .bbi-noir-dot {
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: 50%;
-  background: #ca0808;
-  box-shadow: 0 0 14px #ca080880;
-}
-.bbi-noir-page .bbi-noir-id {
-  margin-left: auto;
-  font-family: "Poppins", monospace;
-  color: #cbbbbb;
-}
-.bbi-noir-page .bbi-noir-category {
-  margin-top: 2rem;
-  color: #ffd2d2;
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-.bbi-noir-page .bbi-noir-hero h1 {
-  margin-top: 0.85rem;
-  font-size: clamp(2rem, 4.1vw, 3.4rem);
-  line-height: 1.15;
-  letter-spacing: -0.04em;
-  font-weight: 600;
-  color: #fff;
-  overflow-wrap: anywhere;
-}
-.bbi-noir-page .bbi-noir-lead {
-  margin-top: 1.4rem;
-  max-width: 39rem;
-  color: #d9cccc;
-  font-size: 1rem;
-  line-height: 1.75;
-}
-.bbi-noir-page .bbi-noir-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1.25rem;
-  margin-top: 1.8rem;
-}
-.bbi-noir-page .bbi-noir-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-  border-radius: 0.8rem;
-  padding: 0.85rem 1.1rem;
-  background: var(--noir-crimson);
-  border: 1px solid #ef969670;
-  color: #fff;
-  font-size: 0.875rem;
-  font-weight: 600;
-  box-shadow: 0 6px 24px #ca080833;
-  transition:
-    background 140ms,
-    transform 140ms;
-}
-.bbi-noir-page .bbi-noir-cta:hover {
-  background: #a70606;
-  transform: translateY(-2px);
-}
-.bbi-noir-page .bbi-noir-text-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #fff5f5;
-  font-size: 0.85rem;
-}
-.bbi-noir-page .bbi-noir-hero-visual {
-  min-width: 0;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 1.8rem;
-}
-.bbi-noir-page .bbi-noir-orb {
-  position: absolute;
-  width: 25rem;
-  aspect-ratio: 1;
-  top: -3rem;
-  right: -9rem;
-  z-index: -1;
-  border-radius: 50%;
-  background: radial-gradient(circle at 70% 18%, #ffffffb3, #ca0808b3 30%, #270a0a66 58%, transparent 74%);
-  filter: blur(18px);
-  box-shadow: none;
-}
-.bbi-noir-page .bbi-noir-signal-card {
-  width: 100%;
-  max-width: 19rem;
-  position: relative;
-  border: 1px solid #ffffff47;
-  border-radius: 1.6rem;
-  padding: 1.35rem;
-  background: linear-gradient(145deg, #ffffff16, #120404bd 48%, #270a0abf);
-  backdrop-filter: blur(22px);
-  box-shadow:
-    inset 0 1px 0 #ffffff44,
-    0 24px 55px #00000060;
-}
-.bbi-noir-page .bbi-noir-signal-top {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-.bbi-noir-page .bbi-noir-signal-top > span:last-child {
-  font-size: 0.58rem;
-  letter-spacing: 0.12em;
-  color: #ffe5e5;
-}
-.bbi-noir-page .bbi-noir-icon {
-  display: inline-grid;
-  place-items: center;
-  width: 2.8rem;
-  height: 2.8rem;
-  flex-shrink: 0;
-  border-radius: 50%;
-  color: #f4b5b5;
-  background: #ca080826;
-  border: 1px solid #efa0a036;
-}
-.bbi-noir-page .bbi-noir-score {
-  position: relative;
-  width: min(100%, 13rem);
-  margin: 1.25rem auto;
-  aspect-ratio: 1;
-}
-.bbi-noir-page .bbi-noir-score svg {
-  width: 100%;
-  height: 100%;
-  fill: none;
-  stroke-width: 3;
-  transform: rotate(-90deg);
-}
-.bbi-noir-page .bbi-noir-ring-track {
-  stroke: #ffffff1a;
-}
-.bbi-noir-page .bbi-noir-ring-value {
-  stroke: #f3b5b5;
-  stroke-linecap: round;
-}
-.bbi-noir-page .bbi-noir-score > div {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.bbi-noir-page .bbi-noir-score strong {
-  font-size: 4.6rem;
-  font-weight: 600;
-  letter-spacing: -0.065em;
-  line-height: 1;
-  color: #fff;
-}
-.bbi-noir-page .bbi-noir-score span {
-  font-size: 0.65rem;
-  color: #e0cccc;
-  margin-top: 0.65rem;
-}
-.bbi-noir-page .bbi-noir-signal-card > p {
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
-  color: #fff;
-}
-.bbi-noir-page .bbi-noir-signal-note {
-  display: block;
-  margin: 0.55rem auto 0;
-  max-width: 13rem;
-  font-size: 0.72rem;
-  line-height: 1.6;
-  text-align: center;
-  color: #d8bfbf;
-}
-.bbi-noir-page .bbi-noir-visual-caption {
-  font-size: 0.55rem;
-  letter-spacing: 0.2em;
-  margin-top: 1.2rem;
-  color: #d2aaaa;
-}
-.bbi-noir-page .bbi-noir-hero-foot {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  justify-content: space-between;
-  margin: 0 2.5rem;
-  padding: 1.25rem 0;
-  border-top: 1px solid #ffffff1c;
-}
-.bbi-noir-page .bbi-noir-overview {
-  min-width: 0;
-  flex: 1;
-  font-size: 0.85rem;
-}
-.bbi-noir-page .bbi-noir-overview summary {
-  cursor: pointer;
-  color: #dacaca;
-  padding: 0.5rem 0;
-}
-.bbi-noir-page .bbi-noir-overview p {
-  padding: 1rem 0;
-  font-size: 0.95rem;
-  line-height: 1.8;
-}
-.bbi-noir-page .bbi-noir-hero-foot > div {
-  flex-shrink: 0;
+  background: var(--cinema-ink);
+  color: var(--cm-text-2);
+  font-family: var(--cm-font);
+  font-weight: 400;
 }
 
-/* Shared content surfaces. Explicit hooks keep the experiment out of the
-   other idea pages, while applying it to every section of both trial pages. */
-.bbi-noir-page .bbi-noir :is(.bg-card, .glass, .bbi-spot),
-.bbi-noir-page .bbi-noir-blueprint-card,
-.bbi-noir-page [data-anchor="breakdown"],
-.bbi-noir-page [data-anchor="playbooks"] > div > div > div {
-  border: 1px solid var(--noir-rim);
-  border-radius: 1.35rem;
-  background: linear-gradient(145deg, #ffffff07, transparent 60%), var(--noir-surface);
-  box-shadow:
-    inset 0 1px 0 #ffffff0c,
-    0 15px 35px #00000020;
-}
-.bbi-noir-page .bbi-noir .bbi-spot:hover,
-.bbi-noir-page .bbi-noir .bbi-spot[data-lit="on"] {
-  border-color: #efa0a069;
-  box-shadow: 0 12px 35px #ca080820;
-}
-.bbi-noir-page [data-anchor="breakdown"] {
-  padding: clamp(1.5rem, 4vw, 2.4rem);
-  background: radial-gradient(ellipse at 100% 0, #ca080815, transparent 65%), #270a0a;
-}
-.bbi-noir-page [data-anchor="breakdown"] > h2::before {
+/* One static, fixed backdrop: bright only at the perimeter, painted once and
+   composited, never repainted on scroll (it replaces a background-attachment:
+   fixed gradient, which repainted the viewport every scroll frame). */
+.bbi-instrument.cm-page::before {
   content: "";
-  display: inline-block;
-  width: 0.4rem;
-  height: 1.15rem;
-  background: var(--noir-crimson);
-  border-radius: 0.25rem;
-  margin-right: 0.7rem;
-  vertical-align: -0.02em;
+  display: block !important;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      58vw 52vh at 100% 0%,
+      color-mix(in srgb, var(--cinema-white) 20%, transparent),
+      color-mix(in srgb, var(--cinema-red) 34%, transparent) 32%,
+      transparent 72%
+    ),
+    radial-gradient(
+      52vw 56vh at 0% 100%,
+      color-mix(in srgb, var(--cinema-red) 40%, transparent),
+      transparent 72%
+    ),
+    linear-gradient(165deg, var(--cinema-ink) 0%, var(--cinema-panel) 58%, var(--cinema-ink) 100%);
 }
-.bbi-noir-page [data-anchor="breakdown"] > div {
-  max-width: 56rem;
-  color: #d9cccc;
+.bbi-instrument.cm-page > main {
+  background: transparent;
 }
-.bbi-noir-page .bbi-noir-blueprint-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.1rem;
+/* The header is meant to be sticky, but `body { overflow-x: hidden }` (with
+   html at `overflow-x: clip`) makes body its own scroll container, so the
+   header scrolls away on every page. `clip` hides sideways overflow without
+   creating a scroll container. Scoped to the trial here; the site-wide fix
+   is in PENDING for the rollout. */
+body:has(.cm-page) {
+  overflow-x: clip;
 }
-.bbi-noir-page .bbi-noir-blueprint-card {
-  padding: 1.8rem;
-  min-width: 0;
+/* The body starfield twinkles forever under an opaque page; switch it off. */
+html[data-cm] body::before,
+html[data-cm] body::after {
+  display: none;
 }
-.bbi-noir-page .bbi-noir-card-top {
+/* Stop the site-wide infinite border animation on the shared chrome here:
+   it animates a registered custom property, which restyles and repaints
+   every button on every frame. The static plate stays. */
+.cm-page :is(button, .ac-action, a.ac-cta, .glass-btn, .glass-pill, .ac-tag) {
+  animation: none !important;
+}
+
+/* Smooth anchor navigation, only while a trial page is mounted (the flag is
+   removed on leave) and never under reduced motion. The existing
+   `[id] { scroll-margin-top: 6.5rem }` clears the sticky header. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-cm] {
+    scroll-behavior: smooth;
+  }
+}
+
+.cm-page :is(h1, h2, h3, h4) {
+  font-family: var(--cm-font);
+  text-transform: none;
+  text-wrap: balance;
+}
+.cm-page :is(button, input, textarea, select) {
+  font-family: var(--cm-font);
+}
+.cm-page ::selection {
+  background: color-mix(in srgb, var(--cinema-red) 70%, transparent);
+  color: var(--cinema-white);
+}
+.cm-page :is(a, button, summary, textarea, input):focus-visible {
+  outline: 2px solid var(--cinema-white);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--cinema-red) 55%, transparent);
+}
+
+/* ---- Header: "Redline Navigation" -------------------------------------- */
+/* A near-opaque ink bar instead of a 24px backdrop blur re-sampled on every
+   scroll frame. `glass-nav` is an @utility carrying !important, which only a
+   layered !important in an earlier layer outranks. */
+@layer base {
+  html .cm-page .glass-nav {
+    background: color-mix(in srgb, var(--cinema-ink) 94%, transparent) !important;
+    backdrop-filter: none !important;
+    border-color: var(--cm-line) !important;
+    box-shadow: 0 12px 32px -18px var(--cinema-black) !important;
+  }
+}
+.cm-page header nav {
+  font-family: var(--cm-font);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+.cm-page header nav > a,
+.cm-page header nav button[aria-haspopup] {
+  position: relative;
+}
+/* The dropdown triggers drop the site-wide border plate here: the redline
+   below is their only state mark. Specificity (0,3,2) + !important beats the
+   plate's (0,3,1) + !important. */
+.bbi-instrument.cm-page header nav button[aria-haspopup],
+.bbi-instrument.cm-page header nav button[aria-haspopup]:hover {
+  background: transparent !important;
+  border-color: transparent !important;
+  color: inherit !important;
+  transition: color var(--motion-control) var(--ease-control);
+}
+.bbi-instrument.cm-page header nav button[aria-haspopup]:is(:hover, :focus-visible, [aria-expanded="true"]),
+.bbi-instrument.cm-page header nav button[aria-haspopup]:hover * {
+  color: var(--cinema-white) !important;
+}
+.cm-page header nav > a::after,
+.cm-page header nav button[aria-haspopup]::after {
+  content: "";
+  position: absolute;
+  left: 0.375rem;
+  right: 0.375rem;
+  bottom: -0.35rem;
+  width: auto;
+  height: 2px;
+  background: var(--cinema-red);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-control) var(--ease-control);
+}
+.cm-page header nav > a:is(:hover, :focus-visible, [aria-current="page"])::after,
+.cm-page
+  header
+  nav
+  button[aria-haspopup]:is(:hover, :focus-visible, [aria-expanded="true"])::after {
+  width: auto;
+  transform: scaleX(1);
+}
+.cm-page header nav > a::after {
+  left: 0;
+  right: 0;
+}
+.cm-page .mo-page-rail {
+  background: var(--cinema-red);
+}
+/* The reading rail runs on a scroll timeline, off the main thread. Where
+   scroll timelines are unsupported the rail track is simply not shown. */
+@supports (animation-timeline: scroll()) {
+  .cm-page .mo-page-rail {
+    transform-origin: left center;
+    animation: cm-read linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+@supports not (animation-timeline: scroll()) {
+  .cm-page header > div:first-child {
+    visibility: hidden;
+  }
+}
+@keyframes cm-read {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ---- Frame, breadcrumbs: "Quiet Path" ----------------------------------- */
+.cm-frame {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding: 1.25rem 1rem 3rem;
+}
+@media (min-width: 640px) {
+  .cm-frame {
+    padding-inline: 1.5rem;
+  }
+}
+.cm-crumbs nav {
+  font-size: 0.8125rem;
+  color: var(--cm-text-3);
+}
+.cm-crumbs a {
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+  transition:
+    color var(--motion-fast) var(--ease-control),
+    background-size var(--motion-control) var(--ease-control);
+}
+.cm-crumbs a:is(:hover, :focus-visible) {
+  color: var(--cinema-white);
+  text-decoration: none;
+  background-size: 100% 1px;
+}
+
+/* ---- Shared type -------------------------------------------------------- */
+.bbi-instrument.cm-page .cm-eyebrow {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cm-red-text);
+}
+.cm-page .cm-head {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 1.25rem;
+}
+.cm-page .cm-head h2,
+.cm-page .cm-deck-heading {
+  margin: 0;
+  font-size: clamp(1.3rem, 1rem + 1.2vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--cinema-white);
+}
+.cm-page .cm-deck-heading {
+  font-size: clamp(1.15rem, 1rem + 0.6vw, 1.4rem);
+  margin-bottom: 1rem;
+}
+@supports (background-clip: text) {
+  .cm-page :is(.cm-h1, .cm-head h2) {
+    background: linear-gradient(
+      100deg,
+      var(--cinema-white) 30%,
+      color-mix(in srgb, var(--cinema-white) 78%, var(--cinema-panel)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+.cm-page .cm-subhead {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--cm-red-lit);
+}
+.cm-page .cm-subhead h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--cinema-white);
+}
+.bbi-instrument.cm-page :is(.cm-prose, .cm-prose p, .cm-card p, .cm-side li, .cm-ledger-side p) {
+  font-size: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
+  line-height: 1.75;
+  color: var(--cm-text-2);
+}
+.cm-page .cm-prose > p + p {
+  margin-top: 1em;
+}
+.cm-page .cm-measure {
+  max-width: 68ch;
+}
+.cm-page .cm-section {
+  margin-top: clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
+}
+.cm-page .cm-section-tight {
+  margin-top: 2rem;
+}
+.cm-page .cm-link-line {
+  margin-top: 1rem;
+}
+.cm-page .cm-aside-line {
+  margin-top: 1.5rem;
+}
+.cm-page .cm-ad:not(:empty) {
+  margin-top: 2rem;
+}
+.cm-page .cm-inline {
+  color: var(--cinema-white);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--cinema-red) 80%, var(--cinema-white));
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--motion-fast) var(--ease-control);
+}
+.cm-page .cm-inline:is(:hover, :focus-visible) {
+  text-decoration-color: var(--cinema-white);
+}
+
+/* ---- Icon family -------------------------------------------------------- */
+.cm-page .ci {
+  flex-shrink: 0;
+  display: block;
+}
+.cm-page .ci-accent {
+  stroke: var(--cm-red-lit);
+}
+.cm-page .cm-plate {
+  display: grid;
+  place-items: center;
+  width: 2.625rem;
+  height: 2.625rem;
+  flex-shrink: 0;
+  color: var(--cinema-white);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--cinema-red) 26%, var(--cinema-panel)),
+    var(--cm-surface)
+  );
+  border: 1px solid var(--cm-line-2);
+  border-radius: 0.375rem 0.875rem 0.375rem 0.375rem;
+}
+.cm-page .cm-plate-sm {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+/* One stroke draws itself, once, when its block is revealed. */
+.cm-page .is-armed .ci-accent {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.cm-page .is-in .ci-accent {
+  stroke-dasharray: 1;
+  animation: cm-draw 520ms var(--ease-enter) 180ms both;
+}
+@keyframes cm-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---- Buttons: "Ignition Sweep" and "Edge Trace" ------------------------- */
+.cm-page .cm-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  padding: 0.7rem 1.15rem;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  font: 500 0.9375rem/1.2 var(--cm-font);
+  color: var(--cinema-white);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform var(--motion-fast) var(--ease-control),
+    background-color var(--motion-control) var(--ease-control),
+    border-color var(--motion-control) var(--ease-control);
+}
+.cm-page .cm-btn-primary {
+  background-color: var(--cinema-red);
+  border-color: color-mix(in srgb, var(--cinema-red) 70%, var(--cinema-white));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--cinema-white) 22%, transparent);
+}
+.cm-page .cm-btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    color-mix(in srgb, var(--cinema-white) 30%, transparent) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+}
+.cm-page .cm-btn-primary:not(:disabled):is(:hover, :focus-visible)::after {
+  transform: translateX(120%);
+  transition: transform 300ms var(--ease-control);
+}
+.cm-page .cm-btn-primary:not(:disabled):is(:hover, :focus-visible) {
+  transform: translateY(-1px);
+  background-color: color-mix(in srgb, var(--cinema-red) 90%, var(--cinema-white));
+}
+.cm-page .cm-btn-primary:not(:disabled):active {
+  transform: scale(0.98);
+  transition-duration: 80ms;
+}
+.cm-page .cm-btn > span {
+  position: relative;
+}
+.cm-page :is(.cm-btn-secondary, .cm-btn-ghost) {
+  background-color: color-mix(in srgb, var(--cinema-panel) 70%, transparent);
+  border-color: var(--cm-line-2);
+}
+.cm-page :is(.cm-btn-secondary, .cm-btn-ghost)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--cinema-red);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-control) var(--ease-control);
+}
+.cm-page
+  :is(.cm-btn-secondary, .cm-btn-ghost):not(:disabled):is(
+    :hover,
+    :focus-visible,
+    [aria-expanded="true"]
+  ) {
+  border-color: color-mix(in srgb, var(--cinema-red) 55%, var(--cinema-white));
+}
+.cm-page
+  :is(.cm-btn-secondary, .cm-btn-ghost):not(:disabled):is(
+    :hover,
+    :focus-visible,
+    [aria-expanded="true"]
+  )::after {
+  transform: scaleX(1);
+}
+.cm-page .cm-btn:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+.cm-page .cm-arrow {
+  transition: transform var(--motion-control) var(--ease-control);
+}
+.cm-page .cm-arrow-down {
+  transform: rotate(90deg);
+}
+.cm-page
+  :is(.cm-btn, .cm-trace-link, .cm-trace, .cm-deck-card):is(:hover, :focus-visible)
+  .cm-arrow {
+  transform: translateX(4px);
+}
+.cm-page :is(.cm-btn, .cm-trace-link):is(:hover, :focus-visible) .cm-arrow-down {
+  transform: rotate(90deg) translateX(4px);
+}
+.cm-page .cm-arrow-out {
+  transform: rotate(-45deg);
+}
+.cm-page .cm-trace:is(:hover, :focus-visible) .cm-arrow-out {
+  transform: rotate(-45deg) translateX(3px);
+}
+.cm-page .cm-trace-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.75rem;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  color: var(--cinema-white);
+  text-decoration: none;
+}
+.cm-page .cm-trace-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 1.4rem;
+  bottom: 0.45rem;
+  height: 1px;
+  background: var(--cm-red-lit);
+  transform: scaleX(0.25);
+  transform-origin: left center;
+  transition: transform var(--motion-control) var(--ease-control);
+}
+.cm-page .cm-trace-link:is(:hover, :focus-visible)::after {
+  transform: scaleX(1);
+}
+
+/* ---- A. Hero: "Cut-corner stage", "Aperture Reveal", "Horizon Light" ---- */
+.cm-page .cm-hero {
+  position: relative;
+  isolation: isolate;
+  margin-top: 1rem;
+  padding: 0 var(--cm-pad) var(--cm-pad);
+}
+/* The silhouette lives on two background layers, never on the content box,
+   so focus rings, the share row and text are never clipped. */
+.cm-page .cm-hero::before,
+.cm-page .cm-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  pointer-events: none;
+  clip-path: polygon(0 0, calc(100% - var(--cm-cut)) 0, 100% var(--cm-cut), 100% 100%, 0 100%);
+  animation: cm-stage var(--motion-scene) var(--ease-enter) both;
+}
+.cm-page .cm-hero::before {
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    var(--cm-line-2),
+    color-mix(in srgb, var(--cinema-red) 60%, var(--cinema-white)) 100%
+  );
+}
+.cm-page .cm-hero::after {
+  inset: 1px;
+  background: linear-gradient(
+    150deg,
+    color-mix(in srgb, var(--cinema-ink) 96%, transparent) 0%,
+    color-mix(in srgb, var(--cinema-panel) 94%, transparent) 70%,
+    color-mix(in srgb, var(--cinema-red) 22%, var(--cinema-panel)) 100%
+  );
+}
+.cm-page .cm-hero-backdrop {
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  perspective: 900px;
+  clip-path: polygon(0 0, calc(100% - var(--cm-cut)) 0, 100% var(--cm-cut), 100% 100%, 0 100%);
+}
+.cm-page .cm-hero-horizon {
+  position: absolute;
+  inset: -8px;
+  transition: transform var(--motion-panel) var(--ease-control);
+}
+/* The horizon lives in the stage's right-hand third, behind the demand
+   signal, so it never crosses a line of reading copy. */
+.cm-page .cm-hero-horizon svg {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(40%, 30rem);
+  height: 100%;
+  fill: none;
+}
+.cm-page .cm-horizon-arc {
+  stroke: var(--cm-red-lit);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.8;
+}
+.cm-page .cm-horizon-glow {
+  stroke: var(--cinema-red);
+  stroke-width: 26;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.22;
+}
+.cm-page .cm-horizon-pass {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 38%;
+  width: 22%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    color-mix(in srgb, var(--cinema-white) 14%, transparent),
+    transparent
+  );
+  opacity: 0;
+  animation: cm-pass 1100ms var(--ease-control) 280ms 1 both;
+}
+@keyframes cm-pass {
+  0% {
+    opacity: 0;
+    transform: translateX(-60%);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(260%);
+  }
+}
+@keyframes cm-stage {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+}
+@keyframes cm-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+@keyframes cm-edge {
+  from {
+    transform: scaleX(0);
+  }
+}
+.cm-page .cm-enter {
+  animation: cm-rise 480ms var(--ease-enter) both;
+  animation-delay: calc(var(--d, 0) * 60ms + 60ms);
+}
+
+/* The metadata rail: id, category and the page index, on the stage's top
+   edge. Its red edge opens once, left to right. */
+.cm-page .cm-hero-rail {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  margin-right: calc(var(--cm-cut) - var(--cm-pad) + 0.5rem);
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--cm-line);
+  font-size: 0.8125rem;
+  color: var(--cm-text-3);
+}
+.cm-page .cm-hero-rail::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(var(--cm-pad) * -1);
+  width: min(14rem, 40%);
+  height: 2px;
+  background: var(--cinema-red);
+  transform-origin: left center;
+  animation: cm-edge 600ms var(--ease-enter) 120ms both;
+}
+.cm-page .cm-hero-id {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--cinema-white);
+  font-variant-numeric: tabular-nums;
+}
+.cm-page .cm-hero-cat {
+  color: var(--cm-red-text);
+}
+.cm-page .cm-hero-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+  margin-left: auto;
+}
+.cm-page .cm-index-link {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  padding: 0.35rem 0.25rem;
+  font-weight: 500;
+  color: var(--cm-text-2);
+  text-decoration: none;
+  transition: color var(--motion-fast) var(--ease-control);
+}
+.cm-page .cm-index-link > span {
+  font-size: 0.6875rem;
+  color: var(--cm-red-text);
+  font-variant-numeric: tabular-nums;
+}
+.cm-page .cm-index-link::after {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  right: 0.25rem;
+  bottom: 0.15rem;
+  height: 1px;
+  background: var(--cinema-red);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-control) var(--ease-control);
+}
+.cm-page .cm-index-link:is(:hover, :focus-visible) {
+  color: var(--cinema-white);
+}
+.cm-page .cm-index-link:is(:hover, :focus-visible)::after {
+  transform: scaleX(1);
+}
+.cm-page .cm-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(15rem, 1fr);
+  gap: clamp(1.5rem, 1rem + 2.5vw, 3rem);
+  align-items: start;
+  padding-top: clamp(1.25rem, 1rem + 1.5vw, 2.25rem);
+}
+.bbi-instrument.cm-page .cm-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cm-red-text);
+}
+.cm-page .cm-kicker::before {
+  content: "";
+  width: 1.5rem;
+  height: 2px;
+  background: var(--cinema-red);
+}
+.cm-page .cm-h1 {
+  margin: 0.75rem 0 0;
+  font-size: clamp(2rem, 4.2vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--cinema-white);
+  overflow-wrap: break-word;
+}
+.bbi-instrument.cm-page .cm-lead {
+  margin: 1.1rem 0 0;
+  max-width: 40rem;
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.1875rem);
+  line-height: 1.7;
+  color: var(--cm-text-2);
+}
+.cm-page .cm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1.5rem;
+}
+
+/* ---- F. "Dossier Expand" (native <details>) ----------------------------- */
+.cm-page :is(.cm-dossier, .cm-faq-item) > summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1.4rem;
+  list-style: none;
+  cursor: pointer;
 }
-.bbi-noir-page .bbi-noir-card-index {
-  font-family: "Poppins", monospace;
-  font-size: 0.7rem;
-  color: #cbaaaa;
+.cm-page :is(.cm-dossier, .cm-faq-item) > summary::-webkit-details-marker {
+  display: none;
 }
-.bbi-noir-page .bbi-noir-blueprint-card h3 {
-  margin-bottom: 0.8rem;
-  font-size: 1.35rem;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  color: #fff;
-}
-.bbi-noir-page .bbi-noir-blueprint-card p {
-  font-size: 1rem;
-  line-height: 1.8;
-  color: #d4c4c4;
-}
-.bbi-noir-page .bbi-noir-blueprint-card p + p {
+.cm-page .cm-dossier {
   margin-top: 1rem;
+  max-width: 40rem;
+  border-top: 1px solid var(--cm-line);
+  border-bottom: 1px solid var(--cm-line);
 }
-.bbi-noir-page .bbi-noir-featured {
-  background: linear-gradient(145deg, #ca0808, #270a0a 95%);
-  border-color: #efa0a050;
-  box-shadow:
-    inset 0 1px 0 #ffffff20,
-    0 15px 45px #ca08081c;
+.cm-page .cm-dossier > summary {
+  min-height: 2.75rem;
+  padding: 0.5rem 0;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--cinema-white);
 }
-.bbi-noir-page .bbi-noir-featured .bbi-noir-icon {
-  background: #ffffff15;
-  color: white;
-  border-color: #ffffff3b;
+.bbi-instrument.cm-page .cm-dossier-body p {
+  padding: 0.25rem 0 1rem;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--cm-text-2);
 }
-.bbi-noir-page .bbi-noir-featured :is(p, .bbi-noir-card-index) {
-  color: #ffe2e2;
+.cm-page :is(.cm-dossier, .cm-faq-item)[open] :is(.cm-dossier-body, .cm-faq-a) {
+  animation: cm-unfold 240ms var(--ease-enter) both;
 }
-.bbi-noir-page .bbi-noir [data-anchor="verdict"].bg-card {
+@keyframes cm-unfold {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+/* Where the browser can animate a disclosure's height, do it on the explicit
+   toggle only. Elsewhere the content simply appears. */
+@supports selector(::details-content) {
+  .cm-page :is(.cm-dossier, .cm-faq-item) {
+    interpolate-size: allow-keywords;
+  }
+  .cm-page :is(.cm-dossier, .cm-faq-item)::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 240ms var(--ease-control),
+      content-visibility 240ms allow-discrete;
+  }
+  .cm-page :is(.cm-dossier, .cm-faq-item)[open]::details-content {
+    block-size: auto;
+  }
+}
+/* The plus/minus mark: two bars, the vertical one folds flat when open. */
+.cm-page .cm-faq-mark {
+  position: relative;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  border: 1px solid var(--cm-line-2);
+  border-radius: 0.3rem;
+  transition: border-color var(--motion-control) var(--ease-control);
+}
+.cm-page .cm-faq-mark::before,
+.cm-page .cm-faq-mark::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.7rem;
+  height: 2px;
+  margin: -1px 0 0 -0.35rem;
+  background: var(--cinema-white);
+  transition: transform 180ms var(--ease-control);
+}
+.cm-page .cm-faq-mark::after {
+  transform: rotate(90deg);
+  background: var(--cm-red-lit);
+}
+.cm-page [open] > summary .cm-faq-mark {
+  border-color: var(--cm-red-lit);
+}
+.cm-page [open] > summary .cm-faq-mark::after {
+  transform: rotate(0deg) scaleX(0);
+}
+
+/* ---- G. "Utility Fan" share --------------------------------------------- */
+.cm-page .cm-share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.cm-page .cm-share-fan {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.cm-page .cm-share-fan[hidden] {
+  display: none;
+}
+.cm-page .cm-share-fan > .cm-icon-btn {
+  animation: cm-fan var(--motion-control) var(--ease-enter) both;
+  animation-delay: calc(var(--i, 0) * 40ms);
+}
+@keyframes cm-fan {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+}
+.cm-page .cm-icon-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--cm-line-2);
+  border-radius: 0.375rem;
+  background: color-mix(in srgb, var(--cinema-panel) 80%, transparent);
+  color: var(--cinema-white);
+  cursor: pointer;
+  transition:
+    border-color var(--motion-fast) var(--ease-control),
+    transform var(--motion-fast) var(--ease-control);
+}
+.cm-page .cm-icon-btn:is(:hover, :focus-visible) {
+  border-color: var(--cm-red-lit);
+  transform: translateY(-1px);
+}
+.cm-page .cm-copy svg {
+  position: absolute;
+  transition:
+    opacity 160ms var(--ease-control),
+    transform 160ms var(--ease-control);
+}
+.cm-page .cm-copy-done,
+.cm-page .cm-copy[data-copied] .cm-copy-idle {
+  opacity: 0;
+  transform: scale(0.6);
+}
+.cm-page .cm-copy[data-copied] .cm-copy-done {
+  opacity: 1;
+  transform: none;
+}
+.cm-page .cm-copy[data-copied] {
+  border-color: var(--cm-red-lit);
+}
+
+/* ---- O. "Signal Lock" --------------------------------------------------- */
+.cm-page .cm-signal {
+  position: relative;
+  padding: 1.25rem 1.25rem 1.1rem;
+  border: 1px solid var(--cm-line-2);
+  border-radius: 0.5rem 1.25rem 0.5rem 0.5rem;
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--cinema-red) 16%, var(--cinema-panel)),
+    var(--cm-surface) 70%
+  );
+}
+.bbi-instrument.cm-page .cm-signal-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cm-text-2);
+}
+.cm-page .cm-signal-label .ci {
+  color: var(--cinema-white);
+}
+.bbi-instrument.cm-page .cm-signal-value {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  margin: 0.9rem 0 0;
+  color: var(--cinema-white);
+}
+.cm-page .cm-signal-value strong {
+  font-size: clamp(2.75rem, 2rem + 2.5vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.cm-page .cm-signal-value span {
+  font-size: 0.9375rem;
+  color: var(--cm-text-3);
+}
+.bbi-instrument.cm-page .cm-signal-band {
+  margin: 0.35rem 0 0;
+  font-weight: 600;
+  color: var(--cinema-white);
+}
+.cm-page .cm-gauge {
+  position: relative;
+  height: 0.375rem;
+  margin-top: 0.9rem;
+  overflow: hidden;
+  border-radius: 1px;
+  background: var(--cm-line);
+}
+.cm-page .cm-gauge-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--cinema-red), var(--cm-red-lit));
+  transform-origin: left center;
+  transform: scaleX(var(--v, 0));
+  animation: cm-gauge 620ms var(--ease-enter) 380ms both;
+}
+@keyframes cm-gauge {
+  from {
+    transform: scaleX(0);
+  }
+}
+.bbi-instrument.cm-page :is(.cm-signal-note, .cm-signal-empty) {
+  margin: 0.8rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--cm-text-3);
+}
+
+/* ---- Q. Capsules: "Capsule Snap" ---------------------------------------- */
+.cm-page .cm-capsules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
   padding: 0;
-  background: transparent !important;
-  border: 0;
-  box-shadow: none;
+  list-style: none;
 }
-.bbi-noir-page [data-anchor="verdict"] > div:first-child {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.1rem;
+.cm-page .cm-capsules.cm-section-tight {
+  margin-top: 2rem;
 }
-.bbi-noir-page [data-anchor="verdict"] > div:first-child > div {
-  border: 1px solid #ffffff22;
-  border-radius: 1.4rem;
-  padding: 1.8rem;
-  background: radial-gradient(ellipse at 100% 100%, #ca08081b, transparent 60%), #270a0a;
+.cm-page .cm-capsules-quiet {
+  margin-top: 0.75rem;
 }
-.bbi-noir-page [data-anchor="verdict"] h2,
-.bbi-noir-page [data-anchor="numbers"] .bbi-spot h2,
-.bbi-noir-page [data-anchor="playbooks"] h2 {
-  font-size: 1.2rem;
-  letter-spacing: -0.015em;
-  text-transform: none;
-  line-height: 1.3;
+.bbi-instrument.cm-page .cm-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 100%;
+  padding: 0.35rem 0.75rem 0.35rem 0.65rem;
+  border: 1px solid var(--cm-line-2);
+  border-radius: 0.25rem 0.625rem 0.25rem 0.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--cm-text-2);
+  overflow-wrap: anywhere;
+  text-decoration: none;
+  transition:
+    border-color 140ms var(--ease-control),
+    color 140ms var(--ease-control),
+    background-color 140ms var(--ease-control);
 }
-.bbi-noir-page [data-anchor="verdict"] .bbi-noir-icon,
-.bbi-noir-page [data-anchor="numbers"] .bbi-noir-icon,
-.bbi-noir-page [data-anchor="playbooks"] .bbi-noir-icon {
-  margin-bottom: 1rem;
+.cm-page .cm-capsule-link {
+  min-height: 2.5rem;
+  font-weight: 500;
 }
-.bbi-noir-page [data-anchor="verdict"] > div:last-child:not(:first-child) {
-  border: 1px solid #ca080850;
-  border-left: 3px solid #ca0808;
-  border-radius: 1rem;
-  padding: 1.5rem 1.8rem;
-  background: #ca08080a;
+.cm-page .cm-capsule-link:is(:hover, :focus-visible) {
+  border-color: var(--cm-red-lit);
+  color: var(--cinema-white);
+  background-color: color-mix(in srgb, var(--cinema-red) 16%, transparent);
 }
-.bbi-noir-page [data-anchor="numbers"] .grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.cm-page .cm-capsule-count {
+  font-size: 0.75rem;
+  color: var(--cm-red-text);
+  font-variant-numeric: tabular-nums;
 }
-.bbi-noir-page [data-anchor="numbers"] .bbi-spot {
-  padding: 1.8rem;
+
+/* ---- C. "Open-edge panel": strong rail left, the right edge left open --- */
+.cm-page .cm-open-edge {
+  position: relative;
+  padding: var(--cm-pad);
+  background: linear-gradient(
+    90deg,
+    var(--cm-surface) 0%,
+    var(--cm-surface) 55%,
+    color-mix(in srgb, var(--cm-surface) 55%, transparent) 100%
+  );
 }
-.bbi-noir-page [data-anchor="playbooks"] > div > div {
+.cm-page .cm-open-edge::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(
+    180deg,
+    var(--cinema-red),
+    color-mix(in srgb, var(--cinema-red) 30%, transparent)
+  );
+  transform-origin: top center;
+}
+.cm-page .cm-open-edge::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--cm-line-2), transparent 90%);
+}
+
+/* ---- B. "Stepped dossier" + blueprint grid ------------------------------ */
+.cm-page .cm-blueprint {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.1rem;
+  gap: 1rem;
+}
+/* An odd card out takes the full row, title beside text, rather than
+   leaving an empty column next to it. */
+.cm-page .cm-blueprint > .cm-open-edge:last-child:nth-child(even) {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-content: start;
+}
+.cm-page .cm-blueprint > .cm-open-edge:last-child:nth-child(even) > .cm-prose {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+.cm-page .cm-card {
+  min-width: 0;
+}
+.cm-page .cm-card h3 {
+  margin: 0.9rem 0 0.75rem;
+  font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--cinema-white);
+}
+.cm-page .cm-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.cm-page .cm-tab-index {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--cm-text-3);
+  font-variant-numeric: tabular-nums;
+}
+/* The lead card: a raised title tab joined to its body, and the strongest
+   red of the four. The tab is part of the surface, not a label on it. */
+.cm-page .cm-stepped {
+  position: relative;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(1.25rem, 3vw, 2.5rem);
+  padding: var(--cm-pad);
+  margin-top: 2.25rem;
+  border: 1px solid color-mix(in srgb, var(--cinema-red) 60%, var(--cinema-white));
+  border-radius: 0 0.75rem 0.75rem 0.75rem;
+  background:
+    radial-gradient(
+      120% 140% at 0% 0%,
+      color-mix(in srgb, var(--cinema-red) 55%, var(--cinema-panel)),
+      transparent 60%
+    ),
+    var(--cinema-panel);
+}
+.cm-page .cm-stepped .cm-tab {
+  position: absolute;
+  left: -1px;
+  bottom: 100%;
+  height: 2.25rem;
+  padding: 0 1rem 0 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--cinema-red) 60%, var(--cinema-white));
+  border-bottom: 0;
+  border-radius: 0.5rem 0.5rem 0 0;
+  background: color-mix(in srgb, var(--cinema-red) 55%, var(--cinema-panel));
+}
+.cm-page .cm-stepped .cm-tab-index {
+  color: var(--cinema-white);
+}
+.cm-page .cm-stepped h3 {
+  margin-top: 0;
+  font-size: clamp(1.35rem, 1.1rem + 1vw, 1.75rem);
+}
+.cm-page .cm-stepped > .cm-prose {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+.bbi-instrument.cm-page .cm-stepped p {
+  color: color-mix(in srgb, var(--cinema-white) 90%, var(--cinema-red));
+}
+.cm-page .cm-card.cm-open-edge {
+  padding-left: calc(var(--cm-pad) + 0.25rem);
+}
+
+/* "Tactical Fold": the icon plate turns over on a deliberate hover and shows
+   the card's real position on its back. Decorative, so hover-only, and a
+   crossfade under reduced motion. */
+.cm-page .cm-fold {
+  position: relative;
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  perspective: 400px;
+}
+.cm-page .cm-fold-face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--cm-line-2);
+  border-radius: 0.375rem 0.75rem 0.375rem 0.375rem;
+  background: var(--cm-surface);
+  color: var(--cinema-white);
+  backface-visibility: hidden;
+  transition: transform 400ms var(--ease-control);
+}
+.cm-page .cm-fold-back {
+  transform: rotateY(180deg);
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  background: var(--cinema-red);
+  border-color: var(--cm-red-lit);
+}
+.cm-page .cm-stepped .cm-fold {
+  width: 1.9rem;
+  height: 1.9rem;
+}
+.cm-page .cm-stepped .cm-fold .ci {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+@media (hover: hover) and (pointer: fine) {
+  .cm-page .cm-fold:hover .cm-fold-front {
+    transform: rotateY(-180deg);
+  }
+  .cm-page .cm-fold:hover .cm-fold-back {
+    transform: rotateY(0deg);
+  }
+}
+
+/* ---- J. "Opposing Panels" ----------------------------------------------- */
+.cm-page .cm-verdict-block {
+  margin-top: 1rem;
+}
+.cm-page .cm-oppose {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 1rem;
+}
+.cm-page .cm-side {
+  position: relative;
+  padding: var(--cm-pad);
+  background: var(--cm-surface);
+  border: 1px solid var(--cm-line);
+}
+.cm-page .cm-side-pro {
+  border-radius: 0.75rem 0.25rem 0.25rem 0.75rem;
+  border-left: 3px solid var(--cm-red-lit);
+}
+.cm-page .cm-side-con {
+  border-radius: 0.25rem 0.75rem 0.75rem 0.25rem;
+  border-right: 3px solid var(--cinema-red);
+  background: linear-gradient(
+    200deg,
+    color-mix(in srgb, var(--cinema-red) 14%, var(--cm-surface)),
+    var(--cm-surface) 60%
+  );
+}
+.cm-page .cm-side ul {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.cm-page .cm-side li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+.cm-page .cm-side li + li {
+  margin-top: 0.85rem;
+}
+/* Distinct marks that do not rely on colour: a rising tick for strengths,
+   a cut bar for risks. */
+.cm-page .cm-side-pro li::before {
+  content: "";
+  position: absolute;
+  left: 0.1rem;
+  top: 0.55em;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-top: 2px solid var(--cm-red-lit);
+  border-right: 2px solid var(--cm-red-lit);
+  transform: rotate(-45deg);
+}
+.cm-page .cm-side-con li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 0.8rem;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--cinema-red) 40%,
+    transparent 40%,
+    transparent 60%,
+    var(--cinema-red) 60%
+  );
+}
+
+/* ---- F2. "Notched verdict" ---------------------------------------------- */
+.cm-page .cm-verdict {
+  position: relative;
+  isolation: isolate;
+  margin-top: 1rem;
+  padding: var(--cm-pad) calc(var(--cm-pad) + 0.5rem);
+}
+/* The notches are a mask on the background layer only. */
+.cm-page .cm-verdict::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--cinema-red) 30%, var(--cinema-panel)),
+    var(--cinema-panel) 55%
+  );
+  border: 1px solid color-mix(in srgb, var(--cinema-red) 55%, var(--cinema-white));
+  /* Rims for the two notches, so the cut reads as an edge, not a hole. */
+  background-image:
+    radial-gradient(
+      circle at 0 50%,
+      transparent calc(var(--cm-notch) - 0.5px),
+      color-mix(in srgb, var(--cinema-red) 55%, var(--cinema-white)) var(--cm-notch),
+      transparent calc(var(--cm-notch) + 1px)
+    ),
+    radial-gradient(
+      circle at 100% 50%,
+      transparent calc(var(--cm-notch) - 0.5px),
+      color-mix(in srgb, var(--cinema-red) 55%, var(--cinema-white)) var(--cm-notch),
+      transparent calc(var(--cm-notch) + 1px)
+    ),
+    linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--cinema-red) 30%, var(--cinema-panel)),
+      var(--cinema-panel) 55%
+    );
+  -webkit-mask:
+    radial-gradient(circle var(--cm-notch) at 0 50%, transparent 98%, #000) left / 51% 100%
+      no-repeat,
+    radial-gradient(circle var(--cm-notch) at 100% 50%, transparent 98%, #000) right / 51% 100%
+      no-repeat;
+  mask:
+    radial-gradient(circle var(--cm-notch) at 0 50%, transparent 98%, #000) left / 51% 100%
+      no-repeat,
+    radial-gradient(circle var(--cm-notch) at 100% 50%, transparent 98%, #000) right / 51% 100%
+      no-repeat;
+}
+/* A narrow red edge that illuminates once when the verdict lands. */
+.cm-page .cm-verdict::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--cm-notch) + 0.75rem);
+  right: calc(var(--cm-notch) + 0.75rem);
+  top: 0;
+  height: 2px;
+  background: var(--cinema-red);
+  transform-origin: left center;
+}
+.cm-page .cm-verdict .cm-subhead h3 {
+  font-size: 1.25rem;
+}
+.bbi-instrument.cm-page .cm-verdict p {
+  margin-top: 0.75rem;
+  max-width: 68ch;
+  font-size: clamp(1.05rem, 1rem + 0.25vw, 1.1875rem);
+  line-height: 1.7;
+  color: var(--cinema-white);
+}
+
+/* ---- D. "Split ledger" -------------------------------------------------- */
+.cm-page .cm-ledger {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+  gap: 0 clamp(1rem, 3vw, 2rem);
+  padding: var(--cm-pad);
+  border: 1px solid var(--cm-line);
+  border-radius: 0.25rem;
+  background: var(--cm-surface);
+}
+.cm-page .cm-ledger.is-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+.cm-page .cm-ledger.is-single .cm-ledger-axis {
+  display: none;
+}
+.cm-page .cm-ledger-axis {
+  position: relative;
+  background: var(--cm-line-2);
+}
+.cm-page .cm-ledger-axis::before {
+  content: "";
+  position: absolute;
+  top: 0.35rem;
+  left: -4px;
+  width: 9px;
+  height: 9px;
+  background: var(--cinema-red);
+  transform: rotate(45deg);
+}
+.cm-page .cm-ledger-rail {
+  position: relative;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+.cm-page .cm-ledger-rail::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--cinema-red),
+    color-mix(in srgb, var(--cinema-red) 10%, transparent)
+  );
+  transform-origin: left center;
+}
+
+/* ---- E. "Numbered ribbon" + "Mission Rail" ------------------------------ */
+.cm-page .cm-playbook {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 1rem;
   align-items: start;
 }
-.bbi-noir-page [data-anchor="playbooks"] > div > div > div {
-  padding: 1.8rem;
-  margin-top: 0;
+.cm-page .cm-playbook.is-single {
+  grid-template-columns: minmax(0, 1fr);
 }
-.bbi-noir-page [data-anchor="playbooks"] > div > div > div:first-child {
-  grid-row: span 2;
+.cm-page :is(.cm-mission, .cm-dock, .cm-timeline) {
+  padding: var(--cm-pad);
+  border: 1px solid var(--cm-line);
+  border-radius: 0.25rem;
+  background: var(--cm-surface);
 }
-.bbi-noir-page [data-anchor="playbooks"] ol {
-  counter-reset: none;
+.cm-page .cm-playbook-side {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
 }
-.bbi-noir-page [data-anchor="playbooks"] ol > li {
-  border-bottom: 1px solid #ffffff12;
-  padding: 0.7rem 0;
-  margin: 0;
-  align-items: baseline;
-  font-size: 1rem;
-}
-.bbi-noir-page [data-anchor="playbooks"] ol > li:last-child {
-  border-bottom: 0;
-}
-.bbi-noir-page [data-anchor="playbooks"] ol > li > span:first-child {
-  background: #ca080826;
-  color: #f4b5b5;
-  width: 1.8rem;
-  height: 1.8rem;
-  line-height: 1.8rem;
-  border: 1px solid #efa0a030;
-}
-.bbi-noir-page [data-anchor="playbooks"] ul > li {
-  border-radius: 0.6rem;
-  padding: 0.45rem 0.75rem;
-  background: #ffffff05;
-  line-height: 1.5;
-}
-.bbi-noir-page .idea-shell details.bg-card {
-  padding: 1.3rem 1.5rem;
-  border-radius: 1rem;
-}
-.bbi-noir-page .idea-shell details.bg-card[open] {
-  border-color: #efa0a066;
-  background: #270a0a;
-}
-.bbi-noir-page .idea-shell details.bg-card summary {
-  line-height: 1.5;
-  padding-right: 0.5rem;
-}
-.bbi-noir-page .idea-shell details.bg-card summary::marker {
-  color: #efa0a0;
-}
-.bbi-noir-page [data-anchor="demand"] {
-  padding: 1.8rem;
-}
-.bbi-noir-page [data-anchor="demand"] .demand-gauge-track {
-  height: 0.4rem;
-  background: #ffffff13;
-}
-.bbi-noir-page [data-anchor="demand"] .demand-gauge-track > div {
-  background: #ca0808;
-}
-.bbi-noir-page #validate {
-  background: radial-gradient(ellipse at 100% 0, #ca080838, transparent 65%), #270a0a;
-  border-color: #efa0a03d;
-}
-.bbi-noir-page .stack-list {
-  perspective: none;
-}
-.bbi-noir-page .stack-list .stack-item,
-.bbi-noir-page .stack-list:hover .stack-item,
-.bbi-noir-page .stack-list:focus-within .stack-item {
+.cm-page .cm-mission-track {
   position: relative;
-  transform: none;
-  filter: none;
-  opacity: 1;
-  margin-top: 0.8rem;
+  margin-top: 1.1rem;
 }
-.bbi-noir-page .bbi-noir-idea-card > span > a {
-  padding: 1.5rem;
-}
-.bbi-noir-page .bbi-noir-idea-card .bbi-noir-card-top {
-  margin-bottom: 0.65rem;
-}
-.bbi-noir-page .bbi-noir-arrow {
-  color: #f4b5b5;
-}
-.bbi-noir-page .bbi-noir-idea-card h3 {
-  font-size: 1.2rem;
-}
-.bbi-noir-page .bbi-noir-idea-card .bbi-noir-icon {
-  width: 2.3rem;
-  height: 2.3rem;
-}
-
-/* ResourceHub lives beside main. The optional SiteShell root class reaches
-   these panels without a global selector or duplicating the resource list. */
-.bbi-noir-page [data-anchor="resources"] {
-  border-top-color: #efa0a029;
-  padding-top: 2.8rem;
-}
-.bbi-noir-page [data-anchor="resources"] > section {
-  padding: 1.8rem;
-  border: 1px solid #ffffff15;
-  border-radius: 1.5rem;
-  background: linear-gradient(140deg, #ca08080a, transparent 55%), #120404;
-}
-.bbi-noir-page [data-anchor="resources"] section > div > span {
-  border-radius: 50%;
-  background: #ca080826 !important;
-  color: #f4b5b5 !important;
-}
-.bbi-noir-page [data-anchor="resources"] .mo-card {
-  border-radius: 1rem;
-  padding: 1.3rem;
-}
-.bbi-noir-page [data-anchor="resources"] [aria-labelledby="rh-calculators"] > ul {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0;
-  counter-reset: calculator;
-  border: 1px solid #ffffff17;
-  border-radius: 1rem;
-  overflow: hidden;
-}
-.bbi-noir-page [aria-labelledby="rh-calculators"] li {
-  counter-increment: calculator;
-  border-bottom: 1px solid #ffffff12;
-}
-.bbi-noir-page [data-anchor="resources"] [aria-labelledby="rh-calculators"] a.mo-card {
-  padding-left: 3.6rem;
-  position: relative;
-  border-radius: 0;
-}
-.bbi-noir-page [aria-labelledby="rh-calculators"] a::after {
-  content: counter(calculator, decimal-leading-zero);
+.cm-page .cm-rail {
   position: absolute;
-  left: 1.2rem;
-  top: 1.4rem;
-  font:
-    0.75rem "Poppins",
-    monospace;
-  color: #efa0a0;
+  left: 1.05rem;
+  top: 1rem;
+  bottom: 1rem;
+  width: 2px;
+  background: var(--cm-line);
+}
+.cm-page .cm-rail-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--cinema-red);
+  transform-origin: top center;
+}
+/* The rail fills as the list crosses the viewport, on a view timeline: no
+   scroll listener and no layout writes. Unsupported browsers show it full. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .cm-page .cm-rail-fill {
+      animation: cm-fill linear both;
+      animation-timeline: view();
+      animation-range: cover 20% cover 65%;
+    }
+  }
+}
+@keyframes cm-fill {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.cm-page .cm-ribbons {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.bbi-instrument.cm-page .cm-ribbon {
+  display: grid;
+  grid-template-columns: 2.1rem minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: start;
+  padding: 0.6rem 0.75rem 0.6rem 0;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--cm-text-2);
+}
+.cm-page .cm-ribbon + .cm-ribbon {
+  border-top: 1px solid var(--cm-line);
+}
+.cm-page .cm-ribbon-idx {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 1.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--cinema-white);
+  font-variant-numeric: tabular-nums;
+  background: var(--cinema-panel);
+  border: 1px solid color-mix(in srgb, var(--cinema-red) 60%, var(--cinema-white));
+  border-radius: 0.25rem 0.5rem 0.25rem 0.25rem;
 }
 
-/* Existing instrument rules use layered !important. A narrowly scoped base
-   layer wins those rules in both saved themes; no theme preference is changed. */
-@layer base {
-  html .bbi-instrument.bbi-noir-page .bbi-noir :is(.glass, .glass-pill),
-  html .bbi-instrument.bbi-noir-page [data-anchor="resources"] .glass {
-    background: linear-gradient(145deg, #ffffff07, transparent 70%), #270a0a !important;
-    border-color: #ffffff24 !important;
-    box-shadow:
-      inset 0 1px 0 #ffffff0b,
-      0 8px 25px #0000001a !important;
-  }
-  html .bbi-instrument.bbi-noir-page [aria-labelledby="rh-calculators"] a.glass {
-    border: 0 !important;
-    border-radius: 0;
-    box-shadow: none !important;
-    background: transparent !important;
-  }
-  html .bbi-instrument.bbi-noir-page .bbi-noir a.glass:hover,
-  html .bbi-instrument.bbi-noir-page [data-anchor="resources"] a.glass:hover {
-    background: #270a0a !important;
-    border-color: #efa0a069 !important;
-  }
-  html .bbi-instrument.bbi-noir-page .bbi-noir-hero :is(.bbi-noir-cta, .bbi-noir-cta:hover) {
-    color: #fff !important;
-  }
-  html .bbi-instrument.bbi-noir-page .bbi-noir-featured :is(p, .bbi-noir-card-index) {
-    color: #ffe2e2 !important;
-  }
-  html .bbi-instrument.bbi-noir-page .bbi-noir-icon,
-  html .bbi-instrument.bbi-noir-page .bbi-noir-icon svg {
-    color: #f4b5b5 !important;
-  }
-  html .bbi-instrument.bbi-noir-page .bbi-noir-featured .bbi-noir-icon {
-    color: #fff !important;
-  }
-  html .bbi-instrument.bbi-noir-page .bbi-noir-category {
-    color: #ffd2d2 !important;
-  }
-  html .bbi-instrument.bbi-noir-page [data-anchor="playbooks"] ol > li > span:first-child {
-    background: #ca080826 !important;
-    color: #f4b5b5 !important;
-  }
+/* ---- "Tool Dock" and "Timeline Lock" ------------------------------------ */
+.cm-page .cm-tools {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
 }
-.bbi-noir-page :is(a, button, summary, textarea):focus-visible {
-  outline: 2px solid #efa0a0;
-  outline-offset: 4px;
+.bbi-instrument.cm-page .cm-tool {
+  position: relative;
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.55rem 0.75rem 0.55rem 0.9rem;
+  border: 1px solid var(--cm-line);
+  border-radius: 0.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--cm-text-2);
+  transition: border-color 140ms var(--ease-control);
 }
-@media (max-width: 767px) {
-  .bbi-noir-page .bbi-noir {
-    padding-top: 1.25rem;
-  }
-  .bbi-noir-page .bbi-noir-hero {
-    grid-template-columns: 1fr;
-    border-radius: 1.5rem;
-  }
-  .bbi-noir-page .bbi-noir-hero-copy {
-    padding: 1.6rem;
-  }
-  .bbi-noir-page .bbi-noir-hero h1 {
-    font-size: clamp(2rem, 7.5vw, 3rem);
-  }
-  .bbi-noir-page .bbi-noir-category {
-    margin-top: 1.5rem;
-  }
-  .bbi-noir-page .bbi-noir-hero-visual {
-    padding: 0.5rem 1.5rem 2rem;
-  }
-  .bbi-noir-page .bbi-noir-orb {
-    top: -1rem;
-    right: -2rem;
-    width: 20rem;
-  }
-  .bbi-noir-page .bbi-noir-signal-card {
-    max-width: 24rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 0.5rem 1rem;
-  }
-  .bbi-noir-page .bbi-noir-signal-top {
-    grid-column: 1 / -1;
-  }
-  .bbi-noir-page .bbi-noir-score {
-    grid-row: span 2;
-    margin: 0.5rem 0;
-    width: 100%;
-    max-width: 9rem;
-  }
-  .bbi-noir-page .bbi-noir-score strong {
-    font-size: 3rem;
-  }
-  .bbi-noir-page .bbi-noir-signal-card > p {
-    align-self: end;
-    text-align: left;
-  }
-  .bbi-noir-page .bbi-noir-signal-note {
-    align-self: start;
-    text-align: left;
-    font-size: 0.68rem;
-  }
-  .bbi-noir-page .bbi-noir-visual-caption {
-    display: none;
-  }
-  .bbi-noir-page .bbi-noir-hero-foot {
-    margin: 0 1.6rem;
-    flex-direction: column;
-    gap: 0.65rem;
-  }
-  .bbi-noir-page .bbi-noir-hero-foot > div {
-    max-width: 100%;
-    flex-wrap: wrap;
-  }
-  .bbi-noir-page .bbi-noir-blueprint-grid,
-  .bbi-noir-page [data-anchor="verdict"] > div:first-child,
-  .bbi-noir-page [data-anchor="numbers"] .grid,
-  .bbi-noir-page [data-anchor="playbooks"] > div > div,
-  .bbi-noir-page [data-anchor="resources"] [aria-labelledby="rh-calculators"] > ul {
+.cm-page .cm-tool::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0.55rem;
+  bottom: 0.55rem;
+  width: 2px;
+  background: var(--cinema-red);
+}
+.cm-page .cm-tool:hover {
+  border-color: var(--cm-line-2);
+}
+.cm-page .cm-tool-name {
+  font-weight: 500;
+  color: var(--cinema-white);
+}
+.cm-page .cm-tool-use {
+  font-size: 0.875rem;
+  color: var(--cm-text-3);
+}
+.cm-page .cm-timeline-bar {
+  position: relative;
+  display: block;
+  height: 2px;
+  margin: 1rem 0;
+  background: var(--cm-line);
+}
+.cm-page .cm-timeline-bar > span {
+  position: absolute;
+  left: 0;
+  top: -3px;
+  width: 8px;
+  height: 8px;
+  background: var(--cinema-red);
+  transform: rotate(45deg);
+}
+.bbi-instrument.cm-page .cm-timeline p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--cm-text-2);
+}
+
+/* ---- N. "Precision Accordion" ------------------------------------------- */
+.cm-page .cm-faq {
+  display: grid;
+  gap: 0.5rem;
+}
+.cm-page .cm-faq-item {
+  border: 1px solid var(--cm-line);
+  border-radius: 0.25rem;
+  background: var(--cm-surface);
+  transition: border-color var(--motion-control) var(--ease-control);
+}
+.cm-page .cm-faq-item[open] {
+  border-color: color-mix(in srgb, var(--cinema-red) 50%, var(--cm-line-2));
+}
+.cm-page .cm-faq-item > summary {
+  min-height: 3rem;
+  padding: 0.85rem 1rem 0.85rem 1.25rem;
+}
+.cm-page .cm-faq-q {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--cinema-white);
+}
+.bbi-instrument.cm-page .cm-faq-a p {
+  padding: 0 1.25rem 1.1rem;
+  max-width: 70ch;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--cm-text-2);
+}
+
+/* ---- Sources and resource rows: "Edge Trace" ---------------------------- */
+.cm-page .cm-sources {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cm-page .cm-trace {
+  position: relative;
+  text-decoration: none;
+}
+.cm-page .cm-trace::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--cinema-red);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform var(--motion-control) var(--ease-control);
+}
+.cm-page .cm-trace:is(:hover, :focus-visible)::before {
+  transform: scaleY(1);
+}
+.cm-page .cm-source {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3rem;
+  padding: 0.75rem 1rem 0.75rem 1.25rem;
+  border: 1px solid var(--cm-line);
+  border-radius: 0.25rem;
+  background: var(--cm-surface);
+  font-weight: 500;
+  color: var(--cinema-white);
+  transition: border-color var(--motion-control) var(--ease-control);
+}
+.cm-page .cm-source:is(:hover, :focus-visible) {
+  border-color: var(--cm-line-2);
+}
+
+/* ---- P. "Deck Lift" ----------------------------------------------------- */
+.cm-page .cm-decks {
+  display: grid;
+  gap: clamp(2rem, 3vw, 2.75rem);
+}
+.cm-page .cm-decks > section {
+  min-width: 0;
+}
+.cm-page .cm-deck {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cm-page .cm-deck-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 0.4rem 1rem;
+  padding: 1rem 1.1rem 1rem 1.25rem;
+  border: 1px solid var(--cm-line);
+  background: var(--cm-surface);
+  color: var(--cinema-white);
+  text-decoration: none;
+  transition:
+    transform var(--motion-control) var(--ease-control),
+    border-color var(--motion-control) var(--ease-control);
+}
+/* Related shapes, varied by position: the cut corner moves round the deck. */
+.cm-page .cm-deck > li:nth-child(3n + 1) .cm-deck-card {
+  border-radius: 0.25rem 1rem 0.25rem 0.25rem;
+}
+.cm-page .cm-deck > li:nth-child(3n + 2) .cm-deck-card {
+  border-radius: 0.25rem 0.25rem 1rem 0.25rem;
+}
+.cm-page .cm-deck > li:nth-child(3n) .cm-deck-card {
+  border-radius: 1rem 0.25rem 0.25rem 0.25rem;
+}
+.cm-page .cm-deck-card::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0.75rem;
+  bottom: 0.75rem;
+  width: 2px;
+  background: var(--cinema-red);
+  transform: scaleY(0.3);
+  transform-origin: center;
+  transition: transform var(--motion-control) var(--ease-control);
+}
+.cm-page .cm-deck-card:is(:hover, :focus-visible) {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--cinema-red) 45%, var(--cm-line-2));
+}
+.cm-page .cm-deck-card:is(:hover, :focus-visible)::before {
+  transform: scaleY(1);
+}
+.cm-page .cm-deck-meta {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--cm-text-3);
+}
+.cm-page .cm-deck-cat {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cm-page .cm-deck-trend {
+  flex-shrink: 0;
+  color: var(--cm-red-text);
+  font-variant-numeric: tabular-nums;
+}
+.cm-page .cm-deck-title {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.cm-page .cm-deck-card .cm-arrow {
+  color: var(--cm-red-lit);
+}
+
+/* ---- R. "Launch Console" ------------------------------------------------ */
+.cm-page .cm-console {
+  position: relative;
+  padding: var(--cm-pad);
+  border: 1px solid color-mix(in srgb, var(--cinema-red) 45%, var(--cm-line-2));
+  border-radius: 0.25rem 1.5rem 0.25rem 0.25rem;
+  background:
+    radial-gradient(
+      90% 120% at 100% 0%,
+      color-mix(in srgb, var(--cinema-red) 30%, transparent),
+      transparent 60%
+    ),
+    var(--cm-surface);
+}
+.bbi-instrument.cm-page .cm-console-sub {
+  margin: -0.5rem 0 1.25rem;
+  font-size: 1rem;
+  color: var(--cm-text-2);
+}
+.cm-page .cm-validate {
+  padding: 1.25rem 0 0;
+  border-top: 1px solid var(--cm-line);
+}
+.cm-page .cm-validate h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--cinema-white);
+}
+.cm-page .cm-validate .t-eyebrow {
+  color: var(--cm-red-text);
+  font-size: 0.75rem;
+}
+.cm-page .cm-validate > div:has(> .cm-btn) {
+  gap: 0.75rem;
+}
+.cm-page .cm-validate :is(.text-xs, .text-\[11px\]) {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+.cm-page .cm-field {
+  padding: 1rem 0 0;
+}
+.cm-page .cm-field label {
+  color: var(--cinema-white);
+}
+.cm-page .cm-field-input {
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--cm-line-2);
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, var(--cinema-ink) 80%, transparent);
+  color: var(--cinema-white);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  outline: none;
+  box-shadow: inset 3px 0 0 transparent;
+  transition:
+    border-color var(--motion-control) var(--ease-control),
+    box-shadow var(--motion-control) var(--ease-control);
+}
+.cm-page .cm-field-input:focus,
+.cm-page .cm-field-input:focus-visible {
+  border-color: var(--cinema-white);
+  outline: none;
+  box-shadow:
+    inset 3px 0 0 var(--cinema-red),
+    0 0 0 3px color-mix(in srgb, var(--cinema-red) 35%, transparent);
+}
+.cm-page .cm-field-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.cm-page .cm-console-browse {
+  margin-top: 1rem;
+}
+
+/* ---- T. Signature and footer: "Quiet Close" ----------------------------- */
+.bbi-instrument.cm-page .cm-signature {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--cm-line);
+  font-size: 0.9375rem;
+  color: var(--cm-text-3);
+}
+.cm-page .cm-signature a {
+  color: var(--cinema-white);
+  text-decoration-color: var(--cinema-red);
+}
+
+/* ---- S. Resource hub: "Indexed Rail", "Editorial", "Term Register" ------- */
+.cm-page .cm-hub {
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--cm-line);
+}
+.bbi-instrument.cm-page .cm-hub > .cm-eyebrow {
+  margin-bottom: 1.5rem;
+}
+.cm-page .cm-hub-block + .cm-hub-block {
+  margin-top: 2.75rem;
+}
+.cm-page .cm-hub-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  margin-bottom: 1.1rem;
+}
+.cm-page .cm-hub-head h2 {
+  margin: 0;
+  font-size: clamp(1.2rem, 1rem + 0.8vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--cinema-white);
+}
+.bbi-instrument.cm-page .cm-hub-head p {
+  margin-top: 0.35rem;
+  max-width: 60ch;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--cm-text-3);
+}
+.cm-page .cm-index {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--cm-line);
+}
+.cm-page .cm-index > li {
+  border-bottom: 1px solid var(--cm-line);
+}
+.cm-page .cm-index-row {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.75rem;
+  padding: 0.9rem 0.5rem 0.9rem 0.75rem;
+  color: var(--cinema-white);
+  text-decoration: none;
+  transition: background-color var(--motion-control) var(--ease-control);
+}
+.cm-page .cm-index-row:is(:hover, :focus-visible) {
+  background-color: color-mix(in srgb, var(--cinema-red) 10%, transparent);
+}
+.cm-page .cm-index-num {
+  padding-top: 0.15rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--cm-red-text);
+  font-variant-numeric: tabular-nums;
+}
+.cm-page .cm-index-text {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.cm-page .cm-index-title {
+  font-weight: 500;
+  line-height: 1.4;
+}
+.cm-page :is(.cm-index-blurb, .cm-editorial-blurb) {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--cm-text-3);
+}
+.cm-page .cm-index-row .cm-arrow {
+  margin-top: 0.2rem;
+  color: var(--cm-red-lit);
+}
+.cm-page .cm-editorial {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cm-page .cm-editorial-item {
+  display: grid;
+  gap: 0.35rem;
+  height: 100%;
+  padding: 1rem 1rem 1rem 1.25rem;
+  border: 1px solid var(--cm-line);
+  border-radius: 0.25rem;
+  background: var(--cm-surface);
+  color: var(--cinema-white);
+  transition: border-color var(--motion-control) var(--ease-control);
+}
+.cm-page .cm-editorial-item:is(:hover, :focus-visible) {
+  border-color: var(--cm-line-2);
+}
+.cm-page .cm-editorial-meta {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cm-red-text);
+}
+.cm-page .cm-editorial-title {
+  font-weight: 500;
+  line-height: 1.4;
+}
+.cm-page .cm-register {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 0 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cm-page .cm-register > li {
+  border-bottom: 1px solid var(--cm-line);
+}
+.cm-page .cm-register-row {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.7rem 0;
+  text-decoration: none;
+}
+.cm-page .cm-register-term {
+  font-weight: 600;
+  color: var(--cinema-white);
+  transition: color var(--motion-fast) var(--ease-control);
+}
+.cm-page .cm-register-row:is(:hover, :focus-visible) .cm-register-term {
+  color: var(--cm-red-text);
+}
+.cm-page :is(.cm-register-def, .cm-register-meta) {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--cm-text-3);
+}
+
+/* ---- Reveals ----------------------------------------------------------------
+   Only blocks below the fold at hydration are ever armed (use-cinema-stage).
+   Each reveal is transform + opacity, once. */
+.cm-page .is-armed {
+  opacity: 0;
+}
+.cm-page .is-in {
+  transition:
+    opacity var(--motion-panel) var(--ease-enter),
+    transform var(--motion-panel) var(--ease-enter);
+}
+/* H. "Evidence Wipe": the edge rule draws, the panel settles 10px. */
+.cm-page [data-reveal="wipe"].is-armed,
+.cm-page [data-reveal="rise"].is-armed {
+  transform: translateY(10px);
+}
+.cm-page [data-reveal="wipe"].is-armed::before {
+  transform: scaleY(0);
+}
+.cm-page [data-reveal="wipe"].is-in::before {
+  transition: transform 420ms var(--ease-enter) 60ms;
+}
+/* I. "Staggered Dossier Entry" and P's grouped entry: children in order. */
+.cm-page [data-reveal="stagger"].is-armed {
+  opacity: 1;
+}
+.cm-page [data-reveal="stagger"] > * {
+  --stagger: calc(var(--i, 0) * 75ms);
+}
+.cm-page [data-reveal="stagger"].is-armed > *,
+.cm-page [data-reveal="stagger"].is-armed > ul > li {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.cm-page [data-reveal="stagger"].is-in > *,
+.cm-page [data-reveal="stagger"].is-in > ul > li {
+  transition:
+    opacity var(--motion-panel) var(--ease-enter) var(--stagger, 0ms),
+    transform var(--motion-panel) var(--ease-enter) var(--stagger, 0ms);
+}
+.cm-page [data-reveal="stagger"] > ul > li {
+  --stagger: calc(var(--i, 0) * 60ms);
+}
+/* J. "Opposing Panels": from slight opposite sides. */
+.cm-page [data-reveal="oppose"].is-armed {
+  opacity: 1;
+}
+.cm-page [data-reveal="oppose"].is-armed > * {
+  opacity: 0;
+}
+.cm-page [data-reveal="oppose"].is-armed > :first-child {
+  transform: translateX(-14px);
+}
+.cm-page [data-reveal="oppose"].is-armed > :last-child {
+  transform: translateX(14px);
+}
+.cm-page [data-reveal="oppose"].is-in > * {
+  transition:
+    opacity 380ms var(--ease-enter),
+    transform 380ms var(--ease-enter);
+}
+.cm-page [data-reveal="oppose"].is-in > :last-child {
+  transition-delay: 70ms;
+}
+/* K. "Impact Settle": 0.99 to 1, and the edge lights once. */
+.cm-page [data-reveal="impact"].is-armed {
+  transform: scale(0.99);
+}
+.cm-page [data-reveal="impact"].is-armed::after {
+  transform: scaleX(0);
+}
+.cm-page [data-reveal="impact"].is-in {
+  transition-duration: 400ms;
+}
+.cm-page [data-reveal="impact"].is-in::after {
+  transition: transform 520ms var(--ease-enter) 120ms;
+}
+/* L. "Ledger Reveal": rails draw, then the figures settle. */
+.cm-page [data-reveal="ledger"].is-armed {
+  opacity: 1;
+}
+.cm-page [data-reveal="ledger"].is-armed .cm-ledger-rail::after {
+  transform: scaleX(0);
+}
+.cm-page [data-reveal="ledger"].is-armed .cm-ledger-side > p {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.cm-page [data-reveal="ledger"].is-in .cm-ledger-rail::after {
+  transition: transform 350ms var(--ease-enter);
+}
+.cm-page [data-reveal="ledger"].is-in .cm-ledger-side > p {
+  transition:
+    opacity 350ms var(--ease-enter) 150ms,
+    transform 350ms var(--ease-enter) 150ms;
+}
+/* "Timeline Lock": the one indicator slides to its mark. */
+.cm-page [data-reveal="lock"].is-armed .cm-timeline-bar > span {
+  transform: translateX(-12px) rotate(45deg);
+  opacity: 0;
+}
+.cm-page [data-reveal="lock"].is-in .cm-timeline-bar > span {
+  transition:
+    transform 420ms var(--ease-enter) 120ms,
+    opacity 420ms var(--ease-enter) 120ms;
+}
+
+/* ---- Narrow screens ------------------------------------------------------ */
+@media (max-width: 900px) {
+  .cm-page .cm-hero-grid,
+  .cm-page .cm-playbook {
     grid-template-columns: minmax(0, 1fr);
   }
-  .bbi-noir-page .bbi-noir-blueprint-card,
-  .bbi-noir-page [data-anchor="verdict"] > div:first-child > div,
-  .bbi-noir-page [data-anchor="numbers"] .bbi-spot,
-  .bbi-noir-page [data-anchor="playbooks"] > div > div > div {
-    padding: 1.5rem;
-  }
-  .bbi-noir-page [data-anchor="resources"] > section {
-    padding: 1.2rem;
+  .cm-page .cm-hero-index {
+    margin-left: 0;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .bbi-noir-page .bbi-noir :is(a, button, .bbi-spot),
-  .bbi-noir-page [data-anchor="resources"] a {
-    transition: none;
+@media (max-width: 767px) {
+  .bbi-instrument.cm-page,
+  html.light .bbi-instrument.cm-page {
+    --cm-cut: 1.25rem;
+    --cm-notch: 0.5rem;
   }
-  .bbi-noir-page .bbi-noir :is(a, button, .bbi-spot):hover,
-  .bbi-noir-page [data-anchor="resources"] a:hover {
-    transform: none;
+  .cm-page .cm-blueprint,
+  .cm-page .cm-oppose,
+  .cm-page .cm-index {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cm-page .cm-stepped {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cm-page .cm-stepped > .cm-prose,
+  .cm-page .cm-blueprint > .cm-open-edge:last-child:nth-child(even) > .cm-prose {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .cm-page .cm-blueprint > .cm-open-edge:last-child:nth-child(even) {
+    display: block;
+  }
+  /* No room beside the copy on a phone: keep the one light pass, drop the
+     arc rather than run it behind text. */
+  .cm-page .cm-hero-horizon svg {
+    display: none;
+  }
+  /* The ledger turns on its side: the shared axis becomes a horizontal rule
+     between the two figures. */
+  .cm-page .cm-ledger {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+  .cm-page .cm-ledger-axis {
+    height: 1px;
+  }
+  .cm-page .cm-ledger-axis::before {
+    top: -4px;
+    left: 0;
+  }
+  .cm-page [data-reveal="oppose"].is-armed > :is(:first-child, :last-child) {
+    transform: translateY(10px);
+  }
+  .cm-page .cm-hero-rail {
+    margin-right: 0.75rem;
   }
 }
 
-/* White-to-muted-white display type, with a solid accessible fallback. */
-@supports (background-clip: text) {
-  .bbi-noir-page .bbi-noir-hero h1 {
-    background: linear-gradient(115deg, #ffffff 18%, #ffffff 45%, #d9bcbc 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+/* ---- Reduced motion: final state, immediate feedback --------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .cm-page :is(.cm-hero, .cm-hero-rail)::before,
+  .cm-page .cm-hero::after,
+  .cm-page .cm-enter,
+  .cm-page .cm-horizon-pass,
+  .cm-page .cm-gauge-fill,
+  .cm-page .cm-share-fan > *,
+  .cm-page [open] :is(.cm-dossier-body, .cm-faq-a),
+  .cm-page .ci-accent {
+    animation: none !important;
+  }
+  .cm-page .cm-horizon-pass {
+    display: none;
+  }
+  .cm-page :is(.cm-btn, .cm-icon-btn, .cm-deck-card, .cm-arrow, .cm-fold-face, .cm-hero-horizon) {
+    transition-property: opacity, color, background-color, border-color;
+  }
+  .cm-page :is(.cm-btn, .cm-icon-btn, .cm-deck-card):is(:hover, :focus-visible, :active) {
+    transform: none;
+  }
+  .cm-page .cm-fold:hover .cm-fold-front {
+    transform: none;
+    opacity: 0;
+  }
+  .cm-page .cm-fold:hover .cm-fold-back,
+  .cm-page .cm-fold-back {
+    transform: none;
+  }
+  .cm-page .cm-fold-back {
+    opacity: 0;
+  }
+  .cm-page .cm-fold:hover .cm-fold-back {
+    opacity: 1;
+  }
+  .cm-page .cm-fold-face {
+    transition: opacity 120ms linear;
+  }
+  @supports selector(::details-content) {
+    .cm-page :is(.cm-dossier, .cm-faq-item)::details-content {
+      transition: none;
+    }
   }
 }
+
 @media (forced-colors: active) {
-  .bbi-noir-page .bbi-noir-hero h1 {
+  .cm-page :is(.cm-h1, .cm-head h2) {
     background: none;
     -webkit-text-fill-color: currentColor;
+  }
+  .cm-page :is(.cm-hero, .cm-verdict)::before {
+    border: 1px solid CanvasText;
+    -webkit-mask: none;
+    mask: none;
+  }
+  .cm-page :is(.cm-card, .cm-side, .cm-ledger, .cm-faq-item, .cm-deck-card, .cm-signal) {
+    border: 1px solid CanvasText;
+  }
+}
+
+@media print {
+  .cm-page .is-armed,
+  .cm-page .is-armed > * {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

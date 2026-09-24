@@ -20,16 +20,19 @@ export function ValidateContextInput({
   value,
   onChange,
   disabled,
+  cinema = false,
 }: {
   value: string;
   onChange: (value: string) => void;
   disabled?: boolean;
+  /** The idea-page cinema trial's field treatment (styles.css `.cm-field`). */
+  cinema?: boolean;
 }) {
   const id = useId();
   const remaining = VALIDATE_CONTEXT_MAX_LENGTH - value.length;
 
   return (
-    <div className="glass rounded-2xl px-5 py-4">
+    <div className={cinema ? "cm-field" : "glass rounded-2xl px-5 py-4"}>
       <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
         <label htmlFor={id} className="text-sm font-semibold">
           Add your own context <span className="font-normal text-muted-foreground">(optional)</span>
@@ -47,7 +50,11 @@ export function ValidateContextInput({
         onChange={(e) => onChange(e.target.value)}
         rows={3}
         placeholder="Sharpen it with specifics: your city or target market, the budget you're starting with, skills or an edge you already have, or one angle you want stress-tested hardest."
-        className="mt-3 w-full resize-y rounded-xl border border-border/60 bg-background/30 px-3.5 py-3 text-sm leading-relaxed text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent disabled:cursor-not-allowed disabled:opacity-60"
+        className={
+          cinema
+            ? "cm-field-input mt-3 w-full resize-y"
+            : "mt-3 w-full resize-y rounded-xl border border-border/60 bg-background/30 px-3.5 py-3 text-sm leading-relaxed text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent disabled:cursor-not-allowed disabled:opacity-60"
+        }
       />
 
       <p className="mt-2 text-xs leading-relaxed text-muted-foreground">

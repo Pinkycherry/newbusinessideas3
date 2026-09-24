@@ -54,12 +54,16 @@ function PlatformButton({
   isOpening,
   disabled,
   primary = false,
+  cinema = false,
   onSelect,
 }: {
   platform: (typeof VALIDATE_PLATFORMS)[number];
   isOpening: boolean;
   disabled: boolean;
   primary?: boolean;
+  /** Cinema trial: CSS owns this button's motion, so neither the magnet nor
+   * the pill tween is attached, and the Spotlight wrapper is dropped. */
+  cinema?: boolean;
   onSelect: (id: ValidatePlatform) => void;
 }) {
   const pill = usePillInteraction<HTMLButtonElement>();
@@ -75,6 +79,20 @@ function PlatformButton({
         onPointerDown: pill.onPointerDown,
         onPointerUp: pill.onPointerUp,
       };
+
+  if (cinema) {
+    return (
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => onSelect(platform.id)}
+        className={primary ? "cm-btn cm-btn-primary bbi-bare" : "cm-btn cm-btn-secondary bbi-bare"}
+      >
+        <Icon aria-hidden className="h-5 w-5 shrink-0" />
+        <span>{isOpening ? "Opening…" : `Continue with ${platform.label}`}</span>
+      </button>
+    );
+  }
 
   return (
     <Spotlight className="inline-block rounded-full">
@@ -99,7 +117,7 @@ function PlatformButton({
 // site no longer makes — unreachable code carrying prices that contradict the
 // pricing page.
 
-export function ValidateButton({ slug }: { slug: string }) {
+export function ValidateButton({ slug, cinema = false }: { slug: string; cinema?: boolean }) {
   const ideaPath = `/idea/${slug}`;
   const auth = useAuth();
   const navigate = useNavigate();
@@ -132,7 +150,7 @@ export function ValidateButton({ slug }: { slug: string }) {
   const buttonsDisabled = auth.status === "loading" || go.isPending;
 
   return (
-    <section className="glass mt-10 rounded-3xl px-5 py-7 sm:px-8">
+    <section className={cinema ? "cm-validate" : "glass mt-10 rounded-3xl px-5 py-7 sm:px-8"}>
       <p className="t-eyebrow">Free · no extra cost, no limit</p>
       <h2 className="mt-2 font-display text-xl font-bold tracking-tight">Validate this idea</h2>
       <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
@@ -148,13 +166,19 @@ export function ValidateButton({ slug }: { slug: string }) {
             isOpening={go.isPending && activePlatform === platform.id}
             disabled={buttonsDisabled}
             primary={i === 0}
+            cinema={cinema}
             onSelect={handleSelect}
           />
         ))}
       </div>
 
       <div className="mt-5">
-        <ValidateContextInput value={context} onChange={setContext} disabled={go.isPending} />
+        <ValidateContextInput
+          value={context}
+          onChange={setContext}
+          disabled={go.isPending}
+          cinema={cinema}
+        />
       </div>
 
       {go.isError && (

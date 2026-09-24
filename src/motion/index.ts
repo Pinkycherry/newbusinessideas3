@@ -29,7 +29,11 @@ export { useDepthScene } from "./use-depth-scene";
 export type { DepthSceneOptions } from "./use-depth-scene";
 export type { GsapBundle } from "./gsap";
 
-export { PointerChannelProvider, startPointerChannel } from "./pointer-channel";
+export {
+  PointerChannelProvider,
+  startPointerChannel,
+  suspendPointerChannel,
+} from "./pointer-channel";
 export type { PointerChannelOptions } from "./pointer-channel";
 
 export { PageTransition } from "./page-transition";

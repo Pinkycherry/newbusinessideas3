@@ -3,6 +3,7 @@ import { BookOpen, Calculator, Newspaper, SpellCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import type { PageResources, ResourceLink } from "@/lib/resources.server";
+import { CinemaIcon, type CinemaIconName } from "@/components/idea-cinema/cinema-icons";
 
 /**
  * The block that closes a long page: twelve calculators, six guides, twelve
@@ -67,6 +68,14 @@ function Block({ id, heading, standfirst, Icon, tint, items, columns, render }: 
   );
 }
 
+/** Shared by both layouts below so the copy cannot drift between them. */
+const STANDFIRST = {
+  calc: "Twelve of them. Each one does arithmetic on the numbers you type and shows its working — no industry averages, no benchmarks, nothing invented.",
+  guides: "Six, drawn from the library at random — refresh for six more.",
+  glossary: "Twelve terms from the 159 defined on this site, in plain words. These rotate too.",
+  blog: "Six posts, picked fresh every time this page loads.",
+};
+
 const CARD =
   "mo-card glass glass-hover group flex h-full flex-col rounded-2xl border border-border/60 p-4 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg";
 const CARD_TITLE =
@@ -75,8 +84,17 @@ const CARD_BLURB = "mt-1.5 text-sm leading-relaxed text-muted-foreground";
 const CARD_META =
   "mt-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/80";
 
-export function ResourceHub({ resources }: { resources: PageResources | null | undefined }) {
+export function ResourceHub({
+  resources,
+  cinema = false,
+}: {
+  resources: PageResources | null | undefined;
+  /** The idea-page cinema trial's layout: the same links, rendered as an
+   * indexed rail, two editorial lists and a term register. */
+  cinema?: boolean;
+}) {
   if (!resources) return null;
+  if (cinema) return <CinemaResourceHub resources={resources} />;
   const { calculators, guides, glossary, posts } = resources;
   if (
     calculators.length === 0 &&
@@ -98,7 +116,7 @@ export function ResourceHub({ resources }: { resources: PageResources | null | u
       <Block
         id="rh-calculators"
         heading="Free startup calculators"
-        standfirst="Twelve of them. Each one does arithmetic on the numbers you type and shows its working — no industry averages, no benchmarks, nothing invented."
+        standfirst={STANDFIRST.calc}
         Icon={Calculator}
         tint="--hl-green"
         items={calculators}
@@ -116,7 +134,7 @@ export function ResourceHub({ resources }: { resources: PageResources | null | u
       <Block
         id="rh-guides"
         heading="Startup guides"
-        standfirst="Six, drawn from the library at random — refresh for six more."
+        standfirst={STANDFIRST.guides}
         Icon={BookOpen}
         tint="--hl-teal"
         items={guides}
@@ -135,7 +153,7 @@ export function ResourceHub({ resources }: { resources: PageResources | null | u
       <Block
         id="rh-glossary"
         heading="Startup glossary"
-        standfirst="Twelve terms from the 159 defined on this site, in plain words. These rotate too."
+        standfirst={STANDFIRST.glossary}
         Icon={SpellCheck}
         tint="--hl-gold"
         items={glossary}
@@ -154,7 +172,7 @@ export function ResourceHub({ resources }: { resources: PageResources | null | u
       <Block
         id="rh-blog"
         heading="From the blog"
-        standfirst="Six posts, picked fresh every time this page loads."
+        standfirst={STANDFIRST.blog}
         Icon={Newspaper}
         tint="--hl-coral"
         items={posts}
@@ -169,6 +187,155 @@ export function ResourceHub({ resources }: { resources: PageResources | null | u
           </li>
         )}
       />
+    </div>
+  );
+}
+
+/* ---- Cinema trial layout -------------------------------------------------
+   Same four lists, same links and copy as above. Only the shapes change:
+   calculators become a numbered "Indexed Rail", guides and blog posts an
+   "Editorial" list, glossary terms a dense "Term Register". Rendered only
+   when SiteShell's `visualTrial` is on. */
+
+function CinemaBlock({
+  id,
+  heading,
+  standfirst,
+  icon,
+  children,
+}: {
+  id: string;
+  heading: string;
+  standfirst: string;
+  icon: CinemaIconName;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="cm-hub-block" aria-labelledby={id} data-reveal="rise">
+      <div className="cm-hub-head">
+        <span className="cm-plate cm-plate-sm" aria-hidden="true">
+          <CinemaIcon name={icon} size={20} />
+        </span>
+        <div className="min-w-0">
+          <h2 id={id}>{heading}</h2>
+          <p>{standfirst}</p>
+        </div>
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function CinemaResourceHub({ resources }: { resources: PageResources }) {
+  const { calculators, guides, glossary, posts } = resources;
+  if (
+    calculators.length === 0 &&
+    guides.length === 0 &&
+    glossary.length === 0 &&
+    posts.length === 0
+  ) {
+    return null;
+  }
+  return (
+    <div className="cm-hub" data-anchor="resources" data-anchor-label="Free tools">
+      <p className="cm-eyebrow">Everything below is free. No sign-in, no credits.</p>
+      {calculators.length > 0 && (
+        <CinemaBlock
+          id="rh-calculators"
+          heading="Free startup calculators"
+          standfirst={STANDFIRST.calc}
+          icon="calculator"
+        >
+          <ol className="cm-index">
+            {calculators.map((item, i) => (
+              <li key={item.slug}>
+                <Link
+                  to="/calculator/$slug"
+                  params={{ slug: item.slug }}
+                  className="cm-index-row cm-trace"
+                >
+                  <span className="cm-index-num" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="cm-index-text">
+                    <span className="cm-index-title">{item.label}</span>
+                    {item.blurb && <span className="cm-index-blurb">{item.blurb}</span>}
+                  </span>
+                  <CinemaIcon name="arrow" size={18} className="cm-arrow" />
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </CinemaBlock>
+      )}
+      {guides.length > 0 && (
+        <CinemaBlock
+          id="rh-guides"
+          heading="Startup guides"
+          standfirst={STANDFIRST.guides}
+          icon="guide"
+        >
+          <ul className="cm-editorial">
+            {guides.map((item) => (
+              <li key={item.slug}>
+                <Link
+                  to="/startup-guides/$slug"
+                  params={{ slug: item.slug }}
+                  className="cm-editorial-item cm-trace"
+                >
+                  {item.meta && <span className="cm-editorial-meta">{item.meta}</span>}
+                  <span className="cm-editorial-title">{item.label}</span>
+                  {item.blurb && <span className="cm-editorial-blurb">{item.blurb}</span>}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </CinemaBlock>
+      )}
+      {glossary.length > 0 && (
+        <CinemaBlock
+          id="rh-glossary"
+          heading="Startup glossary"
+          standfirst={STANDFIRST.glossary}
+          icon="glossary"
+        >
+          <ul className="cm-register">
+            {glossary.map((item) => (
+              <li key={item.slug}>
+                <Link to="/founder-glossary" hash={item.slug} className="cm-register-row">
+                  <span className="cm-register-term">{item.label}</span>
+                  {item.blurb && <span className="cm-register-def">{item.blurb}</span>}
+                  {item.meta && <span className="cm-register-meta">{item.meta}</span>}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </CinemaBlock>
+      )}
+      {posts.length > 0 && (
+        <CinemaBlock
+          id="rh-blog"
+          heading="From the blog"
+          standfirst={STANDFIRST.blog}
+          icon="journal"
+        >
+          <ul className="cm-editorial">
+            {posts.map((item) => (
+              <li key={item.slug}>
+                <Link
+                  to="/blog/$slug"
+                  params={{ slug: item.slug }}
+                  className="cm-editorial-item cm-trace"
+                >
+                  {item.meta && <span className="cm-editorial-meta">{item.meta}</span>}
+                  <span className="cm-editorial-title">{item.label}</span>
+                  {item.blurb && <span className="cm-editorial-blurb">{item.blurb}</span>}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </CinemaBlock>
+      )}
     </div>
   );
 }

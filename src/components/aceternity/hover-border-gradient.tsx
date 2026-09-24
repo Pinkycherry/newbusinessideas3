@@ -11,6 +11,7 @@ const SWEEP: Record<"TOP" | "RIGHT" | "BOTTOM" | "LEFT", string> = {
   LEFT: "radial-gradient(40% 90% at 0% 50%, var(--primary) 0%, transparent 100%)",
 };
 const ORDER = ["TOP", "RIGHT", "BOTTOM", "LEFT"] as const;
+const STILL_RULE = "radial-gradient(120% 120% at 50% 50%, var(--border) 0%, var(--border) 100%)";
 
 /**
  * HoverBorderGradient — Aceternity UI, ported to this stack.
@@ -27,11 +28,16 @@ export default function HoverBorderGradient({
   containerClassName,
   asChild = false,
   duration = 1.1,
+  still = false,
   ...rest
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
   containerClassName?: string;
   asChild?: boolean;
   duration?: number;
+  /** A static rule instead of the travelling band: no interval, and framer
+   * only animates on an actual hover. Used by the idea-page cinema trial,
+   * where the band kept framer's frame loop running on every idle frame. */
+  still?: boolean;
 }) {
   const [hovered, setHovered] = React.useState(false);
   const faceRef = React.useRef<HTMLButtonElement | null>(null);
@@ -55,7 +61,7 @@ export default function HoverBorderGradient({
   const Comp = asChild ? Slot : "button";
 
   React.useEffect(() => {
-    if (hovered) return;
+    if (hovered || still) return;
     const timer = window.setInterval(() => {
       setEdge((current) => {
         const next = ORDER[(ORDER.indexOf(current) + 1) % ORDER.length];
@@ -63,7 +69,7 @@ export default function HoverBorderGradient({
       });
     }, duration * 1000);
     return () => window.clearInterval(timer);
-  }, [duration, hovered]);
+  }, [duration, hovered, still]);
 
   return (
     <span
@@ -74,13 +80,17 @@ export default function HoverBorderGradient({
       <motion.span
         aria-hidden
         className="pointer-events-none absolute inset-0 z-0"
-        initial={{ background: SWEEP.TOP }}
+        initial={{ background: still ? STILL_RULE : SWEEP.TOP }}
         animate={{
           background: hovered
             ? "radial-gradient(120% 120% at 50% 50%, var(--primary) 0%, var(--primary) 100%)"
-            : SWEEP[edge],
+            : still
+              ? STILL_RULE
+              : SWEEP[edge],
         }}
-        transition={{ duration, ease: "linear" }}
+        transition={
+          still ? { duration: 0.2, ease: [0.22, 1, 0.36, 1] } : { duration, ease: "linear" }
+        }
       />
       <Comp
         className={cn(

@@ -141,6 +141,37 @@ export function startPointerChannel(options: PointerChannelOptions = {}): () => 
 }
 
 /**
+ * Pages that own their own motion can switch the channel off while they are
+ * mounted. The idea-page cinema trial does, because every pointer frame here
+ * writes custom properties on :root, and a custom property on :root
+ * invalidates style for the whole document: measured on the trial page as a
+ * full-document style recalc on every pointer frame, with nothing on that
+ * page reading the values. Other pages are unaffected: nothing suspends the
+ * channel unless it asks to.
+ *
+ * Returns the release function. The channel restarts when the last suspender
+ * releases it.
+ */
+let suspendCount = 0;
+let stopActive: (() => void) | null = null;
+let restartActive: (() => void) | null = null;
+
+export function suspendPointerChannel(): () => void {
+  suspendCount += 1;
+  if (suspendCount === 1) {
+    stopActive?.();
+    stopActive = null;
+  }
+  let released = false;
+  return () => {
+    if (released) return;
+    released = true;
+    suspendCount -= 1;
+    if (suspendCount === 0) restartActive?.();
+  };
+}
+
+/**
  * Mount once, as high in the tree as possible (root route layout). Renders its
  * children untouched and adds no DOM of its own.
  */
@@ -149,16 +180,24 @@ export function PointerChannelProvider({
   ...options
 }: PointerChannelOptions & { children?: ReactNode }) {
   const { pointerVelocityScale, scrollVelocityScale } = options;
-  useEffect(
-    () =>
+  useEffect(() => {
+    const start = () => {
+      if (suspendCount > 0 || stopActive) return;
       // Built conditionally rather than spread wholesale: the repo runs
       // `exactOptionalPropertyTypes`, so an explicit `undefined` is not the
       // same as an absent optional property.
-      startPointerChannel({
+      stopActive = startPointerChannel({
         ...(pointerVelocityScale === undefined ? {} : { pointerVelocityScale }),
         ...(scrollVelocityScale === undefined ? {} : { scrollVelocityScale }),
-      }),
-    [pointerVelocityScale, scrollVelocityScale],
-  );
+      });
+    };
+    restartActive = start;
+    start();
+    return () => {
+      restartActive = null;
+      stopActive?.();
+      stopActive = null;
+    };
+  }, [pointerVelocityScale, scrollVelocityScale]);
   return <>{children}</>;
 }

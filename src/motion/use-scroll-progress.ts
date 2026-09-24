@@ -127,9 +127,14 @@ export function useScrollProgress<T extends HTMLElement = HTMLElement>(
  * Page-level scroll progress: publishes `--page-p` (0 -> 1) on :root for the
  * whole document. Useful for a reading-progress bar without a scroll listener
  * of its own.
+ *
+ * Passing `false` skips it entirely. The idea-page cinema trial draws its
+ * reading rail with a CSS scroll timeline instead, because a custom property
+ * written on :root every scroll frame restyles the whole document.
  */
-export function usePageScrollProgress() {
+export function usePageScrollProgress(enabled = true) {
   useEffect(() => {
+    if (!enabled) return;
     if (typeof window === "undefined") return;
     const root = document.documentElement;
     if (prefersReducedMotion()) {
@@ -158,5 +163,5 @@ export function usePageScrollProgress() {
       window.removeEventListener("resize", onScroll);
       root.style.removeProperty("--page-p");
     };
-  }, []);
+  }, [enabled]);
 }

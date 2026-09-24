@@ -6,20 +6,9 @@ import { queryOptions } from "@tanstack/react-query";
 // belonged to `KeepExploringRail`, which ResourceHub replaced at the foot of
 // this page; leaving the imports behind would keep pulling them into the
 // idea-page chunk for nothing.
-import {
-  Lock,
-  Lightbulb,
-  Users,
-  Wallet,
-  Shield,
-  Rocket,
-  Wrench,
-  Clock,
-  Check,
-  X,
-  type LucideIcon,
-} from "lucide-react";
-import { IdeaTrialHero, TrialIcon } from "@/components/idea-visual-trial";
+import { Lightbulb, Users, Wallet, Shield, type LucideIcon } from "lucide-react";
+import { IdeaCinemaPage } from "@/components/idea-cinema/idea-cinema";
+import { InternalLinkLine, IdeaSignature, LockedBody } from "@/components/idea-blocks";
 import type { CSSProperties, ReactNode } from "react";
 
 import { IdeaCard } from "@/components/idea-card";
@@ -59,6 +48,22 @@ type IdeaDetailData = {
   variant: IdeaVariant;
   gradient: IdeaGradient;
 } | null;
+
+/**
+ * The cinema trial's allowlist. Only these two existing slugs render through
+ * IdeaCinemaPage; every other idea keeps the standard template below, and no
+ * shared style changes for them. Delete a slug to revert that page.
+ */
+const CINEMA_TRIAL_SLUGS: readonly string[] = [
+  "solar-fencing-business-for-farms",
+  "part-time-podcast-guest-pitch-writing-business",
+];
+
+/** The two Poppins weights the trial's first screen paints with. */
+const CINEMA_FONT_PRELOADS = [
+  "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecg.woff2",
+  "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2",
+];
 
 type ContextualLink = { key: string; label: string; to: string; params: Record<string, string> };
 
@@ -175,7 +180,17 @@ export const Route = createFileRoute("/idea/$slug")({
     // the same pattern a blog's tag pages use, not duplicate content, and it
     // beats the blank preview this page rendered until now.
     const image = idea ? categoryImage(idea.categorySlug) : null;
+    const cinema = idea ? CINEMA_TRIAL_SLUGS.includes(idea.slug) : false;
     return {
+      links: cinema
+        ? CINEMA_FONT_PRELOADS.map((href) => ({
+            rel: "preload",
+            as: "font",
+            type: "font/woff2",
+            href,
+            crossOrigin: "anonymous" as const,
+          }))
+        : [],
       meta: [
         { title },
         { name: "description", content: description },
@@ -290,13 +305,7 @@ function DemandBlock({ score }: { score: number | null }) {
  * position instead (0 as it enters the viewport, 1 as it leaves) — same
  * crossfade, zero reserved dead space, page keeps its real length.
  */
-function ComputedVerdictPanel({
-  idea,
-  visualTrial = false,
-}: {
-  idea: IdeaDetail;
-  visualTrial?: boolean;
-}) {
+function ComputedVerdictPanel({ idea }: { idea: IdeaDetail }) {
   const stageRef = useScrollProgress<HTMLElement>({ mode: "unpinned" });
 
   return (
@@ -308,7 +317,6 @@ function ComputedVerdictPanel({
     >
       <div className="grid grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-4">
         <div>
-          {visualTrial && <TrialIcon icon={Check} />}
           <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-hl-green sm:text-lg">
             Why it works
           </h2>
@@ -324,7 +332,6 @@ function ComputedVerdictPanel({
           </ul>
         </div>
         <div>
-          {visualTrial && <TrialIcon icon={X} />}
           <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-hl-coral sm:text-lg">
             What will hurt
           </h2>
@@ -344,15 +351,11 @@ function ComputedVerdictPanel({
       {idea.verdict && (
         <div
           className="mt-6 border-t border-primary/30 pt-5"
-          style={
-            visualTrial
-              ? undefined
-              : {
-                  opacity: "clamp(0, calc((var(--sc-p, 1) - 0.55) * 4), 1)",
-                  transform:
-                    "translateY(calc((1 - clamp(0, calc((var(--sc-p, 1) - 0.55) * 4), 1)) * 10px))",
-                }
-          }
+          style={{
+            opacity: "clamp(0, calc((var(--sc-p, 1) - 0.55) * 4), 1)",
+            transform:
+              "translateY(calc((1 - clamp(0, calc((var(--sc-p, 1) - 0.55) * 4), 1)) * 10px))",
+          }}
         >
           <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-primary sm:text-lg">
             Verdict
@@ -382,13 +385,7 @@ type BlueprintEntry = {
  * primary tokens (never the reference's raw red-100/blue-100/etc.) so this reads as
  * part of the same design system as everything else on the page.
  */
-function BlueprintCards({
-  entries,
-  visualTrial = false,
-}: {
-  entries: BlueprintEntry[];
-  visualTrial?: boolean;
-}) {
+function BlueprintCards({ entries }: { entries: BlueprintEntry[] }) {
   const items = entries.filter((entry): entry is BlueprintEntry & { body: string } =>
     Boolean(entry.body),
   );
@@ -404,31 +401,10 @@ function BlueprintCards({
   if (items.length === 0) return null;
 
   return (
-    <div
-      ref={rowsRef}
-      className={`mt-6 grid gap-6${visualTrial ? " bbi-noir-blueprint-grid" : ""}`}
-    >
+    <div ref={rowsRef} className="mt-6 grid gap-6">
       {items.map((item, i) => {
         const Icon = item.Icon;
         const reversed = i % 2 === 1;
-        if (visualTrial)
-          return (
-            <section
-              key={item.title}
-              className={`bbi-noir-blueprint-card${i === 0 ? " bbi-noir-featured" : ""}`}
-            >
-              <div className="bbi-noir-card-top">
-                <TrialIcon icon={Icon} />
-                <span className="bbi-noir-card-index">0{i + 1}</span>
-              </div>
-              <h3>{item.title}</h3>
-              <div>
-                {toParagraphs(item.body).map((paragraph) => (
-                  <p key={paragraph.slice(0, 48)}>{paragraph}</p>
-                ))}
-              </div>
-            </section>
-          );
         return (
           <div
             key={item.title}
@@ -489,31 +465,6 @@ function BlueprintCards({
 }
 
 /**
- * One inline internal link, as a natural sentence rather than a card or a
- * bolted-on "related" rail. `link.anchor` must be an exact substring of
- * `link.sentence` (enforced by toObjectList's picker in ideas-shared.ts) —
- * that phrase becomes the link, the rest stays plain text. Saffron/yellow
- * styling lives in styles.css under `.bbi-inline-link`, the one deliberate
- * exception to this page's five-value greyscale rule.
- */
-function InternalLinkLine({ link }: { link: InternalLink | undefined }) {
-  if (!link) return null;
-  const i = link.sentence.indexOf(link.anchor);
-  if (i === -1) return null;
-  const before = link.sentence.slice(0, i);
-  const after = link.sentence.slice(i + link.anchor.length);
-  return (
-    <p className={`mt-5 ${BODY_PROSE}`}>
-      {before}
-      <Link to="/idea/$slug" params={{ slug: link.slug }} className="bbi-inline-link">
-        {link.anchor}
-      </Link>
-      {after}
-    </p>
-  );
-}
-
-/**
  * The "friend talking to a friend" section: plain Indian-English, motivating,
  * not a corporate recommendation block. Two inline links woven into two
  * short sentences, styled the same saffron/yellow as the other inline links.
@@ -565,23 +516,6 @@ function RichSection({ title, body }: { title: string; body: string }) {
 }
 
 /**
- * PROJECT_BRIEF.md Section 3.3 (2026-09-16) — the FOMO model. These panels
- * are never unlocked on our own page, for anyone, at any tier: not by
- * signing in, not by paying. The real researched content still renders in
- * the DOM underneath the blur — this is a visual tease, not cloaking, and a
- * search crawler reads the same real text a human can't make out — a CSS
- * filter is the only thing between a reader and it. The only way to
- * actually read it is the Validate button below: paying unlocks that
- * button, which sends this exact content, server-side, into the reader's
- * own chosen LLM. It is never unblurred here.
- */
-// TEMPORARY — founder asked to see every section unblurred while reviewing
-// layout and content gaps against Supabase. Flip back to `true` to restore
-// the permanent lock from PROJECT_BRIEF.md Section 3.3. Nothing else about
-// LockedSection changes: same sections, same structure, blur switched off.
-const LOCK_ENABLED = false;
-
-/**
  * The page's type scale, declared once.
  *
  * Every section heading on this template was `text-sm` (14px) uppercase and
@@ -610,38 +544,6 @@ const SECTION_HEADING =
 const BODY_PROSE = "text-[1.0625rem] leading-[1.8] sm:text-lg";
 const CARD_PROSE = "text-[1.0625rem] leading-[1.75]";
 
-/**
- * The signature that closes every blueprint.
- *
- * One name now, not four lines. The founder asked for the block trimmed to
- * the person who is actually accountable for the page, and that is the one
- * claim worth making: he researches and signs off every blueprint.
- *
- * The name is a link, and it is the SAME destination the page's JSON-LD
- * author already resolves to (`personUrl()` in schema.tsx) — a byline whose
- * visible link and machine-readable `author.url` disagree is a worse signal
- * than either alone. `FOUNDER.name` and the profile both come from
- * site-config, so the name here can never drift from the name on /founders.
- */
-function IdeaSignature() {
-  const profile = founderProfile(FOUNDER.name);
-  return (
-    <section className="mt-12 border-t border-border pt-6 text-sm leading-relaxed text-muted-foreground motion-safe:animate-none">
-      <p>
-        Researched and signed off by{" "}
-        <Link
-          to="/founders"
-          hash={profile.slug}
-          className="font-semibold text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary"
-        >
-          {FOUNDER.name}
-        </Link>
-        .
-      </p>
-    </section>
-  );
-}
-
 function LockedSection({
   title,
   anchorId,
@@ -664,26 +566,7 @@ function LockedSection({
         Premium research
       </p>
       <h2 className="mt-1.5 text-2xl font-bold tracking-tight sm:text-3xl">{title}</h2>
-      <div className="relative mt-4">
-        <div
-          aria-hidden={LOCK_ENABLED}
-          className={LOCK_ENABLED ? "pointer-events-none select-none blur-sm" : undefined}
-        >
-          {children}
-        </div>
-        {LOCK_ENABLED && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-background/70 px-4 text-center">
-            <Lock className="h-5 w-5 text-accent" aria-hidden />
-            <p className="text-sm font-semibold">This is what the Validate button unlocks</p>
-            <a
-              href="#validate"
-              className="text-xs font-semibold uppercase tracking-widest text-primary underline decoration-border underline-offset-4 hover:text-accent"
-            >
-              See how to unlock it ↓
-            </a>
-          </div>
-        )}
-      </div>
+      <LockedBody>{children}</LockedBody>
     </section>
   );
 }
@@ -716,12 +599,10 @@ function IdeaPage() {
   if (!data) return null;
   const { idea, related, relatedCategories, trending, variant, gradient } = data;
 
-  // The complete visual experiment is opt-in, including SiteShell resources.
-  // Remove a slug here to return that page to its original presentation.
-  const isVisualTrial = [
-    "part-time-podcast-guest-pitch-writing-business",
-    "solar-fencing-business-for-farms",
-  ].includes(idea.slug);
+  // The cinema trial is opt-in by slug, including its SiteShell treatment.
+  // Remove a slug from CINEMA_TRIAL_SLUGS to return that page to the
+  // standard presentation below.
+  const isVisualTrial = CINEMA_TRIAL_SLUGS.includes(idea.slug);
 
   const showSidebarList = related.length > 3;
   // The aside's only real content. When it is empty the grid drops to one
@@ -762,22 +643,45 @@ function IdeaPage() {
     { name: idea.title, path: ideaPath },
   ];
 
+  // One JSON-LD block for both presentations: the trial changes how the page
+  // looks, never what it declares.
+  const structuredData = (
+    <JsonLd
+      schema={[
+        articleSchema({
+          path: ideaPath,
+          headline: idea.title,
+          description: idea.businessDescription || idea.summary,
+          datePublished: idea.createdAt,
+          categoryName: idea.categoryName,
+          image: categoryFeatured.src,
+        }),
+        breadcrumbSchema(breadcrumbItems),
+      ]}
+    />
+  );
+
+  if (isVisualTrial) {
+    return (
+      <>
+        {structuredData}
+        <SiteShell tone="instrument" visualTrial>
+          <IdeaCinemaPage
+            idea={idea}
+            related={related}
+            trending={trending}
+            relatedCategories={relatedCategories}
+            contextualLinks={contextualLinks}
+          />
+        </SiteShell>
+      </>
+    );
+  }
+
   return (
     <>
-      <JsonLd
-        schema={[
-          articleSchema({
-            path: ideaPath,
-            headline: idea.title,
-            description: idea.businessDescription || idea.summary,
-            datePublished: idea.createdAt,
-            categoryName: idea.categoryName,
-            image: categoryFeatured.src,
-          }),
-          breadcrumbSchema(breadcrumbItems),
-        ]}
-      />
-      <SiteShell tone="instrument" visualTrial={isVisualTrial}>
+      {structuredData}
+      <SiteShell tone="instrument">
         <div
           ref={mastheadRef}
           // Was `max-w-6xl` -- the same cap the header's own nav card
@@ -796,35 +700,26 @@ function IdeaPage() {
           // instead of stretching into empty space on wide and ultra-wide
           // monitors alike.
           /* max-w-6xl, matching the header and the other thirty-six pages.
-             This was max-w-[100rem] — 1600px against a 1152px header — so the
-             article started well left of the wordmark above it on any wide
-             screen, and the large lg/xl/2xl paddings existed only to tame that
-             box. The second column is conditional now: it holds an ad slot
-             that renders nothing until ad code is configured, and a related
-             list that only appears when there are more than three, so most
-             ideas were reserving 20rem of empty gutter and pushing the article
-             a further 10rem off centre. */
+           This was max-w-[100rem] — 1600px against a 1152px header — so the
+           article started well left of the wordmark above it on any wide
+           screen, and the large lg/xl/2xl paddings existed only to tame that
+           box. The second column is conditional now: it holds an ad slot
+           that renders nothing until ad code is configured, and a related
+           list that only appears when there are more than three, so most
+           ideas were reserving 20rem of empty gutter and pushing the article
+           a further 10rem off centre. */
           className={`cx-scene mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 ${
             hasSidebar ? "lg:grid-cols-[minmax(0,1fr)_20rem]" : ""
-          } ${
-            // TRIAL 2026-09-24 (see styles.css "TRIAL: smoother card
-            // geometry" + "TRIAL, round 2"): rounder corners, saffron
-            // hover-lift and a tinted background glow across every panel on
-            // these two pages only, so the founder can compare against
-            // reference screenshots before deciding whether to roll it out.
-            // Removing this ternary (or a slug from the list) reverts
-            // instantly, page by page.
-            isVisualTrial ? "bbi-card-smooth bbi-noir" : ""
           }`}
         >
           {/* No `cx-layer` here on purpose: the sticky right-column aside
-              below is a `position: sticky` element, and a `transform` on any
-              ancestor of a sticky element breaks its stickiness (it stops
-              tracking scroll and renders wherever it first computed,
-              disconnected from its matching content). The pointer-parallax
-              this cost was imperceptible anyway -- its scroll term only fires
-              when something sets `--sc-p` on this element, which nothing
-              here does. */}
+            below is a `position: sticky` element, and a `transform` on any
+            ancestor of a sticky element breaks its stickiness (it stops
+            tracking scroll and renders wherever it first computed,
+            disconnected from its matching content). The pointer-parallax
+            this cost was imperceptible anyway -- its scroll term only fires
+            when something sets `--sc-p` on this element, which nothing
+            here does. */}
           <article className="idea-shell min-w-0" data-variant={variant} data-gradient={gradient}>
             {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
             <Breadcrumbs
@@ -848,118 +743,114 @@ function IdeaPage() {
             />
 
             {/* Section 6.1 item 1 — hero, built as a Live Surface status bar rather
-                than a marketing banner: the blueprint's own computed state,
-                already in view, no separate title treatment or CTA pill layered
-                on top of it (uniqueness.md §2.3 bans marketing chrome here — the
-                "validate" action lives at the page's actual close instead). The
-                wrapper classes let the chosen layout variant genuinely restructure
-                this block (see styles.css). */}
-            {isVisualTrial ? (
-              <IdeaTrialHero idea={idea} />
-            ) : (
-              <div className="idea-hero mt-5" data-anchor="top" data-anchor-label="Top">
-                <div className="min-w-0">
-                  <div className="idea-hero-meta flex flex-wrap items-center gap-3 text-xs uppercase tracking-widest">
-                    <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-secondary-foreground">
-                      {idea.ideaId}
-                    </span>
-                    {/* The category's own featured image, small, riding along
-                      next to its name -- the same image the category page
-                      runs as a full hero. Decorative here (the text right
-                      next to it already names the category), so alt is
-                      empty rather than repeating that description across
-                      every idea in the category: the full alt text already
-                      does its SEO job once, on the category page itself. */}
-                    <span className="mo-media relative h-6 w-6 shrink-0 overflow-hidden rounded-full border border-border">
-                      <img
-                        ref={hideImgIfBroken}
-                        src={categoryFeatured.src}
-                        alt=""
-                        aria-hidden="true"
-                        width={24}
-                        height={24}
-                        loading="lazy"
-                        decoding="async"
-                        className="absolute inset-0 h-full w-full object-cover"
-                      />
-                    </span>
-                    <span className="text-accent">{idea.categoryName}</span>
-                    <span className="text-muted-foreground">/</span>
-                    <span className="text-muted-foreground">{idea.subcategoryName}</span>
-                  </div>
-
-                  <h1
-                    ref={titleRef}
-                    className="mt-3 text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
-                  >
-                    {idea.title}
-                  </h1>
-                  <p className="mt-4 text-lg leading-relaxed text-muted-foreground sm:text-xl">
-                    {idea.businessDescription}
-                  </p>
-
-                  <div className="mt-5">
-                    {/* Deterministic on server and client (pure function of the
-                      known idea path) — the previous `window.location.href`
-                      branch rendered "" server-side and the real URL
-                      client-side, a guaranteed hydration mismatch on every
-                      idea page. React answering that mismatch by re-rendering
-                      the subtree is what silently stripped the `.revealed`
-                      class SiteTextMotion had already added to headings
-                      already in view at load, leaving them stuck invisible. */}
-                    <ShareLinks url={absoluteUrl(ideaPath)} title={idea.title} />
-                  </div>
+              than a marketing banner: the blueprint's own computed state,
+              already in view, no separate title treatment or CTA pill layered
+              on top of it (uniqueness.md §2.3 bans marketing chrome here — the
+              "validate" action lives at the page's actual close instead). The
+              wrapper classes let the chosen layout variant genuinely restructure
+              this block (see styles.css). */}
+            <div className="idea-hero mt-5" data-anchor="top" data-anchor-label="Top">
+              <div className="min-w-0">
+                <div className="idea-hero-meta flex flex-wrap items-center gap-3 text-xs uppercase tracking-widest">
+                  <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-secondary-foreground">
+                    {idea.ideaId}
+                  </span>
+                  {/* The category's own featured image, small, riding along
+                    next to its name -- the same image the category page
+                    runs as a full hero. Decorative here (the text right
+                    next to it already names the category), so alt is
+                    empty rather than repeating that description across
+                    every idea in the category: the full alt text already
+                    does its SEO job once, on the category page itself. */}
+                  <span className="mo-media relative h-6 w-6 shrink-0 overflow-hidden rounded-full border border-border">
+                    <img
+                      ref={hideImgIfBroken}
+                      src={categoryFeatured.src}
+                      alt=""
+                      aria-hidden="true"
+                      width={24}
+                      height={24}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  </span>
+                  <span className="text-accent">{idea.categoryName}</span>
+                  <span className="text-muted-foreground">/</span>
+                  <span className="text-muted-foreground">{idea.subcategoryName}</span>
                 </div>
 
-                {/* A real telemetry readout, not a decorative visual: the idea's
-                  own trend_score, already computed, with the verdict's status
-                  read alongside it. */}
-                <div className="idea-hero-aside">
-                  <div className="glass rounded-2xl p-5">
-                    <dl className="sc-spec-label !text-[10px]">
-                      <div className="w-full">
-                        <dt>Momentum</dt>
-                        <dd className="!ml-0 block">
-                          {idea.trendScore !== null ? (
-                            <Odometer
-                              value={idea.trendScore}
-                              duration={1.2}
-                              className="font-mono text-4xl font-bold leading-none tabular-nums text-foreground"
-                            />
-                          ) : (
-                            <span className="font-mono text-4xl font-bold leading-none tabular-nums text-foreground">
-                              —
-                            </span>
-                          )}
-                          <span className="ml-1 text-xs text-muted-foreground">/ 100</span>
-                        </dd>
-                      </div>
-                    </dl>
-                    {idea.keywords.length > 0 && (
-                      <div className="mt-4 flex flex-wrap gap-1.5">
-                        {idea.keywords.slice(0, 3).map((k) => (
-                          <span
-                            key={k}
-                            className="rounded-full border border-border px-2 py-0.5 text-[10px] text-muted-foreground"
-                          >
-                            {k}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                <h1
+                  ref={titleRef}
+                  className="mt-3 text-4xl font-bold leading-tight tracking-tight sm:text-5xl"
+                >
+                  {idea.title}
+                </h1>
+                <p className="mt-4 text-lg leading-relaxed text-muted-foreground sm:text-xl">
+                  {idea.businessDescription}
+                </p>
+
+                <div className="mt-5">
+                  {/* Deterministic on server and client (pure function of the
+                    known idea path) — the previous `window.location.href`
+                    branch rendered "" server-side and the real URL
+                    client-side, a guaranteed hydration mismatch on every
+                    idea page. React answering that mismatch by re-rendering
+                    the subtree is what silently stripped the `.revealed`
+                    class SiteTextMotion had already added to headings
+                    already in view at load, leaving them stuck invisible. */}
+                  <ShareLinks url={absoluteUrl(ideaPath)} title={idea.title} />
                 </div>
               </div>
-            )}
+
+              {/* A real telemetry readout, not a decorative visual: the idea's
+                own trend_score, already computed, with the verdict's status
+                read alongside it. */}
+              <div className="idea-hero-aside">
+                <div className="glass rounded-2xl p-5">
+                  <dl className="sc-spec-label !text-[10px]">
+                    <div className="w-full">
+                      <dt>Momentum</dt>
+                      <dd className="!ml-0 block">
+                        {idea.trendScore !== null ? (
+                          <Odometer
+                            value={idea.trendScore}
+                            duration={1.2}
+                            className="font-mono text-4xl font-bold leading-none tabular-nums text-foreground"
+                          />
+                        ) : (
+                          <span className="font-mono text-4xl font-bold leading-none tabular-nums text-foreground">
+                            —
+                          </span>
+                        )}
+                        <span className="ml-1 text-xs text-muted-foreground">/ 100</span>
+                      </dd>
+                    </div>
+                  </dl>
+                  {idea.keywords.length > 0 && (
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {idea.keywords.slice(0, 3).map((k) => (
+                        <span
+                          key={k}
+                          className="rounded-full border border-border px-2 py-0.5 text-[10px] text-muted-foreground"
+                        >
+                          {k}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
 
             {/* The free teaser. Anyone, signed in or not, reads this.
 
-                `summary` is stored as one unbroken run of text — no row of
-                the 409 contains a newline — so this used to render as a
-                twenty-four sentence wall in a single <p>. `toParagraphs`
-                breaks it into 5-to-8-sentence paragraphs at render time
-                (src/lib/prose.ts holds the rule); nothing is added, removed
-                or reordered, and nothing is written back to Supabase. */}
+              `summary` is stored as one unbroken run of text — no row of
+              the 409 contains a newline — so this used to render as a
+              twenty-four sentence wall in a single <p>. `toParagraphs`
+              breaks it into 5-to-8-sentence paragraphs at render time
+              (src/lib/prose.ts holds the rule); nothing is added, removed
+              or reordered, and nothing is written back to Supabase. */}
             <section className="mt-10" data-anchor="breakdown" data-anchor-label="Breakdown">
               <h2 className={SECTION_HEADING}>The breakdown</h2>
               <div className={`mt-4 space-y-5 ${BODY_PROSE}`}>
@@ -971,18 +862,17 @@ function IdeaPage() {
             </section>
 
             {/* PROJECT_BRIEF.md Section 3.3 — three panels, always locked,
-                for everyone, at every tier. See LockedSection's own comment
-                for why. Each wraps an existing, unmodified component/block
-                so ComputedVerdictPanel's scroll-linked crossfade doesn't need
-                to change shape.
+              for everyone, at every tier. See LockedSection's own comment
+              for why. Each wraps an existing, unmodified component/block
+              so ComputedVerdictPanel's scroll-linked crossfade doesn't need
+              to change shape.
 
-                The four fields below used to render through StickyScroll (a
-                left-list + right-sticky-plate layout). Founder asked for
-                these four specifically in an alternating left/right "team
-                member" card style instead -- see BlueprintCards above. */}
+              The four fields below used to render through StickyScroll (a
+              left-list + right-sticky-plate layout). Founder asked for
+              these four specifically in an alternating left/right "team
+              member" card style instead -- see BlueprintCards above. */}
             <LockedSection title="The Blueprint" anchorId="blueprint" anchorLabel="The Blueprint">
               <BlueprintCards
-                visualTrial={isVisualTrial}
                 entries={[
                   {
                     title: "The opportunity",
@@ -1010,7 +900,7 @@ function IdeaPage() {
                   },
                 ]}
               />
-              <ComputedVerdictPanel idea={idea} visualTrial={isVisualTrial} />
+              <ComputedVerdictPanel idea={idea} />
             </LockedSection>
 
             <div className="mt-8">
@@ -1022,7 +912,6 @@ function IdeaPage() {
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(19rem,1fr))] gap-4">
                   {idea.startupCost && (
                     <CardSpotlight className="p-5">
-                      {isVisualTrial && <TrialIcon icon={Wallet} />}
                       <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-hl-coral sm:text-lg">
                         What it costs to start
                       </h2>
@@ -1031,7 +920,6 @@ function IdeaPage() {
                   )}
                   {idea.incomePotential && (
                     <CardSpotlight className="p-5">
-                      {isVisualTrial && <TrialIcon icon={Lightbulb} />}
                       <h2 className="text-base font-semibold uppercase tracking-[0.14em] text-hl-green sm:text-lg">
                         What you can earn
                       </h2>
@@ -1047,9 +935,9 @@ function IdeaPage() {
             </LockedSection>
 
             {/* All three of these can be empty at once: the pipeline's generic
-                steps, tools and timeline are stripped in toIdeaDetail, because
-                356 of 409 rows held the same ones byte-for-byte. Without this
-                guard the section would render as a heading over nothing. */}
+              steps, tools and timeline are stripped in toIdeaDetail, because
+              356 of 409 rows held the same ones byte-for-byte. Without this
+              guard the section would render as a heading over nothing. */}
             {idea.gettingStartedSteps.length > 0 ||
             idea.toolsNeeded.length > 0 ||
             idea.timeToFirstCustomer ? (
@@ -1060,7 +948,6 @@ function IdeaPage() {
               >
                 {idea.gettingStartedSteps.length > 0 && (
                   <div>
-                    {isVisualTrial && <TrialIcon icon={Rocket} />}
                     <h2 className={SECTION_HEADING}>How to start</h2>
                     <ol className="mt-4 space-y-3">
                       {idea.gettingStartedSteps.map((step, i) => (
@@ -1076,7 +963,6 @@ function IdeaPage() {
                 )}
                 {idea.toolsNeeded.length > 0 && (
                   <div className="mt-8">
-                    {isVisualTrial && <TrialIcon icon={Wrench} />}
                     <h2 className={SECTION_HEADING}>What you need</h2>
                     <ul className="mt-3 flex flex-wrap gap-2">
                       {idea.toolsNeeded.map((tool) => (
@@ -1092,7 +978,6 @@ function IdeaPage() {
                 )}
                 {idea.timeToFirstCustomer && (
                   <div className="mt-8">
-                    {isVisualTrial && <TrialIcon icon={Clock} />}
                     <h2 className={SECTION_HEADING}>Time to first customer</h2>
                     <p className={`mt-3 whitespace-pre-line ${BODY_PROSE}`}>
                       {idea.timeToFirstCustomer}
@@ -1103,12 +988,12 @@ function IdeaPage() {
             ) : null}
 
             {/* Outside the LockedSection on purpose: a real navigational
-                link should never sit behind the blur treatment, even
-                though LOCK_ENABLED is currently false. */}
+              link should never sit behind the blur treatment, even
+              though LOCK_ENABLED is currently false. */}
             <InternalLinkLine link={linkForPosition("playbooks")} />
 
             {/* FAQ and citations are not part of the locked research — they
-                stay free, same as the teaser above. */}
+              stay free, same as the teaser above. */}
             {faqAbove.length > 0 && (
               <section className="mt-10">
                 <h2 className={SECTION_HEADING}>Questions people ask</h2>
@@ -1242,33 +1127,33 @@ function IdeaPage() {
             </div>
 
             {/* Was two full-width <section>s stacked vertically, each holding
-                only a `max-w-xl` (36rem) stack-list -- 36rem made sense as a
-                column inside the old max-w-6xl page, but once the article
-                went full-width (see the masthead div's className below) each
-                one turned into a narrow list floating in a sea of empty
-                space beside it, one after another. Side by side in a
-                two-column row, the same two narrow lists fill a normal-width
-                row instead of each claiming (and mostly wasting) a full one.
-                `relatedCategories` moves after this row rather than between
-                the two lists, since it's a flex-wrap pill cluster that
-                already fills whatever width it's given and doesn't need a
-                column of its own. */}
+              only a `max-w-xl` (36rem) stack-list -- 36rem made sense as a
+              column inside the old max-w-6xl page, but once the article
+              went full-width (see the masthead div's className below) each
+              one turned into a narrow list floating in a sea of empty
+              space beside it, one after another. Side by side in a
+              two-column row, the same two narrow lists fill a normal-width
+              row instead of each claiming (and mostly wasting) a full one.
+              `relatedCategories` moves after this row rather than between
+              the two lists, since it's a flex-wrap pill cluster that
+              already fills whatever width it's given and doesn't need a
+              column of its own. */}
             {/* `grid-cols-1` and `[&>*]:min-w-0`: a grid item's default minimum
-                width is its content's, so on a phone the idea cards (long
-                unbroken tag rows) pushed this column to 483px on a 412px
-                screen. Everything below it was dragged sideways with it. */}
+              width is its content's, so on a phone the idea cards (long
+              unbroken tag rows) pushed this column to 483px on a 412px
+              screen. Everything below it was dragged sideways with it. */}
             {(bottomRelated.length > 0 || trending.length > 0) && (
               <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-2 [&>*]:min-w-0">
                 {bottomRelated.length > 0 && (
                   <section data-anchor="related" data-anchor-label="Related">
                     <h2 className={SECTION_HEADING}>More in {idea.categoryName}</h2>
                     {/* `.mo-card` for these cells lives on IdeaCard itself,
-                        which is the listing agent's file — this rail supplies
-                        the single delegated pointer listener the sheen reads
-                        from. `.stack-list`/`.stack-item` (motion.css) layer a
-                        CSS-only depth stack on top: a shallow perspective
-                        deck at rest, fanned into an open column on hover or
-                        keyboard focus. */}
+                      which is the listing agent's file — this rail supplies
+                      the single delegated pointer listener the sheen reads
+                      from. `.stack-list`/`.stack-item` (motion.css) layer a
+                      CSS-only depth stack on top: a shallow perspective
+                      deck at rest, fanned into an open column on hover or
+                      keyboard focus. */}
                     <ul ref={relatedRailRef} className="stack-list mt-4">
                       {bottomRelated.map((r, i) => (
                         <li
@@ -1276,7 +1161,7 @@ function IdeaPage() {
                           className="stack-item"
                           style={{ "--i": i + 1 } as CSSProperties}
                         >
-                          <IdeaCard idea={r} visualTrial={isVisualTrial} />
+                          <IdeaCard idea={r} />
                         </li>
                       ))}
                     </ul>
@@ -1287,15 +1172,15 @@ function IdeaPage() {
                   <section>
                     <h2 className={SECTION_HEADING}>Trending across the library</h2>
                     {/* `.stack-list`/`.stack-item` (motion.css) — the same
-                        CSS-only depth stack used above: a shallow perspective
-                        deck at rest, fanned into an open column on hover or
-                        keyboard focus. Was `.stack-row` with a horizontal
-                        snap-scroll strip layered under the fan — kept the old
-                        swipeable rail alive alongside the new effect, but that
-                        meant the section still scrolled sideways instead of
-                        just fanning open, which reads as broken next to the
-                        other two lists on this page. Matching them: one
-                        consistent effect, no scrollbar. */}
+                      CSS-only depth stack used above: a shallow perspective
+                      deck at rest, fanned into an open column on hover or
+                      keyboard focus. Was `.stack-row` with a horizontal
+                      snap-scroll strip layered under the fan — kept the old
+                      swipeable rail alive alongside the new effect, but that
+                      meant the section still scrolled sideways instead of
+                      just fanning open, which reads as broken next to the
+                      other two lists on this page. Matching them: one
+                      consistent effect, no scrollbar. */}
                     <ul ref={trendingRailRef} className="stack-list mt-4">
                       {trending.map((t, i) => (
                         <li
@@ -1346,10 +1231,10 @@ function IdeaPage() {
             )}
 
             {/* The page's actual close, per the Live Surface grammar: an actual
-                input the visitor puts a cursor in, not a button pointing back
-                at one. ValidateButton already opens Claude/Perplexity with a
-                real prompt and an optional free-text context field — this IS
-                the ending, not a decoration in front of it. */}
+              input the visitor puts a cursor in, not a button pointing back
+              at one. ValidateButton already opens Claude/Perplexity with a
+              real prompt and an optional free-text context field — this IS
+              the ending, not a decoration in front of it. */}
             <section
               id="validate"
               data-anchor="validate"
@@ -1372,29 +1257,29 @@ function IdeaPage() {
             </section>
 
             {/* Who stands behind the research, on the page that makes the
-                claims, rather than only on /about. The names, roles and the
-                reason the site is free are the ones already written there —
-                nothing is invented per idea, and the block is identical on
-                every blueprint by design. Deliberately quiet type and no
-                button: this signs the work, it does not sell anything. */}
+              claims, rather than only on /about. The names, roles and the
+              reason the site is free are the ones already written there —
+              nothing is invented per idea, and the block is identical on
+              every blueprint by design. Deliberately quiet type and no
+              button: this signs the work, it does not sell anything. */}
             <IdeaSignature />
             {/* EDITABLE SECTION END */}
 
             {/* The resource block that closes this page (twelve calculators, six
-                guides, twelve glossary terms, six blog posts) is rendered by
-                SiteShell now, above the footer, on every page but the
-                homepage and the policy pages. It used to be mounted here by
-                hand, which is why it appeared on three templates and not the
-                other twenty. What used to be here before that was a
-                five-card "Keep exploring" rail pointing at the same two or
-                three destinations on all 409 blueprints. */}
+              guides, twelve glossary terms, six blog posts) is rendered by
+              SiteShell now, above the footer, on every page but the
+              homepage and the policy pages. It used to be mounted here by
+              hand, which is why it appeared on three templates and not the
+              other twenty. What used to be here before that was a
+              five-card "Keep exploring" rail pointing at the same two or
+              three destinations on all 409 blueprints. */}
           </article>
 
           {/* Sticky right column — desktop only. Add or reorder blocks freely.
-              `cx-layer` sits on the sticky div itself, not this wrapper — a
-              `transform` on an ANCESTOR of a `position: sticky` element
-              breaks its stickiness, same reasoning as the article above. A
-              transform on the sticky element itself composes fine. */}
+            `cx-layer` sits on the sticky div itself, not this wrapper — a
+            `transform` on an ANCESTOR of a `position: sticky` element
+            breaks its stickiness, same reasoning as the article above. A
+            transform on the sticky element itself composes fine. */}
           {hasSidebar && (
             <aside className="hidden lg:block">
               <div
@@ -1409,9 +1294,9 @@ function IdeaPage() {
                       More in {idea.categoryName}
                     </p>
                     {/* CSS-only depth stack (motion.css: .stack-list/.stack-item) —
-                      a shallow perspective deck at rest, fans into an open
-                      column on hover or keyboard focus. --i is each item's
-                      1-based position; the deck and the fan both read off it. */}
+                    a shallow perspective deck at rest, fans into an open
+                    column on hover or keyboard focus. --i is each item's
+                    1-based position; the deck and the fan both read off it. */}
                     <ul className="stack-list mt-4">
                       {sidebarRelated.map((r, i) => (
                         <li
