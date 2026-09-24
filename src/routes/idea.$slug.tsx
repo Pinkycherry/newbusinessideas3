@@ -742,6 +742,13 @@ function IdeaPage() {
              a further 10rem off centre. */
           className={`cx-scene mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 ${
             hasSidebar ? "lg:grid-cols-[minmax(0,1fr)_20rem]" : ""
+          } ${
+            // TRIAL 2026-09-24 (see styles.css "TRIAL: smoother card
+            // geometry"): rounder corners + saffron hover-lift on this one
+            // page's cards only, so the founder can compare against
+            // reference screenshots before deciding whether to roll it out.
+            // Removing this ternary reverts the page instantly.
+            idea.slug === "part-time-podcast-guest-pitch-writing-business" ? "bbi-card-smooth" : ""
           }`}
         >
           {/* No `cx-layer` here on purpose: the sticky right-column aside
