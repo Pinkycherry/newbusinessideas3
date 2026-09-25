@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 
 /**
  * Animated FAQ accordion row. Replaces native <details>/<summary> (which the
@@ -21,12 +21,13 @@ export function AccordionItem({
   size?: "sm" | "base";
 }) {
   const [open, setOpen] = useState(false);
+  const answerId = useId();
   const questionSize = size === "base" ? "text-base sm:text-lg" : "text-sm sm:text-base";
   const answerSize = size === "base" ? "text-sm sm:text-base" : "text-sm";
   const padY = size === "base" ? "py-4" : "py-3";
 
   return (
-    <div className="bbi-faq-item">
+    <div className="bbi-faq-item" data-open={open}>
       {/* `bbi-bare` opts this row OUT of the site-wide action treatment. That
           treatment is for buttons that look like buttons: it draws a
           travelling band along the border and fills the plate white under the
@@ -37,19 +38,29 @@ export function AccordionItem({
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
+        aria-controls={answerId}
         className={`bbi-bare bbi-faq-row flex w-full cursor-pointer items-center justify-between gap-6 px-4 text-left font-semibold ${padY} ${questionSize}`}
       >
-        {question}
+        <span className="bbi-faq-question">{question}</span>
         <span
           aria-hidden
           className={`bbi-faq-mark shrink-0 transition-transform duration-300 motion-reduce:transition-none ${
             open ? "rotate-45" : ""
           }`}
         >
-          +
+          <svg viewBox="0 0 20 20" width="18" height="18" fill="none">
+            <path
+              d="M4 10h12M10 4v12"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
         </span>
       </button>
       <div
+        id={answerId}
+        aria-hidden={!open}
         className="grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none"
         style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
       >

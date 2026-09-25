@@ -1,4 +1,5 @@
 /* Homepage: crimson studio. Native scroll, CSS interaction, no canvas. */
+html.light .home-page.bbi-instrument,
 .home-page.bbi-instrument {
   --ins-void: #120404;
   --ins-face: #270a0a;
@@ -605,4 +606,213 @@ html:has(.home-page) body::after {
     border: 1px solid ButtonText;
   }
 }
-.home-page.bbi-instrument .ins-action { padding: .85rem 1.3rem !important; font-size: .875rem !important; line-height: 1.25; }
+.home-page.bbi-instrument .ins-action {
+  padding: 0.85rem 1.3rem !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25;
+}
+
+/* Final homepage polish: compact rhythm and interaction-led crimson accents. */
+.home-page main > section:not(#hero) {
+  margin-top: clamp(2rem, 4vw, 3.25rem);
+}
+.home-page main > section:is(.pb-24, .py-16) {
+  padding-bottom: 2rem;
+}
+.home-page main > section.py-16 {
+  padding-top: 1.5rem;
+}
+.home-page main > section:is(.pt-16, .pt-12) {
+  padding-top: 2rem;
+}
+.home-page main > div:empty {
+  display: none;
+}
+.home-page #golden-tree > .relative {
+  margin-top: 1.5rem;
+  padding-block: 1.25rem;
+}
+.home-page #how-it-works > ol {
+  margin-top: 1.75rem;
+}
+.home-page #how-it-works > .mt-14 {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+}
+.home-page #free-access > .mt-12 {
+  margin-top: 2rem;
+}
+.home-page .hf-toolkit > .mt-16 {
+  margin-top: 2.5rem;
+}
+.home-page footer {
+  padding-top: 2.5rem;
+}
+.home-page .bbi-built-ticker {
+  margin-top: 1rem;
+}
+
+/* FAQ / numbered disclosure. No floating cards or idle border animation. */
+.home-page div:has(> .bbi-faq-item) {
+  counter-reset: faq;
+  border-top: 1px solid #f6979740;
+}
+.home-page .bbi-faq-item {
+  position: relative;
+  counter-increment: faq;
+  border-bottom: 1px solid #f6979730;
+  transition: background-color 180ms ease;
+}
+.home-page .bbi-faq-item:last-child {
+  padding-bottom: 0;
+}
+.home-page .bbi-faq-item[data-open="true"] {
+  background: linear-gradient(100deg, #64151b55, #270a0a33 65%, transparent);
+}
+.home-page .bbi-faq-row {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr) 2rem;
+  gap: 0.9rem;
+  padding: 1.15rem 1rem;
+  min-height: 64px;
+  font-weight: 500;
+  line-height: 1.55;
+}
+.home-page .bbi-faq-row::before {
+  content: counter(faq, decimal-leading-zero);
+  position: static;
+  font-size: 0.7rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: #ff9a9a;
+}
+.home-page .bbi-faq-question {
+  transition: transform 200ms var(--home-ease);
+}
+.home-page .bbi-faq-mark {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #f08a8a55;
+  border-radius: 50%;
+  background: #270a0a;
+}
+.home-page .bbi-faq-item > .grid p {
+  padding: 0 4rem 1.4rem 3.65rem;
+  margin: 0;
+  max-width: 85ch;
+  color: #ddc2c0;
+  line-height: 1.8;
+}
+.home-page .bbi-faq-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  inset-block: 1rem;
+  width: 2px;
+  background: #ca0808;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 220ms var(--home-ease);
+  pointer-events: none;
+}
+.home-page .bbi-faq-item[data-open="true"]::after {
+  transform: scaleY(1);
+}
+html.light .home-page.bbi-instrument .bbi-faq-row,
+html.light .home-page.bbi-instrument .bbi-faq-row[aria-expanded="true"] {
+  background: transparent !important;
+  color: #fff0ee !important;
+}
+html.light .home-page.bbi-instrument .bbi-faq-row .bbi-faq-mark {
+  color: #ffadad !important;
+}
+html.light .home-page.bbi-instrument .bbi-faq-row[aria-expanded="true"] .bbi-faq-mark {
+  color: white !important;
+  background: #ca0808;
+  border-color: #f46969;
+}
+
+/* Replace legacy conic-gradient clocks with user-triggered feedback. */
+.home-page.bbi-instrument :is(button, .ac-action, .ac-tag, .glass-btn, .glass-pill) {
+  animation: none !important;
+}
+.home-page.bbi-instrument :is(.ac-tag, .glass-btn) {
+  background: #270a0a !important;
+  border-color: #ed999944 !important;
+}
+.home-page.bbi-instrument :is(.ac-tag, .glass-btn):is(:hover, :focus-visible) {
+  background: #66121a !important;
+  color: #fff !important;
+}
+.home-page .bbi-footer-link {
+  text-decoration-color: transparent;
+  text-underline-offset: 5px;
+  transition:
+    color 180ms ease,
+    text-decoration-color 180ms ease;
+}
+.home-page .bbi-footer-link:is(:hover, :focus-visible) {
+  text-decoration: underline;
+  text-decoration-color: #ff9999;
+}
+.home-page #the-difference > .grid {
+  gap: 1.5rem;
+}
+.home-page #the-difference .ins-cell {
+  background: linear-gradient(140deg, #321014, #170607);
+  border-top: 2px solid #9b333b;
+}
+@media (hover: hover) and (pointer: fine) {
+  .home-page .bbi-faq-row:hover .bbi-faq-question {
+    transform: translateX(3px);
+  }
+  html.light .home-page.bbi-instrument .bbi-faq-row:hover {
+    background: #56121855 !important;
+  }
+  .home-page .hf-guide:hover .hf-guide-open {
+    transform: translateX(4px);
+  }
+  .home-page .hf-guide-open {
+    transition: transform 220ms var(--home-ease);
+  }
+}
+@media (max-width: 767px) {
+  .home-page main > section:not(#hero) {
+    margin-top: 2rem;
+  }
+  .home-page .bbi-faq-row {
+    padding: 0.9rem 0.6rem;
+    gap: 0.55rem;
+    grid-template-columns: 1.3rem minmax(0, 1fr) 1.75rem;
+    font-size: 0.875rem;
+  }
+  .home-page .bbi-faq-mark {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  .home-page .bbi-faq-item > .grid p {
+    padding: 0 0.75rem 1rem 2.45rem;
+    font-size: 0.82rem;
+  }
+  .home-page .hf-toolkit > .mt-16 {
+    margin-top: 2rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-page
+    :is(.bbi-faq-item, .bbi-faq-item::after, .bbi-faq-question, .hf-guide-open, .bbi-footer-link) {
+    transition: none;
+  }
+  .home-page .bbi-faq-row:hover .bbi-faq-question {
+    transform: none;
+  }
+}
+@layer utilities {
+  html.light .home-page.bbi-instrument #free-access .bg-primary,
+  html.light .home-page.bbi-instrument #free-access .bg-primary * {
+    background-color: transparent !important;
+    color: #f0dfdd !important;
+  }
+}
