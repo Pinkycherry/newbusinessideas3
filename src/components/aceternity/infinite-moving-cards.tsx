@@ -1,7 +1,9 @@
 import { Link } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { useMarqueeMotion } from "@/motion/use-marquee-motion";
+import "./infinite-moving-cards.css";
 
 export type MovingItem = {
   label: string;
@@ -12,65 +14,100 @@ export type MovingItem = {
 /**
  * InfiniteMovingCards — Aceternity UI, ported to this stack.
  *
- * The row duplicates its own children once and scrolls exactly half its width,
- * so the loop is seamless no matter how many items it is given. It pauses on
- * hover and on keyboard focus, and stands completely still for readers who ask
- * for reduced motion.
+ * Two equal groups include their trailing gap, so -50% lands exactly at the
+ * next group's start. Each group repeats the set until it fills the viewport.
+ * Only the first set is exposed to keyboard and assistive technology users.
  */
 export default function InfiniteMovingCards({
   items,
   direction = "left",
   speed = 70,
   className,
+  itemClassName,
 }: {
   items: MovingItem[];
   direction?: "left" | "right";
   /** Seconds for one full pass. Lower is faster. */
   speed?: number;
   className?: string;
+  itemClassName?: string;
 }) {
   const hostRef = useMarqueeMotion();
+  const setRef = useRef<HTMLUListElement | null>(null);
+  const [repetitions, setRepetitions] = useState(1);
 
-  // A row whose items do not fill the viewport leaves a visible blank stretch
-  // at one end: translating -50% of a track narrower than the screen exposes
-  // the gap behind it. Repeat the set until one half is comfortably wider than
-  // any viewport, THEN duplicate that for the seamless loop.
-  const perHalf = Math.max(1, Math.ceil(18 / Math.max(items.length, 1)));
-  const half = Array.from({ length: perHalf }, () => items).flat();
-  const doubled = [...half, ...half];
+  useEffect(() => {
+    const host = hostRef.current;
+    const set = setRef.current;
+    if (!host || !set || !items.length) return;
+
+    const measure = () => {
+      const setWidth = set.getBoundingClientRect().width;
+      if (setWidth > 0) {
+        setRepetitions(Math.max(1, Math.ceil(host.clientWidth / setWidth)));
+      }
+    };
+    measure();
+    // Observe the original set as well as the viewport: loaded fonts, new
+    // labels and resizes can all change how many copies fill one group.
+    const observer = new ResizeObserver(measure);
+    observer.observe(host);
+    observer.observe(set);
+    return () => observer.disconnect();
+  }, [hostRef, items.length]);
 
   return (
     <div
       ref={hostRef}
       className={cn(
-        "ac-marquee group relative overflow-hidden",
+        "ac-marquee ac-pill-marquee group relative overflow-hidden",
         "[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]",
         className,
       )}
     >
-      <ul
+      <div
         data-marquee-track
-        className="ac-marquee-track flex w-max gap-3 py-1"
+        className="ac-marquee-track ac-pill-marquee-track flex w-max py-1"
         style={{
           animationPlayState: "paused",
           animationDuration: `${speed}s`,
           animationDirection: direction === "right" ? "reverse" : "normal",
         }}
       >
-        {doubled.map((item, index) => (
-          <li key={`${item.label}-${index}`} className="shrink-0">
-            <Link
-              to={item.to}
-              params={item.params}
-              aria-hidden={index >= items.length ? true : undefined}
-              tabIndex={index >= items.length ? -1 : undefined}
-              className="block whitespace-nowrap rounded-full border border-border bg-card px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary focus-visible:border-primary focus-visible:text-primary"
-            >
-              {item.label}
-            </Link>
-          </li>
+        {[0, 1].map((group) => (
+          <div key={group} className="ac-pill-marquee-group" aria-hidden={group === 1 || undefined}>
+            {Array.from({ length: repetitions }, (_, copy) => {
+              const duplicate = group > 0 || copy > 0;
+              return (
+                <ul
+                  key={copy}
+                  ref={!duplicate ? setRef : undefined}
+                  className="ac-pill-marquee-set"
+                  aria-hidden={duplicate || undefined}
+                  data-marquee-copy={duplicate || undefined}
+                >
+                  {items.map((item, index) => (
+                    <li key={`${item.label}-${index}`} className="shrink-0">
+                      <Link
+                        to={item.to}
+                        params={item.params}
+                        tabIndex={duplicate ? -1 : undefined}
+                        className={cn(
+                          "block whitespace-nowrap",
+                          itemClassName ??
+                            "rounded-full border border-border bg-card px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground transition-colors duration-200 hover:border-primary hover:text-primary focus-visible:border-primary focus-visible:text-primary",
+                        )}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              );
+            })}
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

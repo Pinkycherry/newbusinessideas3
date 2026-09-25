@@ -1,0 +1,48 @@
+/* Each set owns its trailing space; the two groups have exactly equal widths. */
+.ac-pill-marquee-group,
+.ac-pill-marquee-set {
+  display: flex;
+  flex: 0 0 auto;
+  width: max-content;
+}
+
+.ac-pill-marquee-set {
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0 0.75rem 0 0;
+  list-style: none;
+}
+
+.ac-pill-marquee:active .ac-pill-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-pill-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .ac-pill-marquee .ac-pill-marquee-track,
+  .ac-pill-marquee .ac-pill-marquee-group,
+  .ac-pill-marquee .ac-pill-marquee-set {
+    width: 100%;
+  }
+
+  .ac-pill-marquee .ac-pill-marquee-track {
+    animation: none;
+    transform: none;
+  }
+
+  .ac-pill-marquee .ac-pill-marquee-set {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-inline: 1rem;
+  }
+
+  .ac-pill-marquee-group[aria-hidden="true"],
+  .ac-pill-marquee-set[data-marquee-copy] {
+    display: none;
+  }
+}

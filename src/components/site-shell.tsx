@@ -360,10 +360,12 @@ const CINEMA_PANEL_MOTION = {
  */
 function NavDropdown({
   label,
+  centered = false,
   panelClassName = "glass-nav absolute left-0 top-full z-50 mt-3 w-64 rounded-2xl p-3",
   children,
 }: {
   label: string;
+  centered?: boolean;
   panelClassName?: string;
   children: (close: () => void) => ReactNode;
 }) {
@@ -401,7 +403,7 @@ function NavDropdown({
   return (
     <div
       ref={ref}
-      className="relative"
+      className={centered ? "bbi-nav-mega" : "relative"}
       onMouseEnter={() => isDesktop() && openNow()}
       onMouseLeave={closeSoon}
       onKeyDown={
@@ -422,7 +424,6 @@ function NavDropdown({
         aria-haspopup="menu"
         // Plain pages: keyboard focus no longer opens the menu, because
         // Enter then toggled it straight back shut. Enter or Space opens it.
-        onFocus={cinema ? undefined : () => isDesktop() && openNow()}
         onClick={() => setOpen((v) => !v)}
         className="relative flex items-center gap-1 rounded-[calc(var(--radius)-2px)] px-1.5 py-1 uppercase tracking-[0.18em] transition-colors duration-300 hover:text-foreground"
       >
@@ -479,6 +480,7 @@ function CategoryMega() {
   return (
     <NavDropdown
       label="Categories"
+      centered
       panelClassName="glass-nav absolute left-0 top-full z-50 mt-3 max-h-[70vh] w-[min(52rem,94vw)] overflow-y-auto rounded-3xl p-6"
     >
       {(close) => (
@@ -867,7 +869,7 @@ export function SiteShell({
         <div aria-hidden className="mx-auto h-px max-w-6xl overflow-hidden rounded-full bg-border">
           <div className="mo-page-rail h-full w-full bg-accent" />
         </div>
-        <div className="glass-nav mx-auto mt-2 flex max-w-6xl items-center justify-between gap-3 rounded-md border border-border px-4 py-2.5 sm:gap-5 sm:px-6 sm:py-3">
+        <div className="glass-nav bbi-nav-bar relative mx-auto mt-2 flex max-w-6xl items-center justify-between gap-3 rounded-md border border-border px-4 py-2.5 sm:gap-5 sm:px-6 sm:py-3">
           <Link
             to="/"
             onClick={() => setMobileOpen(false)}
@@ -900,7 +902,7 @@ export function SiteShell({
           </Link>
 
           <nav className="hidden shrink-0 items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground lg:flex xl:gap-4">
-            <CinemaChrome.Provider value={plain}>
+            <CinemaChrome.Provider value={true}>
               <CategoryMega />
               <LinkListDropdown label="Explore" items={EXPLORE_ITEMS} />
               <LinkListDropdown label="Company" items={COMPANY_ITEMS} />

@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import InfiniteMovingCards from "@/components/aceternity/infinite-moving-cards";
 import MovingImageCards from "@/components/aceternity/moving-image-cards";
-import { prefersReducedMotion } from "@/lib/motion";
 import type { PageResources, ResourceLink } from "@/lib/resources.server";
 import "./home-resource-showcase.css";
 
@@ -134,21 +134,8 @@ function GlossaryFlip({ term, index }: { term: ResourceLink; index: number }) {
 }
 
 export function HomeResourceShowcase({ resources }: { resources: PageResources | null }) {
-  // The ticker duplicates its own list to loop seamlessly; under reduced
-  // motion it wraps into a static cluster instead, exactly as the
-  // "Built with" row does.
-  const [looping, setLooping] = useState(true);
-  useEffect(() => {
-    setLooping(!prefersReducedMotion());
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setLooping(!query.matches);
-    query.addEventListener("change", sync);
-    return () => query.removeEventListener("change", sync);
-  }, []);
-
   if (!resources) return null;
   const { calculators, guides, glossary, posts } = resources;
-  const tickerItems = looping ? [...calculators, ...calculators] : calculators;
 
   return (
     <section
@@ -169,29 +156,17 @@ export function HomeResourceShowcase({ resources }: { resources: PageResources |
       {/* ---- Calculators: the ticker ---------------------------------- */}
       {calculators.length > 0 && (
         <div className="mt-12">
-          <Heading legend="Run the numbers" title="Twelve free calculators." />
-          <div className="bbi-built-ticker mt-6">
-            <div
-              className={`bbi-built-ticker-track ${looping ? "" : "bbi-built-ticker-static"}`}
-              style={looping ? { animationDuration: "46s" } : undefined}
-            >
-              {tickerItems.map((item, i) => (
-                <Link
-                  key={`${item.slug}-${i}`}
-                  to="/calculator/$slug"
-                  params={{ slug: item.slug }}
-                  // The duplicated half is decoration for the loop, so it is
-                  // hidden from assistive tech and taken out of the tab order
-                  // rather than read out and tabbed through twice.
-                  aria-hidden={i >= calculators.length ? true : undefined}
-                  tabIndex={i >= calculators.length ? -1 : undefined}
-                  className="glass glass-hover shrink-0 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:text-accent"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </div>
+          <Heading legend="Run the numbers" title="Make your next move add up." />
+          <InfiniteMovingCards
+            className="bbi-built-ticker mt-6"
+            itemClassName="glass glass-hover rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:text-accent"
+            speed={46}
+            items={calculators.map((item) => ({
+              label: item.label,
+              to: "/calculator/$slug",
+              params: { slug: item.slug },
+            }))}
+          />
         </div>
       )}
 

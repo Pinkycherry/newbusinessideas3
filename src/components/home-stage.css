@@ -816,3 +816,45 @@ html.light .home-page.bbi-instrument .bbi-faq-row[aria-expanded="true"] .bbi-faq
     color: #f0dfdd !important;
   }
 }
+
+/* Open editorial columns keep the first screen compact and immediately readable. */
+.home-page .home-hero-benefits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 4rem);
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 2rem;
+}
+.home-page .home-hero-benefit {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  align-items: start;
+  gap: 0.85rem;
+}
+.home-page .home-benefit-index {
+  color: #ff9999;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding-top: 0.2rem;
+}
+.home-page .home-hero-benefit h2 {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.home-page .home-hero-benefit p {
+  margin-top: 0.55rem;
+  max-width: 58ch;
+  color: #d8bbbb;
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+@media (max-width: 639px) {
+  .home-page .home-hero-benefits {
+    grid-template-columns: 1fr;
+    gap: 1.35rem;
+    padding: 1.25rem 1.25rem 1.75rem;
+  }
+}

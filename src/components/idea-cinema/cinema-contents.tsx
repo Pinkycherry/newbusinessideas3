@@ -108,6 +108,7 @@ export function CinemaContents({
         type="button"
         className="cm-contents-toggle bbi-bare"
         aria-expanded={open}
+        aria-label="On this page"
         aria-controls={listId}
         data-contents-toggle
         onClick={() => setOpen((v) => !v)}

@@ -119,7 +119,13 @@ export const getSubcategoriesForCategory = createServerFn({ method: "GET" })
  * from an already-warm cache on every page, not a fresh client-only fetch
  * per visit — that per-page-visit fetch was the "slow dropdown" complaint.
  */
-export const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
+export const catalogQuery = queryOptions({
+  queryKey: ["catalog"],
+  queryFn: () => getCatalog(),
+  // Reuse the server result during hydration and quick page/focus changes.
+  // A later refetch can refresh the public counts after this short window.
+  staleTime: 60_000,
+});
 
 export const getTrendingIdeas = createServerFn({ method: "GET" }).handler(
   async (): Promise<IdeaCard[]> => {

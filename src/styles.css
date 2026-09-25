@@ -3698,20 +3698,20 @@ html.light .bbi-instrument .divide-border > * {
   html[data-tone="instrument"] [role="listbox"],
   html[data-tone="instrument"] [data-radix-select-content],
   html[data-tone="instrument"] [data-radix-popper-content-wrapper] > * {
-    background: #1e1e1e !important;
+    background: #270a0a !important;
     background-image: none !important;
-    border: 1px solid rgb(224 224 224 / 0.14) !important;
-    color: #e0e0e0 !important;
-    box-shadow: none !important;
+    border: 1px solid rgb(255 160 160 / 0.3) !important;
+    color: #f0dfdd !important;
+    box-shadow: 0 16px 40px #0008 !important;
   }
   html[data-tone="instrument"] [role="option"],
   html[data-tone="instrument"] [role="option"] *,
   html[data-tone="instrument"] [data-radix-select-content] * {
-    color: #e0e0e0 !important;
+    color: #f0dfdd !important;
   }
   html[data-tone="instrument"] [role="option"][data-highlighted],
   html[data-tone="instrument"] [role="option"][data-state="checked"] {
-    background: #262626 !important;
+    background: #64151b !important;
     color: #ffffff !important;
     outline: none !important;
   }
@@ -4883,21 +4883,24 @@ html.light .bbi-instrument .ac-action:disabled:hover {
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2") format("woff2");
+  src: url("https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2")
+    format("woff2");
 }
 @font-face {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2") format("woff2");
+  src: url("https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2")
+    format("woff2");
 }
 @font-face {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2") format("woff2");
+  src: url("https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2")
+    format("woff2");
 }
 
 /* ==========================================================================
@@ -5076,7 +5079,10 @@ html[data-cm] body::after {
   color: inherit !important;
   transition: color var(--motion-control) var(--ease-control);
 }
-.bbi-instrument.cm-page header nav button[aria-haspopup]:is(:hover, :focus-visible, [aria-expanded="true"]),
+.bbi-instrument.cm-page
+  header
+  nav
+  button[aria-haspopup]:is(:hover, :focus-visible, [aria-expanded="true"]),
 .bbi-instrument.cm-page header nav button[aria-haspopup]:hover * {
   color: var(--cinema-white) !important;
 }
@@ -7105,5 +7111,49 @@ html[data-cm] body::after {
   .cm-page .is-armed > * {
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+/* Shared navigation: one surface per action and centered mega-menu. */
+.bbi-instrument .bbi-action-wrap {
+  background: none !important;
+  padding: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: inherit;
+}
+.bbi-instrument .bbi-action-wrap::before,
+.bbi-instrument .bbi-action-wrap::after {
+  display: none !important;
+}
+.bbi-nav-bar .bbi-nav-mega {
+  position: static;
+}
+.bbi-nav-bar .bbi-nav-mega > .iv-nav-panel {
+  left: 50%;
+  right: auto;
+  translate: -50% 0;
+  width: min(52rem, calc(100vw - 3rem));
+  max-height: min(70vh, 38rem);
+}
+.bbi-instrument button[role="combobox"]::before,
+.bbi-instrument button[role="combobox"]::after {
+  display: none !important;
+}
+html[data-tone="instrument"] [role="listbox"] {
+  max-width: calc(100vw - 1.5rem);
+  border-radius: 0.8rem !important;
+  font-family: Poppins, sans-serif;
+}
+@layer utilities {
+  html.light .bbi-instrument button[role="combobox"] {
+    background: #270a0a !important;
+    color: #f0dfdd !important;
+    border: 1px solid #e8878766 !important;
+    border-radius: 0.6rem !important;
+    box-shadow: none !important;
+  }
+  html.light .bbi-instrument button[role="combobox"][data-state="open"] {
+    border-color: #ff9c9c !important;
   }
 }

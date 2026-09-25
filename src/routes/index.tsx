@@ -10,7 +10,6 @@ import { CategoryBadge } from "@/components/category-badge";
 import { AdSlot } from "@/components/AdSlot";
 import { BusinessIcons } from "@/components/business-icons";
 import HoverBorderGradient from "@/components/aceternity/hover-border-gradient";
-import TextGenerateEffect from "@/components/aceternity/text-generate-effect";
 import SpotlightCard from "@/components/aceternity/spotlight-card";
 
 import "@/components/home-stage.css";
@@ -29,7 +28,7 @@ import "@/components/home-stage.css";
  * navigation into the homepage — below the fold, where nothing is watching.
  *
  * What is NOT here matters as much as what is. `Lens`,
- * `HoverBorderGradient`, `SpotlightCard` and `TextGenerateEffect` stay eager
+ * `HoverBorderGradient` and `SpotlightCard` stay eager
  * because they render at or immediately below the fold; deferring those trades
  * a smaller bundle for a slower largest-contentful paint, which is the wrong
  * way round.
@@ -212,6 +211,11 @@ function tickerRows<T>(categories: T[], rowCount = 4): T[][] {
   return rows.filter((r) => r.length > 0);
 }
 
+/** Readable on first paint; avoids hundreds of temporary animated word nodes. */
+function HomeCopy({ words, className }: { words: string; className?: string }) {
+  return <p className={className}>{words}</p>;
+}
+
 /** Hero content panels. */
 const HERO_PANELS = [
   {
@@ -255,6 +259,7 @@ const FAQS = [
 const featuredQuery = queryOptions({
   queryKey: ["featured", FEATURED_IDEA_IDS],
   queryFn: () => getFeaturedIdeas({ data: { ideaIds: FEATURED_IDEA_IDS } }),
+  staleTime: 60_000,
 });
 
 export const Route = createFileRoute("/")({
@@ -423,19 +428,18 @@ function HomePage() {
           </p>
         </div>
 
-        {/* The two hero panels, sharing one rule with the block above. */}
-        <div className="mx-auto max-w-[92rem]">
-          <div className="ins-grid border-t border-[var(--ins-rule)] sm:grid-cols-2">
-            {HERO_PANELS.map((panel) => (
-              <SpotlightCard key={panel.label} className="ins-cell border-0 px-6 py-7">
-                <h3 className="text-base font-semibold text-[var(--ins-bright)]">{panel.label}</h3>
-                <TextGenerateEffect
-                  words={panel.body}
-                  className="mt-2 max-w-[58ch] text-sm leading-relaxed text-[var(--ins-read)]"
-                />
-              </SpotlightCard>
-            ))}
-          </div>
+        <div className="home-hero-benefits">
+          {HERO_PANELS.map((panel, index) => (
+            <article key={panel.label} className="home-hero-benefit">
+              <span className="home-benefit-index" aria-hidden="true">
+                0{index + 1}
+              </span>
+              <div>
+                <h2>{panel.label}</h2>
+                <p>{panel.body}</p>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -598,10 +602,10 @@ function HomePage() {
           We got tired of the same 50 ideas recycled into infinity.
         </h2>
         <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
-          <TextGenerateEffect
+          <HomeCopy
             words={`Every business idea list on the internet is the same list. Drop shipping. Print on demand. Start a blog. Sell on Etsy. They are not wrong exactly, but they are not researched either. Nobody tells you the margin, the failure rate, the licensing requirement, or the competitor who already owns the space.`}
           />
-          <TextGenerateEffect
+          <HomeCopy
             words={`This library exists because a genuine small business idea blueprint is worth more than a hundred recycled suggestions. We research each one properly — market context, real revenue mechanics, honest risks — and we tell you directly whether you are the right person to build it.`}
           />
         </div>
@@ -781,7 +785,7 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
         <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-5xl">
           The Golden Tree of Business Growth
         </h2>
-        <TextGenerateEffect
+        <HomeCopy
           className="mt-3 text-sm text-muted-foreground sm:text-base leading-relaxed"
           words={`Tap or hover any leaf node to see how many researched blueprints that category holds right now, then open the ones behind it.`}
         />
@@ -1021,7 +1025,7 @@ function BrandStatementBanner() {
         {/* Back on the word reveal, but the rebuilt component cannot strand a
             sentence: its rest state is visible, and with no IntersectionObserver
             it shows everything rather than nothing. */}
-        <TextGenerateEffect
+        <HomeCopy
           className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg"
           words={`We have been where you are. We paid for those $20 "validation" platforms too. We got a few generic lines back, spent our money, and got nothing real in return. When we asked for help, no one answered. That hurt. So we built the thing we needed back then — a free, honest library of small business ideas and side hustles, with real research, not empty hype. Browse for free, always. Validate as many times as you want, at no extra cost. Free after one sign-in. Never a bill, ever.`}
         />
@@ -1154,7 +1158,7 @@ function HowItWorksSection() {
             <h3 className="self-center text-xl font-semibold leading-snug text-[var(--ins-bright)] sm:text-2xl">
               {step.t}
             </h3>
-            <TextGenerateEffect
+            <HomeCopy
               words={step.d}
               className="self-center max-w-[62ch] text-base leading-relaxed text-[var(--ins-read)]"
             />
@@ -1259,7 +1263,7 @@ function WhoForSection() {
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
           Built with you in mind
         </p>
-        <TextGenerateEffect
+        <HomeCopy
           className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground"
           words={`These are the things people actually type at 1am. Every one of them goes somewhere real.`}
         />
@@ -1342,7 +1346,7 @@ function PricingPhilosophySection() {
           <h2 className="mt-4 max-w-4xl text-[2.1rem] leading-[1.06] text-primary-foreground sm:text-[3.2rem]">
             Two prices. Both are zero. That&apos;s the whole pricing page.
           </h2>
-          <TextGenerateEffect
+          <HomeCopy
             className="mt-6 max-w-[62ch] text-base leading-relaxed text-primary-foreground/80 sm:text-lg"
             words={`No monthly plan. No "Starter / Pro / Enterprise" ladder designed to make you feel small on the cheapest tier. No plan at all, in fact. Sign in once and everything opens — including every idea we add after the day you join. BBI is free because its founder paid three platforms to validate four business ideas and lost money he could afford to lose. Most people reading this cannot.`}
           />
@@ -1374,7 +1378,7 @@ function TeamSection() {
           <p className="ins-legend">Who&apos;s behind this</p>
           <h2 className="mt-3">Built by hand, not by a headcount.</h2>
           <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
-            <TextGenerateEffect
+            <HomeCopy
               words={`BBI is a small, hands-on build — no invented office, no fake team page. We'd rather tell you less and have it be true.`}
             />
             <p>
@@ -1414,7 +1418,7 @@ function InspiredBySection() {
       <div className="border-l-2 border-primary pl-6 sm:pl-8">
         <p className="ins-legend">Where this came from</p>
         <h2 className="mt-3">We didn&apos;t invent this model. We learned it.</h2>
-        <TextGenerateEffect
+        <HomeCopy
           className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground"
           words={`Our inspiration is EthicalFounder.com — a platform offering free websites, free MSME registration help, and free mentorship to Indian entrepreneurs who can't afford any of it otherwise. We're not affiliated with them and we don't take commissions from anyone. We just watched how they operated — help first, ask for nothing, let the value speak — and decided BBI should work the same way for business idea research specifically.`}
         />
@@ -1444,7 +1448,7 @@ function ComparisonSection() {
       <h2 className="mt-3 max-w-3xl">
         Validating a business idea should not cost you the money you were going to start it with.
       </h2>
-      <TextGenerateEffect
+      <HomeCopy
         className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground"
         words={`Twenty dollars buys you three or four checks on most idea validation platforms. If the answer comes back no, that money is gone and you are back where you started — except poorer. We think that is the wrong way round. Read the research first, for free, and decide with your own eyes whether an idea is worth your time.`}
       />
@@ -1512,7 +1516,7 @@ function FutureProofSpotlight() {
     >
       <p className="ins-legend">Ways into the library</p>
       <h2 className="mt-3 max-w-3xl">Start from a theme instead of a blank search box.</h2>
-      <TextGenerateEffect
+      <HomeCopy
         className="mt-3 max-w-[62ch] text-sm leading-relaxed text-muted-foreground"
         words={`Each one runs a live search across every blueprint. They are shortcuts, not a ranking — and if one comes back thin, that is the library being honest with you rather than a page pretending to be fuller than it is.`}
       />
@@ -1661,7 +1665,7 @@ function PromiseSection() {
           <h2 className="text-[2rem] leading-[1.08] sm:text-[2.8rem]">
             We&apos;re not here to sell you a dream. We&apos;re here to hand you the research.
           </h2>
-          <TextGenerateEffect
+          <HomeCopy
             className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg"
             words={`We won't tell you that you'll be a millionaire in three months. We won't show you a lifestyle you can't verify. What we will do: give you honest research, free guidance, and a starting point that doesn't cost you $20 before you've even decided if the idea is worth pursuing.`}
           />
