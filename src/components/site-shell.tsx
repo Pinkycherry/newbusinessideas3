@@ -24,7 +24,7 @@ import { CategoryBadge } from "@/components/category-badge";
 import { catalogQuery } from "@/lib/ideas.functions";
 import { ResourceHub } from "@/components/resource-hub";
 import { useSiteStage } from "@/components/site-stage";
-import { usePageScrollProgress } from "@/motion";
+import { useMarqueeMotion } from "@/motion/use-marquee-motion";
 import { topCategories } from "@/lib/catalog-display";
 import { subscribeToNewsletter } from "@/lib/newsletter.functions";
 import { prefersReducedMotion } from "@/lib/motion";
@@ -103,6 +103,7 @@ function BuiltWithItemLink({ item }: { item: BuiltWithItem }) {
  * homepage. */
 function BuiltWithSection({ still = false }: { still?: boolean }) {
   const [looping, setLooping] = useState(!still);
+  const tickerRef = useMarqueeMotion();
 
   useEffect(() => {
     if (still) return;
@@ -121,10 +122,11 @@ function BuiltWithSection({ still = false }: { still?: boolean }) {
         <p id="built-with-heading" className="text-center t-eyebrow">
           Built with
         </p>
-        <div className="bbi-built-ticker mt-6">
+        <div ref={tickerRef} className="bbi-built-ticker mt-6">
           <div
+            data-marquee-track
             className={`bbi-built-ticker-track ${looping ? "" : "bbi-built-ticker-static"}`}
-            style={looping ? { animationDuration: "38s" } : undefined}
+            style={looping ? { animationDuration: "38s", animationPlayState: "paused" } : undefined}
           >
             {items.map((item, i) => (
               <BuiltWithItemLink key={`${item.name}-${i}`} item={item} />
@@ -847,7 +849,6 @@ export function SiteShell({
   useSiteStage(plain);
   // The homepage keeps its original design and motion (founder, 2026-09-24):
   // there the reading rail still runs from --page-p.
-  usePageScrollProgress(!plain);
   const { data: catalog } = useCatalog();
   const siteResources = useSiteResources();
   const allCategories = catalog?.categories ?? [];
@@ -858,7 +859,7 @@ export function SiteShell({
     <div
       className={`relative flex min-h-screen flex-col text-foreground${
         tone === "instrument" ? " bbi-instrument" : ""
-      }${plain ? " cm-page" : ""}`}
+      }${plain ? " cm-page" : " home-page"}`}
     >
       <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">
         {/* Reading position for the whole document. One composited transform

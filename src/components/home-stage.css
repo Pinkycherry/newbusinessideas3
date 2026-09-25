@@ -1,0 +1,608 @@
+/* Homepage: crimson studio. Native scroll, CSS interaction, no canvas. */
+.home-page.bbi-instrument {
+  --ins-void: #120404;
+  --ins-face: #270a0a;
+  --ins-face-2: #3c1012;
+  --ins-rule: rgb(255 190 186 / 18%);
+  --ins-rule-strong: rgb(255 190 186 / 42%);
+  --ins-signal: #ff9595;
+  --ins-signal-hot: #fff;
+  --ins-bright: #fff;
+  --ins-read: #f0dfdd;
+  --ins-dim: #cfb5b4;
+  --ins-faint: #ac8989;
+  --home-red: #ca0808;
+  --font-sans: "Poppins", sans-serif;
+  --font-display: "Poppins", sans-serif;
+  --home-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  font-family: var(--font-sans);
+  background: #120404;
+  overflow-x: clip;
+}
+.home-page.bbi-instrument :is(h1, h2, h3, h4, .ins-legend, .ins-num) {
+  font-family: var(--font-sans);
+}
+.home-page.bbi-instrument h2 {
+  font-size: clamp(1.8rem, 3.5vw, 3.05rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+.home-page.bbi-instrument h3 {
+  letter-spacing: -0.025em;
+}
+.home-page.bbi-instrument .ins-legend {
+  font-size: 0.88rem;
+  letter-spacing: 0.055em;
+  color: #ffabab;
+  font-weight: 500;
+}
+.home-page.bbi-instrument .ins-num {
+  font-variant-numeric: tabular-nums;
+}
+.home-page :is(section, [id]) {
+  scroll-margin-top: 7rem;
+}
+html:has(.home-page) {
+  scroll-behavior: smooth;
+}
+html:has(.home-page) body::before,
+html:has(.home-page) body::after {
+  display: none;
+}
+.home-page main > section {
+  position: relative;
+}
+.home-page main > section:not(#hero) {
+  margin-top: clamp(2.75rem, 6vw, 5rem);
+}
+.home-page :is(a, button, summary, [role="combobox"]):focus-visible {
+  outline: 2px solid #ffb5b5 !important;
+  outline-offset: 5px;
+}
+.home-page .mo-page-rail {
+  transform-origin: left;
+  animation: home-reading linear both;
+  animation-timeline: scroll(root);
+  background: #ca0808;
+}
+@keyframes home-reading {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Hero / Eclipse entrance: one transform pass, immediately readable type. */
+.home-page #hero {
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 90% -18%, #ffc1bf 0%, #9b2024 13%, transparent 40%),
+    radial-gradient(ellipse at 0% 90%, #640a10, transparent 48%), #120404;
+}
+.home-page #hero > .pointer-events-none {
+  display: none;
+}
+.home-page #hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 90%;
+  height: 18rem;
+  left: 8%;
+  top: 10rem;
+  border-top: 1px solid #ff5151;
+  border-radius: 50%;
+  box-shadow: 0 -5px 28px -15px #ff9a9a;
+  rotate: -17deg;
+  opacity: 0.45;
+  animation: home-eclipse 1s var(--home-ease) both;
+  pointer-events: none;
+}
+@keyframes home-eclipse {
+  from {
+    transform: translateY(28px) scaleX(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 0.45;
+  }
+}
+.home-page .home-hero-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  grid-template-areas: "label story" "title story" "proof story" "action story" "note story";
+  column-gap: clamp(2rem, 7vw, 7rem);
+  max-width: 80rem;
+  padding: clamp(3rem, 6vw, 5.5rem) 2rem 3.5rem;
+  margin: auto;
+  align-items: start;
+}
+.home-page .home-hero-layout > .ins-legend {
+  grid-area: label;
+  margin-bottom: 1.4rem;
+}
+.home-page.bbi-instrument .home-title {
+  grid-area: title;
+  font-size: clamp(2.6rem, 4.8vw, 4.7rem);
+  line-height: 1.06;
+  letter-spacing: -0.055em;
+  font-weight: 600;
+  text-wrap: balance;
+  max-width: 15ch;
+  color: white;
+}
+.home-page .home-proof {
+  grid-area: proof;
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+.home-page .home-proof dd {
+  font-size: clamp(2.4rem, 4vw, 3.5rem);
+  font-weight: 500;
+}
+.home-page .home-proof dt {
+  font-size: 0.75rem;
+}
+.home-page .home-proof > [aria-hidden] {
+  height: 3rem;
+  display: block;
+}
+.home-page .home-story {
+  grid-area: story;
+  align-self: center;
+  position: relative;
+  padding: 2rem 0 1.5rem 1.8rem;
+  border-left: 1px solid #f66b6b;
+  max-width: 46ch;
+  font-size: 0.95rem;
+  line-height: 1.85;
+}
+.home-page .home-story::before {
+  content: "“";
+  position: absolute;
+  top: -2rem;
+  left: 1.4rem;
+  font-size: 7rem;
+  line-height: 1;
+  color: #ff9696;
+  opacity: 0.35;
+}
+.home-page .home-story-label {
+  display: block;
+  margin-bottom: 1rem;
+  color: #ffabab;
+  font-size: 0.78rem;
+  letter-spacing: 0.035em;
+}
+.home-page .home-origin {
+  margin-top: 1.6rem;
+  border-top: 1px solid var(--ins-rule);
+}
+.home-page .home-origin summary {
+  padding: 0.8rem 0;
+  cursor: pointer;
+  color: white;
+  font-size: 0.8rem;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.home-page .home-origin summary::-webkit-details-marker {
+  display: none;
+}
+.home-page .home-origin summary span {
+  transition: transform 0.3s var(--home-ease);
+}
+.home-page .home-origin[open] summary span {
+  transform: rotate(90deg);
+}
+.home-page .home-origin p {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+.home-page .home-hero-actions {
+  grid-area: action;
+  display: flex;
+  margin-top: 2rem;
+}
+.home-page .home-hero-note {
+  grid-area: note;
+  font-size: 0.65rem;
+  line-height: 1.7;
+  color: var(--ins-dim);
+  margin-top: 1rem;
+  max-width: 42ch;
+}
+.home-page #hero .ins-grid {
+  background: transparent;
+  padding: 0 2rem;
+  max-width: 80rem;
+  margin: auto;
+}
+.home-page #hero .ins-cell {
+  background: transparent;
+  border-top: 1px solid var(--ins-rule);
+  box-shadow: none;
+  padding: 1.6rem 0;
+}
+.home-page #hero .ins-cell + .ins-cell {
+  padding-left: 2rem;
+}
+
+/* Controls / shutter wipe: only the interacted button moves. */
+.home-page .ins-action {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid #f15151;
+  border-radius: 7px 7px 18px 7px !important;
+  min-height: 48px;
+  background: #ca0808 !important;
+  font-weight: 500;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  transition:
+    transform 0.22s var(--home-ease),
+    background-color 0.22s;
+}
+.home-page .ins-action::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(110deg, #fff0, #ffb0b073, #fff0);
+  transform: translateX(-110%) skewX(-20deg);
+  opacity: 0;
+  transition:
+    transform 0.55s var(--home-ease),
+    opacity 0.25s;
+  animation: none !important;
+}
+.home-page .ins-action:is(:hover, :focus-visible)::before {
+  transform: translateX(110%) skewX(-20deg);
+  opacity: 1;
+}
+.home-page .ins-action:is(:hover, :focus-visible) {
+  transform: translateY(-2px);
+}
+.home-page .ins-action:active {
+  transform: translateY(1px) scale(0.98);
+}
+.home-page .ins-action svg {
+  transition: transform 0.25s var(--home-ease);
+}
+.home-page .ins-action:hover svg {
+  transform: translateX(4px);
+}
+.home-page .bbi-spot-light {
+  display: none;
+}
+.home-page :is(.bbi-spot, .bbi-card-motion, .bbi-card-float) {
+  animation: none;
+}
+.home-page :is(.ac-action, .ins-action)::after {
+  animation: none !important;
+}
+
+/* Surprise me / pull tab. A punched ticket, distinct from interior panels. */
+.home-page #surprise-me > .bbi-spot {
+  border: 0;
+  border-block: 1px solid #ff777754;
+  border-radius: 0;
+  padding: 2rem clamp(1.2rem, 4vw, 3.5rem);
+  background: radial-gradient(ellipse at 100% 10%, #8a111d, transparent 70%), #270a0a;
+  box-shadow: none;
+}
+.home-page #surprise-me > .bbi-spot::after {
+  content: "";
+  position: absolute;
+  left: -9px;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #120404;
+  box-shadow: none;
+}
+.home-page #surprise-me h2 {
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  max-width: 28ch;
+}
+.home-page #surprise-me [role="combobox"] {
+  min-height: 48px;
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+/* Browse / revolving coins and category rails. */
+.home-page #categories {
+  padding-top: 0;
+}
+.home-page #categories > .ins-legend {
+  display: flex;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+}
+.home-page .bbi-icons {
+  height: 8rem;
+  gap: 0.85rem;
+}
+.home-page .bbi-icons .bbi-icon {
+  flex-basis: 4.25rem;
+  color: #ffb9b9;
+  border: 1px solid #ef686844;
+  background: radial-gradient(circle at 20% 10%, #8c3030, #270a0a 65%);
+  box-shadow: inset 0 1px #ffcdcd38;
+  animation: home-coin-bob 4s ease-in-out infinite alternate;
+}
+@keyframes home-coin-bob {
+  from {
+    transform: translateY(-9px) rotate(-6deg);
+  }
+  to {
+    transform: translateY(9px) rotate(6deg);
+  }
+}
+.home-page .bbi-icons .bbi-icon:nth-child(3n) {
+  animation-delay: -2s;
+}
+.home-page .bbi-icons .bbi-icon:nth-child(3n + 1) {
+  animation-delay: -1s;
+}
+.home-page .glass-pill {
+  border-radius: 5px !important;
+  min-height: 42px;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+  font-size: 0.8rem;
+}
+.home-page [aria-label="Every category, and what it actually holds."] {
+  border-top: 0;
+  padding-block: 1rem;
+  background: radial-gradient(ellipse at 0% 45%, #5b0b14, transparent 65%);
+}
+.home-page .ac-marquee .group\/card {
+  border-radius: 4px 26px 4px 4px !important;
+  border-color: #ef9c9c50;
+  box-shadow: inset 0 -1px #ca0808;
+}
+.home-page .ac-marquee .group\/card img {
+  transition:
+    transform 0.55s var(--home-ease),
+    opacity 0.3s;
+}
+
+/* What you get / How it works / growing canopy. */
+.home-page #what-you-get {
+  border-color: #ca080877;
+}
+.home-page #what-you-get h2 {
+  color: #ffb2b2;
+}
+.home-page #how-it-works ol {
+  counter-reset: steps;
+}
+.home-page #how-it-works ol li {
+  position: relative;
+  padding-inline: 1rem;
+  transition: background-color 0.25s;
+}
+.home-page #how-it-works ol li::before {
+  content: "";
+  position: absolute;
+  inset: 10% auto 10% 0;
+  width: 3px;
+  background: #ca0808;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.35s var(--home-ease);
+}
+.home-page #how-it-works ol li:hover::before {
+  transform: scaleY(1);
+}
+.home-page #how-it-works ol li > .ins-num {
+  color: #ff9999;
+  transition: transform 0.35s var(--home-ease);
+}
+.home-page #how-it-works ol li:hover > .ins-num {
+  transform: translateX(5px);
+}
+.home-page #golden-tree {
+  background: radial-gradient(ellipse at 50% 60%, #67101955, transparent 66%);
+}
+.home-page #golden-tree .tree-asset-container::before {
+  background: radial-gradient(ellipse, #ca080838, transparent 65%);
+  filter: none;
+  animation: none;
+}
+.home-page #golden-tree img {
+  filter: drop-shadow(0 8px 18px #ca080840);
+}
+.home-page :is(.bbi-tree-node-d, .bbi-tree-node-m) {
+  animation: none;
+}
+.home-page #golden-tree .glass-pill {
+  border-radius: 999px !important;
+  transition: transform 0.25s var(--home-ease);
+}
+.home-page #golden-tree .glass-pill:is(:hover, :focus-visible) {
+  transform: translateY(-3px) scale(1.04);
+}
+.home-page .bbi-flip {
+  border-radius: 0 !important;
+}
+.home-page .bbi-flip-front {
+  border-top: 2px solid #ca0808;
+  background: linear-gradient(130deg, #361014, #120404);
+}
+.home-page .bbi-flip-back {
+  background: linear-gradient(120deg, #6f1119, #270a0a);
+}
+.home-page #built-for-you > div > .grid {
+  gap: 10px;
+  background: transparent;
+}
+.home-page #behind-bbi {
+  padding-top: 2rem;
+  border-top: 1px solid #ca080866;
+}
+.home-page .bbi-orbit-ring {
+  border-color: #ff7f7f50;
+  animation-play-state: paused;
+}
+.home-page .bbi-orbit-center {
+  background: radial-gradient(circle at 25% 15%, #bd3038, #270a0a 80%);
+  border-color: #ff9a9a77;
+  box-shadow: 0 0 32px #ca08082a;
+}
+.home-page .bbi-orbit-node-inner {
+  background: #270a0a;
+  border-color: #ff999944;
+}
+.home-page .bbi-orbit-node-bob {
+  animation-play-state: paused;
+}
+.home-page .bbi-orbit-wrap:hover :is(.bbi-orbit-ring, .bbi-orbit-node-bob) {
+  animation-play-state: running;
+}
+.home-page #free-access {
+  background: radial-gradient(ellipse at 100% 0, #a32730, #270a0a 65%);
+}
+.home-page #free-access .bg-primary {
+  background: transparent !important;
+}
+.home-page #free-access :is(h2, p) {
+  color: var(--ins-read) !important;
+}
+.home-page #browse-keywords {
+  border-top: 1px solid var(--ins-rule);
+  padding-top: 2rem;
+}
+.home-page #future-themes a {
+  text-underline-offset: 6px;
+}
+
+.home-page .bbi-footer {
+  background: radial-gradient(ellipse at 0 100%, #7a111a, transparent 70%), #1a0608 !important;
+  border-top: 1px solid #e68a8a66;
+  border-radius: 0 !important;
+}
+.home-page .bbi-footer-input {
+  min-height: 48px;
+  border-radius: 6px !important;
+}
+
+/* Existing layered !important plate rules require a matching layer. */
+@layer utilities {
+  html.light .home-page.bbi-instrument .glass-nav {
+    background: #1b0808f5 !important;
+    backdrop-filter: none !important;
+    border-color: #db6d6d44 !important;
+  }
+  html.light .home-page.bbi-instrument :is(.ins-action, .ins-action *) {
+    color: #fff !important;
+  }
+  html.light .home-page.bbi-instrument .ins-action {
+    background-color: #ca0808 !important;
+  }
+  html.light .home-page.bbi-instrument .glass-pill {
+    background: linear-gradient(120deg, #3b1115, #23090b) !important;
+    border-color: #ff919138 !important;
+  }
+  html.light .home-page.bbi-instrument .glass-pill:is(:hover, :focus-visible) {
+    background: #70121b !important;
+    border-color: #ff9898 !important;
+  }
+  html.light .home-page.bbi-instrument .glass-pill * {
+    color: #f7e5e5 !important;
+  }
+}
+@media (max-width: 767px) {
+  .home-page .home-hero-layout {
+    grid-template-columns: 1fr;
+    grid-template-areas: "label" "title" "proof" "action" "note" "story";
+    padding: 2.8rem 1.25rem 2rem;
+  }
+  .home-page.bbi-instrument .home-title {
+    font-size: clamp(2.5rem, 8.5vw, 3.6rem);
+    max-width: 19ch;
+  }
+  .home-page .home-story {
+    margin-top: 2.7rem;
+    padding: 1.3rem 0 0 1rem;
+    max-width: none;
+    font-size: 0.875rem;
+  }
+  .home-page .home-story::before {
+    display: none;
+  }
+  .home-page .home-proof {
+    gap: 1.5rem;
+  }
+  .home-page #hero .ins-grid {
+    padding: 0 1.25rem;
+  }
+  .home-page #hero .ins-cell + .ins-cell {
+    padding-left: 0;
+  }
+  .home-page #surprise-me .ins-legend {
+    flex-wrap: wrap;
+  }
+  .home-page #surprise-me .ins-action {
+    width: 100%;
+  }
+  .home-page.bbi-instrument .bbi-icons {
+    display: flex;
+    height: 6rem;
+  }
+  .home-page .bbi-icons .bbi-icon {
+    flex-basis: 3.5rem;
+  }
+  .home-page #how-it-works ol li {
+    padding-block: 1.4rem;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0.75rem;
+  }
+  .home-page #how-it-works ol li > :last-child {
+    grid-column: 2;
+  }
+  .home-page #how-it-works ol li > .ins-num {
+    font-size: 1.8rem;
+  }
+  .home-page #how-it-works ol li h3 {
+    font-size: 1.15rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:has(.home-page) {
+    scroll-behavior: auto;
+  }
+  .home-page *,
+  .home-page *::before,
+  .home-page *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+  .home-page .mo-page-rail {
+    display: none;
+  }
+}
+@media (forced-colors: active) {
+  .home-page #hero::after {
+    display: none;
+  }
+  .home-page :is(.ins-action, .glass-pill) {
+    border: 1px solid ButtonText;
+  }
+}
+.home-page.bbi-instrument .ins-action { padding: .85rem 1.3rem !important; font-size: .875rem !important; line-height: 1.25; }

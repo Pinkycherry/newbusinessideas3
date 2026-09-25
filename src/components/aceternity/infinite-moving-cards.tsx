@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
+import { useMarqueeMotion } from "@/motion/use-marquee-motion";
 
 export type MovingItem = {
   label: string;
@@ -29,16 +29,7 @@ export default function InfiniteMovingCards({
   speed?: number;
   className?: string;
 }) {
-  const hostRef = useRef<HTMLDivElement | null>(null);
-  const [still, setStill] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setStill(query.matches);
-    sync();
-    query.addEventListener("change", sync);
-    return () => query.removeEventListener("change", sync);
-  }, []);
+  const hostRef = useMarqueeMotion();
 
   // A row whose items do not fill the viewport leaves a visible blank stretch
   // at one end: translating -50% of a track narrower than the screen exposes
@@ -58,15 +49,13 @@ export default function InfiniteMovingCards({
       )}
     >
       <ul
-        className={cn("flex w-max gap-3 py-1", !still && "ac-marquee-track")}
-        style={
-          still
-            ? undefined
-            : {
-                animationDuration: `${speed}s`,
-                animationDirection: direction === "right" ? "reverse" : "normal",
-              }
-        }
+        data-marquee-track
+        className="ac-marquee-track flex w-max gap-3 py-1"
+        style={{
+          animationPlayState: "paused",
+          animationDuration: `${speed}s`,
+          animationDirection: direction === "right" ? "reverse" : "normal",
+        }}
       >
         {doubled.map((item, index) => (
           <li key={`${item.label}-${index}`} className="shrink-0">

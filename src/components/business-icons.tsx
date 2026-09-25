@@ -10,6 +10,8 @@
  * its ligature names as literal text across the page.
  */
 
+import { useMarqueeMotion } from "@/motion/use-marquee-motion";
+
 const ICONS: Array<{ label: string; d: string }> = [
   {
     label: "idea",
@@ -50,11 +52,17 @@ const ICONS: Array<{ label: string; d: string }> = [
 ];
 
 export function BusinessIcons() {
+  const ref = useMarqueeMotion();
   return (
-    <div className="bbi-icons" aria-hidden>
+    <div ref={ref} className="bbi-icons" aria-hidden>
       {/* doubled so the band still fills a wide viewport */}
       {[...ICONS, ...ICONS].map((icon, i) => (
-        <div className="bbi-icon" key={`${icon.label}-${i}`}>
+        <div
+          className="bbi-icon"
+          key={`${icon.label}-${i}`}
+          data-marquee-track
+          style={{ animationPlayState: "paused" }}
+        >
           <svg viewBox="0 0 24 24">
             <path d={icon.d} />
           </svg>

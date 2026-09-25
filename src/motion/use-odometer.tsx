@@ -19,7 +19,7 @@
  */
 import { useEffect, useRef, type RefObject } from "react";
 
-import { loadGsap, prefersReducedMotion } from "./gsap";
+import { prefersReducedMotion } from "./gsap";
 import { isLegacyMotionPage } from "./legacy-page";
 
 export type OdometerOptions = {
@@ -54,7 +54,7 @@ export function useOdometer<T extends HTMLElement = HTMLElement>(
 
     const render = (n: number) => (formatRef.current ? formatRef.current(n) : n.toFixed(decimals));
 
-    if (prefersReducedMotion()) {
+    if (prefersReducedMotion() || typeof IntersectionObserver === "undefined") {
       el.textContent = render(value);
       return;
     }
@@ -65,51 +65,40 @@ export function useOdometer<T extends HTMLElement = HTMLElement>(
     // — the reader still sees the true number rather than a zero.
     el.textContent = render(value);
 
-    let cancelled = false;
-    let tween: gsap.core.Tween | null = null;
-
-    loadGsap().then(({ gsap, ScrollTrigger }) => {
-      if (cancelled || !ref.current) return;
-      const counter = { n: from };
-      tween = gsap.to(counter, {
-        n: value,
-        duration,
-        ease: "power2.out",
-        onUpdate: () => {
-          if (ref.current) ref.current.textContent = render(counter.n);
-        },
-        // Land on the exact figure, never on an interpolated near-miss.
-        onComplete: () => {
-          if (ref.current) ref.current.textContent = render(value);
-        },
-        // Never reverse. "restart reverse" counted the figure back DOWN to
-        // its `from` value on scroll-out and left it there, so the page read
-        // "0+ researched blueprints" for anyone who had scrolled past — a
-        // counter that lies about the catalogue is worse than no counter.
-        // Never reverse. "restart reverse" counted the figure back DOWN to
-        // its `from` value on scroll-out and left it there.
-        scrollTrigger: { trigger: el, start, toggleActions: "play none none none" },
-        // And never let the tween paint `from` before it actually runs.
-        immediateRender: false,
-      });
-
-      // For a counter that's already on-screen at load (the common case --
-      // a hero stat, this Momentum card), ScrollTrigger's very first
-      // position measurement can land before a late web-font swap or an
-      // image below it finishes and shifts the layout. When that happens
-      // the trigger's start point is measured wrong, decides the reader
-      // hasn't reached it yet, and then only re-checks on an actual scroll
-      // event -- so a visitor who never scrolls sees "0" forever. One
-      // `refresh()` right after creation re-measures against the settled
-      // layout and fires the already-satisfied trigger immediately instead
-      // of waiting on a scroll that may never come.
-      ScrollTrigger.refresh();
-    });
+    let raf = 0;
+    let started = false;
+    let startedAt = 0;
+    const milliseconds = Math.max(0, duration * 1000);
+    const finish = () => {
+      cancelAnimationFrame(raf);
+      raf = 0;
+      el.textContent = render(value);
+    };
+    const frame = (now: number) => {
+      if (document.hidden) {
+        finish();
+        return;
+      }
+      if (!startedAt) startedAt = now;
+      const progress = milliseconds ? Math.min(1, (now - startedAt) / milliseconds) : 1;
+      el.textContent = render(from + (value - from) * (1 - Math.pow(1 - progress, 3)));
+      if (progress < 1) raf = requestAnimationFrame(frame);
+      else finish();
+    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (started || !entries.some((entry) => entry.isIntersecting)) return;
+        started = true;
+        observer.disconnect();
+        raf = requestAnimationFrame(frame);
+      },
+      { rootMargin: "0px 0px -12% 0px" },
+    );
+    observer.observe(el);
 
     return () => {
-      cancelled = true;
-      tween?.scrollTrigger?.kill();
-      tween?.kill();
+      observer.disconnect();
+      cancelAnimationFrame(raf);
     };
   }, [value, from, decimals, duration, start]);
 

@@ -39,9 +39,12 @@ export default function SpotlightCard({
 } & Omit<React.HTMLAttributes<HTMLElement>, "children" | "className">) {
   const ref = useRef<HTMLElement | null>(null);
   const [lit, setLit] = useState(false);
+  // The homepage owns its CSS hover treatment; its hidden spotlight should
+  // not measure layout or write pointer coordinates behind that treatment.
+  const followsPointer = () => isLegacyMotionPage() && !ref.current?.closest(".home-page");
 
   const track = (e: React.MouseEvent<HTMLElement>) => {
-    if (!isLegacyMotionPage()) return;
+    if (!followsPointer()) return;
     const node = ref.current;
     if (!node) return;
     const rect = node.getBoundingClientRect();
@@ -56,16 +59,16 @@ export default function SpotlightCard({
       ref={ref as never}
       onMouseMove={track}
       onMouseEnter={() => {
-        if (isLegacyMotionPage()) setLit(true);
+        if (followsPointer()) setLit(true);
       }}
       onMouseLeave={() => {
-        if (isLegacyMotionPage()) setLit(false);
+        if (followsPointer()) setLit(false);
       }}
       onFocus={() => {
-        if (isLegacyMotionPage()) setLit(true);
+        if (followsPointer()) setLit(true);
       }}
       onBlur={() => {
-        if (isLegacyMotionPage()) setLit(false);
+        if (followsPointer()) setLit(false);
       }}
       className={cn("bbi-spot", className)}
       style={{ "--spot-color": spotlightColor } as React.CSSProperties}

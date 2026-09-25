@@ -137,9 +137,8 @@ export function useScrollProgress<T extends HTMLElement = HTMLElement>(
 }
 
 /**
- * Page-level scroll progress: publishes `--page-p` (0 -> 1) on :root for the
- * whole document. Useful for a reading-progress bar without a scroll listener
- * of its own.
+ * Reading progress is written only to the rail elements. Updating :root
+ * would invalidate inherited styles across the entire homepage per frame.
  *
  * Passing `false` skips it entirely. The idea-page cinema trial draws its
  * reading rail with a CSS scroll timeline instead, because a custom property
@@ -150,17 +149,19 @@ export function usePageScrollProgress(enabled = true) {
     if (!enabled) return;
     if (typeof window === "undefined") return;
     const root = document.documentElement;
-    if (prefersReducedMotion()) {
-      root.style.setProperty("--page-p", "0");
-      return;
-    }
+    const rails = Array.from(document.querySelectorAll<HTMLElement>(".mo-page-rail"));
+    if (!rails.length) return;
     let raf = 0;
     let queued = false;
+    let previous = "";
     const write = () => {
       raf = 0;
       queued = false;
       const max = root.scrollHeight - window.innerHeight;
-      root.style.setProperty("--page-p", max > 0 ? (window.scrollY / max).toFixed(4) : "0");
+      const progress = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)).toFixed(4) : "0";
+      if (progress === previous) return;
+      previous = progress;
+      for (const rail of rails) rail.style.setProperty("--page-p", progress);
     };
     const onScroll = () => {
       if (queued) return;
@@ -174,7 +175,7 @@ export function usePageScrollProgress(enabled = true) {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
-      root.style.removeProperty("--page-p");
+      for (const rail of rails) rail.style.removeProperty("--page-p");
     };
   }, [enabled]);
 }

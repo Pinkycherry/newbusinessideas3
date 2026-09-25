@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 
 import MovingImageCards from "@/components/aceternity/moving-image-cards";
 import { prefersReducedMotion } from "@/lib/motion";
-import type { PageResources } from "@/lib/resources.server";
+import type { PageResources, ResourceLink } from "@/lib/resources.server";
+import "./home-resource-showcase.css";
 
 /**
  * The homepage's own treatment of the four resource pools.
@@ -17,9 +18,8 @@ import type { PageResources } from "@/lib/resources.server";
  *   Calculators  — the "Built with" ticker. Twelve short names is a strip,
  *                  not a grid, and it is already the grammar this site uses
  *                  for a long list of small things (`.bbi-built-ticker`).
- *   Guides       — a light travelling the border of each card on hover
- *                  (`.bbi-aura`). Six cards, so the motion has room to be
- *                  noticed without the page turning into a light show.
+ *   Guides       — numbered reading folios with a small hinged corner.
+ *                  One transform answers hover; no border-painting loop.
  *   Glossary     — flip cards. Term on the face, definition behind. A
  *                  glossary is the one pool where the card genuinely has two
  *                  sides, so the effect is the content rather than decoration.
@@ -47,6 +47,92 @@ function Heading({ legend, title }: { legend: string; title: string }) {
   );
 }
 
+/** One small original mark, shared by the folio links and the flip control. */
+function FolioArrow({ turn = false }: { turn?: boolean }) {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {turn ? (
+        <path d="M7 7.5h8a4 4 0 0 1 0 8h-1M7 7.5l3-3M7 7.5l3 3M8 16.5H4m0 0 2.5-2.5M4 16.5 6.5 19" />
+      ) : (
+        <path d="M5 12h14m-5-5 5 5-5 5" />
+      )}
+    </svg>
+  );
+}
+
+function GlossaryFlip({ term, index }: { term: ResourceLink; index: number }) {
+  const [flipped, setFlipped] = useState(false);
+
+  return (
+    <li
+      className="hf-term"
+      data-flipped={flipped || undefined}
+      onPointerEnter={(event) => {
+        if (event.pointerType === "mouse") setFlipped(true);
+      }}
+      onPointerLeave={(event) => {
+        if (
+          event.pointerType === "mouse" &&
+          !event.currentTarget.contains(document.activeElement)
+        ) {
+          setFlipped(false);
+        }
+      }}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setFlipped(false);
+      }}
+    >
+      <Link
+        to="/founder-glossary"
+        hash={term.slug}
+        className="hf-term-link"
+        aria-label={`${term.label}: ${term.blurb}`}
+        onFocus={() => setFlipped(true)}
+      >
+        {/* The two faces share a grid cell, so the longer face sets their
+            height. The accessible link name reads the definition once. */}
+        <span className="hf-term-inner" aria-hidden="true">
+          <span className="hf-term-face hf-term-front">
+            <span className="hf-term-index">{String(index + 1).padStart(2, "0")}</span>
+            <span className="hf-term-title">{term.label}</span>
+            {term.meta && <span className="hf-term-meta">{term.meta}</span>}
+          </span>
+          <span className="hf-term-face hf-term-back">
+            <span className="hf-term-back-title">{term.label}</span>
+            <span className="hf-term-definition">{term.blurb}</span>
+            <span className="hf-term-open">
+              Read in glossary <FolioArrow />
+            </span>
+          </span>
+        </span>
+      </Link>
+      {/* Separate from the link: a phone can turn the page before choosing
+          to leave it. Hover and keyboard focus retain the original flip. */}
+      <button
+        type="button"
+        className="hf-term-toggle bbi-bare"
+        aria-label={`Flip ${term.label}`}
+        aria-pressed={flipped}
+        onClick={() => setFlipped((value) => !value)}
+      >
+        <span>{flipped ? "Turn back" : "Turn over"}</span>
+        <FolioArrow turn />
+      </button>
+    </li>
+  );
+}
+
 export function HomeResourceShowcase({ resources }: { resources: PageResources | null }) {
   // The ticker duplicates its own list to loop seamlessly; under reduced
   // motion it wraps into a static cluster instead, exactly as the
@@ -68,7 +154,7 @@ export function HomeResourceShowcase({ resources }: { resources: PageResources |
     <section
       data-anchor="toolkit"
       data-anchor-label="The toolkit"
-      className="ins-module py-16"
+      className="hf-toolkit ins-module py-16"
       aria-label="Free calculators, guides, glossary and writing."
     >
       <div className="mx-auto max-w-6xl px-6">
@@ -109,29 +195,28 @@ export function HomeResourceShowcase({ resources }: { resources: PageResources |
         </div>
       )}
 
-      {/* ---- Guides: the travelling border ---------------------------- */}
+      {/* ---- Guides: numbered reading folios -------------------------- */}
       {guides.length > 0 && (
         <div className="mt-16">
           <Heading legend="Read first" title="Six startup guides, drawn fresh each visit." />
-          <ul className="mx-auto mt-6 grid max-w-6xl gap-4 px-6 sm:grid-cols-2 lg:grid-cols-3">
-            {guides.map((guide) => (
+          <ul className="hf-guides mx-auto mt-6 max-w-6xl px-6">
+            {guides.map((guide, index) => (
               <li key={guide.slug}>
-                <Link
-                  to="/startup-guides/$slug"
-                  params={{ slug: guide.slug }}
-                  className="bbi-aura group flex h-full flex-col rounded-2xl border border-border bg-card p-5 transition-transform duration-300 hover:-translate-y-1"
-                >
-                  <span className="text-base font-bold leading-snug text-foreground transition-colors group-hover:text-accent">
-                    {guide.label}
+                <Link to="/startup-guides/$slug" params={{ slug: guide.slug }} className="hf-guide">
+                  <span className="hf-guide-spine" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
-                  <span className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {guide.blurb}
-                  </span>
-                  {guide.meta && (
-                    <span className="mt-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/80">
-                      {guide.meta}
+                  <span className="hf-guide-sheet">
+                    <span className="hf-guide-meta">
+                      <span>Startup guide</span>
+                      {guide.meta && <span>{guide.meta}</span>}
                     </span>
-                  )}
+                    <span className="hf-guide-title">{guide.label}</span>
+                    <span className="hf-guide-blurb">{guide.blurb}</span>
+                    <span className="hf-guide-open">
+                      Read the guide <FolioArrow />
+                    </span>
+                  </span>
                 </Link>
               </li>
             ))}
@@ -143,40 +228,9 @@ export function HomeResourceShowcase({ resources }: { resources: PageResources |
       {glossary.length > 0 && (
         <div className="mt-16">
           <Heading legend="Say it properly" title="Twelve terms. Turn one over." />
-          <ul className="mx-auto mt-6 grid max-w-6xl gap-4 px-6 sm:grid-cols-2 lg:grid-cols-3">
-            {glossary.map((term) => (
-              <li key={term.slug} className="bbi-turn h-40">
-                {/* The link wraps BOTH faces, so the whole card is one target
-                    and `:focus-within` on the outer element turns it for a
-                    keyboard exactly as hover does for a cursor. */}
-                <Link
-                  to="/founder-glossary"
-                  hash={term.slug}
-                  className="block h-full rounded-2xl"
-                  aria-label={`${term.label}: ${term.blurb}`}
-                >
-                  <span className="bbi-turn-inner block rounded-2xl">
-                    <span className="bbi-turn-face rounded-2xl border border-border bg-card p-5">
-                      <span className="text-lg font-bold leading-snug text-foreground">
-                        {term.label}
-                      </span>
-                      {term.meta && (
-                        <span className="mt-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/80">
-                          {term.meta}
-                        </span>
-                      )}
-                    </span>
-                    <span className="bbi-turn-face bbi-turn-back rounded-2xl border border-primary/40 bg-card p-5">
-                      {/* `aria-hidden`: the link's own label already reads the
-                          term and its definition, so the back face would say
-                          the same sentence a second time. */}
-                      <span aria-hidden className="text-sm leading-relaxed text-foreground">
-                        {term.blurb}
-                      </span>
-                    </span>
-                  </span>
-                </Link>
-              </li>
+          <ul className="hf-terms mx-auto mt-6 max-w-6xl px-6">
+            {glossary.map((term, index) => (
+              <GlossaryFlip key={term.slug} term={term} index={index} />
             ))}
           </ul>
         </div>

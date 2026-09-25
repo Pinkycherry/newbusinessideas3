@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
 
 import { cn, hideImgIfBroken } from "@/lib/utils";
+import { useMarqueeMotion } from "@/motion/use-marquee-motion";
 
 export type MovingImageCard = {
   title: string;
@@ -33,15 +33,7 @@ export default function MovingImageCards({
   speed?: number;
   className?: string;
 }) {
-  const [still, setStill] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setStill(query.matches);
-    sync();
-    query.addEventListener("change", sync);
-    return () => query.removeEventListener("change", sync);
-  }, []);
+  const hostRef = useMarqueeMotion();
 
   const perHalf = Math.max(1, Math.ceil(8 / Math.max(cards.length, 1)));
   const half = Array.from({ length: perHalf }, () => cards).flat();
@@ -49,6 +41,7 @@ export default function MovingImageCards({
 
   return (
     <div
+      ref={hostRef}
       className={cn(
         "ac-marquee group relative overflow-hidden",
         "[mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]",
@@ -56,23 +49,21 @@ export default function MovingImageCards({
       )}
     >
       <ul
-        className={cn("flex w-max gap-4", !still && "ac-marquee-track")}
-        style={
-          still
-            ? undefined
-            : {
-                animationDuration: `${speed}s`,
-                animationDirection: direction === "right" ? "reverse" : "normal",
-              }
-        }
+        data-marquee-track
+        className="ac-marquee-track flex w-max gap-4"
+        style={{
+          animationPlayState: "paused",
+          animationDuration: `${speed}s`,
+          animationDirection: direction === "right" ? "reverse" : "normal",
+        }}
       >
         {doubled.map((card, index) => (
           <li key={`${card.title}-${index}`} className="shrink-0">
             <Link
               to={card.to}
               params={card.params}
-              aria-hidden={index >= half.length ? true : undefined}
-              tabIndex={index >= half.length ? -1 : undefined}
+              aria-hidden={index >= cards.length ? true : undefined}
+              tabIndex={index >= cards.length ? -1 : undefined}
               className="group/card relative block h-48 w-[20rem] overflow-hidden border border-border bg-card md:h-56 md:w-[26rem]"
             >
               {card.src ? (
@@ -81,6 +72,9 @@ export default function MovingImageCards({
                     src={card.src}
                     alt={card.alt ?? ""}
                     loading="lazy"
+                    decoding="async"
+                    width={624}
+                    height={336}
                     ref={hideImgIfBroken}
                     onError={(event) => hideImgIfBroken(event.currentTarget)}
                     className="absolute inset-0 h-full w-full object-cover opacity-70 transition-all duration-500 group-hover/card:scale-105 group-hover/card:opacity-100"

@@ -20,15 +20,16 @@ import { prefersReducedMotion, suspendPointerChannel } from "@/motion";
  *    pages of the same template share one mounted shell.
  *
  * No scroll listener, no pointer listener, no animation frame loop.
- * `enabled` is false on the homepage, which keeps its original motion.
+ * `enabled` selects the interior page scope/reveals. The inherited root
+ * pointer channel is suspended on every page: homepage interactions now
+ * animate the interacted element instead of restyling the whole document.
  */
 export function useSiteStage(enabled = true) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
-    if (!enabled) return;
     const html = document.documentElement;
-    html.dataset["cm"] = "site";
+    if (enabled) html.dataset["cm"] = "site";
     const release = suspendPointerChannel();
     return () => {
       release();

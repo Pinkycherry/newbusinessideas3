@@ -9,12 +9,11 @@ import { SiteShell } from "@/components/site-shell";
 import { CategoryBadge } from "@/components/category-badge";
 import { AdSlot } from "@/components/AdSlot";
 import { BusinessIcons } from "@/components/business-icons";
-import { CardFan } from "@/components/card-fan";
 import HoverBorderGradient from "@/components/aceternity/hover-border-gradient";
 import TextGenerateEffect from "@/components/aceternity/text-generate-effect";
 import SpotlightCard from "@/components/aceternity/spotlight-card";
 
-import Lens from "@/components/aceternity/lens";
+import "@/components/home-stage.css";
 
 /**
  * Below-the-fold components, split out of the homepage bundle.
@@ -52,7 +51,6 @@ function belowFold<P extends object>(load: () => Promise<{ default: ComponentTyp
    that is fetched after the page has painted, and a browser that never gets
    there never pays for it. MoltenMetal used to sit beside this: it was the
    hero's animated ground and is gone. */
-const GlowCursor = lazy(() => import("@/components/aceternity/glow-cursor"));
 
 const ContainerTextFlip = belowFold(() => import("@/components/aceternity/container-text-flip"));
 const InfiniteMovingCards = belowFold(
@@ -74,18 +72,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { FEATURED_IDEA_IDS } from "@/config/featured";
-import {
-  catalogQuery,
-  getFeaturedIdeas,
-  getSurpriseIdeas,
-  getTrendingIdeas,
-} from "@/lib/ideas.functions";
-import { DemandBoard } from "@/components/demand-board";
+import { catalogQuery, getFeaturedIdeas, getSurpriseIdeas } from "@/lib/ideas.functions";
 import type { CategoryNode } from "@/lib/ideas.functions";
 import { hideImgIfBroken } from "@/lib/utils";
 import { AccordionItem } from "@/components/accordion-item";
 import { loadGsap, prefersReducedMotion } from "@/lib/motion";
-import { Odometer, useScrollProgress, useStaggerReveal, useTwoWayReveal } from "@/motion";
+import { Odometer } from "@/motion";
 
 /**
  * Hero's primary CTA. Every action on this page is a HoverBorderGradient now,
@@ -108,7 +100,7 @@ function ArrowGlyph() {
 
 function HeroCta() {
   return (
-    <HoverBorderGradient asChild containerClassName="rounded-full justify-self-start">
+    <HoverBorderGradient still asChild containerClassName="rounded-full justify-self-start">
       <Link
         to="/browse"
         className="rounded-full text-xs font-extrabold uppercase tracking-[0.18em]"
@@ -187,6 +179,7 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
             </SelectContent>
           </Select>
           <HoverBorderGradient
+            still
             onClick={() => surprise.mutate()}
             disabled={surprise.isPending}
             className="disabled:cursor-wait disabled:opacity-70"
@@ -264,20 +257,11 @@ const featuredQuery = queryOptions({
   queryFn: () => getFeaturedIdeas({ data: { ideaIds: FEATURED_IDEA_IDS } }),
 });
 
-// Ordered by the live `trend_score` column, so unlike `featuredQuery` above --
-// which reads a hand-maintained list of ids -- this moves on its own as the
-// data moves.
-const trendingQuery = queryOptions({
-  queryKey: ["trending"],
-  queryFn: () => getTrendingIdeas(),
-});
-
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
     await Promise.all([
       context.queryClient.ensureQueryData(catalogQuery),
       context.queryClient.ensureQueryData(featuredQuery),
-      context.queryClient.ensureQueryData(trendingQuery),
     ]);
   },
   head: () => ({
@@ -316,21 +300,16 @@ function HomePage() {
   // them in the browser would disagree with the server's markup.
   const { resources } = useLoaderData({ from: "__root__" });
   const { data: highlights } = useSuspenseQuery(featuredQuery);
-  const { data: trending } = useSuspenseQuery(trendingQuery);
   const featured = highlights.slice(0, 6);
 
   // Phones only. The homepage is 17,000px tall on a 390px screen and a reader
   // travels it in both directions; a one-way reveal is seen once. See
   // src/motion/use-two-way-reveal.tsx.
-  useTwoWayReveal();
 
   return (
     <SiteShell tone="instrument">
       {/* The trail. It does not replace the system cursor — the canvas is
           pointer-events:none, so every hit target is exactly where it was. */}
-      <Suspense fallback={null}>
-        <GlowCursor />
-      </Suspense>
 
       {/* LLM crawlable summary */}
       <p className="sr-only">
@@ -367,21 +346,19 @@ function HomePage() {
         {/* Centred. The hero was a left column with two thirds of the fold
             empty beside it; with no image left to fill that space there was
             nothing holding the right-hand side. */}
-        <div className="relative mx-auto flex max-w-[62rem] flex-col items-center px-6 py-12 text-center lg:py-16">
+        <div className="home-hero-layout">
           <p className="ins-legend">The Truth About Business Ideas</p>
 
           {/* Plain type, no reveal. This line went from a particle heading, to
               a blur reveal, to what it always should have been: the sentence,
               legible the instant the page paints. Nothing animates it now. */}
-          <h1 className="mt-5 max-w-[20ch]">
-            Tired of paying just to check if your idea will work?
-          </h1>
+          <h1 className="home-title">Tired of paying just to check if your idea will work?</h1>
 
           {/* The two figures, at display size. They are the fold's proof —
               the reader's first question is whether anything is actually
               behind the promise — so they are set as large as the headline
               rather than as a caption under it, and both of them count up. */}
-          <dl className="mt-8 flex flex-wrap items-end justify-center gap-x-12 gap-y-5 sm:gap-x-16">
+          <dl className="home-proof">
             <div>
               <dd className="ins-num text-[3.25rem] font-bold leading-[0.95] text-[var(--ins-bright)] sm:text-[4.5rem]">
                 <Odometer value={catalog.totalIdeas} format={(n) => `${Math.round(n)}`} />
@@ -405,36 +382,43 @@ function HomePage() {
               want full access" — a price that no longer exists. The site is
               free, so the paragraph says why it is free, in the founder's own
               terms, rather than describing a plan nobody can buy. */}
-          <Lens className="mt-8 max-w-[62ch] space-y-4 text-base leading-relaxed text-[var(--ins-read)] sm:text-[1.175rem]">
+          <div className="home-story">
+            <span className="home-story-label">The founder’s promise</span>
             <p>
               We built a free home for real business ideas — side hustles, zero investment ideas,
               work from home ideas, and low investment ideas. Every idea is researched, not guessed.
               We tell you who will actually pay you, how the money works, and what will hurt you in
               year one. Then we give it to you straight — build it, or walk away.
             </p>
-            <p>
-              BBI is free because its founder paid three platforms to validate four business ideas
-              and lost money he could afford to lose. Most people reading this cannot. He had a
-              salary. He could absorb the loss. The people in his WhatsApp groups could not. The
-              people this site was built for cannot.
-            </p>
-            <p>
-              So the rule is simple. Sign in once. The whole library stays open. No credits that
-              disappear. No monthly fee that starts after a &ldquo;free trial&rdquo;. No expiry date
-              that turns your access into a memory. The research, the numbers, the honest
-              kill-verdicts — all of it stays free because the people who need it most start from
-              zero.
-            </p>
-          </Lens>
+            <details className="home-origin">
+              <summary>
+                Why the whole library stays free <span aria-hidden>↗</span>
+              </summary>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <p>
+                BBI is free because its founder paid three platforms to validate four business ideas
+                and lost money he could afford to lose. Most people reading this cannot. He had a
+                salary. He could absorb the loss. The people in his WhatsApp groups could not. The
+                people this site was built for cannot.
+              </p>
+              <p>
+                So the rule is simple. Sign in once. The whole library stays open. No credits that
+                disappear. No monthly fee that starts after a &ldquo;free trial&rdquo;. No expiry
+                date that turns your access into a memory. The research, the numbers, the honest
+                kill-verdicts — all of it stays free because the people who need it most start from
+                zero.
+              </p>
+            </details>
+          </div>
+
+          <div className="home-hero-actions">
             {/* One way in, not two. The search control that sat beside this
                 button duplicated the live search already in the header, and
                 split the fold's single call to action in half. */}
             <HeroCta />
           </div>
 
-          <p className="mt-4 text-xs uppercase tracking-[0.16em] text-[var(--ins-mute,var(--muted-foreground))]">
+          <p className="home-hero-note">
             100% free after one sign-in · No credit card required · Pay nothing, ever
           </p>
         </div>
@@ -570,7 +554,7 @@ function HomePage() {
               Blueprints worth your afternoon
             </h2>
           </div>
-          <HoverBorderGradient asChild>
+          <HoverBorderGradient still asChild>
             <Link to="/browse" className="text-xs font-semibold uppercase tracking-[0.2em]">
               Browse the full library →
             </Link>
@@ -825,7 +809,8 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
             width={1000}
             height={567}
             alt="The Golden Tree of Business Growth"
-            fetchPriority="high"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-contain filter drop-shadow-[0_10px_35px_rgba(27,42,107,0.35)] transition-all duration-700 group-hover:drop-shadow-[0_15px_50px_rgba(27,42,107,0.5)]"
             onError={(e) => (e.currentTarget.style.display = "none")}
           />
@@ -858,7 +843,8 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
             width={640}
             height={363}
             alt="The Golden Tree of Business Growth (Mobile)"
-            fetchPriority="high"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-contain filter drop-shadow-[0_8px_25px_rgba(27,42,107,0.35)]"
             onError={(e) => (e.currentTarget.style.display = "none")}
           />
@@ -1017,7 +1003,10 @@ function BrandStatementBanner() {
     // people actually stop and read does not need a frame around it: a rule
     // above, the statement at display size, and the prose set to a real
     // measure beside it.
-    <section className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4 sm:pt-16">
+    <section
+      id="what-you-get"
+      className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4 sm:pt-16"
+    >
       <p className="ins-legend">Who we are</p>
       <div className="mt-4 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
         {/* The flip runs through the words of the name itself, so the
@@ -1140,7 +1129,7 @@ const BBI_FAQ_1 = [
 
 function HowItWorksSection() {
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+    <section id="how-it-works" className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <p className="ins-legend">Step by step</p>
       <h2 className="mt-4 max-w-4xl text-[2rem] leading-[1.05] sm:text-[3rem]">
         Grab the idea. Validate it however you want. Keep the money.
@@ -1246,12 +1235,12 @@ const BBI_BUILT_FOR: {
 
 function WhoForSection() {
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+    <section id="built-for-you" className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <p className="ins-legend">Who we built this for</p>
       <h2 className="mt-3 max-w-3xl">For the person with an idea and nothing else.</h2>
       {/* Two paragraphs at a real reading measure, side by side, rather than
           stacked in the left half of a card. */}
-      <Lens className="mt-6 grid gap-6 text-base leading-relaxed text-muted-foreground sm:grid-cols-2 sm:gap-10">
+      <div className="mt-6 grid gap-6 text-base leading-relaxed text-muted-foreground sm:grid-cols-2 sm:gap-10">
         <p>
           Some of us have been jobless. Some of us have started over with no savings. We know what
           it&apos;s like to have a business idea and no laptop, no capital, no one to ask. BBI is
@@ -1264,7 +1253,7 @@ function WhoForSection() {
           no team, no connections. If that&apos;s not you — great, we&apos;ve got the bigger ideas
           too.
         </p>
-      </Lens>
+      </div>
 
       <div className="mt-12 border-t border-border pt-8">
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
@@ -1340,7 +1329,7 @@ const BBI_FAQ_2 = [
 
 function PricingPhilosophySection() {
   return (
-    <section className="mt-16">
+    <section id="free-access" className="mt-16">
       {/* The one inverted band on the page. Twelve sections of paper in a row
           flatten out; the pricing statement is the right place to break the
           rhythm, and it is the only block here that is genuinely an assertion
@@ -1374,7 +1363,7 @@ function PricingPhilosophySection() {
 
 function TeamSection() {
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+    <section id="behind-bbi" className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       {/* Two columns. Stacked, the diagram sat alone in a full-width band with
           the right 40% of the section empty beside the copy and 336px of
           orbit floating in the middle of it — 687px of section to carry 246px
@@ -1390,10 +1379,7 @@ function TeamSection() {
             />
             <p>
               The full story lives on our{" "}
-              <LinkPreview
-                url="https://newbusinessideas3.vercel.app/about"
-                className="font-semibold"
-              >
+              <LinkPreview url="https://bbusiness.online/about" className="font-semibold">
                 <Link
                   to="/about"
                   className="font-semibold text-primary underline decoration-border underline-offset-4 transition-colors hover:text-accent"
@@ -1422,7 +1408,7 @@ function TeamSection() {
 
 function InspiredBySection() {
   return (
-    <section className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
+    <section id="inspiration" className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
       {/* Was a centred card. This is an attribution, so it is set as one: a
           rule down the left edge, the way a citation is marked in print. */}
       <div className="border-l-2 border-primary pl-6 sm:pl-8">
@@ -1453,7 +1439,7 @@ const BBI_US = [
 
 function ComparisonSection() {
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+    <section id="the-difference" className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
       <p className="ins-legend">The comparison</p>
       <h2 className="mt-3 max-w-3xl">
         Validating a business idea should not cost you the money you were going to start it with.
@@ -1520,7 +1506,10 @@ const BBI_FUTURE_TERMS = [
 
 function FutureProofSpotlight() {
   return (
-    <section className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4">
+    <section
+      id="future-themes"
+      className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4"
+    >
       <p className="ins-legend">Ways into the library</p>
       <h2 className="mt-3 max-w-3xl">Start from a theme instead of a blank search box.</h2>
       <TextGenerateEffect
@@ -1587,7 +1576,11 @@ const BBI_KEYWORD_GROUPS: KeywordGroup[] = [
 
 function KeywordMosaic() {
   return (
-    <section className="mx-auto mt-16 max-w-6xl px-3 sm:px-4" aria-label="Browse ideas by keyword">
+    <section
+      id="browse-keywords"
+      className="mx-auto mt-16 max-w-6xl px-3 sm:px-4"
+      aria-label="Browse ideas by keyword"
+    >
       <p className="ins-legend">Every angle covered</p>
       <h2 className="mt-2 max-w-2xl">
         <EncryptedText

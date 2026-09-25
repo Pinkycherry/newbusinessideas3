@@ -242,6 +242,8 @@ const FONT_CSS =
 const FONT_SWAP = `(function(){var l=document.getElementById("bbi-fonts");if(!l)return;var go=function(){l.media="all"};if(l.sheet){go()}else{l.addEventListener("load",go,{once:true})}})();`;
 
 function FontStylesheet() {
+  const homepage = useRouterState({ select: (state) => state.location.pathname === "/" });
+  if (homepage) return null;
   return (
     <>
       <link id="bbi-fonts" rel="stylesheet" href={FONT_CSS} media="print" />
