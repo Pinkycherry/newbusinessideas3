@@ -1,0 +1,11 @@
+{
+  "slug": "flexible-business-ideas-for-women",
+  "title": "50 Flexible Business Ideas for Women Balancing Work and Life",
+  "excerpt": "50 real flexible business ideas for women, home-based and India-focused, from BBI's own research library. Real links, no invented titles or numbers.",
+  "meta_description": "Build a career on your own terms with 50 flexible business ideas for women. Practical, independent, and rewarding paths to financial independence.",
+  "categories": ["Business Ideas for Women"],
+  "source_category_slug": "business-ideas-for-women",
+  "author": "BBI",
+  "status": "published",
+  "note": "Repo copy of the blog_posts row with this slug. This file is not read by the live app — the /blog route serves published content from Supabase only, per src/lib/blog.server.ts. This is the version-controlled backup/source of truth."
+}
