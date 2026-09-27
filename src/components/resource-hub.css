@@ -464,16 +464,210 @@
   }
 }
 
+/* Each surface has its own motion language. All effects run on interaction;
+   no timers, pointer tracking, permanent compositor layers or scroll work. */
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .rh-hub .rh-card:hover,
-  .rh-hub .rh-shortcuts > a:hover {
-    transform: translateY(-3px);
+  .rh-hub {
+    --rh-cut: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .rh-hub .rh-card {
+    overflow: hidden;
+    transition:
+      transform 450ms var(--rh-cut),
+      border-color 220ms ease;
+  }
+  .rh-hub .rh-card:is(:hover, :focus-visible) {
+    z-index: 2;
+    border-color: #ffc4b9;
+    box-shadow:
+      inset 0 2px 2px #fff9,
+      inset 0 -2px 8px #ca080866,
+      0 18px 28px -18px #000;
+  }
+  .rh-hub .rh-card::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .rh-hub :is(.rh-card-icon, .rh-card-arrow, .rh-card-title) {
+    transition: transform 450ms var(--rh-cut);
   }
 
-  .rh-hub .rh-card:hover .rh-card-arrow,
-  .rh-hub .rh-action:hover .rh-action-arrow,
-  .rh-hub .rh-shortcuts > a:hover > svg:last-child {
-    transform: translate(2px, -2px);
+  /* Calculators — a crimson scanner crosses the raised instrument panel. */
+  .rh-hub .rh-card--calculators::after {
+    inset: 0;
+    background: linear-gradient(180deg, transparent 35%, #ca080822 75%, #ffb4aa77 99%, #fff2edaa);
+    transform: translateY(-102%);
+    opacity: 0;
+    transition:
+      transform 700ms var(--rh-cut),
+      opacity 200ms ease;
+  }
+  .rh-hub .rh-card--calculators:is(:hover, :focus-visible) {
+    transform: perspective(1000px) translateY(-7px) rotateX(3deg);
+  }
+  .rh-hub .rh-card--calculators:is(:hover, :focus-visible)::after {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .rh-hub .rh-card--calculators:is(:hover, :focus-visible) .rh-card-icon {
+    transform: rotate(-12deg) scale(1.14);
+  }
+  .rh-hub .rh-card--calculators:is(:hover, :focus-visible) .rh-card-arrow {
+    transform: rotate(45deg);
+  }
+
+  /* Guides — the folio hinges from its spine; the text remains readable. */
+  .rh-hub .rh-card--guides {
+    transform-origin: left center;
+  }
+  .rh-hub .rh-card--guides::after {
+    inset: 0;
+    background: linear-gradient(105deg, transparent 30%, #fff4 48%, #ffb6a82b 51%, transparent 70%);
+    transform: translateX(-115%);
+    transition: transform 750ms var(--rh-cut);
+  }
+  .rh-hub .rh-card--guides:is(:hover, :focus-visible) {
+    transform: perspective(900px) rotateY(-7deg) translateY(-4px);
+  }
+  .rh-hub .rh-card--guides:is(:hover, :focus-visible)::after {
+    transform: translateX(115%);
+  }
+  .rh-hub .rh-card--guides:is(:hover, :focus-visible) .rh-card-title {
+    transform: translateX(5px);
+  }
+  .rh-hub .rh-card--guides:is(:hover, :focus-visible) .rh-card-arrow {
+    transform: translateX(5px);
+  }
+
+  /* Glossary — two glass shutters separate around the definition. */
+  .rh-hub .rh-card--glossary::before,
+  .rh-hub .rh-card--glossary::after {
+    inset: 0 0 50%;
+    border: 0;
+    border-radius: 0;
+    background: linear-gradient(165deg, #ffd0c51f, #ca080830);
+    transition: transform 550ms var(--rh-cut);
+  }
+  .rh-hub .rh-card--glossary::after {
+    inset: 50% 0 0;
+    background: linear-gradient(345deg, #ffd0c51f, #ca080830);
+  }
+  .rh-hub .rh-card--glossary:is(:hover, :focus-visible)::before {
+    transform: translateY(-100%);
+  }
+  .rh-hub .rh-card--glossary:is(:hover, :focus-visible)::after {
+    transform: translateY(100%);
+  }
+  .rh-hub .rh-card--glossary:is(:hover, :focus-visible) {
+    transform: translateY(-4px);
+  }
+  .rh-hub .rh-card--glossary:is(:hover, :focus-visible) .rh-card-icon {
+    transform: rotateY(180deg);
+  }
+  .rh-hub .rh-card--glossary:is(:hover, :focus-visible) .rh-card-arrow {
+    transform: translate(3px, -3px);
+  }
+
+  /* Blog — viewfinder brackets lock onto the story like a camera frame. */
+  .rh-hub .rh-card--posts::after {
+    inset: 9px;
+    border-radius: 12px;
+    background:
+      linear-gradient(#ffb6a8, #ffb6a8) left top / 28px 2px,
+      linear-gradient(#ffb6a8, #ffb6a8) left top / 2px 28px,
+      linear-gradient(#ffb6a8, #ffb6a8) right bottom / 28px 2px,
+      linear-gradient(#ffb6a8, #ffb6a8) right bottom / 2px 28px;
+    background-repeat: no-repeat;
+    transform: scale(1.15);
+    opacity: 0;
+    transition:
+      transform 450ms var(--rh-cut),
+      opacity 250ms ease;
+  }
+  .rh-hub .rh-card--posts:is(:hover, :focus-visible) {
+    transform: translateY(-6px) scale(1.015);
+  }
+  .rh-hub .rh-card--posts:is(:hover, :focus-visible)::after {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .rh-hub .rh-card--posts:is(:hover, :focus-visible) .rh-card-arrow {
+    transform: rotate(-45deg) scale(1.1);
+  }
+
+  /* Actions — reflective red wipe; shortcuts press like glass keys. */
+  .rh-hub .rh-action,
+  .rh-hub .rh-shortcuts > a {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    transition:
+      transform 260ms var(--rh-cut),
+      border-color 220ms ease;
+  }
+  .rh-hub .rh-action::after {
+    content: "";
+    position: absolute;
+    inset: -50% -20%;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(110deg, transparent 30%, #ffffff4d 50%, transparent 65%);
+    transform: translateX(-100%);
+    transition: transform 650ms var(--rh-cut);
+  }
+  .rh-hub .rh-action:is(:hover, :focus-visible)::after {
+    transform: translateX(100%);
+  }
+  .rh-hub .rh-action:is(:hover, :focus-visible) {
+    transform: translateY(-3px);
+  }
+  .rh-hub .rh-action:is(:hover, :focus-visible) .rh-action-arrow {
+    transform: translate(3px, -3px);
+  }
+  .rh-hub .rh-shortcuts > a:is(:hover, :focus-visible) {
+    transform: perspective(700px) rotateX(6deg) translateY(-5px);
+    border-color: #ffd7cf;
+    box-shadow:
+      inset 0 2px 3px #fff6,
+      inset 0 -10px 20px #ca080833,
+      0 12px 14px -10px #000;
+  }
+  .rh-hub .rh-shortcuts > a:is(:hover, :focus-visible) > svg:last-child {
+    transform: translate(3px, -3px) rotate(45deg);
+  }
+  .rh-hub .rh-action:active,
+  .rh-hub .rh-shortcuts > a:active {
+    transform: translateY(1px) scale(0.98);
+  }
+
+  /* Intro — a broad studio light rolls across the glass without a blur. */
+  .rh-hub .rh-intro {
+    overflow: hidden;
+  }
+  .rh-hub .rh-intro::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 20%, #ffb6a82b 48%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 1100ms var(--rh-cut);
+  }
+  .rh-hub .rh-intro:is(:hover, :focus-within)::after {
+    transform: translateX(100%);
+  }
+}
+
+/* Touch is immediate, with no sticky hover or first-tap animation gate. */
+@media (hover: none) {
+  .rh-hub .rh-card:active,
+  .rh-hub .rh-action:active,
+  .rh-hub .rh-shortcuts > a:active {
+    border-color: #fff2ed;
+    box-shadow: inset 0 0 0 2px #ca0808;
   }
 }
 
