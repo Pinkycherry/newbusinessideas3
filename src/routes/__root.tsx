@@ -164,10 +164,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       })),
       /* The .ico carries 16 through 256 so the tab strip, the bookmark bar
          and Windows each get a bitmap made for their size rather than one
-         downscaled on the fly. The 32px PNG is what modern browsers prefer
-         when offered both. */
+         downscaled on the fly. The PNGs are sized in multiples of 48, which
+         is what Google Search wants for the icon beside a result. Their
+         file names are new on purpose: Google kept showing the old Lovable
+         heart from its cache, and a URL it has never fetched is one it has
+         to fetch fresh. Keep these names stable from here on. */
+      { rel: "icon", href: "/images/brob-favicon-192.png", type: "image/png", sizes: "192x192" },
+      { rel: "icon", href: "/images/brob-favicon-48.png", type: "image/png", sizes: "48x48" },
       { rel: "icon", href: "/favicon.ico", sizes: "any" },
-      { rel: "icon", href: "/images/favicon-32.png", type: "image/png", sizes: "32x32" },
       { rel: "apple-touch-icon", href: "/images/apple-touch-icon.png", sizes: "180x180" },
     ],
   }),

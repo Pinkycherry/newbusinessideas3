@@ -26,7 +26,7 @@ Owner: **You** = needs the founder (an account, a decision, a click).
 | # | What | Why it matters | Owner |
 |---|---|---|---|
 | 6 | **Old "Keep exploring" block on 17 pages** | `ExploreRail` (three generic cards) still renders directly above the new resource block on 17 routes. Remove the mounts, then delete the component. | Claude |
-| 7 | **Google still shows the Lovable icon** | The site's favicon has been the Bro-B mark since 2026-09-20 and meets Google's rules (includes 48×48, not blocked by robots). Google is showing its old cached copy. | **You**: Search Console → URL Inspection → `https://bbusiness.online/` → Request indexing |
+| 7 | **Google still shows the Lovable icon** | Checked 2026-09-27: Google's favicon cache (`google.com/s2/favicons?domain=bbusiness.online`) still returns the Lovable heart; the site serves Bro-B. On 2026-09-27 the icon links moved to never-fetched URLs (`/images/brob-favicon-192.png`, `/images/brob-favicon-48.png`, both multiples of 48) so Google has to fetch fresh. Delete this row once that URL returns the Bro-B mark. | **You**: after the deploy, Search Console → URL Inspection → `https://bbusiness.online/` → Request indexing |
 | 8 | **No `ads.txt`, no AdSense publisher ID** | Hard requirement for AdSense. | **You** supply the publisher ID |
 | 10 | **`sameAs` is empty** | Organization schema lists no social profiles. Deliberately empty — inventing them is worse. | **You** supply the real profile URLs |
 | 12 | **Look at the 2026-09-22 changes on the live site** | Nothing from that day was seen rendered from a session. Worth a look: one idea page, `/founders`, `/calculator/break-even`, a category page, a blog post, the homepage, and the footer's Built With strip (now credits Cloudflare, not Vercel). | **You** |
