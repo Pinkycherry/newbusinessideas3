@@ -1,0 +1,11 @@
+{
+  "slug": "50-untold-work-from-home-business-ideas",
+  "title": "50 Untold Work-From-Home Business Ideas You Can Start With No Money",
+  "excerpt": "50 real work-from-home business ideas from BBI's own research library, each with a real link to the full blueprint, no invented titles or numbers.",
+  "meta_description": "50 work from home business ideas you can start with no money, each linked to a full researched blueprint on who pays, how the money works, and what breaks in year one.",
+  "categories": ["Work From Home Business Ideas"],
+  "source_category_slug": "work-from-home-business-ideas",
+  "author": "BBI",
+  "status": "published",
+  "note": "Repo copy of the blog_posts row with this slug. This file is not read by the live app — the /blog route serves published content from Supabase only, per src/lib/blog.server.ts. This is the version-controlled backup/source of truth."
+}
