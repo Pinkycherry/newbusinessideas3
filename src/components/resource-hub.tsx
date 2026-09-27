@@ -32,7 +32,7 @@ type Group = {
 const GROUPS: Group[] = [
   {
     kind: "calculators",
-    label: "Make the numbers work.",
+    label: "Every number. A clearer decision.",
     eyebrow: "Free startup calculators",
     description:
       "Your inputs. Clear working. Find the costs, margins and milestones behind your next move.",
@@ -44,7 +44,7 @@ const GROUPS: Group[] = [
   },
   {
     kind: "guides",
-    label: "From a good idea to a first step.",
+    label: "Open a new chapter.",
     eyebrow: "Startup guides",
     description:
       "Practical reading for the decisions ahead, with fresh picks from the library each visit.",
@@ -56,7 +56,7 @@ const GROUPS: Group[] = [
   },
   {
     kind: "glossary",
-    label: "Speak startup. Skip the jargon.",
+    label: "Big ideas. Plain words.",
     eyebrow: "Startup glossary",
     description: "The terms you will meet along the way, explained in plain language.",
     action: "Full glossary",
@@ -67,7 +67,7 @@ const GROUPS: Group[] = [
   },
   {
     kind: "posts",
-    label: "A fresh angle on building.",
+    label: "Read beyond the obvious.",
     eyebrow: "From the blog",
     description: "Ideas, field notes and founder lessons worth taking into your next decision.",
     action: "All posts",
@@ -106,9 +106,16 @@ function ResourceCard({ item, kind, index }: { item: ResourceLink; kind: Kind; i
           ? { to: "/blog/$slug", params: { slug: item.slug } }
           : { to: "/founder-glossary", hash: item.slug };
   return (
-    <li>
-      <Link {...route} className={`rh-card rh-card--${kind}`}>
+    <li data-index={index + 1}>
+      <Link
+        {...route}
+        data-index={index + 1}
+        className={`rh-card rh-card--${kind}${index === 0 ? " rh-card--lead" : ""}`}
+      >
         <span className="rh-card-top">
+          <span className="rh-card-number" aria-hidden="true">
+            {String(index + 1).padStart(2, "0")}
+          </span>
           <span className="rh-card-icon" aria-hidden="true">
             <Icon size={20} strokeWidth={1.65} />
           </span>
@@ -123,8 +130,16 @@ function ResourceCard({ item, kind, index }: { item: ResourceLink; kind: Kind; i
         </span>
         <strong className="rh-card-title">{item.label}</strong>
         {item.blurb && <span className="rh-card-blurb">{item.blurb}</span>}
+        {kind === "calculators" && index === 0 && (
+          <span className="rh-console-art" aria-hidden="true">
+            <span>+</span>
+            <span>−</span>
+            <span>×</span>
+            <span>÷</span>
+          </span>
+        )}
         <span className="rh-card-foot">
-          {action}
+          <span className="rh-card-action-label">{action}</span>
           <span className="rh-card-arrow" aria-hidden="true">
             <ArrowUpRight size={18} />
           </span>
@@ -198,15 +213,19 @@ export function ResourceHub({
         <div className="rh-intro-copy">
           <span className="rh-eyebrow">The founder's toolkit · Always free</span>
           <h2>
-            Your next move,
-            <br />
-            made clearer.
+            An idea is a start.{" "}
+            <span className="rh-intro-emphasis">Make your next move count.</span>
           </h2>
           <p>
             Run the numbers. Find your starting point. Everything here is free, with no sign-in or
             credits.
           </p>
         </div>
+        <span className="rh-poster-art" aria-hidden="true">
+          <span>PLAN</span>
+          <span>TEST</span>
+          <span>BUILD</span>
+        </span>
         <nav className="rh-shortcuts" aria-label="Explore the free toolkit">
           {groups.map(({ kind, eyebrow, Icon }) => (
             <a key={kind} href={`#rh-${kind === "posts" ? "blog" : kind}`}>
