@@ -5,6 +5,9 @@ import { ArrowRight } from "lucide-react";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
+import { BlogCtaEnd, BlogCtaHero, BlogCtaStickyBar } from "@/components/blog-cta";
+import { headingIdeaSlugs, injectIdeaCtas, isSignedIn } from "@/lib/blog-cta-shared";
+import { useAuth } from "@/hooks/use-auth";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPost } from "@/lib/blog.functions";
 import { CO_FOUNDER, FOUNDER, founderProfile } from "@/lib/site-config";
@@ -87,11 +90,14 @@ function BlogPostPage() {
   const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
 
   const relatedRef = useStaggerReveal<HTMLDivElement>({ direction: "up", stagger: 0.05 });
+  const auth = useAuth();
   if (!data) return null;
   const { post, related } = data;
+  const ideaSlugs = headingIdeaSlugs(post.html);
   // Split the sanitized article so ad slots can sit after the first
-  // paragraph and at the mid-article point.
-  const blocks = withLinkMotion(post.html).split(/(?<=<\/p>)/);
+  // paragraph and at the mid-article point. The per-idea Validate buttons
+  // are added after withLinkMotion so they are not given its link class.
+  const blocks = injectIdeaCtas(withLinkMotion(post.html), isSignedIn(auth)).split(/(?<=<\/p>)/);
   const firstBlock = blocks.slice(0, 1).join("");
   const midIndex = Math.max(1, Math.ceil(blocks.length / 2));
   const secondBlock = blocks.slice(1, midIndex).join("");
@@ -99,7 +105,10 @@ function BlogPostPage() {
 
   return (
     <SiteShell tone="instrument">
-      <article ref={sceneRef} className="cx-scene mx-auto max-w-3xl px-3 py-12 sm:px-4">
+      <article
+        ref={sceneRef}
+        className={`cx-scene mx-auto max-w-3xl px-3 py-12 sm:px-4${isSignedIn(auth) ? "" : " blog-cta-has-sticky"}`}
+      >
         {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
         {/* Reading progress lives in SiteShell (site-shell.tsx — the rail
             under the header, driven by the same --page-p). A second rail
@@ -186,6 +195,13 @@ function BlogPostPage() {
           </div>
         )}
 
+        <BlogCtaHero
+          auth={auth}
+          postSlug={post.slug}
+          firstIdeaSlug={ideaSlugs[0] ?? null}
+          ideaCount={ideaSlugs.length}
+        />
+
         {/* Content comes from our own CMS and is sanitized server-side
             (scripts, iframes, inline handlers and theme classes stripped).
 
@@ -212,7 +228,10 @@ function BlogPostPage() {
           </div>
         </div>
 
+        <BlogCtaEnd auth={auth} postSlug={post.slug} />
+
         <AdSlot position="blog-post-after-last-paragraph" size="banner" className="mt-6" />
+        <BlogCtaStickyBar auth={auth} postSlug={post.slug} />
 
         {related.length > 0 && (
           <section className="mt-14 border-t border-border/70 pt-10">
