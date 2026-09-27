@@ -97,7 +97,9 @@ function BlogPostPage() {
   // Split the sanitized article so ad slots can sit after the first
   // paragraph and at the mid-article point. The per-idea Validate buttons
   // are added after withLinkMotion so they are not given its link class.
-  const blocks = injectIdeaCtas(withLinkMotion(post.html), isSignedIn(auth)).split(/(?<=<\/p>)/);
+  const blocks = injectIdeaCtas(withLinkMotion(post.html), isSignedIn(auth), post.slug).split(
+    /(?<=<\/p>)/,
+  );
   const firstBlock = blocks.slice(0, 1).join("");
   const midIndex = Math.max(1, Math.ceil(blocks.length / 2));
   const secondBlock = blocks.slice(1, midIndex).join("");
