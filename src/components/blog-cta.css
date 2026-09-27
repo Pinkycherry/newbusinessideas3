@@ -140,3 +140,54 @@ a.blog-cta-btn-sm {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
+
+/* Mid-list checkpoint, every few ideas (checkpointStep in blog-cta-shared). */
+.wp-prose .blog-cta-checkpoint {
+  display: block;
+  margin: 2.25rem 0 1.5rem;
+  border: 1px solid var(--cm-line-2, color-mix(in srgb, currentColor 18%, transparent));
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.1rem;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--bbi-accent, #ca0808) 16%, transparent),
+    color-mix(in srgb, var(--bbi-accent, #ca0808) 4%, transparent)
+  );
+}
+@media (min-width: 640px) {
+  .wp-prose .blog-cta-checkpoint {
+    padding: 1.5rem 1.75rem;
+  }
+}
+.wp-prose .blog-cta-checkpoint .blog-cta-title {
+  font-size: 1.05rem;
+}
+.wp-prose .blog-cta-chips {
+  margin-top: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.wp-prose a.blog-cta-chip,
+.wp-prose a.blog-cta-chip:hover {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-height: 36px;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--bbi-accent, #ca0808) 55%, transparent);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--foreground);
+  text-decoration: none;
+  background: rgb(0 0 0 / 0.18);
+}
+.wp-prose a.blog-cta-chip:hover {
+  border-color: var(--bbi-accent, #ca0808);
+  background: color-mix(in srgb, var(--bbi-accent, #ca0808) 22%, transparent);
+}
+.wp-prose .blog-cta-checkpoint .blog-cta-actions {
+  margin-top: 1rem;
+}
