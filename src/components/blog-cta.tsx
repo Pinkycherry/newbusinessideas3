@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
@@ -124,15 +126,22 @@ export function BlogCtaEnd({ auth, postSlug }: { auth: AuthState; postSlug: stri
 /**
  * Slim bar pinned to the bottom of the screen on phones, for new visitors
  * only. Signed-in readers already have a button under every idea.
+ *
+ * Portalled to <body>: the article is a depth scene with a transform, and a
+ * transformed ancestor turns `position: fixed` into "fixed to that box" and
+ * traps the bar under the article's glass cards.
  */
 export function BlogCtaStickyBar({ auth, postSlug }: { auth: AuthState; postSlug: string }) {
-  if (isSignedIn(auth)) return null;
-  return (
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted || isSignedIn(auth)) return null;
+  return createPortal(
     <div className="blog-cta-sticky" role="complementary" aria-label="Sign up free">
       <span className="blog-cta-sticky-text">Validate any idea free</span>
       <a className="ac-cta blog-cta-btn blog-cta-btn-sm" href={signInHref(`/blog/${postSlug}`)}>
         Sign up free
       </a>
-    </div>
+    </div>,
+    document.body,
   );
 }

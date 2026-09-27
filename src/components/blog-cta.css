@@ -68,6 +68,7 @@ a.blog-cta-btn,
   text-decoration: none;
   color: #ffffff;
   background: var(--bbi-accent, #ca0808);
+  border: 1px solid color-mix(in srgb, var(--bbi-accent, #ca0808) 70%, #ffffff);
 }
 a.blog-cta-btn-sm {
   min-height: 40px;
@@ -107,25 +108,35 @@ a.blog-cta-btn-sm {
     left: 0.75rem;
     right: 0.75rem;
     bottom: 0.75rem;
-    z-index: 40;
+    z-index: 60;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
     padding: 0.55rem 0.55rem 0.55rem 1rem;
-    border: 1px solid var(--cm-line-2, color-mix(in srgb, currentColor 18%, transparent));
+    /* Portalled to <body>, outside the page's theme scope, so every colour
+       here is literal: the brand dark ground and white text. */
+    border: 1px solid rgb(255 255 255 / 0.16);
     border-radius: 999px;
-    background: rgb(18 4 4 / 0.97);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background-color: #120404;
+    box-shadow: 0 -6px 24px rgb(0 0 0 / 0.45);
   }
   .blog-cta-sticky-text {
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--foreground);
+    color: #ffffff;
   }
   /* Keep the last lines of the article clear of the bar. */
   .blog-cta-has-sticky {
     padding-bottom: 4.5rem;
   }
+}
+
+/* Tables in posts are often wider than a phone. Let them scroll sideways
+   inside the article instead of pushing the page wider than the screen. */
+.wp-prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
