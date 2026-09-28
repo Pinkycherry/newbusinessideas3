@@ -7,11 +7,16 @@ import { signInWithGoogle } from "@/lib/auth-client";
 
 export const Route = createFileRoute("/sign-in")({
   validateSearch: z.object({ redirect: z.string().optional() }),
-  head: () =>
-    metaFor(
+  head: () => {
+    const base = metaFor(
       "Sign In | BBI – Bro Business Ideas",
       "Sign in with Google to read full idea blueprints on BBI.",
-    ),
+    );
+    // Every ?redirect= variant is a separate URL to Google, and several got
+    // indexed as duplicate "Sign In" results. Keep them all out of search;
+    // "follow" still lets crawlers pass through the page's links.
+    return { meta: [...base.meta, { name: "robots", content: "noindex, follow" }] };
+  },
   component: SignInPage,
 });
 
