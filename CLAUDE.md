@@ -70,7 +70,7 @@ honest about limits.
   subscription and any feature needing it must ship switched off.
 - **Never mutate Supabase rows without asking.** The live site and the n8n
   pipeline both depend on them.
-- **Never generate a second n8n workflow** — edit the existing one.
+- **Never generate a second n8n workflow** for the existing idea pipeline: edit the existing one. The one exception is the India Idea Atlas (`BBI_EXPANSION.md`), which the founder approved on 2026-09-28: it has its own four workflows writing only `india_*` tables.
 - **The custom cursor was removed at the founder's request.** Do not reinstate
   it.
 - Report work with **full URLs**, never bare commit hashes.

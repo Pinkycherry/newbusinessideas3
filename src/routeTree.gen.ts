@@ -27,6 +27,7 @@ import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as SitemapCategoriesDotxmlRouteImport } from './routes/sitemap-categories[.]xml'
 import { Route as SitemapIndexDotxmlRouteImport } from './routes/sitemap-index[.]xml'
+import { Route as SitemapIndiaDotxmlRouteImport } from './routes/sitemap-india[.]xml'
 import { Route as SitemapPagesDotxmlRouteImport } from './routes/sitemap-pages[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as VersionDotjsonRouteImport } from './routes/version[.]json'
@@ -51,6 +52,8 @@ import { Route as UsefulToolsIndexRouteImport } from './routes/useful-tools.inde
 import { Route as ValidateIndustrySlugRouteImport } from './routes/validate.$industrySlug'
 import { Route as CategoryCategorySlugIndexRouteImport } from './routes/category.$categorySlug.index'
 import { Route as CategoryCategorySlugSubcategorySlugRouteImport } from './routes/category.$categorySlug.$subcategorySlug'
+import { Route as IndiaIdeasIndexRouteImport } from './routes/india.ideas.index'
+import { Route as IndiaIdeasSetSlugRouteImport } from './routes/india.ideas.$setSlug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -140,6 +143,11 @@ const SitemapCategoriesDotxmlRoute = SitemapCategoriesDotxmlRouteImport.update({
 const SitemapIndexDotxmlRoute = SitemapIndexDotxmlRouteImport.update({
   id: '/sitemap-index.xml',
   path: '/sitemap-index.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapIndiaDotxmlRoute = SitemapIndiaDotxmlRouteImport.update({
+  id: '/sitemap-india.xml',
+  path: '/sitemap-india.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapPagesDotxmlRoute = SitemapPagesDotxmlRouteImport.update({
@@ -264,6 +272,16 @@ const CategoryCategorySlugSubcategorySlugRoute =
     path: '/$subcategorySlug',
     getParentRoute: () => CategoryCategorySlugRoute,
   } as any)
+const IndiaIdeasIndexRoute = IndiaIdeasIndexRouteImport.update({
+  id: '/india/ideas/',
+  path: '/india/ideas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndiaIdeasSetSlugRoute = IndiaIdeasSetSlugRouteImport.update({
+  id: '/india/ideas/$setSlug',
+  path: '/india/ideas/$setSlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -284,6 +302,7 @@ export interface FileRoutesByFullPath {
   '/sitemap': typeof SitemapRoute
   '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
+  '/sitemap-india.xml': typeof SitemapIndiaDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
   '/version.json': typeof VersionDotjsonRoute
@@ -307,7 +326,9 @@ export interface FileRoutesByFullPath {
   '/startup-guides/': typeof StartupGuidesIndexRoute
   '/useful-tools/': typeof UsefulToolsIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
+  '/india/ideas/$setSlug': typeof IndiaIdeasSetSlugRoute
   '/category/$categorySlug/': typeof CategoryCategorySlugIndexRoute
+  '/india/ideas/': typeof IndiaIdeasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -328,6 +349,7 @@ export interface FileRoutesByTo {
   '/sitemap': typeof SitemapRoute
   '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
+  '/sitemap-india.xml': typeof SitemapIndiaDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
   '/version.json': typeof VersionDotjsonRoute
@@ -350,7 +372,9 @@ export interface FileRoutesByTo {
   '/startup-guides': typeof StartupGuidesIndexRoute
   '/useful-tools': typeof UsefulToolsIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
+  '/india/ideas/$setSlug': typeof IndiaIdeasSetSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugIndexRoute
+  '/india/ideas': typeof IndiaIdeasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -372,6 +396,7 @@ export interface FileRoutesById {
   '/sitemap': typeof SitemapRoute
   '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
+  '/sitemap-india.xml': typeof SitemapIndiaDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/terms': typeof TermsRoute
   '/version.json': typeof VersionDotjsonRoute
@@ -395,7 +420,9 @@ export interface FileRoutesById {
   '/startup-guides/': typeof StartupGuidesIndexRoute
   '/useful-tools/': typeof UsefulToolsIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
+  '/india/ideas/$setSlug': typeof IndiaIdeasSetSlugRoute
   '/category/$categorySlug/': typeof CategoryCategorySlugIndexRoute
+  '/india/ideas/': typeof IndiaIdeasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -418,6 +445,7 @@ export interface FileRouteTypes {
     | '/sitemap'
     | '/sitemap-categories.xml'
     | '/sitemap-index.xml'
+    | '/sitemap-india.xml'
     | '/sitemap-pages.xml'
     | '/terms'
     | '/version.json'
@@ -441,7 +469,9 @@ export interface FileRouteTypes {
     | '/startup-guides/'
     | '/useful-tools/'
     | '/category/$categorySlug/$subcategorySlug'
+    | '/india/ideas/$setSlug'
     | '/category/$categorySlug/'
+    | '/india/ideas/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -462,6 +492,7 @@ export interface FileRouteTypes {
     | '/sitemap'
     | '/sitemap-categories.xml'
     | '/sitemap-index.xml'
+    | '/sitemap-india.xml'
     | '/sitemap-pages.xml'
     | '/terms'
     | '/version.json'
@@ -484,7 +515,9 @@ export interface FileRouteTypes {
     | '/startup-guides'
     | '/useful-tools'
     | '/category/$categorySlug/$subcategorySlug'
+    | '/india/ideas/$setSlug'
     | '/category/$categorySlug'
+    | '/india/ideas'
   id:
     | '__root__'
     | '/'
@@ -505,6 +538,7 @@ export interface FileRouteTypes {
     | '/sitemap'
     | '/sitemap-categories.xml'
     | '/sitemap-index.xml'
+    | '/sitemap-india.xml'
     | '/sitemap-pages.xml'
     | '/terms'
     | '/version.json'
@@ -528,7 +562,9 @@ export interface FileRouteTypes {
     | '/startup-guides/'
     | '/useful-tools/'
     | '/category/$categorySlug/$subcategorySlug'
+    | '/india/ideas/$setSlug'
     | '/category/$categorySlug/'
+    | '/india/ideas/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -550,6 +586,7 @@ export interface RootRouteChildren {
   SitemapRoute: typeof SitemapRoute
   SitemapCategoriesDotxmlRoute: typeof SitemapCategoriesDotxmlRoute
   SitemapIndexDotxmlRoute: typeof SitemapIndexDotxmlRoute
+  SitemapIndiaDotxmlRoute: typeof SitemapIndiaDotxmlRoute
   SitemapPagesDotxmlRoute: typeof SitemapPagesDotxmlRoute
   TermsRoute: typeof TermsRoute
   VersionDotjsonRoute: typeof VersionDotjsonRoute
@@ -572,6 +609,8 @@ export interface RootRouteChildren {
   ListIndexRoute: typeof ListIndexRoute
   StartupGuidesIndexRoute: typeof StartupGuidesIndexRoute
   UsefulToolsIndexRoute: typeof UsefulToolsIndexRoute
+  IndiaIdeasSetSlugRoute: typeof IndiaIdeasSetSlugRoute
+  IndiaIdeasIndexRoute: typeof IndiaIdeasIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -700,6 +739,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap-index.xml'
       fullPath: '/sitemap-index.xml'
       preLoaderRoute: typeof SitemapIndexDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap-india.xml': {
+      id: '/sitemap-india.xml'
+      path: '/sitemap-india.xml'
+      fullPath: '/sitemap-india.xml'
+      preLoaderRoute: typeof SitemapIndiaDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap-pages.xml': {
@@ -870,6 +916,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategoryCategorySlugSubcategorySlugRouteImport
       parentRoute: typeof CategoryCategorySlugRoute
     }
+    '/india/ideas/': {
+      id: '/india/ideas/'
+      path: '/india/ideas'
+      fullPath: '/india/ideas/'
+      preLoaderRoute: typeof IndiaIdeasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/india/ideas/$setSlug': {
+      id: '/india/ideas/$setSlug'
+      path: '/india/ideas/$setSlug'
+      fullPath: '/india/ideas/$setSlug'
+      preLoaderRoute: typeof IndiaIdeasSetSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -906,6 +966,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapRoute: SitemapRoute,
   SitemapCategoriesDotxmlRoute: SitemapCategoriesDotxmlRoute,
   SitemapIndexDotxmlRoute: SitemapIndexDotxmlRoute,
+  SitemapIndiaDotxmlRoute: SitemapIndiaDotxmlRoute,
   SitemapPagesDotxmlRoute: SitemapPagesDotxmlRoute,
   TermsRoute: TermsRoute,
   VersionDotjsonRoute: VersionDotjsonRoute,
@@ -928,6 +989,8 @@ const rootRouteChildren: RootRouteChildren = {
   ListIndexRoute: ListIndexRoute,
   StartupGuidesIndexRoute: StartupGuidesIndexRoute,
   UsefulToolsIndexRoute: UsefulToolsIndexRoute,
+  IndiaIdeasSetSlugRoute: IndiaIdeasSetSlugRoute,
+  IndiaIdeasIndexRoute: IndiaIdeasIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

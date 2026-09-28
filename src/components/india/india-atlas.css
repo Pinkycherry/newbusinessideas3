@@ -1,0 +1,1043 @@
+/*
+ * BBI India Idea Atlas. Loaded ONLY by the /india/ideas routes (route
+ * `head.links`), never from styles.css.
+ *
+ * Every selector starts `.india-atlas.ia`: two classes on the root, then the
+ * element's own class. That puts each rule at (0,3,0), above the site's
+ * `html.light .bbi-instrument p|dt|dd` (0,2,1/0,2,2) and `.bbi-instrument h1`
+ * rules, so the atlas looks the same in light and dark mode without touching
+ * the global stylesheet. Inputs and selects need !important only because
+ * styles.css forces theirs with !important in light mode.
+ */
+
+.india-atlas.ia {
+  --ia-ink: #120404;
+  --ia-surface: #270a0a;
+  --ia-surface-2: #361310;
+  --ia-red: #ca0808;
+  --ia-red-hover: #a90707;
+  --ia-paper: #fff1e8;
+  --ia-paper-ink: #3b1c14;
+  --ia-muted: #dfbfb5;
+  --ia-line: #6b3f35;
+  --ia-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ia-shadow: 0 6px 0 #090202, 0 18px 32px rgb(0 0 0 / 0.22);
+  --ia-gutter: clamp(16px, 4vw, 56px);
+  --ia-gap: clamp(32px, 5vw, 64px);
+
+  background: var(--ia-ink);
+  color: var(--ia-paper);
+  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(16px, 0.95rem + 0.2vw, 18px);
+  line-height: 1.55;
+  overflow-x: clip;
+}
+
+.india-atlas.ia .ia-wrap {
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: var(--ia-gutter);
+  padding-block: 20px var(--ia-gap);
+}
+
+/* ------------------------------------------------------------ type */
+.india-atlas.ia .ia-h1 {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: clamp(38px, 5.3vw, 76px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  margin: 14px 0 18px;
+  text-wrap: balance;
+  color: var(--ia-paper);
+}
+.india-atlas.ia .ia-h1 .ia-soft {
+  color: #f3c3ad;
+}
+.india-atlas.ia .ia-h2 {
+  font-family: inherit;
+  font-weight: 600;
+  font-size: clamp(24px, 2.4vw, 32px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ia-paper);
+  text-wrap: balance;
+}
+.india-atlas.ia .ia-h3 {
+  font-family: inherit;
+  font-weight: 600;
+  font-size: clamp(20px, 1.8vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--ia-paper);
+}
+.india-atlas.ia .ia-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #f0b7a0;
+}
+.india-atlas.ia .ia-text {
+  color: var(--ia-muted);
+  margin: 0;
+  max-width: 62ch;
+}
+.india-atlas.ia .ia-small {
+  font-size: 14px;
+  color: var(--ia-muted);
+  margin: 0;
+}
+.india-atlas.ia .ia-link {
+  color: var(--ia-paper);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.india-atlas.ia .ia-link:hover {
+  color: #f3c3ad;
+}
+
+/* Focus is never clipped and always cream. */
+.india-atlas.ia :is(a, button, input, select, summary):focus-visible {
+  outline: 3px solid var(--ia-paper);
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------- masthead */
+.india-atlas.ia .ia-masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--ia-line);
+}
+.india-atlas.ia .ia-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--ia-muted);
+}
+.india-atlas.ia .ia-crumbs a {
+  color: var(--ia-paper);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.india-atlas.ia .ia-edition {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ia-muted);
+}
+.india-atlas.ia .ia-edition::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--ia-red);
+  transform: rotate(45deg);
+}
+
+/* --------------------------------------------------- draft notice */
+.india-atlas.ia .ia-draft {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: var(--ia-paper);
+  color: var(--ia-paper-ink);
+  border-left: 6px solid var(--ia-red);
+  font-size: 15px;
+}
+.india-atlas.ia .ia-draft strong {
+  color: var(--ia-ink);
+}
+
+/* ------------------------------------------------------------ hero */
+.india-atlas.ia .ia-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: clamp(24px, 5vw, 72px);
+  align-items: center;
+  padding-block: clamp(28px, 5vw, 56px);
+}
+.india-atlas.ia .ia-hero-lede {
+  font-size: clamp(17px, 1.3vw, 20px);
+  color: var(--ia-muted);
+  max-width: 44ch;
+  margin: 0;
+}
+.india-atlas.ia .ia-folio {
+  position: relative;
+  padding: 26px 26px 22px;
+  background: linear-gradient(140deg, #3d100d, var(--ia-surface) 70%);
+  border: 1px solid #8e5647;
+  box-shadow: var(--ia-shadow);
+  transform: rotate(2deg);
+  transition: transform 340ms var(--ia-ease);
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+}
+@media (hover: hover) and (pointer: fine) {
+  .india-atlas.ia .ia-folio:hover {
+    transform: rotate(0deg) translateY(-5px);
+  }
+}
+.india-atlas.ia .ia-folio-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ia-muted);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ia-line);
+}
+.india-atlas.ia .ia-folio-word {
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin: 22px 0;
+}
+.india-atlas.ia .ia-folio-word span {
+  color: #e7b39d;
+}
+.india-atlas.ia .ia-stamp {
+  display: inline-grid;
+  place-content: center;
+  width: 78px;
+  height: 78px;
+  border: 1.5px solid #d1917a;
+  border-radius: 50%;
+  transform: rotate(-10deg);
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  color: #f0c9b8;
+}
+.india-atlas.ia .ia-stamp b {
+  display: block;
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
+/* ---------------------------------------------------------- buttons */
+.india-atlas.ia .ia-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 48px;
+  padding: 12px 20px;
+  background: var(--ia-red);
+  color: var(--ia-paper);
+  border: 1px solid var(--ia-red);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 4px 0 #5e0303;
+  transition:
+    background 220ms var(--ia-ease),
+    transform 120ms var(--ia-ease);
+}
+.india-atlas.ia .ia-btn::after {
+  /* "arrow shutter": one inset highlight crosses once on hover. */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgb(255 241 232 / 0.22) 50%,
+    transparent 70%
+  );
+  transform: translateX(-110%);
+  pointer-events: none;
+}
+.india-atlas.ia .ia-btn:hover {
+  background: var(--ia-red-hover);
+}
+.india-atlas.ia .ia-btn:hover::after {
+  transform: translateX(110%);
+  transition: transform 220ms var(--ia-ease);
+}
+.india-atlas.ia .ia-btn:active {
+  transform: translateY(1px);
+}
+.india-atlas.ia .ia-arrow {
+  display: inline-block;
+  transition: transform 220ms var(--ia-ease);
+}
+.india-atlas.ia .ia-btn:hover .ia-arrow {
+  transform: translateX(4px);
+}
+.india-atlas.ia .ia-btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 14px;
+  background: transparent;
+  color: var(--ia-paper);
+  border: 1px solid var(--ia-line);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.india-atlas.ia .ia-btn-quiet:hover {
+  background: var(--ia-surface-2);
+}
+
+/* ----------------------------------------------------------- finder */
+.india-atlas.ia .ia-section {
+  margin-top: var(--ia-gap);
+}
+.india-atlas.ia .ia-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 20px;
+  margin-bottom: 18px;
+}
+.india-atlas.ia .ia-finder {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) repeat(3, minmax(0, 1fr)) auto;
+  background: var(--ia-surface);
+  border: 1px solid var(--ia-line);
+  box-shadow: var(--ia-shadow);
+}
+.india-atlas.ia .ia-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 16px;
+  border-right: 1px solid var(--ia-line);
+  min-width: 0;
+}
+.india-atlas.ia .ia-field-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #eab5a0;
+}
+.india-atlas.ia .ia-field input,
+.india-atlas.ia .ia-field select {
+  width: 100%;
+  min-height: 36px;
+  padding: 4px 0;
+  background: transparent !important;
+  color: var(--ia-paper) !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--ia-line) !important;
+  border-radius: 0;
+  box-shadow: none !important;
+  font: inherit;
+  font-size: 16px;
+}
+.india-atlas.ia .ia-field input::placeholder {
+  color: #caa597 !important;
+}
+.india-atlas.ia .ia-field select option {
+  background: var(--ia-surface);
+  color: var(--ia-paper);
+}
+/* "Selection latch": a chosen filter gets an inset mark, by opacity only. */
+.india-atlas.ia .ia-field {
+  position: relative;
+}
+.india-atlas.ia .ia-field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 -3px 0 var(--ia-red);
+  opacity: 0;
+  transition: opacity 140ms var(--ia-ease);
+  pointer-events: none;
+}
+.india-atlas.ia .ia-field[data-active="true"]::after {
+  opacity: 1;
+}
+.india-atlas.ia .ia-field-check {
+  font-size: 12px;
+  color: #f3c3ad;
+}
+.india-atlas.ia .ia-finder-submit {
+  display: flex;
+  align-items: stretch;
+  padding: 10px;
+}
+.india-atlas.ia .ia-result-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  font-size: 15px;
+  color: var(--ia-muted);
+}
+
+/* ------------------------------------------------------- family index */
+.india-atlas.ia .ia-families {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.india-atlas.ia .ia-family-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--ia-line);
+  color: var(--ia-paper);
+  text-decoration: none;
+  font-size: 14px;
+}
+.india-atlas.ia .ia-family-link[aria-current="true"] {
+  background: var(--ia-paper);
+  color: var(--ia-ink);
+  border-color: var(--ia-paper);
+}
+.india-atlas.ia .ia-family-link small {
+  color: inherit;
+  opacity: 0.75;
+}
+
+/* ------------------------------------------------------------ set rows */
+.india-atlas.ia .ia-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(24px, 4vw, 56px);
+}
+.india-atlas.ia .ia-group {
+  margin-top: 32px;
+}
+.india-atlas.ia .ia-group-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #f0b7a0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--ia-red);
+  margin: 0;
+}
+.india-atlas.ia .ia-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.india-atlas.ia .ia-row {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 24px;
+  gap: 16px;
+  padding: 20px 4px;
+  border-bottom: 1px solid var(--ia-line);
+  color: var(--ia-paper);
+  text-decoration: none;
+}
+.india-atlas.ia .ia-row-num {
+  font-size: 22px;
+  font-weight: 600;
+  color: #c79682;
+  font-variant-numeric: tabular-nums;
+}
+.india-atlas.ia .ia-row-title {
+  position: relative;
+  display: inline;
+  font-size: clamp(19px, 1.6vw, 23px);
+  font-weight: 600;
+  line-height: 1.25;
+  background-image: linear-gradient(var(--ia-red), var(--ia-red));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 180ms var(--ia-ease);
+}
+.india-atlas.ia .ia-row:hover .ia-row-title,
+.india-atlas.ia .ia-row:focus-visible .ia-row-title {
+  background-size: 100% 2px;
+}
+.india-atlas.ia .ia-row-purpose {
+  display: block;
+  margin-top: 6px;
+  color: var(--ia-muted);
+  font-size: 16px;
+}
+.india-atlas.ia .ia-row-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #eac1b1;
+}
+.india-atlas.ia .ia-row-arrow {
+  align-self: start;
+  font-size: 20px;
+  transition: transform 180ms var(--ia-ease);
+}
+.india-atlas.ia .ia-row:hover .ia-row-arrow {
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------- cream note */
+.india-atlas.ia .ia-note {
+  position: relative;
+  margin-top: var(--ia-gap);
+  padding: clamp(20px, 3vw, 34px);
+  background: var(--ia-paper);
+  color: var(--ia-paper-ink);
+  box-shadow: var(--ia-shadow);
+}
+.india-atlas.ia .ia-note::after {
+  /* folded corner; "corner lift" moves it 3px, the text never moves */
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(225deg, var(--ia-ink) 50%, #e8cdbf 50%);
+  transition: transform 200ms var(--ia-ease);
+}
+.india-atlas.ia .ia-note:hover::after,
+.india-atlas.ia .ia-note:focus-within::after {
+  transform: translate(3px, -3px);
+}
+/* !important only because styles.css forces every heading white with
+   !important in light mode; on cream that is invisible. */
+.india-atlas.ia .ia-note .ia-h2 {
+  color: var(--ia-ink) !important;
+}
+.india-atlas.ia .ia-note-text {
+  margin: 10px 0 0;
+  color: var(--ia-paper-ink);
+  max-width: 62ch;
+}
+.india-atlas.ia .ia-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  font-weight: 600;
+  color: var(--ia-ink);
+}
+.india-atlas.ia .ia-steps li {
+  color: var(--ia-ink);
+}
+.india-atlas.ia .ia-checklist {
+  margin: 14px 0 0;
+  padding-left: 22px;
+  color: var(--ia-paper-ink);
+}
+.india-atlas.ia .ia-checklist li {
+  color: var(--ia-paper-ink);
+  margin-top: 6px;
+}
+.india-atlas.ia .ia-note .ia-link {
+  color: var(--ia-ink);
+}
+
+/* ------------------------------------------------------------ pager */
+.india-atlas.ia .ia-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 32px;
+  font-size: 15px;
+  color: var(--ia-muted);
+}
+
+/* ------------------------------------------------------ detail header */
+.india-atlas.ia .ia-dossier {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: clamp(24px, 5vw, 64px);
+  padding-block: clamp(22px, 4vw, 44px);
+}
+.india-atlas.ia .ia-criterion {
+  margin-top: 18px;
+  padding-left: 14px;
+  border-left: 3px solid var(--ia-red);
+  color: var(--ia-paper);
+  max-width: 62ch;
+}
+.india-atlas.ia .ia-criterion span {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #f0b7a0;
+}
+.india-atlas.ia .ia-dossier-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--ia-muted);
+}
+.india-atlas.ia .ia-dossier-facts b {
+  color: var(--ia-paper);
+  font-weight: 600;
+}
+.india-atlas.ia .ia-plate {
+  position: relative;
+  align-self: start;
+  background: var(--ia-surface);
+  border: 1px solid var(--ia-line);
+  box-shadow: var(--ia-shadow);
+  clip-path: polygon(0 0, calc(100% - 26px) 0, 100% 26px, 100% 100%, 0 100%);
+}
+.india-atlas.ia .ia-plate svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.india-atlas.ia .ia-plate-count {
+  position: absolute;
+  left: 18px;
+  bottom: 14px;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ia-paper);
+  font-variant-numeric: tabular-nums;
+}
+.india-atlas.ia .ia-plate-count small {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ia-muted);
+}
+
+/* ------------------------------------------------------ detail layout */
+.india-atlas.ia .ia-layout {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: start;
+  border-top: 1px solid var(--ia-line);
+  padding-top: 28px;
+}
+.india-atlas.ia .ia-rail {
+  position: sticky;
+  top: 96px;
+}
+.india-atlas.ia .ia-rail-box {
+  border: 1px solid var(--ia-line);
+  background: var(--ia-surface);
+}
+.india-atlas.ia .ia-rail-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 12px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  color: var(--ia-paper);
+}
+.india-atlas.ia .ia-rail-summary::-webkit-details-marker {
+  display: none;
+}
+.india-atlas.ia .ia-rail-body {
+  display: grid;
+  gap: 16px;
+  padding: 4px 16px 18px;
+}
+.india-atlas.ia .ia-rail-body .ia-field {
+  padding: 0;
+  border: 0;
+}
+.india-atlas.ia .ia-rail-body .ia-field::after {
+  display: none;
+}
+
+/* -------------------------------------------------------------- ideas */
+.india-atlas.ia .ia-ideas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.india-atlas.ia .ia-idea {
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--ia-line);
+  scroll-margin-top: 110px;
+}
+.india-atlas.ia .ia-idea:target .ia-idea-title {
+  color: #ffd6c4;
+}
+.india-atlas.ia .ia-idea-top {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: start;
+}
+.india-atlas.ia .ia-rank {
+  font-size: clamp(30px, 3vw, 42px);
+  font-weight: 600;
+  line-height: 1;
+  color: #a8705c;
+  font-variant-numeric: tabular-nums;
+  min-width: 2ch;
+}
+.india-atlas.ia .ia-idea-title {
+  margin-top: 6px;
+}
+.india-atlas.ia .ia-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 28px;
+  margin: 16px 0 0;
+}
+.india-atlas.ia .ia-pair dt {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #eab5a0;
+}
+.india-atlas.ia .ia-pair dd {
+  margin: 4px 0 0;
+  color: var(--ia-paper);
+}
+.india-atlas.ia .ia-fit {
+  margin: 14px 0 0;
+  font-size: 15px;
+  color: var(--ia-muted);
+}
+.india-atlas.ia .ia-save {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--ia-paper);
+  border: 1px solid #8e5647;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    opacity 140ms var(--ia-ease),
+    background 140ms var(--ia-ease);
+}
+.india-atlas.ia .ia-save[aria-pressed="true"] {
+  background: var(--ia-red);
+  border-color: var(--ia-red);
+}
+.india-atlas.ia .ia-more {
+  margin-top: 16px;
+  background: var(--ia-surface);
+  border-top: 1px solid var(--ia-line);
+}
+.india-atlas.ia .ia-more-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  padding: 12px 16px;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ia-paper);
+}
+.india-atlas.ia .ia-more-summary::-webkit-details-marker {
+  display: none;
+}
+.india-atlas.ia .ia-plus {
+  display: inline-block;
+  font-size: 22px;
+  line-height: 1;
+  transition: transform 160ms var(--ia-ease);
+}
+.india-atlas.ia .ia-more[open] .ia-plus {
+  transform: rotate(45deg);
+}
+.india-atlas.ia .ia-more-body {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 12px 20px;
+  margin: 0;
+  padding: 4px 16px 18px;
+}
+.india-atlas.ia .ia-more-body dt {
+  font-size: 13px;
+  font-weight: 600;
+  color: #eab5a0;
+}
+.india-atlas.ia .ia-more-body dd {
+  margin: 0;
+  color: var(--ia-muted);
+}
+.india-atlas.ia .ia-empty {
+  padding: 24px;
+  border: 1px dashed var(--ia-line);
+  color: var(--ia-muted);
+}
+
+/* ------------------------------------------------------------- related */
+.india-atlas.ia .ia-related {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 0 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ------------------------------------------------------- shortlist tray */
+.india-atlas.ia.ia-portal {
+  background: transparent;
+  overflow: visible;
+}
+.india-atlas.ia .ia-tray-space {
+  height: 120px;
+}
+.india-atlas.ia .ia-tray {
+  position: fixed;
+  z-index: 60;
+  left: 50%;
+  bottom: 14px;
+  width: min(760px, calc(100% - 24px));
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  padding: 12px 16px;
+  background: var(--ia-paper);
+  color: var(--ia-ink);
+  border-top: 4px solid var(--ia-red);
+  box-shadow: 0 10px 34px rgb(0 0 0 / 0.45);
+  animation: ia-dock 180ms var(--ia-ease) both;
+}
+@keyframes ia-dock {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+}
+.india-atlas.ia .ia-tray-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ia-ink);
+  margin: 0;
+}
+.india-atlas.ia .ia-tray-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1 1 260px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.india-atlas.ia .ia-chip {
+  min-height: 40px;
+  max-width: 220px;
+  padding: 6px 10px;
+  background: transparent;
+  color: var(--ia-ink);
+  border: 1px solid #c79a86;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.india-atlas.ia .ia-status {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 14px;
+  color: #8a1b0f;
+}
+.india-atlas.ia .ia-status:empty {
+  display: none;
+}
+
+/* ------------------------------------------------------ compare dialog */
+.india-atlas.ia .ia-dialog {
+  width: min(1040px, calc(100vw - 24px));
+  max-height: calc(100vh - 40px);
+  padding: clamp(18px, 3vw, 32px);
+  border: 0;
+  background: #fff1e8;
+  color: #120404;
+  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.55;
+}
+.india-atlas.ia .ia-dialog::backdrop {
+  background: rgb(18 4 4 / 0.86);
+}
+.india-atlas.ia .ia-dialog .ia-dialog-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: start;
+}
+.india-atlas.ia .ia-dialog .ia-dialog-title {
+  margin: 0;
+  font-size: clamp(22px, 2.4vw, 32px);
+  font-weight: 700;
+  color: #120404 !important;
+}
+.india-atlas.ia .ia-dialog .ia-dialog-note {
+  margin: 8px 0 18px;
+  color: #5c3a2e;
+  font-size: 15px;
+}
+.india-atlas.ia .ia-dialog .ia-close {
+  min-width: 44px;
+  min-height: 44px;
+  background: transparent;
+  border: 1px solid #a4806d;
+  color: #120404;
+  font-size: 22px;
+  cursor: pointer;
+}
+.india-atlas.ia .ia-dialog .ia-compare-scroll {
+  overflow-x: auto;
+}
+.india-atlas.ia .ia-dialog .ia-compare {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.india-atlas.ia .ia-dialog .ia-compare th,
+.india-atlas.ia .ia-dialog .ia-compare td {
+  text-align: left;
+  vertical-align: top;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e0c3b4;
+  color: #2a120d;
+}
+.india-atlas.ia .ia-dialog .ia-compare thead th {
+  border-bottom: 4px solid #ca0808;
+  font-size: 17px;
+}
+.india-atlas.ia .ia-dialog .ia-compare tbody th {
+  width: 150px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #7e3426;
+}
+.india-atlas.ia .ia-dialog .ia-remove {
+  display: block;
+  margin-top: 6px;
+  padding: 8px 0;
+  min-height: 40px;
+  background: none;
+  border: 0;
+  color: #7d2118;
+  text-decoration: underline;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.india-atlas.ia .ia-dialog :is(button):focus-visible {
+  outline: 3px solid #ca0808;
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------ responsive */
+@media (max-width: 1023px) {
+  .india-atlas.ia .ia-finder {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .india-atlas.ia .ia-field:first-child {
+    grid-column: 1 / -1;
+  }
+  .india-atlas.ia .ia-field {
+    border-bottom: 1px solid var(--ia-line);
+  }
+  .india-atlas.ia .ia-finder-submit {
+    grid-column: 1 / -1;
+  }
+  .india-atlas.ia .ia-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .india-atlas.ia .ia-rail {
+    position: static;
+  }
+}
+@media (max-width: 767px) {
+  .india-atlas.ia .ia-hero,
+  .india-atlas.ia .ia-dossier {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .india-atlas.ia .ia-groups {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .india-atlas.ia .ia-pair,
+  .india-atlas.ia .ia-more-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .india-atlas.ia .ia-more-body dd {
+    margin-bottom: 8px;
+  }
+}
+@media (max-width: 639px) {
+  /* Decorative art goes; the finder moves up. */
+  .india-atlas.ia .ia-folio,
+  .india-atlas.ia .ia-plate {
+    display: none;
+  }
+  .india-atlas.ia .ia-finder {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .india-atlas.ia .ia-row {
+    grid-template-columns: 34px minmax(0, 1fr) 18px;
+    gap: 12px;
+  }
+  .india-atlas.ia .ia-idea-top {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .india-atlas.ia .ia-save {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .india-atlas.ia *,
+  .india-atlas.ia *::before,
+  .india-atlas.ia *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+  .india-atlas.ia .ia-folio,
+  .india-atlas.ia .ia-folio:hover {
+    transform: none;
+  }
+}

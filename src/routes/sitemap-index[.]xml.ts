@@ -22,6 +22,8 @@ export const Route = createFileRoute("/sitemap-index.xml")({
         const children: SitemapChild[] = [
           { path: "/sitemap-pages.xml" },
           { path: "/sitemap-categories.xml" },
+          // India Idea Atlas (BBI_EXPANSION.md). Empty until a set is published.
+          { path: "/sitemap-india.xml" },
           ...Array.from({ length: tranches }, (_unused, index) => ({
             path: `/sitemap-ideas/${index + 1}`,
             lastmod: lastmods[index] ?? null,

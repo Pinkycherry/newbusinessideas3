@@ -31,6 +31,10 @@ If a task is all "no" on 1–4 and "yes" on 5 → **safe, proceed.** If any "yes
 | Supabase `ideas` table / live rows | **Critical** | Never mutate. The live site + 280 ideas depend on it. |
 | Payment/checkout | out of scope this phase | Do not touch. |
 | Gemini/n8n pipeline | isolated build, but writes to DB | Writes to NEW tables only; never edits core `ideas` rows. |
+| **India Idea Atlas** (`BBI_EXPANSION.md`): `/india/ideas*` routes, `src/components/india/*`, `src/lib/india*.ts`, `india-atlas.css` | **Isolated** | New namespace. Never imports, reads, rewrites or backfills existing ideas, categories, posts or workflows. Its CSS is scoped under `.india-atlas` and loaded only by the India routes. |
+| `india_*` Supabase tables (`supabase/india/`) | **Isolated** | Additive only. No foreign key, view, trigger or function touches `ideas`, `blog_posts`, `category_faqs` or any existing table. Rollback drops only `india_*` objects. Apply only after the founder has seen the SQL. |
+| India n8n workflows (Planner, Worker, Publisher, Error) | **Isolated**, writes DB | Four NEW workflows, by the founder's decision on 2026-09-28 (this overrides the old "never a second n8n workflow" rule, for the India system only). They write `india_*` tables only, through a restricted `india_worker` role. The existing idea pipeline is not edited. |
+| `sitemap-index.xml` | Medium | One added child (`/sitemap-india.xml`). Existing children and their order stay exactly as they are. |
 
 ## Working rules that fall out of this
 
@@ -38,6 +42,7 @@ If a task is all "no" on 1–4 and "yes" on 5 → **safe, proceed.** If any "yes
 - **One owner per shared file per work-round.** Two agents must never edit `styles.css` or `site-shell.tsx` at once.
 - **Conditional rendering for enrichment.** New sections on existing pages render only when their data exists, so un-enriched content never breaks.
 - **Centralized branding (colors/buttons/layout tokens) is HIGH blast radius** — it's valuable but touches everything, so it is a deliberate, isolated, single-focus round on its own, never bundled with feature work. Deferred until we choose to do it alone.
+- **India expansion stays in its own lane.** The only lines it may add outside its own files are: one child in `sitemap-index.xml`, and the generated `routeTree.gen.ts`. It does not change global CSS, the header, navigation, the homepage or any existing route. Inside `SiteShell`, every India button carries `bbi-bare` so the site-wide button plate cannot restyle it.
 - **Verify the affected areas, not just the changed one.** After a medium/high-risk change, screenshot/check the *other* pages that share the file, not only the one you meant to change.
 
 This file is consulted first. Then we touch anything.
