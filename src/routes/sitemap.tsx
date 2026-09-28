@@ -5,7 +5,12 @@ import { ContentPage, Section, metaFor } from "@/components/page-layout";
 import { CALCULATORS } from "@/lib/calculators";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
 import { CASE_STUDIES } from "@/lib/case-studies-data";
-import { fetchIdeasForHub, type HubIdea } from "@/lib/sitemap.server";
+import {
+  fetchBlogPostsForHub,
+  fetchIdeasForHub,
+  type HubBlogPost,
+  type HubIdea,
+} from "@/lib/sitemap.server";
 
 /**
  * The HTML sitemap — one page that links to every page on this site.
@@ -57,8 +62,11 @@ import { fetchIdeasForHub, type HubIdea } from "@/lib/sitemap.server";
  * Editing `.glass-pill` instead would have been the wrong trade — every
  * button on the site depends on it.
  */
-const getSitemapData = createServerFn({ method: "GET" }).handler(async (): Promise<HubIdea[]> =>
-  fetchIdeasForHub(),
+const getSitemapData = createServerFn({ method: "GET" }).handler(
+  async (): Promise<{ ideas: HubIdea[]; blogPosts: HubBlogPost[] }> => {
+    const [ideas, blogPosts] = await Promise.all([fetchIdeasForHub(), fetchBlogPostsForHub()]);
+    return { ideas, blogPosts };
+  },
 );
 
 export const Route = createFileRoute("/sitemap")({
@@ -173,7 +181,7 @@ function packByWidth<T>(items: readonly T[], label: (item: T) => string): T[] {
 }
 
 function SitemapPage() {
-  const ideas = Route.useLoaderData();
+  const { ideas, blogPosts } = Route.useLoaderData();
 
   // Grouped by category so the page has the same shape as the site, and so
   // each category heading links to the category page a crawler should also see.
@@ -195,7 +203,7 @@ function SitemapPage() {
       eyebrow="Site map"
       title="Every page on"
       highlight="BBI"
-      intro={`${ideas.length} idea blueprints across ${categories.length} categories, plus ${CALCULATORS.length} calculators, ${STARTUP_GUIDES.length} startup guides and ${CASE_STUDIES.length} founder stories — every one of them linked from this page.`}
+      intro={`${ideas.length} idea blueprints across ${categories.length} categories, plus ${CALCULATORS.length} calculators, ${STARTUP_GUIDES.length} startup guides, ${CASE_STUDIES.length} founder stories and ${blogPosts.length} blog posts — every one of them linked from this page.`}
     >
       {PAGE_GROUPS.map((group) => (
         <Section key={group.heading} heading={group.heading}>
@@ -241,6 +249,19 @@ function SitemapPage() {
               to="/founder-stories/$slug"
               params={{ slug: study.slug }}
               label={study.title}
+            />
+          ))}
+        </PillRow>
+      </Section>
+
+      <Section heading={`Blog posts (${blogPosts.length})`}>
+        <PillRow>
+          {packByWidth(blogPosts, (p) => p.title).map((post) => (
+            <Chip
+              key={post.slug}
+              to="/blog/$slug"
+              params={{ slug: post.slug }}
+              label={post.title}
             />
           ))}
         </PillRow>

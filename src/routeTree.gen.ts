@@ -24,6 +24,7 @@ import { Route as SearchRouteImport } from './routes/search'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as SitemapRouteImport } from './routes/sitemap'
+import { Route as SitemapBlogDotxmlRouteImport } from './routes/sitemap-blog[.]xml'
 import { Route as SitemapCategoriesDotxmlRouteImport } from './routes/sitemap-categories[.]xml'
 import { Route as SitemapIndexDotxmlRouteImport } from './routes/sitemap-index[.]xml'
 import { Route as SitemapPagesDotxmlRouteImport } from './routes/sitemap-pages[.]xml'
@@ -123,6 +124,11 @@ const SignInRoute = SignInRouteImport.update({
 const SitemapRoute = SitemapRouteImport.update({
   id: '/sitemap',
   path: '/sitemap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapBlogDotxmlRoute = SitemapBlogDotxmlRouteImport.update({
+  id: '/sitemap-blog.xml',
+  path: '/sitemap-blog.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapCategoriesDotxmlRoute = SitemapCategoriesDotxmlRouteImport.update({
@@ -269,6 +275,7 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/sign-in': typeof SignInRoute
   '/sitemap': typeof SitemapRoute
+  '/sitemap-blog.xml': typeof SitemapBlogDotxmlRoute
   '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
@@ -311,6 +318,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/sign-in': typeof SignInRoute
   '/sitemap': typeof SitemapRoute
+  '/sitemap-blog.xml': typeof SitemapBlogDotxmlRoute
   '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
@@ -353,6 +361,7 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/sign-in': typeof SignInRoute
   '/sitemap': typeof SitemapRoute
+  '/sitemap-blog.xml': typeof SitemapBlogDotxmlRoute
   '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
@@ -397,6 +406,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/sign-in'
     | '/sitemap'
+    | '/sitemap-blog.xml'
     | '/sitemap-categories.xml'
     | '/sitemap-index.xml'
     | '/sitemap-pages.xml'
@@ -439,6 +449,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/sign-in'
     | '/sitemap'
+    | '/sitemap-blog.xml'
     | '/sitemap-categories.xml'
     | '/sitemap-index.xml'
     | '/sitemap-pages.xml'
@@ -480,6 +491,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/sign-in'
     | '/sitemap'
+    | '/sitemap-blog.xml'
     | '/sitemap-categories.xml'
     | '/sitemap-index.xml'
     | '/sitemap-pages.xml'
@@ -523,6 +535,7 @@ export interface RootRouteChildren {
   ServicesRoute: typeof ServicesRoute
   SignInRoute: typeof SignInRoute
   SitemapRoute: typeof SitemapRoute
+  SitemapBlogDotxmlRoute: typeof SitemapBlogDotxmlRoute
   SitemapCategoriesDotxmlRoute: typeof SitemapCategoriesDotxmlRoute
   SitemapIndexDotxmlRoute: typeof SitemapIndexDotxmlRoute
   SitemapPagesDotxmlRoute: typeof SitemapPagesDotxmlRoute
@@ -653,6 +666,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap'
       fullPath: '/sitemap'
       preLoaderRoute: typeof SitemapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap-blog.xml': {
+      id: '/sitemap-blog.xml'
+      path: '/sitemap-blog.xml'
+      fullPath: '/sitemap-blog.xml'
+      preLoaderRoute: typeof SitemapBlogDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap-categories.xml': {
@@ -863,6 +883,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesRoute: ServicesRoute,
   SignInRoute: SignInRoute,
   SitemapRoute: SitemapRoute,
+  SitemapBlogDotxmlRoute: SitemapBlogDotxmlRoute,
   SitemapCategoriesDotxmlRoute: SitemapCategoriesDotxmlRoute,
   SitemapIndexDotxmlRoute: SitemapIndexDotxmlRoute,
   SitemapPagesDotxmlRoute: SitemapPagesDotxmlRoute,
