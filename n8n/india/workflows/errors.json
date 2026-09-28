@@ -1,0 +1,112 @@
+{
+  "name": "BBI India 4 Error handler",
+  "nodes": [
+    {
+      "id": "9b9fceb9-e56c-4dc5-a874-977bd4906464",
+      "name": "On workflow error",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "parameters": {}
+    },
+    {
+      "id": "456872a4-6cce-4869-8786-5b98f172ffe3",
+      "name": "Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [260, 0],
+      "parameters": {
+        "jsCode": "// Settings for the India Idea Atlas workflows. Edited by deploy.mjs.\nreturn [{ json: {\n  \"SUPABASE_URL\": \"https://jqzadwobnfypmytcbpkw.supabase.co\",\n  \"GEMINI_MODEL\": \"gemini-3.8-flash\",\n  \"PROMPT_VERSION\": \"india-v1\",\n  \"MAX_REQUESTS_PER_DAY\": 100,\n  \"MAX_INPUT_TOKENS_PER_DAY\": 1000000,\n  \"MAX_OUTPUT_TOKENS\": 8000,\n  \"RECORDS_PER_CALL\": 3,\n  \"CANDIDATE_LIMIT\": 20,\n  \"PILOT_ONLY\": true,\n  \"LEASE_SECONDS\": 900,\n  \"AUTH_HALT_SECONDS\": 21600,\n  \"WORKER_ID\": \"n8n-india-worker\"\n} }];"
+      }
+    },
+    {
+      "id": "041b74b7-b2e5-4a7b-82e0-a148e987b941",
+      "name": "Compact error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [520, 0],
+      "parameters": {
+        "jsCode": "// A failed India execution, reduced to what is actionable. Secrets are\n// masked again by india_log_error before anything is stored.\nconst e = $('On workflow error').first().json;\nreturn [{ json: {\n  p_workflow: (e.workflow && e.workflow.name) || 'unknown workflow',\n  p_node: (e.execution && e.execution.lastNodeExecuted) || null,\n  p_message: String((e.execution && e.execution.error && e.execution.error.message) || 'unknown error').slice(0, 900),\n  p_execution: String((e.execution && e.execution.id) || ''),\n} }];"
+      }
+    },
+    {
+      "id": "bb28340e-7709-4425-9c3a-5ddee70b0c87",
+      "name": "Log error",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [780, 0],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.SUPABASE_URL }}/rest/v1/rpc/india_log_error",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "__SUPABASE_CRED_ID__",
+          "name": "BBI India Supabase"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "On workflow error": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Compact error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compact error": {
+      "main": [
+        [
+          {
+            "node": "Log error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "none",
+    "timezone": "Asia/Kolkata"
+  }
+}
