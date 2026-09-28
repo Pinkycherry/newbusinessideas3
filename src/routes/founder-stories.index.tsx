@@ -3,7 +3,9 @@ import { DollarSign, TrendingUp, Clock, ArrowRight, ShieldCheck, Zap } from "luc
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { ExploreRail } from "@/components/explore-rail";
-import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { absoluteUrl, JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { PAGE_IMAGES, pageImageMeta } from "@/config/page-imagery";
+import { PageHeroImage } from "@/components/page-hero-image";
 import { CASE_STUDIES, type CaseStudy } from "@/lib/case-studies-data";
 
 export const Route = createFileRoute("/founder-stories/")({
@@ -24,6 +26,8 @@ export const Route = createFileRoute("/founder-stories/")({
         content:
           "How real operators scaled UGC agencies, AI repurposing workflows, Notion templates, and cold outreach setups to $12K–$42K/month.",
       },
+      { name: "twitter:card", content: "summary_large_image" },
+      ...pageImageMeta(PAGE_IMAGES.stories, absoluteUrl),
     ],
   }),
   component: FounderStoriesIndexPage,
@@ -48,6 +52,7 @@ function FounderStoriesIndexPage() {
             description:
               "Transparent breakdowns of real bootstrapped ventures and execution playbooks.",
             itemCount: CASE_STUDIES.length,
+            image: PAGE_IMAGES.stories.src,
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -84,6 +89,7 @@ function FounderStoriesIndexPage() {
               </Link>
             </div>
           </div>
+          <PageHeroImage image={PAGE_IMAGES.stories} />
 
           {/* Every story that existed here was an illustrative composite, and
               it said so on its own badge. They are filtered out in

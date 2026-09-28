@@ -14,7 +14,9 @@ import {
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { ExploreRail } from "@/components/explore-rail";
-import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { absoluteUrl, JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { PAGE_IMAGES, pageImageMeta } from "@/config/page-imagery";
+import { PageHeroImage } from "@/components/page-hero-image";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
 import { CALCULATORS } from "@/lib/calculators";
 import { CASE_STUDIES } from "@/lib/case-studies-data";
@@ -38,6 +40,8 @@ export const Route = createFileRoute("/learning-resources/")({
         content:
           "Master hub for startup validation: TAM sizing, unit economics calculators, illustrative founder case studies, and playbooks.",
       },
+      { name: "twitter:card", content: "summary_large_image" },
+      ...pageImageMeta(PAGE_IMAGES.resources, absoluteUrl),
     ],
   }),
   component: LearningResourcesIndexPage,
@@ -110,6 +114,7 @@ function LearningResourcesIndexPage() {
             name: "Founder Learning Resources & Operator Toolkit",
             description: "Master hub for startup validation, calculators, and frameworks.",
             itemCount: 4,
+            image: PAGE_IMAGES.resources.src,
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -135,6 +140,7 @@ function LearningResourcesIndexPage() {
               cash-flow-positive ventures.
             </p>
           </div>
+          <PageHeroImage image={PAGE_IMAGES.resources} />
 
           {/* 4 Core Pillars Bento Grid */}
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

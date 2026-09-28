@@ -6,7 +6,9 @@ import { ExploreRail } from "@/components/explore-rail";
 import { getCatalog } from "@/lib/ideas.functions";
 import FocusCards from "@/components/aceternity/focus-cards";
 import { categoryImage } from "@/config/category-imagery";
-import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { absoluteUrl, JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { PAGE_IMAGES, pageImageMeta } from "@/config/page-imagery";
+import { PageHeroImage } from "@/components/page-hero-image";
 import { usePillInteraction } from "@/hooks/use-pill-interaction";
 import { useScrollProgress, useTextReveal } from "@/motion";
 
@@ -33,6 +35,7 @@ export const Route = createFileRoute("/browse")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      ...pageImageMeta(PAGE_IMAGES.browse, absoluteUrl),
     ],
   }),
   component: BrowsePage,
@@ -89,6 +92,7 @@ function BrowsePage() {
             name: "Browse Business Idea Categories",
             description: "Every category and subcategory in the BBI business idea library.",
             itemCount: data.totalIdeas,
+            image: PAGE_IMAGES.browse.src,
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -115,6 +119,7 @@ function BrowsePage() {
             <p className="mt-1 text-xs uppercase tracking-[0.16em] text-muted-foreground">
               Free after one sign-in · No credit card · Pay nothing, ever
             </p>
+            <PageHeroImage image={PAGE_IMAGES.browse} />
           </div>
           {/* Was `space-y-6`: fourteen full-width bars, each holding a single
               line of text and a count, roughly 1,600px of page to say what a

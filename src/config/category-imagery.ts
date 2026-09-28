@@ -266,6 +266,70 @@ const RULES: { match: string[]; image: CategoryImage }[] = [
         "Productivity and workflow business ideas: the specific hour of somebody's week you are selling back to them, and what that is worth.",
     },
   },
+  {
+    match: ["agriculture", "farming", "agri", "farm"],
+    image: {
+      src: `${DIR}/agriculture-farming-business-ideas-rural-india-agri-startup-youth.webp`,
+      alt: "Agriculture and farming business ideas for young people starting an agri business in rural India",
+      focus: "agriculture business ideas",
+      keywords: ["farming business ideas", "agri startup India", "rural business for youth"],
+      longTail: [
+        "agriculture business ideas for unemployed youth in India",
+        "low cost farming business ideas for young people in villages",
+      ],
+      description:
+        "Agriculture and farming business ideas: the services, repairs and produce trades farmers already pay for, with the setup cost and the season that decides the money.",
+    },
+  },
+  {
+    match: ["women", "woman"],
+    image: {
+      src: `${DIR}/business-ideas-for-women-india-home-based-startup-funding-entrepreneurs.webp`,
+      alt: "Business ideas for women in India starting a home based business or small enterprise",
+      focus: "business ideas for women",
+      keywords: [
+        "women entrepreneurs India",
+        "home based business for women",
+        "startup funding for women",
+      ],
+      longTail: [
+        "business ideas for women at home with low investment in India",
+        "how women in India can fund a small business",
+      ],
+      description:
+        "Business ideas for women: home kitchens, crafts, beauty and care services, with who buys, what it costs to begin and what the first year asks of you.",
+    },
+  },
+  {
+    match: ["small-town"],
+    image: {
+      src: `${DIR}/small-town-business-ideas-india-local-market-shop-service-youth.webp`,
+      alt: "Small town business ideas for young people opening a local shop or repair service in India",
+      focus: "small town business ideas",
+      keywords: ["local business ideas India", "repair shop business", "business ideas for youth"],
+      longTail: [
+        "small town business ideas in India with low investment",
+        "which local service business works in a small town market",
+      ],
+      description:
+        "Small town business ideas: the repair benches, workshops and counters a bazaar keeps busy, with the equipment they need and who walks in first.",
+    },
+  },
+  {
+    match: ["village", "rural"],
+    image: {
+      src: `${DIR}/village-business-ideas-rural-india-low-cost-local-youth-enterprise.webp`,
+      alt: "Village business ideas for rural youth starting a low cost local enterprise in India",
+      focus: "village business ideas",
+      keywords: ["rural business ideas", "low cost village business", "rural enterprise India"],
+      longTail: [
+        "village business ideas for youth with low investment",
+        "what business to start in a village in India",
+      ],
+      description:
+        "Village business ideas: rural trades built on dairy, poultry, crops and daily needs, with the customer next door and the work it takes.",
+    },
+  },
 ];
 
 /**

@@ -4,7 +4,9 @@ import { Search, BookOpen, Calculator, Sparkles, Tag, ArrowRight } from "lucide-
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { ExploreRail } from "@/components/explore-rail";
-import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { absoluteUrl, JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { PAGE_IMAGES, pageImageMeta } from "@/config/page-imagery";
+import { PageHeroImage } from "@/components/page-hero-image";
 import { GLOSSARY_DATA, GLOSSARY_CATEGORIES, type GlossaryTerm } from "@/lib/glossary-data";
 
 export const Route = createFileRoute("/founder-glossary/")({
@@ -26,6 +28,8 @@ export const Route = createFileRoute("/founder-glossary/")({
         content:
           "Definitions and mathematical formulas for TAM, CAC Payback, LTV, Burn Rate, MOIC, Churn, ARR, and Safe Notes.",
       },
+      { name: "twitter:card", content: "summary_large_image" },
+      ...pageImageMeta(PAGE_IMAGES.glossary, absoluteUrl),
     ],
   }),
   component: FounderGlossaryPage,
@@ -78,6 +82,7 @@ export function FounderGlossaryPage() {
             name: "Founder & Unit Economics Glossary",
             description: `${GLOSSARY_DATA.length} essential startup and unit economics terms defined for operators.`,
             itemCount: GLOSSARY_DATA.length,
+            image: PAGE_IMAGES.glossary.src,
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -113,6 +118,7 @@ export function FounderGlossaryPage() {
               </Link>
             </div>
           </div>
+          <PageHeroImage image={PAGE_IMAGES.glossary} />
 
           {/* Search & Filter Bar */}
           <div className="mt-8 grid gap-4 sm:grid-cols-12">
