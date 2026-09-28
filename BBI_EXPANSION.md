@@ -271,7 +271,7 @@ Do not deploy or activate recurring runs merely by producing this answer. Give m
 
 ## 4. Design reference: BBI-India-Lists-Design.html
 
-Save the block below as an  file and open it in a browser to see the interactive preview.
+Save the block below as an `.html` file and open it in a browser to see the interactive preview.
 
 ```html
 <!doctype html>
