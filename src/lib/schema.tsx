@@ -33,6 +33,7 @@ export function organisationSchema() {
     name: ORGANISATION_NAME,
     legalName: ORGANISATION_LEGAL_NAME,
     url: siteUrl(),
+    logo: `${siteUrl()}/images/brand/bro-b-business-ideas-logo-512.png`,
     founder: [personRef(FOUNDER.name), personRef(CO_FOUNDER.name)],
     ...(sameAs.length > 0 ? { sameAs } : {}),
   };
@@ -100,6 +101,7 @@ function publisherRef() {
     "@type": "Organization",
     name: ORGANISATION_NAME,
     url: siteUrl(),
+    logo: `${siteUrl()}/images/brand/bro-b-business-ideas-logo-512.png`,
   };
 }
 

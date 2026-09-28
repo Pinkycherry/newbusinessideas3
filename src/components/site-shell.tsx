@@ -870,35 +870,15 @@ export function SiteShell({
           <div className="mo-page-rail h-full w-full bg-accent" />
         </div>
         <div className="glass-nav bbi-nav-bar relative mx-auto mt-2 flex max-w-6xl items-center justify-between gap-3 rounded-md border border-border px-4 py-2.5 sm:gap-5 sm:px-6 sm:py-3">
-          <Link
-            to="/"
-            onClick={() => setMobileOpen(false)}
-            className="flex shrink-0 items-baseline gap-2"
-          >
-            {/* The wordmark is set in type, not drawn.
-    
-                The image that was here read "B Business — Beyond the Bright
-                Idea", while the title tags said BBI, the footer said Bro
-                Business Ideas and the domain said bbusiness. Four names for
-                one company: a reader cannot form a stable idea of who this is,
-                and neither can a search engine. A picture of a name is also
-                the one place a name can silently drift out of sync with the
-                rest of the site, because nothing type-checks a PNG.
-    
-                Set as text it is correct by construction, matches
-                ORGANISATION_NAME, scales on any screen, reads to a screen
-                reader without an alt attribute to maintain, and costs no
-                request. The brush mark itself is untouched — it is the
-                favicon and the touch icon, where it does the job it is good
-                at. */}
-            <span className="font-display text-lg font-extrabold leading-none tracking-tight sm:text-xl">
-              BBI
-            </span>
-            <span aria-hidden className="hidden h-4 w-px shrink-0 self-center bg-border sm:block" />
-            <span className="hidden text-[0.7rem] font-semibold uppercase leading-none tracking-[0.16em] text-muted-foreground sm:block">
-              Bro Business Ideas
-            </span>
-            <span className="sr-only">Bro Business Ideas</span>
+          <Link to="/" onClick={() => setMobileOpen(false)} className="flex shrink-0 items-center">
+            {/* The founder's wordmark image, by request (2026-09-28). */}
+            <img
+              src="/images/brand/b-business-beyond-the-bright-idea-wordmark.webp"
+              alt="B Business, Beyond the Bright Idea"
+              width={160}
+              height={40}
+              className="h-8 w-auto rounded-sm sm:h-9"
+            />
           </Link>
 
           <nav className="hidden shrink-0 items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground lg:flex xl:gap-4">

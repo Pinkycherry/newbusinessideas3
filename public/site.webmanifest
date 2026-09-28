@@ -1,0 +1,12 @@
+{
+  "name": "Bro Business Ideas",
+  "short_name": "BBI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f5f4",
+  "theme_color": "#f6f5f4",
+  "icons": [
+    { "src": "/images/brand/bro-b-business-ideas-logo-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/images/brand/bro-b-business-ideas-logo-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
