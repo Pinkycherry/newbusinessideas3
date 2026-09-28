@@ -674,8 +674,8 @@ with `npm` updates only one of them, and the next deploy fails the same way.
 Until one is removed, always run `bun install` after changing `package.json`,
 and check `bun install --frozen-lockfile` passes before pushing.
 
-The old `bun.lock` also pinned every `@supabase/*` tarball to a private Lovable
-npm cache (`europe-west1-npm.pkg.dev/lovable-core-prod/...`), which returns 403
+The old `bun.lock` also pinned every `@supabase/*` tarball to the old site
+builder's private npm cache, which returns 403
 outside that sandbox. The regenerated lockfile resolves from the public registry
 and carries none of those URLs.
 

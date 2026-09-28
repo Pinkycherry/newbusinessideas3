@@ -20,7 +20,7 @@ remembers the other. The bridge between them is this section.
    recently: the brief and `git log` already say.
 2. **Truth order.** The live site and live database, then `git log` on `main`,
    then the docs, then your own memory or chat history — last. If your memory
-   mentions Vercel, Lovable hosting, BBI-With-ChatGPT, the
+   mentions Vercel, the old site-builder hosting, BBI-With-ChatGPT, the
    `claude/bbi-continuation-sj6nbr` branch or ₹199/₹399 pricing, it is out of
    date. Never quote a count from a doc without re-measuring it this session.
 3. **Hand off as you go.** Commit and push to `main` after every finished

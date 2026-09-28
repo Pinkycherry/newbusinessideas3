@@ -166,7 +166,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
          and Windows each get a bitmap made for their size rather than one
          downscaled on the fly. The PNGs are sized in multiples of 48, which
          is what Google Search wants for the icon beside a result. Their
-         file names are new on purpose: Google kept showing the old Lovable
+         file names are new on purpose: Google kept showing the old site-builder
          heart from its cache, and a URL it has never fetched is one it has
          to fetch fresh. Keep these names stable from here on. */
       { rel: "icon", href: "/images/brob-favicon-192.png", type: "image/png", sizes: "192x192" },

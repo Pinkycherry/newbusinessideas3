@@ -278,9 +278,8 @@ Do not present payment or AI-audit features as functional unless they are genuin
 
 **Live app**: https://bbusiness.online — deployed on Cloudflare Workers from `main`.
 
-The build still uses `@lovable.dev/vite-tanstack-config` (see `vite.config.ts`),
-because the project was first scaffolded in Lovable. That package is build
-tooling only — nothing from it reaches a visitor.
+The build is plain Vite with the TanStack Start, React, Tailwind and Nitro
+(Cloudflare) plugins, all listed in `vite.config.ts`.
 
 ## Development
 
