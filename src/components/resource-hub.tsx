@@ -105,11 +105,23 @@ function ResourceCard({ item, kind, index }: { item: ResourceLink; kind: Kind; i
         : kind === "posts"
           ? { to: "/blog/$slug", params: { slug: item.slug } }
           : { to: "/founder-glossary", hash: item.slug };
+  const scene =
+    kind === "calculators"
+      ? index === 0
+        ? "rh-console"
+        : "rh-drawer"
+      : kind === "guides"
+        ? "rh-folio"
+        : kind === "posts"
+          ? "rh-shutter"
+          : "rh-index";
   return (
     <li data-index={index + 1}>
       <Link
         {...route}
         data-index={index + 1}
+        data-scroll-scene={scene}
+        data-scroll-index={index % 3}
         className={`rh-card rh-card--${kind}${index === 0 ? " rh-card--lead" : ""}`}
       >
         <span className="rh-card-top">
@@ -149,7 +161,15 @@ function ResourceCard({ item, kind, index }: { item: ResourceLink; kind: Kind; i
   );
 }
 
-function ResourceGroup({ group, items }: { group: Group; items: ResourceLink[] }) {
+function ResourceGroup({
+  group,
+  items,
+  index,
+}: {
+  group: Group;
+  items: ResourceLink[];
+  index: number;
+}) {
   const { kind, label, eyebrow, description, action, to, Icon, shown, noun } = group;
   const renderList = (selection: ResourceLink[], offset = 0) => (
     <ul className={`rh-grid rh-grid--${kind}`}>
@@ -173,7 +193,12 @@ function ResourceGroup({ group, items }: { group: Group; items: ResourceLink[] }
           <h3 id={`rh-${kind === "posts" ? "blog" : kind}`}>{label}</h3>
           <p>{description}</p>
         </div>
-        <Link to={to} className="rh-action">
+        <Link
+          to={to}
+          className="rh-action"
+          data-scroll-scene="rh-action"
+          data-scroll-index={index % 3}
+        >
           {action}
           <span className="rh-action-arrow" aria-hidden="true">
             <ArrowUpRight size={18} />
@@ -183,7 +208,11 @@ function ResourceGroup({ group, items }: { group: Group; items: ResourceLink[] }
       {renderList(items.slice(0, shown))}
       {items.length > shown && (
         <details className="rh-more">
-          <summary className="rh-action">
+          <summary
+            className="rh-action"
+            data-scroll-scene="rh-action"
+            data-scroll-index={index % 3}
+          >
             <span className="rh-more-closed">Explore more {noun}</span>
             <span className="rh-more-open">Show fewer {noun}</span>
             <Plus className="rh-plus" size={18} aria-hidden="true" />
@@ -221,14 +250,24 @@ export function ResourceHub({
             credits.
           </p>
         </div>
-        <span className="rh-poster-art" aria-hidden="true">
+        <span
+          className="rh-poster-art"
+          aria-hidden="true"
+          data-scroll-scene="rh-poster"
+          data-scroll-index={0}
+        >
           <span>PLAN</span>
           <span>TEST</span>
           <span>BUILD</span>
         </span>
         <nav className="rh-shortcuts" aria-label="Explore the free toolkit">
-          {groups.map(({ kind, eyebrow, Icon }) => (
-            <a key={kind} href={`#rh-${kind === "posts" ? "blog" : kind}`}>
+          {groups.map(({ kind, eyebrow, Icon }, index) => (
+            <a
+              key={kind}
+              href={`#rh-${kind === "posts" ? "blog" : kind}`}
+              data-scroll-scene="rh-action"
+              data-scroll-index={index % 3}
+            >
               <Icon className="rh-shortcut-icon" size={20} strokeWidth={1.65} aria-hidden="true" />
               <span>{eyebrow}</span>
               <ArrowUpRight size={17} aria-hidden="true" />
@@ -236,8 +275,8 @@ export function ResourceHub({
           ))}
         </nav>
       </div>
-      {groups.map((group) => (
-        <ResourceGroup key={group.kind} group={group} items={resources[group.kind]} />
+      {groups.map((group, index) => (
+        <ResourceGroup key={group.kind} group={group} items={resources[group.kind]} index={index} />
       ))}
     </div>
   );

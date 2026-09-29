@@ -851,6 +851,308 @@ html.light .home-page.bbi-instrument .bbi-faq-row[aria-expanded="true"] .bbi-faq
   font-size: 0.875rem;
   line-height: 1.75;
 }
+
+/* Fixed-size word plates: no offscreen springs or width animations. */
+.home-word-flip {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  min-width: 0;
+  max-width: 100%;
+}
+.home-word-plate {
+  display: inline-grid;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0.2rem 0.65rem;
+  border: 1px solid #e8787855;
+  border-radius: 6px;
+  background: #4c1115;
+  color: #ffcfcb;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.home-word-reserve,
+.home-word-current {
+  grid-area: 1 / 1;
+}
+.home-word-reserve {
+  visibility: hidden;
+  pointer-events: none;
+}
+.home-word-current.is-moving {
+  animation: home-word-settle 320ms var(--home-ease);
+}
+@keyframes home-word-settle {
+  from {
+    transform: translateY(0.4em);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* Mobile scroll scenes. The shared viewport observer only toggles attributes;
+   every pass is finite, every sentence stays readable, and no layout is animated. */
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .home-page [data-scroll-index="1"] {
+    --home-scroll-delay: 65ms;
+  }
+  .home-page [data-scroll-index="2"] {
+    --home-scroll-delay: 130ms;
+  }
+
+  .home-page [data-scroll-scene="home-hero"][data-scroll-active="true"] .home-title {
+    animation: home-title-settle 760ms var(--home-ease) both;
+    transform-origin: left bottom;
+  }
+  .home-page [data-scroll-scene="home-hero"][data-scroll-active="true"] .home-hero-actions > span {
+    animation: home-action-arrive 680ms var(--home-ease) 100ms both;
+  }
+  .home-page .home-hero-benefit {
+    position: relative;
+  }
+  .home-page .home-hero-benefit::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.5rem;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, #ff9595, #ca0808 55%, transparent);
+    transform: scaleX(0.15);
+    transform-origin: left;
+    pointer-events: none;
+  }
+  .home-page [data-scroll-scene="home-benefit"][data-scroll-active="true"]::after {
+    animation: home-line-trace 750ms var(--home-ease) var(--home-scroll-delay, 0ms) both;
+  }
+  .home-page [data-scroll-scene="home-benefit"][data-scroll-active="true"] .home-benefit-index {
+    animation: home-number-rise 640ms var(--home-ease) var(--home-scroll-delay, 0ms) both;
+  }
+
+  .home-page [data-scroll-scene="home-surprise-me"][data-scroll-active="true"] > .bbi-spot,
+  .home-page [data-scroll-scene="home-proof"][data-scroll-active="true"] > .relative {
+    animation: home-depth-settle 650ms var(--home-ease) var(--home-scroll-delay, 0ms) both;
+  }
+  .home-page [data-scroll-scene="home-categories"][data-scroll-active="true"] > .ins-legend,
+  .home-page [data-scroll-scene="home-library"][data-scroll-active="true"] h2 {
+    animation: home-heading-arrive 620ms var(--home-ease) both;
+  }
+  .home-page [data-scroll-scene="home-tree-window"][data-scroll-active="true"] > img {
+    animation: home-canopy-open 900ms var(--home-ease) both;
+    transform-origin: center 80%;
+  }
+  .home-page .bbi-orbit-wrap :is(.bbi-orbit-ring, .bbi-orbit-node-bob) {
+    animation: none;
+  }
+  .home-page [data-scroll-scene="home-team-orbit"][data-scroll-active="true"] .bbi-orbit-ring {
+    animation: home-orbit-focus 850ms var(--home-ease) both;
+  }
+  .home-page [data-scroll-scene="home-step"][data-scroll-active="true"]::before {
+    animation: home-step-trace 720ms var(--home-ease) var(--home-scroll-delay, 0ms) both;
+  }
+  .home-page [data-scroll-scene="home-step"][data-scroll-active="true"] > .ins-num {
+    animation: home-number-rise 600ms var(--home-ease) var(--home-scroll-delay, 0ms) both;
+    color: #ffadad;
+  }
+  .home-page
+    :is(
+      [data-scroll-scene="home-what-you-get"],
+      [data-scroll-scene="home-featured"],
+      [data-scroll-scene="home-how-it-works"],
+      [data-scroll-scene="home-built-for-you"],
+      [data-scroll-scene="home-free-access"],
+      [data-scroll-scene="home-research"],
+      [data-scroll-scene="home-behind-bbi"],
+      [data-scroll-scene="home-inspiration"],
+      [data-scroll-scene="home-the-difference"],
+      [data-scroll-scene="home-future-themes"],
+      [data-scroll-scene="home-promise"]
+    )[data-scroll-active="true"]
+    h2 {
+    animation: home-depth-settle 700ms var(--home-ease) both;
+  }
+  .home-page [data-scroll-scene="home-browse-keywords"] h2,
+  .home-page [data-scroll-scene="home-faq"] > .ins-legend {
+    position: relative;
+  }
+  .home-page [data-scroll-scene="home-browse-keywords"] h2::after,
+  .home-page [data-scroll-scene="home-faq"] > .ins-legend::after {
+    content: "";
+    display: block;
+    margin-top: 0.65rem;
+    width: min(12rem, 55%);
+    height: 2px;
+    background: linear-gradient(90deg, #ffaaaa, #ca0808);
+    transform-origin: left;
+  }
+  .home-page [data-scroll-scene="home-browse-keywords"][data-scroll-active="true"] h2::after,
+  .home-page [data-scroll-scene="home-faq"][data-scroll-active="true"] > .ins-legend::after {
+    animation: home-line-trace 800ms var(--home-ease) both;
+  }
+}
+@keyframes home-title-settle {
+  from {
+    transform: translateY(12px) rotate(-0.6deg);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes home-action-arrive {
+  from {
+    transform: translateX(-12px);
+  }
+  65% {
+    transform: translateX(3px);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes home-line-trace {
+  from {
+    transform: scaleX(0.15);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes home-step-trace {
+  from {
+    transform: scaleY(0.08);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes home-number-rise {
+  from {
+    transform: translateY(12px) scale(0.92);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes home-depth-settle {
+  from {
+    transform: translateY(18px) scale(0.985);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes home-heading-arrive {
+  from {
+    transform: translateX(-16px);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes home-canopy-open {
+  from {
+    transform: translateY(18px) scale(0.93);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes home-orbit-focus {
+  from {
+    scale: 0.87;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+/* The homepage toolkit keeps its own paper/flip vocabulary on scroll. */
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .home-page [data-scroll-scene="home-toolkit"][data-scroll-active="true"] > div:first-child h2,
+  .home-page
+    :is(
+      [data-scroll-scene="home-calculator-ticker"],
+      [data-scroll-scene="home-guides"],
+      [data-scroll-scene="home-glossary"],
+      [data-scroll-scene="home-blog"]
+    )[data-scroll-active="true"]
+    > div:first-child
+    h3 {
+    animation: home-heading-arrive 620ms var(--home-ease) both;
+  }
+  .home-page [data-scroll-scene="home-guide-paper"][data-scroll-active="true"] .hf-guide {
+    animation: home-paper-arrive 680ms var(--home-ease) var(--home-scroll-delay, 0ms) both;
+  }
+  .home-page
+    [data-scroll-scene="home-guide-paper"][data-scroll-active="true"]
+    .hf-guide-sheet::after {
+    animation: home-paper-corner 900ms var(--home-ease) var(--home-scroll-delay, 0ms) both;
+  }
+  /* Move the link, never the inner face transform that owns the real flip. */
+  .home-page [data-scroll-scene="home-glossary-turn"][data-scroll-active="true"] .hf-term-link {
+    animation: home-term-arrive 780ms var(--home-ease) var(--home-scroll-delay, 0ms) both;
+    transform-origin: left center;
+  }
+  .home-page [data-scroll-scene="home-glossary-turn"]::after {
+    content: "";
+    position: absolute;
+    inset: auto 1.4rem 3.75rem;
+    height: 1px;
+    background: linear-gradient(90deg, #ffb1a9, #ca0808, transparent);
+    transform-origin: left;
+    pointer-events: none;
+  }
+  .home-page [data-scroll-scene="home-glossary-turn"][data-scroll-active="true"]::after {
+    animation: home-line-trace 800ms var(--home-ease) var(--home-scroll-delay, 0ms) both;
+  }
+  .home-page [data-scroll-scene="home-blog"][data-scroll-active="true"] .ac-marquee {
+    animation: home-blog-slate 750ms var(--home-ease) both;
+    transform-origin: center;
+  }
+}
+@keyframes home-paper-arrive {
+  from {
+    transform: translateY(12px) rotate(-0.7deg);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes home-paper-corner {
+  0% {
+    transform: rotate(-35deg) scale(0.8);
+  }
+  60% {
+    transform: rotate(6deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes home-term-arrive {
+  from {
+    transform: translateY(10px) rotateY(-9deg);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes home-blog-slate {
+  from {
+    transform: translateY(12px) rotate(0.9deg);
+  }
+  to {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-word-current.is-moving {
+    animation: none;
+  }
+}
 @media (max-width: 639px) {
   .home-page .home-hero-benefits {
     grid-template-columns: 1fr;

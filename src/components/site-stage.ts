@@ -2,6 +2,8 @@ import { useRouterState } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 import { prefersReducedMotion, suspendPointerChannel } from "@/motion";
+import { observeMobileScenes } from "@/motion/mobile-scenes";
+import "./mobile-scenes.css";
 
 /**
  * The plain site system's only motion controller, mounted once by SiteShell.
@@ -38,7 +40,19 @@ export function useSiteStage(enabled = true) {
   }, [enabled]);
 
   useEffect(() => {
-    if (!enabled || prefersReducedMotion() || typeof IntersectionObserver === "undefined") return;
+    const root = document.querySelector<HTMLElement>(".cm-page, .home-page");
+    if (!root) return;
+    return observeMobileScenes(root);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (
+      !enabled ||
+      prefersReducedMotion() ||
+      typeof IntersectionObserver === "undefined" ||
+      matchMedia("(max-width: 1023px), (pointer: coarse)").matches
+    )
+      return;
     const fold = window.innerHeight * 0.92;
     const blocks = Array.from(document.querySelectorAll<HTMLElement>(".cm-page [data-reveal]"));
     const armed = blocks.filter((el) => el.getBoundingClientRect().top > fold);

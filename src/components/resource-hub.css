@@ -1,4 +1,4 @@
-/* Resource editorial system. Static depth; motion is interaction-only. */
+/* Resource editorial system. Static depth; finite pointer and viewport effects. */
 .rh-hub {
   --rh-ink: #120404;
   --rh-red: #ca0808;
@@ -652,7 +652,33 @@
     gap: 1.5rem;
   }
   .rh-hub .rh-poster-art {
-    display: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    justify-self: center;
+    align-items: center;
+    width: min(100%, 22rem);
+    min-height: 6rem;
+    padding: 0.4rem 0.15rem 0.8rem;
+    perspective: none;
+  }
+  .rh-hub .rh-poster-art span {
+    width: 100%;
+    min-width: 0;
+    padding: 0.4em 0.25em;
+    font-size: clamp(1.15rem, 6vw, 2rem);
+    text-align: center;
+    box-shadow:
+      0 7px 10px #0006,
+      inset 0 -3px #070101;
+  }
+  .rh-hub .rh-poster-art span:nth-child(1) {
+    transform: rotate(-9deg) translateY(5px);
+  }
+  .rh-hub .rh-poster-art span:nth-child(2) {
+    transform: rotate(3deg) translateY(-1px);
+  }
+  .rh-hub .rh-poster-art span:nth-child(3) {
+    transform: rotate(8deg) translateY(5px);
   }
   .rh-hub .rh-shortcuts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -821,6 +847,196 @@
   }
   .rh-hub [data-kind="posts"] .rh-action:is(:hover, :focus-visible) {
     transform: translateY(-3px) rotate(-2deg);
+  }
+}
+/* These two decorative islands need no layout work outside their own bounds.
+   Paint is not contained: the approved paper shadows can still extend out. */
+@media (max-width: 1023px), (pointer: coarse) {
+  .rh-hub :is(.rh-poster-art, .rh-console-art) {
+    contain: layout style;
+  }
+}
+
+/* The shared observer supplies data-scroll-active once. Nothing is hidden
+   while waiting for it, and each animation releases its transform on finish. */
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference),
+  (pointer: coarse) and (prefers-reduced-motion: no-preference) {
+  .rh-hub [data-scroll-scene] {
+    --rh-scroll-delay: 0ms;
+  }
+  .rh-hub [data-scroll-index="1"] {
+    --rh-scroll-delay: 70ms;
+  }
+  .rh-hub [data-scroll-index="2"] {
+    --rh-scroll-delay: 140ms;
+  }
+
+  /* Three paper layers fan out, then return to their printed resting angles. */
+  .rh-hub [data-scroll-scene="rh-poster"] > span {
+    --rh-paper-x: -9px;
+    --rh-paper-turn: -7deg;
+    --rh-paper-delay: 0ms;
+  }
+  .rh-hub [data-scroll-scene="rh-poster"] > span:nth-child(2) {
+    --rh-paper-x: 2px;
+    --rh-paper-turn: 3deg;
+    --rh-paper-delay: 70ms;
+  }
+  .rh-hub [data-scroll-scene="rh-poster"] > span:nth-child(3) {
+    --rh-paper-x: 9px;
+    --rh-paper-turn: 7deg;
+    --rh-paper-delay: 140ms;
+  }
+  .rh-hub [data-scroll-scene="rh-poster"][data-scroll-active="true"] > span {
+    animation: rh-scroll-paper 820ms var(--rh-ease)
+      calc(var(--rh-scroll-delay) + var(--rh-paper-delay)) 1 backwards;
+  }
+
+  /* Only the four decorative keys move; the calculator's copy stays still. */
+  .rh-hub .rh-console-art > span {
+    --rh-key-delay: 0ms;
+  }
+  .rh-hub .rh-console-art > span:nth-child(2) {
+    --rh-key-delay: 65ms;
+  }
+  .rh-hub .rh-console-art > span:nth-child(3) {
+    --rh-key-delay: 130ms;
+  }
+  .rh-hub .rh-console-art > span:nth-child(4) {
+    --rh-key-delay: 195ms;
+  }
+  .rh-hub [data-scroll-scene="rh-console"][data-scroll-active="true"] .rh-console-art > span {
+    animation: rh-scroll-key 620ms var(--rh-ease) calc(var(--rh-scroll-delay) + var(--rh-key-delay))
+      1 backwards;
+  }
+  .rh-hub [data-scroll-scene="rh-drawer"][data-scroll-active="true"] {
+    animation: rh-scroll-drawer 680ms var(--rh-ease) var(--rh-scroll-delay) 1 backwards;
+  }
+
+  /* A shallow hinge keeps the folio's words legible throughout the settle. */
+  .rh-hub [data-scroll-scene="rh-folio"] {
+    transform-origin: left center;
+  }
+  .rh-hub [data-scroll-scene="rh-folio"][data-scroll-active="true"] {
+    animation: rh-scroll-folio 780ms var(--rh-ease) var(--rh-scroll-delay) 1 backwards;
+  }
+
+  .rh-hub [data-scroll-scene="rh-index"]::before {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 2px;
+    background: #fb7654;
+    pointer-events: none;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  .rh-hub [data-scroll-scene="rh-index"][data-scroll-active="true"]::before {
+    transform: scaleX(1);
+    animation: rh-scroll-ink 650ms var(--rh-ease) var(--rh-scroll-delay) 1 backwards;
+  }
+
+  /* The shutter stays behind the writing. Side stories get a small band;
+     the lead retains its existing full diagonal artwork. */
+  .rh-hub [data-scroll-scene="rh-shutter"]:not(.rh-card--lead)::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: #ca080821;
+    clip-path: polygon(60% 0, 78% 0, 38% 100%, 20% 100%);
+    pointer-events: none;
+  }
+  .rh-hub [data-scroll-scene="rh-shutter"][data-scroll-active="true"]::before {
+    animation: rh-scroll-shutter 900ms var(--rh-ease) var(--rh-scroll-delay) 1 backwards;
+  }
+
+  .rh-hub
+    [data-scroll-scene="rh-action"][data-scroll-active="true"]
+    :is(.rh-action-arrow, .rh-plus),
+  .rh-hub .rh-shortcuts > [data-scroll-active="true"] > .rh-shortcut-icon,
+  .rh-hub .rh-shortcuts > [data-scroll-active="true"] > svg:last-child {
+    animation: rh-scroll-action 600ms var(--rh-ease) var(--rh-scroll-delay) 1 backwards;
+  }
+
+  @keyframes rh-scroll-paper {
+    0% {
+      translate: 0 5px;
+      scale: 0.98;
+    }
+    45% {
+      translate: var(--rh-paper-x) -6px;
+      rotate: var(--rh-paper-turn);
+      scale: 1;
+    }
+    100% {
+      translate: 0;
+      rotate: 0deg;
+      scale: 1;
+    }
+  }
+  @keyframes rh-scroll-key {
+    0%,
+    100% {
+      translate: 0;
+      rotate: 0deg;
+      scale: 1;
+    }
+    42% {
+      translate: 0 -9px;
+      rotate: 7deg;
+      scale: 1.04;
+    }
+  }
+  @keyframes rh-scroll-drawer {
+    0% {
+      translate: -12px 0;
+    }
+    60% {
+      translate: 3px 0;
+    }
+    100% {
+      translate: 0;
+    }
+  }
+  @keyframes rh-scroll-folio {
+    0% {
+      transform: perspective(950px) rotateY(-7deg) translateX(-4px);
+    }
+    65% {
+      transform: perspective(950px) rotateY(1deg) translateY(-2px);
+    }
+    100% {
+      transform: none;
+    }
+  }
+  @keyframes rh-scroll-ink {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes rh-scroll-shutter {
+    0% {
+      translate: -9% 0;
+    }
+    60% {
+      translate: 9% 0;
+    }
+    100% {
+      translate: 0;
+    }
+  }
+  @keyframes rh-scroll-action {
+    0%,
+    100% {
+      translate: 0;
+    }
+    45% {
+      translate: 3px -3px;
+    }
   }
 }
 .rh-hub :is(.rh-card, .rh-action, .rh-shortcuts > a):active {

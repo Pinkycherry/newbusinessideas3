@@ -32,7 +32,14 @@ export function calmStaggerReveal(
     stagger = 0.05,
   }: { selector?: string | undefined; distance?: number; direction?: Direction; stagger?: number },
 ): (() => void) | undefined {
-  if (prefersReducedMotion() || typeof IntersectionObserver === "undefined") return undefined;
+  // The shell owns readable mobile entrances. A second opacity gate here
+  // leaves blank cards during a fast swipe and competes with those scenes.
+  if (
+    prefersReducedMotion() ||
+    typeof IntersectionObserver === "undefined" ||
+    window.matchMedia("(max-width: 1023px), (pointer: coarse)").matches
+  )
+    return undefined;
 
   const all = selector
     ? Array.from(el.querySelectorAll<HTMLElement>(selector))

@@ -8,7 +8,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import "../styles.css";
 import "../motion.css";
@@ -146,15 +146,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
     links: [
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      /* The plain site system sets every page but the homepage in Poppins,
-         declared with @font-face in styles.css; the two weights the first
-         screen paints with are preloaded. The Google Fonts stylesheet below
-         (IBM Plex + Geist) is still loaded, non-blocking, for the homepage,
-         which keeps its original design. A browser only downloads a face
-         some element actually uses, so other pages fetch only that small
-         stylesheet. */
+      /* The homepage, interior shell and India Atlas use Poppins, declared
+         with @font-face in styles.css. Keep their first-screen weights
+         preloaded without requesting the retired IBM font families. */
       ...FONT_PRELOADS.map((href) => ({
         rel: "preload",
         as: "font",
@@ -216,43 +211,40 @@ function RobotsMeta() {
   return <meta name="robots" content="noindex,nofollow" />;
 }
 
-/**
- * Google Fonts, loaded without blocking first paint.
- *
- * Declared as a normal `rel="stylesheet"` this cost roughly 1.4 seconds of
- * blocked render on every route: the browser will not paint until it has the
- * stylesheet, and the stylesheet comes from a third-party host we do not
- * control the latency of.
- *
- * `media="print"` is the trick. The browser still fetches the file, but at low
- * priority and without blocking, because the rules do not apply to the screen.
- * The inline script below flips `media` to `all` once it has loaded, at which
- * point the fonts apply normally.
- *
- * The flip is an inline script rather than React's `onLoad` on purpose: on a
- * server-rendered page the stylesheet can finish loading before hydration, and
- * a React handler attached afterwards would never fire, leaving the site in its
- * fallback fonts forever. The script checks `.sheet` first for exactly that
- * case and only falls back to listening.
- *
- * `<noscript>` restores the blocking version, because with no JavaScript there
- * is nothing to flip the attribute.
- */
+/** The blog's body-portalled sticky CTA still inherits Geist. Other route
+ * content uses Poppins and does not need this additional stylesheet. */
 const FONT_CSS =
-  "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700" +
-  "&family=IBM+Plex+Sans+Condensed:wght@600;700" +
-  "&family=IBM+Plex+Mono:wght@400;500;600" +
-  "&family=Geist:wght@400;500;600;700;800&display=swap";
-
-const FONT_SWAP = `(function(){var l=document.getElementById("bbi-fonts");if(!l)return;var go=function(){l.media="all"};if(l.sheet){go()}else{l.addEventListener("load",go,{once:true})}})();`;
+  "https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap";
 
 function FontStylesheet() {
-  const homepage = useRouterState({ select: (state) => state.location.pathname === "/" });
-  if (homepage) return null;
+  const needsGeist = useRouterState({
+    select: (state) => /^\/blog\/[^/]+\/?$/.test(state.location.pathname),
+  });
+  const stylesheetRef = useRef<HTMLLinkElement>(null);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const stylesheet = stylesheetRef.current;
+    if (!needsGeist || !stylesheet) return;
+    const apply = () => setLoaded(true);
+    stylesheet.addEventListener("load", apply);
+    // A cached sheet can finish before hydration. React owns the media
+    // change after this effect, so the server and first client render agree.
+    if (stylesheet.sheet) apply();
+    return () => stylesheet.removeEventListener("load", apply);
+  }, [needsGeist]);
+
+  if (!needsGeist) return null;
   return (
     <>
-      <link id="bbi-fonts" rel="stylesheet" href={FONT_CSS} media="print" />
-      <script dangerouslySetInnerHTML={{ __html: FONT_SWAP }} />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link
+        ref={stylesheetRef}
+        id="bbi-fonts"
+        rel="stylesheet"
+        href={FONT_CSS}
+        media={loaded ? "all" : "print"}
+      />
       <noscript>
         <link rel="stylesheet" href={FONT_CSS} />
       </noscript>

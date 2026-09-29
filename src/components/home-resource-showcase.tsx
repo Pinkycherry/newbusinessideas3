@@ -77,6 +77,8 @@ function GlossaryFlip({ term, index }: { term: ResourceLink; index: number }) {
   return (
     <li
       className="hf-term"
+      data-scroll-scene="home-glossary-turn"
+      data-scroll-index={index % 3}
       data-flipped={flipped || undefined}
       onPointerEnter={(event) => {
         if (event.pointerType === "mouse") setFlipped(true);
@@ -139,6 +141,7 @@ export function HomeResourceShowcase({ resources }: { resources: PageResources |
 
   return (
     <section
+      data-scroll-scene="home-toolkit"
       data-anchor="toolkit"
       data-anchor-label="The toolkit"
       className="hf-toolkit ins-module py-16"
@@ -155,7 +158,7 @@ export function HomeResourceShowcase({ resources }: { resources: PageResources |
 
       {/* ---- Calculators: the ticker ---------------------------------- */}
       {calculators.length > 0 && (
-        <div className="mt-12">
+        <div className="mt-12" data-scroll-scene="home-calculator-ticker">
           <Heading legend="Run the numbers" title="Make your next move add up." />
           <InfiniteMovingCards
             className="bbi-built-ticker mt-6"
@@ -172,11 +175,15 @@ export function HomeResourceShowcase({ resources }: { resources: PageResources |
 
       {/* ---- Guides: numbered reading folios -------------------------- */}
       {guides.length > 0 && (
-        <div className="mt-16">
+        <div className="mt-16" data-scroll-scene="home-guides">
           <Heading legend="Read first" title="Six startup guides, drawn fresh each visit." />
           <ul className="hf-guides mx-auto mt-6 max-w-6xl px-6">
             {guides.map((guide, index) => (
-              <li key={guide.slug}>
+              <li
+                key={guide.slug}
+                data-scroll-scene="home-guide-paper"
+                data-scroll-index={index % 3}
+              >
                 <Link to="/startup-guides/$slug" params={{ slug: guide.slug }} className="hf-guide">
                   <span className="hf-guide-spine" aria-hidden="true">
                     {String(index + 1).padStart(2, "0")}
@@ -201,7 +208,7 @@ export function HomeResourceShowcase({ resources }: { resources: PageResources |
 
       {/* ---- Glossary: flip cards ------------------------------------- */}
       {glossary.length > 0 && (
-        <div className="mt-16">
+        <div className="mt-16" data-scroll-scene="home-glossary">
           <Heading legend="Say it properly" title="Twelve terms. Turn one over." />
           <ul className="hf-terms mx-auto mt-6 max-w-6xl px-6">
             {glossary.map((term, index) => (
@@ -213,7 +220,7 @@ export function HomeResourceShowcase({ resources }: { resources: PageResources |
 
       {/* ---- Blog: the image marquee ---------------------------------- */}
       {posts.length > 0 && (
-        <div className="mt-16">
+        <div className="mt-16" data-scroll-scene="home-blog">
           <Heading legend="From the blog" title="What we have been writing." />
           <div className="mt-6">
             <MovingImageCards

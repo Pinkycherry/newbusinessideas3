@@ -11,29 +11,13 @@ import { AdSlot } from "@/components/AdSlot";
 import { BusinessIcons } from "@/components/business-icons";
 import HoverBorderGradient from "@/components/aceternity/hover-border-gradient";
 import SpotlightCard from "@/components/aceternity/spotlight-card";
+import HomeWordFlip from "@/components/home-word-flip";
 
 import "@/components/home-stage.css";
 
-/**
- * Below-the-fold components, split out of the homepage bundle.
- *
- * `lazy()` alone is not enough here: every call site would need its own
- * `<Suspense>`, and these render in sixteen places across a 1,650-line file.
- * This wraps the boundary INTO the component, so a lazy component is a drop-in
- * replacement for the eager one it replaces and no call site changes.
- *
- * The fallback is `null` on purpose. Server rendering still emits the real
- * markup, and React keeps that server HTML in place while the chunk arrives
- * rather than blanking it, so the fallback is only ever seen on a client-side
- * navigation into the homepage — below the fold, where nothing is watching.
- *
- * What is NOT here matters as much as what is. `Lens`,
- * `HoverBorderGradient` and `SpotlightCard` stay eager
- * because they render at or immediately below the fold; deferring those trades
- * a smaller bundle for a slower largest-contentful paint, which is the wrong
- * way round.
- */
-function belowFold<P extends object>(load: () => Promise<{ default: ComponentType<P> }>) {
+/** Split interactive modules without withholding server-rendered content.
+ * This splits code; viewport hooks inside each component pause its effects. */
+function splitComponent<P extends object>(load: () => Promise<{ default: ComponentType<P> }>) {
   const Lazy = lazy(load);
   return function BelowFold(props: P) {
     return (
@@ -44,22 +28,12 @@ function belowFold<P extends object>(load: () => Promise<{ default: ComponentTyp
   };
 }
 
-/* WebGL is not on the critical path. `ogl` was bundled into the shared routes
-   chunk — 169KB shipped to every visitor of every page for a decorative
-   canvas that only exists on the homepage. Lazy, it splits into its own chunk
-   that is fetched after the page has painted, and a browser that never gets
-   there never pays for it. MoltenMetal used to sit beside this: it was the
-   hero's animated ground and is gone. */
-
-const ContainerTextFlip = belowFold(() => import("@/components/aceternity/container-text-flip"));
-const InfiniteMovingCards = belowFold(
+const InfiniteMovingCards = splitComponent(
   () => import("@/components/aceternity/infinite-moving-cards"),
 );
-const MovingImageCards = belowFold(() => import("@/components/aceternity/moving-image-cards"));
-const LayoutTextFlip = belowFold(() => import("@/components/aceternity/layout-text-flip"));
-const EncryptedText = belowFold(() => import("@/components/aceternity/encrypted-text"));
-const LinkPreview = belowFold(() => import("@/components/aceternity/link-preview"));
-const Tabs = belowFold(() => import("@/components/aceternity/tabs"));
+const MovingImageCards = splitComponent(() => import("@/components/aceternity/moving-image-cards"));
+const LinkPreview = splitComponent(() => import("@/components/aceternity/link-preview"));
+const Tabs = splitComponent(() => import("@/components/aceternity/tabs"));
 import { categoryImage } from "@/config/category-imagery";
 import CardSpotlight from "@/components/aceternity/card-spotlight";
 import { HomeResourceShowcase } from "@/components/home-resource-showcase";
@@ -75,7 +49,7 @@ import { catalogQuery, getFeaturedIdeas, getSurpriseIdeas } from "@/lib/ideas.fu
 import type { CategoryNode } from "@/lib/ideas.functions";
 import { hideImgIfBroken } from "@/lib/utils";
 import { AccordionItem } from "@/components/accordion-item";
-import { loadGsap, prefersReducedMotion } from "@/lib/motion";
+import { prefersReducedMotion } from "@/lib/motion";
 import { Odometer } from "@/motion";
 
 /**
@@ -126,25 +100,21 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
   });
   const resultsRef = useRef<HTMLDivElement | null>(null);
 
-  // Results appear via a mutation, not a scroll — Reveal's rv-wipe variant
-  // is ScrollTrigger-driven and doesn't fit here, so this fires the same
-  // clip-path wipe directly on the mutation succeeding instead.
+  // Newly chosen results settle into place without loading an animation engine.
   useEffect(() => {
     const el = resultsRef.current;
     if (!surprise.data || !el || prefersReducedMotion()) return;
-    loadGsap().then((gsap) => {
-      if (!resultsRef.current) return;
-      gsap.fromTo(
-        resultsRef.current,
-        { clipPath: "inset(0 100% 0 0)", opacity: 0.5 },
-        { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 0.7, ease: "power3.out" },
-      );
+    const animation = el.animate([{ transform: "translateY(12px)" }, { transform: "none" }], {
+      duration: 430,
+      easing: "cubic-bezier(.2,.8,.2,1)",
     });
+    return () => animation.cancel();
   }, [surprise.data]);
 
   return (
     <section
       id="surprise-me"
+      data-scroll-scene="home-surprise-me"
       data-anchor="surprise-me"
       data-anchor-label="Surprise Me"
       className="mx-auto mt-10 max-w-6xl px-3 sm:px-4"
@@ -152,7 +122,7 @@ function SurpriseMeSection({ categories }: { categories: CategoryNode[] }) {
       <CardSpotlight className="px-6 py-8 sm:px-10 sm:py-10">
         <p className="ins-legend flex flex-wrap items-baseline gap-2">
           Surprise me
-          <ContainerTextFlip
+          <HomeWordFlip
             words={categories.map((c) => c.categoryName)}
             className="text-sm font-semibold normal-case tracking-normal sm:text-base"
           />
@@ -330,6 +300,7 @@ function HomePage() {
           the sentence rather than as chrome. */}
       <section
         id="hero"
+        data-scroll-scene="home-hero"
         data-anchor="hero"
         data-anchor-label="Top"
         className="relative overflow-hidden border-b border-[var(--ins-rule)]"
@@ -430,7 +401,12 @@ function HomePage() {
 
         <div className="home-hero-benefits">
           {HERO_PANELS.map((panel, index) => (
-            <article key={panel.label} className="home-hero-benefit">
+            <article
+              key={panel.label}
+              className="home-hero-benefit"
+              data-scroll-scene="home-benefit"
+              data-scroll-index={index}
+            >
               <span className="home-benefit-index" aria-hidden="true">
                 0{index + 1}
               </span>
@@ -457,6 +433,7 @@ function HomePage() {
           resolves to a light fill + midnight-blue glow + black text on hover. */}
       <section
         id="categories"
+        data-scroll-scene="home-categories"
         data-anchor="categories"
         data-anchor-label="Browse by category"
         className="pt-10"
@@ -492,6 +469,7 @@ function HomePage() {
           band: same content, and a marquee reads as a library going past
           rather than as a hero effect. */}
       <section
+        data-scroll-scene="home-library"
         data-anchor="library"
         data-anchor-label="The library"
         className="ins-module py-12"
@@ -550,7 +528,7 @@ function HomePage() {
       {/* SECTION 3: THE BBI 4-PILLAR BLUEPRINT STANDARD */}
 
       {/* FEATURED */}
-      <section className="mx-auto max-w-6xl px-3 py-16 sm:px-4">
+      <section data-scroll-scene="home-featured" className="mx-auto max-w-6xl px-3 py-16 sm:px-4">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="ins-legend">Featured blueprints</p>
@@ -597,7 +575,7 @@ function HomePage() {
       <PricingPhilosophySection />
 
       {/* WHY WE BUILT THIS */}
-      <section className="mx-auto max-w-4xl px-3 pb-24 sm:px-4">
+      <section data-scroll-scene="home-research" className="mx-auto max-w-4xl px-3 pb-24 sm:px-4">
         <h2 className="text-3xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
           We got tired of the same 50 ideas recycled into infinity.
         </h2>
@@ -629,7 +607,10 @@ function HomePage() {
       <PromiseSection />
 
       {/* GENERAL CLOSING FAQ */}
-      <section className="mx-auto mt-20 max-w-4xl border-t border-border/60 px-3 pt-16 pb-24 sm:mt-28 sm:px-4 sm:pt-20">
+      <section
+        data-scroll-scene="home-faq"
+        className="mx-auto mt-20 max-w-4xl border-t border-border/60 px-3 pt-16 pb-24 sm:mt-28 sm:px-4 sm:pt-20"
+      >
         <p className="ins-legend">Common questions</p>
         <div className="mt-6 divide-y divide-border">
           {FAQS.map((item) => (
@@ -776,6 +757,7 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
   return (
     <section
       id="golden-tree"
+      data-scroll-scene="home-golden-tree"
       data-anchor="golden-tree"
       data-anchor-label="Golden Tree"
       className="mx-auto mt-12 sm:mt-16 max-w-6xl px-3 sm:px-4"
@@ -840,7 +822,10 @@ function GoldenTreeSection({ categories }: { categories: CategoryNode[] }) {
 
         {/* MOBILE TREE ASSET — same-origin now, like desktop. Organic
             floating liquid capsules for the node pills below. */}
-        <div className="block sm:hidden relative w-full max-w-xs aspect-[9/16] tree-asset-container">
+        <div
+          data-scroll-scene="home-tree-window"
+          className="block sm:hidden relative w-full max-w-xs aspect-[9/16] tree-asset-container"
+        >
           <img
             ref={hideImgIfBroken}
             src={MOBILE_TREE_SRC}
@@ -961,6 +946,7 @@ function OrbitDiagram({
   return (
     <div
       ref={wrapRef}
+      data-scroll-scene="home-team-orbit"
       className={`bbi-orbit-wrap${live ? " is-live" : ""}`}
       role="img"
       aria-label={`${centerLabel}: ${nodes.join(", ")}`}
@@ -1009,6 +995,7 @@ function BrandStatementBanner() {
     // measure beside it.
     <section
       id="what-you-get"
+      data-scroll-scene="home-what-you-get"
       className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4 sm:pt-16"
     >
       <p className="ins-legend">Who we are</p>
@@ -1016,7 +1003,7 @@ function BrandStatementBanner() {
         {/* The flip runs through the words of the name itself, so the
             component earns its motion without a syllable being invented. */}
         <h2 className="text-[2.4rem] leading-[1.04] sm:text-[3.4rem]">
-          <LayoutTextFlip
+          <HomeWordFlip
             text="BBI —"
             words={["Bro", "Business", "Ideas."]}
             wordClassName="text-[0.9em]"
@@ -1078,8 +1065,14 @@ function TrustStatsBar({
     // pale band paints down both sides of the row.
     <div className="mx-auto mt-8 max-w-6xl px-3 sm:px-4">
       <ul className="grid list-none gap-px bg-[var(--ins-rule)] sm:grid-cols-3">
-        {stats.map((stat) => (
-          <SpotlightCard as="li" key={stat.label} className="border-0 px-6 py-7">
+        {stats.map((stat, index) => (
+          <SpotlightCard
+            as="li"
+            key={stat.label}
+            data-scroll-scene="home-proof"
+            data-scroll-index={index}
+            className="border-0 px-6 py-7"
+          >
             <p className="ins-num text-[2.75rem] font-bold leading-[0.95] tracking-tight text-[var(--ins-bright)] sm:text-[3.25rem]">
               <Odometer value={stat.value} format={(n) => `${Math.round(n)}${stat.suffix}`} />
             </p>
@@ -1133,7 +1126,11 @@ const BBI_FAQ_1 = [
 
 function HowItWorksSection() {
   return (
-    <section id="how-it-works" className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+    <section
+      id="how-it-works"
+      data-scroll-scene="home-how-it-works"
+      className="mx-auto mt-16 max-w-6xl px-3 sm:px-4"
+    >
       <p className="ins-legend">Step by step</p>
       <h2 className="mt-4 max-w-4xl text-[2rem] leading-[1.05] sm:text-[3rem]">
         Grab the idea. Validate it however you want. Keep the money.
@@ -1147,9 +1144,11 @@ function HowItWorksSection() {
           numeral at display size, and the row lights on hover. Nothing here
           hides content behind an interaction. */}
       <ol className="mt-12 border-t border-border">
-        {BBI_HOW_STEPS.map((step) => (
+        {BBI_HOW_STEPS.map((step, index) => (
           <li
             key={step.n}
+            data-scroll-scene="home-step"
+            data-scroll-index={index}
             className="group/step grid gap-4 border-b border-border py-8 transition-colors duration-300 hover:bg-[var(--ins-face)] sm:grid-cols-[6rem_minmax(0,22ch)_1fr] sm:gap-8 sm:px-4"
           >
             <span className="ins-num text-[2.5rem] leading-none text-[var(--ins-faint)] transition-colors duration-300 group-hover/step:text-[var(--ins-bright)] sm:text-[3.5rem]">
@@ -1239,7 +1238,11 @@ const BBI_BUILT_FOR: {
 
 function WhoForSection() {
   return (
-    <section id="built-for-you" className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+    <section
+      id="built-for-you"
+      data-scroll-scene="home-built-for-you"
+      className="mx-auto mt-16 max-w-6xl px-3 sm:px-4"
+    >
       <p className="ins-legend">Who we built this for</p>
       <h2 className="mt-3 max-w-3xl">For the person with an idea and nothing else.</h2>
       {/* Two paragraphs at a real reading measure, side by side, rather than
@@ -1333,7 +1336,7 @@ const BBI_FAQ_2 = [
 
 function PricingPhilosophySection() {
   return (
-    <section id="free-access" className="mt-16">
+    <section id="free-access" data-scroll-scene="home-free-access" className="mt-16">
       {/* The one inverted band on the page. Twelve sections of paper in a row
           flatten out; the pricing statement is the right place to break the
           rhythm, and it is the only block here that is genuinely an assertion
@@ -1367,7 +1370,11 @@ function PricingPhilosophySection() {
 
 function TeamSection() {
   return (
-    <section id="behind-bbi" className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+    <section
+      id="behind-bbi"
+      data-scroll-scene="home-behind-bbi"
+      className="mx-auto mt-16 max-w-6xl px-3 sm:px-4"
+    >
       {/* Two columns. Stacked, the diagram sat alone in a full-width band with
           the right 40% of the section empty beside the copy and 336px of
           orbit floating in the middle of it — 687px of section to carry 246px
@@ -1412,7 +1419,11 @@ function TeamSection() {
 
 function InspiredBySection() {
   return (
-    <section id="inspiration" className="mx-auto mt-16 max-w-4xl px-3 sm:px-4">
+    <section
+      id="inspiration"
+      data-scroll-scene="home-inspiration"
+      className="mx-auto mt-16 max-w-4xl px-3 sm:px-4"
+    >
       {/* Was a centred card. This is an attribution, so it is set as one: a
           rule down the left edge, the way a citation is marked in print. */}
       <div className="border-l-2 border-primary pl-6 sm:pl-8">
@@ -1443,7 +1454,11 @@ const BBI_US = [
 
 function ComparisonSection() {
   return (
-    <section id="the-difference" className="mx-auto mt-16 max-w-6xl px-3 sm:px-4">
+    <section
+      id="the-difference"
+      data-scroll-scene="home-the-difference"
+      className="mx-auto mt-16 max-w-6xl px-3 sm:px-4"
+    >
       <p className="ins-legend">The comparison</p>
       <h2 className="mt-3 max-w-3xl">
         Validating a business idea should not cost you the money you were going to start it with.
@@ -1512,6 +1527,7 @@ function FutureProofSpotlight() {
   return (
     <section
       id="future-themes"
+      data-scroll-scene="home-future-themes"
       className="mx-auto mt-16 max-w-6xl border-t border-border px-3 pt-12 sm:px-4"
     >
       <p className="ins-legend">Ways into the library</p>
@@ -1582,17 +1598,12 @@ function KeywordMosaic() {
   return (
     <section
       id="browse-keywords"
+      data-scroll-scene="home-browse-keywords"
       className="mx-auto mt-16 max-w-6xl px-3 sm:px-4"
       aria-label="Browse ideas by keyword"
     >
       <p className="ins-legend">Every angle covered</p>
-      <h2 className="mt-2 max-w-2xl">
-        <EncryptedText
-          text="Business ideas by industry, founder, and model"
-          encryptedClassName="text-[var(--ins-faint)]"
-          revealedClassName="text-[var(--ins-bright)]"
-        />
-      </h2>
+      <h2 className="mt-2 max-w-2xl">Business ideas by industry, founder, and model</h2>
       {/* Was three panels side by side, each a wall of pills — 18 links
           competing at once, and the same shape repeated three times. As tabs,
           one axis is legible at a time and the marker slides between them. */}
@@ -1653,6 +1664,7 @@ function PromiseSection() {
   return (
     <section
       id="promise"
+      data-scroll-scene="home-promise"
       data-anchor="promise"
       data-anchor-label="Our promise"
       className="mx-auto mt-16 max-w-6xl px-3 sm:px-4"

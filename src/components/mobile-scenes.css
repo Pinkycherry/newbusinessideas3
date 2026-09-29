@@ -1,0 +1,102 @@
+/* Leave room for both article contents and site navigation on narrow phones. */
+@media (max-width: 380px) {
+  .cm-page .bbi-nav-bar:has(.cm-header-slot) {
+    gap: 6px;
+    padding-inline: 10px;
+  }
+  .cm-page .bbi-nav-bar .cm-contents-toggle {
+    width: 44px;
+    min-height: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+  .cm-page .bbi-nav-bar :is(.cm-contents-label, .cm-contents-now) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+/* Finite mobile scroll scenes. Content is visible before JS and at every frame. */
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference),
+  (pointer: coarse) and (prefers-reduced-motion: no-preference) {
+  [data-scroll-scene="chapter"][data-scroll-active="true"] {
+    animation: mobile-chapter 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  [data-scroll-scene="blueprint"][data-scroll-active="true"] {
+    animation: mobile-blueprint 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  [data-scroll-scene="verdict"][data-scroll-active="true"] {
+    animation: mobile-verdict 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  [data-scroll-scene="ledger"][data-scroll-active="true"] .cm-ledger-rail {
+    transform-origin: left center;
+    animation: mobile-ledger 750ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  [data-scroll-scene="playbook"][data-scroll-active="true"] {
+    animation: mobile-playbook 750ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  [data-scroll-scene="archive"][data-scroll-active="true"] {
+    transform-origin: center bottom;
+    animation: mobile-archive 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  /* Stop running entrances when they leave the viewport or the tab is hidden. */
+  [data-scroll-paused="true"],
+  [data-scroll-paused="true"] *,
+  [data-scroll-paused="true"]::before,
+  [data-scroll-paused="true"]::after,
+  [data-scroll-paused="true"] *::before,
+  [data-scroll-paused="true"] *::after {
+    animation-play-state: paused !important;
+  }
+}
+@keyframes mobile-chapter {
+  from {
+    transform: translateX(-14px);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes mobile-blueprint {
+  from {
+    transform: perspective(1000px) rotateX(-3deg) translateY(18px);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes mobile-verdict {
+  from {
+    transform: translateX(14px) rotate(0.5deg);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes mobile-ledger {
+  from {
+    transform: scaleX(0.88) translateX(9px);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes mobile-playbook {
+  from {
+    transform: translateY(15px) rotate(-0.6deg);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes mobile-archive {
+  from {
+    transform: perspective(900px) rotateX(3deg) translateY(22px) scale(0.98);
+  }
+  to {
+    transform: none;
+  }
+}
