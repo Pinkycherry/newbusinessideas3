@@ -102,18 +102,33 @@ const RULES: { match: string[]; image: CategoryImage }[] = [
     },
   },
   {
-    match: ["side-hustle", "part-time"],
+    match: ["side-hustle"],
+    image: {
+      src: `${DIR}/side-hustle-business-ideas-young-creators-income-streams.webp`,
+      alt: "Young creators building multiple income streams through side hustle businesses",
+      focus: "side hustle business ideas",
+      keywords: ["side hustle ideas", "multiple income streams", "young creators"],
+      longTail: [
+        "side hustle business ideas for young creators",
+        "how to build multiple income streams with a side hustle",
+      ],
+      description:
+        "A cinematic scene of young creators exploring multiple side hustle opportunities through content creation, freelancing, digital work, online business, and creative skills. The image represents modern side hustle business ideas for young entrepreneurs building additional income streams.",
+    },
+  },
+  {
+    match: ["part-time"],
     image: {
       src: `${DIR}/side-hustle-business-ideas-part-time-income-evenings-weekends-beginners.webp`,
-      alt: "Side hustle business ideas for part time income in evenings and weekends",
-      focus: "side hustle ideas",
-      keywords: ["part time business", "evening income", "weekend side hustle"],
+      alt: "Part time business ideas for extra income in evenings and weekends",
+      focus: "part time business ideas",
+      keywords: ["part time business", "evening income", "weekend business"],
       longTail: [
-        "side hustle ideas you can run alongside a full time job",
+        "part time business ideas you can run alongside a full time job",
         "part time business ideas for evenings and weekends",
       ],
       description:
-        "Side hustle ideas: what fits around a job, how many hours it really takes, and the point at which it stops being a side hustle.",
+        "Part time business ideas: what fits around a job, how many hours it really takes, and the point at which it stops being part time.",
     },
   },
   {
