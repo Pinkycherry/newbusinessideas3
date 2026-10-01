@@ -5,6 +5,8 @@ export type BlogPostCard = {
   excerpt: string;
   date: string;
   image: string | null;
+  imageAlt: string | null;
+  imageCaption: string | null;
   categories: string[];
   readingMinutes: number;
 };

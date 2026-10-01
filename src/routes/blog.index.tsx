@@ -103,7 +103,7 @@ function BlogIndex() {
                     >
                       <img
                         src={post.image}
-                        alt={post.title}
+                        alt={post.imageAlt ?? post.title}
                         loading="lazy"
                         className="h-full w-full object-cover opacity-90"
                       />

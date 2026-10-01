@@ -7,6 +7,7 @@ import {
   type BlogPost,
   type BlogPostCard,
 } from "./blog-shared";
+import { blogImage } from "@/config/blog-imagery";
 import { siteUrl } from "./site-config";
 
 /**
@@ -43,6 +44,7 @@ const CARD_COLUMNS = "id, slug, title, excerpt, html, image, categories, publish
 
 function toCard(row: BlogRow): BlogPostCard {
   const html = row.html ?? "";
+  const art = blogImage(row.slug);
   return {
     id: Number(row.id),
     slug: row.slug,
@@ -52,7 +54,10 @@ function toCard(row: BlogRow): BlogPostCard {
     // `created_at` stands in for a row published without a date, so a card
     // never renders an empty timestamp.
     date: row.published_at ?? row.created_at ?? "",
-    image: row.image,
+    // The post's own image wins; the slug-matched file fills in when it is empty.
+    image: row.image ?? art?.src ?? null,
+    imageAlt: row.image ? null : (art?.alt ?? null),
+    imageCaption: row.image ? null : (art?.description ?? null),
     categories: row.categories ?? [],
     readingMinutes: readingMinutes(html),
   };

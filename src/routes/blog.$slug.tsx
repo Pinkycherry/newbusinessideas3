@@ -10,7 +10,7 @@ import { headingIdeaSlugs, injectIdeaCtas, isSignedIn } from "@/lib/blog-cta-sha
 import { useAuth } from "@/hooks/use-auth";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPost } from "@/lib/blog.functions";
-import { CO_FOUNDER, FOUNDER, founderProfile } from "@/lib/site-config";
+import { canonicalUrl, CO_FOUNDER, FOUNDER, founderProfile } from "@/lib/site-config";
 import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
 
 /**
@@ -55,8 +55,21 @@ export const Route = createFileRoute("/blog/$slug")({
         { name: "twitter:card", content: "summary_large_image" },
         ...(post.image
           ? [
-              { property: "og:image", content: post.image },
-              { name: "twitter:image", content: post.image },
+              // Share previews need an absolute URL; our own files are stored as paths.
+              {
+                property: "og:image",
+                content: post.image.startsWith("/") ? canonicalUrl(post.image) : post.image,
+              },
+              {
+                name: "twitter:image",
+                content: post.image.startsWith("/") ? canonicalUrl(post.image) : post.image,
+              },
+              ...(post.imageAlt
+                ? [
+                    { property: "og:image:alt", content: post.imageAlt },
+                    { name: "twitter:image:alt", content: post.imageAlt },
+                  ]
+                : []),
             ]
           : []),
       ],
@@ -184,17 +197,28 @@ function BlogPostPage() {
         )}
 
         {post.image && (
-          // Keeps the page's own corner radius — the media slot supplies the
-          // clip and the scale, not a new shape.
-          <div
-            style={{ borderRadius: "var(--radius-3xl)" }}
-            className="mo-media relative mt-8 aspect-video w-full border border-border"
-          >
-            <img src={post.image} alt={post.title} className="h-full w-full object-cover" />
-            {/* Subtle corner wash so the photo reads as art-directed, not a
-                raw drop-in (brief 12.8). */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/45 via-transparent to-transparent" />
-          </div>
+          <figure className="mt-8">
+            {/* Keeps the page's own corner radius — the media slot supplies the
+                clip and the scale, not a new shape. */}
+            <div
+              style={{ borderRadius: "var(--radius-3xl)" }}
+              className="mo-media relative aspect-video w-full border border-border"
+            >
+              <img
+                src={post.image}
+                alt={post.imageAlt ?? post.title}
+                className="h-full w-full object-cover"
+              />
+              {/* Subtle corner wash so the photo reads as art-directed, not a
+                  raw drop-in (brief 12.8). */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/45 via-transparent to-transparent" />
+            </div>
+            {post.imageCaption && (
+              <figcaption className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                {post.imageCaption}
+              </figcaption>
+            )}
+          </figure>
         )}
 
         <BlogCtaHero
