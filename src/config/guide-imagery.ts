@@ -43,6 +43,22 @@ const GUIDE_IMAGES: Record<string, GuideImage> = {
     description:
       "B2B SaaS churn reduction: why retaining customers beats replacing them, and how onboarding, proactive customer success and sticky product features keep churn down.",
   },
+  "business-idea-validation-framework": {
+    src: `${DIR}/business-idea-validation-framework-test-before-you-build.webp`,
+    alt: "Business idea validation framework: test your idea before you build",
+    focus: "business idea validation framework",
+    keywords: [
+      "validate a business idea",
+      "customer discovery interviews",
+      "test before you build",
+    ],
+    longTail: [
+      "business idea validation framework test before you build",
+      "how to validate a business idea with customer interviews and an MVP test",
+    ],
+    description:
+      "Business idea validation framework: test the problem, the demand and the willingness to pay with customer interviews and a lean MVP test before you spend time building.",
+  },
   "b2b-cold-email-lead-generation": {
     src: `${DIR}/b2b-cold-email-lead-generation-high-converting-frameworks.webp`,
     alt: "B2B cold email lead generation frameworks that turn prospects into clients",
