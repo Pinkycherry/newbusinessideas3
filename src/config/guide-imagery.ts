@@ -145,6 +145,20 @@ const IMAGES: Record<string, GuideImage> = {
     description:
       "Product-market fit metrics: how to measure true PMF using retention, churn and user sentiment.",
   },
+  "saas-pricing-models": {
+    src: `${DIR}/micro-saas-pricing-models-structuring-for-profitability-tiered-value-based-subscription.webp`,
+    width: 1170,
+    height: 659,
+    alt: "Micro SaaS pricing models: structuring for profitability with tiered plans",
+    focus: "SaaS pricing models",
+    keywords: ["micro SaaS", "value-based pricing", "subscription tiers"],
+    longTail: [
+      "how to price a micro SaaS product",
+      "SaaS pricing models for bootstrapped founders",
+    ],
+    description:
+      "SaaS pricing models for micro SaaS: structuring tiers and value-based pricing for profitability.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1003,
