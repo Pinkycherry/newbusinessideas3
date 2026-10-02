@@ -1,6 +1,11 @@
-import { SiDiscord, SiPinterest, SiX } from "react-icons/si";
+import { SiDiscord, SiFacebook, SiPinterest, SiX } from "react-icons/si";
 
-import { DISCORD_PROFILE_URL, PINTEREST_PROFILE_URL, X_PROFILE_URL } from "@/lib/site-config";
+import {
+  DISCORD_PROFILE_URL,
+  FACEBOOK_PROFILE_URL,
+  PINTEREST_PROFILE_URL,
+  X_PROFILE_URL,
+} from "@/lib/site-config";
 
 const PROFILES = [
   { label: "X", handle: "@bbusinessidea", href: X_PROFILE_URL, Icon: SiX },
@@ -10,6 +15,7 @@ const PROFILES = [
     href: PINTEREST_PROFILE_URL,
     Icon: SiPinterest,
   },
+  { label: "Facebook", handle: "BBI on Facebook", href: FACEBOOK_PROFILE_URL, Icon: SiFacebook },
   { label: "Discord", handle: "BBI on Discord", href: DISCORD_PROFILE_URL, Icon: SiDiscord },
 ];
 

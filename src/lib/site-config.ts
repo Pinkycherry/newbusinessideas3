@@ -205,6 +205,7 @@ export const ORGANISATION_LEGAL_NAME = "Bro Business Ideas";
 /** The official social profiles, given by the founder on 2026-10-02. */
 export const X_PROFILE_URL = "https://x.com/bbusinessidea";
 export const PINTEREST_PROFILE_URL = "https://in.pinterest.com/bbusinessideaonline/";
+export const FACEBOOK_PROFILE_URL = "https://www.facebook.com/profile.php?id=61594714933614";
 /** Discord user profile, from the account ID the founder gave on 2026-10-02. */
 export const DISCORD_PROFILE_URL = "https://discord.com/users/1555678143233130547";
 
@@ -214,7 +215,9 @@ export function organisationSameAs(): string[] {
     .split(",")
     .map((entry) => entry.trim())
     .filter(Boolean);
-  return Array.from(new Set([X_PROFILE_URL, PINTEREST_PROFILE_URL, ...extra]));
+  return Array.from(
+    new Set([X_PROFILE_URL, PINTEREST_PROFILE_URL, FACEBOOK_PROFILE_URL, ...extra]),
+  );
 }
 
 /**
