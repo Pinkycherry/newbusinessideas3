@@ -106,6 +106,20 @@ const IMAGES: Record<string, GuideImage> = {
     description:
       "Minimum viable product development: building the smallest version that tests your idea with real users.",
   },
+  "pre-launch-checklist-for-startups": {
+    src: `${DIR}/pre-launch-checklist-for-startups-technical-marketing-audit-test-track-secure-launch.webp`,
+    width: 1003,
+    height: 565,
+    alt: "Pre-launch checklist for startups: technical and marketing audit before launch",
+    focus: "pre-launch checklist",
+    keywords: ["technical audit", "marketing audit", "startup launch"],
+    longTail: [
+      "pre-launch checklist for a startup website",
+      "technical and marketing checklist before product launch",
+    ],
+    description:
+      "Pre-launch checklist for startups: a technical and marketing audit to run before you go live.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1003,
