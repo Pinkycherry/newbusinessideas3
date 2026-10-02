@@ -15,13 +15,15 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { ExploreRail } from "@/components/explore-rail";
 import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { getGuideBySlug, STARTUP_GUIDES } from "@/lib/guides-data";
-import { FOUNDER, founderProfile } from "@/lib/site-config";
+import { guideImage } from "@/config/guide-imagery";
+import { canonicalUrl, FOUNDER, founderProfile } from "@/lib/site-config";
 
 export const Route = createFileRoute("/startup-guides/$slug")({
   head: ({ params }) => {
     const guide = getGuideBySlug(params.slug);
     const title = guide ? `${guide.title} | BBI Guide` : "Startup Guide | BBI – Bro Business Ideas";
     const description = guide?.description ?? "Practical tactical playbook for startup founders.";
+    const art = guide ? guideImage(guide.slug) : null;
     return {
       meta: [
         { title },
@@ -29,6 +31,16 @@ export const Route = createFileRoute("/startup-guides/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:type", content: "article" },
+        { name: "twitter:card", content: "summary_large_image" },
+        ...(art
+          ? [
+              // Share previews need an absolute URL; our own files are stored as paths.
+              { property: "og:image", content: canonicalUrl(art.src) },
+              { name: "twitter:image", content: canonicalUrl(art.src) },
+              { property: "og:image:alt", content: art.alt },
+              { name: "twitter:image:alt", content: art.alt },
+            ]
+          : []),
       ],
     };
   },
@@ -57,6 +69,7 @@ function StartupGuideDetailPage() {
     );
   }
 
+  const art = guideImage(guide.slug);
   const currentIndex = STARTUP_GUIDES.findIndex((g) => g.slug === guide.slug);
   const prevGuide = currentIndex > 0 ? STARTUP_GUIDES[currentIndex - 1] : null;
   const nextGuide =
@@ -72,6 +85,7 @@ function StartupGuideDetailPage() {
             description: guide.description,
             datePublished: guide.publishedDate,
             categoryName: guide.category,
+            ...(art ? { image: art.src } : {}),
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -125,6 +139,21 @@ function StartupGuideDetailPage() {
               {guide.description}
             </p>
           </header>
+
+          {art && (
+            <figure className="mt-8">
+              <img
+                src={art.src}
+                alt={art.alt}
+                width={1672}
+                height={941}
+                className="aspect-video w-full rounded-2xl border border-border/60 object-cover"
+              />
+              <figcaption className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                {art.description}
+              </figcaption>
+            </figure>
+          )}
 
           {/* Key Takeaways Callout Card */}
           <section className="glass my-8 rounded-2xl border-l-4 border-primary p-6 sm:p-7">
