@@ -96,7 +96,7 @@ const IMAGES: Record<string, GuideImage> = {
     src: `${DIR}/minimum-viable-product-development-ship-faster-validate-ideas-real-users-feedback-iterate.webp`,
     width: 1003,
     height: 565,
-    alt: "Minimum viable product development: ship faster, validate ideas, iterate with feedback",
+    alt: "Minimum viable product development: ship faster, validate ideas and iterate",
     focus: "minimum viable product",
     keywords: ["ship faster", "validate ideas", "user feedback"],
     longTail: [
