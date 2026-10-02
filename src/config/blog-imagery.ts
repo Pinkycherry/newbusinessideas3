@@ -217,6 +217,18 @@ const BLOG_IMAGES: Record<string, BlogImage> = {
     description:
       "One off gutter jobs are a bad business, contracts are not: why annual gutter cleaning contracts give a gutter cleaning business recurring revenue and steadier income.",
   },
+  "selling-invoice-templates-online": {
+    src: `${DIR}/the-invoice-your-client-judged-before-reading-it.webp`,
+    alt: "Selling professional invoice templates to tradespeople and freelancers",
+    focus: "professional invoice templates",
+    keywords: ["invoice templates for trades", "estimate and receipt templates", "get paid faster"],
+    longTail: [
+      "the invoice your client judged before reading it",
+      "how to sell invoice templates online to plumbers, electricians and contractors",
+    ],
+    description:
+      "The invoice your client judged before reading it: how a professional invoice helps small businesses look credible and get paid faster, and how to sell invoice templates online.",
+  },
   "flexible-business-ideas-for-women": {
     src: `${DIR}/flexible-business-ideas-for-women-balancing-work-and-life-home-based-india.webp`,
     alt: "Flexible home based business ideas for women in India",
