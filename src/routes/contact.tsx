@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { ContentPage, Section, metaFor } from "@/components/page-layout";
+import { SocialLinks } from "@/components/social-links";
 import { contactEmail, TEAM } from "@/lib/site-config";
 
 /**
@@ -90,6 +91,11 @@ function ContactPage() {
         <p className="mt-5">
           Prathap answers roughly half of it. Anything that needs the founder reaches the founder.
         </p>
+      </Section>
+
+      <Section heading="Find BBI elsewhere">
+        <p>Our official profiles. Email is still the way to reach a person.</p>
+        <SocialLinks />
       </Section>
 
       <Section heading="Say which of these it is">

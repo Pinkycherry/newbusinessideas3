@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { ContentPage, Section, metaFor } from "@/components/page-layout";
+import { SocialLinks } from "@/components/social-links";
 import { JsonLd, personSchema } from "@/lib/schema";
 import { FOUNDER_PROFILES, contactEmail } from "@/lib/site-config";
 
@@ -85,6 +86,13 @@ function FoundersPage() {
             </a>{" "}
             and a human reads it. That is the whole process.
           </p>
+        </Section>
+
+        <Section heading="Find BBI elsewhere">
+          <p className="text-[1.05rem] leading-[1.75]">
+            BBI's official profiles.
+          </p>
+          <SocialLinks />
         </Section>
       </ContentPage>
     </>
