@@ -78,6 +78,20 @@ const IMAGES: Record<string, GuideImage> = {
     description:
       "Go-to-market strategy for B2B startups: aligning pricing, sales and distribution around a clear wedge into the market.",
   },
+  "inbound-marketing-bootstrapped-startups": {
+    src: `${DIR}/inbound-marketing-for-bootstrapped-startups-seo-content-organic-growth-low-cac.webp`,
+    width: 1003,
+    height: 565,
+    alt: "Inbound marketing for bootstrapped startups: SEO, content and organic growth",
+    focus: "inbound marketing",
+    keywords: ["bootstrapped startups", "organic growth", "content marketing"],
+    longTail: [
+      "how to do inbound marketing with no budget",
+      "inbound marketing strategy for bootstrapped startups",
+    ],
+    description:
+      "Inbound marketing for bootstrapped startups: using SEO and content to earn customers without paid ads.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1003,
