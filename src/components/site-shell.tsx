@@ -18,6 +18,7 @@ import {
   SiGithub,
   SiX,
   SiPinterest,
+  SiDiscord,
 } from "react-icons/si";
 
 import { LiveSearch } from "@/components/live-search";
@@ -28,7 +29,7 @@ import { ResourceHub } from "@/components/resource-hub";
 import { useSiteStage } from "@/components/site-stage";
 import { useMarqueeMotion } from "@/motion/use-marquee-motion";
 import { topCategories } from "@/lib/catalog-display";
-import { PINTEREST_PROFILE_URL, X_PROFILE_URL } from "@/lib/site-config";
+import { DISCORD_PROFILE_URL, PINTEREST_PROFILE_URL, X_PROFILE_URL } from "@/lib/site-config";
 import { subscribeToNewsletter } from "@/lib/newsletter.functions";
 import { prefersReducedMotion } from "@/lib/motion";
 
@@ -1050,7 +1051,7 @@ export function SiteShell({
                   className="bbi-footer-link inline-flex items-center gap-2"
                 >
                   <SiX aria-hidden className="h-3.5 w-3.5" />
-                  <span>@bbusinessidea</span>
+                  <span>X</span>
                 </a>
                 <a
                   href={PINTEREST_PROFILE_URL}
@@ -1061,6 +1062,16 @@ export function SiteShell({
                 >
                   <SiPinterest aria-hidden className="h-3.5 w-3.5" />
                   <span>Pinterest</span>
+                </a>
+                <a
+                  href={DISCORD_PROFILE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer me"
+                  aria-label="BBI on Discord"
+                  className="bbi-footer-link inline-flex items-center gap-2"
+                >
+                  <SiDiscord aria-hidden className="h-3.5 w-3.5" />
+                  <span>Discord</span>
                 </a>
               </div>
               <p className="text-muted-foreground">

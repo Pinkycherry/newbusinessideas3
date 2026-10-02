@@ -205,6 +205,8 @@ export const ORGANISATION_LEGAL_NAME = "Bro Business Ideas";
 /** The official social profiles, given by the founder on 2026-10-02. */
 export const X_PROFILE_URL = "https://x.com/bbusinessidea";
 export const PINTEREST_PROFILE_URL = "https://in.pinterest.com/bbusinessideaonline/";
+/** Discord user profile, from the account ID the founder gave on 2026-10-02. */
+export const DISCORD_PROFILE_URL = "https://discord.com/users/1555678143233130547";
 
 export function organisationSameAs(): string[] {
   const fromEnv = typeof process !== "undefined" ? process.env?.["SITE_SAME_AS"] : undefined;
