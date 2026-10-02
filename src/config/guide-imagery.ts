@@ -159,6 +159,16 @@ const IMAGES: Record<string, GuideImage> = {
     description:
       "SaaS pricing models for micro SaaS: structuring tiers and value-based pricing for profitability.",
   },
+  "startup-cash-flow-management": {
+    src: `${DIR}/startup-cash-flow-management-extending-your-runway-reduce-burn-rate-expenses.webp`,
+    width: 1338,
+    height: 753,
+    alt: "Startup cash flow management: extending your runway and reducing burn",
+    focus: "cash flow management",
+    keywords: ["startup runway", "burn rate", "expense control"],
+    longTail: ["how to manage cash flow in a startup", "how to extend startup runway"],
+    description: "Startup cash flow management: tracking burn and expenses to extend your runway.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1003,
