@@ -165,7 +165,7 @@ const IMAGES: Record<string, GuideImage> = {
     height: 753,
     alt: "Startup cash flow management: extending your runway and reducing burn",
     focus: "cash flow management",
-    keywords: ["startup runway", "burn rate", "expense control"],
+    keywords: ["startup cash flow", "extending your runway", "reducing burn"],
     longTail: ["how to manage cash flow in a startup", "how to extend startup runway"],
     description: "Startup cash flow management: tracking burn and expenses to extend your runway.",
   },
