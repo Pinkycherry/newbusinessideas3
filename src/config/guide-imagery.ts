@@ -31,6 +31,18 @@ const GUIDE_IMAGES: Record<string, GuideImage> = {
     description:
       "Zero investment business models for bootstrapped founders: productized services, reverse marketplaces and micro-consulting that bring in cash flow without giving up equity.",
   },
+  "b2b-saas-churn-reduction": {
+    src: `${DIR}/b2b-saas-churn-reduction-high-retention-strategies.webp`,
+    alt: "B2B SaaS churn reduction with high retention strategies for customer success",
+    focus: "B2B SaaS churn reduction",
+    keywords: ["high retention strategies", "customer success", "reduce customer churn"],
+    longTail: [
+      "B2B SaaS churn reduction high retention strategies",
+      "how to reduce churn with onboarding and proactive customer success",
+    ],
+    description:
+      "B2B SaaS churn reduction: why retaining customers beats replacing them, and how onboarding, proactive customer success and sticky product features keep churn down.",
+  },
   "b2b-cold-email-lead-generation": {
     src: `${DIR}/b2b-cold-email-lead-generation-high-converting-frameworks.webp`,
     alt: "B2B cold email lead generation frameworks that turn prospects into clients",
