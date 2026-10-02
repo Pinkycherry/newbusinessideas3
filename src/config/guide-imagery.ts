@@ -169,6 +169,20 @@ const IMAGES: Record<string, GuideImage> = {
     longTail: ["how to manage cash flow in a startup", "how to extend startup runway"],
     description: "Startup cash flow management: tracking burn and expenses to extend your runway.",
   },
+  "startup-equity-split-guide": {
+    src: `${DIR}/startup-equity-split-guide-avoiding-co-founder-conflict-vesting-cap-table-founder-agreement.webp`,
+    width: 1170,
+    height: 659,
+    alt: "Startup equity split guide: avoiding co-founder conflict with clear vesting",
+    focus: "startup equity split",
+    keywords: ["co-founder conflict", "clear vesting", "equity split guide"],
+    longTail: [
+      "how to split equity between co-founders",
+      "startup equity split with vesting and cap table",
+    ],
+    description:
+      "Startup equity split guide: dividing ownership, vesting and cap table terms to avoid co-founder conflict.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1003,
