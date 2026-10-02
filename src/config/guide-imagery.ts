@@ -24,8 +24,8 @@ const DIR = "/images/guides";
 const IMAGES: Record<string, GuideImage> = {
   "competitor-analysis-framework": {
     src: `${DIR}/competitor-analysis-framework-for-founders-positioning-gaps-feature-matrix-startup.webp`,
-    width: 1672,
-    height: 941,
+    width: 1170,
+    height: 659,
     alt: "Competitor analysis framework for founders: positioning gaps and feature matrix",
     focus: "competitor analysis framework",
     keywords: ["positioning gaps", "feature matrix", "unserved niches"],
@@ -38,8 +38,8 @@ const IMAGES: Record<string, GuideImage> = {
   },
   "early-stage-startup-hiring": {
     src: `${DIR}/early-stage-startup-hiring-finding-founding-engineers-high-agency-ownership-team.webp`,
-    width: 1672,
-    height: 941,
+    width: 1003,
+    height: 565,
     alt: "Early stage startup hiring: finding founding engineers with ownership mindset",
     focus: "early stage startup hiring",
     keywords: ["founding engineers", "ownership mindset", "high agency"],
@@ -52,8 +52,8 @@ const IMAGES: Record<string, GuideImage> = {
   },
   "freemium-to-paid-conversion": {
     src: `${DIR}/freemium-to-paid-conversion-strategies-free-plan-pro-plan-upgrade-saas.webp`,
-    width: 1672,
-    height: 941,
+    width: 1003,
+    height: 565,
     alt: "Freemium to paid conversion strategies: free plan to pro upgrade",
     focus: "freemium to paid conversion",
     keywords: ["free plan", "pro plan", "upgrade strategies"],
@@ -66,8 +66,8 @@ const IMAGES: Record<string, GuideImage> = {
   },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
-    width: 1672,
-    height: 941,
+    width: 1003,
+    height: 565,
     alt: "Zero investment business models for bootstrapped founders using productized services",
     focus: "zero investment business models",
     keywords: ["bootstrapped founders", "productized services", "micro consulting"],
@@ -80,8 +80,8 @@ const IMAGES: Record<string, GuideImage> = {
   },
   "b2b-cold-email-lead-generation": {
     src: `${DIR}/b2b-cold-email-lead-generation-high-converting-frameworks.webp`,
-    width: 1672,
-    height: 941,
+    width: 1003,
+    height: 565,
     alt: "B2B cold email lead generation: personalized outreach that books meetings",
     focus: "B2B cold email lead generation",
     keywords: ["cold email frameworks", "personalized outreach", "booking meetings"],
@@ -94,8 +94,8 @@ const IMAGES: Record<string, GuideImage> = {
   },
   "b2b-saas-churn-reduction": {
     src: `${DIR}/b2b-saas-churn-reduction-high-retention-strategies.webp`,
-    width: 1672,
-    height: 941,
+    width: 1003,
+    height: 565,
     alt: "B2B SaaS churn reduction using customer success and retention strategies",
     focus: "B2B SaaS churn reduction",
     keywords: ["retention strategies", "customer success", "reduce churn"],
@@ -108,8 +108,8 @@ const IMAGES: Record<string, GuideImage> = {
   },
   "business-idea-validation-framework": {
     src: `${DIR}/business-idea-validation-framework-test-before-you-build.webp`,
-    width: 1672,
-    height: 941,
+    width: 1003,
+    height: 565,
     alt: "Business idea validation framework: customer discovery and test before building",
     focus: "business idea validation framework",
     keywords: ["customer discovery", "validate demand", "test before building"],
@@ -122,8 +122,8 @@ const IMAGES: Record<string, GuideImage> = {
   },
   "calculating-customer-lifetime-value": {
     src: `${DIR}/calculating-customer-lifetime-value-cltv-saas-churn-mrr-unit-economics.webp`,
-    width: 1672,
-    height: 941,
+    width: 1170,
+    height: 659,
     alt: "Calculating customer lifetime value CLTV for SaaS using unit economics",
     focus: "customer lifetime value",
     keywords: ["CLTV", "unit economics", "churn and MRR"],
