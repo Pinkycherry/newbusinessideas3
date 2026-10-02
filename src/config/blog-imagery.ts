@@ -141,6 +141,18 @@ const BLOG_IMAGES: Record<string, BlogImage> = {
     description:
       "How to start a niche job board: why hundreds of applications can still include no licensed candidates, and how to attract the qualified ones.",
   },
+  "mobile-bike-repair-business-startup": {
+    src: `${DIR}/two-week-wait-that-built-a-van-business.webp`,
+    alt: "The two week wait that built a mobile bike repair van business",
+    focus: "mobile bike repair business",
+    keywords: ["van business startup", "bike repair van", "mobile repair service"],
+    longTail: [
+      "the two week wait that built a van business",
+      "how to start a mobile bike repair business from a van",
+    ],
+    description:
+      "The two week wait that built a van business: how a mobile bike repair service got started, and what the wait taught about demand.",
+  },
   "flexible-business-ideas-for-women": {
     src: `${DIR}/flexible-business-ideas-for-women-balancing-work-and-life-home-based-india.webp`,
     alt: "Flexible home based business ideas for women in India",
