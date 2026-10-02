@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { blogImage } from "@/config/blog-imagery";
 import { urlsetXml, xmlResponse, type SitemapUrl } from "@/lib/sitemap";
 import { fetchBlogPostsForSitemap } from "@/lib/sitemap.server";
 
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/sitemap-blog.xml")({
         const urls: SitemapUrl[] = posts.map((post) => ({
           path: `/blog/${post.slug}`,
           lastmod: post.lastmod,
+          images: [blogImage(post.slug)?.src].filter((src): src is string => Boolean(src)),
         }));
 
         return xmlResponse(urlsetXml(urls));

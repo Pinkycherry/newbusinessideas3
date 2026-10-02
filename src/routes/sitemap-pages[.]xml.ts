@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { guideImage } from "@/config/guide-imagery";
 import { urlsetXml, xmlResponse } from "@/lib/sitemap";
 import { CALCULATORS } from "@/lib/calculators";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
@@ -60,7 +61,13 @@ export const Route = createFileRoute("/sitemap-pages.xml")({
           urlsetXml([
             ...STATIC_PAGES.map((path) => ({ path })),
             ...CALCULATORS.map((calculator) => ({ path: `/calculator/${calculator.slug}` })),
-            ...STARTUP_GUIDES.map((guide) => ({ path: `/startup-guides/${guide.slug}` })),
+            ...STARTUP_GUIDES.map((guide) => {
+              const image = guideImage(guide.slug);
+              return {
+                path: `/startup-guides/${guide.slug}`,
+                images: image ? [image.src] : [],
+              };
+            }),
             ...CASE_STUDIES.map((story) => ({ path: `/founder-stories/${story.slug}` })),
           ]),
         ),

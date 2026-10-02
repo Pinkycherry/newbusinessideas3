@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { categoryImage } from "@/config/category-imagery";
 import { urlsetXml, xmlResponse, type SitemapUrl } from "@/lib/sitemap";
 import { fetchCategoryPaths } from "@/lib/sitemap.server";
 
@@ -19,7 +20,10 @@ export const Route = createFileRoute("/sitemap-categories.xml")({
         const { categorySlugs, subcategoryPaths } = await fetchCategoryPaths();
 
         const urls: SitemapUrl[] = [
-          ...categorySlugs.map((slug) => ({ path: `/category/${slug}` })),
+          ...categorySlugs.map((slug) => ({
+            path: `/category/${slug}`,
+            images: [categoryImage(slug).src],
+          })),
           ...subcategoryPaths.map((path) => ({ path: `/category/${path}` })),
           // The vertical validation pages. Derived from the SAME set of live
           // category slugs, so a page can never appear in the sitemap unless

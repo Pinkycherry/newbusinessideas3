@@ -14,10 +14,24 @@ export function escapeXml(value: string): string {
     .replace(/'/g, "&apos;");
 }
 
-export type SitemapUrl = { path: string; lastmod?: string | null };
+/**
+ * `images` are site paths ("/images/guides/x.webp"). Only `<image:loc>` is
+ * written: Google dropped the caption, title and licence tags from the image
+ * sitemap spec, so the location is the whole signal.
+ */
+export type SitemapUrl = { path: string; lastmod?: string | null; images?: string[] };
 
 /** One child of the sitemap index. `lastmod` is what makes tranching pay off. */
 export type SitemapChild = { path: string; lastmod?: string | null };
+
+function imageTags(images: string[] | undefined): string {
+  return (images ?? [])
+    .map(
+      (src) =>
+        `<image:image><image:loc>${escapeXml(`${siteUrl()}${src}`)}</image:loc></image:image>`,
+    )
+    .join("");
+}
 
 function lastmodTag(lastmod: string | null | undefined): string {
   return lastmod ? `<lastmod>${escapeXml(lastmod.slice(0, 10))}</lastmod>` : "";
@@ -32,11 +46,11 @@ export function urlsetXml(urls: SitemapUrl[]): string {
     ? urls
         .map(
           (u) =>
-            `<url><loc>${escapeXml(`${siteUrl()}${u.path}`)}</loc>${lastmodTag(u.lastmod)}</url>`,
+            `<url><loc>${escapeXml(`${siteUrl()}${u.path}`)}</loc>${lastmodTag(u.lastmod)}${imageTags(u.images)}</url>`,
         )
         .join("")
     : "";
-  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${entries}</urlset>`;
+  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">${entries}</urlset>`;
 }
 
 /**
