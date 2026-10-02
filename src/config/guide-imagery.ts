@@ -194,6 +194,20 @@ const IMAGES: Record<string, GuideImage> = {
     description:
       "Startup metrics dashboard: the KPIs that actually matter, from burn rate and CAC to churn.",
   },
+  "tam-sam-som-market-sizing": {
+    src: `${DIR}/tam-sam-som-market-sizing-practical-guide-total-addressable-serviceable-obtainable-market.webp`,
+    width: 1003,
+    height: 565,
+    alt: "TAM, SAM and SOM market sizing: practical guide for startups",
+    focus: "TAM, SAM and SOM market sizing",
+    keywords: ["market sizing", "practical guide", "for startups"],
+    longTail: [
+      "how to calculate TAM SAM and SOM",
+      "TAM SAM SOM market sizing examples for startups",
+    ],
+    description:
+      "TAM, SAM and SOM market sizing: a practical guide to sizing your total, serviceable and obtainable market.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1003,
