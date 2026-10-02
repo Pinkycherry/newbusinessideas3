@@ -89,9 +89,7 @@ function FoundersPage() {
         </Section>
 
         <Section heading="Find BBI elsewhere">
-          <p className="text-[1.05rem] leading-[1.75]">
-            BBI's official profiles.
-          </p>
+          <p className="text-[1.05rem] leading-[1.75]">BBI's official profiles.</p>
           <SocialLinks />
         </Section>
       </ContentPage>
