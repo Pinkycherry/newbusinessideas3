@@ -193,6 +193,18 @@ const BLOG_IMAGES: Record<string, BlogImage> = {
     description:
       "Why day one goes badly when nobody wrote it down: how onboarding checklists and SOP templates fix it, and how to sell them to small businesses.",
   },
+  "paid-community-business-model-trades": {
+    src: `${DIR}/five-contradictory-answers-and-real-liability.webp`,
+    alt: "Paid community business model for trades and licensed work",
+    focus: "paid community business model",
+    keywords: ["paid community for trades", "verified professionals", "legal compliance advice"],
+    longTail: [
+      "five contradictory answers and real liability",
+      "how a paid community can replace conflicting free advice for tradespeople",
+    ],
+    description:
+      "Five contradictory answers and real liability: why free forum advice on licences and methods is risky for trades, and how a paid community with verified professionals can fix it.",
+  },
   "flexible-business-ideas-for-women": {
     src: `${DIR}/flexible-business-ideas-for-women-balancing-work-and-life-home-based-india.webp`,
     alt: "Flexible home based business ideas for women in India",
