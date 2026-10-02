@@ -174,6 +174,19 @@ const COMPANY_ITEMS = [
   { to: "/contact", label: "Contact" },
 ];
 
+/**
+ * Every policy page, in one list: the header "Policies" dropdown, the mobile
+ * menu and the footer's legal row all read it, so a new policy page is added
+ * once.
+ */
+const POLICY_ITEMS = [
+  { to: "/terms", label: "Terms of service" },
+  { to: "/privacy", label: "Privacy policy" },
+  { to: "/disclaimer", label: "Disclaimer" },
+  { to: "/gdpr", label: "GDPR" },
+  { to: "/refund-policy", label: "Refund policy" },
+];
+
 /** Curated static groupings — link through to /browse (no dedicated filtered route yet). */
 const isDesktop = () =>
   typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
@@ -672,6 +685,18 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
               {item.label}
             </Link>
           ))}
+
+          <p className="mt-4 px-3 text-[10px] normal-case tracking-normal text-accent">Policies</p>
+          {POLICY_ITEMS.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              onClick={onClose}
+              className="mo-row rounded-xl px-3 py-2.5 text-xs normal-case tracking-normal text-muted-foreground"
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <div className="mt-auto grid gap-2 pt-8">
@@ -713,13 +738,7 @@ const footerColumns: { title: string; links: { to: string; label: string }[] }[]
   },
   {
     title: "Legal",
-    links: [
-      { to: "/terms", label: "Terms of service" },
-      { to: "/privacy", label: "Privacy policy" },
-      { to: "/disclaimer", label: "Disclaimer" },
-      { to: "/gdpr", label: "GDPR" },
-      { to: "/refund-policy", label: "Refund policy" },
-    ],
+    links: POLICY_ITEMS,
   },
 ];
 
@@ -890,6 +909,7 @@ export function SiteShell({
               <CategoryMega />
               <LinkListDropdown label="Explore" items={EXPLORE_ITEMS} />
               <LinkListDropdown label="Company" items={COMPANY_ITEMS} />
+              <LinkListDropdown label="Policies" items={POLICY_ITEMS} />
             </CinemaChrome.Provider>
             {navLinks.map((link) => (
               <Link
