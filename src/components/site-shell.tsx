@@ -16,6 +16,7 @@ import {
   SiSupabase,
   SiCloudflare,
   SiGithub,
+  SiX,
 } from "react-icons/si";
 
 import { LiveSearch } from "@/components/live-search";
@@ -26,6 +27,7 @@ import { ResourceHub } from "@/components/resource-hub";
 import { useSiteStage } from "@/components/site-stage";
 import { useMarqueeMotion } from "@/motion/use-marquee-motion";
 import { topCategories } from "@/lib/catalog-display";
+import { X_PROFILE_URL } from "@/lib/site-config";
 import { subscribeToNewsletter } from "@/lib/newsletter.functions";
 import { prefersReducedMotion } from "@/lib/motion";
 
@@ -1038,6 +1040,16 @@ export function SiteShell({
                 are and who this is for, not how many rows are in the table. The
                 count is on /browse, where someone is actually looking for it. */}
             <div className="pr-24 sm:pr-0 sm:text-right">
+              <a
+                href={X_PROFILE_URL}
+                target="_blank"
+                rel="noopener noreferrer me"
+                aria-label="BBI on X"
+                className="bbi-footer-link mb-2 inline-flex items-center gap-2 sm:justify-end"
+              >
+                <SiX aria-hidden className="h-3.5 w-3.5" />
+                <span>@bbusinessidea</span>
+              </a>
               <p className="text-muted-foreground">
                 © {new Date().getFullYear()} BBI – Bro Business Ideas
               </p>

@@ -202,12 +202,16 @@ export const TEAM: TeamMember[] = [
 export const ORGANISATION_NAME = "BBI – Bro Business Ideas";
 export const ORGANISATION_LEGAL_NAME = "Bro Business Ideas";
 
+/** The official X account, given by the founder on 2026-10-02. */
+export const X_PROFILE_URL = "https://x.com/bbusinessidea";
+
 export function organisationSameAs(): string[] {
   const fromEnv = typeof process !== "undefined" ? process.env?.["SITE_SAME_AS"] : undefined;
-  return (fromEnv ?? "")
+  const extra = (fromEnv ?? "")
     .split(",")
     .map((entry) => entry.trim())
     .filter(Boolean);
+  return Array.from(new Set([X_PROFILE_URL, ...extra]));
 }
 
 /**
