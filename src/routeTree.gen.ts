@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as FeedDotxmlRouteImport } from './routes/feed[.]xml'
 import { Route as FoundersRouteImport } from './routes/founders'
@@ -74,6 +75,11 @@ const BrowseRoute = BrowseRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiePolicyRoute = CookiePolicyRouteImport.update({
+  id: '/cookie-policy',
+  path: '/cookie-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DisclaimerRoute = DisclaimerRouteImport.update({
@@ -294,6 +300,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/browse': typeof BrowseRoute
   '/contact': typeof ContactRoute
+  '/cookie-policy': typeof CookiePolicyRoute
   '/disclaimer': typeof DisclaimerRoute
   '/feed.xml': typeof FeedDotxmlRoute
   '/founders': typeof FoundersRoute
@@ -342,6 +349,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/browse': typeof BrowseRoute
   '/contact': typeof ContactRoute
+  '/cookie-policy': typeof CookiePolicyRoute
   '/disclaimer': typeof DisclaimerRoute
   '/feed.xml': typeof FeedDotxmlRoute
   '/founders': typeof FoundersRoute
@@ -390,6 +398,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/browse': typeof BrowseRoute
   '/contact': typeof ContactRoute
+  '/cookie-policy': typeof CookiePolicyRoute
   '/disclaimer': typeof DisclaimerRoute
   '/feed.xml': typeof FeedDotxmlRoute
   '/founders': typeof FoundersRoute
@@ -440,6 +449,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/browse'
     | '/contact'
+    | '/cookie-policy'
     | '/disclaimer'
     | '/feed.xml'
     | '/founders'
@@ -488,6 +498,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/browse'
     | '/contact'
+    | '/cookie-policy'
     | '/disclaimer'
     | '/feed.xml'
     | '/founders'
@@ -535,6 +546,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/browse'
     | '/contact'
+    | '/cookie-policy'
     | '/disclaimer'
     | '/feed.xml'
     | '/founders'
@@ -584,6 +596,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BrowseRoute: typeof BrowseRoute
   ContactRoute: typeof ContactRoute
+  CookiePolicyRoute: typeof CookiePolicyRoute
   DisclaimerRoute: typeof DisclaimerRoute
   FeedDotxmlRoute: typeof FeedDotxmlRoute
   FoundersRoute: typeof FoundersRoute
@@ -654,6 +667,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookie-policy': {
+      id: '/cookie-policy'
+      path: '/cookie-policy'
+      fullPath: '/cookie-policy'
+      preLoaderRoute: typeof CookiePolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/disclaimer': {
@@ -972,6 +992,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   BrowseRoute: BrowseRoute,
   ContactRoute: ContactRoute,
+  CookiePolicyRoute: CookiePolicyRoute,
   DisclaimerRoute: DisclaimerRoute,
   FeedDotxmlRoute: FeedDotxmlRoute,
   FoundersRoute: FoundersRoute,

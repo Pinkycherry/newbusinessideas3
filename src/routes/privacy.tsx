@@ -37,8 +37,12 @@ function PrivacyPage() {
       </Section>
       <Section heading="What we do not do">
         <p>
-          We do not sell personal data. We do not run advertising trackers. We do not build
-          advertising profiles of the people who visit.
+          We do not sell personal data. We do not build advertising profiles of the people who
+          visit. Today the site runs no advertising trackers; if we start showing Google ads, the{" "}
+          <Link to="/cookie-policy" className="mo-link font-semibold text-accent">
+            cookie policy
+          </Link>{" "}
+          says what changes.
         </p>
       </Section>
       <Section heading="Why we handle it">
@@ -69,8 +73,14 @@ function PrivacyPage() {
       </Section>
       <Section heading="Cookies">
         <p>
-          Only what the site needs to work and to remember your session. No third-party advertising
-          cookies.
+          Today, only what the site needs to work and to remember your session. No third-party
+          advertising cookies are set yet. If we show Google ads, Google and its partners will use
+          cookies to serve ads based on your earlier visits to this and other sites, and we will
+          update this page and ask for consent where the law requires it. Details are in the{" "}
+          <Link to="/cookie-policy" className="mo-link font-semibold text-accent">
+            cookie policy
+          </Link>
+          .
         </p>
       </Section>
       <Section heading="Your rights">

@@ -185,6 +185,7 @@ const POLICY_ITEMS = [
   { to: "/disclaimer", label: "Disclaimer" },
   { to: "/gdpr", label: "GDPR" },
   { to: "/refund-policy", label: "Refund policy" },
+  { to: "/cookie-policy", label: "Cookie policy" },
 ];
 
 /** Curated static groupings — link through to /browse (no dedicated filtered route yet). */
@@ -234,6 +235,7 @@ const NO_RESOURCE_HUB = new Set([
   "/disclaimer",
   "/gdpr",
   "/refund-policy",
+  "/cookie-policy",
   "/sign-in",
 ]);
 

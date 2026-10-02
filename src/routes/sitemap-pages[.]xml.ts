@@ -51,6 +51,7 @@ const STATIC_PAGES = [
   "/disclaimer",
   "/gdpr",
   "/refund-policy",
+  "/cookie-policy",
 ];
 
 export const Route = createFileRoute("/sitemap-pages.xml")({
