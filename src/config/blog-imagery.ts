@@ -129,6 +129,18 @@ const BLOG_IMAGES: Record<string, BlogImage> = {
     description:
       "Fifty work from home business ideas with no money needed to start: what each one involves, who pays and where it gets hard.",
   },
+  "how-to-start-a-niche-job-board": {
+    src: `${DIR}/two-hundred-applications-and-not-one-licensed.webp`,
+    alt: "Starting a niche job board when applicants are not licensed",
+    focus: "niche job board",
+    keywords: ["job board applications", "licensed applicants", "job board startup"],
+    longTail: [
+      "two hundred applications and not one licensed applicant",
+      "how to start a niche job board that attracts qualified candidates",
+    ],
+    description:
+      "How to start a niche job board: why hundreds of applications can still include no licensed candidates, and how to attract the qualified ones.",
+  },
   "flexible-business-ideas-for-women": {
     src: `${DIR}/flexible-business-ideas-for-women-balancing-work-and-life-home-based-india.webp`,
     alt: "Flexible home based business ideas for women in India",
