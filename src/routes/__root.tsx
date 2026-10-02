@@ -144,6 +144,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         name: "google-site-verification",
         content: "kXhdOEXdve4shh_6FDlSuuKk09fdqO-6Bf_a5CAuXDc",
       },
+      // Pinterest site claim.
+      { name: "p:domain_verify", content: "f4222cd7b4f9129e5bc3ae50b54ffc62" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
