@@ -36,6 +36,20 @@ const IMAGES: Record<string, GuideImage> = {
     description:
       "Competitor analysis framework for founders: how to find positioning gaps, weaknesses and unserved niches instead of chasing feature parity.",
   },
+  "early-stage-startup-hiring": {
+    src: `${DIR}/early-stage-startup-hiring-finding-founding-engineers-high-agency-ownership-team.webp`,
+    width: 1672,
+    height: 941,
+    alt: "Early stage startup hiring: finding founding engineers with ownership mindset",
+    focus: "early stage startup hiring",
+    keywords: ["founding engineers", "ownership mindset", "high agency"],
+    longTail: [
+      "how to hire founding engineers at an early stage startup",
+      "early stage startup hiring for your first ten hires",
+    ],
+    description:
+      "Early stage startup hiring: finding founding engineers with high agency and an ownership mindset, and aligning incentives from the first hire.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1672,
