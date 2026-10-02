@@ -165,6 +165,22 @@ const BLOG_IMAGES: Record<string, BlogImage> = {
     description:
       "Why the date printed on a coffee bag is not a roast date, and what a small batch coffee roasting business should label so customers know how fresh the coffee is.",
   },
+  "selling-social-media-caption-templates": {
+    src: `${DIR}/selling-social-media-caption-templates-for-niche-businesses.webp`,
+    alt: "Selling social media caption templates for niche businesses",
+    focus: "social media caption templates",
+    keywords: [
+      "caption templates for niche businesses",
+      "Instagram captions",
+      "content ideas for small business",
+    ],
+    longTail: [
+      "selling social media caption templates for niche businesses",
+      "how to sell caption templates to small businesses on Instagram",
+    ],
+    description:
+      "Selling social media caption templates for niche businesses: which template packs small business owners will pay for, and how to find those buyers.",
+  },
   "flexible-business-ideas-for-women": {
     src: `${DIR}/flexible-business-ideas-for-women-balancing-work-and-life-home-based-india.webp`,
     alt: "Flexible home based business ideas for women in India",
