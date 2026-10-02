@@ -134,6 +134,17 @@ const IMAGES: Record<string, GuideImage> = {
     description:
       "Product-led growth onboarding: guiding new users to their first aha moment and faster activation.",
   },
+  "product-market-fit-metrics": {
+    src: `${DIR}/product-market-fit-metrics-how-to-measure-true-pmf-retention-churn-activation.webp`,
+    width: 1170,
+    height: 659,
+    alt: "Product-market fit metrics: how to measure true PMF with retention",
+    focus: "product-market fit",
+    keywords: ["PMF metrics", "retention", "churn"],
+    longTail: ["how to measure product-market fit", "product-market fit metrics for startups"],
+    description:
+      "Product-market fit metrics: how to measure true PMF using retention, churn and user sentiment.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1003,
