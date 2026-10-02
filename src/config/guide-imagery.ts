@@ -120,6 +120,20 @@ const IMAGES: Record<string, GuideImage> = {
     description:
       "Pre-launch checklist for startups: a technical and marketing audit to run before you go live.",
   },
+  "product-led-growth-onboarding": {
+    src: `${DIR}/product-led-growth-onboarding-rapid-user-activation-retention-aha-moment.webp`,
+    width: 1170,
+    height: 659,
+    alt: "Product-led growth onboarding: driving rapid user activation and long-term retention",
+    focus: "product-led growth",
+    keywords: ["user onboarding", "activation", "retention"],
+    longTail: [
+      "product-led growth onboarding best practices",
+      "how to speed up user activation in SaaS",
+    ],
+    description:
+      "Product-led growth onboarding: guiding new users to their first aha moment and faster activation.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1003,
