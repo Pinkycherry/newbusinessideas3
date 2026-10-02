@@ -22,6 +22,20 @@ export type GuideImage = {
 const DIR = "/images/guides";
 
 const IMAGES: Record<string, GuideImage> = {
+  "competitor-analysis-framework": {
+    src: `${DIR}/competitor-analysis-framework-for-founders-positioning-gaps-feature-matrix-startup.webp`,
+    width: 1672,
+    height: 941,
+    alt: "Competitor analysis framework for founders: positioning gaps and feature matrix",
+    focus: "competitor analysis framework",
+    keywords: ["positioning gaps", "feature matrix", "unserved niches"],
+    longTail: [
+      "how to do competitor analysis for a startup",
+      "best competitor analysis frameworks for founders",
+    ],
+    description:
+      "Competitor analysis framework for founders: how to find positioning gaps, weaknesses and unserved niches instead of chasing feature parity.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1672,
