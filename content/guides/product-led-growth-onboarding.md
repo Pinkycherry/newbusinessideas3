@@ -20,7 +20,7 @@ When applied correctly, these tactical shifts compound, creating a structural ad
 
 ## how to design PLG onboarding flows
 
-The Sean Ellis test remains the gold standard for early PMF. Survey your active users and ask: 'How would you feel if you could no longer use this product?' If more than 40% respond 'very disappointed,' you have achieved initial Product-Market Fit. If the number is 20%, you must immediately stop all paid acquisition and go back to iterating on the core value proposition.
+The Sean Ellis test remains the gold standard for early PMF. Survey your active users and ask: 'How would you feel if you could no longer use this product?' If more than 40% respond 'very disappointed,' you have achieved initial [Product-Market Fit](/startup-guides/product-market-fit-metrics). If the number is 20%, you must immediately stop all [paid acquisition](/calculator/customer-acquisition-cost) and go back to iterating on the core value proposition.
 
 When optimizing this process, **time to value** plays a critical role in establishing a baseline. Without it, you are flying blind.
 
@@ -38,7 +38,7 @@ When applied correctly, these tactical shifts compound, creating a structural ad
 
 Product-Led Growth (PLG) demands that the product architecture minimizes Time-To-Value (TTV). Every additional click, form field, or required email verification in the onboarding sequence will drop your activation rate by 10%. Defer account creation until *after* the user has experienced the core utility of the app. Let them play with the tool immediately, and only gate the saving or exporting functions.
 
-To truly scale, you must prioritize **freemium SaaS models**. This is the operational lever that dictates long-term viability.
+To truly scale, you must prioritize **[freemium](/startup-guides/freemium-to-paid-conversion) SaaS models**. This is the operational lever that dictates long-term viability.
 
 The Sean Ellis test remains the gold standard for early PMF. Survey your active users and ask: 'How would you feel if you could no longer use this product?' If more than 40% respond 'very disappointed,' you have achieved initial Product-Market Fit. If the number is 20%, you must immediately stop all paid acquisition and go back to iterating on the core value proposition.
 

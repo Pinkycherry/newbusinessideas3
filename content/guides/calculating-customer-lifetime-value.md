@@ -14,7 +14,7 @@ author: "BBI Research Team"
 # Calculating Customer Lifetime Value (CLTV) in SaaS
 
 
-Customer Lifetime Value (CLTV) is the ultimate metric for SaaS unit economics. It determines exactly how much you can afford to spend on acquisition. If you do not understand the mathematical relationship between churn, MRR, and CLTV, you are operating blindly in a highly competitive market.
+Customer [Lifetime Value](/calculator/lifetime-value-ltv) (CLTV) is the ultimate metric for SaaS unit economics. It determines exactly how much you can afford to spend on acquisition. If you do not understand the mathematical relationship between [churn](/calculator/churn-rate), MRR, and CLTV, you are operating blindly in a highly competitive market.
 
 To execute this properly, operators must look beyond surface-level metrics and dig into the systemic architecture of their business model.
 
@@ -28,7 +28,7 @@ A successful launch is an exercise in derisking. The technical audit must be unc
 
 ### Leveraging cltv to cac ratio
 
-Integrating cltv to cac ratio allows your team to move faster while maintaining structural integrity.
+Integrating cltv to [cac](/calculator/customer-acquisition-cost) ratio allows your team to move faster while maintaining structural integrity.
 
 Understanding the difference between Total Addressable Market and your initial 'wedge' is crucial. The wedge is the highly specific, underserved sub-segment of the market that you will dominate first. Amazon's TAM was global retail, but their wedge was selling books online. Identify a wedge that is small enough to avoid incumbent retaliation, but deep enough to generate initial cash flow and case studies.
 

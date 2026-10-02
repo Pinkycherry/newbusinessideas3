@@ -13,14 +13,14 @@ author: "BBI Research Team"
 # TAM, SAM, and SOM Market Sizing: A Practical Guide
 
 
-Understanding your market isn't a theoretical exercise; it’s a foundational requirement for any operator building a viable business. Too many founders wave vague numbers at investors, often mistaking potential for reality. Let's cut through the noise. **TAM, SAM, and SOM market sizing** isn't about impressing VCs; it's about strategic clarity, resource allocation, and realistic execution. Get these wrong, and you're building blind.
+Understanding your market isn't a theoretical exercise; it’s a foundational requirement for any operator building a viable business. Too many founders wave vague numbers at investors, often mistaking potential for reality. Let's cut through the noise. **[TAM](/calculator/tam-sam-som), SAM, and SOM market sizing** isn't about impressing VCs; it's about strategic clarity, resource allocation, and realistic execution. Get these wrong, and you're building blind.
 
 ### What Are We Actually Measuring?
 
 Forget the textbook definitions. Here’s the operator’s take:
 
 *   **TAM (Total Addressable Market):** This is the **total revenue opportunity** if every single potential customer in the world, who *could* conceivably use your product or service, actually bought it. It's the "pie in the sky" number – the absolute maximum. Think big, global, unconstrained by your current capabilities. For a SaaS company building an HR platform, TAM might be *all* businesses globally with employees. This is your long-term vision, your ultimate scale.
-*   **SAM (Serviceable Available Market):** This is the segment of your TAM that you can **realistically serve** with your *current* business model, technology, and go-to-market strategy. It accounts for geographical limitations, regulatory hurdles, language barriers, specific tech stack requirements, or even the type of businesses you're built for. If your HR platform only supports US payroll and integrates solely with Salesforce, your SAM shrinks considerably. This defines your current battleground.
+*   **SAM (Serviceable Available Market):** This is the segment of your TAM that you can **realistically serve** with your *current* business model, technology, and [go-to-market](/startup-guides/go-to-market-strategy-b2b) strategy. It accounts for geographical limitations, regulatory hurdles, language barriers, specific tech stack requirements, or even the type of businesses you're built for. If your HR platform only supports US payroll and integrates solely with Salesforce, your SAM shrinks considerably. This defines your current battleground.
 *   **SOM (Serviceable Obtainable Market):** This is the portion of SAM that you can **actually capture** in the short to medium term (typically 1-3 years). This is your realistic target, factoring in competitive landscape, your current sales and marketing capacity, brand awareness, pricing, and execution ability. If you're a bootstrapped startup entering a crowded market, your SOM will be a tiny sliver of your SAM. This is your immediate, actionable revenue goal.
 
 These aren't static figures. They evolve as your product matures, your GTM expands, and your market shifts. The best operators constantly revisit and refine them. This iterative process is crucial for effective **startup market analysis**.
@@ -74,7 +74,7 @@ This is where the rubber meets the road. Be brutally honest.
         *   `Estimated closed-won deals in 1-2 years (10% conversion)`: `5,000 * 0.1 = 500 deals`
         *   `SOM (bottom-up) = 500 deals * $15,000 ACV = $7.5 million`
 
-    *Note the convergence: a good SOM validates your top-down market share with a bottom-up sales target. This is powerful for investors.*
+    *Note the convergence: a good SOM [validates](/startup-guides/business-idea-validation-framework) your top-down market share with a bottom-up sales target. This is powerful for investors.*
 
 ## bottom up vs top down market sizing
 

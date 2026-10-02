@@ -14,13 +14,13 @@ author: "BBI Research Team"
 # Inbound Marketing for Bootstrapped Startups
 
 
-Bootstrapped founders cannot outspend venture-backed competitors on ads. Your leverage lies in inbound marketing. By building high-value, programmatic SEO assets and establishing deep domain authority, you create an organic acquisition moat that compounds over time and drives CAC down to near zero.
+[Bootstrapped](/startup-guides/zero-investment-business-models) founders cannot outspend venture-backed competitors on ads. Your leverage lies in inbound marketing. By building high-value, programmatic SEO assets and establishing deep domain authority, you create an organic acquisition moat that compounds over time and drives [CAC](/calculator/customer-acquisition-cost) down to near zero.
 
 This is where theoretical strategy meets operational reality. The market rewards execution, not just innovative ideas.
 
 ## how to build an inbound marketing strategy for startups
 
-B2B cold outreach requires a transition from generic spam to high-leverage personalization. Use tools like Clay to enrich prospect data before sending a single email. Reference specific trigger events—a recent round of funding, a new executive hire, or a specific technology they use in their stack. The email should be under 75 words, entirely focused on their operational pain, and end with a soft, low-friction call to action.
+[B2B](/startup-guides/go-to-market-strategy-b2b) cold outreach requires a transition from generic spam to high-leverage personalization. Use tools like Clay to enrich prospect data before sending a single email. Reference specific trigger events—a recent round of funding, a new executive hire, or a specific technology they use in their stack. The email should be under 75 words, entirely focused on their operational pain, and end with a soft, low-friction call to action.
 
 When optimizing this process, **content marketing strategy** plays a critical role in establishing a baseline. Without it, you are flying blind.
 
@@ -48,7 +48,7 @@ Retention cohort analysis is the heartbeat of SaaS growth. Plot your user cohort
 
 2. **Implement Tactical Fixes**: Apply the operator framework to your content marketing strategy immediately.
 
-3. **Measure and Iterate**: Track the impact on your core KPIs over a 14-day sprint.
+3. **Measure and Iterate**: Track the impact on your core [KPIs](/startup-guides/startup-metrics-dashboard) over a 14-day sprint.
 
 The Sean Ellis test remains the gold standard for early PMF. Survey your active users and ask: 'How would you feel if you could no longer use this product?' If more than 40% respond 'very disappointed,' you have achieved initial Product-Market Fit. If the number is 20%, you must immediately stop all paid acquisition and go back to iterating on the core value proposition.
 

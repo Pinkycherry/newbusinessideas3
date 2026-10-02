@@ -14,7 +14,7 @@ author: "BBI Research Team"
 # Zero-Investment Business Models for Bootstrapped Founders
 
 
-Capital is an accelerant, not a prerequisite. Bootstrapping forces financial discipline and rapid iteration. By leveraging zero-investment models like productized services, reverse marketplaces, and micro-consulting, founders can generate cash flow from day one without sacrificing equity to venture capitalists.
+Capital is an accelerant, not a prerequisite. Bootstrapping forces financial discipline and rapid iteration. By leveraging zero-investment models like productized services, reverse marketplaces, and micro-consulting, founders can generate [cash flow](/startup-guides/startup-cash-flow-management) from day one without sacrificing equity to venture capitalists.
 
 Ignoring these principles will invariably lead to increased burn rates and stalled momentum. Execution is everything.
 
@@ -22,7 +22,7 @@ Ignoring these principles will invariably lead to increased burn rates and stall
 
 The productized service model is the ultimate bootstrapping mechanism. Instead of building software first, offer your core value proposition as a fixed-price, monthly retainer service. If you want to build AI copywriting software, start by selling SEO content as a service. This generates immediate, high-margin cash flow, allows you to intimately understand the customer's operational pain points, and funds the eventual software development without requiring external venture capital.
 
-When optimizing this process, **bootstrapped business ideas** plays a critical role in establishing a baseline. Without it, you are flying blind.
+When optimizing this process, **bootstrapped [business ideas](/browse)** plays a critical role in establishing a baseline. Without it, you are flying blind.
 
 Capital allocation in the first 12 months should be ruthlessly defensive. Implement strict financial compartmentalization. Separate your operational checking account from your tax reserves and runway holding accounts. Parkinson's Law dictates that expenses rise to meet available capital. If you see $100,000 sitting in your primary account, you will unconsciously increase burn. Keep operational cash tight to force disciplined spending.
 
@@ -38,7 +38,7 @@ This is where theoretical strategy meets operational reality. The market rewards
 
 Leverage the power of reverse marketplaces. In a two-sided marketplace, demand is significantly harder to aggregate than supply. Focus entirely on securing the supply side first through scraping, manual onboarding, or partnerships. Once you have a dense, highly valuable directory or supplier base, you can monetize the demand side. The initial investment is purely time and operational grit.
 
-To truly scale, you must prioritize **lean startup methodology**. This is the operational lever that dictates long-term viability.
+To truly scale, you must prioritize **[lean startup](/startup-guides/minimum-viable-product-development) methodology**. This is the operational lever that dictates long-term viability.
 
 Product-Led Growth (PLG) demands that the product architecture minimizes Time-To-Value (TTV). Every additional click, form field, or required email verification in the onboarding sequence will drop your activation rate by 10%. Defer account creation until *after* the user has experienced the core utility of the app. Let them play with the tool immediately, and only gate the saving or exporting functions.
 

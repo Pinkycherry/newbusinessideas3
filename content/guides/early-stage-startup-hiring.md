@@ -76,9 +76,9 @@ Traditional interviewing falls short. You need a multi-faceted assessment design
 Cash compensation will always be a discount to market for founding engineers. The true value proposition lies in ownership and impact.
 
 **Equity as the Primary Lever:**
-*   **Range:** For your first 1-3 engineers (excluding co-founders), expect to allocate 0.5% to 2.0% of the fully diluted cap table. This range varies significantly based on their experience, expected impact, and the stage/valuation of your company. A Staff+ equivalent engineer joining extremely early might command the higher end.
-*   **Vesting:** Standard 4-year vesting with a 1-year cliff. This protects the company from early departures and ensures long-term alignment.
-*   **Transparency:** Clearly explain the current valuation, dilution potential, and the long-term vision for equity value creation. Provide a simple model to illustrate potential future value.
+*   **Range:** For your first 1-3 engineers (excluding co-founders), expect to allocate 0.5% to 2.0% of the [fully diluted cap table](/calculator/option-pool-sizing). This range varies significantly based on their experience, expected impact, and the stage/valuation of your company. A Staff+ equivalent engineer joining extremely early might command the higher end.
+*   **[Vesting](/startup-guides/startup-equity-split-guide):** Standard 4-year vesting with a 1-year cliff. This protects the company from early departures and ensures long-term alignment.
+*   **Transparency:** Clearly explain the current [valuation](/calculator/pre-money-valuation), dilution potential, and the long-term vision for equity value creation. Provide a simple model to illustrate potential future value.
 
 **Cash as a Floor:**
 *   Offer a liveable salary, typically 60-80% of market rate for a similar role at a Series A/B company. The goal is to remove financial distress, not to compete with FAANG salaries.

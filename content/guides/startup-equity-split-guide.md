@@ -33,7 +33,7 @@ Equity allocation must be an analytical exercise, not an emotional one. The init
 
 ### A Weighted Contribution Framework
 
-To operationalize this, consider a simple weighted framework. Assign a score (e.g., 1-10) to each of the above categories for each founder, then apply a weighting to the categories based on their perceived importance *to this specific venture*. For instance, in a deep tech startup, "Skills & Experience" (specific technical expertise) might be weighted higher than "Capital Invested" if seed funding is readily available. Sum the weighted scores to derive a proportional equity recommendation. This isn't a perfect formula, but it forces a structured, objective conversation.
+To operationalize this, consider a simple weighted framework. Assign a score (e.g., 1-10) to each of the above categories for each founder, then apply a weighting to the categories based on their perceived importance *to this specific venture*. For instance, in a deep tech startup, "Skills & Experience" (specific technical expertise) might be weighted higher than "Capital Invested" if seed [funding](/calculator/funding-needed) is readily available. Sum the weighted scores to derive a proportional equity recommendation. This isn't a perfect formula, but it forces a structured, objective conversation.
 
 ## Vesting Schedules: The Foundation of Commitment
 
@@ -63,7 +63,7 @@ Your startup capitalization table (cap table) is the definitive record of owners
 
 ### Initial Allocation & Dilution
 
-Understand that initial founder equity will be diluted by future funding rounds (angel, seed, Series A, etc.) and employee option pools. A 20% future dilution is common in early rounds. Plan for this. Don't over-allocate initial equity such that there's no room for future hires or investors.
+Understand that initial founder equity will be [diluted](/calculator/post-money-dilution) by future funding rounds (angel, seed, Series A, etc.) and employee [option pools](/calculator/option-pool-sizing). A 20% future dilution is common in early rounds. Plan for this. Don't over-allocate initial equity such that there's no room for future hires or investors.
 
 ### Dynamic Equity Models: When and Why
 

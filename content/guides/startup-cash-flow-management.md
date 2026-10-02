@@ -14,7 +14,7 @@ author: "BBI Research Team"
 # Startup Cash Flow Management: Extending Your Runway
 
 
-Revenue is vanity, margin is sanity, but cash is reality. A profitable startup will still go bankrupt if the timing of its cash outflows precedes its inflows. Mastering cash flow management—optimizing working capital and rigorously projecting runway—is the ultimate defensive skill for any founder.
+Revenue is vanity, margin is sanity, but cash is reality. A profitable startup will still go bankrupt if the timing of its cash outflows precedes its inflows. Mastering cash flow management—optimizing [working capital](/calculator/working-capital) and rigorously projecting [runway](/calculator/runway)—is the ultimate defensive skill for any founder.
 
 The difference between a failing startup and a scaling one is often rooted in how rigorously the founding team implements these exact protocols.
 
@@ -38,7 +38,7 @@ To execute this properly, operators must look beyond surface-level metrics and d
 
 Capital allocation in the first 12 months should be ruthlessly defensive. Implement strict financial compartmentalization. Separate your operational checking account from your tax reserves and runway holding accounts. Parkinson's Law dictates that expenses rise to meet available capital. If you see $100,000 sitting in your primary account, you will unconsciously increase burn. Keep operational cash tight to force disciplined spending.
 
-To truly scale, you must prioritize **bootstrapped financial modeling**. This is the operational lever that dictates long-term viability.
+To truly scale, you must prioritize **[bootstrapped](/startup-guides/zero-investment-business-models) financial modeling**. This is the operational lever that dictates long-term viability.
 
 A successful launch is an exercise in derisking. The technical audit must be uncompromising. Before pushing anything to the public, verify your canonical URLs to prevent SEO cannibalization. Run a full suite of cross-browser tests focusing on mobile viewports, as 60% of early traffic will come from mobile devices. Most critically, execute live end-to-end payment testing. Do not rely solely on Stripe test mode. Run real $1 transactions with real credit cards to ensure webhooks trigger database updates perfectly.
 

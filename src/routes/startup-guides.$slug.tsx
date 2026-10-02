@@ -15,6 +15,7 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { ExploreRail } from "@/components/explore-rail";
 import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { getGuideBySlug, STARTUP_GUIDES } from "@/lib/guides-data";
+import { FOUNDER, founderProfile } from "@/lib/site-config";
 
 export const Route = createFileRoute("/startup-guides/$slug")({
   head: ({ params }) => {
@@ -103,7 +104,16 @@ function StartupGuideDetailPage() {
                 <span>·</span>
                 <span>{guide.wordCount} words</span>
                 <span>·</span>
-                <span>By {guide.author}</span>
+                <span>
+                  Written by{" "}
+                  <Link
+                    to="/founders"
+                    hash={founderProfile(FOUNDER.name).slug}
+                    className="mo-link text-accent underline underline-offset-4"
+                  >
+                    {FOUNDER.name}
+                  </Link>
+                </span>
               </div>
             </div>
 
@@ -143,6 +153,21 @@ function StartupGuideDetailPage() {
                   img: ({ node, ...props }) => (
                     <img {...props} loading="lazy" decoding="async" className="mx-auto" />
                   ),
+                  // Inline links inside a guide: our own pages open in-app, the rest
+                  // are left as ordinary links.
+                  a: ({ node, href, children }) =>
+                    href && href.startsWith("/") ? (
+                      <Link
+                        to={href as "/"}
+                        className="mo-link text-accent underline underline-offset-4"
+                      >
+                        {children}
+                      </Link>
+                    ) : (
+                      <a href={href} className="text-accent underline underline-offset-4">
+                        {children}
+                      </a>
+                    ),
                 }}
                 children={guide.rawMarkdown}
               />

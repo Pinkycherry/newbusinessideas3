@@ -24,7 +24,7 @@ Founding team recruitment requires an entirely different lens than corporate hir
 
 When optimizing this process, **value based pricing** plays a critical role in establishing a baseline. Without it, you are flying blind.
 
-Most founders approach market validation backward. They build a product, construct a landing page, and then desperately search for users to validate their assumptions. This is a recipe for burning capital. The operator's approach demands strict adherence to pre-selling. If you cannot get a customer to commit a deposit or sign a Letter of Intent (LOI) before the product exists, you do not have a validated idea. You have a hypothesis. Force the transaction early to eliminate false positives.
+Most founders approach market [validation](/startup-guides/business-idea-validation-framework) backward. They build a product, construct a landing page, and then desperately search for users to validate their assumptions. This is a recipe for burning capital. The operator's approach demands strict adherence to pre-selling. If you cannot get a customer to commit a deposit or sign a Letter of Intent (LOI) before the product exists, you do not have a validated idea. You have a hypothesis. Force the transaction early to eliminate false positives.
 
 ### Leveraging tiered subscription plans
 
@@ -38,9 +38,9 @@ The difference between a failing startup and a scaling one is often rooted in ho
 
 Avoid the trap of 'visionary validation.' Too many founders believe they are creating a new market category from scratch. While category creation is possible, it is brutally expensive. For your first product, it is vastly safer to enter an existing market with established demand and compete on a specific vector: speed, design, niche focus, or pricing. Find incumbent software products with terrible UX and build a streamlined alternative.
 
-To truly scale, you must prioritize **freemium vs trial**. This is the operational lever that dictates long-term viability.
+To truly scale, you must prioritize **[freemium](/startup-guides/freemium-to-paid-conversion) vs trial**. This is the operational lever that dictates long-term viability.
 
-B2B cold outreach requires a transition from generic spam to high-leverage personalization. Use tools like Clay to enrich prospect data before sending a single email. Reference specific trigger events—a recent round of funding, a new executive hire, or a specific technology they use in their stack. The email should be under 75 words, entirely focused on their operational pain, and end with a soft, low-friction call to action.
+[B2B](/startup-guides/go-to-market-strategy-b2b) cold outreach requires a transition from generic spam to high-leverage personalization. Use tools like Clay to enrich prospect data before sending a single email. Reference specific trigger events—a recent round of funding, a new executive hire, or a specific technology they use in their stack. The email should be under 75 words, entirely focused on their operational pain, and end with a soft, low-friction call to action.
 
 ### Core Execution Steps for micro saas pricing models
 

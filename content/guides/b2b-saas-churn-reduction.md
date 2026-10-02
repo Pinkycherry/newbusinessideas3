@@ -14,17 +14,17 @@ author: "BBI Research Team"
 # B2B SaaS Churn Reduction: High-Retention Strategies
 
 
-Churn isn't merely a metric; it's a symptom of value misalignment. In the B2B SaaS landscape, an unflinching analysis reveals that every percentage point of churn compounds into existential threat. While acquisition fuels initial velocity, high churn is the operational drag that inevitably stalls growth. The objective isn't just to reduce churn, but to engineer an impenetrable retention moat around your customer base.
+[Churn](/calculator/churn-rate) isn't merely a metric; it's a symptom of value misalignment. In the B2B SaaS landscape, an unflinching analysis reveals that every percentage point of churn compounds into existential threat. While acquisition fuels initial velocity, high churn is the operational drag that inevitably stalls growth. The objective isn't just to reduce churn, but to engineer an impenetrable retention moat around your customer base.
 
 ### The True Cost of Churn: Beyond GRR
 
-Most operators track Gross Revenue Retention (GRR), a foundational metric. However, the BBI perspective demands a deeper dive into Net Revenue Retention (NRR). NRR accounts for expansion revenue (upsells, cross-sells) and contractions, painting a holistic picture of your customer base's health. A GRR below 90% signals critical product-market fit issues or severe value leakage. An NRR above 100% is the gold standard, indicating that your existing customers are growing faster than you're losing them. Our focus is on achieving this, not just stemming the bleeding.
+Most operators track Gross Revenue Retention (GRR), a foundational metric. However, the BBI perspective demands a deeper dive into [Net Revenue Retention](/calculator/net-revenue-retention) (NRR). NRR accounts for expansion revenue (upsells, cross-sells) and contractions, painting a holistic picture of your customer base's health. A GRR below 90% signals critical product-market fit issues or severe value leakage. An NRR above 100% is the gold standard, indicating that your existing customers are growing faster than you're losing them. Our focus is on achieving this, not just stemming the bleeding.
 
 **Formula for NRR:** `(Starting MRR + Expansion MRR - Downgrade MRR - Churn MRR) / Starting MRR`
 
 ### Onboarding: Engineering the First Win
 
-The initial 90 days are your most critical window for **saas onboarding optimization**. This isn't a checklist; it's a meticulously engineered journey to the "Aha!" moment and beyond.
+The initial 90 days are your most critical window for **saas [onboarding](/startup-guides/product-led-growth-onboarding) optimization**. This isn't a checklist; it's a meticulously engineered journey to the "Aha!" moment and beyond.
 
 1.  **Define the Activation Matrix:** Identify 3-5 key actions a customer *must* complete to derive initial value. For a project management tool, this might be: `(1) Invite Team Member, (2) Create First Project, (3) Assign First Task, (4) Set Due Date.`
 2.  **Map Time-to-Value (TTV):** Aggressively reduce the time it takes for a new user to achieve their first tangible success. This often means pre-populating data, providing interactive walkthroughs, or offering white-glove setup for enterprise clients. Measure TTV ruthlessly.
@@ -58,7 +58,7 @@ Retention isn't a post-sale activity; it's a continuous engineering discipline. 
 
 ### The Churn Autopsy: Learning from Departures
 
-Even with the most robust **customer retention rate** strategies, some churn is inevitable. The exit interview is not a formality; it's an invaluable data collection opportunity. Systematize the process:
+Even with the most robust **[customer retention](/startup-guides/user-retention-strategies-saas) rate** strategies, some churn is inevitable. The exit interview is not a formality; it's an invaluable data collection opportunity. Systematize the process:
 
 1.  **Standardized Exit Survey:** Collect qualitative and quantitative data on reasons for churn (price, features, support, competitive offering, business change).
 2.  **Direct Interview Protocol:** For high-value churns, conduct a direct, empathetic interview. Focus on understanding the root cause, not defending your product.

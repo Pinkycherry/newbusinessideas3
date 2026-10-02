@@ -20,11 +20,11 @@ Scaling requires discipline. By operationalizing these frameworks, you transitio
 
 ## how to do competitor analysis for a startup
 
-Understanding the difference between Total Addressable Market and your initial 'wedge' is crucial. The wedge is the highly specific, underserved sub-segment of the market that you will dominate first. Amazon's TAM was global retail, but their wedge was selling books online. Identify a wedge that is small enough to avoid incumbent retaliation, but deep enough to generate initial cash flow and case studies.
+Understanding the difference between [Total Addressable Market](/startup-guides/tam-sam-som-market-sizing) and your initial 'wedge' is crucial. The wedge is the highly specific, underserved sub-segment of the market that you will dominate first. Amazon's TAM was global retail, but their wedge was selling books online. Identify a wedge that is small enough to avoid incumbent retaliation, but deep enough to generate initial cash flow and case studies.
 
 When optimizing this process, **startup competitive advantage** plays a critical role in establishing a baseline. Without it, you are flying blind.
 
-Competitor analysis should prioritize positioning over feature parity. Do not build a spreadsheet listing every feature your competitor has and attempt to clone them all. This leads to a bloated, undifferentiated product. Instead, identify the axes of competition—usually price vs. performance, or complexity vs. ease of use. If the incumbent is enterprise-heavy and complex, position your product as the lightweight, consumer-grade alternative for SMBs.
+Competitor analysis should prioritize positioning over feature parity. Do not build a spreadsheet listing every feature your competitor has and attempt to clone them all. This leads to a bloated, undifferentiated product. Instead, identify the axes of competition—usually [price](/startup-guides/saas-pricing-models) vs. performance, or complexity vs. ease of use. If the incumbent is enterprise-heavy and complex, position your product as the lightweight, consumer-grade alternative for SMBs.
 
 ### Leveraging feature matrix comparison
 
@@ -40,7 +40,7 @@ Your Serviceable Obtainable Market (SOM) is the only metric that matters in year
 
 To truly scale, you must prioritize **market positioning**. This is the operational lever that dictates long-term viability.
 
-B2B cold outreach requires a transition from generic spam to high-leverage personalization. Use tools like Clay to enrich prospect data before sending a single email. Reference specific trigger events—a recent round of funding, a new executive hire, or a specific technology they use in their stack. The email should be under 75 words, entirely focused on their operational pain, and end with a soft, low-friction call to action.
+[B2B](/startup-guides/go-to-market-strategy-b2b) cold outreach requires a transition from generic spam to high-leverage personalization. Use tools like Clay to enrich prospect data before sending a single email. Reference specific trigger events—a recent round of funding, a new executive hire, or a specific technology they use in their stack. The email should be under 75 words, entirely focused on their operational pain, and end with a soft, low-friction call to action.
 
 ### Core Execution Steps for competitor analysis framework
 

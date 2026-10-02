@@ -30,13 +30,13 @@ B2B cold outreach requires a transition from generic spam to high-leverage perso
 
 Integrating feature gating allows your team to move faster while maintaining structural integrity.
 
-Product-Led Growth (PLG) demands that the product architecture minimizes Time-To-Value (TTV). Every additional click, form field, or required email verification in the onboarding sequence will drop your activation rate by 10%. Defer account creation until *after* the user has experienced the core utility of the app. Let them play with the tool immediately, and only gate the saving or exporting functions.
+Product-Led Growth (PLG) demands that the product architecture minimizes Time-To-Value (TTV). Every additional click, form field, or required email verification in the [onboarding](/startup-guides/product-led-growth-onboarding) sequence will drop your activation rate by 10%. Defer account creation until *after* the user has experienced the core utility of the app. Let them play with the tool immediately, and only gate the saving or exporting functions.
 
 ## best strategies for converting free SaaS users
 
 Scaling requires discipline. By operationalizing these frameworks, you transition from reactive firefighting to proactive, predictable growth.
 
-Retention cohort analysis is the heartbeat of SaaS growth. Plot your user cohorts on a retention curve. A failing product will see the curve approach zero over six months. A product with true PMF will see the curve 'smile' or flatten out at a stable baseline (e.g., 30% retention at month 12). This horizontal asymptote proves that a specific segment of users finds enduring value in the platform.
+[Retention cohort](/startup-guides/user-retention-strategies-saas) analysis is the heartbeat of SaaS growth. Plot your user cohorts on a retention curve. A failing product will see the curve approach zero over six months. A product with true PMF will see the curve 'smile' or flatten out at a stable baseline (e.g., 30% retention at month 12). This horizontal asymptote proves that a specific segment of users finds enduring value in the platform.
 
 To truly scale, you must prioritize **saas upgrade friction**. This is the operational lever that dictates long-term viability.
 
@@ -56,4 +56,4 @@ Scaling requires discipline. By operationalizing these frameworks, you transitio
 
 ## The Operator's Conclusion
 
-Success in this arena is not about finding a silver bullet. It is about relentlessly applying the principles of freemium to paid conversion day in and day out. Build the systems, trust the data, and execute with precision.
+Success in this arena is not about finding a silver bullet. It is about relentlessly applying the principles of freemium to paid [conversion](/calculator/conversion-rate) day in and day out. Build the systems, trust the data, and execute with precision.

@@ -13,7 +13,7 @@ author: "BBI Research Team"
 # Pre-Launch Checklist for Startups: Technical and Marketing Audit
 
 
-The market doesn't forgive unpreparedness. Your pre-launch phase isn't a suggestion; it’s the crucible where viability is forged. Ignore this comprehensive **pre-launch checklist for startups** at your peril. This isn't about checking boxes for optics; it's about rigorous technical and marketing validation to ensure your product doesn't just launch, but lands and scales.
+The market doesn't forgive unpreparedness. Your pre-launch phase isn't a suggestion; it’s the crucible where viability is forged. Ignore this comprehensive **pre-launch checklist for startups** at your peril. This isn't about checking boxes for optics; it's about rigorous technical and marketing [validation](/startup-guides/business-idea-validation-framework) to ensure your product doesn't just launch, but lands and scales.
 
 ## what to check before launching a saas product
 
@@ -21,7 +21,7 @@ Before you even think about "Go Live," subject your product to an unforgiving te
 
 ### Technical QA & Functionality Audit
 
-*   **Core User Flows Validation:** Every single path a user can take, from signup to conversion (e.g., "create a project," "invite team member," "process payment"). Test these repeatedly, across devices and browsers. Are your onboarding flows intuitive? Do error states provide actionable feedback, or cryptic messages?
+*   **Core User Flows Validation:** Every single path a user can take, from signup to conversion (e.g., "create a project," "invite team member," "process payment"). Test these repeatedly, across devices and browsers. Are your [onboarding](/startup-guides/product-led-growth-onboarding) flows intuitive? Do error states provide actionable feedback, or cryptic messages?
 *   **Edge Case Torture Test:** What happens if a user inputs malformed data? What if an API call fails mid-transaction? Simulate network outages, concurrent user load, and invalid credentials. For a SaaS like Calendly, what if two users try to book the same slot simultaneously? Does your system handle this gracefully?
 *   **Data Integrity & Consistency:** Verify that data persists correctly across sessions, modules, and database operations. Are foreign keys properly enforced? Is historical data accurate after updates? Crucial for financial SaaS or any platform managing critical user data.
 *   **Security Posture Assessment:**
@@ -61,7 +61,7 @@ Your product might be technically brilliant, but without a sharp go to market hy
     *   **Pre-launch Sequence:** Build anticipation.
     *   **Onboarding Flows:** Triggered post-signup.
     *   **Welcome Emails:** Clear, action-oriented.
-    *   **Nurture Sequences:** Designed to convert or engage. Test all links, personalization, and deliverability.
+    *   **Nurture Sequences:** Designed to convert or engage. Test all links, personalization, and [deliverability](/startup-guides/b2b-cold-email-lead-generation).
 *   **Paid Channels Readiness:**
     *   **Ad Account Setup:** Google Ads, LinkedIn Ads, Facebook Ads – accounts warmed up, billing configured.
     *   **Tracking Pixels:** Facebook Pixel, Google Analytics, LinkedIn Insight Tag correctly installed and firing. Event tracking *must* be validated.

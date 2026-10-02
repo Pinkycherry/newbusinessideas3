@@ -28,7 +28,7 @@ Your Go-To-Market (GTM) hygiene determines your launch trajectory. This involves
 
 ### Leveraging retention cohort curves
 
-Integrating retention cohort curves allows your team to move faster while maintaining structural integrity.
+Integrating [retention cohort](/startup-guides/user-retention-strategies-saas) curves allows your team to move faster while maintaining structural integrity.
 
 B2B cold outreach requires a transition from generic spam to high-leverage personalization. Use tools like Clay to enrich prospect data before sending a single email. Reference specific trigger events—a recent round of funding, a new executive hire, or a specific technology they use in their stack. The email should be under 75 words, entirely focused on their operational pain, and end with a soft, low-friction call to action.
 
@@ -36,9 +36,9 @@ B2B cold outreach requires a transition from generic spam to high-leverage perso
 
 The difference between a failing startup and a scaling one is often rooted in how rigorously the founding team implements these exact protocols.
 
-Retention cohort analysis is the heartbeat of SaaS growth. Plot your user cohorts on a retention curve. A failing product will see the curve approach zero over six months. A product with true PMF will see the curve 'smile' or flatten out at a stable baseline (e.g., 30% retention at month 12). This horizontal asymptote proves that a specific segment of users finds enduring value in the platform.
+Retention [cohort](/calculator/net-revenue-retention) analysis is the heartbeat of SaaS growth. Plot your user cohorts on a retention curve. A failing product will see the curve approach zero over six months. A product with true PMF will see the curve 'smile' or flatten out at a stable baseline (e.g., 30% retention at month 12). This horizontal asymptote proves that a specific segment of users finds enduring value in the platform.
 
-To truly scale, you must prioritize **startup growth KPIs**. This is the operational lever that dictates long-term viability.
+To truly scale, you must prioritize **startup growth [KPIs](/startup-guides/startup-metrics-dashboard)**. This is the operational lever that dictates long-term viability.
 
 The Sean Ellis test remains the gold standard for early PMF. Survey your active users and ask: 'How would you feel if you could no longer use this product?' If more than 40% respond 'very disappointed,' you have achieved initial Product-Market Fit. If the number is 20%, you must immediately stop all paid acquisition and go back to iterating on the core value proposition.
 

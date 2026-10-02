@@ -22,15 +22,15 @@ To execute this properly, operators must look beyond surface-level metrics and d
 
 Capital allocation in the first 12 months should be ruthlessly defensive. Implement strict financial compartmentalization. Separate your operational checking account from your tax reserves and runway holding accounts. Parkinson's Law dictates that expenses rise to meet available capital. If you see $100,000 sitting in your primary account, you will unconsciously increase burn. Keep operational cash tight to force disciplined spending.
 
-When optimizing this process, **customer success management** plays a critical role in establishing a baseline. Without it, you are flying blind.
+When optimizing this process, **[customer success](/startup-guides/b2b-saas-churn-reduction) management** plays a critical role in establishing a baseline. Without it, you are flying blind.
 
-Retention cohort analysis is the heartbeat of SaaS growth. Plot your user cohorts on a retention curve. A failing product will see the curve approach zero over six months. A product with true PMF will see the curve 'smile' or flatten out at a stable baseline (e.g., 30% retention at month 12). This horizontal asymptote proves that a specific segment of users finds enduring value in the platform.
+Retention [cohort](/calculator/net-revenue-retention) analysis is the heartbeat of SaaS growth. Plot your user cohorts on a retention curve. A failing product will see the curve approach zero over six months. A product with true PMF will see the curve 'smile' or flatten out at a stable baseline (e.g., 30% retention at month 12). This horizontal asymptote proves that a specific segment of users finds enduring value in the platform.
 
 ### Leveraging in app engagement
 
 Integrating in app engagement allows your team to move faster while maintaining structural integrity.
 
-The Sean Ellis test remains the gold standard for early PMF. Survey your active users and ask: 'How would you feel if you could no longer use this product?' If more than 40% respond 'very disappointed,' you have achieved initial Product-Market Fit. If the number is 20%, you must immediately stop all paid acquisition and go back to iterating on the core value proposition.
+The Sean Ellis test remains the gold standard for early PMF. Survey your active users and ask: 'How would you feel if you could no longer use this product?' If more than 40% respond 'very disappointed,' you have achieved initial [Product-Market Fit](/startup-guides/product-market-fit-metrics). If the number is 20%, you must immediately stop all paid acquisition and go back to iterating on the core value proposition.
 
 ## best customer retention strategies for software startups
 
@@ -40,7 +40,7 @@ Founding team recruitment requires an entirely different lens than corporate hir
 
 To truly scale, you must prioritize **saas renewal tactics**. This is the operational lever that dictates long-term viability.
 
-Product-Led Growth (PLG) demands that the product architecture minimizes Time-To-Value (TTV). Every additional click, form field, or required email verification in the onboarding sequence will drop your activation rate by 10%. Defer account creation until *after* the user has experienced the core utility of the app. Let them play with the tool immediately, and only gate the saving or exporting functions.
+Product-Led Growth (PLG) demands that the product architecture minimizes Time-To-Value (TTV). Every additional click, form field, or required email verification in the [onboarding](/startup-guides/product-led-growth-onboarding) sequence will drop your activation rate by 10%. Defer account creation until *after* the user has experienced the core utility of the app. Let them play with the tool immediately, and only gate the saving or exporting functions.
 
 ### Core Execution Steps for user retention strategies saas
 

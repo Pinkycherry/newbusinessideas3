@@ -14,17 +14,17 @@ author: "BBI Research Team"
 # Startup Metrics Dashboard: KPIs that Actually Matter
 
 
-Data without structure is noise. A startup metrics dashboard should not be a sprawling collection of every conceivable data point. It must be a highly focused array of leading and lagging indicators—Burn Rate, CAC, Churn, and your North Star—that directly inform operational decisions and drive team alignment.
+Data without structure is noise. A startup metrics dashboard should not be a sprawling collection of every conceivable data point. It must be a highly focused array of leading and lagging indicators—[Burn Rate](/calculator/burn-rate), CAC, Churn, and your North Star—that directly inform operational decisions and drive team alignment.
 
 Ignoring these principles will invariably lead to increased burn rates and stalled momentum. Execution is everything.
 
 ## what metrics should a startup dashboard track
 
-The Sean Ellis test remains the gold standard for early PMF. Survey your active users and ask: 'How would you feel if you could no longer use this product?' If more than 40% respond 'very disappointed,' you have achieved initial Product-Market Fit. If the number is 20%, you must immediately stop all paid acquisition and go back to iterating on the core value proposition.
+The Sean Ellis test remains the gold standard for early PMF. Survey your active users and ask: 'How would you feel if you could no longer use this product?' If more than 40% respond 'very disappointed,' you have achieved initial [Product-Market Fit](/startup-guides/product-market-fit-metrics). If the number is 20%, you must immediately stop all [paid acquisition](/calculator/customer-acquisition-cost) and go back to iterating on the core value proposition.
 
 When optimizing this process, **core startup kpis** plays a critical role in establishing a baseline. Without it, you are flying blind.
 
-Capital allocation in the first 12 months should be ruthlessly defensive. Implement strict financial compartmentalization. Separate your operational checking account from your tax reserves and runway holding accounts. Parkinson's Law dictates that expenses rise to meet available capital. If you see $100,000 sitting in your primary account, you will unconsciously increase burn. Keep operational cash tight to force disciplined spending.
+Capital allocation in the first 12 months should be ruthlessly defensive. Implement strict financial compartmentalization. Separate your operational checking account from your tax reserves and [runway](/calculator/runway) holding accounts. Parkinson's Law dictates that expenses rise to meet available capital. If you see $100,000 sitting in your primary account, you will unconsciously increase burn. Keep operational cash tight to force disciplined spending.
 
 ### Leveraging mrr and arr tracking
 

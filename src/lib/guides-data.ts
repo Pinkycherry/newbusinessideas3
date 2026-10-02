@@ -53,7 +53,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 1148,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "b2b cold email lead generation",
       "outbound sales strategy",
@@ -72,7 +72,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 1009,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "b2b saas churn reduction",
       "customer retention rate",
@@ -91,7 +91,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 1056,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "business idea validation framework",
       "customer discovery interviews",
@@ -110,7 +110,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 733,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "calculating customer lifetime value",
       "saas unit economics",
@@ -129,7 +129,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 716,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "competitor analysis framework",
       "startup competitive advantage",
@@ -148,7 +148,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 1061,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "early stage startup hiring",
       "founding team recruitment",
@@ -167,7 +167,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 716,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "freemium to paid conversion",
       "product qualified leads",
@@ -186,7 +186,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 737,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "go to market strategy b2b",
       "ideal customer profile",
@@ -205,7 +205,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 718,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "inbound marketing bootstrapped startups",
       "content marketing strategy",
@@ -224,7 +224,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 757,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "minimum viable product development",
       "lean startup principles",
@@ -243,7 +243,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 1015,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "pre-launch checklist for startups",
       "startup launch preparation",
@@ -262,7 +262,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 698,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "product led growth onboarding",
       "time to value",
@@ -281,7 +281,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 737,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "product market fit metrics",
       "sean ellis test",
@@ -300,7 +300,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 775,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "micro saas pricing models",
       "value based pricing",
@@ -319,7 +319,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 740,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "startup cash flow management",
       "startup runway calculation",
@@ -338,7 +338,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 1270,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "startup equity split guide",
       "co-founder vesting schedules",
@@ -357,7 +357,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 710,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "startup metrics dashboard",
       "core startup kpis",
@@ -376,7 +376,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 1109,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "tam sam som market sizing",
       "total addressable market",
@@ -395,7 +395,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 715,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "user retention strategies saas",
       "customer success management",
@@ -414,7 +414,7 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
     wordCount: 663,
     readTime: "5 min read",
     publishedDate: "2026-09-14",
-    author: "BBI Research Team",
+    author: "Kartik Ramaswamy",
     keywords: [
       "zero investment business models",
       "bootstrapped business ideas",
