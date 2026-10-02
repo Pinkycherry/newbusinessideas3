@@ -61,7 +61,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "cold outreach templates",
     ],
     rawMarkdown: extractBody(guide0),
-    keyTakeaways: ["b2b cold email lead generation", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Warm your sending domain before you send volume: deliverability decides whether anyone sees the email.",
+      "Personalize around a problem the prospect actually has, not just their first name.",
+      "Write short, curiosity-led copy that asks for a reply instead of a meeting.",
+      "Test one change at a time and track reply rate and positive reply rate.",
+    ],
   },
   {
     slug: "b2b-saas-churn-reduction",
@@ -80,7 +85,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "sticky software features",
     ],
     rawMarkdown: extractBody(guide1),
-    keyTakeaways: ["b2b saas churn reduction", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Measure the true cost of churn with net revenue retention, not customer counts alone.",
+      "Engineer a first win in the early days: onboarding is your best defence against churn.",
+      "Build features that lock in value, such as integrations, stored data and network effects.",
+      "Run a churn autopsy on every departure and act on what it shows.",
+    ],
   },
   {
     slug: "business-idea-validation-framework",
@@ -99,7 +109,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "smoke test mvp",
     ],
     rawMarkdown: extractBody(guide2),
-    keyTakeaways: ["business idea validation framework", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Confirm the problem first with customer discovery interviews, before anything is built.",
+      "Run a lean demand test, such as a landing page or a concierge MVP, to see who really signs up.",
+      "Validate willingness to pay before you validate the product.",
+      "Treat the early work as learning, not profit, until the problem is proven.",
+    ],
   },
   {
     slug: "calculating-customer-lifetime-value",
@@ -118,7 +133,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "churn rate impact",
     ],
     rawMarkdown: extractBody(guide3),
-    keyTakeaways: ["calculating customer lifetime value", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Understand how churn, MRR and CLTV connect before you set an acquisition budget.",
+      "Compare lifetime value with customer acquisition cost to see what you can afford to spend.",
+      "Work the calculation step by step, then re-run it as churn changes.",
+      "Use CLTV as a decision tool for pricing, retention and growth, not a one-off number.",
+    ],
   },
   {
     slug: "competitor-analysis-framework",
@@ -137,7 +157,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "market positioning",
     ],
     rawMarkdown: extractBody(guide4),
-    keyTakeaways: ["competitor analysis framework", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Look for positioning gaps and unserved niches instead of chasing feature parity.",
+      "Map competitors on a feature matrix and on the axes they compete on, such as price against performance.",
+      "Find a narrow wedge into the market before you take on the whole of it.",
+      "Study competitors enough to differentiate, then get back to your own customers.",
+    ],
   },
   {
     slug: "early-stage-startup-hiring",
@@ -156,7 +181,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "evaluating startup fit",
     ],
     rawMarkdown: extractBody(guide5),
-    keyTakeaways: ["early stage startup hiring", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Hire for high agency, adaptability and an ownership mindset before specialist skills.",
+      "Recruit your first engineers yourself and sell the vision directly.",
+      "Use a structured process: a problem-space interview, a war-story deep dive and reference checks.",
+      "Pair a cash floor with equity so incentives line up with the company's success.",
+    ],
   },
   {
     slug: "freemium-to-paid-conversion",
@@ -175,7 +205,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "saas upgrade friction",
     ],
     rawMarkdown: extractBody(guide6),
-    keyTakeaways: ["freemium to paid conversion", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Gate the features that drive professional value and keep enough free to hook the user.",
+      "Cut friction in sign-up and onboarding so free users reach value faster.",
+      "Spot product-qualified leads from real usage and approach them at the right moment.",
+      "Watch upgrade friction and retention cohorts to see where free users stall.",
+    ],
   },
   {
     slug: "go-to-market-strategy-b2b",
@@ -194,7 +229,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "b2b sales cycle",
     ],
     rawMarkdown: extractBody(guide7),
-    keyTakeaways: ["go to market strategy b2b", "Execution", "Optimization"],
+    keyTakeaways: [
+      "A go-to-market strategy aligns pricing, sales and distribution; it is more than a marketing plan.",
+      "Choose a clear wedge and an ideal customer profile before you try to scale.",
+      "Plan for outbound, account-based marketing and channel partners, not launch buzz alone.",
+      "Understand the B2B sales cycle so your pipeline is predictable.",
+    ],
   },
   {
     slug: "inbound-marketing-bootstrapped-startups",
@@ -213,7 +253,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "organic lead generation",
     ],
     rawMarkdown: extractBody(guide8),
-    keyTakeaways: ["inbound marketing bootstrapped startups", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Bootstrapped founders win with inbound: build content assets that keep bringing in leads.",
+      "Use programmatic SEO to turn one template and your own data into many useful pages.",
+      "Build domain authority steadily so organic acquisition compounds over time.",
+      "Track CAC and organic lead generation against your core KPIs.",
+    ],
   },
   {
     slug: "minimum-viable-product-development",
@@ -232,7 +277,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "mvp feature prioritization",
     ],
     rawMarkdown: extractBody(guide9),
-    keyTakeaways: ["minimum viable product development", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Build one tool that tests your riskiest assumption, not a smaller copy of the final product.",
+      "Use no-code prototyping to learn faster and spend less.",
+      "Choose features by what the test needs and cut the rest.",
+      "If you are not slightly embarrassed by the first release, you launched too late.",
+    ],
   },
   {
     slug: "pre-launch-checklist-for-startups",
@@ -251,7 +301,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "go to market hygiene",
     ],
     rawMarkdown: extractBody(guide10),
-    keyTakeaways: ["pre-launch checklist for startups", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Audit the product before launch: functionality, access control, backups and the deployment pipeline.",
+      "Check that analytics and tracking work, so launch day data is usable.",
+      "Have marketing ready: ad accounts, creatives and copy in place before you go live.",
+      "Test onboarding flows and email deliverability so first users get a good first experience.",
+    ],
   },
   {
     slug: "product-led-growth-onboarding",
@@ -270,7 +325,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "freemium SaaS models",
     ],
     rawMarkdown: extractBody(guide11),
-    keyTakeaways: ["product led growth onboarding", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Get users to their first 'Aha!' moment within the first five minutes.",
+      "Track user activation rate and time to value as your core onboarding numbers.",
+      "Design the onboarding so the product sells itself and needs no sales rep.",
+      "Remove steps and form fields that delay activation.",
+    ],
   },
   {
     slug: "product-market-fit-metrics",
@@ -289,7 +349,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "startup growth KPIs",
     ],
     rawMarkdown: extractBody(guide12),
-    keyTakeaways: ["product market fit metrics", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Run the Sean Ellis test: ask active users how they would feel if they could no longer use the product.",
+      "Plot user cohorts on a retention curve to see whether people stay.",
+      "Hold back scaling acquisition until fit shows in the numbers.",
+      "Track a short list of growth KPIs rather than every metric.",
+    ],
   },
   {
     slug: "saas-pricing-models",
@@ -308,7 +373,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "freemium vs trial",
     ],
     rawMarkdown: extractBody(guide13),
-    keyTakeaways: ["micro saas pricing models", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Price on the value of the problem you solve, not on the hours you spent building.",
+      "Compare tiered subscription plans and pick the structure that fits your customer.",
+      "Weigh freemium against a free trial for your product.",
+      "Revisit pricing as you learn what customers will actually pay.",
+    ],
   },
   {
     slug: "startup-cash-flow-management",
@@ -327,7 +397,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "bootstrapped financial modeling",
     ],
     rawMarkdown: extractBody(guide14),
-    keyTakeaways: ["startup cash flow management", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Cash decides survival: make sure inflows arrive before outflows.",
+      "Optimize working capital and project your runway on a rolling basis.",
+      "Keep operating cash, tax reserves and runway money in separate accounts.",
+      "Build a bootstrapped financial model and stress-test it.",
+    ],
   },
   {
     slug: "startup-equity-split-guide",
@@ -346,7 +421,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "dynamic equity models",
     ],
     rawMarkdown: extractBody(guide15),
-    keyTakeaways: ["startup equity split guide", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Avoid the 50/50 handshake split; tie equity to contribution and risk.",
+      "Weigh each founder's role, time, capital invested and idea ownership.",
+      "Use a vesting schedule, such as four years with a one-year cliff.",
+      "Plan for good leaver and bad leaver clauses, and for dilution from funding rounds and option pools.",
+    ],
   },
   {
     slug: "startup-metrics-dashboard",
@@ -365,7 +445,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "burn rate calculation",
     ],
     rawMarkdown: extractBody(guide16),
-    keyTakeaways: ["startup metrics dashboard", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Track a small set of leading and lagging indicators: burn rate, CAC, churn and your North Star.",
+      "Include MRR and ARR tracking so growth is visible at a glance.",
+      "Choose KPIs that change decisions and drop the rest.",
+      "Review the dashboard with your team on a regular rhythm.",
+    ],
   },
   {
     slug: "tam-sam-som-market-sizing",
@@ -384,7 +469,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "startup market analysis",
     ],
     rawMarkdown: extractBody(guide17),
-    keyTakeaways: ["tam sam som market sizing", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Separate TAM, SAM and SOM: the vision, the immediate horizon and what you can win in the next 12 to 18 months.",
+      "Compare top-down and bottom-up sizing; the bottom-up view is the operator's reality.",
+      "Define your core offering and geographic constraints before you size the market.",
+      "Check go-to-market capacity: your SOM must match what you can actually reach.",
+    ],
   },
   {
     slug: "user-retention-strategies-saas",
@@ -403,7 +493,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "saas renewal tactics",
     ],
     rawMarkdown: extractBody(guide18),
-    keyTakeaways: ["user retention strategies saas", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Embed the product in daily workflows to create switching costs.",
+      "Analyze behavior cohorts to see who stays and who drifts away.",
+      "Run targeted interventions on at-risk users instead of blanket emails.",
+      "Use in-app engagement and customer success to drive renewals.",
+    ],
   },
   {
     slug: "zero-investment-business-models",
@@ -422,7 +517,12 @@ export const STARTUP_GUIDES: StartupGuideMeta[] = [
       "lean startup methodology",
     ],
     rawMarkdown: extractBody(guide19),
-    keyTakeaways: ["zero investment business models", "Execution", "Optimization"],
+    keyTakeaways: [
+      "Start with a productized service: a fixed-price offer built on skills you already have.",
+      "Try reverse marketplaces and micro-consulting to get paid before you build.",
+      "Keep operating cash tight and separate from tax reserves.",
+      "Let early cash flow fund the next step so you never sell equity to get started.",
+    ],
   },
 ];
 

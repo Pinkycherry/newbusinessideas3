@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { BookOpen, Clock, ArrowRight, CheckCircle2, Sparkles, Compass } from "lucide-react";
+import { BookOpen, Clock, ArrowRight, Sparkles, Compass } from "lucide-react";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { ExploreRail } from "@/components/explore-rail";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { guideImage } from "@/config/guide-imagery";
 import { STARTUP_GUIDES, type StartupGuideMeta } from "@/lib/guides-data";
 
 export const Route = createFileRoute("/startup-guides/")({
@@ -119,6 +120,24 @@ function StartupGuidesIndexPage() {
                 className="glass group flex flex-col justify-between rounded-2xl p-6 transition-all hover:border-primary/50 hover:shadow-lg sm:p-7"
               >
                 <div>
+                  {guideImage(guide.slug) && (
+                    <Link
+                      to="/startup-guides/$slug"
+                      params={{ slug: guide.slug }}
+                      className="-mx-6 -mt-6 mb-5 block overflow-hidden rounded-t-2xl sm:-mx-7 sm:-mt-7"
+                      tabIndex={-1}
+                    >
+                      <img
+                        src={guideImage(guide.slug)!.src}
+                        alt={guideImage(guide.slug)!.alt}
+                        width={1672}
+                        height={941}
+                        loading="lazy"
+                        decoding="async"
+                        className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
+                    </Link>
+                  )}
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="rounded-full border border-accent/40 bg-accent/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.18em] text-accent">
                       {guide.category}
@@ -142,18 +161,6 @@ function StartupGuidesIndexPage() {
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                     {guide.description}
                   </p>
-
-                  <div className="mt-5 space-y-2 rounded-xl border border-border/60 bg-background/40 p-4">
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-foreground">
-                      Core Framework Takeaways:
-                    </p>
-                    {guide.keyTakeaways.map((takeaway, i) => (
-                      <div key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
-                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
-                        <span className="leading-snug">{takeaway}</span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
 
                 <div className="mt-6 flex items-center justify-between border-t border-border/60 pt-4">
