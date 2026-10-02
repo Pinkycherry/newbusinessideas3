@@ -181,6 +181,18 @@ const BLOG_IMAGES: Record<string, BlogImage> = {
     description:
       "Selling social media caption templates for niche businesses: which template packs small business owners will pay for, and how to find those buyers.",
   },
+  "selling-business-templates-online": {
+    src: `${DIR}/day-one-goes-badly-because-nobody-wrote-it-down.webp`,
+    alt: "Onboarding checklist and SOP templates for a new business",
+    focus: "business onboarding templates",
+    keywords: ["onboarding checklist", "SOP templates", "business setup templates"],
+    longTail: [
+      "day one goes badly because nobody wrote it down",
+      "how to sell onboarding and SOP templates to small businesses",
+    ],
+    description:
+      "Why day one goes badly when nobody wrote it down: how onboarding checklists and SOP templates fix it, and how to sell them to small businesses.",
+  },
   "flexible-business-ideas-for-women": {
     src: `${DIR}/flexible-business-ideas-for-women-balancing-work-and-life-home-based-india.webp`,
     alt: "Flexible home based business ideas for women in India",
