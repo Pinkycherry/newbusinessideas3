@@ -50,6 +50,20 @@ const IMAGES: Record<string, GuideImage> = {
     description:
       "Early stage startup hiring: finding founding engineers with high agency and an ownership mindset, and aligning incentives from the first hire.",
   },
+  "freemium-to-paid-conversion": {
+    src: `${DIR}/freemium-to-paid-conversion-strategies-free-plan-pro-plan-upgrade-saas.webp`,
+    width: 1672,
+    height: 941,
+    alt: "Freemium to paid conversion strategies: free plan to pro upgrade",
+    focus: "freemium to paid conversion",
+    keywords: ["free plan", "pro plan", "upgrade strategies"],
+    longTail: [
+      "how to increase freemium to paid conversion rate",
+      "strategies for converting free SaaS users to paid customers",
+    ],
+    description:
+      "Freemium to paid conversion: how to gate the features that drive professional value, keep enough free to hook users and turn them into paying customers.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1672,
