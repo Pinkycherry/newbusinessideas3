@@ -183,6 +183,17 @@ const IMAGES: Record<string, GuideImage> = {
     description:
       "Startup equity split guide: dividing ownership, vesting and cap table terms to avoid co-founder conflict.",
   },
+  "startup-metrics-dashboard": {
+    src: `${DIR}/startup-metrics-dashboard-kpis-that-actually-matter-burn-rate-cac-churn-north-star.webp`,
+    width: 1003,
+    height: 565,
+    alt: "Startup metrics dashboard: the KPIs that actually matter for founders",
+    focus: "startup metrics dashboard",
+    keywords: ["KPIs that actually matter", "startup metrics", "for founders"],
+    longTail: ["what KPIs should a startup track", "how to build a startup metrics dashboard"],
+    description:
+      "Startup metrics dashboard: the KPIs that actually matter, from burn rate and CAC to churn.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1003,
