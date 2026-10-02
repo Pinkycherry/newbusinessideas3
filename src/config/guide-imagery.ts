@@ -92,6 +92,20 @@ const IMAGES: Record<string, GuideImage> = {
     description:
       "Inbound marketing for bootstrapped startups: using SEO and content to earn customers without paid ads.",
   },
+  "minimum-viable-product-development": {
+    src: `${DIR}/minimum-viable-product-development-ship-faster-validate-ideas-real-users-feedback-iterate.webp`,
+    width: 1003,
+    height: 565,
+    alt: "Minimum viable product development: ship faster, validate ideas, iterate with feedback",
+    focus: "minimum viable product",
+    keywords: ["ship faster", "validate ideas", "user feedback"],
+    longTail: [
+      "how to build a minimum viable product fast",
+      "minimum viable product development steps for startups",
+    ],
+    description:
+      "Minimum viable product development: building the smallest version that tests your idea with real users.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1003,
