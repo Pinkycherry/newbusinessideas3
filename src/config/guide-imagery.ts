@@ -208,6 +208,20 @@ const IMAGES: Record<string, GuideImage> = {
     description:
       "TAM, SAM and SOM market sizing: a practical guide to sizing your total, serviceable and obtainable market.",
   },
+  "user-retention-strategies-saas": {
+    src: `${DIR}/user-retention-strategies-for-saas-keeping-customers-engagement-cohorts-renewals-customer-success.webp`,
+    width: 1170,
+    height: 659,
+    alt: "User retention strategies for SaaS: keeping customers engaged and renewing",
+    focus: "user retention strategies",
+    keywords: ["retention strategies for SaaS", "keeping customers", "engaged and renewing"],
+    longTail: [
+      "how to improve user retention in SaaS",
+      "SaaS customer retention strategies that work",
+    ],
+    description:
+      "User retention strategies for SaaS: keeping customers engaged through onboarding, cohorts and renewals.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1003,
