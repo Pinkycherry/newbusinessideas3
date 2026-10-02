@@ -68,7 +68,7 @@ honest about limits.
 
 - **Zero fabricated numbers.** Every figure traces to a real source. If a
   number cannot be verified, say so rather than producing one.
-- **Never name an AI vendor in public copy.**
+- **Never name an AI vendor in public copy.** The one exception, by the founder's decision on 2026-10-02: the Validate button picker names its four destinations (Claude, Perplexity, ChatGPT, Grok).
 - **Never invent a category slug, an idea title or a statistic.** Two
   hand-typed slugs already shipped broken once here.
 - **Free tiers only** for every third-party tool until launch. Claude Code is

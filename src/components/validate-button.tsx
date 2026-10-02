@@ -3,7 +3,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useNavigate } from "@tanstack/react-router";
 import type { IconType } from "react-icons";
-import { SiClaude, SiPerplexity, SiGooglegemini } from "react-icons/si";
+import { SiClaude, SiPerplexity } from "react-icons/si";
+import { RiOpenaiFill } from "react-icons/ri";
 import { Sparkles } from "lucide-react";
 
 import { getValidateUrl } from "@/lib/validate.functions";
@@ -24,10 +25,11 @@ import { useMagnet } from "@/motion";
  * the site, not this screen, which the user only reaches by already using
  * the feature).
  *
- * PROJECT_BRIEF.md Section 3.3 (2026-09-16) reversed the earlier deferral
- * and added Gemini and Grok, ChatGPT staying excluded. react-icons/si
- * carries a real mark for Claude, Perplexity and Gemini (`SiGooglegemini`);
- * it has no Grok mark at all (confirmed — the library's only "grok" hit is
+ * PROJECT_BRIEF.md Section 3.3 (2026-09-16) added Gemini and Grok; on
+ * 2026-10-02 the founder replaced Gemini with ChatGPT in the same slot.
+ * react-icons/si carries a real mark for Claude and Perplexity, and
+ * react-icons/ri carries the OpenAI mark (`RiOpenaiFill`) used for ChatGPT;
+ * there is no Grok mark at all (confirmed — the library's only "grok" hit is
  * `SiNgrok`, the tunnelling tool, unrelated and not used here). Grok's
  * button falls back to a generic icon; the visible label text still names
  * it correctly either way.
@@ -35,7 +37,7 @@ import { useMagnet } from "@/motion";
 const PLATFORM_ICONS: Record<ValidatePlatform, IconType> = {
   claude: SiClaude,
   perplexity: SiPerplexity,
-  gemini: SiGooglegemini,
+  chatgpt: RiOpenaiFill,
   grok: Sparkles,
 };
 

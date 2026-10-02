@@ -1,12 +1,12 @@
-// PROJECT_BRIEF.md Section 3.3 (2026-09-16) — four platforms, ChatGPT
-// deliberately excluded. Was Claude + Perplexity only; Gemini and Grok
-// added by explicit founder decision, reversing an earlier deferral.
-export type ValidatePlatform = "claude" | "perplexity" | "gemini" | "grok";
+// PROJECT_BRIEF.md Section 3.3 — four platforms. 2026-10-02: ChatGPT replaces
+// Gemini in the same slot, by explicit founder decision (this picker is the one
+// place the site names a destination; ChatGPT was excluded before today).
+export type ValidatePlatform = "claude" | "perplexity" | "chatgpt" | "grok";
 
 export const VALIDATE_PLATFORMS: { id: ValidatePlatform; label: string }[] = [
   { id: "claude", label: "Claude" },
   { id: "perplexity", label: "Perplexity" },
-  { id: "gemini", label: "Gemini" },
+  { id: "chatgpt", label: "ChatGPT" },
   { id: "grok", label: "Grok" },
 ];
 
