@@ -153,6 +153,18 @@ const BLOG_IMAGES: Record<string, BlogImage> = {
     description:
       "The two week wait that built a van business: how a mobile bike repair service got started, and what the wait taught about demand.",
   },
+  "starting-a-small-batch-coffee-roasting-business": {
+    src: `${DIR}/that-date-on-the-coffee-bag-is-not-a-roast-date.webp`,
+    alt: "Why the date on a coffee bag is not a roast date",
+    focus: "small batch coffee roasting business",
+    keywords: ["coffee roast date", "coffee bag label", "starting a coffee roastery"],
+    longTail: [
+      "that date on the coffee bag is not a roast date",
+      "how to start a small batch coffee roasting business and label it honestly",
+    ],
+    description:
+      "Why the date printed on a coffee bag is not a roast date, and what a small batch coffee roasting business should label so customers know how fresh the coffee is.",
+  },
   "flexible-business-ideas-for-women": {
     src: `${DIR}/flexible-business-ideas-for-women-balancing-work-and-life-home-based-india.webp`,
     alt: "Flexible home based business ideas for women in India",
