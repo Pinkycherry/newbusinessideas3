@@ -205,6 +205,18 @@ const BLOG_IMAGES: Record<string, BlogImage> = {
     description:
       "Five contradictory answers and real liability: why free forum advice on licences and methods is risky for trades, and how a paid community with verified professionals can fix it.",
   },
+  "is-a-gutter-cleaning-business-profitable": {
+    src: `${DIR}/one-off-gutter-jobs-are-a-bad-business-contracts-are-not.webp`,
+    alt: "Gutter cleaning business profit from annual contracts, not one off jobs",
+    focus: "gutter cleaning business",
+    keywords: ["annual gutter cleaning contract", "recurring revenue", "one off jobs"],
+    longTail: [
+      "one off gutter jobs are a bad business and contracts are not",
+      "is a gutter cleaning business profitable with annual contracts",
+    ],
+    description:
+      "One off gutter jobs are a bad business, contracts are not: why annual gutter cleaning contracts give a gutter cleaning business recurring revenue and steadier income.",
+  },
   "flexible-business-ideas-for-women": {
     src: `${DIR}/flexible-business-ideas-for-women-balancing-work-and-life-home-based-india.webp`,
     alt: "Flexible home based business ideas for women in India",
