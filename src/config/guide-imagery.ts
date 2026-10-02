@@ -64,6 +64,20 @@ const IMAGES: Record<string, GuideImage> = {
     description:
       "Freemium to paid conversion: how to gate the features that drive professional value, keep enough free to hook users and turn them into paying customers.",
   },
+  "go-to-market-strategy-b2b": {
+    src: `${DIR}/go-to-market-strategy-for-b2b-startups-target-customers-pricing-sales-distribution.webp`,
+    width: 1003,
+    height: 565,
+    alt: "Go-to-market strategy for B2B startups: target customers, pricing and distribution",
+    focus: "go-to-market strategy",
+    keywords: ["B2B startups", "target customers", "sales and distribution"],
+    longTail: [
+      "how to build a go-to-market strategy for B2B SaaS",
+      "go-to-market plan examples for startups",
+    ],
+    description:
+      "Go-to-market strategy for B2B startups: aligning pricing, sales and distribution around a clear wedge into the market.",
+  },
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
     width: 1003,
