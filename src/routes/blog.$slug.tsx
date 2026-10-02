@@ -11,6 +11,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPost } from "@/lib/blog.functions";
 import { canonicalUrl, CO_FOUNDER, FOUNDER, founderProfile } from "@/lib/site-config";
+import { hideImgIfBroken } from "@/lib/utils";
 import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
 
 /**
@@ -207,6 +208,12 @@ function BlogPostPage() {
               <img
                 src={post.image}
                 alt={post.imageAlt ?? post.title}
+                width={post.imageWidth ?? 1672}
+                height={post.imageHeight ?? 941}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                ref={hideImgIfBroken}
                 className="h-full w-full object-cover"
               />
               {/* Subtle corner wash so the photo reads as art-directed, not a

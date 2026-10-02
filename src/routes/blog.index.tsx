@@ -5,6 +5,7 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { ExploreRail } from "@/components/explore-rail";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPosts } from "@/lib/blog.functions";
+import { hideImgIfBroken } from "@/lib/utils";
 import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
 
 const postsQuery = queryOptions({
@@ -104,7 +105,11 @@ function BlogIndex() {
                       <img
                         src={post.image}
                         alt={post.imageAlt ?? post.title}
+                        width={post.imageWidth ?? 1672}
+                        height={post.imageHeight ?? 941}
                         loading="lazy"
+                        decoding="async"
+                        ref={hideImgIfBroken}
                         className="h-full w-full object-cover opacity-90"
                       />
                       {/* Gradient scrim so text over/near the image always stays

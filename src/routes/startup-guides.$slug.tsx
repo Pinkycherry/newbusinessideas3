@@ -17,6 +17,7 @@ import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { getGuideBySlug, STARTUP_GUIDES } from "@/lib/guides-data";
 import { guideImage } from "@/config/guide-imagery";
 import { canonicalUrl, FOUNDER, founderProfile } from "@/lib/site-config";
+import { hideImgIfBroken } from "@/lib/utils";
 
 export const Route = createFileRoute("/startup-guides/$slug")({
   head: ({ params }) => {
@@ -145,8 +146,12 @@ function StartupGuideDetailPage() {
               <img
                 src={art.src}
                 alt={art.alt}
-                width={1672}
-                height={941}
+                width={art.width}
+                height={art.height}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                ref={hideImgIfBroken}
                 className="aspect-video w-full rounded-2xl border border-border/60 object-cover"
               />
               <figcaption className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">

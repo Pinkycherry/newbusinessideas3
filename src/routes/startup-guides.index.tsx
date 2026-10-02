@@ -6,6 +6,7 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { ExploreRail } from "@/components/explore-rail";
 import { JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { guideImage } from "@/config/guide-imagery";
+import { hideImgIfBroken } from "@/lib/utils";
 import { STARTUP_GUIDES, type StartupGuideMeta } from "@/lib/guides-data";
 
 export const Route = createFileRoute("/startup-guides/")({
@@ -130,10 +131,11 @@ function StartupGuidesIndexPage() {
                       <img
                         src={guideImage(guide.slug)!.src}
                         alt={guideImage(guide.slug)!.alt}
-                        width={1672}
-                        height={941}
+                        width={guideImage(guide.slug)!.width}
+                        height={guideImage(guide.slug)!.height}
                         loading="lazy"
                         decoding="async"
+                        ref={hideImgIfBroken}
                         className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                       />
                     </Link>

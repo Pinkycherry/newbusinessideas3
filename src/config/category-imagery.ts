@@ -52,8 +52,7 @@ export const GENERIC: CategoryImage = {
  * `fintech-finance` to the SaaS image, because both contain "tech". Three of
  * fourteen categories were showing another category's picture.
  */
-const hasSegment = (slug: string, phrase: string) =>
-  `-${slug}-`.includes(`-${phrase}-`);
+const hasSegment = (slug: string, phrase: string) => `-${slug}-`.includes(`-${phrase}-`);
 
 const RULES: { match: string[]; image: CategoryImage }[] = [
   {
@@ -120,7 +119,7 @@ const RULES: { match: string[]; image: CategoryImage }[] = [
     match: ["part-time"],
     image: {
       src: `${DIR}/side-hustle-business-ideas-part-time-income-evenings-weekends-beginners.webp`,
-      alt: "Part time business ideas for extra income in evenings and weekends",
+      alt: "Part time business ideas for extra evening and weekend income",
       focus: "part time business ideas",
       keywords: ["part time business", "evening income", "weekend business"],
       longTail: [

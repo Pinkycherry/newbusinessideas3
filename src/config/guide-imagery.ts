@@ -1,14 +1,17 @@
 /**
  * Featured images for startup guides, matched to a guide by its slug.
  *
- * Same standard as `blog-imagery.ts`: a keyword file name, a keyword alt, one
- * focus keyword, three supporting keywords, two long-tail phrases and a topic
- * caption. Alt and caption describe the business topic and its keywords,
- * never what the picture looks like. A guide with no entry simply shows no
- * image.
+ * A guide with no entry shows no image. Written to the
+ * contract in IMAGE_SEO.md: a file name of at least 5 keywords, a 10-word alt
+ * carrying the focus keyword and supporting keywords, one focus keyword, three
+ * supporting keywords, two long-tail phrases, and a caption that contains the
+ * focus keyword. Alt and caption describe the business topic, never what the
+ * picture looks like.
  */
 export type GuideImage = {
   src: string;
+  width: number;
+  height: number;
   alt: string;
   focus: string;
   keywords: [string, string, string];
@@ -18,10 +21,12 @@ export type GuideImage = {
 
 const DIR = "/images/guides";
 
-const GUIDE_IMAGES: Record<string, GuideImage> = {
+const IMAGES: Record<string, GuideImage> = {
   "zero-investment-business-models": {
     src: `${DIR}/zero-investment-business-models-for-bootstrapped-founders.webp`,
-    alt: "Zero investment business models for bootstrapped founders with no capital",
+    width: 1672,
+    height: 941,
+    alt: "Zero investment business models for bootstrapped founders using productized services",
     focus: "zero investment business models",
     keywords: ["bootstrapped founders", "productized services", "micro consulting"],
     longTail: [
@@ -31,11 +36,27 @@ const GUIDE_IMAGES: Record<string, GuideImage> = {
     description:
       "Zero investment business models for bootstrapped founders: productized services, reverse marketplaces and micro-consulting that bring in cash flow without giving up equity.",
   },
+  "b2b-cold-email-lead-generation": {
+    src: `${DIR}/b2b-cold-email-lead-generation-high-converting-frameworks.webp`,
+    width: 1672,
+    height: 941,
+    alt: "B2B cold email lead generation: personalized outreach that books meetings",
+    focus: "B2B cold email lead generation",
+    keywords: ["cold email frameworks", "personalized outreach", "booking meetings"],
+    longTail: [
+      "high converting B2B cold email lead generation frameworks",
+      "how to write cold emails that get replies and book meetings",
+    ],
+    description:
+      "B2B cold email lead generation: finding the right prospects, personalizing the message, following up and turning replies into booked meetings and clients.",
+  },
   "b2b-saas-churn-reduction": {
     src: `${DIR}/b2b-saas-churn-reduction-high-retention-strategies.webp`,
-    alt: "B2B SaaS churn reduction with high retention strategies for customer success",
+    width: 1672,
+    height: 941,
+    alt: "B2B SaaS churn reduction using customer success and retention strategies",
     focus: "B2B SaaS churn reduction",
-    keywords: ["high retention strategies", "customer success", "reduce customer churn"],
+    keywords: ["retention strategies", "customer success", "reduce churn"],
     longTail: [
       "B2B SaaS churn reduction high retention strategies",
       "how to reduce churn with onboarding and proactive customer success",
@@ -45,13 +66,11 @@ const GUIDE_IMAGES: Record<string, GuideImage> = {
   },
   "business-idea-validation-framework": {
     src: `${DIR}/business-idea-validation-framework-test-before-you-build.webp`,
-    alt: "Business idea validation framework: test your idea before you build",
+    width: 1672,
+    height: 941,
+    alt: "Business idea validation framework: customer discovery and test before building",
     focus: "business idea validation framework",
-    keywords: [
-      "validate a business idea",
-      "customer discovery interviews",
-      "test before you build",
-    ],
+    keywords: ["customer discovery", "validate demand", "test before building"],
     longTail: [
       "business idea validation framework test before you build",
       "how to validate a business idea with customer interviews and an MVP test",
@@ -59,21 +78,23 @@ const GUIDE_IMAGES: Record<string, GuideImage> = {
     description:
       "Business idea validation framework: test the problem, the demand and the willingness to pay with customer interviews and a lean MVP test before you spend time building.",
   },
-  "b2b-cold-email-lead-generation": {
-    src: `${DIR}/b2b-cold-email-lead-generation-high-converting-frameworks.webp`,
-    alt: "B2B cold email lead generation frameworks that turn prospects into clients",
-    focus: "B2B cold email lead generation",
-    keywords: ["cold email frameworks", "personalized outreach", "booking sales meetings"],
+  "calculating-customer-lifetime-value": {
+    src: `${DIR}/calculating-customer-lifetime-value-cltv-saas-churn-mrr-unit-economics.webp`,
+    width: 1672,
+    height: 941,
+    alt: "Calculating customer lifetime value CLTV for SaaS using unit economics",
+    focus: "customer lifetime value",
+    keywords: ["CLTV", "unit economics", "churn and MRR"],
     longTail: [
-      "high converting B2B cold email lead generation frameworks",
-      "how to write cold emails that get replies and book meetings",
+      "how to calculate customer lifetime value in SaaS",
+      "how much customer lifetime value tells you to spend on acquisition",
     ],
     description:
-      "B2B cold email lead generation: finding the right prospects, personalizing the message, following up and turning replies into booked meetings and clients.",
+      "Calculating customer lifetime value (CLTV) in SaaS: how churn, MRR and unit economics set what you can afford to spend to win a customer.",
   },
 };
 
-/** The mapped image for a guide, or null when none has been added for it. */
+/** The mapped image for a slug, or null when none has been added for it. */
 export function guideImage(slug: string): GuideImage | null {
-  return GUIDE_IMAGES[slug] ?? null;
+  return IMAGES[slug] ?? null;
 }

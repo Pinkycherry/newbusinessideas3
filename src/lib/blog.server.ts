@@ -57,6 +57,8 @@ function toCard(row: BlogRow): BlogPostCard {
     // The post's own image wins; the slug-matched file fills in when it is empty.
     image: row.image ?? art?.src ?? null,
     imageAlt: row.image ? null : (art?.alt ?? null),
+    imageWidth: row.image ? null : (art?.width ?? null),
+    imageHeight: row.image ? null : (art?.height ?? null),
     imageCaption: row.image ? null : (art?.description ?? null),
     categories: row.categories ?? [],
     readingMinutes: readingMinutes(html),

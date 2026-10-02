@@ -174,7 +174,7 @@ workflow, including anything these skills generate.
 
 ## Where things stand
 
-Eleven docs at the root, each with one job:
+Twelve docs at the root, each with one job:
 
 | File | What it is for |
 |---|---|
@@ -187,6 +187,7 @@ Eleven docs at the root, each with one job:
 | `LAUNCH_RUNBOOK.md` | AdSense phases, sitemaps, domain flip, deploy gotchas |
 | `MOTION_SPEC.md` | Motion rules (code comments cite it) |
 | `DESIGN.md`, `PRODUCT.md` | Design context the design skill reads |
+| `IMAGE_SEO.md` | The contract for every image: file name, alt, keywords, caption, markup |
 | `README.md` | Setup and development |
 
 Seven project skills in `.claude/skills/` (SEO, schema, programmatic SEO,
