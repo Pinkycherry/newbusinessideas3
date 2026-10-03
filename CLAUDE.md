@@ -142,6 +142,27 @@ in `DESIGN_WORKFLOW.md` — that file is the portable copy for other projects.
 The free-tiers rule and the never-name-an-AI-vendor rule above both bind this
 workflow, including anything these skills generate.
 
+## Writing blog content
+
+Standing rules for any blog post, for this session or a delegated one. Full
+version, including the Voice DNA grammar rules, the image-SEO alt-text spec,
+and the repo+Supabase dual-publish steps, is in `BLOG_CONTENT_STANDARDS.md`
+— read that file before writing or publishing a post, every time, since the
+rules were previously only stated in chat and in a now-deleted repo file.
+
+- **No two posts in a batch share a structural pattern.** Two patterns
+  already exist on the live site (narrative single-idea deep-dive, "50 real
+  ideas" listicle); a third repeat of either is what reads as an AI content
+  factory.
+- **2,000 words minimum, varying across a batch** — never 800–1,000, never
+  the same round number on every post.
+- **2–3 images per post, at least one an infographic** where the content has
+  something tabular or sequential to show. New for batch 2 onward.
+- Every idea discussed closes with a line pointing at its own Validate
+  button, never explaining the mechanism or naming a vendor.
+- Zero fabricated numbers still applies to blog copy exactly as it does to
+  idea content.
+
 ## Where things stand
 
 See `wp-theme/bbi/README.md` for the theme, and PR #22 for the full history.
