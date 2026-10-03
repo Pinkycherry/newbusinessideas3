@@ -138,9 +138,7 @@ type ComparisonRow = { label: string; cells: string[] };
  * Two pure-presentational infographic shapes, data-driven from the post's
  * own `data-json`, no chart library and no image file. Covers the two
  * things this site's content actually needs to show visually: a ranked tier
- * breakdown (cost bands, investment bands) and a side-by-side comparison —
- * everything else in `BLOG_BATCH_2_TOPICS.md`'s patterns reduces to one of
- * these two shapes.
+ * breakdown (cost bands, investment bands) and a side-by-side comparison.
  */
 function Infographic({ kind, data }: { kind: string; data: unknown }) {
   if (kind === "tiers" && isTierData(data)) return <TierInfographic {...data} />;

@@ -44,6 +44,10 @@ honest about limits.
 - **Every theme change gets a new version number**, in all four places at once:
   `wp-theme/bbi/style.css`, `BBI_VERSION` in `functions.php`, each
   `blocks/*/index.asset.php`, and `wp-theme/bbi-update.json`.
+- **Never push a brand-new file to the repo without asking first.** This
+  repo is public. Editing an existing tracked file is fine without asking.
+  A new file — plans, topic lists, anything not yet decided — gets asked
+  about, every time, after it's written and before `git push`.
 
 ## The two codebases
 

@@ -1,9 +1,5 @@
 # Blog content standards — batch 2 and onward
 
-The 20 approved article assignments for batch 2 — titles, slugs, focus and
-additional keywords, format, and word-count floor — live in
-`BLOG_BATCH_2_TOPICS.md`. This file is the rules; that file is the list.
-
 Read this before writing or publishing any blog post. It exists because the
 Voice DNA rules and the image-SEO rules were previously only stated in chat
 and in a repo file that got deleted — nothing written down survives a new
@@ -223,11 +219,10 @@ the embedded button's own copy already handles that correctly on its own.
 
 - **2,000 words minimum per post**, never 800–1,000.
 - **Vary the word count across a batch, and don't let the variation itself
-  look engineered.** `BLOG_BATCH_2_TOPICS.md`'s floors range roughly
-  2,020–3,480 — picked per-topic, not stepped down the list by a round
-  number. A batch where every floor is a multiple of 50 or decreases by the
-  same amount row after row is its own tell, exactly like a shared word
-  count would be. When adding a batch 3, generate floors the same way:
+  look engineered.** Pick each floor per-topic, not by stepping down a list
+  by a round number. A batch where every floor is a multiple of 50 or
+  decreases by the same amount row after row is its own tell, exactly like
+  a shared word count would be. For any batch, generate floors the same way:
   judge each topic on its own, not by a formula applied to the row above it.
 
 ## Publishing: repo + Supabase, every time
