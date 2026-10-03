@@ -139,29 +139,96 @@ he needs to generate, needs:
   a genuinely descriptive caption of what's actually in the frame. Never a
   generic filename, never a blank `alt`.
 - **2–3 images per post minimum** for this batch: one featured/hero image,
-  plus one or two in-body images. At least one of the in-body images should
+  plus one or two in-body images. At least one of the in-body slots should
   be an infographic wherever the article has something tabular or
   sequential to show (a cost tier, a comparison, a step sequence) — this is
-  new for batch 2; the first 23 posts didn't carry images at all.
+  new for batch 2; the first 23 posts didn't carry images at all. An
+  infographic slot can be filled either way: a founder-supplied image (alt
+  text per the rules above), or one of the live `data-embed="infographic"`
+  blocks in "Dynamic content blocks" below, which renders from real data
+  instead of a static picture. Prefer the live one when the data is
+  genuinely tabular — a real rendered bar/grid beats a flat image of one.
 - Images are supplied by the founder after the article text is approved.
   The article draft should flag exactly where each image slot goes and what
   it needs to show, the same way `PROJECT_BRIEF.md` requires for every other
   template on this site.
 
-## The Validate button — every post needs this, phrased without naming the mechanism
+## Dynamic content blocks — how a post stops being plain text
 
-Per idea discussed, close with a line that points at BBI's free Validate
-feature for that idea's `/idea/$slug` page — never explaining the mechanism
-(no "paste this into an AI chat," no naming Claude/Gemini/Perplexity/Grok).
-Keep it the way the first two posts did it: a short, plain sentence that the
-next real step is to validate the specific idea for free on its own page.
+Added 2026-10-03 after the founder pointed out that a 500-word article, a
+hand-drawn infographic, and a live calculator all have to fit through the
+same pipe as a 50-item listicle, and a sanitizer that only ever strips tags
+can't also add icons, embed a real calculator, or drop a Validate button in
+exactly where the text needs it. `blog.$slug.tsx` now renders through
+`BlogRichBlock` (`src/components/blog-embeds.tsx`) instead of a single
+`dangerouslySetInnerHTML` call, so a post's own HTML can contain markers
+that get swapped for real, live site components at render time — not a
+description of a widget, the actual widget.
+
+`sanitizeHtml()` in `blog-shared.ts` already lets `<div>` and every `data-*`
+attribute through untouched (it only ever strips `script/style/iframe/…`,
+event handlers, and `class`/`style`/`id`), so none of this needed the
+sanitizer relaxed. Write these markers directly into the article's HTML,
+exactly as shown, as a bare empty `<div>` — no nested content inside it:
+
+- **Validate button**, inline, wherever an idea is discussed:
+  `<div data-embed="validate" data-idea-slug="SLUG"></div>` — renders the
+  real `ValidateButton` component from the idea page, not a link to it. One
+  per idea discussed is normal; don't stack several in a row.
+- **Live calculator**, inline, wherever a number the reader could plug in
+  comes up: `<div data-embed="calculator" data-calc-slug="SLUG"></div>` —
+  renders the actual form-and-results widget from `/calculator/$slug`
+  (same component, same arithmetic, just embedded). `SLUG` must be a real
+  slug from `CALCULATORS` in `src/lib/calculators.ts` — check it resolves
+  before using it; an unknown slug renders nothing rather than erroring the
+  page, which means a typo here fails silently, so verify it.
+- **Infographic**, wherever the article has something tabular or sequential
+  to show: `<div data-embed="infographic" data-kind="tiers" data-json="..."></div>`
+  for a ranked bar breakdown (cost tiers, investment bands — `data-json` is
+  `{"title": "...", "rows": [{"label": "...", "value": 5000, "note": "..."}]}`),
+  or `data-kind="comparison"` for a side-by-side grid (`{"title": "...",
+  "columns": ["A", "B"], "rows": [{"label": "...", "cells": ["x", "y"]}]}`).
+  `value` in a tiers row must be a real number from the article's own
+  research, never an invented one — this is still content, the zero
+  fabricated numbers rule still applies to it. The JSON goes inside the
+  `data-json` attribute with its own quotes written as `&quot;` (standard
+  HTML attribute escaping — write it as valid JSON first, then escape the
+  double quotes when placing it in the attribute).
+- **Icon bullet lists**: `<ul data-icon="check">...</ul>` (also `money`,
+  `warning`, `clock`) — a plain colored-dot marker per `src/blog-content.css`,
+  not a stock icon pack and not an emoji, so it stays inside the house
+  rules while reading as more deliberate than a bare disc bullet.
+- **Styled tables**: `<table data-style="tiers">...</table>` or
+  `data-style="comparison"` — same table markup as always, just gets a
+  header accent so a cost-tier table and a plain reference table don't look
+  identical.
+
+None of this is optional ornamentation to skip under time pressure — it's
+the actual answer to "how does a 500-word post or a hand-written
+infographic fit this template": it fits by using these markers inline,
+exactly where the text calls for them, in a post of any length. A short
+post uses fewer of them; a long one can use several. What never changes is
+that each marker is a bare, self-closing-shaped `<div>` with no content
+inside it — nesting real HTML inside one will not render, since the
+renderer only recognizes the empty-marker shape.
+
+## The Validate button — every idea discussed needs one, phrased without naming the mechanism
+
+Use the inline embed above, not a plain sentence, wherever an idea is
+actually named and discussed. Never explain the mechanism in body copy (no
+"paste this into an AI chat," no naming Claude/Gemini/Perplexity/Grok) —
+the embedded button's own copy already handles that correctly on its own.
 
 ## Minimum length and variation
 
 - **2,000 words minimum per post**, never 800–1,000.
-- **Vary the word count across a batch** — if every post lands at exactly
-  2,400 words, that's its own tell. A reasonable batch-2 spread is roughly
-  2,000–4,200, genuinely driven by how much the topic needs, not padded.
+- **Vary the word count across a batch, and don't let the variation itself
+  look engineered.** `BLOG_BATCH_2_TOPICS.md`'s floors range roughly
+  2,020–3,480 — picked per-topic, not stepped down the list by a round
+  number. A batch where every floor is a multiple of 50 or decreases by the
+  same amount row after row is its own tell, exactly like a shared word
+  count would be. When adding a batch 3, generate floors the same way:
+  judge each topic on its own, not by a formula applied to the row above it.
 
 ## Publishing: repo + Supabase, every time
 

@@ -1,0 +1,64 @@
+/* Dynamic blog content — icon bullets and styled tables.
+ *
+ * Isolated on purpose: imported only by `blog.$slug.tsx`, never by
+ * `__root.tsx`, so it loads on no page except a blog post and never
+ * competes with `styles.css`'s own cascade (seven unlayered `:root`
+ * blocks, `@theme inline` aliases — see CLAUDE.md's cascade facts). These
+ * rules are themselves unlayered, matching `.wp-prose`'s own rule in
+ * `styles.css`, since an `@layer`-wrapped rule here would lose to that
+ * unlayered base regardless of specificity.
+ *
+ * Every selector here is scoped under an explicit `data-icon` or
+ * `data-style` attribute a post's HTML opts into — a post with neither
+ * attribute (all 23 posts live before this file existed) renders exactly
+ * as `.wp-prose`'s own rules already describe it. Nothing here overrides
+ * default `ul`/`table` behavior globally.
+ */
+
+/* Icon bullets: `<ul data-icon="check|money|warning|clock">`. A solid
+ * colour dot rather than a glyph — this stays inside the "no stock icon
+ * packs, no emoji" constraint while still reading as more deliberate than
+ * a plain disc. */
+.wp-prose ul[data-icon] {
+  list-style: none;
+  padding-left: 0.2rem;
+}
+.wp-prose ul[data-icon] > li {
+  position: relative;
+  padding-left: 1.6rem;
+}
+.wp-prose ul[data-icon] > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 999px;
+}
+.wp-prose ul[data-icon="check"] > li::before { background: var(--primary); }
+.wp-prose ul[data-icon="money"] > li::before { background: var(--accent); }
+.wp-prose ul[data-icon="warning"] > li::before { background: #d97757; border-radius: 0.15rem; }
+.wp-prose ul[data-icon="clock"] > li::before {
+  background: transparent;
+  border: 2px solid var(--muted-foreground);
+}
+
+/* Styled tables: `<table data-style="tiers|comparison">`. Both reuse the
+ * same border/padding `.wp-prose table` already sets — this layer only
+ * adds the header accent and row rhythm that make a tier breakdown or a
+ * comparison grid read as a distinct shape from a plain data table. */
+.wp-prose table[data-style="tiers"] th,
+.wp-prose table[data-style="comparison"] th {
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  color: var(--foreground);
+}
+.wp-prose table[data-style="tiers"] tr:first-child td,
+.wp-prose table[data-style="tiers"] tr:first-child th {
+  border-top: 2px solid var(--primary);
+}
+.wp-prose table[data-style="comparison"] td:first-child,
+.wp-prose table[data-style="comparison"] th:first-child {
+  font-weight: 600;
+  color: var(--foreground);
+}

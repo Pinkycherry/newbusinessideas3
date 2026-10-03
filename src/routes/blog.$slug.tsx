@@ -2,8 +2,10 @@ import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowRight } from "lucide-react";
 
+import "@/blog-content.css";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
+import { BlogRichBlock } from "@/components/blog-embeds";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPost } from "@/lib/blog.functions";
 import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
@@ -165,15 +167,15 @@ function BlogPostPage() {
             whether or not an ad is there to mark them. */}
         <div className="mt-8 space-y-6">
           <div className="wp-prose glass rounded-3xl px-5 py-8 sm:px-8">
-            <div dangerouslySetInnerHTML={{ __html: firstBlock }} />
+            <BlogRichBlock html={firstBlock} />
           </div>
           <AdSlot position="blog-post-after-first-paragraph" size="banner" />
           <div className="wp-prose glass rounded-3xl px-5 py-8 sm:px-8">
-            <div dangerouslySetInnerHTML={{ __html: secondBlock }} />
+            <BlogRichBlock html={secondBlock} />
           </div>
           <AdSlot position="blog-post-mid-article" size="rectangle" />
           <div className="wp-prose glass rounded-3xl px-5 py-8 sm:px-8">
-            <div dangerouslySetInnerHTML={{ __html: thirdBlock }} />
+            <BlogRichBlock html={thirdBlock} />
           </div>
         </div>
 

@@ -158,8 +158,13 @@ rules were previously only stated in chat and in a now-deleted repo file.
   the same round number on every post.
 - **2–3 images per post, at least one an infographic** where the content has
   something tabular or sequential to show. New for batch 2 onward.
-- Every idea discussed closes with a line pointing at its own Validate
-  button, never explaining the mechanism or naming a vendor.
+- **Posts render through `BlogRichBlock`** (`src/components/blog-embeds.tsx`),
+  not a single sanitized HTML blob — a post's own markup can embed the real
+  `ValidateButton`, a live `CalculatorWidget`, or a data-driven infographic
+  inline via marker `<div data-embed="...">` tags. See "Dynamic content
+  blocks" in `BLOG_CONTENT_STANDARDS.md` for the exact syntax.
+- Every idea discussed gets the inline Validate embed, never a plain
+  sentence explaining the mechanism or naming a vendor.
 - Zero fabricated numbers still applies to blog copy exactly as it does to
   idea content.
 
