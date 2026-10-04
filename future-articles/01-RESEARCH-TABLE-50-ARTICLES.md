@@ -211,8 +211,8 @@ confirmed live at drafting time, placed inline, never as an end list.
 - **Intro device:** 2 · **Outro device:** 3
 
 ### Article 17
-- **SEO title:** The MSME Loan Mistake That Sinks a First-Time Founder
-- **Slug:** `msme-loan-mistake-first-time-founder`
+- **SEO title:** The MSME Loan Mistake for First Time Founders That Sinks a New Business (71 chars; revised when written so the title contains the exact focus keyword and clears the 60-char floor)
+- **Slug:** `msme-loan-mistake-for-first-time-founders`
 - **Focus keyword:** msme loan mistake for first time founders
 - **Additional keywords (9):** msme loan schemes in india; mistakes taking a business loan; udyam registration and loan eligibility; small business debt mistakes; sidbi loan schemes for startups; business loan repayment planning; first time founder loan mistakes; working capital loan mistakes msme; how much business loan is too much
 - **Structure:** H1 → H2 The specific mistake, named plainly → H2 Why it happens to smart, careful people → H2 What a healthy loan-to-revenue ratio actually looks like → H2 The MSME loan schemes worth understanding first → H2 How to recover if this mistake already happened → H2 A closing word on borrowing responsibly
@@ -222,8 +222,8 @@ confirmed live at drafting time, placed inline, never as an end list.
 - **Intro device:** 11 · **Outro device:** 4
 
 ### Article 18
-- **SEO title:** Why Most Small Business Owners Don't Know Their Own Profit Margin
-- **Slug:** `small-business-owners-dont-know-profit-margin`
+- **SEO title:** The Small Business Owners Profit Margin Gap: Why Most Can't Name Their Number (77 chars; revised when written so the title contains the exact focus keyword)
+- **Slug:** `small-business-owners-profit-margin-gap`
 - **Focus keyword:** small business owners profit margin
 - **Additional keywords (9):** how to calculate profit margin for small business; profit margin mistakes in retail; understanding unit economics small business; pricing mistakes from not knowing margin; break even point for a small business; gross margin vs net margin explained simply; small business financial literacy; why small businesses underprice their work; profit margin by business type india
 - **Structure:** H1 → H2 A simple question most owners can't answer on the spot → H2 Why this happens even to careful, hardworking owners → H2 The actual calculation, done simply → H2 What changes once you actually know your number → H2 Where margin gets quietly eaten without anyone noticing → H2 A closing word on knowing your own numbers
@@ -233,8 +233,8 @@ confirmed live at drafting time, placed inline, never as an end list.
 - **Intro device:** 4 · **Outro device:** 6
 
 ### Article 19
-- **SEO title:** GST, Udyam, and the Paperwork Nobody Explains to a First-Time Founder
-- **Slug:** `gst-udyam-paperwork-first-time-founder`
+- **SEO title:** GST and Udyam Registration for First Time Founders: The Paperwork Explained (75 chars; revised when written so the title contains the exact focus keyword)
+- **Slug:** `gst-and-udyam-registration-for-first-time-founders`
 - **Focus keyword:** gst and udyam registration for first time founders
 - **Additional keywords (9):** udyam registration process india; gst registration for a new business; msme registration benefits; which businesses need gst registration; udyam registration eligibility criteria; startup india registration process; business registration paperwork india; gst exemption limits for small business; msme registration vs gst registration
 - **Structure:** H1 → H2 The paperwork question every first-time founder asks eventually → H2 Udyam registration, explained plainly → H2 GST registration, explained plainly → H2 Where the two overlap and where they don't → H2 What actually happens if this gets skipped → H2 A closing word on getting this right early
@@ -244,8 +244,8 @@ confirmed live at drafting time, placed inline, never as an end list.
 - **Intro device:** 15 · **Outro device:** 1
 
 ### Article 20
-- **SEO title:** The Real Difference Between a Side Income and a Registered Business
-- **Slug:** `difference-side-income-and-registered-business`
+- **SEO title:** Side Income vs Registered Business: Where the Legal and Tax Line Really Falls (77 chars; revised when written so the title contains the exact focus keyword)
+- **Slug:** `side-income-vs-registered-business`
 - **Focus keyword:** side income vs registered business
 - **Additional keywords (9):** when does a side hustle become a business; udyam registration threshold for side income; tax implications of side income in india; turning side income into a legal business; side hustle vs small business legal difference; income tax on unregistered side income; when to register a side business; side income reporting requirements india; converting a hobby income into a business
 - **Structure:** H1 → H2 Why this question matters more than people realize → H2 The actual legal and tax lines that separate the two → H2 What stays fine as side income → H2 What crosses into needing registration → H2 The risk of staying unregistered too long → H2 A closing word for anyone earning quietly on the side
