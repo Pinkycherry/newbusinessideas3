@@ -10,22 +10,23 @@ mandatory, each triggered by different things.
 
 I get messages about this almost every week, usually from salaried
 people who started earning something on the side and now feel a low
-hum of worry. A software tester who designs wedding invitations at
-night. A teacher who tutors three students on weekends. A bank clerk
-whose home-baked cakes have quietly become a second income. None of
-them did anything wrong. They just don't know where the lines are, and
-the internet gives them a mix of panic and shrugging.
+hum of worry. A software tester who designs logos for small companies
+at night. A lab technician who repairs phones for neighbours on
+Sundays. A bank clerk whose home-cooked tiffin orders have quietly
+become a second income. All of them are honest earners who simply
+haven't been shown where the lines are, and the internet gives them a
+mix of panic and shrugging.
 
-So let me draw the lines plainly. Side income vs registered business
-is a real distinction, and it sits in a different place from where
-most people expect.
+So let me draw the lines. Side income vs registered business is a real
+distinction, and it sits in a different place from where most people
+expect.
 
-## Why this question matters more than people realize
+## Why this question matters more than people realise
 
 The cost of getting this wrong tends to be quiet, and it builds over
-time. A weekend tutor won't see officials at the door. A tax notice
-that arrives two years later asking about receipts you never reported.
-A business customer who won't work with you because you can't issue a
+time. For a weekend phone-repairer, trouble looks like a tax notice
+two years later asking about receipts that were never reported. Or a
+business customer who won't work with you because you can't issue a
 proper invoice. A loan you can't get because the bank has no record
 that your business exists. A growing side income that you can't turn
 into a full-time business because none of its history is on paper.
@@ -41,11 +42,11 @@ Annual Information Statement that pulls together much of this reported
 information. If someone else has reported paying you, the department
 likely knows, whether or not you've told it.
 
-There's no reason to be afraid of this. What it changes is the old
-idea that small side income lives in a grey zone nobody looks at has
-gone out of date. The sensible approach is to understand the rules,
-report honestly and register when it starts to make sense, which is
-often earlier than people think and sometimes later than they fear.
+There's no reason to be afraid of this. It just means the old idea of
+a grey zone that nobody looks at is out of date. The sensible approach
+is to understand the rules, report honestly and register when it
+starts to make sense, which is often earlier than people think and
+sometimes later than they fear.
 
 ### The three questions hiding inside one
 
@@ -68,7 +69,7 @@ them separate, and each one has a fairly clear answer.
 
 Let's take the three questions one at a time.
 
-### Tax implications of side income in India
+### How side income is taxed
 
 The tax implications of side income in India start from a simple
 principle: your income is your income, wherever it comes from. Salary
@@ -80,8 +81,7 @@ tax is worked out on the total under whichever regime you choose.
 That means side income can push your total tax up even if your salary
 alone was comfortably covered by the tax your employer deducted. Your
 employer only deducts tax on what it pays you. It knows nothing about
-your weekend tutoring or your invitation designs, and it can't account
-for them.
+your weekend repairs or your logo work, and it can't account for them.
 
 Because side income is business or professional income, you can
 usually deduct genuine expenses incurred to earn it: materials, a
@@ -89,29 +89,31 @@ share of internet costs, software subscriptions, travel for client
 work, and so on, provided you can show records. Alternatively, small
 businesses and certain professionals can use the presumptive taxation
 schemes, where a set percentage of your turnover or receipts is
-treated as income and you don't need to keep full books. Section 44AD
-covers eligible small businesses, and section 44ADA covers eligible
-professionals such as consultants, designers in certain categories and
-technical freelancers. The details and current limits are published on
-the income tax portal, and they're worth reading carefully before you
-choose.
+treated as income and you don't need to keep full books. Under the old
+Act these were sections 44AD for small businesses and 44ADA for
+specified professionals. From April 2026 they sit together within
+section 58 of the Income-tax Act, 2025, with the professional scheme
+still limited to listed and notified professions. Whether your
+particular side work counts as one of those professions is worth
+checking with a chartered accountant before you choose a scheme.
 
-### Income tax on unregistered side income
+### Does registration change the tax?
 
 A question I hear often is whether income tax on unregistered side
-income works differently. It doesn't. Registration under GST or Udyam
-has no effect on whether income is taxable. An unregistered tutor and
-a registered tutoring company both owe income tax on their profits.
-The only difference is that the registered one usually has better
-records, which makes the tax easier to get right.
+income works differently. Registration under GST or Udyam has no
+effect on whether income is taxable, so income tax on unregistered
+side income works exactly like income tax on any other business
+income. An unregistered phone-repairer and a registered repair shop
+both owe income tax on their profits. The only difference is that the
+registered one usually has better records, which makes the tax easier
+to get right.
 
 If you earn side income, you'll generally need to file a return that
 includes business or professional income, which means using the return
 form meant for that rather than the simplest salaried form. Which form
 depends on whether you're using presumptive taxation or reporting
-actual profits. Filing the wrong form is one of the most common
-reasons salaried people with side income end up with a defective
-return notice.
+actual profits. Filing the wrong form can get the return marked
+defective, which means more paperwork to put right.
 
 ### Advance tax: the rule salaried people forget
 
@@ -122,25 +124,26 @@ rather than all at the end. For a salaried person, the employer's
 deductions usually cover the salary portion, so nobody thinks about
 advance tax. Add a decent side income, and the tax on that side income
 may well cross the line. Miss the instalments and you'll owe interest
-when you file. Presumptive taxpayers under section 44AD get a simpler
-schedule, paying in one instalment by mid-March, but they still need
-to pay.
+when you file. Businesses and professionals using the presumptive
+schemes get a simpler schedule, paying in one instalment by mid-March,
+and they still need to pay on time.
 
-### Side income reporting requirements India-wide
+### Reporting goes beyond your own return
 
-Side income reporting requirements India applies go beyond your own
-return. Clients who are businesses may deduct tax at source on
-payments to you, and they report those payments. Some platforms and
-marketplaces also deduct tax or report what they paid you. All of that
-shows up in your Annual Information Statement and Form 26AS.
+Side income reporting requirements in India go beyond your own return.
+Clients who are businesses may deduct tax at source on payments to
+you, and they report those payments. Some platforms and marketplaces
+also deduct tax or report what they paid you. All of that shows up in
+your Annual Information Statement and Form 26AS.
 
-The practical habit is simple. Before filing your return, download
-your Annual Information Statement, compare it with your own records of
-side income, and make sure everything reported there appears in your
-return. If something looks wrong, there's a feedback mechanism on the
-portal to flag it. Mismatches between what others reported and what
-you declared are the most common trigger for questions from the
-department, and most of them are entirely avoidable.
+Meeting the side income reporting requirements in India comes down to
+one habit. Before filing your return, download your Annual Information
+Statement, compare it with your own records of side income, and make
+sure everything reported there appears in your return. If something
+looks wrong, there's a feedback mechanism on the portal to flag it.
+Mismatches between what others reported and what you declared are a
+frequent trigger for questions from the department, and almost all of
+them are avoidable.
 
 ### GST: a separate line entirely
 
@@ -160,13 +163,14 @@ your customers want a GST invoice.
 
 ### Side income vs registered business for salaried employees
 
-Salaried people are the largest group asking me about this, so it's
-worth putting their situation in one place. Your salary is taxed
-through your employer's deductions, and your employer reports it. Your
-side income is your own responsibility from start to finish: recording
-it, adding it to your return under the right head, paying advance tax
-if your liability crosses the line, and checking it against what
-others have reported about you.
+Salaried people are the largest group asking me about the tax
+implications of side income in India, so it's worth putting their
+situation in one place. Your salary is taxed through your employer's
+deductions, and your employer reports it. Your side income is your own
+responsibility from start to finish: recording it, adding it to your
+return under the right head, paying advance tax if your liability
+crosses the line, and checking it against what others have reported
+about you.
 
 Many salaried people also choose the simplest return form out of
 habit, because that's what they've always used. Once you have business
@@ -190,11 +194,11 @@ the tax due. These are the patterns I'd usually leave alone.
 
 ### Occasional, small, personal-skill income
 
-If you tutor a few students, take the odd design commission, sell
-crafts at a festival stall a couple of times a year, or do occasional
-consulting for a friend's company, there's usually no registration
-required. Report the income, keep a simple record of what came in and
-what you spent, and you're on solid ground.
+If you fix the odd phone for neighbours, take an occasional design
+commission, sell crafts at a festival stall a couple of times a year,
+or do occasional consulting for a friend's company, there's usually no
+registration required. Report the income, keep a simple record of what
+came in and what you spent, and you're on solid ground.
 
 ### Income well below the GST threshold, sold to individuals
 
@@ -217,7 +221,7 @@ protect you from breaching your own employment terms.
 Then there's the side income that has quietly become something more.
 These are the signs I look for.
 
-### When does a side hustle become a business?
+### The point where a side hustle turns into a business
 
 When does a side hustle become a business? In everyday terms, it's
 when the activity is regular, organised and aimed at profit, and
@@ -229,6 +233,13 @@ profit is usually business income already. For registration purposes,
 the tipping point is when the lack of a registration starts to cost
 you work, credit or credibility.
 
+I'd put it more bluntly for salaried readers. When does a side hustle
+become a business? Usually a few months before its owner admits it, at
+the point where the evenings and weekends are fully booked and the
+side income has started to matter to the household budget. That's the
+moment to stop treating it casually and start running it with the same
+care you'd expect from any small business you paid money to.
+
 ### GST becomes mandatory or useful
 
 You cross the GST threshold, you start selling goods across state
@@ -239,11 +250,14 @@ means it's time to look seriously at GST registration.
 ### You want to borrow or apply for schemes
 
 Bank loans and government schemes for small enterprises almost always
-start from some form of registration. If you want a working capital
-loan for your side business, or want to apply for a micro-enterprise
-loan through a scheme like Mudra, which is listed on the [Mudra
-scheme's site](https://www.mudra.org.in/), you'll need the enterprise
-to exist on paper.
+start from some form of registration. The [SIDBI
+website](https://www.sidbi.in/en/) is a good place to see how MSME
+lending programmes are set up, and every one of them assumes the
+enterprise exists on paper. If you want a working capital loan for
+your side business, or want to apply for a micro-enterprise loan
+through a scheme like Mudra, which is listed on the [Mudra scheme's
+site](https://www.mudra.org.in/), you'll need the enterprise to exist
+on paper.
 
 ### Customers or partners need a formal counterparty
 
@@ -252,9 +266,9 @@ have certain registrations before they'll issue a purchase order.
 Business partners, landlords and co-founders also tend to want a
 formal structure before they commit money or time.
 
-### The udyam registration threshold for side income
+### Is there a minimum for Udyam?
 
-People often ask about the udyam registration threshold for side
+People often ask about the Udyam registration threshold for side
 income, expecting a minimum turnover before they're allowed to
 register. There isn't one in that sense. Udyam is open to any
 enterprise that falls within the MSME definition, which is set by
@@ -266,41 +280,51 @@ The question is whether the benefits are useful to you yet, and they
 become useful once you borrow, sell to businesses or want to use MSME
 schemes.
 
+So when someone asks me about a Udyam registration threshold for side
+income, my answer is to ignore the idea of a threshold and ask a
+better question: would the certificate help this month? If you're
+about to approach a bank, pitch to a company buyer or apply for a
+scheme, register. If you're fixing phones for neighbours, it can wait.
+
 ### Side income vs registered business: three short sketches
 
 These are composites drawn from conversations over time, with details
 changed, to show how the lines play out in practice.
 
-The first is a schoolteacher who tutors a handful of students at home
-on weekends. Her parents pay in cash or by UPI, she has no business
-customers, and her side income is a small fraction of her salary. She
-doesn't need GST or Udyam. She needs to report the tutoring income in
-her return, keep a simple register of fees received, and check whether
-the extra tax pushes her past the advance tax line. That's all.
+The first is a lab technician who repairs phones for neighbours on
+Sundays. His customers pay in cash or by UPI, he has no business
+customers, and his side income is a small fraction of his salary. He
+doesn't need GST or Udyam. He needs to report the repair income in his
+return, keep a simple register of what he's paid and what parts he
+buys, and check whether the extra tax pushes him past the advance tax
+line. That's all.
 
 The second is a software tester who designs logos and brand kits for
 small companies in the evenings. His clients are businesses, some
 deduct tax at source, and payments arrive by bank transfer. His income
 is already visible in his Annual Information Statement, so accurate
-reporting is essential, and he's likely eligible for presumptive
-taxation as a professional. As his client list grows, a couple of
-companies ask for GST invoices. That's his signal to think about GST
-registration, even though he's below the threshold, and to register on
-Udyam so that larger clients have a reason to pay him on time.
+reporting is essential, and he can likely use one of the presumptive
+schemes, though which one depends on whether his design work counts as
+a notified profession, so he should check with a CA. As his client
+list grows, a couple of companies ask for GST invoices. That's his
+signal to think about GST registration, even though he's below the
+threshold, and to register on Udyam so that larger clients have a
+reason to pay him on time.
 
-The third is a bank clerk whose cake orders have grown into a steady
-stream, with a part-time helper on weekends and plans to rent a small
-kitchen. She needs food registration before anything else, a separate
-business account, proper records and Udyam registration ahead of the
-bank loan she wants for the kitchen. Her side income has become a
-business in every practical sense, and the paperwork is catching up
+The third is a bank clerk whose tiffin orders have grown into a steady
+stream, with a part-time helper and plans to rent a small kitchen.
+Before anything else she needs written permission from her bank, whose
+service rules restrict outside business, and then food registration, a
+separate business account, proper records and Udyam registration ahead
+of the bank loan she wants for the kitchen. Her side income has become
+a business in every practical sense, and the paperwork is catching up
 with what she's already built.
 
 ### When to register a side business, in one table
 
 | Income pattern | Likely classification | Registration trigger |
 |---|---|---|
-| Occasional tutoring or one-off commissions for individuals | Business or professional income, reported in your return | Usually none beyond filing the right return |
+| Occasional repairs or one-off commissions for individuals | Business or professional income, reported in your return | Usually none beyond filing the right return |
 | Regular freelance work for companies, payments through bank transfer | Professional income, often eligible for presumptive taxation | GST if receipts cross the threshold or clients need GST invoices; Udyam if you want MSME benefits |
 | Home-made products sold locally to households | Business income | Trade-specific licences such as food registration; GST only above threshold or in compulsory cases |
 | Products sold through online marketplaces | Business income, often with tax deducted or reported by the platform | GST rules for e-commerce sellers, which have specific conditions; platform onboarding requirements |
@@ -308,10 +332,62 @@ with what she's already built.
 | Side business seeking a loan or scheme | Business income | Udyam registration, plus whatever the lender or scheme requires |
 | Side business with a partner or investor | Business income | Choice of a formal structure such as a partnership, LLP or company |
 
-Use the table to locate yourself. The right timing for when to
-register a side business is the moment one of the triggers in the
-third column applies, or shortly before it, so you're never
-scrambling.
+Use the table to locate yourself. As for when to register a side
+business: the moment one of the triggers in the third column applies,
+or shortly before it, so you're never scrambling.
+
+### Turning side income into a legal business, step by step
+
+When you decide the time has come, turning side income into a legal
+business is less work than most people imagine. Yesterday I laid out
+the full registration order for first-time founders, Udyam, GST and
+the trade licences, and it applies here unchanged. What a salaried
+person with side income needs on top of it is short.
+
+1. **Open a separate bank account** for the side work and route every
+   payment through it. This one step makes everything else easier.
+2. **Keep simple records**: every receipt, every expense, and the date
+   and source of each payment. A notebook works. A spreadsheet works
+   better.
+3. **Switch to the right return form**, the one that includes business
+   or professional income, and stop filing the salaried-only form out
+   of habit.
+4. **Work out your advance tax** each quarter once the side income is
+   regular, so the March deadline never arrives as a surprise.
+5. **Get your employer's written permission** if your contract or
+   service rules require it, before the side work grows large enough
+   to be noticed.
+
+The [Ministry of MSME's website](https://msme.gov.in/) lists the
+schemes and support programmes that registered enterprises can use,
+and it's worth a look once you've completed the first few steps.
+
+### Side hustle vs small business legal difference, summed up
+
+The side hustle vs small business legal difference is smaller than the
+words suggest. Both are taxed on profit. Both may need GST and
+licences when they cross the relevant lines. The difference is mostly
+in how organised, how documented and how formally structured the
+activity is. A side hustle that's well recorded, properly taxed and
+registered where needed is already a small business in every way that
+matters to the law. What's left is the decision to treat it like one.
+
+### Converting a hobby income into a business without losing the joy
+
+Converting a hobby income into a business carries a particular risk.
+People who love painting, baking, stitching or photography often
+resist formalising, because they worry that paperwork will turn
+something they enjoy into a chore. The paperwork is lighter than they
+fear, and the protection it gives is worth having: no tax surprises,
+clean records, the ability to take on bigger work when it comes.
+
+My advice is to formalise in layers. Separate the account and keep
+records first, because that costs almost nothing in joy. Add
+registrations only when a real trigger appears. Keep your pricing
+honest, including your own time. And if formalising ever starts to
+make you hate the work, that's useful information too. Some hobbies
+are better kept small and personal, and that's a perfectly good
+decision, as long as the tax is paid.
 
 ## The risk of staying unregistered too long
 
@@ -381,63 +457,6 @@ What I'd ask you not to do is ignore it. Unanswered notices tend to
 escalate, and a small correction can grow into a much bigger problem
 through silence alone.
 
-### Turning side income into a legal business, step by step
-
-When you decide the time has come, turning side income into a legal
-business is less work than most people imagine. Here's the order I'd
-follow.
-
-1. **Open a separate bank account** for the side business and route
-   every payment through it. This one step makes everything else
-   easier.
-2. **Keep simple records**: every receipt, every expense, and the date
-   and source of each payment. A notebook works. A spreadsheet works
-   better.
-3. **File your income tax return correctly**, including business or
-   professional income, and pay advance tax if your liability crosses
-   the threshold.
-4. **Register on Udyam** once you want to borrow, sell to businesses
-   or use MSME schemes. It's free and quick.
-5. **Register for GST** when you cross the threshold, meet a
-   compulsory condition, or your customers need GST invoices.
-6. **Get the trade-specific licences** your work requires, such as
-   food registration for home bakers.
-7. **Choose a formal structure** only when you need one, typically
-   when bringing in a partner, raising money or taking on significant
-   risk you want separated from your personal assets.
-
-The [Ministry of MSME's website](https://msme.gov.in/) lists the
-schemes and support programmes that registered enterprises can use,
-and it's worth a look once you've completed the first few steps.
-
-### Side hustle vs small business legal difference, summed up
-
-The side hustle vs small business legal difference is smaller than the
-words suggest. Both are taxed on profit. Both may need GST and
-licences when they cross the relevant lines. The difference is mostly
-in how organised, how documented and how formally structured the
-activity is. A side hustle that's well recorded, properly taxed and
-registered where needed is already a small business in every way that
-matters to the law. What's left is the decision to treat it like one.
-
-### Converting a hobby income into a business without losing the joy
-
-I want to say a word about hobbies, because converting a hobby income
-into a business carries a particular risk. People who love painting,
-baking, stitching or photography often resist formalising, because
-they worry that paperwork will turn something they enjoy into a chore.
-That worry is fair. But the paperwork is lighter than they fear, and
-the protection it gives is worth having: no tax surprises, clean
-records, the ability to take on bigger work when it comes.
-
-My advice is to formalise in layers. Separate the account and keep
-records first, because that costs almost nothing in joy. Add
-registrations only when a real trigger appears. Keep your pricing
-honest, including your own time. And if formalising ever starts to
-make you hate the work, that's useful information too. Some hobbies
-are better kept small and personal, and that's a perfectly good
-decision, as long as the tax is paid.
-
 ## A closing word for anyone earning quietly on the side
 
 If you're earning on the side right now, the most useful thing you can
@@ -447,11 +466,11 @@ when the triggers arrive. Done this way, side income vs registered
 business stops being a source of worry and becomes a choice you make
 on your own timetable.
 
-And here's the part I find most exciting. A side income that's run
-cleanly for a year is a very different thing from one that's run in
-the shadows. In a year, if you do this properly, you'll have twelve
-months of records, a tax history that matches your bank statements,
-and a clear picture of what your side work earns. That's the
-foundation a bank, a partner or a larger customer looks for. It's also
-exactly what you'll need on the day you decide that the side income
-deserves to stop being on the side.
+Picture where this goes in a year. A side income that's run cleanly
+for a year is a very different thing from one that's run in the
+shadows. In a year, if you do this properly, you'll have twelve months
+of records, a tax history that matches your bank statements, and a
+clear picture of what your side work earns. That's the foundation a
+bank, a partner or a larger customer looks for. It's also exactly what
+you'll need on the day you decide that the side income deserves to
+stop being on the side.

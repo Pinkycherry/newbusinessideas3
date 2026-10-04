@@ -20,11 +20,11 @@ I've heard some version of that story from founders more times than
 I'd like. I sit with people starting MSMEs, people registering under
 Startup India, and people bootstrapping something small and stubborn,
 and the MSME loan mistake for first time founders keeps showing up in
-the same shape. I went home from that waiting room and wrote this
-down, because the pattern is avoidable and almost nobody explains it
-before the loan is signed.
+the same shape. I kept turning that conversation over long after I
+left the waiting room, because the pattern is avoidable and so few
+people explain it to founders before the loan is signed.
 
-## The MSME loan mistake for first time founders, named plainly
+## The MSME loan mistake for first time founders, in one sentence
 
 Here is the mistake in one sentence: the founder sizes the loan to the
 sanction letter and the business plan, when it should be sized to the
@@ -75,6 +75,30 @@ I meet want to hear that their plan is fine, and the instinct is to
 soften the answers until they pass. Resist that. The questions take
 five minutes, and the loan will be with you for years.
 
+### Mistakes taking a business loan that I'd avoid on day one
+
+Beyond the main mistake, there's a short list of smaller mistakes
+taking a business loan that I see often enough to name. None of them
+will sink you on its own. Together they make the main mistake more
+likely.
+
+- Signing without reading the repayment schedule line by line,
+  including when the first instalment falls due.
+- Not asking about processing fees, guarantee fees, insurance add-ons
+  and prepayment charges, all of which change the true cost.
+- Mixing personal and business accounts, which makes it impossible to
+  see what the business can really pay.
+- Giving personal guarantees for amounts you haven't sized against
+  proven cash flow.
+- Choosing a lender because the branch is near home, without comparing
+  what other lenders offer for the same scheme.
+- Letting a consultant inflate the project report to get a bigger
+  sanction. A larger sanction isn't a win if you can't repay it.
+
+Each of these is easy to avoid in the week before you sign and hard to
+undo in the year after. That's the whole lesson of first time founder
+loan mistakes: they're cheap to prevent and expensive to correct.
+
 ## Why it happens to smart, careful people
 
 I want to be fair to the founders who make this mistake, because they
@@ -109,11 +133,10 @@ for them.
 
 I hear this one constantly. A relative, a consultant or a well-meaning
 branch officer says that loans are hard to get, so take the maximum
-while it is on the table. There is a grain of truth in it. Credit can
-tighten. But borrowing extra money today to protect against a
-hypothetical future shortage means paying interest every month on cash
-you don't need, and that interest is a certainty while the shortage is
-only a possibility.
+while it is on the table. Credit can tighten, and borrowing extra
+money today to protect against a hypothetical future shortage means
+paying interest every month on cash you don't need, and that interest
+is a certainty while the shortage is only a possibility.
 
 ### The interest feels small next to the dream
 
@@ -127,15 +150,14 @@ too heavy for a business in its first year.
 
 Most new businesses spend first and earn later. You buy stock, then
 sell it. You do the work, then raise the invoice, then wait for
-payment. That gap is where working capital loan mistakes MSME founders
-make start to hurt, because the gap needs its own funding. When the
-term loan is already spent on assets and the gap appears, the founder
+payment. That gap needs its own funding, and the working capital loan
+mistakes MSME founders make most often begin right here. When the term
+loan is already spent on assets and the gap appears, the founder
 starts using personal savings, credit cards or informal borrowing to
 plug it, and the debt starts stacking in layers.
 
-None of these pressures needs a foolish founder. They need an
-ordinary, optimistic person who hasn't seen the pattern before. That's
-exactly who a first-time founder is.
+These pressures land on ordinary, optimistic people who haven't seen
+the pattern before, which is exactly who a first-time founder is.
 
 ### The family money that never makes it onto the page
 
@@ -160,40 +182,15 @@ repayment schedule, because sooner or later it will behave like one.
 Small business debt mistakes often start here, with a debt the founder
 didn't think of as debt.
 
-### Mistakes taking a business loan that I'd avoid on day one
-
-Beyond the main mistake, there's a short list of smaller mistakes
-taking a business loan that I see often enough to name. None of them
-will sink you on its own. Together they make the main mistake more
-likely.
-
-- Signing without reading the repayment schedule line by line,
-  including when the first instalment falls due.
-- Not asking about processing fees, guarantee fees, insurance add-ons
-  and prepayment charges, all of which change the true cost.
-- Mixing personal and business accounts, which makes it impossible to
-  see what the business can really pay.
-- Giving personal guarantees for amounts you haven't sized against
-  proven cash flow.
-- Choosing a lender because the branch is near home, without comparing
-  what other lenders offer for the same scheme.
-- Letting a consultant inflate the project report to get a bigger
-  sanction. A larger sanction isn't a win if you can't repay it.
-
-Each of these is easy to avoid in the week before you sign and hard to
-undo in the year after. That's the whole lesson of first time founder
-loan mistakes: they're cheap to prevent and expensive to correct.
-
 ## What a healthy loan-to-revenue ratio actually looks like
 
-I'll say this up front: there is no single official ratio that tells
-you how much business loan is too much. Banks use their own assessment
-methods, which differ between lenders and change with the type of
-facility. What I can give you is the way I work it out with founders
-across the table, which has served them well and which you can do on
-paper in an evening.
+There is no single official ratio that tells you how much business
+loan is too much. Banks use their own assessment methods, which differ
+between lenders and change with the type of facility. What I can give
+you is the way I work it out with founders across the table, which has
+served them well and which you can do on paper in an evening.
 
-### Start from gross margin, not revenue
+### Start from gross margin
 
 Revenue is the money customers pay you. Gross margin is what's left
 after you pay for the goods or direct costs that went into what you
@@ -203,7 +200,7 @@ you need is your monthly gross margin, and if you're not sure how to
 calculate it, that is the first thing to fix before you borrow
 anything.
 
-### Use proven margin, not projected margin
+### Use the margin you've already earned
 
 If the business is already running, take the average monthly gross
 margin from your last few months of real sales, and use your weakest
@@ -215,14 +212,13 @@ sales.
 
 ### My own rule of thumb for the instalment
 
-This is my personal working rule, and I want to be clear that it's a
-habit from my own consulting work and not a banking norm or a
-statistic. I like to see the total monthly instalment on all business
-loans sit comfortably inside what the business can pay from proven
-margin after fixed costs, with enough left over to survive a bad
-month. When a founder's instalment would eat most of what's left after
-rent and salaries, I tell them the loan is too large, whatever the
-sanction letter says.
+This is my personal working rule, a habit from my own consulting work
+and not a banking norm or a statistic. I like to see the total monthly
+instalment on all business loans sit comfortably inside what the
+business can pay from proven margin after fixed costs, with enough
+left over to survive a bad month. When a founder's instalment would
+eat most of what's left after rent and salaries, I tell them the loan
+is too large, whatever the sanction letter says.
 
 ### A worked illustration
 
@@ -243,9 +239,10 @@ In this sketch, the business can carry instalments of about ₹20,000 a
 month on a normal month, and less on a weak one. If the bank sanctions
 a loan whose instalment is ₹38,000, the founder would be paying almost
 double what the business can afford, and the gap would come from
-savings, from delayed supplier payments or from new borrowing. The
-sanction might be entirely correct from the bank's side. It would
-still be the wrong loan for this business at this stage.
+savings, from delayed supplier payments or from new borrowing. From
+the bank's side the sanction may be perfectly sound, and for this
+business at this stage the instalment is close to double what it can
+carry.
 
 Business loan repayment planning starts exactly here: one honest page
 that shows what the business has proven it can pay, set against what
@@ -292,13 +289,12 @@ month, from money the business has already shown it can make.
 Everything above that line is a bet on your projections, and you
 should place that bet knowingly, in a small amount, if at all.
 
-There's one more angle worth saying out loud. Debt can be a perfectly
-good tool. Many good businesses in this country were built with
-sensible MSME loans, and a well-sized loan at the right moment can be
-the difference between staying tiny and growing. The schemes above
-exist because policymakers know that small enterprises need credit.
-The aim is to borrow at a size and in a form that the business can
-carry, and then to borrow more later, once you've shown you can repay.
+A well-sized loan at the right moment is how many small units in this
+country grow, and plenty of good businesses were built with sensible
+MSME loans. The schemes below exist because policymakers know that
+small enterprises need credit. The aim is to borrow at a size and in a
+form that the business can carry, and then to borrow more later, once
+you've shown you can repay.
 
 ## The MSME loan schemes in India worth understanding first
 
@@ -308,17 +304,6 @@ were designed specifically for people without collateral or a long
 track record. Each has rules that change from time to time, so read
 the current terms on the official page before relying on any figure
 here.
-
-### Look at your own credit record before the bank does
-
-Every lender you approach will pull your credit report, and for a
-first-time founder that usually means your personal report, since the
-business has no history yet. The Reserve Bank's rules require each
-credit information company to give you a free full credit report once
-a year, so there's no reason to walk in blind. Get yours, read it line
-by line, and fix any errors before you apply. An old credit card
-dispute or a loan you closed but the bank never marked as closed can
-slow down an application that would otherwise go through cleanly.
 
 ### Udyam registration and loan eligibility
 
@@ -391,15 +376,13 @@ around the money.
 
 ### If you're a registered startup as well as an MSME
 
-Some founders reading this will have recognition from the Department
-for Promotion of Industry and Internal Trade through the [Startup
-India portal](https://www.startupindia.gov.in/), on top of their Udyam
-registration. The two are different things. Udyam places you in the
-MSME framework that most bank lending schemes refer to. Startup India
-recognition is for newer entities working on innovation or a scalable
-model, and it opens a separate set of benefits, including access to
-certain government-backed funding routes that work through investors
-and institutions rather than through your local branch.
+A few of you will hold DPIIT recognition from the [Startup India
+portal](https://www.startupindia.gov.in/) as well as a Udyam
+certificate. For borrowing, Udyam is the one that counts at a bank
+branch, because it's what MSME lending programmes check. DPIIT
+recognition belongs to younger entities building something innovative
+or scalable, and its funding benefits mostly reach founders through
+investors and institutions, far from the loan desk at your local bank.
 
 For a first-time founder, the practical lesson is that recognition
 doesn't change the sizing rule. A recognised startup with a heavy
@@ -425,6 +408,17 @@ The table is a starting map. Your branch officer will know which of
 these the bank actively processes, and that matters, because a scheme
 that a branch rarely handles can take much longer in practice.
 
+### Look at your own credit record before the bank does
+
+Every lender you approach will pull your credit report, and for a
+first-time founder that usually means your personal report, since the
+business has no history yet. The Reserve Bank's rules require each
+credit information company to give you a free full credit report once
+a year, so there's no reason to walk in blind. Get yours, read it line
+by line, and fix any errors before you apply. An old credit card
+dispute or a loan you closed but the bank never marked as closed can
+slow down an application that would otherwise go through cleanly.
+
 ### Questions to ask the branch before you sign
 
 Whichever scheme you choose, the conversation at the branch decides
@@ -443,22 +437,21 @@ I make every founder I work with ask, and write the answers down.
 - What happens, specifically, if I need to restructure the repayment
   in a bad quarter?
 
-That fifth question is where most working capital loan mistakes MSME
-founders make get prevented. When the bank understands that you need
-two kinds of money for two kinds of purpose, it can structure the
-facility properly, and you avoid the trap of paying for monthly stock
-out of a loan meant for a machine.
+That fifth question prevents a lot of grief. When the bank understands
+that you need two kinds of money for two kinds of purpose, it can
+structure the facility properly, and you avoid the trap of paying for
+monthly stock out of a loan meant for a machine.
 
 A good branch officer will answer all six without hesitation. If the
 answers are vague, ask again, or ask another lender. The point is to
 understand the loan in full before your signature makes it permanent.
 
-## How to recover if this MSME loan mistake for first time founders already happened
+## How to recover from the MSME loan mistake for first time founders
 
-If you're reading this with a loan you already regret, I want to start
-with something plain: this is fixable far more often than it feels at
-two in the morning. The founders who recover tend to do the same few
-things, and they do them early.
+If you're reading this with a loan you already regret, start with
+this: it's fixable far more often than it feels at two in the morning.
+The founders who recover tend to do the same few things, and they do
+them early.
 
 ### Write the honest page first
 
@@ -489,6 +482,17 @@ that the term loan stops carrying expenses it was never designed for.
 This is a real conversation with the bank, and it's easier to have
 when you can show your sales, purchase and collection patterns for the
 last few months.
+
+Of all the working capital loan mistakes MSME owners describe to me,
+this one is the most common and the easiest to correct once it's
+named. Bring three things to the branch: a month-by-month view of when
+you pay suppliers, when customers pay you, and how much stock you hold
+on average. With those on the table, the officer can size a cash
+credit or overdraft limit to your real cycle, and the term loan can go
+back to doing the one job it was designed for. Founders are often
+surprised by how routine this request is for the bank. It's a standard
+facility, and asking for it is a sign of a borrower who understands
+their own business.
 
 ### Stop the debt from stacking
 
@@ -539,28 +543,26 @@ earns, the founder has a working capital facility sized to the real
 cycle, and the family money has a written repayment plan everyone
 agreed to.
 
-None of that requires luck. It requires the founder to look at the
-numbers early and to have one uncomfortable conversation at the bank
-before the record turns bad. Business loan repayment planning done
-late still works, as long as it gets done.
+What it takes is a founder who looks at the numbers early and has one
+uncomfortable conversation at the bank before the record turns bad.
+Business loan repayment planning done late still works, as long as it
+gets done.
 
 ### Use the formal grievance routes for payment delays
 
 If your own customers are other businesses and they're paying you
 late, look at the Samadhaan delayed payment portal run under the MSME
 ministry, which exists for micro and small enterprises chasing overdue
-payments from buyers. It takes time, and it gives your follow-up some
-weight and it's one of the few tools designed specifically for this
-problem.
+payments from buyers. It takes time. It also gives your follow-up
+weight, and it's one of the few tools built for this exact problem.
 
-I also want to say something to the founders who'll read this and feel
-embarrassed because they've already made the mistake. Please don't.
-The man in the visa office was a capable, hardworking person who'd
-built a real business. He made a sizing error, recovered from it with
-an honest conversation at his bank and two hard years of discipline,
-and his unit was still running when he told me the story. The mistake
-is common. Recovery is common too, for the founders who face the
-numbers early.
+To the founders who'll read this and feel embarrassed because they've
+already made the mistake. Please don't. The man in the visa office was
+a capable, hardworking person who'd built a real business. He made a
+sizing error, recovered from it with an honest conversation at his
+bank and two hard years of discipline, and his unit was still running
+when he told me the story. The mistake is common. Recovery is common
+too, for the founders who face the numbers early.
 
 ## A closing word on borrowing responsibly
 

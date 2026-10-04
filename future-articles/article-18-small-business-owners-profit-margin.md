@@ -1,15 +1,14 @@
 # The small business owners profit margin gap: why most can't name their own number
 
-Yesterday I wrote about the loan mistake that sinks first-time
-founders, the one where the instalment gets sized to the sanction
-letter instead of to what the business has proven it can earn. If you
-haven't read it, go and look, because today's piece sits right
-underneath it. Several of you wrote back with the same question in
-different words: "How do I even know what my business earns?" That
-question deserves its own answer. And tomorrow I'm taking on the
-paperwork that confuses almost every first-time founder, GST and
-Udyam, side by side. Some of you are going to find out you've been
-worrying about the wrong one.
+Tomorrow I'm putting GST and Udyam side by side, the paperwork that
+confuses almost every first-time founder, and a few of you are going
+to discover you've been worrying about the wrong one. Before that,
+there's a gap to close from yesterday. I wrote about the loan mistake
+that sinks first-time founders, where the instalment gets sized to the
+sanction letter instead of to what the business has proven it can
+earn. If you missed it, go back and read it, because it rests on one
+number that most owners I meet can't produce on the spot: what the
+business keeps from each sale. That number is today's subject.
 
 ## The small business owners profit margin gap starts with a simple question
 
@@ -108,7 +107,7 @@ comes with a crisis.
 A lot of owners carry a margin figure in their head that came from
 somewhere else: a cousin in a different trade, a supplier's sales
 pitch, a video about a business in another city. People ask me
-constantly for the right profit margin by business type India-wide, as
+constantly for the right profit margin by business type in India, as
 if there's a chart somewhere that settles it. I haven't found a
 published figure I'd trust for a specific shop, and I'd be wary of
 anyone who offers one with confidence. Two sweet shops on the same
@@ -148,11 +147,10 @@ earlier. An owner who believes they're keeping 25 percent when they're
 keeping 20 percent will underprice every product by the same quiet
 amount for years.
 
-If any of this sounds familiar, you're in good company. Fixing it
-rarely means a dramatic price rise overnight. It usually means small,
-steady increases on new orders, clearer pricing for custom work, and a
-new rule that every price gets checked against the margin before it's
-quoted.
+If any of this sounds familiar, you're in good company. The fix is
+usually small, steady increases on new orders, clearer pricing for
+custom work, and a new rule that every price gets checked against the
+margin before it's quoted.
 
 ## How to calculate profit margin for small business, done simply
 
@@ -195,14 +193,14 @@ your net profit. Net profit divided by sales is your net margin.
 
 ### Gross margin vs net margin explained simply
 
-Here's gross margin vs net margin explained simply, the way I'd
-explain it to my own cousin. Gross margin tells you whether each sale
-is a good sale. Net margin tells you whether the whole business is a
-good business. A shop can have a healthy gross margin on every product
-and still lose money overall, because the rent is too high for the
-volume it sells. A shop can also have a thin gross margin and do well,
-because it sells a huge volume with very low running costs. You need
-both numbers. Each one, on its own, will mislead you.
+I explain the difference to owners the way I'd explain it to my own
+cousin. Gross margin tells you whether each sale is a good sale. Net
+margin tells you whether the whole business is a good business. A shop
+can have a healthy gross margin on every product and still lose money
+overall, because the rent is too high for the volume it sells. A shop
+can also have a thin gross margin and do well, because it sells a huge
+volume with very low running costs. You need both numbers. Each one,
+on its own, will mislead you.
 
 ### A worked example across three small business types
 
@@ -230,21 +228,21 @@ risk there is that the owner's own salary gets forgotten. The bakery
 sits in the middle, and its margin is very sensitive to ingredient
 prices and to how many orders get wasted or remade.
 
-None of these figures should be read as the profit margin by business
-type India-wide. Real margins swing widely with location, rent,
-supplier terms, the owner's pricing and the competition on the street.
-What the table teaches is the method, and the method works for any
-business.
+Treat these figures as a demonstration of the method, which works for
+any business. Real margins swing widely with location, rent, supplier
+terms, the owner's pricing and the competition on the street, which is
+why I'd distrust any neat guide to profit margin by business type in
+India that claims to fit your shop.
 
-### Understanding unit economics small business owners can use
+### Understanding unit economics in a small business
 
 Once you have the monthly picture, go one level down and look at a
 single sale. What does one kurta, one cake, one service visit cost you
-directly, and what do you get for it? This is understanding unit
-economics small business owners can use every day, without any jargon.
-When you know that one cake leaves ₹220 after ingredients and box, you
-can decide in seconds whether a ₹100 discount for a bulk order makes
-sense, or how many cakes a month cover the gas and power.
+directly, and what do you get for it? This is what understanding unit
+economics in a small business means day to day, without any jargon.
+When you know that one cake leaves, say, ₹220 after ingredients and
+box, you can decide in seconds whether a ₹100 discount for a bulk
+order makes sense, or how many cakes a month cover the gas and power.
 
 ### The break even point for a small business
 
@@ -265,12 +263,12 @@ exactly what that gap looks like in orders."
 ### Step four: repeat it every month and compare
 
 Doing the calculation once is useful. Doing it every month is where
-the value really builds. Keep the same page format, fill it in at the
-end of each month, and put the months side by side. Patterns appear
-quickly: the month when gross margin dipped because a supplier raised
-prices, the month when net margin jumped because you dropped a slow
-product, the festival month that looked busy and earned less than
-expected because of heavy discounts.
+the value builds. Keep the same page format, fill it in at the end of
+each month, and put the months side by side. Patterns appear quickly:
+the month when gross margin dipped because a supplier raised prices,
+the month when net margin jumped because you dropped a slow product,
+the festival month that looked busy and earned less than expected
+because of heavy discounts.
 
 This is how to calculate profit margin for small business owners in a
 way that sticks. One-off exercises get forgotten. A monthly page
@@ -287,8 +285,8 @@ quarter. Combined figures hide a weak part behind a strong one.
 
 The calculation itself takes an evening. What follows from it can
 change the next five years of the business. These are the changes I've
-watched happen most often, in my consulting work and in the free
-sessions I run for owners who can't afford to pay a consultant.
+watched happen most often, in my consulting work with MSME owners and
+bootstrapped founders.
 
 ### Pricing stops being a guess
 
@@ -310,10 +308,10 @@ they can't.
 ### The owner's time gets a value
 
 When you put your own fair salary into the calculation, you see
-clearly how much of the business's profit is really your wages. That's
-a hard thing to see. It's also the moment a lot of owners decide to
-raise prices, cut a product line that eats their evenings, or hire
-help for the parts of the work that don't need them.
+clearly how much of the business's profit is your wages. That's a hard
+thing to see. It's also the moment a lot of owners decide to raise
+prices, cut a product line that eats their evenings, or hire help for
+the parts of the work that don't need them.
 
 ### Product lines get judged on what they earn
 
@@ -338,8 +336,11 @@ loan to proven margin if you don't know your margin. Owners who've
 done this exercise walk into the bank with a page that shows what the
 business can carry, and that page gets them better loans and fewer
 sleepless nights. Lenders like SIDBI publish their MSME programmes on
-the [SIDBI website](https://www.sidbi.in/en/), and every one of them
-will look more closely at your margins than at your sales.
+the [SIDBI website](https://www.sidbi.in/en/), and a lender will read
+your margins as closely as your sales. Even a collateral-free loan
+backed by the [credit guarantee trust for micro and small
+enterprises](https://www.cgtmse.in/) still depends on the bank
+believing the business can repay, and margins are how you show it.
 
 ### Saying no gets easier
 
@@ -361,10 +362,12 @@ of them will meet you halfway.
 ### Tax and margin stop getting confused
 
 Here's a confusion I meet often. Many small owners file income tax
-under the presumptive scheme in section 44AD, which lets eligible
-small businesses declare a set percentage of turnover as income
-instead of keeping full accounts. The details and current limits are
-on the [Income Tax Department's e-filing
+under the presumptive taxation scheme, which lets eligible small
+businesses declare a set percentage of turnover as income instead of
+keeping full accounts. It was section 44AD under the old Act and now
+sits within section 58 of the Income-tax Act, 2025, which took effect
+from April 2026, and you can read how it applies to you on the [Income
+Tax Department's e-filing
 portal](https://www.incometax.gov.in/iec/foportal/). Some owners then
 start believing that the presumptive percentage is their actual profit
 margin. That percentage was designed as a simplified figure for tax
@@ -374,10 +377,9 @@ which.
 
 ## Where small business owners profit margin gets quietly eaten
 
-Margin rarely vanishes in one dramatic event. It leaks, a little at a
-time, through gaps that nobody is watching. These are the leaks I
-check first when an owner tells me the business is busy but the money
-never seems to be there.
+Margin leaks a little at a time, through gaps that nobody is watching.
+These are the leaks I check first when an owner tells me the business
+is busy but the money never seems to be there.
 
 ### Wastage and shrinkage
 
@@ -426,26 +428,26 @@ owners find that their busiest channel is their least profitable.
 
 The free delivery that started as a favour for one customer and became
 expected by everyone. The extra alteration that was never charged. The
-bonus sweet in every box. Generosity is good business up to a point.
-Past that point, it's a price cut you never decided to make.
+bonus sweet in every box. Past a certain point, generosity is a price
+cut you never decided to make.
 
 ### Owner's time on the wrong work
 
 When the owner spends hours on tasks a helper could do, the business
-pays the owner's rate for helper work. That doesn't show up on any
-receipt, but it shows up in what the business could have earned if the
-owner's time went to selling, pricing and finding better suppliers.
+pays the owner's rate for helper work. The cost shows up in what the
+business could have earned if the owner's time went to selling,
+pricing and finding better suppliers.
 
 ### Interest and slow-moving stock
 
 Two costs hide especially well. The first is interest on any loan or
 overdraft used to buy stock. If you borrowed to fill the shelves, the
-interest is part of what that stock really cost you, and a product
-that sits for months carries months of interest. The second is the
-cost of slow stock itself: money locked on a shelf can't buy the
-fast-moving items customers are asking for. Owners who look at how
-long each product sits before it sells often find that their slowest
-lines are quietly eating the margin their best lines earn.
+interest is part of what that stock cost you, and a product that sits
+for months carries months of interest. The second is the cost of slow
+stock itself: money locked on a shelf can't buy the fast-moving items
+customers are asking for. Owners who look at how long each product
+sits before it sells often find that their slowest lines are quietly
+eating the margin their best lines earn.
 
 A simple fix is to mark the purchase month on every carton or batch
 when it comes in. At month-end, walk the shelves and note anything
@@ -473,8 +475,10 @@ looks fine until they count their own time.
 
 Both groups benefit from the same habit: a monthly page with sales,
 direct costs, running costs and their own fair salary, worked out to
-two percentages. It takes less time than most owners spend arguing
-with a single difficult supplier.
+two percentages. Once someone has had gross margin vs net margin
+explained simply, with their own shop's figures on the page, the habit
+tends to stick. It takes less time than most owners spend arguing with
+a single difficult supplier.
 
 ## A closing word on knowing your own numbers
 
@@ -489,9 +493,10 @@ vegetable vendor keep cleaner margin notes than a factory owner with a
 full-time accountant, because the vendor cared about the number and
 the factory owner had handed it to someone else.
 
-Do the calculation for last month, this week. Write down your gross
-margin, your net margin and your break-even sales figure. Keep the
-page where you'll see it before you quote your next price, give your
-next discount or sign your next loan. That's all. Your business will
-be the same business tomorrow, and you'll be running it with the one
-number you were missing.
+The owners I've watched turn their businesses around did something
+plain: they wrote down three figures every month, gross margin, net
+margin and break-even sales, and let those figures settle arguments
+that used to be settled by mood. Prices got quoted with the page in
+view. Discounts got checked against it. Loans got sized from it.
+
+Know your number, and the rest of the decisions get easier.
