@@ -94,27 +94,21 @@ None of this paperwork is exciting, and none of it will be the reason the shop s
 ## Frequently asked questions from people in this exact position
 
 ### Should I change the shop's name if I'm genuinely rebuilding it?
-
 Rarely, and only when the name itself is actively hurting the business rather than just feeling dated to the new owner. A recognized name, even an old-fashioned one, carries decades of trust that a rebrand throws away along with whatever was actually wrong.
 
 ### What if my siblings disagree about what to do with the shop?
-
 Get the disagreement on the table early and explicitly, ideally before any changes are made rather than after, since a change made without agreement tends to harden a disagreement into a genuine family rift.
 
 ### Is it worth getting the shop professionally valued before deciding anything?
-
 Yes, if there's any real chance of selling, partnering, or bringing in outside investment later. A professional valuation also settles family disagreements about the business's worth far more cleanly than an argument based on memory and sentiment.
 
 ### How do I know if I'm the right person to run this, versus just the person who happened to inherit it?
-
 Ask whether you'd choose this business if you were starting completely fresh today, with the capital tied up in it instead available as cash. An honest no doesn't mean selling immediately, but it's worth knowing before investing years of your own life into keeping it running out of obligation alone.
 
 ### Where do I actually start if the shop has never had any online presence at all?
-
 Business ideas for a shop with no online presence almost always start smaller than people expect: a Google Business listing with accurate hours and photos, and a WhatsApp number customers can message, cover the bulk of what a first-time searcher actually needs before any real website or social media effort is worth the time. Reviving an old family business idea through visibility doesn't require a redesign of anything, just making the shop findable to people who don't already know it exists.
 
 ### Is Udyam registration actually worth doing if the shop has survived fine without it for decades?
-
 Yes, and it's worth doing early rather than waiting for a reason to need it urgently. Udyam registration for an old family business is free, takes about ten minutes, and becomes the gateway to collateral-free MSME loans, interest subventions, and delayed-payment protection against larger buyers, benefits that mean nothing until the year the shop actually needs them, at which point having the registration already in place saves weeks. Retail business ideas for a second generation owner that include this single piece of paperwork early tend to have far more financing options available exactly when a real opportunity, or a real emergency, shows up.
 
 ## What this looks like three years in

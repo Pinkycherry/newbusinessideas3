@@ -93,39 +93,30 @@ There's a quieter signal worth watching too: whether the side business is active
 ## Questions people ask me about this constantly
 
 ### Is there a real difference between a side hustle and what you're calling business ideas with your first salary here?
-
 Mostly just intent. A side hustle can stay casual forever without anyone minding. A first-salary business idea, as I'm describing it here, is being tested deliberately, with real pricing and real customers, specifically to see whether it deserves more of someone's time later.
 
 ### What's the single clearest example of starting a side business on a salary done right?
-
 The freelancers who kept their day job for a full year while building a real client base on evenings and weekends, then only stepped away once that client base alone matched their salary for several months running. Nothing dramatic, just patient and consistent.
 
 ### Should I tell my employer I'm running a side business?
-
 Check the employment contract first for any non-compete or conflict-of-interest clause before deciding anything. Plenty of jobs have no issue at all with an unrelated evening or weekend business; some genuinely do, and it's worth knowing which situation applies before building anything further.
 
 ### How do I actually land the first client with no track record at all?
-
 Almost always through an existing relationship rather than a stranger. The first freelance client, the first social media management client, the first tutoring student, nearly all of them trace back to a former colleague, a family friend, or someone from the same college network who already trusts the person behind the offer. Cold outreach to complete strangers comes later, once there's an actual track record worth pointing to, not before it.
 
 ### What if the business idea I actually want needs more capital than I have right now?
-
 Then it waits, and something smaller that genuinely fits the current budget goes first. Building a track record on a smaller idea, then reinvesting the proceeds into the bigger one later, is a far steadier path than stretching a first salary's entire savings on day one for an idea that hasn't been tested at any scale yet.
 
 ### What if my first salary barely covers my own expenses, let alone a business?
-
 Then start with one of the near-zero capital ideas, the freelance or service-based ones, and treat the first few months purely as proof of concept rather than income. Business ideas for people in their first job don't have to start with any spare cash at all.
 
 ### At what point does a side business need to start filing GST?
-
 Only once turnover crosses the registration threshold [the GST portal](https://www.gst.gov.in/) itself publishes, which is well above what most of these side businesses earn in their first year. Checking this early avoids both over-worrying about paperwork that isn't due yet and under-preparing for the month it genuinely does become due.
 
 ### How long should I run a side business before even considering quitting?
-
 Long enough to have survived at least two full income cycles that genuinely match the job's take-home pay, not one. Business ideas that don't need a resignation at all are a perfectly legitimate outcome too, if the side income never needs to become the whole income.
 
 ### What's the biggest mistake you see in this specific group of founders?
-
 Underpricing out of gratitude for having any client at all in the first place. It costs far more later than it saves in the first few weeks.
 
 ## What this doesn't apply to

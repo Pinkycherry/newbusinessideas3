@@ -78,31 +78,24 @@ A rough shape worth expecting, regardless of which of the five gets picked: the 
 ## Common questions about business ideas for engineering graduates
 
 ### Is corporate experience actually useless if I skip it entirely?
-
 No, and I want to be honest about that rather than romanticize skipping the job for its own sake. For the consulting and fix-it directions specifically, a couple of years inside a real manufacturing or operations setup teaches pattern recognition that's genuinely hard to fake from the outside. For the training, automation, and micro-SaaS directions, it matters far less. The honest answer depends on which of the five directions actually fits, not on a blanket rule either way.
 
 ### What's realistically the fastest of these to turn into income?
-
 Automation and systems consulting, almost every time, because it needs no inventory, no manufacturing setup, and no waiting around for a product to get built. It's also one of the more reliable side business ideas for working engineers for exactly that reason, since a first small client can be served in a handful of evenings without touching the day job at all.
 
 ### Every roundup of technical business ideas for fresh graduates seems to read the same online. What's actually different about this one?
-
 Most of that content is written by someone describing a market from the outside, naming categories without ever tying each one to the specific skill it draws on or the specific institution that actually helps fund or support it. This piece ties every direction back to one real engineering habit and, where it's genuinely relevant, one real government body such as NSIC or SIDBI built specifically to help with that direction. That's the difference between a category list and something a graduate can actually act on this month.
 
 ### Do I need savings before I start any of these, or can I start from zero?
-
 The consulting, training, and automation directions can genuinely start from close to zero, which is exactly why they sit at the low investment tech business ideas end of this list. The hardware and manufacturing directions almost always need either savings, family support, or the kind of institutional financing SIDBI offers, and pretending otherwise would set a founder up for a very avoidable disappointment in month two.
 
 ### What's the honest answer on what to do after engineering besides a job, when family pressure is the real obstacle rather than the business idea itself?
-
 Start in the side-business lane deliberately, not as a consolation prize. Pick one of the lower-capital directions, treat it as a serious nights-and-weekends commitment for a few months, and let a real, visible track record do the negotiating with family later. Proof persuades people that arguments rarely can.
 
 ### Does any of this really work without a technical co-founder or a team?
-
 Every direction above starts, and often stays for a long while, as a single-founder operation. The consulting, training, and fix-it directions especially were built to be run by one competent, credible person using business ideas using an engineering degree as the entire differentiator, not a team or a funding round. A team becomes useful later, once there's actual revenue proving the direction is worth scaling, not before.
 
 ### Which of these suits someone who's more comfortable with spreadsheets and logic than with talking to people?
-
 The automation and fix-it directions, without much competition. Both sit squarely among business ideas for people who are good at systems rather than people who are naturally gifted at small talk, and both let the actual analysis do most of the persuading once a prospective client sees the specific bottleneck named correctly.
 
 ## What I'd actually tell a graduate who asked me this

@@ -105,39 +105,30 @@ There's a fourth break point too, quieter than the other three, and it shows up 
 ## Questions I get asked about this constantly
 
 ### Do I need to register before I start, or can I wait until it's making money?
-
 Wait until it's actually earning something regular, then register promptly once it is. Registering a business doing nothing yet is paperwork for its own sake. Staying unregistered once real, repeat money is coming in is the actual risk.
 
 ### What if my family will only support a side business, not a full-time one?
-
 Then this list's own sorting logic is the answer. Pick from the three-hour or half-day tier, build real proof of income and reliability there first, and let that track record do the negotiating for a bigger commitment later, rather than arguing for full-time belief before there's anything concrete to point to.
 
 ### Is a loan actually necessary, or can this be done on savings alone?
-
 Plenty of the ideas in the first two tiers genuinely don't need a loan to start. The manufacturing and larger D2C ideas in the full-time tier usually do, at some point, and that's exactly where SIDBI and NSIC's financing options are worth a real conversation rather than defaulting to "I'll just save up for another year."
 
 ### How do I know which tier I actually belong in, rather than the one I wish I belonged in?
-
 Track your actual available hours for one real week before deciding anything, not your intended hours. Most people overestimate this badly at the planning stage and correct for it painfully in month two instead.
 
 ### Are these really different from generic business ideas for homemakers I've seen elsewhere?
-
 Yes, deliberately. Most lists in that category assume unlimited time and call it flexibility. Real flexible business ideas around family respect the actual hours available, which is the entire point of sorting this list by tier rather than by category.
 
 ### Is there a formal name for what you're describing with the registration push?
-
 No formal name, just a practical pattern. In practice this is what women led MSME registration looks like from the inside: a founder treating Udyam Registration as part of launching the business, not an afterthought handled once a bank asks for it.
 
 ### What's the single biggest mistake you see repeated across every tier?
-
 Pricing based on what feels comfortable to ask rather than what the business genuinely costs to run. It isn't close. This is the one mistake I'd flag above every other item on this list combined, in every one of the home based business ideas for married women I've watched someone actually try.
 
 ### Does it actually help to have another woman running a similar business to talk to?
-
 Enormously, and not for the reason most people expect. The real value is having one person who won't treat a slow month as proof the whole idea was a mistake, because she's lived through her own slow months and knows what they do and don't actually mean, far more than any tip or tactic she could pass along. A lot of the women I work with who stay the course past month three have exactly one such person they check in with regularly, often found through the same local women's business groups, a cooperative society, or an informal WhatsApp circle that started around something completely unrelated to business.
 
 ### What should I actually tell my family before starting, rather than after they notice?
-
 Tell them the real hours and the real money involved before either one shows up as a surprise. Vague promises about "just a small side thing" tend to cause more friction later than an honest, specific conversation upfront about exactly how many hours a week this will take and what the first few months are realistically going to look like financially. Families who feel informed from the start, even when they're not thrilled about it, tend to come around faster than families who feel blindsided by a business that grew quietly without warning.
 
 ## What changes once there's already a working business

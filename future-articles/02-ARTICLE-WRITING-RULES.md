@@ -194,7 +194,10 @@ Added 2026-10-05 after the founder found FAQ entries written as one
 paragraph, a bold question followed by the plain answer on the same
 line. That layout can't go into the Rank Math FAQ block without
 splitting every entry by hand. Articles 1, 2, 6, 7, 8 and 9 were
-reformatted to fix this, with no wording changed.
+reformatted to fix this, with no wording changed. A first fix left a
+blank line between each question and its answer, which pasted into the
+editor as a large empty gap and came along with every copied question,
+so that blank line was removed too.
 
 Every FAQ section, in every article, new or edited, follows this format:
 
@@ -202,18 +205,20 @@ Every FAQ section, in every article, new or edited, follows this format:
 ## Frequently asked questions about this exact transition
 
 ### Do I need to register for GST even if I'm below the threshold?
-
 Not legally, but there are real reasons to consider it...
 
 ### How long does GST registration actually take once I apply?
-
 Usually...
 ```
 
 - **The FAQ section heading is an H2.** Each question is its own H3,
   ending in a question mark, in sentence case, never bold.
-- **The answer starts on its own line below the question,** as one or
-  more normal paragraphs, separated from the question by a blank line.
+- **The answer is one paragraph on the very next line under the
+  question. No blank line between the question and its answer.** A
+  blank line there turns into an empty gap in the editor and gets
+  copied along with the question.
+- **One blank line before the next question,** the same as between any
+  two paragraphs, so each question-and-answer pair stays a clean block.
 - **Never put a bold question and its answer in the same paragraph.**
 - This maps straight onto the Rank Math FAQ block: the H3 text goes
   into the Question field, the paragraph below it into the Answer field.
@@ -261,8 +266,9 @@ feeling that it's probably in there — a count.
     keyword line, a 140–160 character meta description containing the
     focus keyword, and 5–7 comma-separated WordPress tags.
 12. FAQ format (see "FAQ format" above): every FAQ question is its own
-    H3, and its answer is a separate paragraph below it, never a bold
-    question and answer sharing one paragraph.
+    H3, its answer is one paragraph on the very next line with no blank
+    line between them, and a bold question never shares a paragraph
+    with its answer.
 
 ## The quality-check agent — briefing for the agent that reviews each finished article
 
@@ -303,8 +309,8 @@ just give a pass/fail:
    Math line, meta description, WordPress tags) missing from the row, or
    a meta description that promises something the article doesn't
    deliver, is also a finding. So is any FAQ entry where the question
-   and answer share one paragraph instead of an H3 question with the
-   answer below it.
+   and answer share one paragraph, or where a blank line separates an
+   H3 question from the answer on the line below it.
 7. **Tone drift.** Anything that reads like a different person wrote it
    than the persona in `03-TONE-AND-PERSONA.md` describes — too formal,
    too generic, too much like a template, not enough like the specific
