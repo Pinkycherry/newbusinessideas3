@@ -188,6 +188,39 @@ From now on, every article file, new or edited, follows this format:
 This applies to article files only. The three planning documents in
 this folder can stay as they are.
 
+## FAQ format: question and answer always separate (permanent)
+
+Added 2026-10-05 after the founder found FAQ entries written as one
+paragraph, a bold question followed by the plain answer on the same
+line. That layout can't go into the Rank Math FAQ block without
+splitting every entry by hand. Articles 1, 2, 6, 7, 8 and 9 were
+reformatted to fix this, with no wording changed.
+
+Every FAQ section, in every article, new or edited, follows this format:
+
+```
+## Frequently asked questions about this exact transition
+
+### Do I need to register for GST even if I'm below the threshold?
+
+Not legally, but there are real reasons to consider it...
+
+### How long does GST registration actually take once I apply?
+
+Usually...
+```
+
+- **The FAQ section heading is an H2.** Each question is its own H3,
+  ending in a question mark, in sentence case, never bold.
+- **The answer starts on its own line below the question,** as one or
+  more normal paragraphs, separated from the question by a blank line.
+- **Never put a bold question and its answer in the same paragraph.**
+- This maps straight onto the Rank Math FAQ block: the H3 text goes
+  into the Question field, the paragraph below it into the Answer field.
+- Bold lead-ins elsewhere in an article (a bold idea name followed by its
+  explanation, inside a normal section) are fine. This rule is for FAQ
+  entries.
+
 ## Before calling any article done, check:
 
 **Do check #2 as a literal count, not an impression.** Article 1 in this
@@ -227,6 +260,9 @@ feeling that it's probably in there — a count.
     fields" above): additional keywords comma-separated, the Rank Math
     keyword line, a 140–160 character meta description containing the
     focus keyword, and 5–7 comma-separated WordPress tags.
+12. FAQ format (see "FAQ format" above): every FAQ question is its own
+    H3, and its answer is a separate paragraph below it, never a bold
+    question and answer sharing one paragraph.
 
 ## The quality-check agent — briefing for the agent that reviews each finished article
 
@@ -266,7 +302,9 @@ just give a pass/fail:
    assigned band. Any publishing field (comma-separated keywords, Rank
    Math line, meta description, WordPress tags) missing from the row, or
    a meta description that promises something the article doesn't
-   deliver, is also a finding.
+   deliver, is also a finding. So is any FAQ entry where the question
+   and answer share one paragraph instead of an H3 question with the
+   answer below it.
 7. **Tone drift.** Anything that reads like a different person wrote it
    than the persona in `03-TONE-AND-PERSONA.md` describes — too formal,
    too generic, too much like a template, not enough like the specific

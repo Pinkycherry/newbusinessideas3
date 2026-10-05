@@ -82,15 +82,25 @@ For business ideas that need a bank loan at a meaningful scale, this total cost 
 
 ## Frequently asked questions on this exact decision
 
-**Can I switch from bootstrapped to financed partway through, once the business has proven itself?** Yes, and this is actually one of the cleanest uses of a loan. A business with a proven track record from its bootstrapped months is a far easier loan applicant than a brand-new idea with no history at all, since there's now real revenue and repayment capacity to point to rather than a projection.
+### Can I switch from bootstrapped to financed partway through, once the business has proven itself?
 
-**Is it ever smart to take a loan just to avoid using up personal savings, even if the business could technically self-fund?** Sometimes, specifically when keeping a personal cash reserve matters more than the interest cost of the loan. This is a legitimate reason to borrow, distinct from borrowing because the business structurally needs capital it cannot generate itself.
+Yes, and this is actually one of the cleanest uses of a loan. A business with a proven track record from its bootstrapped months is a far easier loan applicant than a brand-new idea with no history at all, since there's now real revenue and repayment capacity to point to rather than a projection.
 
-**What's the single biggest red flag in a loan application you'd warn someone about?** A repayment plan built entirely on best-case revenue projections with no accounting for a slow month. Every business has slow months. A loan structured without room for at least one is a loan structured to fail under perfectly normal conditions, not even unusually bad ones.
+### Is it ever smart to take a loan just to avoid using up personal savings, even if the business could technically self-fund?
 
-**Does Udyam registration actually affect the interest rate offered?** It affects access and priority far more directly than the headline rate. A registered MSME generally gets considered for schemes and priority lending categories an unregistered business simply isn't eligible for at all, which matters more in practice than a small rate difference would.
+Sometimes, specifically when keeping a personal cash reserve matters more than the interest cost of the loan. This is a legitimate reason to borrow, distinct from borrowing because the business structurally needs capital it cannot generate itself.
 
-**How much of my own money should I put in before asking a lender for the rest?** Most sensible schemes expect the founder to carry a real stake in the business, commonly somewhere in the range of 10 to 25 percent of the total project cost depending on the specific scheme and loan size, rather than financing the entire capital need through debt alone. This isn't an arbitrary rule a lender invented to be difficult. A founder with genuine skin in the business behaves differently, usually more carefully, than one financing the whole venture with someone else's money, and lenders price that difference into both their risk assessment and their willingness to extend credit at all.
+### What's the single biggest red flag in a loan application you'd warn someone about?
+
+A repayment plan built entirely on best-case revenue projections with no accounting for a slow month. Every business has slow months. A loan structured without room for at least one is a loan structured to fail under perfectly normal conditions, not even unusually bad ones.
+
+### Does Udyam registration actually affect the interest rate offered?
+
+It affects access and priority far more directly than the headline rate. A registered MSME generally gets considered for schemes and priority lending categories an unregistered business simply isn't eligible for at all, which matters more in practice than a small rate difference would.
+
+### How much of my own money should I put in before asking a lender for the rest?
+
+Most sensible schemes expect the founder to carry a real stake in the business, commonly somewhere in the range of 10 to 25 percent of the total project cost depending on the specific scheme and loan size, rather than financing the entire capital need through debt alone. This isn't an arbitrary rule a lender invented to be difficult. A founder with genuine skin in the business behaves differently, usually more carefully, than one financing the whole venture with someone else's money, and lenders price that difference into both their risk assessment and their willingness to extend credit at all.
 
 ## Two businesses, same idea, opposite financing choice
 

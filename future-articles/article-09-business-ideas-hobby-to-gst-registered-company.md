@@ -124,21 +124,37 @@ This is also the stage where [NSIC](https://www.nsic.co.in/) and government proc
 
 ## Frequently asked questions about this exact transition
 
-**Do I need to register for GST even if I'm below the threshold?** Not legally, but there are real reasons to anyway: voluntary registration lets a business claim input tax credit, sell to larger businesses that require a GST number from their vendors, and list on most major e-commerce marketplaces, several of which won't onboard an unregistered seller regardless of turnover.
+### Do I need to register for GST even if I'm below the threshold?
 
-**What if I'm already past the threshold and haven't registered yet?** Register now rather than waiting, since penalties accrue the longer the gap continues, and a voluntary late registration is treated far more leniently than one triggered by a tax department notice. [SIDBI](https://www.sidbi.in/en/) and most MSME lenders will also want to see clean GST compliance before extending any working capital, so the gap costs more than just the penalty itself.
+Not legally, but there are real reasons to anyway: voluntary registration lets a business claim input tax credit, sell to larger businesses that require a GST number from their vendors, and list on most major e-commerce marketplaces, several of which won't onboard an unregistered seller regardless of turnover.
 
-**Should I register the business as a sole proprietorship or something more formal?** Most hobby-to-business transitions start as sole proprietorships because the paperwork is lightest, and that's usually the right call initially. [Startup India](https://www.startupindia.gov.in/) recognition and a more formal structure, an LLP or private limited company, becomes worth the added complexity once outside investment, multiple co-founders, or significant liability exposure enter the picture, not before.
+### What if I'm already past the threshold and haven't registered yet?
 
-**How long does GST registration actually take once I apply?** Usually between three and seven working days when every document is submitted correctly the first time. Most delays come from a mismatch between the address proof submitted and the address entered on the application, which is a small, fixable detail worth double-checking before submission rather than after a rejection notice arrives.
+Register now rather than waiting, since penalties accrue the longer the gap continues, and a voluntary late registration is treated far more leniently than one triggered by a tax department notice. [SIDBI](https://www.sidbi.in/en/) and most MSME lenders will also want to see clean GST compliance before extending any working capital, so the gap costs more than just the penalty itself.
 
-**Can I run the hobby business from home, or do I need a commercial address for registration?** A home address works fine for GST and Udyam registration in the vast majority of cases, provided the documentation, a utility bill or rent agreement, is in the applicant's own name or has a proper no-objection certificate from whoever it's registered under. Hobby business ideas that make money from a spare room at home remain entirely legitimate once properly registered; nothing about working from home disqualifies a business from full compliance.
+### Should I register the business as a sole proprietorship or something more formal?
 
-**What happens if I register for GST but my sales stay small or seasonal?** Nothing bad, beyond the ongoing requirement to file returns on schedule even in zero-revenue months. Many legitimate hobby businesses, particularly festival-driven ones selling diyas, rakhis, or wedding-season items, operate profitably on a genuinely seasonal calendar, and registration doesn't require constant, year-round sales volume to stay valid or worthwhile.
+Most hobby-to-business transitions start as sole proprietorships because the paperwork is lightest, and that's usually the right call initially. [Startup India](https://www.startupindia.gov.in/) recognition and a more formal structure, an LLP or private limited company, becomes worth the added complexity once outside investment, multiple co-founders, or significant liability exposure enter the picture, not before.
 
-**Do I need a separate trademark or brand registration on top of GST and Udyam?** Not legally required to operate, but worth considering once a brand name starts carrying real recognition, since a trademark protects the name from being used by someone else in the same category later. This is usually a year-two or year-three decision for most hobby-businesses, not something to prioritize in the first few months of formalizing.
+### How long does GST registration actually take once I apply?
 
-**What if my hobby-business involves a partner, like a sibling or a spouse, rather than just me?** Decide the structure of that partnership on paper before revenue starts flowing in any serious volume, even if it's just a simple written agreement covering who owns what share and how decisions get made. A surprising number of otherwise successful hobby-businesses run into real trouble not from tax authorities or customers, but from an undocumented understanding between two family members that each side remembers slightly differently once real money starts arriving.
+Usually between three and seven working days when every document is submitted correctly the first time. Most delays come from a mismatch between the address proof submitted and the address entered on the application, which is a small, fixable detail worth double-checking before submission rather than after a rejection notice arrives.
+
+### Can I run the hobby business from home, or do I need a commercial address for registration?
+
+A home address works fine for GST and Udyam registration in the vast majority of cases, provided the documentation, a utility bill or rent agreement, is in the applicant's own name or has a proper no-objection certificate from whoever it's registered under. Hobby business ideas that make money from a spare room at home remain entirely legitimate once properly registered; nothing about working from home disqualifies a business from full compliance.
+
+### What happens if I register for GST but my sales stay small or seasonal?
+
+Nothing bad, beyond the ongoing requirement to file returns on schedule even in zero-revenue months. Many legitimate hobby businesses, particularly festival-driven ones selling diyas, rakhis, or wedding-season items, operate profitably on a genuinely seasonal calendar, and registration doesn't require constant, year-round sales volume to stay valid or worthwhile.
+
+### Do I need a separate trademark or brand registration on top of GST and Udyam?
+
+Not legally required to operate, but worth considering once a brand name starts carrying real recognition, since a trademark protects the name from being used by someone else in the same category later. This is usually a year-two or year-three decision for most hobby-businesses, not something to prioritize in the first few months of formalizing.
+
+### What if my hobby-business involves a partner, like a sibling or a spouse, rather than just me?
+
+Decide the structure of that partnership on paper before revenue starts flowing in any serious volume, even if it's just a simple written agreement covering who owns what share and how decisions get made. A surprising number of otherwise successful hobby-businesses run into real trouble not from tax authorities or customers, but from an undocumented understanding between two family members that each side remembers slightly differently once real money starts arriving.
 
 ## The part of this that isn't actually about paperwork
 
