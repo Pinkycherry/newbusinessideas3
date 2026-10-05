@@ -137,6 +137,29 @@ the same device number repeats later in the batch. Record the choice in
 the log table at the bottom of `01-RESEARCH-TABLE-50-ARTICLES.md` as each
 article gets written, and read that log before starting the next one.
 
+## File format: one line per paragraph (permanent, every article)
+
+Added 2026-10-05 after the founder pasted articles into Elementor and
+the text broke short of the column, leaving empty space on the right.
+The cause was the article files: every paragraph was hard-wrapped at
+about 70 characters, and the editor turned each of those line breaks
+into a forced `<br>`. Articles 1-16 were reformatted to fix this, with
+no wording changed.
+
+From now on, every article file, new or edited, follows this format:
+
+- **Each paragraph is a single line.** Never press Enter inside a
+  paragraph. A blank line separates one paragraph from the next.
+- **Headings, table rows and list items** each sit on their own line,
+  as normal Markdown. A list item that runs long stays on one line too.
+- **Never hard-wrap prose** at a fixed width, in a first draft or in an
+  edit. If a tool or editor wraps lines, unwrap before saving.
+- **Edits keep the format.** When fixing a sentence in an existing
+  article, the paragraph must still be one line afterwards.
+
+This applies to article files only. The three planning documents in
+this folder can stay as they are.
+
 ## Before calling any article done, check:
 
 **Do check #2 as a literal count, not an impression.** Article 1 in this
@@ -169,6 +192,9 @@ feeling that it's probably in there — a count.
    opinionated, not hedging (Authoritativeness); every number and link
    traces to something real (Trustworthiness). This is the AdSense bar —
    check it on every article, not just the first few.
+10. One line per paragraph: no line breaks inside any paragraph (see
+    "File format" above), so the text reflows correctly in Elementor or
+    any other editor.
 
 ## The quality-check agent — briefing for the agent that reviews each finished article
 
