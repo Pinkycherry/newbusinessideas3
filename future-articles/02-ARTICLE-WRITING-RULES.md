@@ -83,6 +83,34 @@ a ceiling, don't stop short of the floor.
   batch checks that its own H1 actually contains its own focus keyword
   before being considered done.
 
+## Publishing fields: copy-paste ready for Rank Math and WordPress
+
+Added 2026-10-05 after the founder tried to paste keywords into Rank Math
+and the semicolon-separated list came across as one long phrase. Every
+row in `01-RESEARCH-TABLE-50-ARTICLES.md` carries these four fields, and
+every new row gets them before the article is written:
+
+- **Additional keywords (9):** separated by commas, never semicolons or
+  colons, so the line pastes straight into Rank Math as separate keywords.
+- **Rank Math keywords (focus first, paste as-is):** the focus keyword
+  followed by the nine additional keywords, all comma-separated, on one
+  line. Copy everything after the colon and paste it into the Rank Math
+  focus keyword box.
+- **SEO meta description:** 140–160 characters, contains the focus
+  keyword (punctuation between its words is fine), describes only what
+  the article actually covers, and follows every house rule: no em dash,
+  no emoji, no fabricated number, no AI vendor named. The character count
+  sits in the label, never inside the description text, so the text can
+  be copied clean.
+- **WordPress tags:** 5–7 tags, comma-separated, Title Case, so the line
+  pastes straight into the WordPress tags box. Reuse the same tag wording
+  across articles that share a topic (for example `MSME Loans`,
+  `GST Registration`, `Small Business Finance`) so tag archives group
+  properly, and end every list with the site-wide `Small Business India`.
+
+Any field on any row that is missing or uses semicolons is a finding, the
+same as a missing focus keyword.
+
 ## Structure — dynamic, never templated
 
 Every article's heading structure (H1, every H2, every H3, every table
@@ -195,6 +223,10 @@ feeling that it's probably in there — a count.
 10. One line per paragraph: no line breaks inside any paragraph (see
     "File format" above), so the text reflows correctly in Elementor or
     any other editor.
+11. Publishing fields complete in the article's row (see "Publishing
+    fields" above): additional keywords comma-separated, the Rank Math
+    keyword line, a 140–160 character meta description containing the
+    focus keyword, and 5–7 comma-separated WordPress tags.
 
 ## The quality-check agent — briefing for the agent that reviews each finished article
 
@@ -231,7 +263,10 @@ just give a pass/fail:
    don't match what the article's own row in the research table assigned,
    or repeat the immediately preceding article's devices. The structure
    doesn't match its planned row. The word count falls outside its
-   assigned band.
+   assigned band. Any publishing field (comma-separated keywords, Rank
+   Math line, meta description, WordPress tags) missing from the row, or
+   a meta description that promises something the article doesn't
+   deliver, is also a finding.
 7. **Tone drift.** Anything that reads like a different person wrote it
    than the persona in `03-TONE-AND-PERSONA.md` describes — too formal,
    too generic, too much like a template, not enough like the specific
