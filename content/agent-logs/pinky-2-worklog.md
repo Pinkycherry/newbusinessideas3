@@ -15,3 +15,8 @@ Own table: `public.ideas_pinky_2` · Range C035–C067 · Times in UTC.
 - Sources not usable this run (not cited): Air India pet fees (site 503), PIB/labour.gov.in construction worker counts (403), isbn.gov.in (connection reset), safety-shoe retail prices (listings showed no price).
 - Proposed related links (not saved; internal_link_anchors null): PK2-C042-S05-0001 → IDEA-00533; PK2-C037-S06-0001 → IDEA-00688, IDEA-00222; PK2-C051-S07-0001 → IDEA-00448, IDEA-00472.
 - Paused for coordinator review.
+
+## Run 2 · production (amended brief: no research, 37 columns, 100 ideas in 10 batches)
+
+- Coordinator reset cleared the pilot rows and dropped research_facts and external_links. Schema re-read: 37 columns. Count before: 0.
+- 2026-10-08T18:29Z batch 1 saved and read back; cumulative 10/100. IDs: PK2-C035-S01-0001, PK2-C035-S02-0001, PK2-C035-S04-0001, PK2-C035-S06-0001, PK2-C035-S10-0001, PK2-C036-S01-0001, PK2-C036-S03-0001, PK2-C036-S06-0001, PK2-C037-S06-0001, PK2-C037-S08-0001. Skipped as duplicates of live ideas during planning: paper bags (IDEA-00463), workplace wellness (IDEA-00053), doorstep pet grooming (IDEA-00688), dog walking (IDEA-00303), pet sitting (IDEA-00222), seniors tech hotline (IDEA-00093), school carpool (IDEA-00098). Errors: none.
