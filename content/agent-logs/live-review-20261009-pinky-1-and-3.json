@@ -1,0 +1,1214 @@
+{
+  "batch": "live_review_20261009_pinky_1_and_3",
+  "requested_at": "2026-10-09T01:13:30+05:30",
+  "source_agents": [
+    "pinky_1",
+    "pinky_3"
+  ],
+  "expected_rows": 200,
+  "original_live_rows": 679,
+  "publication_status": "completed",
+  "source_tables_preserved": true,
+  "rows": [
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C002-S07-0001",
+      "slug": "hot-meal-vending-kiosk-for-hospitals",
+      "title": "Hot Meal Vending Kiosk for Hospital Waiting Areas"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C003-S01-0001",
+      "slug": "live-dosa-counter-catering-for-functions",
+      "title": "Live Dosa Counter Catering for Functions"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C004-S01-0001",
+      "slug": "tulsi-and-lemongrass-herbal-tea-blends",
+      "title": "Tulsi and Lemongrass Herbal Tea Blends"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C005-S06-0001",
+      "slug": "zero-waste-refill-store-for-staples",
+      "title": "Zero Waste Refill Store for Staples"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C007-S02-0001",
+      "slug": "green-gram-contract-farming-for-dal-mills",
+      "title": "Green Gram Contract Farming for Dal Mills"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C008-S02-0001",
+      "slug": "hydroponic-lettuce-and-basil-supply-to-cafes",
+      "title": "Hydroponic Lettuce and Basil Supply to Cafes"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C009-S08-0001",
+      "slug": "duck-farming-with-paddy-fields",
+      "title": "Duck Farming with Paddy Fields"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C010-S07-0001",
+      "slug": "guppy-and-molly-breeding-for-aquarium-shops",
+      "title": "Guppy and Molly Breeding for Aquarium Shops"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C011-S09-0001",
+      "slug": "mobile-mango-sorting-and-grading-service",
+      "title": "Mobile Mango Sorting and Grading Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C001-S01-0001",
+      "slug": "tamarind-date-chutney-supply-for-chaat-vendors",
+      "title": "Tamarind and Date Chutney Supply for Chaat Vendors"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C012-S07-0001",
+      "slug": "cocopeat-potting-mix-blending-business",
+      "title": "Cocopeat and Potting Mix Blending Business"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C013-S05-0001",
+      "slug": "flour-mill-stone-dressing-and-chakki-service",
+      "title": "Flour Mill Stone Dressing and Chakki Maintenance Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C014-S04-0001",
+      "slug": "solar-cold-room-rental-for-vegetable-traders",
+      "title": "Solar Cold Room Rental for Vegetable Traders"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C015-S03-0001",
+      "slug": "banana-fibre-extraction-from-pseudostems",
+      "title": "Banana Fibre Extraction from Pseudostems"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C016-S02-0001",
+      "slug": "bamboo-gazebos-and-huts-for-farmstays",
+      "title": "Bamboo Gazebos and Huts for Farmstays and Resorts"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C017-S01-0001",
+      "slug": "gerbera-cut-flower-supply-to-florists",
+      "title": "Gerbera Cut Flower Supply to Florists"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C018-S04-0001",
+      "slug": "washable-orthopaedic-dog-beds",
+      "title": "Washable Orthopaedic Dog Beds Made to Order"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C019-S05-0001",
+      "slug": "livestock-sample-courier-to-veterinary-labs",
+      "title": "Livestock Sample Courier to Veterinary Labs"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C020-S03-0001",
+      "slug": "guided-wetland-birdwatching-walks",
+      "title": "Guided Wetland Birdwatching Walks"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C021-S02-0001",
+      "slug": "homestay-turnover-cleaning-service",
+      "title": "Homestay and Short Stay Turnover Cleaning Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C022-S05-0001",
+      "slug": "bridal-lehenga-and-sherwani-care-service",
+      "title": "Bridal Lehenga and Sherwani Care and Storage Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C023-S04-0001",
+      "slug": "locked-house-check-visits-for-absent-owners",
+      "title": "Locked House Check Visits for Absent Owners"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C024-S03-0001",
+      "slug": "concealed-pipe-leak-detection-for-apartments",
+      "title": "Concealed Pipe Leak Detection for Apartments"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C028-S02-0001",
+      "slug": "old-wardrobe-interior-retrofit-service",
+      "title": "Old Wardrobe Interior Retrofit Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C001-S06-0001",
+      "slug": "chikki-and-til-bar-making-business",
+      "title": "Chikki and Til Bar Making Business"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C002-S01-0001",
+      "slug": "khichdi-bowl-quick-service-outlet",
+      "title": "Khichdi Bowl Quick Service Outlet"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C002-S08-0001",
+      "slug": "regional-home-cuisine-pop-up-dinners",
+      "title": "Regional Home Cuisine Pop Up Dinners"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C003-S02-0001",
+      "slug": "high-tea-catering-for-corporate-trainings",
+      "title": "High Tea and Snack Catering for Corporate Trainings"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C003-S08-0001",
+      "slug": "private-chef-for-home-dinner-parties",
+      "title": "Private Chef for Home Dinner Parties"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C025-S05-0001",
+      "slug": "home-electrical-safety-audit-service",
+      "title": "Home Electrical Safety Audit Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C026-S06-0001",
+      "slug": "kitchen-chimney-deep-cleaning-service",
+      "title": "Kitchen Chimney Deep Cleaning Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C027-S08-0001",
+      "slug": "second-hand-appliance-inspection-service",
+      "title": "Second Hand Appliance Inspection Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C029-S08-0001",
+      "slug": "wallpaper-installation-for-rented-homes",
+      "title": "Wallpaper and Wall Decal Installation for Rented Homes"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C030-S03-0001",
+      "slug": "balcony-privacy-screen-planters",
+      "title": "Balcony Privacy Screen Planters"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C031-S05-0001",
+      "slug": "bed-bug-treatment-for-hostels-and-pgs",
+      "title": "Bed Bug Treatment for Hostels and PG Accommodations"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C032-S02-0001",
+      "slug": "digital-door-lock-installation-for-rental-flats",
+      "title": "Digital Door Lock Installation for Rental Flats"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C033-S01-0001",
+      "slug": "wardrobe-decluttering-and-seasonal-rotation",
+      "title": "Wardrobe Decluttering and Seasonal Rotation Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C034-S07-0001",
+      "slug": "bathroom-grab-bar-installation-for-elderly",
+      "title": "Bathroom Grab Bar and Safety Installation for Elderly Parents"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C001-S02-0001",
+      "slug": "spice-cleaning-and-grinding-job-work-unit",
+      "title": "Spice Cleaning and Grinding Job Work Unit"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C001-S03-0001",
+      "slug": "fresh-idli-dosa-batter-business",
+      "title": "Fresh Idli and Dosa Batter Business"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C004-S03-0001",
+      "slug": "kokum-and-aam-panna-seasonal-drinks",
+      "title": "Bottled Kokum and Aam Panna Summer Drinks"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C004-S10-0001",
+      "slug": "chaas-buttermilk-supply-to-canteens",
+      "title": "Masala Chaas Supply to Canteens and Offices"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C004-S09-0001",
+      "slug": "sattu-drink-premix-packs",
+      "title": "Instant Sattu Drink Premix Packs"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C005-S02-0001",
+      "slug": "chilled-chicken-cut-shop-with-preorders",
+      "title": "Hygienic Chilled Chicken Cut Shop with Pre Orders"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C005-S03-0001",
+      "slug": "cleaned-fish-doorstep-subscription",
+      "title": "Cleaned Fish Doorstep Subscription for Apartments"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C005-S08-0001",
+      "slug": "regional-speciality-food-store",
+      "title": "Regional Speciality Food Store"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C006-S01-0001",
+      "slug": "paneer-and-dairy-supply-route-for-restaurants",
+      "title": "Paneer and Dairy Supply Route for Restaurants"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C006-S10-0001",
+      "slug": "rural-kirana-restocking-van",
+      "title": "Rural Kirana Restocking Van"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C006-S09-0001",
+      "slug": "near-expiry-packaged-food-clearance-outlet",
+      "title": "Near Expiry Packaged Food Clearance Outlet"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C007-S05-0001",
+      "slug": "baby-corn-contract-farming-for-hotels",
+      "title": "Baby Corn Contract Farming for Hotels"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C007-S07-0001",
+      "slug": "ginger-seed-rhizome-farming",
+      "title": "Ginger Farming with Seed Rhizome Sales"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C007-S08-0001",
+      "slug": "sunn-hemp-seed-production",
+      "title": "Sunn Hemp Seed and Fibre Production"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C008-S07-0001",
+      "slug": "edible-flower-growing-for-bakers",
+      "title": "Edible Flower Growing for Bakers and Cafes"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C008-S08-0001",
+      "slug": "fresh-sprouts-packs-for-gyms-and-offices",
+      "title": "Fresh Sprouts Packs for Gyms and Offices"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C009-S09-0001",
+      "slug": "small-piggery-unit",
+      "title": "Small Piggery Unit for Piglets and Pork"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C009-S10-0001",
+      "slug": "black-soldier-fly-larvae-farming",
+      "title": "Black Soldier Fly Larvae Farming for Poultry and Fish Feed"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C010-S03-0001",
+      "slug": "freshwater-prawn-farming-in-farm-ponds",
+      "title": "Freshwater Prawn Farming in Farm Ponds"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C010-S06-0001",
+      "slug": "seaweed-raft-farming-for-coastal-families",
+      "title": "Seaweed Raft Farming for Coastal Families"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C011-S08-0001",
+      "slug": "orchard-harvest-labour-crew-coordination",
+      "title": "Orchard Harvest Labour Crew Coordination"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C011-S10-0001",
+      "slug": "absentee-landowner-farm-management",
+      "title": "Farm Management for Absentee Landowners"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C012-S08-0001",
+      "slug": "fruit-bagging-covers-supply",
+      "title": "Fruit Bagging Covers Supply and Fitting Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C012-S10-0001",
+      "slug": "improved-hand-tools-for-women-farmers",
+      "title": "Improved Hand Tools for Women Farmers"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C013-S01-0001",
+      "slug": "bakery-oven-repair-and-servicing",
+      "title": "Bakery Oven and Equipment Servicing for Small Bakeries"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C014-S08-0001",
+      "slug": "banana-and-mango-ripening-chamber-service",
+      "title": "Banana and Mango Ripening Chamber Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C014-S05-0001",
+      "slug": "insulated-last-mile-delivery-for-dairy-and-bakery",
+      "title": "Insulated Last Mile Delivery for Dairy and Bakery Brands"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C015-S07-0001",
+      "slug": "biochar-from-crop-residue",
+      "title": "Biochar from Crop Residue for Farms and Nurseries"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C015-S09-0001",
+      "slug": "spent-grain-collection-for-dairy-farmers",
+      "title": "Spent Grain Collection for Dairy Farmers"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C016-S10-0001",
+      "slug": "natural-plant-dye-extracts-for-weavers",
+      "title": "Natural Plant Dye Extracts for Handloom Weavers"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C016-S04-0001",
+      "slug": "lac-cultivation-on-host-trees",
+      "title": "Lac Cultivation on Host Trees"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C017-S07-0001",
+      "slug": "bonsai-nursery-and-workshops",
+      "title": "Bonsai Nursery and Workshops"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C017-S09-0001",
+      "slug": "temple-flower-waste-dried-flower-decor",
+      "title": "Temple Flower Waste into Dried Flower Decor"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C017-S10-0001",
+      "slug": "tissue-culture-plantlet-hardening-nursery",
+      "title": "Tissue Culture Plantlet Hardening Nursery"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C018-S07-0001",
+      "slug": "compostable-dog-waste-bag-supply",
+      "title": "Compostable Dog Waste Bags and Scooper Stations for Societies"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C018-S08-0001",
+      "slug": "pet-travel-crates-and-car-seat-covers",
+      "title": "Pet Travel Crates and Car Seat Covers"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C019-S01-0001",
+      "slug": "mastitis-screening-camps-for-dairy-farmers",
+      "title": "Mastitis Screening Camps for Dairy Farmers"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C019-S09-0001",
+      "slug": "relief-veterinary-assistant-staffing",
+      "title": "Relief Veterinary Assistant Staffing for Pet Clinics"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C020-S04-0001",
+      "slug": "stargazing-nights-at-farmstays",
+      "title": "Stargazing Nights at Farmstays"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C020-S07-0001",
+      "slug": "heritage-cycling-tours-old-city",
+      "title": "Heritage Cycling Tours in Old City Areas"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C021-S07-0001",
+      "slug": "apartment-window-and-balcony-glass-cleaning",
+      "title": "Apartment Window and Balcony Glass Cleaning"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C021-S10-0001",
+      "slug": "bulk-floor-cleaner-refill-supply-for-societies",
+      "title": "Bulk Floor Cleaner and Phenyl Refill Supply for Housing Societies"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C022-S06-0001",
+      "slug": "uniform-laundry-contracts-for-security-and-hotels",
+      "title": "Uniform Laundry Contracts for Security Agencies and Hotels"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C022-S07-0001",
+      "slug": "curtain-and-sofa-cover-laundry-pickup",
+      "title": "Curtain and Sofa Cover Laundry Pickup Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C023-S03-0001",
+      "slug": "small-apartment-building-maintenance-contracts",
+      "title": "Maintenance Contracts for Small Apartment Buildings"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C024-S06-0001",
+      "slug": "domestic-pressure-pump-installation-and-service",
+      "title": "Domestic Pressure Pump Installation and Servicing"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C024-S09-0001",
+      "slug": "water-saving-fixture-retrofit-for-offices",
+      "title": "Water Saving Fixture Retrofit for Offices and Institutions"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C025-S03-0001",
+      "slug": "solar-compound-lighting-for-houses",
+      "title": "Solar Compound and Garden Lighting for Houses and Farmhouses"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C025-S06-0001",
+      "slug": "ceiling-fan-servicing-and-bldc-upgrade",
+      "title": "Ceiling Fan Servicing and Energy Efficient Fan Upgrade"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C026-S04-0001",
+      "slug": "bathroom-ventilation-and-damp-control",
+      "title": "Bathroom Ventilation and Damp Control for Homes"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C027-S09-0001",
+      "slug": "refurbished-appliances-for-renters",
+      "title": "Refurbished Washing Machines and Fridges for Renters"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C023-S05-0001",
+      "slug": "pre-monsoon-home-readiness-service",
+      "title": "Pre Monsoon Home Readiness Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C028-S04-0001",
+      "slug": "wall-mounted-folding-desks-and-murphy-beds",
+      "title": "Wall Mounted Folding Desks and Murphy Beds for Small Flats"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C028-S08-0001",
+      "slug": "door-alignment-and-mosquito-mesh-frames",
+      "title": "Door Alignment and Mosquito Mesh Frame Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C029-S07-0001",
+      "slug": "epoxy-floor-coating-for-shops-and-garages",
+      "title": "Epoxy Floor Coating for Shops, Workshops and Garages"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C029-S06-0001",
+      "slug": "grill-and-gate-rust-repainting",
+      "title": "Grill and Gate Rust Removal and Repainting"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C030-S04-0001",
+      "slug": "tree-pruning-service-for-societies-and-bungalows",
+      "title": "Tree Pruning Service for Housing Societies and Bungalows"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C030-S05-0001",
+      "slug": "drip-irrigation-kits-for-home-gardens",
+      "title": "Drip Irrigation Kits and Installation for Home Gardens"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C031-S02-0001",
+      "slug": "termite-treatment-for-homes-and-furniture",
+      "title": "Termite Treatment for Homes and Furniture"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C032-S06-0001",
+      "slug": "smoke-detector-installation-for-homes-and-shops",
+      "title": "Smoke Detector Installation for Homes and Small Shops"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C033-S06-0001",
+      "slug": "moving-and-unpacking-setup-service",
+      "title": "Unpacking and New Home Setup Service"
+    },
+    {
+      "agent": "pinky_1",
+      "idea_id": "PK1-C034-S10-0001",
+      "slug": "renovation-project-coordinator-for-homeowners",
+      "title": "Renovation Project Coordinator for Busy Homeowners"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C068-S09-0001",
+      "slug": "measured-waterproofing-kits-contractors",
+      "title": "Measured Waterproofing Material Kits for Small Contractors"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C069-S03-0001",
+      "slug": "millet-processing-equipment-setup-groups",
+      "title": "Small Millet Processing Equipment Setup for Producer Groups"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C070-S04-0001",
+      "slug": "produce-cold-room-condenser-care",
+      "title": "Preventive Condenser Care for Small Produce Cold Rooms"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C071-S08-0001",
+      "slug": "food-brand-packaging-transit-checks",
+      "title": "In-House Transit Abuse Checks for Small Food Brands"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C072-S05-0001",
+      "slug": "apartment-food-scrap-compost-operations",
+      "title": "Apartment Food-Scrap Segregation and Compost Operations"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C073-S05-0001",
+      "slug": "retail-shop-handover-cleaning",
+      "title": "Dust-Controlled Handover Cleaning for New Retail Shops"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C074-S05-0001",
+      "slug": "community-event-check-in-crews",
+      "title": "Trained Check-In Crews for Community Events"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C075-S04-0001",
+      "slug": "hotel-linen-replenishment-procurement",
+      "title": "Linen Replenishment Procurement for Independent Hotels"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C076-S06-0001",
+      "slug": "online-seller-return-inspection-repacking",
+      "title": "Return Inspection and Repacking for Small Online Sellers"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C077-S10-0001",
+      "slug": "furniture-workshop-shared-dispatch-planning",
+      "title": "Shared Dispatch Planning for Small Furniture Workshops"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C078-S08-0001",
+      "slug": "appliance-service-parts-shuttle-routes",
+      "title": "Scheduled Repair-Part Shuttles for Appliance Service Centres"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C079-S03-0001",
+      "slug": "coir-producer-export-document-coordination",
+      "title": "Export Document Coordination for Small Coir Producers"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C080-S02-0001",
+      "slug": "regional-distributor-catalogue-data-cleanup",
+      "title": "Catalogue Data Cleanup Desk for Regional Distributors"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C081-S06-0001",
+      "slug": "wholesale-dispatch-exception-tracker",
+      "title": "Dispatch Exception Tracker for Small Wholesale Fleets"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C082-S06-0001",
+      "slug": "construction-invoice-approval-routing",
+      "title": "Human-Approved Invoice Routing for Construction Firms"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C083-S07-0001",
+      "slug": "small-office-phishing-practice",
+      "title": "Role-Based Phishing Practice for Small Office Teams"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C084-S04-0001",
+      "slug": "job-shop-downtime-reason-dashboard",
+      "title": "Machine Downtime Reason Dashboards for Job Shops"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C085-S09-0001",
+      "slug": "agency-shared-drive-access-handover",
+      "title": "Shared-Drive Access and Staff Handover Support for Agencies"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C086-S05-0001",
+      "slug": "equipment-installer-service-ticket-portal",
+      "title": "Service-Ticket Portals for Equipment Installers"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C087-S10-0001",
+      "slug": "consumable-distributor-reorder-reminders",
+      "title": "Reorder Reminder Campaigns for Consumable Distributors"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C088-S08-0001",
+      "slug": "bilingual-machine-use-guides-makers",
+      "title": "Bilingual Machine-Use Guides for Local Equipment Makers"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C089-S05-0001",
+      "slug": "remote-booking-desk-art-classes",
+      "title": "Remote Booking Desk for Independent Art Classes"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C090-S08-0001",
+      "slug": "msme-investor-update-deck-design",
+      "title": "Plain-Language Investor Update Decks for Growing MSMEs"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C091-S10-0001",
+      "slug": "college-commuter-study-routine-coaching",
+      "title": "Study Routine Coaching for First-Generation College Commuters"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C092-S08-0001",
+      "slug": "warehouse-pick-pack-practice-training",
+      "title": "Mock Pick-and-Pack Training for New Warehouse Workers"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C093-S09-0001",
+      "slug": "trade-graduate-apprentice-portfolio-support",
+      "title": "Apprentice Application Portfolio Support for Trade Graduates"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C094-S07-0001",
+      "slug": "repair-shop-spare-parts-stock-ledger",
+      "title": "Spare-Parts Stock Ledger Service for Repair Shops"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C095-S09-0001",
+      "slug": "upi-payment-safety-workshops-traders",
+      "title": "UPI Payment Safety Workshops for Market Traders"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C096-S03-0001",
+      "slug": "private-company-records-calendar-support",
+      "title": "Corporate Records Calendar for Small Private Companies"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C097-S07-0001",
+      "slug": "step-free-family-trip-mobility-aid-planning",
+      "title": "Step-Free Family Trip Planning With Mobility-Aid Checks"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C098-S04-0001",
+      "slug": "independent-guesthouse-arrival-setup",
+      "title": "Arrival Experience Setup for Independent Guesthouses"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C099-S10-0001",
+      "slug": "dental-missed-appointment-follow-up-desk",
+      "title": "Missed-Appointment Follow-Up Desk for Dental Practices"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C100-S06-0001",
+      "slug": "weekend-market-display-rack-rentals",
+      "title": "Weekend Display Rack Rentals for Market Vendors"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C068-S06-0001",
+      "slug": "cut-size-acoustic-panels-recording-rooms",
+      "title": "Cut-to-Size Acoustic Panels for Small Recording Rooms"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C069-S05-0001",
+      "slug": "cottage-food-pouch-sealer-supply",
+      "title": "Pouch Sealer Demonstration and Supply for Cottage Food Makers"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C070-S03-0001",
+      "slug": "fabrication-shop-compressed-air-leak-surveys",
+      "title": "Compressed-Air Leak Surveys for Fabrication Shops"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C071-S06-0001",
+      "slug": "workshop-calibration-due-date-coordination",
+      "title": "Calibration Due-Date Coordination for Small Workshops"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C072-S06-0001",
+      "slug": "textile-workshop-energy-use-walkthroughs",
+      "title": "Energy-Use Walkthroughs for Small Textile Workshops"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C073-S08-0001",
+      "slug": "high-street-shop-sign-cleaning",
+      "title": "Safe Exterior Sign Cleaning for High-Street Shops"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C074-S02-0001",
+      "slug": "seasonal-book-distributor-catalogue-clerks",
+      "title": "Temporary Catalogue Clerks for Seasonal Book Distributors"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C075-S10-0001",
+      "slug": "restaurant-supplier-qualification-files",
+      "title": "Supplier Qualification Files for Independent Restaurant Groups"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C076-S07-0001",
+      "slug": "professional-firm-paper-archive-storage",
+      "title": "Indexed Paper Archive Storage for Small Professional Firms"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C077-S07-0001",
+      "slug": "grower-chilled-produce-freight-coordination",
+      "title": "Chilled Produce Freight Coordination for Small Grower Groups"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C078-S06-0001",
+      "slug": "bulky-appliance-staircase-delivery",
+      "title": "Bulky Appliance Delivery With Staircase and Handover Checks"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C079-S10-0001",
+      "slug": "ceramic-homeware-export-product-adaptation",
+      "title": "Export-Ready Product Adaptation for Ceramic Homeware Makers"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C080-S04-0001",
+      "slug": "factory-shift-attendance-reconciliation",
+      "title": "Shift Attendance Reconciliation Desk for Small Factories"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C081-S04-0001",
+      "slug": "tailoring-course-practice-log-app",
+      "title": "Practice Log App for Community Tailoring Courses"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C082-S09-0001",
+      "slug": "equipment-service-knowledge-assistant",
+      "title": "Searchable Repair Knowledge Assistant for Equipment Service Desks"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C083-S08-0001",
+      "slug": "small-manufacturer-ransomware-tabletop",
+      "title": "Ransomware Response Tabletop for Small Manufacturers"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C084-S06-0001",
+      "slug": "farmer-cooperative-input-purchase-dashboard",
+      "title": "Input Purchase Planning Dashboards for Farmer Cooperatives"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C085-S08-0001",
+      "slug": "accounting-practice-cloud-file-migration",
+      "title": "Cloud File Migration for Small Accounting Practices"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C086-S07-0001",
+      "slug": "repair-ticket-parts-inventory-integration",
+      "title": "Parts-Inventory Integration for Repair Ticket Systems"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C087-S06-0001",
+      "slug": "handloom-cooperative-marketplace-listing-operations",
+      "title": "Marketplace Listing Operations for Handloom Cooperatives"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C088-S06-0001",
+      "slug": "community-education-podcast-dialogue-cleanup",
+      "title": "Dialogue Cleanup for Community Education Podcasts"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C089-S10-0001",
+      "slug": "harmonium-bellows-home-bench-repair",
+      "title": "Home Bench Harmonium Bellows Repair Service"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C090-S06-0001",
+      "slug": "small-clinic-wayfinding-sign-system",
+      "title": "Wayfinding Sign Systems for Small Multi-Room Clinics"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C091-S05-0001",
+      "slug": "computing-fundamentals-non-computer-students",
+      "title": "Computing Fundamentals Tutorials for Non-Computer College Students"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C092-S05-0001",
+      "slug": "salon-assistant-tool-hygiene-practice",
+      "title": "Salon Tool-Hygiene Practice Sessions for New Assistants"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C093-S02-0001",
+      "slug": "fabrication-welding-skill-trial-coordination",
+      "title": "Welding Skill Trial Coordination for Fabrication Employers"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C094-S02-0001",
+      "slug": "producer-cooperative-vendor-statement-reconciliation",
+      "title": "Vendor Statement Reconciliation for Producer Cooperatives"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C095-S10-0001",
+      "slug": "tiny-manufacturer-cash-flow-scenario-workshops",
+      "title": "Cash-Flow Scenario Workshops for Tiny Manufacturing Firms"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C096-S01-0001",
+      "slug": "small-exporter-contract-obligation-calendar",
+      "title": "Contract Obligation Calendar for Small Exporters"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C097-S05-0001",
+      "slug": "college-craft-cluster-visit-planning",
+      "title": "Craft Cluster Visit Planning for Small College Groups"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C098-S09-0001",
+      "slug": "guesthouse-guest-message-inbox-operations",
+      "title": "Guest Message Inbox Operations for Independent Guesthouses"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C099-S03-0001",
+      "slug": "diagnostic-centre-referral-document-intake",
+      "title": "Diagnostic Centre Referral Document Intake Service"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C100-S08-0001",
+      "slug": "reusable-fabric-gift-wrap-small-batch",
+      "title": "Weekend Batch Production of Reusable Fabric Gift Wrap"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C068-S02-0001",
+      "slug": "precast-institutional-courtyard-planting-troughs",
+      "title": "Precast Planting Troughs for Institutional Courtyards"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C069-S07-0001",
+      "slug": "small-food-plant-modular-dosing-skids",
+      "title": "Modular Dosing Skids for Small Food Plants"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C070-S08-0001",
+      "slug": "packaging-line-sensor-fault-tracing",
+      "title": "Sensor Fault Tracing for Small Packaging Lines"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C071-S05-0001",
+      "slug": "small-dye-house-fabric-shade-consistency-checks",
+      "title": "Fabric Shade Consistency Checks for Small Dye Houses"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C072-S02-0001",
+      "slug": "industrial-cooling-tower-water-use-logs",
+      "title": "Cooling-Tower Water Use Logs for Small Industrial Sites"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C073-S04-0001",
+      "slug": "bakery-production-changeover-cleaning-crew",
+      "title": "Bakery Production Changeover Cleaning Crew"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C074-S06-0001",
+      "slug": "regional-warehouse-inventory-count-crew-staffing",
+      "title": "Inventory Count Crew Staffing for Regional Warehouses"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C075-S07-0001",
+      "slug": "school-bus-fleet-tyre-specification-sourcing",
+      "title": "Tyre Specification Sourcing for School Bus Fleets"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C076-S04-0001",
+      "slug": "nursery-seed-kit-kitting-fulfilment",
+      "title": "Seed-Kit Kitting and Fulfilment for Nursery Brands"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C077-S08-0001",
+      "slug": "industrial-machine-move-route-survey",
+      "title": "Industrial Machine Move Route Survey Service"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C078-S09-0001",
+      "slug": "shoe-brand-repairable-footwear-return-collection",
+      "title": "Repairable Footwear Return Collection for Shoe Brands"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C079-S06-0001",
+      "slug": "component-importer-overseas-supplier-dossier",
+      "title": "Overseas Supplier Document Dossier for Component Importers"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C080-S08-0001",
+      "slug": "equipment-maker-dealer-lead-reconciliation-desk",
+      "title": "Dealer Lead Reconciliation Desk for Equipment Makers"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C081-S01-0001",
+      "slug": "clothing-store-alteration-ticket-software",
+      "title": "Alteration Ticket Software for Independent Clothing Stores"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C082-S10-0001",
+      "slug": "ai-ceramic-kiln-firing-log-review",
+      "title": "AI-Assisted Kiln Firing Log Review for Small Ceramic Units"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C083-S03-0001",
+      "slug": "architecture-studio-cloud-permission-review",
+      "title": "Cloud Permission Reviews for Small Architecture Studios"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C084-S07-0001",
+      "slug": "rental-property-repeat-maintenance-dashboard",
+      "title": "Maintenance Repeat-Issue Dashboard for Rental Property Managers"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C085-S03-0001",
+      "slug": "restaurant-counter-tablet-fleet-management",
+      "title": "Managed Tablet Fleet for Quick-Service Restaurant Counters"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C086-S09-0001",
+      "slug": "local-museum-collection-website-rebuild",
+      "title": "Accessible Rebuild of Local Museum Collection Websites"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C087-S04-0001",
+      "slug": "spice-brand-wholesale-reorder-email-program",
+      "title": "Wholesale Reorder Email Program for Independent Spice Brands"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C088-S09-0001",
+      "slug": "local-history-museum-touchscreen-stories",
+      "title": "Interactive Museum Touchscreen Stories for Local History"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C089-S03-0001",
+      "slug": "handbound-guestbooks-heritage-stays",
+      "title": "Handbound Guestbooks for Small Heritage Stays"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C090-S02-0001",
+      "slug": "household-cleaner-refill-label-system",
+      "title": "Refill Station Label System for Household Cleaner Brands"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C091-S07-0001",
+      "slug": "commerce-diploma-cost-accounting-tutorials",
+      "title": "Cost Accounting Tutorials for Commerce Diploma Students"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C092-S06-0001",
+      "slug": "industrial-sewing-thread-tension-operator-practice",
+      "title": "Industrial Sewing Thread-Tension Practice for New Operators"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C093-S04-0001",
+      "slug": "small-hotel-front-desk-role-simulation",
+      "title": "Front-Desk Role Simulation Assessments for Small Hotels"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C094-S05-0001",
+      "slug": "field-technician-receipt-expense-coding",
+      "title": "Field Technician Receipt Capture and Expense Coding"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C095-S03-0001",
+      "slug": "artisan-credit-record-literacy-workshops",
+      "title": "Credit Record Literacy Workshops for Self-Employed Artisans"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C096-S04-0001",
+      "slug": "food-brand-trademark-renewal-docket-administration",
+      "title": "Trademark Renewal Docket Administration for Regional Food Brands"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C097-S10-0001",
+      "slug": "self-drive-ev-road-trip-contingency-planning",
+      "title": "Self-Drive EV Road Trip Contingency Planning"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C098-S08-0001",
+      "slug": "eco-lodge-breakfast-crockery-replacement-sourcing",
+      "title": "Breakfast Crockery Replacement Sourcing for Eco Lodges"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C099-S09-0001",
+      "slug": "dental-practice-historical-chart-indexing",
+      "title": "Historical Dental Chart Scanning and Indexing Service"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C100-S07-0001",
+      "slug": "weekend-children-book-swap-sale-stall",
+      "title": "Weekend Children's Book Swap and Sale Stall"
+    },
+    {
+      "agent": "pinky_3",
+      "idea_id": "PK3-C100-S03-0001",
+      "slug": "used-teaching-microscope-resale-coaching-labs",
+      "title": "Used Teaching Microscope Resale for Coaching Labs"
+    }
+  ]
+}
