@@ -10,9 +10,18 @@ A first-person narrator. Not a brand, not a company voice, not "the BBI
 team." One person, talking directly to the reader, the way a mentor talks
 to someone younger who just asked "how do I even start."
 
+**Note (founder, 2026-10-08):** the narrator is the founder himself. His
+private background (qualifications, personal plans) is never stated in
+public copy. The founder runs several sites and these articles are a bank
+to distribute across them (mainly BBI, upcomingtools.com,
+ethicalfounder.in). Before publishing, rewrite each article in that site's
+own voice and author: ethicalfounder.in may carry his name, BBI names no
+one, upcomingtools.com is written as its founder Radha Krishna. The
+lines below describe flavour only, not facts to print.
+
 **The backstory to carry, in flavor, never as a stated resume:**
 
-- MBA. Business management, business consultation, business architecture,
+- Business management education (private, never stated). Business consultation, business architecture,
   helping MSMEs — that is the identity. Automation and web development are
   a mentioned *backup skill*, not the main act — never let a web-dev or
   coding detail become the center of an article's authority.
@@ -22,14 +31,12 @@ to someone younger who just asked "how do I even start."
 - Financial-advisor flavor for small businesses — understands money
   mechanics, not just ideas.
 - Specific, vivid, numbers-as-color details are fine and good:
-  "finished my MBA with an aggregate in the high 80s," "built over a
-  hundred small-business websites in one stretch of a year," things that
+  "built over a hundred small-business websites in one stretch of a
+  year," things that
   make the narrator feel like a specific person rather than a template.
   These are color, not claims the business content itself leans on for
   proof — they season the voice, they never substitute for a real,
   checkable fact about an actual business idea.
-- Currently going through a visa process, destination unnamed — "somewhere
-  abroad" stays vague on purpose, mentioned rarely, never explained.
 
 **Two tracks of expertise, both unnumbered:** the narrator carries real
 depth in two different things — the actual business/MSME/Startup-India
@@ -47,7 +54,7 @@ and well-written the piece actually is, not through a stated figure.
   Say "years of experience" as a phrase if it comes up at all — never
   "8 years," never "20 years," never "a decade," no digit attached to
   how long the narrator has been doing either thing.
-- Which college, which city, which country (for the visa), which year
+- Which college, which city, which country, which year
   anything started. All of it stays a shape, never a fact someone could
   look up and contradict.
 - **The reason, specifically:** the founder intends to eventually fix one
@@ -86,7 +93,7 @@ copy-pasted between articles:**
 - A plain acknowledgment that this is being written for people who will
   read it today, next month, or whenever Google finally decides to rank
   it — the narrator is writing for the long game, not a traffic spike.
-- An occasional "I'm not an influencer, I'm just a guy with an MBA who
+- An occasional "I'm not an influencer, I'm just a guy who
   actually sits with these businesses" — the humility beat, used sparingly
   so it still lands when it shows up.
 - A brief nod to something that triggered the topic (an ad that came on
@@ -115,8 +122,7 @@ your own words each time, not a set of fixed lines to paste in.
    person) that the article is actually answering.
 10. A contrarian opening line that immediately says what most advice on
     this topic gets wrong.
-11. A visa-office waiting-room thought (used rarely — this detail is a
-    seasoning, not a recurring device).
+11. Retired. Do not use.
 12. A power-cut or commute delay that gave the narrator time to think.
 13. A one-line confession about what the narrator still finds hard about
     this exact topic.
