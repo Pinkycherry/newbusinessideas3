@@ -52,15 +52,15 @@ export type Catalog = {
  * the response is bounded by the number of CATEGORIES rather than by the number
  * of IDEAS.
  *
- * `subcategories` is deliberately no longer part of the catalogue.
- * `subcategory_name` is byte-identical to `title` in this table — 290 ideas,
- * 290 distinct subcategory slugs, at most one idea in any of them — so it is
- * not a grouping level, and shipping every idea's subcategory to every page
- * bought nothing. The one page that wants them fetches them scoped, through
- * `getSubcategoriesForCategory` below.
+ * `subcategories` is deliberately not shipped in the global catalogue.
+ * Legacy entries often used one subcategory slug per idea; the expansion
+ * taxonomy now groups multiple ideas beneath each of ten approved subjects
+ * on a category page. That page uses the approved taxonomy and its scoped
+ * category ideas, while `getSubcategoriesForCategory` remains available for
+ * legacy category views.
  *
- * `totalSubcategories` is gone rather than recomputed, for the same reason: it
- * was the idea count under a different label, presented as a separate figure.
+ * `totalSubcategories` is not included in this broad aggregate. It must not
+ * be inferred from idea count because the two levels now differ.
  */
 export const getCatalog = createServerFn({ method: "GET" }).handler(async (): Promise<Catalog> => {
   const [summaryRes, totalsRes] = await Promise.all([
