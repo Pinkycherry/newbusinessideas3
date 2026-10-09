@@ -9,6 +9,7 @@ import { AdSlot } from "@/components/AdSlot";
 import { ExploreBanner, EXPLORE_BANNER_ROTATION } from "@/components/explore-rail";
 import { categoryImage } from "@/config/category-imagery";
 import { EXPANSION_SUBCATEGORIES } from "@/config/expansion-taxonomy";
+import { getExpansionCategoryPage } from "@/lib/expansion-category.functions";
 import { getCategoryPage } from "@/lib/ideas.functions";
 import { JsonLd, absoluteUrl, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { hideImgIfBroken } from "@/lib/utils";
@@ -23,7 +24,10 @@ import {
 const categoryQuery = (categorySlug: string) =>
   queryOptions({
     queryKey: ["category", categorySlug],
-    queryFn: () => getCategoryPage({ data: { categorySlug } }),
+    queryFn: () =>
+      EXPANSION_SUBCATEGORIES[categorySlug]
+        ? getExpansionCategoryPage({ data: { categorySlug } })
+        : getCategoryPage({ data: { categorySlug } }),
   });
 
 export const Route = createFileRoute("/category/$categorySlug/")({
@@ -86,15 +90,11 @@ function CategoryPage() {
   // The approved expansion taxonomy defines the new three-level navigation.
   // Every legacy category keeps its existing direct idea-card layout.
   const showLegacyGrid = !expansionSubcategories;
-  const subcategoryCounts = new Map<string, number>();
-  if (expansionSubcategories) {
-    for (const idea of data.ideas) {
-      subcategoryCounts.set(
-        idea.subcategorySlug,
-        (subcategoryCounts.get(idea.subcategorySlug) ?? 0) + 1,
-      );
-    }
-  }
+  const totalIdeas = "totalIdeas" in data ? data.totalIdeas : data.ideas.length;
+  const expansionCounts = "subcategoryCounts" in data ? data.subcategoryCounts : [];
+  const subcategoryCounts = new Map(
+    expansionCounts.map((item) => [item.slug, item.ideaCount]),
+  );
 
   const headingRef = useTextReveal<HTMLHeadingElement>();
   // MOTION_SPEC section 3 — gallery grammar. `useElementPointerGroup` puts ONE
@@ -139,7 +139,7 @@ function CategoryPage() {
             description: expansionSubcategories
               ? `Ten ${categoryName} collections with practical ideas for Indian readers.`
               : `${categoryName} business ideas with pros, cons and verdicts.`,
-            itemCount: data.ideas.length,
+            itemCount: totalIdeas,
             image: featured.src,
           }),
           breadcrumbSchema([
@@ -169,8 +169,8 @@ function CategoryPage() {
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
               {expansionSubcategories
-                ? `10 subcategories · ${data.ideas.length} ideas`
-                : `${data.ideas.length} ideas`}
+                ? `10 subcategories · ${totalIdeas} ideas`
+                : `${totalIdeas} ideas`}
             </p>
             {/* Category pages are the most common organic landing point after
                 an idea page, and they said nothing about the price. */}
