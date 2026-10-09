@@ -60,3 +60,6 @@ Read: `Current_Instruction.md`, `BBI_Taxonomy.md`, `docs/agents/README.md`, the 
 
 **2026-10-09 11:10 UTC (16:40 IST) · ACTION**
 Wrote `Pinky_2_Assignment.md` and this log into `docs/agents/`.
+
+**2026-10-09 11:13 UTC (16:43 IST) · SUCCESS · C035 batch 1**
+Added a Validate-button line to the five existing C035 drafts (S01, S02, S04, S06, S10-0001). Saved and read back 9 new S01 ideas: PK2-C035-S01-0002 to PK2-C035-S01-0010. Read-back: all pending/free, taxonomy IDs/names/slugs match lookup tables, no null fields, no digits, every C035 row mentions Validate, minimum 686 visitor-facing words, no slug or title duplicates across ideas and all three staging tables. Overlaps replaced before writing: wardrobe decluttering and move-in unpacking (Pinky 1 C033), elder grab-bar installation (Pinky 1 C034), at-home meal prep (live IDEA-00203). C035 counts: S01 10, S02 1, S03 0, S04 1, S05 0, S06 1, S07 0, S08 0, S09 0, S10 1 (total 15). Table total 109.
