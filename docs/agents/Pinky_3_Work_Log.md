@@ -158,3 +158,10 @@
 - New saved IDs: PK3-C068-S01-0006, PK3-C068-S02-0006, PK3-C068-S03-0006, PK3-C068-S04-0006, PK3-C068-S05-0006, PK3-C068-S06-0006, PK3-C068-S07-0006, PK3-C068-S08-0006, PK3-C068-S09-0006, PK3-C068-S10-0006.
 - Visitor-facing words in ID order: 596, 586, 561, 565, 546, 571, 614, 585, 571, 584. Each read back with 37 fields, pending/free, exact drafted content, native arrays and q/a FAQ, correct lookup IDs/names/slugs, unique IDs/slugs and no live overlap. Pre-insert cross-table title/concept review found no duplicates.
 - Ten subcategory counts S01–S10: **6, 6, 6, 6, 6, 6, 6, 6, 6, 6**. Distinct C068 total 60/100; missing slots 40. Skipped duplicates: none. Errors: none.
+
+## C068 batch 8 — seventh idea in every subcategory
+
+- Read-back verified at: 2026-10-09 17:34:42 IST.
+- New saved IDs: PK3-C068-S01-0007, PK3-C068-S02-0007, PK3-C068-S03-0007, PK3-C068-S04-0007, PK3-C068-S05-0007, PK3-C068-S06-0007, PK3-C068-S07-0007, PK3-C068-S08-0007, PK3-C068-S09-0007, PK3-C068-S10-0007.
+- Visitor-facing words in ID order: 576, 549, 569, 554, 553, 554, 547, 562, 549, 578. All ten passed 37-field, pending/free, exact content, JSON/FAQ, lookup taxonomy, unique ID/slug and no new live overlap checks.
+- Pre-insert review noted reclaimed tile cafe mosaic versus existing reclaimed terrazzo garden path mosaic and timber wall cladding. Buyer, material, operation, cleaning and first step differ; no duplicate candidate was inserted. Ten subcategory counts S01–S10: **7, 7, 7, 7, 7, 7, 7, 7, 7, 7**. Distinct C068 total 70/100; missing slots 30. Skipped duplicates: none. Errors: none.
