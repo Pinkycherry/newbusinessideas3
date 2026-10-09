@@ -31,7 +31,7 @@ Never write passwords, keys or tokens here.
 |---|---|---|
 | C001-S01 Sauce and Condiment | 10 | 10 |
 | C001-S02 Spice and Seasoning | 10 | 10 |
-| C001-S03 Ready-to-Cook Food | 1 | 10 |
+| C001-S03 Ready-to-Cook Food | 10 | 10 |
 | C001-S04 Savory Snack | 0 | 10 |
 | C001-S05 Packaged Bakery | 0 | 10 |
 | C001-S06 Confectionery | 1 | 10 |
@@ -39,10 +39,12 @@ Never write passwords, keys or tokens here.
 | C001-S08 Breakfast Food | 0 | 10 |
 | C001-S09 Nutrition Snack | 0 | 10 |
 | C001-S10 Frozen Prepared Food | 0 | 10 |
-| **Total** | **22** | **100** |
+| **Total** | **31** | **100** |
 
 ## Entries
 
+- 2026-10-09T16:52:04+05:30 · SUCCESS · Batch C001-B03 saved and verified — New rows PK1-C001-S03-0002 to PK1-C001-S03-0010 (biryani kits; onion-tomato gravy base; fresh chilled pasta and noodles; dal-khichdi one-pot packs for hostels; marinated soya chunks; dhokla and handvo mixes; puran poli dough and filling; marinated paneer tikka; vrat fasting kits). Overlap note: live "Meal Kit Business Idea for Cooks With Joint Pain" is a general meal kit, different from a single-dish biryani kit. Rows S03-0004 to 0006 were thin after the first insert and were rewritten before verification (updated_at set). Read-back of all 31 C001 rows: minimum 555 words, Validate in all, taxonomy, metadata, JSON, duplicates and fields clean. C001 now 31 of 100; S03 complete.
+- 2026-10-09T16:47:54+05:30 · START · Batch C001-B03 — Nine new S03 Ready-to-Cook ideas (PK1-C001-S03-0002 to 0010), written in two inserts of five and four. Overlap check first.
 - 2026-10-09T16:47:39+05:30 · SUCCESS · Batch C001-B02 saved and verified — New rows PK1-C001-S02-0002 to PK1-C001-S02-0010 (single-origin whole spice gift boxes; fries and popcorn seasoning shakers; flavour dust for snack makers; herb salt and low-sodium blends; curry leaf and moringa powder; hing compounding; pepper and cardamom grading for growers; custom house blends for restaurants; kokum and amchur souring agents). Overlap check: no slug or title match; nearest live idea "Homemade Dry Spice Blend & Masala Pouching" differs (restaurant contract blending, not retail pouches).
 - 2026-10-09T16:47:39+05:30 · FAILURE · First read-back of B02 failed the 500-word rule — S02-0006 495, S02-0007 422, S02-0008 399, S02-0009 388, S02-0010 392 words. Fixed by rewriting market, customer, money, cost, income and edge sections of those five rows in first-person voice (updated_at set). Re-check passed: all 22 C001 rows at least 583 words, Validate present in all, taxonomy, metadata, JSON, duplicates and required fields clean. C001 now 22 of 100; S02 complete. Lesson: write five ideas per insert so later ideas do not get thin.
 - 2026-10-09T16:43:58+05:30 · START · Batch C001-B02 — Nine new S02 Spice and Seasoning ideas (PK1-C001-S02-0002 to 0010). Slug and title overlap check first.
