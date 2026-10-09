@@ -1,0 +1,72 @@
+# Pinky 1 work log
+
+The single, central log for Pinky 1 (slot 1: `public.ideas_pinky_1`, categories C001–C034).
+Every instruction from the founder or coordinator, every action, and every result is written here
+with a timestamp: **before** the action starts, and again when it succeeds, fails or is stopped.
+Newest entries are at the top. Times are India time (`+05:30`).
+
+This log is Markdown only. It is published as an Artifact in Pinky 1's chat (so it can be downloaded to a phone and
+shared), and, as the writer instruction of 2026-10-09 requires, the same file is committed to `docs/agents/Pinky_1_Work_Log.md`. No repository file, no script, no HTML page.
+
+## Entry format
+
+Each entry is one line:
+
+`- <timestamp> · <TYPE> · <what> — <details>`
+
+| Type | Meaning |
+|---|---|
+| INSTRUCTION | A new instruction received, summarised in plain words |
+| START | An action is about to begin |
+| SUCCESS | The action finished and was checked |
+| FAILURE | The action failed; the exact error is quoted |
+| BLOCKED | Work stopped because something outside Pinky 1's control prevents it |
+| NOTE | Anything else worth keeping (a decision, a skipped duplicate, a correction) |
+
+Never write passwords, keys or tokens here.
+
+## C001 progress (active category)
+
+| Subcategory | Saved ideas | Target |
+|---|---|---|
+| C001-S01 Sauce and Condiment | 1 | 10 |
+| C001-S02 Spice and Seasoning | 1 | 10 |
+| C001-S03 Ready-to-Cook Food | 1 | 10 |
+| C001-S04 Savory Snack | 0 | 10 |
+| C001-S05 Packaged Bakery | 0 | 10 |
+| C001-S06 Confectionery | 1 | 10 |
+| C001-S07 Fruit Preserve | 0 | 10 |
+| C001-S08 Breakfast Food | 0 | 10 |
+| C001-S09 Nutrition Snack | 0 | 10 |
+| C001-S10 Frozen Prepared Food | 0 | 10 |
+| **Total** | **4** | **100** |
+
+## Entries
+
+- 2026-10-09T16:38:55+05:30 · START · Publish assignment and work log — Commit `docs/agents/Pinky_1_Assignment.md` and `docs/agents/Pinky_1_Work_Log.md` to `main`, publish both as Markdown Artifacts.
+- 2026-10-09T16:38:55+05:30 · NOTE · Existing C001 drafts measured — Exact visitor-facing words: PK1-C001-S01-0001 1166, PK1-C001-S02-0001 646, PK1-C001-S03-0001 619, PK1-C001-S06-0001 609. All above 500. None mentions the Validate button yet; each gets one varied sentence in batch 1.
+- 2026-10-09T16:38:55+05:30 · NOTE · Repo copies decision — Founder said earlier today not to create repo files for the log. The writer instruction sent after that requires named Markdown copies in `docs/agents`. Following the newer instruction: Markdown only, no scripts or other file types.
+- 2026-10-09T16:38:55+05:30 · SUCCESS · Read-only checks done — `bbi_agent_assignments` row for Pinky 1 matches slot 1, `ideas_pinky_1`, C001–C034, task text already updated for this workflow. Live `ideas` 879 rows. `ideas_pinky_1` 100 rows, all 100 also copied to live (count once). Lookup tables read: C001 = Packaged Food Business Ideas / `packaged-food-business-ideas`, ten subcategories S01–S10. No clash with the 20 legacy category names or slugs. Active category chosen: **C001**, 4 of 100 done.
+- 2026-10-09T16:36:07+05:30 · START · Read the instruction, taxonomy, assignment row and saved drafts — Read-only. `docs/agents/Current_Instruction.md`, `BBI_Taxonomy.md`, `bbi_agent_assignments`, lookup tables, `ideas_pinky_1`, live `ideas` overlap.
+- 2026-10-09T16:36:07+05:30 · NOTE · Slot placeholder not filled in the prompt — The prompt says "[OWNER: INSERT 1, 2, OR 3]". This account has always been Pinky 1, so slot 1: `public.ideas_pinky_1`, C001–C034.
+- 2026-10-09T16:36:07+05:30 · INSTRUCTION · Founder: universal writer prompt (expansion, one category at a time) — Complete one main category: ten approved subcategories, at least ten distinct ideas each (at least 100), each page at least 500 visitor-facing words, first-person prospective founder voice, varied wording, natural Validate button mention. Count existing drafts (live copies once). Update the assignment document and work log in Artifacts and commit named copies to `docs/agents`. Pending rows only, batches of up to ten, read back each. Do not touch `public.ideas`, other tables, lookup tables, schema or deployment. Report the ten subcategory counts after one category and stop for review.
+- 2026-10-09T16:33:01+05:30 · SUCCESS · Rule confirmed and applied — The log is one Markdown file published to this Artifact link. No other file type is created for logs or updates. Republished after this entry.
+- 2026-10-09T16:33:01+05:30 · INSTRUCTION · Founder: Markdown files only, published only as Artifacts — All discussion notes, updates, timestamps and logs go into Markdown files saved as Artifacts, so the founder can download them to a phone and share them with friends as Markdown. Keep exact timestamps and every instruction.
+- 2026-10-09T16:30:01+05:30 · SUCCESS · Log is now a Markdown Artifact — Same link: https://claude.ai/artifact/9YaqQ7cYnHapAK9K25qaVt (version 3 onwards). Helper script and HTML page deleted. Nothing in the repo.
+- 2026-10-09T16:29:52+05:30 · START · Switch the log to a Markdown Artifact — Delete the helper script and the HTML page, publish this Markdown file to the same Artifact link.
+- 2026-10-09T16:29:52+05:30 · INSTRUCTION · Founder: the log must be a Markdown Artifact only — No Python file, no HTML page or anything else; it must be easy to read on mobile.
+- 2026-10-09T16:28:54+05:30 · SUCCESS · Log published as a private Artifact — https://claude.ai/artifact/9YaqQ7cYnHapAK9K25qaVt (version 1). Every later step will be logged here before it starts and again when it ends. Waiting for the founder's next instruction.
+- 2026-10-09T16:29:00+05:30 · START · Publish the log as a private Artifact page in this chat — Built from a working copy kept outside the repo.
+- 2026-10-09T16:28:35+05:30 · SUCCESS · Repo files removed — Both files moved out of the repository before any commit. `git status` is clean, so nothing reached GitHub.
+- 2026-10-09T16:28:20+05:30 · INSTRUCTION · Founder correction: do not create any file in the repository — The log must be an Artifact in this chat window only.
+- 2026-10-09T16:28:00+05:30 · NOTE · Wrong first attempt — Pinky 1 had started a repo file `docs/agents/Pinky_1_Work_Log.md` and a renderer script `scripts/render_pinky_log.py`. Neither was committed or pushed.
+- 2026-10-09T16:27:44+05:30 · INSTRUCTION · Founder: keep one dedicated, centralised log of everything — Before trying anything, write the instruction and a timestamp in the log; after anything happens (success, failure or anything else) write it with a timestamp and full details, and report it. A bigger instruction that may change the whole ecosystem is coming next.
+- 2026-10-09T16:25:00+05:30 · NOTE · State at session resume — `main` pulled at 98e64d8. Since the last Pinky 1 run the coordinator added `docs/agents/` (README, Current_Instruction.md, BBI_Taxonomy.md), the expansion taxonomy tables and routes, and a CLAUDE.md section dated 2026-10-09 16:26 IST. Per CLAUDE.md, 200 of the 300 staged expansion drafts were copied to live `ideas`. Pinky 1 has not received `Current_Instruction.md` from the founder yet, so no work has started on it.
+
+## Earlier history (before this log)
+
+Detailed entries for 2026-10-08 are in `content/agent-logs/pinky-1-worklog.md`. Summary:
+
+- 2026-10-08T22:10+05:30 · NOTE · Pilot access check passed (read only). Pilot research blocked by the session's network policy; no rows saved.
+- 2026-10-08T23:45+05:30 · INSTRUCTION · Coordinator amendment: 100 ideas, ten batches of ten, no web research, 37 columns.
+- 2026-10-08T23:53+05:30 to 2026-10-09T00:31+05:30 · SUCCESS · 100 ideas saved to `ideas_pinky_1` in ten verified batches (PK1-C001-S01-0001 … PK1-C030-S04-0001), one per subcategory, all 34 categories covered, `ideas` unchanged at 679 at the time. Commit f077ee4.
