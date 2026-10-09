@@ -214,3 +214,8 @@ Final read-back of all of C040: 100 rows, 100 unique IDs, 100 unique slugs, 100 
 C040 counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 10, S08 10, S09 10, S10 10 (total 100). Table total 289. Live ideas still 879.
 
 Handed to the coordinator for review. No publishing, no deployment, no new category started.
+
+**2026-10-09 19:38 UTC (01:08 IST) · INSTRUCTION**
+Founder: next category is C041 Apparel and Clothing Retail in ideas_pinky_2. Complete S01 to S10 in order, ten genuinely different ideas each, exactly 100. Rewrite the five seeds to the new standard first. Voice: site adviser speaking to the reader, operations in you/your, never operator I or my customers; no repeated greeting or verdict formula. business_description: self-contained hero sentence plus at least 180 useful words. Each page above 500 informative words with garment-specific detail. Natural Validate reference. Check names, slugs and models across live and staging; small batches, read back. Do not rewrite C035/C040, public.ideas, the 679, taxonomy or other tables. Update assignment and log first, log each batch, stop at 100 for review.
+
+**ACTION** Read CLAUDE.md, the Current_Instruction overrides (00:23 voice correction, 00:53 editorial override), PROJECT_BRIEF 6.2 notes, scripts/audit-expansion-voice.sql and the bbi_agent_assignments row (matches: C041, ideas_pinky_2). C041 recount: 5 staged seeds (S02, S04, S06, S08, S10), 0 live. Assignment updated with the voice and depth rule and pushed before any row was written.
