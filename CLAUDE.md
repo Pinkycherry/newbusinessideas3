@@ -1,3 +1,10 @@
+## Expansion editorial correction — 2026-10-10 00:53 IST
+
+The founder clarified that the site's narrator speaks to the reader as **you**, offering advice about a business the reader might start. Do not write operator-first-person (“I charge”, “I will sell”, “my customers”). The “Read the full overview” panel is the remainder of `business_description` after the hero's first sentence (`src/components/idea-cinema/idea-cinema.tsx`), so a two-sentence description makes the panel almost empty. New/revised expansion descriptions now need at least 180 meaningful words, usually 200–300, with a strong standalone first sentence; page-wide visitor-facing copy remains at least 500 words, and every existing section/JSON bullet should be specific. See `docs/agents/Current_Instruction.md`.
+
+At 00:48 IST, 200/200 live expansion descriptions were under 100 words (median 53); stage counts were 292/289/294, so this is a cohort repair, not a two-page issue. The coordinator owns existing expansion content correction, with original 679 legacy ideas preserved. Writers own only new category assignments C005/C041/C093 in their exclusive stage tables; earlier instructions to repair completed categories before starting are superseded. The first two live+stage pages corrected across existing fields are PK1-C031-S02-0001 and PK1-C031-S05-0001; their descriptions are 287/280 words and matching field hashes were verified. Many pages remain open in PENDING #42. Do not claim the whole cohort is fixed. Timestamp and external mutations in OPS_LOG.md; single owner-facing Artifact log: BBI_Architecture_Log_2026-10-09.txt.
+
+---
 # BBI — working notes
 
 Read this first. It exists because a new session starts with no memory of any
