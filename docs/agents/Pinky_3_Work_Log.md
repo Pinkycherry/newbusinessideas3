@@ -129,3 +129,10 @@
 - New saved IDs: PK3-C068-S01-0002, PK3-C068-S02-0002, PK3-C068-S03-0002, PK3-C068-S04-0002, PK3-C068-S05-0002, PK3-C068-S06-0002, PK3-C068-S07-0002, PK3-C068-S08-0002, PK3-C068-S09-0002, PK3-C068-S10-0002.
 - Visitor-facing words in that order: 709, 680, 712, 687, 609, 613, 628, 621, 621, 622. Each saved row read back with 37 columns, pending status, native JSON arrays and q/a FAQ, exact C068 lookup IDs/names/slugs, intended content, unique ID/slug and a varied Validate reference. No live overlap for these ten IDs/slugs. Pre-insert comparison across all four tables found no exact or substantive concept overlap.
 - Ten subcategory counts S01–S10: **2, 2, 2, 2, 2, 2, 2, 2, 2, 2**. Distinct C068 total 20/100; missing slots 80. Errors: none.
+
+## C068 batch 4 — third idea in every subcategory
+
+- Read-back verified at: 2026-10-09 17:14:51 IST.
+- New saved IDs: PK3-C068-S01-0003, PK3-C068-S02-0003, PK3-C068-S03-0003, PK3-C068-S04-0003, PK3-C068-S05-0003, PK3-C068-S06-0003, PK3-C068-S07-0003, PK3-C068-S08-0003, PK3-C068-S09-0003, PK3-C068-S10-0003.
+- Visitor-facing words in that order: 608, 581, 588, 574, 528, 577, 563, 540, 554, 546. Each row read back with 37 fields, pending/free, native arrays and q/a FAQs, exact C068 lookup IDs/names/slugs, unique IDs/slugs and intended field content (FAQ JSON object key order normalized). No new live ID or slug overlap. Pre-insert comparison across live and all three staging tables found no substantive duplicate concepts.
+- Ten subcategory counts S01–S10: **3, 3, 3, 3, 3, 3, 3, 3, 3, 3**. Distinct C068 total 30/100; missing slots 70. Skipped duplicates: none. Errors: none.
