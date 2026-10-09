@@ -59,6 +59,14 @@ The founder asked whether the three writers had finished. Read-only Supabase che
 
 Independently counted the visitor-facing prose, bullets and FAQ of all 300 finished-category staging rows: minimum words by slot 555/538/510; none below 500, none missing a Validate reference, no pending/free status errors, duplicate IDs or slugs within those categories, or approved taxonomy mismatches. This is a structural and length audit; first-person style, factual sourcing, originality and India relevance still need editorial review before a live copy. Staging totals are now 196/195/197 = **588** rows, comprising 300 older drafts plus 288 new rows. The completed categories include twelve improved older drafts. Live `public.ideas` remains **879** (679 legacy + 200 previously copied expansion ideas); the newly staged rows are not public. Do not double-count live copies of staging rows. Writers stopped after one category as instructed. No database or site code changed during this progress check.
 
+### 2026-10-09 17:57 IST — sparse public expansion categories and next writing allocation
+
+The founder supplied live screenshots of C079 Cross-Border Trade Services and C093 Career and Recruitment. Both show all ten planned subcategory cards although seven have no live idea and three have one each. This is a real visitor experience gap: staged completion does not fill the public site. The previously completed C001/C035/C068 100-idea categories remain in staging, while their old live copies are only partial. Do not describe the first-category writing quota as public release.
+
+Immediate next exclusive assignments: slot 1 `ideas_pinky_1` → C004 Beverage Product (4 staged, 96 missing); slot 2 `ideas_pinky_2` → C040 Local Event Services (6 staged, 94 missing); slot 3 `ideas_pinky_3` → C079 Cross-Border Trade Services (3 staged, 97 missing). Each writer fills S01 to ten, then S02 to ten, through S10, verifying after each batch, and hands off a complete 100-idea category. Exact approved subcategory IDs/names/slugs come from lookup tables and `docs/agents/BBI_Taxonomy.md`; the full workflow is `docs/agents/Current_Instruction.md`. Existing drafts count once and are improved in staging without editing their live copies. C093 remains a visible sparse category for a later round.
+
+PENDING #40 tracks the distinct site work: gate expansion category/subcategory navigation so visitors do not encounter empty or one-idea collections, and release reviewed 100-idea categories as units. The three writer prompts do not alter live content or fix those pages. Preserve all 679 legacy ideas and URLs. This checkpoint changed only repo documentation and the running Artifact log, not Supabase data or route code.
+
 ## Who you are here
 
 The founder calls this assistant **Pinky**, after his wife, as a credit to her.
