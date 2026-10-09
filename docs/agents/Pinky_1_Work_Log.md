@@ -34,15 +34,17 @@ Never write passwords, keys or tokens here.
 | C001-S03 Ready-to-Cook Food | 10 | 10 |
 | C001-S04 Savory Snack | 10 | 10 |
 | C001-S05 Packaged Bakery | 10 | 10 |
-| C001-S06 Confectionery | 1 | 10 |
+| C001-S06 Confectionery | 10 | 10 |
 | C001-S07 Fruit Preserve | 0 | 10 |
 | C001-S08 Breakfast Food | 0 | 10 |
 | C001-S09 Nutrition Snack | 0 | 10 |
 | C001-S10 Frozen Prepared Food | 0 | 10 |
-| **Total** | **51** | **100** |
+| **Total** | **60** | **100** |
 
 ## Entries
 
+- 2026-10-09T17:17:59+05:30 · SUCCESS · Batch C001-B06 saved and verified — New rows PK1-C001-S06-0002 to PK1-C001-S06-0010 (imli candy and tamarind toffee; small-batch chocolate from Indian cacao; shelf-stable peda; real-fruit jelly candies; Agra-style petha; soan papdi unit; mukhwas blends; chocolate-coated dry fruits; milk toffee). No overlap found. S06 words range 558–810. Read-back of all 60 C001 rows: minimum 555 words, Validate in all, taxonomy, metadata, JSON, duplicates and fields clean. C001 now 60 of 100. S01–S06 complete.
+- 2026-10-09T17:13:50+05:30 · START · Batch C001-B06 — Nine new S06 Confectionery ideas (PK1-C001-S06-0002 to 0010), one per insert. Overlap check first.
 - 2026-10-09T17:13:35+05:30 · SUCCESS · Batch C001-B05 saved and verified — New rows PK1-C001-S05-0001 to PK1-C001-S05-0010 (rusk for tea stalls and kiranas; nankhatai and traditional biscuits; whole wheat bread for local stores; pav for vada pav and pav bhaji stalls; jar cookies for kirana counters; packaged cake slices for cafes; jaggery atta cookies; Christmas plum cake; khari and puff pastry biscuits; sourdough subscription). Overlap note: live "Home Bakery for Custom Celebration Cakes" sells made-to-order cakes, different from these packaged products. S05-0002 deepened after insert (updated_at set). Switched to one idea per insert, and all S05 rows came in at 628 words or more. Read-back of all 51 C001 rows: minimum 555 words, Validate in all, taxonomy, metadata, JSON, duplicates and fields clean. C001 now 51 of 100. S01–S05 complete.
 - 2026-10-09T17:08:43+05:30 · START · Batch C001-B05 — Ten new S05 Packaged Bakery ideas (PK1-C001-S05-0001 to 0010), two per insert, no semicolons in text. Overlap check first.
 - 2026-10-09T17:08:27+05:30 · SUCCESS · Batch C001-B04 saved and verified — New rows PK1-C001-S04-0001 to PK1-C001-S04-0010 (Kerala banana chips for local shops; makhana roasting; khakhra unit; bhakarwadi; murukku and chakli for tea shops; masala coated peanuts; baked millet crackers; extruded corn puffs for rural markets; fresh farsan sev and gathiya; roasted chana). Farsan (S04-0009) was thin on first insert and was rewritten (updated_at set). Read-back of all 41 C001 rows: minimum 555 words, Validate present in all, taxonomy, metadata, JSON, duplicates and fields clean. C001 now 41 of 100. S01–S04 complete.
