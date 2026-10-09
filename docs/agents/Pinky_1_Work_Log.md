@@ -37,9 +37,9 @@ Never write passwords, keys or tokens here.
 | C004-S06 Fermented Beverage | 10 | 10 |
 | C004-S07 Functional Beverage | 10 | 10 |
 | C004-S08 Beverage Concentrate | 10 | 10 |
-| C004-S09 Powdered Drink | 1 | 10 |
+| C004-S09 Powdered Drink | 10 | 10 |
 | C004-S10 Dairy Beverage | 1 | 10 |
-| **Total** | **82** | **100** |
+| **Total** | **91** | **100** |
 
 ## C001 progress (complete, awaiting coordinator review)
 
@@ -59,6 +59,8 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-10T00:15:28+05:30 · START · Batch C004-B10 (S10 Dairy Beverage) — Add a fresh Validate line to PK1-C004-S10-0001 (masala chaas, staging only), then insert PK1-C004-S10-0002 to 0010. The overlap check found no dairy drink clash (the only regex hits were 'lassi' inside the word 'classification' in Pinky 3 titles).
+- 2026-10-10T00:15:28+05:30 · SUCCESS · Batch C004-B09 saved and verified, S09 complete — PK1-C004-S09-0001 (sattu) got a fresh Validate line (staging only, updated_at set, live copy untouched). New rows PK1-C004-S09-0002 to 0010: kesar badam milk mix, jaljeera and shikanji sachets, haldi doodh mix, natural fruit drink powders, hot chocolate from Indian cocoa, milkshake premix for shops, chaas masala sachets, bajra raab instant mix, instant sol kadhi mix. Plan change: ragi malt was dropped (too close to the live millet porridge mix) and replaced by instant sol kadhi mix. S09 words 585–660. Read-back of all 91 C004 rows: 91 unique IDs, none under 500 words, Validate in every S01–S09 row, taxonomy, metadata, pending/free, FAQ, no duplicates, no missing fields. Counts: S01–S09 10 each, S10 1, total 91.
 - 2026-10-10T00:11:34+05:30 · START · Batch C004-B09 (S09 Powdered Drink) — Add a fresh Validate line to PK1-C004-S09-0001 (sattu, staging only), then insert PK1-C004-S09-0002 to 0010.
 - 2026-10-10T00:11:34+05:30 · SUCCESS · Batch C004-B08 saved and verified, S08 complete — New rows PK1-C004-S08-0001 to 0010: rose and khus sharbat syrups, regional orange and pineapple squashes, cafe flavour syrups, thandai concentrate, panipuri water concentrate, desi fountain soda syrups, mocktail mixers for bars and banquets, fruit crushes for parlours, ginger-lemon-honey concentrate, nannari root syrup. S08 words 596–676. Read-back of all 82 C004 rows: 82 unique IDs, none under 500 words, Validate in every S01–S08 row, taxonomy, metadata, pending/free, FAQ, no duplicates, no missing fields. Counts: S01–S08 10 each, S09 1, S10 1, total 82.
 - 2026-10-10T00:07:32+05:30 · START · Batch C004-B08 (S08 Beverage Concentrate) — Ten new rows PK1-C004-S08-0001 to 0010.
