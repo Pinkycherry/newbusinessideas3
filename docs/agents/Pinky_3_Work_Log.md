@@ -136,3 +136,11 @@
 - New saved IDs: PK3-C068-S01-0003, PK3-C068-S02-0003, PK3-C068-S03-0003, PK3-C068-S04-0003, PK3-C068-S05-0003, PK3-C068-S06-0003, PK3-C068-S07-0003, PK3-C068-S08-0003, PK3-C068-S09-0003, PK3-C068-S10-0003.
 - Visitor-facing words in that order: 608, 581, 588, 574, 528, 577, 563, 540, 554, 546. Each row read back with 37 fields, pending/free, native arrays and q/a FAQs, exact C068 lookup IDs/names/slugs, unique IDs/slugs and intended field content (FAQ JSON object key order normalized). No new live ID or slug overlap. Pre-insert comparison across live and all three staging tables found no substantive duplicate concepts.
 - Ten subcategory counts S01–S10: **3, 3, 3, 3, 3, 3, 3, 3, 3, 3**. Distinct C068 total 30/100; missing slots 70. Skipped duplicates: none. Errors: none.
+
+## C068 batch 5 — fourth idea in every subcategory
+
+- Read-back verified at: 2026-10-09 17:20:15 IST.
+- New saved IDs: PK3-C068-S01-0004, PK3-C068-S02-0004, PK3-C068-S03-0004, PK3-C068-S04-0004, PK3-C068-S05-0004, PK3-C068-S06-0004, PK3-C068-S07-0004, PK3-C068-S08-0004, PK3-C068-S09-0004, PK3-C068-S10-0004.
+- Visitor-facing words in ID order: 687, 625, 619, 643, 633, 609, 612, 609, 604, 627. All ten passed 37-field, pending/free, exact saved content, lookup taxonomy, native JSON/FAQ and unique ID/slug checks; no new live overlap.
+- Pre-insert comparison rejected two near-duplicates before saving: a clinic privacy glass panel and a recycled-glass garden paving aggregate. Replaced them with a sweet-shop splash panel and reclaimed ceramic planter drainage media, each rechecked across all four tables. No duplicate rows inserted.
+- Ten subcategory counts S01–S10: **4, 4, 4, 4, 4, 4, 4, 4, 4, 4**. Distinct C068 total 40/100; missing slots 60. Actual errors: none.
