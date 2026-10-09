@@ -31,7 +31,7 @@ Never write passwords, keys or tokens here.
 |---|---|---|
 | C004-S01 Tea Product | 10 | 10 |
 | C004-S02 Coffee Product | 10 | 10 |
-| C004-S03 Fruit and Vegetable Drink | 1 | 10 |
+| C004-S03 Fruit and Vegetable Drink | 10 | 10 |
 | C004-S04 Packaged Water | 0 | 10 |
 | C004-S05 Plant Based Beverage | 0 | 10 |
 | C004-S06 Fermented Beverage | 0 | 10 |
@@ -39,7 +39,7 @@ Never write passwords, keys or tokens here.
 | C004-S08 Beverage Concentrate | 0 | 10 |
 | C004-S09 Powdered Drink | 1 | 10 |
 | C004-S10 Dairy Beverage | 1 | 10 |
-| **Total** | **23** | **100** |
+| **Total** | **32** | **100** |
 
 ## C001 progress (complete, awaiting coordinator review)
 
@@ -59,6 +59,8 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-09T18:18:08+05:30 · START · Batch C004-B04 (S04 Packaged Water) — Ten new rows PK1-C004-S04-0001 to 0010. The live idea 'Packaged Drinking Water Can Delivery Service' is a distribution business, so these ideas avoid jar delivery and cover manufacturing, formats and niche buyers instead.
+- 2026-10-09T18:18:08+05:30 · SUCCESS · Batch C004-B03 saved and verified, S03 complete — PK1-C004-S03-0001 got a fresh Validate line (staging only, updated_at set, live copy untouched). New rows PK1-C004-S03-0002 to 0010: cold-pressed juice subscriptions for apartments, hygienic bottled sugarcane juice, easy-open tender coconuts, live juice counters for events, goli soda revival with real fruit flavours, orchard litchi and mango nectar, frozen smoothie packs, watermelon juice for highway stops, cashew apple juice. Plan change: the ABC juice idea was dropped (too close to the cold-pressed subscription) and replaced by live juice counters for events. S03 words 741–914. Read-back of all 32 C004 rows: 32 unique IDs, none under 500 words, Validate in every S01–S03 row, taxonomy, metadata, pending/free, FAQ, no duplicates across live and staging, no missing fields. Counts: S01 10, S02 10, S03 10, S04 0, S05 0, S06 0, S07 0, S08 0, S09 1, S10 1, total 32.
 - 2026-10-09T18:13:46+05:30 · START · Batch C004-B03 (S03 Fruit and Vegetable Drink) — Add a fresh Validate line to PK1-C004-S03-0001 (staging only), then insert PK1-C004-S03-0002 to 0010. Plan avoids the live fruit chaat and juice cart and the existing kokum and aam panna draft.
 - 2026-10-09T18:13:46+05:30 · SUCCESS · Batch C004-B02 saved and verified, S02 complete — New rows PK1-C004-S02-0001 to 0010: fresh-ground filter coffee and chicory powder for darshinis, bottled filter coffee decoction, cold brew bottles and cafe concentrate, drip coffee bags, green coffee micro-lots for roasters, coffee discovery subscription box, cascara coffee cherry tea, office bean-to-cup supply, sukku malli coffee powder, jaggery instant coffee sachets. Plan change: the instant coffee idea became jaggery sachets for hostels and travellers, kept distinct from the S01 vending premix. S02 words 775–920. Read-back of all 23 C004 rows: 23 unique IDs, none under 500 words, Validate in every S01 and S02 row, taxonomy, metadata, pending/free, FAQ, no duplicates across live and staging, no missing fields. Counts: S01 10, S02 10, S03 1, S04 0, S05 0, S06 0, S07 0, S08 0, S09 1, S10 1, total 23.
 - 2026-10-09T18:08:48+05:30 · START · Batch C004-B02 (S02 Coffee Product) — Ten new rows PK1-C004-S02-0001 to 0010. Plan avoids the live coffee cart, part-time roasting and espresso descaling ideas.
