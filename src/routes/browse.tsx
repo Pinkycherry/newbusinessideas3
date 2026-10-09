@@ -6,6 +6,7 @@ import { ExploreRail } from "@/components/explore-rail";
 import { getCatalog } from "@/lib/ideas.functions";
 import FocusCards from "@/components/aceternity/focus-cards";
 import { categoryImage } from "@/config/category-imagery";
+import { EXPANSION_SUBCATEGORIES } from "@/config/expansion-taxonomy";
 import { absoluteUrl, JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { PAGE_IMAGES, pageImageMeta } from "@/config/page-imagery";
 import { PageHeroImage } from "@/components/page-hero-image";
@@ -110,7 +111,11 @@ function BrowsePage() {
             {/* The total comes from live completed ideas. The new expansion
                 categories are grouped by their ten approved subcategories. */}
             <p className="mt-2 text-sm text-muted-foreground">
-              {data.totalIdeas} business ideas across {data.totalCategories} categories
+              {data.totalIdeas} business ideas across {data.totalCategories} live categories
+            </p>
+            <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+              New collections open into ten focused subcategories. Established collections show
+              their ideas directly.
             </p>
             {/* Someone landing on the library from search has no idea what it
                 costs, and the answer is the most persuasive thing on the page. */}
@@ -132,7 +137,9 @@ function BrowsePage() {
               const photo = categoryImage(category.categorySlug);
               return {
                 title: category.categoryName,
-                meta: `${category.ideaCount} blueprints`,
+                meta: EXPANSION_SUBCATEGORIES[category.categorySlug]
+                  ? `10 subcategories · ${category.ideaCount} ideas`
+                  : `${category.ideaCount} blueprints`,
                 src: photo.src,
                 alt: photo.alt,
                 to: "/category/$categorySlug",
