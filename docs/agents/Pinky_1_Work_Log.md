@@ -35,14 +35,16 @@ Never write passwords, keys or tokens here.
 | C001-S04 Savory Snack | 10 | 10 |
 | C001-S05 Packaged Bakery | 10 | 10 |
 | C001-S06 Confectionery | 10 | 10 |
-| C001-S07 Fruit Preserve | 0 | 10 |
+| C001-S07 Fruit Preserve | 10 | 10 |
 | C001-S08 Breakfast Food | 0 | 10 |
 | C001-S09 Nutrition Snack | 0 | 10 |
 | C001-S10 Frozen Prepared Food | 0 | 10 |
-| **Total** | **60** | **100** |
+| **Total** | **70** | **100** |
 
 ## Entries
 
+- 2026-10-09T17:22:42+05:30 · SUCCESS · Batch C001-B07 saved and verified — New rows PK1-C001-S07-0001 to PK1-C001-S07-0010 (amla murabba and candy; mixed fruit jam for school tiffins; aam papad; small-batch orange marmalade; jackfruit jam and dried bulbs, slug `jackfruit-jam-and-dried-jackfruit-bulbs`; jaggery-sweetened fruit spreads; solar-dried fruit slices; forest fruit preserves with tribal collectors; tutti frutti for bakeries; bake-stable fruit fillings). One wording fix on S07-0008 (updated_at set). S07 words 565–756. Read-back of all 70 C001 rows: minimum 555 words, Validate in all, taxonomy, metadata, JSON, duplicates and fields clean. C001 now 70 of 100. S01–S07 complete.
+- 2026-10-09T17:18:14+05:30 · START · Batch C001-B07 — Ten new S07 Fruit Preserve ideas (PK1-C001-S07-0001 to 0010), one per insert. Overlap check first.
 - 2026-10-09T17:17:59+05:30 · SUCCESS · Batch C001-B06 saved and verified — New rows PK1-C001-S06-0002 to PK1-C001-S06-0010 (imli candy and tamarind toffee; small-batch chocolate from Indian cacao; shelf-stable peda; real-fruit jelly candies; Agra-style petha; soan papdi unit; mukhwas blends; chocolate-coated dry fruits; milk toffee). No overlap found. S06 words range 558–810. Read-back of all 60 C001 rows: minimum 555 words, Validate in all, taxonomy, metadata, JSON, duplicates and fields clean. C001 now 60 of 100. S01–S06 complete.
 - 2026-10-09T17:13:50+05:30 · START · Batch C001-B06 — Nine new S06 Confectionery ideas (PK1-C001-S06-0002 to 0010), one per insert. Overlap check first.
 - 2026-10-09T17:13:35+05:30 · SUCCESS · Batch C001-B05 saved and verified — New rows PK1-C001-S05-0001 to PK1-C001-S05-0010 (rusk for tea stalls and kiranas; nankhatai and traditional biscuits; whole wheat bread for local stores; pav for vada pav and pav bhaji stalls; jar cookies for kirana counters; packaged cake slices for cafes; jaggery atta cookies; Christmas plum cake; khari and puff pastry biscuits; sourdough subscription). Overlap note: live "Home Bakery for Custom Celebration Cakes" sells made-to-order cakes, different from these packaged products. S05-0002 deepened after insert (updated_at set). Switched to one idea per insert, and all S05 rows came in at 628 words or more. Read-back of all 51 C001 rows: minimum 555 words, Validate in all, taxonomy, metadata, JSON, duplicates and fields clean. C001 now 51 of 100. S01–S05 complete.
