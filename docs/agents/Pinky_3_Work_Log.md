@@ -242,3 +242,9 @@
 - Read-back verified at: 2026-10-10 00:18:00 IST. Saved IDs: PK3-C079-S07-0001, PK3-C079-S07-0002, PK3-C079-S07-0003, PK3-C079-S07-0004, PK3-C079-S07-0005, PK3-C079-S07-0006, PK3-C079-S07-0007, PK3-C079-S07-0008, PK3-C079-S07-0009, PK3-C079-S07-0010.
 - Visitor-facing words in ID order: 602, 579, 581, 560, 587, 561, 532, 547, 542, 575. All ten read back with exact content, 37 fields, pending/free, native arrays and q/a FAQs, exact C079/S07 taxonomy, unique IDs/slugs, null metadata and Validate references. Pre-insert ID/title/slug comparison across live and all staging tables returned no collision. Buyer/offer/operation review found no duplicate; hand-tool channel-fit mapping and bicycle-parts territory interviews serve different decisions. No live edit, skipped duplicate or error.
 - Ten C079 counts S01–S10: **10, 10, 10, 10, 10, 10, 10, 0, 0, 1**. Distinct staged total **71/100**; 29 new slots remain. S07 complete; S08 next.
+
+## C079 batch 8 — S08 Cross Border Marketplace Operations complete
+
+- Read-back verified at: 2026-10-10 00:21:07 IST. Saved IDs: PK3-C079-S08-0001, PK3-C079-S08-0002, PK3-C079-S08-0003, PK3-C079-S08-0004, PK3-C079-S08-0005, PK3-C079-S08-0006, PK3-C079-S08-0007, PK3-C079-S08-0008, PK3-C079-S08-0009, PK3-C079-S08-0010.
+- Visitor-facing words in ID order: 586, 585, 568, 550, 572, 555, 564, 560, 557, 578. All ten read back with exact content, 37 fields, pending/free, native arrays and q/a FAQs, exact C079/S08 taxonomy, unique IDs/slugs, null metadata and Validate references. Pre-insert ID/title/slug check across live and all staging returned no collision. Distinct marketplace workflows and buyers were reviewed. No live edit, skipped duplicate or save error.
+- Ten C079 counts S01–S10: **10, 10, 10, 10, 10, 10, 10, 10, 0, 1**. Distinct staged total **81/100**; 19 new slots remain. S08 complete; S09 next.
