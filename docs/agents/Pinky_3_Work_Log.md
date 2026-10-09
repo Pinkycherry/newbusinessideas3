@@ -230,3 +230,9 @@
 - Visitor-facing words in ID order: 600, 553, 537, 545, 558, 527, 564, 545, 602, 521. All ten read back with 37 fields, pending/free, native arrays and q/a FAQs, null metadata and natural Validate references; approved S05 taxonomy and unique IDs/slugs confirmed. No live copies were changed.
 - A proposed generic trade authorisation calendar overlapped an existing contract obligation calendar and was replaced with an adviser-led sales workshop. The cosmetic supplier-change impact board has a regulatory scope distinct from the S04 supplier proforma change tracker. No duplicate inserted. Precise regulatory claims were avoided.
 - Ten C079 counts S01–S10: **10, 10, 10, 10, 10, 1, 0, 0, 0, 1**. Distinct staged total **52/100**; 48 new slots remain. S05 complete; S06 next. Errors: the initial read-back response was truncated in the tool context; a new read-only query resolved it, with no retry of the insert.
+
+## C079 batch 6 — S06 International Supplier Verification complete
+
+- Read-back verified at: 2026-10-10 00:14:45 IST. Expanded existing staged PK3-C079-S06-0001 to 884 words while preserving its live copy. New saved IDs: PK3-C079-S06-0002, PK3-C079-S06-0003, PK3-C079-S06-0004, PK3-C079-S06-0005, PK3-C079-S06-0006, PK3-C079-S06-0007, PK3-C079-S06-0008, PK3-C079-S06-0009, PK3-C079-S06-0010.
+- New visitor-facing words in ID order: 680, 634, 621, 616, 583, 580, 578, 564, 585. All ten read back with exact intended content, 37 fields, pending/free, native arrays and q/a FAQs, C079/S06 taxonomy, unique IDs/slugs and Validate references. New names/slugs/IDs were checked across live and all three staging tables before insertion; no exact overlap. Supplier verification concepts cover different buyers and evidence questions. No duplicate skipped or save error.
+- Ten C079 counts S01–S10: **10, 10, 10, 10, 10, 10, 0, 0, 0, 1**. Distinct staged total **61/100**; 39 new slots remain. S06 complete; S07 next.
