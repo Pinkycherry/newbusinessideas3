@@ -25,7 +25,23 @@ Each entry is one line:
 
 Never write passwords, keys or tokens here.
 
-## C004 progress (active category)
+## C005 progress (active category)
+
+| Subcategory | Saved ideas | Target |
+|---|---|---|
+| C005-S01 Fresh Produce Retail | 0 | 10 |
+| C005-S02 Meat Retail | 0 | 10 |
+| C005-S03 Seafood Retail | 0 | 10 |
+| C005-S04 Bakery Retail | 0 | 10 |
+| C005-S05 Dairy Retail | 0 | 10 |
+| C005-S06 Bulk Food Retail | 0 | 10 |
+| C005-S07 Specialty Diet Food Retail | 0 | 10 |
+| C005-S08 Gourmet Food Retail | 0 | 10 |
+| C005-S09 Confectionery Retail | 0 | 10 |
+| C005-S10 Farm Gate Retail | 0 | 10 |
+| **Total** | **0** (4 seeds awaiting revision) | **100** |
+
+## C004 progress (complete, awaiting coordinator review)
 
 | Subcategory | Saved ideas | Target |
 |---|---|---|
@@ -59,6 +75,8 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-10T01:08:04+05:30 · SUCCESS · Assignment updated before any C005 write — C005 set as the active category in `Pinky_1_Assignment.md` with the corrected rules and a full idea plan, published to Artifacts and pushed. Recount from Supabase: four C005 seeds, all also live (S02, S03, S06 and S08 -0001). Each will be rewritten to the new standard in staging before it counts. 96 new rows needed. Per the override, C001/C004 repair belongs to the coordinator, so no C001/C004 rows will be touched.
+- 2026-10-10T01:08:04+05:30 · INSTRUCTION · Founder/coordinator: C005 Food Retail is the next and only category. The site is an adviser talking to the reader, so operations are written in 'you/your' and never as operator 'I'. business_description needs a standalone hero sentence plus at least 180 meaningful words. Pages need more than 500 informative words, varied structure, no invented facts, and a fresh Validate cue in an existing section. Revise the four seeds before counting them. Order is S01–S10, ten each, exactly 100, in small read-back batches. Update the assignment and log first. Do not touch public.ideas, the legacy rows, taxonomy, other tables or the earlier finished categories. Stop at 100 for review.
 - 2026-10-10T00:19:20+05:30 · NOTE · C004 handed to the coordinator for review — Pinky 1 has stopped. No rows were copied to public.ideas and nothing on the site changed. Open concerns: (1) the four original drafts (S01, S03, S09, S10 -0001) got their Validate line in staging only, so their live copies still lack it until the coordinator resyncs them. (2) Pages get shorter towards the end (S10 551–691 words against S01 815–1059) but are all above 500. (3) The FAQ and getting-started lists repeat a similar shape across pages (for example a 'Do I need a food licence?' question), so an editorial pass for variety is advised before release. (4) Regulatory lines say 'check current rules' and name no figures. Only 'packaged drinking water needs BIS certification' is stated as fact.
 - 2026-10-10T00:19:20+05:30 · SUCCESS · C004 Beverage Product Business Ideas complete, 100 of 100 — Final read-back of all C004 rows in ideas_pinky_1: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 10, S08 10, S09 10, S10 10. 100 unique IDs and 100 unique slugs, all pending/free. Words 551–1059, none under 500. Validate line in all 100. Category and subcategory IDs, names and slugs match the lookup tables for all 100. SEO title, meta, focus keyword and FAQ present in all. No title or slug clash with live ideas (other than the 4 original drafts, which are the same rows and count once) or with ideas_pinky_2 / ideas_pinky_3. No duplicate IDs in the table (292 rows total).
 - 2026-10-10T00:19:20+05:30 · SUCCESS · Batch C004-B10 saved and verified, S10 complete — PK1-C004-S10-0001 (masala chaas) got a fresh Validate line (staging only, updated_at set, live copy untouched). New rows PK1-C004-S10-0002 to 0010: bottled lassi, flavoured milk in returnable glass bottles, bottled cold coffee for colleges, piyush, Madurai jigarthanda counters and kits, camel milk drinks with herder cooperatives, paneer whey fruit drinks, mohabbat ka sharbat counters, kulhad hot milk counters. S10 words 551–691.

@@ -1,6 +1,6 @@
 # Pinky 1 assignment
 
-Last updated: 2026-10-10 00:19 +05:30 · Writer name: **Pinky 1** · Account: Claude Code (cloud session)
+Last updated: 2026-10-10 01:08 +05:30 · Writer name: **Pinky 1** · Account: Claude Code (cloud session)
 
 ## Permanent slot
 
@@ -12,14 +12,20 @@ Database assignment row `bbi_agent_assignments` (agent `Pinky 1`, status `ready`
 
 ## Active main category
 
-**C004 Beverage Product Business Ideas** (`beverage-product-business-ideas`): **completed 2026-10-10 00:19 IST, 100 of 100 saved and verified, handed to the coordinator for review.** No new category starts until sign-off. Assigned by the coordinator on 2026-10-09 (17:57 IST checkpoint in `Current_Instruction.md`) and started 2026-10-09 18:03 IST. This is my only active category.
+**C005 Food Retail Business Ideas** (`food-retail-business-ideas`), assigned by the coordinator (bbi_agent_assignments row updated 2026-10-10 00:56 IST, editorial override in `Current_Instruction.md` dated 00:53 IST). Started 2026-10-10 01:08 IST. This is my only active category.
 
-- Order is fixed: bring S01 to ten verified ideas, then S02, and so on to S10. No scattering.
-- Target: at least ten distinct staged ideas in each of the ten approved subcategories, at least 100 C004 rows.
-- Starting position (recounted 2026-10-09 18:03 IST): four drafts, all also live (each counts once, live copies untouched). They are PK1-C004-S01-0001 (tulsi and lemongrass tea), PK1-C004-S03-0001 (kokum and aam panna), PK1-C004-S09-0001 (sattu premix) and PK1-C004-S10-0001 (masala chaas). Their word counts are 862, 885, 575 and 661. None mentions Validate, so each gets a fresh Validate line in my staging table only. That means 96 new rows are needed.
-- After S10 reaches ten, I report the S01–S10 counts, total unique C004 IDs, the minimum word count and any open concern, push this document and the work log, and stop for coordinator review. I do not copy anything to `public.ideas` and do not touch the site.
+**Corrected rules for C005 (these override older lines below):**
+- **Voice.** The website is an adviser talking to the reader. The reader is the would-be founder, so the copy uses "you/your" for everything about running the business: you could test, your buyers, you would need. Never write operator "I" ("I sell", "I would hire", "my customers", "I will open a shop"), not even hypothetically. An occasional narrator opinion is fine ("my view is…"), but second person carries the page. No mechanical "Bro". Every visible field and JSON item is reviewed for this, not just an "I" search.
+- **business_description.** The first sentence is the hero line and must stand alone. The rest is the "Read the full overview" panel and needs at least 180 meaningful, idea-specific words covering the offer, the real Indian buyer, first practical moves, operating limits and what can go wrong.
+- **Whole page.** More than 500 informative visitor-facing words, normally 500–1,000. Develop the existing fields and bullets, with no filler or disclaimer sections. Vary structure, openings and examples across all 100 pages, with no repeated skeleton. No invented earnings, figures, licences or facts.
+- **Validate.** In a natural existing section, tell the reader to click Validate on that page to see current data on their own screen. Never claim to know the result. Fresh wording on every page.
+- **Overlaps.** Check titles and slugs against live and all staging tables. Fix a genuine clash with a distinctive name, never a "New"/"Latest" prefix.
+- **Order.** S01 to S10, ten distinct ideas each, exactly 100. Small batches, each read back for depth, voice, IDs, slugs, taxonomy and counts.
+- **Seeds.** Revise the four existing seeds (PK1-C005-S02-0001 chilled chicken shop, S03-0001 cleaned fish subscription, S06-0001 zero waste refill store, S08-0001 regional speciality store) to this standard in staging before counting them. Their live copies stay untouched.
+- **Out of scope.** Do not edit `public.ideas`, the 679 legacy ideas, taxonomy, other writers' tables, or my previously finished C001/C004 (the coordinator owns that repair).
+- **Stop.** At 100 verified, log the counts, push the handoff and stop for review.
 
-**Previous category:** C001 Packaged Food Business Ideas, completed 2026-10-09 17:39 IST (100 of 100 verified) and handed to the coordinator.
+**Previous categories (handed off, not to be touched now):** C001 Packaged Food (100) and C004 Beverage Product (100).
 
 ## Rules (from `docs/agents/Current_Instruction.md`, 2026-10-09)
 
@@ -130,3 +136,20 @@ Avoided because they already exist live: coffee cart, part-time coffee roasting,
 - **S10 Dairy Beverage:** Bottled lassi · Flavoured milk in glass bottles · Cold coffee and milkshake bottles for colleges · Piyush · Jigarthanda · Camel milk drinks · Paneer whey drinks · Mohabbat ka sharbat · Kulhad hot milk counters
 
 The plan can change if an overlap check finds a clash; every change goes in the work log.
+
+## C005 idea plan (checked against live and staging titles on the start date)
+
+Avoided because they already exist: pre-cut vegetable delivery, egg reselling, milk delivery reselling, dry fruit reselling over WhatsApp, microgreens delivery, honor-system farm stand, weekly organic farmers' market inside societies (Pinky 2), fruit chaat cart, custom celebration cakes, sourdough subscription, whole wheat bread for stores, rural kirana restocking van.
+
+- **S01 Fresh Produce:** Covered e-cart vegetable round for new colonies · Exotic vegetable stall · Fruit shop with a ripening room · Seasonal mango pre-order shop · Leafy greens and herbs kiosk at transit points · Imperfect produce discount shop · Traceable organic produce shop · Pooja and festive produce stall (banana leaves, flowers, coconuts) · Permanent vegetable kiosk inside a gated society · Onion, potato and garlic store for homes and eateries
+- **S02 Meat:** Seed chilled chicken cut shop (revise) · Mutton shop with custom cuts · Country chicken retail · Marinated ready-to-cook meat counter · Pork retail for Northeast and Goan communities · Frozen meat store · Meat shop-in-shop inside a supermarket · Quail and duck meat retail · Keema and mince counter for fast-food stalls · Raw meat for pet dogs
+- **S03 Seafood:** Seed cleaned fish subscription (revise) · Live fish tank shop · Dry fish store in cities · Prawn and crab counter · Fish stall with cleaning and cutting service · Inland frozen seafood store · Sea fish van to inland towns · Hilsa and festival fish pre-orders · Local pond fish retail · Boneless fillet portions for home cooks
+- **S04 Bakery:** Neighbourhood bakery counter with seating · Iyengar-style bakery outlet · Eggless bakery for Jain and vegetarian buyers · Pav and bread kiosk at stations · Day-old bakery discount store · Pastry kiosk in office parks · Millet bakery shop · Kerala and Irani-style bakes shop · Bakery van for new colonies · Festival bakery pop-ups
+- **S05 Dairy:** Milk parlour with chilled dairy · Paneer and khoa shop · Single-farm milk shop · Curd, buttermilk and malai counter · Bilona ghee shop · Indian artisanal cheese counter · Milk vending ATM · Local ice cream parlour · Bulk milk and cream counter for tea stalls · Dairy cooperative parlour
+- **S06 Bulk:** Seed zero waste refill store (revise) · Rice and atta store for families · Cash-and-carry for small eateries · Monthly ration kits for PGs and hostels · Dal and pulses specialty shop · Loose whole-spice store · Wood-pressed oil refill store · Apartment bulk buying club · Loose namkeen store · Millet and grain store
+- **S07 Specialty Diet:** Low-sugar food store · Gluten-free store · Jain food store · Vegan grocery · Low-carb shelf store · Baby and toddler food store · Soft-food store for elders · Nut-free school snack shop · High-protein foods store · Vrat food store
+- **S08 Gourmet:** Seed regional speciality store (revise) · Vegetarian-friendly deli with Indian cheeses · Imported gourmet grocery · Tea and coffee boutique · Single-estate spice and salt boutique · Gourmet hamper shop · Sandwich deli counter · Honey and preserves shop · Home bakers' ingredient store · Pickles and ferments boutique
+- **S09 Confectionery:** Traditional mithai shop · Pick-and-mix candy store · Chocolate boutique · Dry-fruit sweets shop · Regional sweets shop in a new city · Sugar-free sweets shop · Festival sweets pop-up · Corporate sweet box shop · Nostalgic desi candy store · Temple town prasad sweets shop
+- **S10 Farm Gate:** Highway fruit stall at the farm · Dairy farm shop · FPO retail outlet in town · Pick-your-own strawberry farm · Jaggery unit shop · Organic farm weekend pickup · Farm honey shop · Mango orchard gate sales · Farm stay shop · Village haat stall for several farmers
+
+The plan may change if an overlap check finds a clash. Changes go in the work log.
