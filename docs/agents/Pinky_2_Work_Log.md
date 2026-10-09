@@ -96,3 +96,12 @@ Saved and read back 5 new S08 ideas: PK2-C035-S08-0006 to PK2-C035-S08-0010 (wom
 
 **2026-10-09 11:46 UTC (17:16 IST) · SUCCESS · C035 batch 12**
 Overlap check for S09 concepts against ideas and all three staging tables: no clashes. Saved and read back 5 new S09 ideas: PK2-C035-S09-0001 to PK2-C035-S09-0005 (weekly photo and video update visits, caretaker supervision visits, parent health diary visits, elders' life story recording, video call sitting visits). Passed every check on the first read-back: words 636 to 727, taxonomy, status/tier, nulls, digits, Validate mention, 0 slug or title clashes. C035 counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 10, S08 10, S09 5, S10 1 (total 86). Table total 181.
+
+**2026-10-09 11:50 UTC (17:20 IST) · SUCCESS · C035 batch 13 and figure clean-up**
+Saved and read back 5 new S09 ideas: PK2-C035-S09-0006 to PK2-C035-S09-0010 (local guardian for students, emergency local contact retainer, ancestral home and farm updates, retirement community settling-in reports, live streaming home functions). Words 637 to 698; all checks pass; 0 slug or title clashes.
+
+FAILURE found and fixed: a scan for figures written in words found unsourced income estimates (in the thousands each month, a few lakhs a year, tens of thousands) in income_potential on 64 C035 rows from batches 1 to 8 and the five original drafts. These break the no-invented-figures rule. Rewrote each of those sentences to make no money estimate (for example: a fair income, though I would set no figure until I have checked what local customers pay), hand-fixing four sentences that read awkwardly (S01-0007, S02-0010, S05-0009, S07-0003); updated_at set. Also replaced two unsourced size claims: lakhs of Indian students (S09-0006) and Millions of Indian families (S01-0004) now read large numbers of and Many. Re-check across all C035 fields: 0 lakh, crore, million, thousand or rupee estimates left (one figure of speech, thousands of kilometres away, kept); minimum now 538 words; all other checks pass.
+
+NOTE for coordinator: my 95 older drafts in other categories (C036 to C067) also carry money words in income or cost text. Not touched now, because the instruction is one category at a time; each should be cleaned when its category is worked.
+
+C035 counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 10, S08 10, S09 10, S10 1 (total 91). Table total 186.
