@@ -35,11 +35,11 @@ Never write passwords, keys or tokens here.
 | C005-S04 Bakery Retail | 10 | 10 |
 | C005-S05 Dairy Retail | 10 | 10 |
 | C005-S06 Bulk Food Retail | 10 | 10 |
-| C005-S07 Specialty Diet Food Retail | 0 | 10 |
+| C005-S07 Specialty Diet Food Retail | 10 | 10 |
 | C005-S08 Gourmet Food Retail | 1 | 10 |
 | C005-S09 Confectionery Retail | 0 | 10 |
 | C005-S10 Farm Gate Retail | 0 | 10 |
-| **Total** | **61** | **100** |
+| **Total** | **71** | **100** |
 
 ## C004 progress (complete, awaiting coordinator review)
 
@@ -75,6 +75,8 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-10T01:45:52+05:30 · START · 2026-10-10 01:45 IST · Batch C005-B08 (S08 Gourmet Food Retail) — rewrite seed PK1-C005-S08-0001 (regional speciality store) in staging only, then insert PK1-C005-S08-0002 to 0010
+- 2026-10-10T01:45:52+05:30 · SUCCESS · 2026-10-10 01:45 IST · Batch C005-B07 saved and verified, S07 Specialty Diet Food Retail complete — PK1-C005-S07-0001 to 0010: low-sugar store for diabetic families, gluten-free grocery with separate handling, Jain root-free store, vegan grocery for Indian cooking, low-carb/keto grocery, baby and toddler food store, easy-chew soft food shop for elders, nut-free tiffin snack shop, high-protein vegetarian foods shop, low-sodium grocery shelf. Decision: planned vrat food store replaced by low-sodium shelf because PK1 C001 already has 'Vrat Fasting Food Kits'. All rows avoid medical claims and direct buyers to doctors/dietitians. Corrections: S07-0005, 0009, 0010 overviews extended with idea-specific sentences. Read-back: pages 637–741 words, overview after hero 181–212, Validate in all, taxonomy/meta/status/JSON clean, no duplicates. Voice flags S07-0002/0005/0006/0009 are narrator verdicts, allowed.
 - 2026-10-10T01:41:45+05:30 · START · 2026-10-10 01:41 IST · Batch C005-B07 (S07 Specialty Diet Food Retail) — ten new adviser-voice ideas PK1-C005-S07-0001 to 0010
 - 2026-10-10T01:41:45+05:30 · SUCCESS · 2026-10-10 01:41 IST · Batch C005-B06 saved and verified, S06 Bulk Food Retail complete — Seed PK1-C005-S06-0001 (zero waste refill store) fully rewritten in adviser voice across every field and keywords, 253-word overview after the hero sentence, title/slug unchanged, live copy untouched. New PK1-C005-S06-0002 to 0010: rice varieties and chakki atta store, cash-and-carry for small eateries, monthly ration kits for PGs/hostels, unpolished dal and pulses shop, loose whole spice store with grinding, wood-pressed oil refill counter, apartment bulk buying club, loose namkeen and farsan shop, millet and ancient grain store. Overlap check: no matching live/staging titles (live oil expeller mill and kachi ghani bottling are production, not retail). Read-back: pages 659–895 words, overview after hero 181–253, Validate in all, taxonomy/meta/status/JSON clean, no duplicates. Voice flags S06-0003/0006/0008 are narrator verdicts, allowed.
 - 2026-10-10T01:37:25+05:30 · START · 2026-10-10 01:37 IST · Batch C005-B06 (S06 Bulk Food Retail) — rewrite seed PK1-C005-S06-0001 (zero waste refill store) in staging only, then insert PK1-C005-S06-0002 to 0010
