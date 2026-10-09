@@ -1,6 +1,6 @@
 # Pinky 1 assignment
 
-Last updated: 2026-10-09 16:50 +05:30 · Writer name: **Pinky 1** · Account: Claude Code (cloud session)
+Last updated: 2026-10-09 17:39 +05:30 · Writer name: **Pinky 1** · Account: Claude Code (cloud session)
 
 ## Permanent slot
 
@@ -12,7 +12,7 @@ Database assignment row `bbi_agent_assignments` (agent `Pinky 1`, status `ready`
 
 ## Active main category
 
-**C001 Packaged Food Business Ideas** (`packaged-food-business-ideas`), started 2026-10-09.
+**C001 Packaged Food Business Ideas** (`packaged-food-business-ideas`), started 2026-10-09, **completed 2026-10-09 17:39 IST: 100 of 100 saved and verified, handed to the coordinator for review.** No new category starts until the coordinator signs off.
 Chosen because it is the first category in my range and already has four drafts.
 Name and slug checked: no clash with any of the 20 legacy category names or slugs.
 
@@ -38,6 +38,24 @@ Name and slug checked: no clash with any of the 20 legacy category names or slug
 - `status` `pending`, `tier` `free`; `collection_id`, `trend_score`, `internal_link_anchors` null.
 - JSON fields are native arrays of strings; `faq_json` is an array of `{q, a}`.
 - Word count method: words in all text fields plus every string inside the JSON arrays and every FAQ question and answer. Titles, keywords, SEO title and meta description are not counted.
+
+## C001 final verified counts
+
+| Subcategory | Saved and verified |
+|---|---|
+| C001-S01 Sauce and Condiment | 10 |
+| C001-S02 Spice and Seasoning | 10 |
+| C001-S03 Ready-to-Cook Food | 10 |
+| C001-S04 Savory Snack | 10 |
+| C001-S05 Packaged Bakery | 10 |
+| C001-S06 Confectionery | 10 |
+| C001-S07 Fruit Preserve | 10 |
+| C001-S08 Breakfast Food | 10 |
+| C001-S09 Nutrition Snack | 10 |
+| C001-S10 Frozen Prepared Food | 10 |
+| **Total** | **100** |
+
+All 100 rows: status `pending`, 555–1448 words, Validate mention in each, taxonomy matched against the lookup tables, no duplicate IDs, slugs or titles across live and staging. The 4 original drafts are also live in `ideas` and count once. Full read-back details: `docs/agents/Pinky_1_Work_Log.md`.
 
 ## C001 starting position (read 2026-10-09)
 
