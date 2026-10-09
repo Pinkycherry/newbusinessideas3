@@ -225,6 +225,12 @@ Layout variation (to avoid the "AI factory" look) — confirmed requirement, exp
 
 Top 10 ideas shown in detail-ish cards, remainder as simple clickable cards/buttons. One category count (dozens, not thousands) means this template does not need the same variation trick as the idea template.
 
+**6.2 addendum — approved 2026-10-09 16:26 IST; expansion categories only**
+
+The original 679 indexed ideas and their 20 legacy categories keep their existing category-to-idea layout and all current URLs. The old subcategory field often names the idea itself; do not rewrite those rows to fit the new taxonomy. For **new** categories C001–C100, the browsing path is main category → **exactly ten approved subcategory cards** → the ideas inside the chosen subcategory → the full idea page. Each new subcategory is intended to hold **at least ten distinct ideas** before its parent category is considered complete. The individual idea URL remains `/idea/[slug]`; no new URL nesting or redirect for legacy ideas is required. Empty approved subcategories can appear on the new category page as “Ideas coming soon” until populated.
+
+Supabase stores the approved expansion map separately in `bbi_expansion_categories` (100 rows) and `bbi_expansion_subcategories` (1,000 rows), with ten positions and a parent foreign key. The site mirrors it in `src/config/expansion-taxonomy.ts`; only the new category pages use that map to show the ten choices. The three writers use separate 37-column staging tables and finish one main category at a time, with at least ten ideas per subcategory. Only the coordinator releases reviewed staged ideas into `public.ideas`. C089 uses the distinct name Home-Based Business Ventures and slug `home-based-business-ventures`; the old Work From Home category is preserved. The content rule for every new idea page is 500+ visitor-facing words across its existing sections, varied first-person founder voice for Indian readers, and a natural reference to the on-page Validate action that shows current information on the reader's screen. The complete current writer instruction lives at `docs/agents/Current_Instruction.md`.
+
 **6.3 Listicle template (/list/[slug] or similar — pick a slug word freely, it has zero SEO effect per Section 5)**
 
 New template. "50 Zero Investment Business Ideas for India" style. Top 10 get 200–300 words each written directly on the page; remaining ideas display as clickable cards linking to their full /idea/[slug] page. This is our fastest lever for both search volume and internal linking density.
