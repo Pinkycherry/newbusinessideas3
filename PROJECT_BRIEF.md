@@ -1,3 +1,7 @@
+EDITORIAL DECISION — 2026-10-10 00:53 IST: On expansion idea pages, the site advises the prospective founder using “you/your” for actions and ownership. The site does not pretend it has personally run every business. The existing `business_description` field drives the first-sentence hero lead plus “Read the full overview” remainder; a meaningful revised/new description must have at least 180 words with useful detail after the lead sentence. The entire page must still exceed 500 visitor-facing words across existing sections, with detailed, distinct bullets, no formulaic paragraph skeletons, and a natural on-page Validate cue for current data on the reader's own screen. Correct the previously published expansion cohort in place without touching the established 679 legacy URLs/rows. Coordinator owns the old-content repair; stage writers focus C005/C041/C093 respectively. Track the unfinished cohort in PENDING #42.
+
+---
+
 Here's the full updated brief, exactly as written in the file, for you to listen to:
 
 ---
