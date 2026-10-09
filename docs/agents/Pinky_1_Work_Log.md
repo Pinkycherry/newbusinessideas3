@@ -38,8 +38,8 @@ Never write passwords, keys or tokens here.
 | C004-S07 Functional Beverage | 10 | 10 |
 | C004-S08 Beverage Concentrate | 10 | 10 |
 | C004-S09 Powdered Drink | 10 | 10 |
-| C004-S10 Dairy Beverage | 1 | 10 |
-| **Total** | **91** | **100** |
+| C004-S10 Dairy Beverage | 10 | 10 |
+| **Total** | **100** | **100** |
 
 ## C001 progress (complete, awaiting coordinator review)
 
@@ -59,6 +59,9 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-10T00:19:20+05:30 · NOTE · C004 handed to the coordinator for review — Pinky 1 has stopped. No rows were copied to public.ideas and nothing on the site changed. Open concerns: (1) the four original drafts (S01, S03, S09, S10 -0001) got their Validate line in staging only, so their live copies still lack it until the coordinator resyncs them. (2) Pages get shorter towards the end (S10 551–691 words against S01 815–1059) but are all above 500. (3) The FAQ and getting-started lists repeat a similar shape across pages (for example a 'Do I need a food licence?' question), so an editorial pass for variety is advised before release. (4) Regulatory lines say 'check current rules' and name no figures. Only 'packaged drinking water needs BIS certification' is stated as fact.
+- 2026-10-10T00:19:20+05:30 · SUCCESS · C004 Beverage Product Business Ideas complete, 100 of 100 — Final read-back of all C004 rows in ideas_pinky_1: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 10, S08 10, S09 10, S10 10. 100 unique IDs and 100 unique slugs, all pending/free. Words 551–1059, none under 500. Validate line in all 100. Category and subcategory IDs, names and slugs match the lookup tables for all 100. SEO title, meta, focus keyword and FAQ present in all. No title or slug clash with live ideas (other than the 4 original drafts, which are the same rows and count once) or with ideas_pinky_2 / ideas_pinky_3. No duplicate IDs in the table (292 rows total).
+- 2026-10-10T00:19:20+05:30 · SUCCESS · Batch C004-B10 saved and verified, S10 complete — PK1-C004-S10-0001 (masala chaas) got a fresh Validate line (staging only, updated_at set, live copy untouched). New rows PK1-C004-S10-0002 to 0010: bottled lassi, flavoured milk in returnable glass bottles, bottled cold coffee for colleges, piyush, Madurai jigarthanda counters and kits, camel milk drinks with herder cooperatives, paneer whey fruit drinks, mohabbat ka sharbat counters, kulhad hot milk counters. S10 words 551–691.
 - 2026-10-10T00:15:28+05:30 · START · Batch C004-B10 (S10 Dairy Beverage) — Add a fresh Validate line to PK1-C004-S10-0001 (masala chaas, staging only), then insert PK1-C004-S10-0002 to 0010. The overlap check found no dairy drink clash (the only regex hits were 'lassi' inside the word 'classification' in Pinky 3 titles).
 - 2026-10-10T00:15:28+05:30 · SUCCESS · Batch C004-B09 saved and verified, S09 complete — PK1-C004-S09-0001 (sattu) got a fresh Validate line (staging only, updated_at set, live copy untouched). New rows PK1-C004-S09-0002 to 0010: kesar badam milk mix, jaljeera and shikanji sachets, haldi doodh mix, natural fruit drink powders, hot chocolate from Indian cocoa, milkshake premix for shops, chaas masala sachets, bajra raab instant mix, instant sol kadhi mix. Plan change: ragi malt was dropped (too close to the live millet porridge mix) and replaced by instant sol kadhi mix. S09 words 585–660. Read-back of all 91 C004 rows: 91 unique IDs, none under 500 words, Validate in every S01–S09 row, taxonomy, metadata, pending/free, FAQ, no duplicates, no missing fields. Counts: S01–S09 10 each, S10 1, total 91.
 - 2026-10-10T00:11:34+05:30 · START · Batch C004-B09 (S09 Powdered Drink) — Add a fresh Validate line to PK1-C004-S09-0001 (sattu, staging only), then insert PK1-C004-S09-0002 to 0010.
