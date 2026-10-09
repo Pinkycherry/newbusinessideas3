@@ -29,7 +29,7 @@ Never write passwords, keys or tokens here.
 
 | Subcategory | Saved ideas | Target |
 |---|---|---|
-| C004-S01 Tea Product | 1 | 10 |
+| C004-S01 Tea Product | 10 | 10 |
 | C004-S02 Coffee Product | 0 | 10 |
 | C004-S03 Fruit and Vegetable Drink | 1 | 10 |
 | C004-S04 Packaged Water | 0 | 10 |
@@ -39,7 +39,7 @@ Never write passwords, keys or tokens here.
 | C004-S08 Beverage Concentrate | 0 | 10 |
 | C004-S09 Powdered Drink | 1 | 10 |
 | C004-S10 Dairy Beverage | 1 | 10 |
-| **Total** | **4** | **100** |
+| **Total** | **13** | **100** |
 
 ## C001 progress (complete, awaiting coordinator review)
 
@@ -59,6 +59,9 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-09T18:08:48+05:30 · START · Batch C004-B02 (S02 Coffee Product) — Ten new rows PK1-C004-S02-0001 to 0010. Plan avoids the live coffee cart, part-time roasting and espresso descaling ideas.
+- 2026-10-09T18:08:48+05:30 · SUCCESS · Batch C004-B01 saved and verified, S01 complete — PK1-C004-S01-0001 got a fresh Validate line (staging only, updated_at set, live copy untouched). New rows PK1-C004-S01-0002 to 0010: local CTC blending for kiranas, orthodox tea from small growers, masala chai tea-and-spice blend, Kashmiri kahwa packs, tea bag contract packing, bottled iced tea, butterfly pea and hibiscus flower teas, tea gift boxes, tea premix for vending machines. S01 words 815–1059. Read-back of all 13 C004 rows: none under 500 words, Validate in all S01 rows, taxonomy and category names from the lookup tables, metadata, status pending/free, FAQ, no duplicate titles, slugs or IDs across live and all staging tables, no missing fields. Counts: S01 10, S02 0, S03 1, S04 0, S05 0, S06 0, S07 0, S08 0, S09 1, S10 1, total 13.
+- 2026-10-09T18:04:01+05:30 · START · Batch C004-B01 (S01 Tea Product) — Add a fresh Validate line to PK1-C004-S01-0001 (staging only), then insert PK1-C004-S01-0002 to 0010 one or two per call with no semicolons in text. S06 plan completed: neeragaram fermented rice water, bread kvass from bakery leftovers.
 - 2026-10-09T18:03:34+05:30 · SUCCESS · Assignment updated before any C004 write — C004 set as the active category in `Pinky_1_Assignment.md` with the full idea plan, published to Artifacts and pushed. Recount: four C004 drafts, all live, counted once (S01 862, S03 885, S09 575, S10 661 words). None mentions Validate, so each will get a fresh line in my staging table only. 96 new rows are needed.
 - 2026-10-09T18:03:34+05:30 · INSTRUCTION · Coordinator: C004 Beverage Product Business Ideas is the next and only active category — The order is S01 to S10, ten verified ideas each before moving on. The target is at least 100 C004 rows. Use 500+ words, Indian context, a varied first-person voice, specific offers, no recycled noun-swapped text, no invented figures, licences or rules, and a fresh Validate line on each page. Check for duplicate titles, slugs and concepts. Use pending/free status and batches of up to ten, each read back. Update the assignment before the next write and the log after each batch. At the end, report the counts, unique IDs, minimum words and concerns, then stop. Never copy to `public.ideas` or touch the site.
 - 2026-10-09T17:39:53+05:30 · NOTE · C001 handed to the coordinator for review — Category complete. Pinky 1 has stopped and will not start another category until the coordinator reviews C001.
