@@ -45,6 +45,10 @@ export const Route = createFileRoute("/category/$categorySlug/$subcategorySlug")
     }
   },
   loader: async ({ context, params }) => {
+    const approved = EXPANSION_SUBCATEGORIES[params.categorySlug];
+    if (approved && !approved.some((subcategory) => subcategory.slug === params.subcategorySlug)) {
+      throw notFound();
+    }
     const data = await context.queryClient.ensureQueryData(
       subQuery(params.categorySlug, params.subcategorySlug),
     );
