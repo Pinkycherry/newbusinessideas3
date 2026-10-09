@@ -29,7 +29,7 @@ Never write passwords, keys or tokens here.
 
 | Subcategory | Saved ideas | Target |
 |---|---|---|
-| C001-S01 Sauce and Condiment | 1 | 10 |
+| C001-S01 Sauce and Condiment | 10 | 10 |
 | C001-S02 Spice and Seasoning | 1 | 10 |
 | C001-S03 Ready-to-Cook Food | 1 | 10 |
 | C001-S04 Savory Snack | 0 | 10 |
@@ -39,10 +39,13 @@ Never write passwords, keys or tokens here.
 | C001-S08 Breakfast Food | 0 | 10 |
 | C001-S09 Nutrition Snack | 0 | 10 |
 | C001-S10 Frozen Prepared Food | 0 | 10 |
-| **Total** | **4** | **100** |
+| **Total** | **13** | **100** |
 
 ## Entries
 
+- 2026-10-09T16:43:43+05:30 · SUCCESS · Batch C001-B01 saved and verified — New rows PK1-C001-S01-0002 to PK1-C001-S01-0010 (Schezwan and chilli garlic sauce for street Chinese stalls; kasundi; green chilli thecha; momo chutney supply; portion sauce sachets for cloud kitchens; fresh eggless mayonnaise; pizza and pasta sauce; salad dressings for cafes; Northeast chilli paste). Validate sentence added to the four older C001 drafts; money, cost, income and edge text deepened on S01-0009 and S01-0010 (updated_at set). Read-back of all 13 C001 rows: minimum 642 visitor-facing words, none under 500, every row mentions Validate, taxonomy matches lookup tables, status pending / tier free, JSON arrays valid, no missing fields, no slug or title duplicate in live or other staging tables. C001 now 13 of 100; S01 complete at 10.
+- 2026-10-09T16:39:23+05:30 · START · Batch C001-B01 — Nine new S01 ideas (PK1-C001-S01-0002 to 0010) plus one Validate sentence added to each of the four existing C001 drafts. Slug check first.
+- 2026-10-09T16:39:23+05:30 · SUCCESS · Assignment and work log published — Commit 9b7747d on `main` (after rebasing on Pinky 2's commit a766a4c; the first push was rejected because `main` had moved, then succeeded). Assignment Artifact: https://claude.ai/artifact/BrAoPZJNxmZejM7zooDVzW. Work log Artifact: https://claude.ai/artifact/9YaqQ7cYnHapAK9K25qaVt.
 - 2026-10-09T16:38:55+05:30 · START · Publish assignment and work log — Commit `docs/agents/Pinky_1_Assignment.md` and `docs/agents/Pinky_1_Work_Log.md` to `main`, publish both as Markdown Artifacts.
 - 2026-10-09T16:38:55+05:30 · NOTE · Existing C001 drafts measured — Exact visitor-facing words: PK1-C001-S01-0001 1166, PK1-C001-S02-0001 646, PK1-C001-S03-0001 619, PK1-C001-S06-0001 609. All above 500. None mentions the Validate button yet; each gets one varied sentence in batch 1.
 - 2026-10-09T16:38:55+05:30 · NOTE · Repo copies decision — Founder said earlier today not to create repo files for the log. The writer instruction sent after that requires named Markdown copies in `docs/agents`. Following the newer instruction: Markdown only, no scripts or other file types.
