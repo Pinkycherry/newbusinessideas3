@@ -1,14 +1,14 @@
 # Pinky 3 — BBI writer assignment
 
-Version 3.0 • 9 October 2026 • Current display name: Pinky 3
+Version 4.0 • 9 October 2026 • Current display name: Pinky 3
 
-This is the primary assignment for writer slot **3**. It supersedes the earlier 100-ideas-across-the-range stopping rule and all earlier conflicting copy or research instructions. The permanent assignment is **C068–C100** and the only writable idea destination is `public.ideas_pinky_3` in Supabase project `jqzadwobnfypmytcbpkw`. The current active main category is **C068 Construction Materials Business Ideas**, slug `construction-materials-business-ideas`. Complete C068 before beginning C069 or another category.
+This is the primary assignment for writer slot **3**. The permanent assignment is **C068–C100** and the only writable idea destination is `public.ideas_pinky_3` in Supabase project `jqzadwobnfypmytcbpkw`. The current and only active main category is **C079 Cross-Border Trade Services Business Ideas**, slug `cross-border-trade-services-business-ideas`. Complete its ten approved subcategories **in order S01 through S10**, bringing each to ten distinct verified pages before starting the next. Stop after C079 for coordinator review. C068 was completed and handed off with ten per subcategory on 9 October 2026; its record remains in the named work log.
 
 The source of current writer rules is [Current_Instruction.md](https://github.com/Pinkycherry/newbusinessideas3/blob/main/docs/agents/Current_Instruction.md), and the approved map is [BBI_Taxonomy.md](https://github.com/Pinkycherry/newbusinessideas3/blob/main/docs/agents/BBI_Taxonomy.md). The lookup tables `public.bbi_expansion_categories` and `public.bbi_expansion_subcategories` are authoritative for exact IDs, names, slugs, and ordering. Do not edit those lookup tables. This document retains the assigned C068–C100 map below for handoff. C089 is **Home-Based Business Ventures**, slug `home-based-business-ventures`; its ten subcategories and existing idea IDs remain unchanged.
 
-## Starting inventory and target
+## C079 starting inventory and target
 
-At the 9 October 2026 intake, C068 has three pending staging drafts: `PK3-C068-S02-0001`, `PK3-C068-S06-0001`, and `PK3-C068-S09-0001`. Each also exists in `public.ideas` with the same idea ID, so count each once. Initial distinct subcategory counts, in order S01–S10, are **0, 1, 0, 0, 0, 1, 0, 0, 1, 0**. The target is **at least ten distinct, specific pages in each of C068's ten subcategories**, at least 100 total. The three existing drafts need editorial expansion to the 500-word standard before they qualify as finished pages. Fill the remaining slots without duplicating buyer, offer, operation, or first step.
+The 9 October 2026 live recount found three pending C079 staging drafts: `PK3-C079-S03-0001`, `PK3-C079-S06-0001`, and `PK3-C079-S10-0001`. Their matching live copies count once and must not be edited. Initial distinct subcategory counts S01–S10 are **0, 0, 1, 0, 0, 1, 0, 0, 0, 1**; 97 new slots remain to reach **ten per subcategory, 100 total**. These three staged drafts are thin and need expansion before the category is complete. Begin with S01 Customs Clearance Services, complete and verify ten there, then S02 Trade Classification, and continue in approved order to S10 Product Adaptation for Export.
 
 ## Page writing standard
 
@@ -16,19 +16,21 @@ Each idea is a practical page for a person in India considering a business. The 
 
 The page has an existing **Validate** button. In an appropriate existing section, naturally tell the reader to click **Validate on that page** and view current, real-time information **on their own screen**. Vary the wording. Do not claim to have clicked it, seen results, researched individual ideas, verified current prices, or guaranteed outcomes. Do not invent figures, timelines, regulatory claims, quotations, testimonials, certifications, or achievements. No new sections are needed to meet the word count.
 
+Customs, classification, trade payments and compliance affect real decisions. Avoid precise legal or procedural claims unless checked against an authoritative current source. When a claim is unnecessary to the business brief, describe the question the founder and qualified trade partner would check instead. Give each page a distinct buyer, service boundary, operational method, first step, risks and verdict; avoid interchangeable export or import wording.
+
 ## Data and checks
 
 Use the assigned **37-column** `public.ideas_pinky_3` table. Keep status `pending`, tier `free`, and the established `PK3-Cxxx-Sxx-NNNN` ID pattern. Preserve native JSON arrays for tags, pros, cons, steps and tools, and FAQ objects with exactly `q` and `a`. Keep `collection_id`, `trend_score`, and `internal_link_anchors` null. Timestamps follow database defaults or preserve creation time on corrections. Use exact lookup-table taxonomy values on each row and unique, descriptive page slugs.
 
-Before each batch of up to ten, read titles, IDs, slugs and taxonomy from live and all three staging tables; check conceptual overlaps too. Read back every saved batch, verify all required fields, JSON shapes, pending status, the complete visitor-facing 500-word minimum, exact lookup IDs/names/slugs, distinct IDs/slugs, and all ten C068 subcategory counts. If a result is unclear, read the database before retrying. Existing thin rows may be improved only in this assigned staging table; do not edit their live copies. A draft copied live counts once.
+Before each batch of up to ten, read titles, IDs, slugs and taxonomy from live and all three staging tables; check conceptual overlaps too. Read back every saved batch, verify all required fields, JSON shapes, pending/free, the complete visitor-facing 500-word minimum, on-page Validate reference, exact lookup IDs/names/slugs, distinct IDs/slugs, and all ten C079 subcategory counts. If a result is unclear, read the database before retrying. Existing thin rows may be improved only in this assigned staging table; do not edit their live copies. A draft copied live counts once.
 
-Check proposed category names and slugs against approved and legacy taxonomy. If a genuine overlap appears, propose one specific alternative to the coordinator before inserting that category; do not rename lookup records. No such conflicting legacy category was identified for the active C068 at intake; the three live C068 rows are copies of our staging drafts.
+Check proposed category names and slugs against approved and legacy taxonomy. If a genuine overlap appears, propose one specific alternative to the coordinator before inserting that category; do not rename lookup records. The three live C079 rows are copies of our staging drafts.
 
 ## Artifacts, repo, and release
 
 Keep `Pinky_3_Assignment.md` and `Pinky_3_Work_Log.md` in this account's Artifacts and commit/push named copies in `docs/agents`. Update the work log after each batch with IST timestamps, actual IDs, read-back findings, ten subcategory counts and remaining gaps. The separate central operations log is a chat artifact and remains outside the repository.
 
-Do not edit the original 679 live ideas, their category routes or indexed URLs; do not edit `public.ideas`, another writer's table, assignment row, lookup tables, schema, or deployment. The coordinator owns review and release. When C068 reaches ten verified pages in each subcategory, report its ten counts and hand the category to the coordinator before starting another category.
+Do not edit the original 679 live ideas, their category routes or indexed URLs; do not edit `public.ideas`, another writer's table, assignment row, lookup tables, schema, or deployment. The coordinator owns review and release. When C079 reaches ten verified pages in each subcategory, report its ten counts, total unique IDs, minimum word count and any unresolved factual concern, then stop for coordinator review.
 
 ## Complete assigned taxonomy
 
