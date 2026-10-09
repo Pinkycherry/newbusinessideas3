@@ -1,6 +1,6 @@
 # Pinky 2 assignment
 
-Updated 2026-10-09 12:31 UTC (18:01 IST).
+Updated 2026-10-09 13:14 UTC (18:44 IST).
 
 | | |
 |---|---|
@@ -8,8 +8,8 @@ Updated 2026-10-09 12:31 UTC (18:01 IST).
 | Writer slot | 2 (permanent) |
 | Only table I may edit | `public.ideas_pinky_2` (37 columns, status pending) |
 | Category range | C035–C067 |
-| Active main category | **C040 Local Event Services Business Ideas** (`local-event-services-business-ideas`), assigned by the coordinator 2026-10-09 |
-| Completed, awaiting review | C035 Everyday Assistance Business Ideas (100 rows) |
+| Active main category | none: waiting for the coordinator's next assignment |
+| Completed, awaiting review | C035 Everyday Assistance Business Ideas (100 rows); C040 Local Event Services Business Ideas (100 rows) |
 | Database assignment row | `bbi_agent_assignments` agent_name Pinky 2: matches this table and range |
 
 ## Rules in force (from docs/agents/Current_Instruction.md)
@@ -84,3 +84,24 @@ Starting position (read 2026-10-09 12:31 UTC): 6 staged rows, 0 live copies.
 | C040-S10 Community Markets and Fairs | PK2-C040-S10-0001 weekend-makers-market-organiser (521) | 9 |
 
 Fixes needed on the six drafts: none mentions Validate; all six give income estimates in words (thousands, lakhs) that must go; S06-0001 needs more words; S10-0001 has an unsourced thousands of residents claim. 94 new ideas needed.
+
+## C040 status: complete, awaiting coordinator review (2026-10-09 13:14 UTC)
+
+100 pending rows in `public.ideas_pinky_2`, PK2-C040-S01-0001 to PK2-C040-S10-0010. None are live.
+
+| Subcategory | Verified ideas |
+|---|---|
+| C040-S01 Event Planning and Coordination | 10 |
+| C040-S02 Venue Setup and Logistics | 10 |
+| C040-S03 Event Decoration | 10 |
+| C040-S04 Event Equipment Rental | 10 |
+| C040-S05 Event Sound and Lighting | 10 |
+| C040-S06 Event Photo and Video Services | 10 |
+| C040-S07 Guest Registration Systems | 10 |
+| C040-S08 Party Activities and Entertainment | 10 |
+| C040-S09 Talent Booking and Production | 10 |
+| C040-S10 Community Markets and Fairs | 10 |
+
+Final read-back: 100 unique IDs, slugs and titles; words 543 minimum, 640 average, 1,000 maximum; 100 distinct Validate sentences; taxonomy, status/tier, required fields, digits, money words, AI vendor names, line breaks and duplicates across live and all staging tables all pass. The six older drafts were improved (Validate line, income wording, S06-0001 length).
+
+Remaining issue (unchanged): my older drafts in other categories still use money estimates in words; each will be cleaned when its category is worked.
