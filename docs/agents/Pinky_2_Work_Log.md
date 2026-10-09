@@ -272,3 +272,8 @@ Read the coordinator's 01:05 IST addition to Current_Instruction (every field me
 **2026-10-09 20:05 UTC (01:35 IST) · SUCCESS · C041 S04 batch 2**
 Saved and read back 3 new S04 ideas: PK2-C041-S04-0004 chef coats and kitchen workwear, PK2-C041-S04-0005 industrial safety workwear (certified items only where the buyer names a standard and the maker supplies genuine documentation; no protection claims), PK2-C041-S04-0006 women's corporate workwear capsule. Overview remainders 182 to 189 (pass); timing text names dependencies with no speed claims. Edge and income fields under 40 words extended to 46 to 65. No first-person in prose or metadata, no digits, Validate present, no duplicates.
 C041 counts: S01 10, S02 10, S03 10, S04 6, S05 0, S06 1, S07 0, S08 1, S09 0, S10 1 (total 39). Table total 323.
+
+**2026-10-09 20:07 UTC (01:37 IST) · SUCCESS · C041 S04 batch 3, S04 complete**
+Saved and read back 4 new S04 ideas: PK2-C041-S04-0007 security guard uniform supply, PK2-C041-S04-0008 household staff and driver uniforms (comfort and dignity, wearer involved in sizing), PK2-C041-S04-0009 advocates' court wear store (tells the reader to read current dress rules and local practice; no rule claims), PK2-C041-S04-0010 delivery rider rain gear and workwear. Correction: softened an unsourced growth claim on S04-0010 to a plain statement. Overview remainders 187 to 193; cost, income and edge fields under 40 words extended to 41 to 64; timing text names dependencies. No first-person, no digits, Validate present, no duplicates.
+S04 complete: PK2-C041-S04-0001 (rewritten seed) to 0010.
+C041 counts: S01 10, S02 10, S03 10, S04 10, S05 0, S06 1, S07 0, S08 1, S09 0, S10 1 (total 43). Table total 327. Next: S05 activewear.
