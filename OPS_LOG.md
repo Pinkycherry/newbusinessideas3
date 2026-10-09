@@ -8,6 +8,7 @@ One line per change: `- YYYY-MM-DD · where · what · who`. Add yours at the to
 in the same session you made the change. `scripts/session-brief.mjs` prints the
 latest eight lines at the start of every session.
 
+- 2026-10-10 01:18 IST · Supabase · Captured a non-public bbi_editorial snapshot of the 200 live expansion rows and three staging sheets (308/301/304 rows) before the cohort-wide repair; created a per-source idea_id review_status ledger with pending/edited-needs-final-review states. No original 679 row was copied or changed. · Codex
 - 2026-10-10 01:15 IST · Supabase · Pinky 3 inserted and read back ten C093-S01 Technology Recruitment pending/free ideas PK3-C093-S01-0001 through 0010 in ideas_pinky_3 only; 13/100 C093 staged unique. Overviews 183–212 words, pages 573–678; taxonomy, JSON, POV and Validate checked. No live/legacy edit. · Pinky 3
 - 2026-10-10 01:05 IST · Supabase · Extended four previously repaired idea audits to metadata and timing: corrected PK3-C068-S02-0001 meta description in live+p3; corrected unsupported “quickly” timing text in the two PK1 C031 live+p1 pairs; improved PK2-C040-S01-0001 stage meta description. Readback confirmed live fields. No legacy rows changed. · Codex
 - 2026-10-10 01:02 IST · Supabase · Refined all three bbi_agent_assignments.task rows to require more than 500 informative words, normally 500–1,000 as each idea warrants, without filler or a hard ceiling. Readback confirmed the phrase in all three rows. · Codex
