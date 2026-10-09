@@ -34,12 +34,12 @@ Never write passwords, keys or tokens here.
 | C004-S03 Fruit and Vegetable Drink | 10 | 10 |
 | C004-S04 Packaged Water | 10 | 10 |
 | C004-S05 Plant Based Beverage | 10 | 10 |
-| C004-S06 Fermented Beverage | 0 | 10 |
+| C004-S06 Fermented Beverage | 10 | 10 |
 | C004-S07 Functional Beverage | 0 | 10 |
 | C004-S08 Beverage Concentrate | 0 | 10 |
 | C004-S09 Powdered Drink | 1 | 10 |
 | C004-S10 Dairy Beverage | 1 | 10 |
-| **Total** | **52** | **100** |
+| **Total** | **62** | **100** |
 
 ## C001 progress (complete, awaiting coordinator review)
 
@@ -59,6 +59,8 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-09T18:31:24+05:30 · START · Batch C004-B07 (S07 Functional Beverage) — Ten new rows PK1-C004-S07-0001 to 0010. These ideas are claim-sensitive, so the text names ingredients and uses only, never health benefits, and says to check the applicable category rules.
+- 2026-10-09T18:31:24+05:30 · SUCCESS · Batch C004-B06 saved and verified, S06 complete — New rows PK1-C004-S06-0001 to 0010: bottled black carrot kanji, water kefir fruit sodas, ragi and kambu koozh, non-alcoholic brewed ginger beer, kombucha home-brew kits (kits only, live kombucha wholesale avoided), jamun sirka and fruit vinegar shrubs, pineapple peel tepache, milk kefir with a dairy partner, neeragaram for morning walkers, bread kvass from bakery leftovers. Every fermented soda page says alcohol must be controlled and tested and the non-alcoholic rules confirmed, with no limit figure invented. S06 words 638–686. Read-back of all 62 C004 rows: 62 unique IDs, none under 500 words, Validate in every S01–S06 row, taxonomy, metadata, pending/free, FAQ, no duplicates, no missing fields. Counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 0, S08 0, S09 1, S10 1, total 62.
 - 2026-10-09T18:27:08+05:30 · START · Batch C004-B06 (S06 Fermented Beverage) — Ten new rows PK1-C004-S06-0001 to 0010, all non-alcoholic. The live idea 'Small Batch Kombucha Wholesale' is avoided, so kombucha appears only as home-brew kits, not bottles.
 - 2026-10-09T18:27:08+05:30 · SUCCESS · Batch C004-B05 saved and verified, S05 complete — New rows PK1-C004-S05-0001 to 0010: peanut milk, barista oat milk for cafes, fresh soy milk morning round, flavoured coconut milk drinks, vegan almond-date shakes for gyms, ragi and jowar millet milk for tiffins, nut-milk base paste jars, lemon barley water, plant-based spiced chaas, bottled panakam. Plan change: 'almond milk for gyms' became almond-date shakes, to stay distinct from the nut-milk paste. S05 words 662–779. Read-back of all 52 C004 rows: 52 unique IDs, none under 500 words, Validate in every S01–S05 row, taxonomy, metadata, pending/free, FAQ, no duplicates, no missing fields. Counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 0, S07 0, S08 0, S09 1, S10 1, total 52.
 - 2026-10-09T18:22:45+05:30 · START · Batch C004-B05 (S05 Plant Based Beverage) — Ten new rows PK1-C004-S05-0001 to 0010. They stay distinct from the C001 frozen coconut milk cubes (cooking ingredient) by covering ready drinks only.
