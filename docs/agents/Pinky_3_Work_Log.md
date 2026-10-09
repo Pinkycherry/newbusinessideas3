@@ -209,3 +209,10 @@
 - Visitor-facing word counts in ID order: 606, 585, 570, 580, 559, 578, 623, 563, 563, 566. All ten read back with 37 fields, exact drafted content, pending/free, native arrays and q/a FAQ, null metadata, exact taxonomy, unique IDs/slugs, on-page Validate and no new live overlap. Pre-insert comparison covered live and all three staging tables.
 - Replaced a spice-blend composition dossier that overlapped the ceramic composition dossier in offer and workflow with a historical classification-decision migration service for an acquired catalogue. No duplicate inserted. Every page reserves code judgments to qualified advisers and avoids precise unsupported rules.
 - Ten C079 subcategory counts S01–S10: **10, 10, 1, 0, 0, 1, 0, 0, 0, 1**. Distinct staged C079 total **23/100**; 77 slots remain. S02 is complete; next is S03 only. Actual errors: none.
+
+## C079 batch 3 — S03 Export Operations Support complete
+
+- Read-back verified at: 2026-10-09 18:19:13 IST.
+- Existing staged ID PK3-C079-S03-0001 expanded to 726 visitor-facing words; original created_at preserved and its live copy untouched. New saved IDs: PK3-C079-S03-0002, PK3-C079-S03-0003, PK3-C079-S03-0004, PK3-C079-S03-0005, PK3-C079-S03-0006, PK3-C079-S03-0007, PK3-C079-S03-0008, PK3-C079-S03-0009, PK3-C079-S03-0010.
+- New-row visitor-facing words in ID order: 545, 544, 535, 565, 570, 564, 585, 561, 569. Read back all ten S03 rows with 37 fields, exact content, pending/free, native JSON arrays and q/a FAQs, null metadata, exact lookup taxonomy, unique IDs/slugs, natural Validate references and no live overlap for the nine new rows. The pre-insert comparison covered live and all staging tables; tile load planning differed materially from coir document coordination despite shared generic title words.
+- Ten C079 counts S01–S10: **10, 10, 10, 0, 0, 1, 0, 0, 0, 1**. Distinct staged total **32/100**; 68 new slots remain. S03 complete; S04 is next. No save errors. A local draft-construction JavaScript call failed with `SyntaxError: Unexpected token ':'` due to malformed FAQ syntax before any database mutation; rewritten and validated before insertion.
