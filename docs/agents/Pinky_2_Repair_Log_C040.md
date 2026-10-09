@@ -33,3 +33,21 @@ Readback (words / bd / minf; all fp=false, dig=false, spd=false, val=true, one V
 - S01-0010 1027 / 205 / 45
 
 Fixes during batch: S01-0006 overview phrase containing a first-person quote replaced (two targeted UPDATEs), re-checked clean. Unresolved: none.
+
+## S02 Venue Setup and Logistics — done 2026-10-09 20:53 UTC / 02:23 IST
+
+Reviewed and rewrote all 10 rows PK2-C040-S02-0001..0010. Changed fields on every row: meta_description, business_description, summary, market_opportunity, target_customer, how_you_make_money, startup_cost, income_potential, competition_edge, verdict, time_to_first_customer, pros_json, cons_json, getting_started_steps, tools_needed, faq_json. Titles and seo_titles unchanged (no first person or digits).
+
+Readback (words / bd / minf; all fp=false, dig=false, spd=false, val=true, one Validate mention, no newline or double quote):
+- S02-0001 1097 / 227 / 50
+- S02-0002 1041 / 208 / 47
+- S02-0003 1093 / 215 / 44
+- S02-0004 1079 / 198 / 37
+- S02-0005 1008 / 212 / 36
+- S02-0006 1122 / 228 / 49
+- S02-0007 1054 / 208 / 40
+- S02-0008 1060 / 204 / 40
+- S02-0009 1026 / 204 / 46
+- S02-0010 1039 / 208 / 42
+
+Fixes during batch: S02-0003 overview illustrative chair count reworded (no quantity). S02-0010 timing flagged spd because the word monsoon contains soon; rewrote time_to_first_customer around the rains, re-checked clean. Pros/cons of S02-0003..0005 and 0007..0010 re-saved as fuller, more specific sentences after a meaning read. Unresolved: none.
