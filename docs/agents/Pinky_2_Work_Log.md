@@ -105,3 +105,6 @@ FAILURE found and fixed: a scan for figures written in words found unsourced inc
 NOTE for coordinator: my 95 older drafts in other categories (C036 to C067) also carry money words in income or cost text. Not touched now, because the instruction is one category at a time; each should be cleaned when its category is worked.
 
 C035 counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 10, S08 10, S09 10, S10 1 (total 91). Table total 186.
+
+**2026-10-09 11:52 UTC (17:22 IST) · SUCCESS · C035 batch 14**
+Overlap check for S10 concepts: live Unpacking and New Home Setup Service and Move In Condition Documentation exist, so a new-city settling-in idea was replaced with pet transition help; senior living move-in kept to the physical move, separate from my S09 settling-in reports. Saved and read back 5 new S10 ideas: PK2-C035-S10-0002 to PK2-C035-S10-0006 (paperwork help after a death, senior living move-in day help, home wind-up before moving abroad, household merging when parents move in, care home shortlisting visits). Passed every check on the first read-back: words 629 to 772, no money figures, taxonomy, status/tier, nulls, digits, Validate mention, 0 slug or title clashes. C035 counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 10, S08 10, S09 10, S10 6 (total 96). Table total 191.
