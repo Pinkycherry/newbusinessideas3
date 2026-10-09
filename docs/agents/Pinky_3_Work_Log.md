@@ -144,3 +144,10 @@
 - Visitor-facing words in ID order: 687, 625, 619, 643, 633, 609, 612, 609, 604, 627. All ten passed 37-field, pending/free, exact saved content, lookup taxonomy, native JSON/FAQ and unique ID/slug checks; no new live overlap.
 - Pre-insert comparison rejected two near-duplicates before saving: a clinic privacy glass panel and a recycled-glass garden paving aggregate. Replaced them with a sweet-shop splash panel and reclaimed ceramic planter drainage media, each rechecked across all four tables. No duplicate rows inserted.
 - Ten subcategory counts S01–S10: **4, 4, 4, 4, 4, 4, 4, 4, 4, 4**. Distinct C068 total 40/100; missing slots 60. Actual errors: none.
+
+## C068 batch 6 — fifth idea in every subcategory
+
+- Read-back verified at: 2026-10-09 17:24:36 IST.
+- New saved IDs: PK3-C068-S01-0005, PK3-C068-S02-0005, PK3-C068-S03-0005, PK3-C068-S04-0005, PK3-C068-S05-0005, PK3-C068-S06-0005, PK3-C068-S07-0005, PK3-C068-S08-0005, PK3-C068-S09-0005, PK3-C068-S10-0005.
+- Visitor-facing word counts in ID order: 632, 606, 632, 591, 587, 611, 581, 574, 599, 612. All ten read back with 37 fields, pending/free, exact drafted content, native arrays and q/a FAQ, correct C068 taxonomy, unique IDs/slugs and no live overlap.
+- Pre-insert review found one near title, cut-size laterite blocks for garden boundary repairs; this bench seating kit differs in buyer, designed use, course layout and first step. Ten subcategory counts S01–S10: **5, 5, 5, 5, 5, 5, 5, 5, 5, 5**. Distinct C068 total 50/100; missing slots 50. Skipped duplicates: none. Errors: none.
