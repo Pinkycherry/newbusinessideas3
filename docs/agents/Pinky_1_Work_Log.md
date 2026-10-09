@@ -30,7 +30,7 @@ Never write passwords, keys or tokens here.
 | Subcategory | Saved ideas | Target |
 |---|---|---|
 | C001-S01 Sauce and Condiment | 10 | 10 |
-| C001-S02 Spice and Seasoning | 1 | 10 |
+| C001-S02 Spice and Seasoning | 10 | 10 |
 | C001-S03 Ready-to-Cook Food | 1 | 10 |
 | C001-S04 Savory Snack | 0 | 10 |
 | C001-S05 Packaged Bakery | 0 | 10 |
@@ -39,10 +39,13 @@ Never write passwords, keys or tokens here.
 | C001-S08 Breakfast Food | 0 | 10 |
 | C001-S09 Nutrition Snack | 0 | 10 |
 | C001-S10 Frozen Prepared Food | 0 | 10 |
-| **Total** | **13** | **100** |
+| **Total** | **22** | **100** |
 
 ## Entries
 
+- 2026-10-09T16:47:39+05:30 · SUCCESS · Batch C001-B02 saved and verified — New rows PK1-C001-S02-0002 to PK1-C001-S02-0010 (single-origin whole spice gift boxes; fries and popcorn seasoning shakers; flavour dust for snack makers; herb salt and low-sodium blends; curry leaf and moringa powder; hing compounding; pepper and cardamom grading for growers; custom house blends for restaurants; kokum and amchur souring agents). Overlap check: no slug or title match; nearest live idea "Homemade Dry Spice Blend & Masala Pouching" differs (restaurant contract blending, not retail pouches).
+- 2026-10-09T16:47:39+05:30 · FAILURE · First read-back of B02 failed the 500-word rule — S02-0006 495, S02-0007 422, S02-0008 399, S02-0009 388, S02-0010 392 words. Fixed by rewriting market, customer, money, cost, income and edge sections of those five rows in first-person voice (updated_at set). Re-check passed: all 22 C001 rows at least 583 words, Validate present in all, taxonomy, metadata, JSON, duplicates and required fields clean. C001 now 22 of 100; S02 complete. Lesson: write five ideas per insert so later ideas do not get thin.
+- 2026-10-09T16:43:58+05:30 · START · Batch C001-B02 — Nine new S02 Spice and Seasoning ideas (PK1-C001-S02-0002 to 0010). Slug and title overlap check first.
 - 2026-10-09T16:43:43+05:30 · SUCCESS · Batch C001-B01 saved and verified — New rows PK1-C001-S01-0002 to PK1-C001-S01-0010 (Schezwan and chilli garlic sauce for street Chinese stalls; kasundi; green chilli thecha; momo chutney supply; portion sauce sachets for cloud kitchens; fresh eggless mayonnaise; pizza and pasta sauce; salad dressings for cafes; Northeast chilli paste). Validate sentence added to the four older C001 drafts; money, cost, income and edge text deepened on S01-0009 and S01-0010 (updated_at set). Read-back of all 13 C001 rows: minimum 642 visitor-facing words, none under 500, every row mentions Validate, taxonomy matches lookup tables, status pending / tier free, JSON arrays valid, no missing fields, no slug or title duplicate in live or other staging tables. C001 now 13 of 100; S01 complete at 10.
 - 2026-10-09T16:39:23+05:30 · START · Batch C001-B01 — Nine new S01 ideas (PK1-C001-S01-0002 to 0010) plus one Validate sentence added to each of the four existing C001 drafts. Slug check first.
 - 2026-10-09T16:39:23+05:30 · SUCCESS · Assignment and work log published — Commit 9b7747d on `main` (after rebasing on Pinky 2's commit a766a4c; the first push was rejected because `main` had moved, then succeeded). Assignment Artifact: https://claude.ai/artifact/BrAoPZJNxmZejM7zooDVzW. Work log Artifact: https://claude.ai/artifact/9YaqQ7cYnHapAK9K25qaVt.
