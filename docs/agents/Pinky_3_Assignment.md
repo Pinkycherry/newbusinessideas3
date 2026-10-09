@@ -2,13 +2,17 @@
 
 Version 4.0 • 9 October 2026 • Current display name: Pinky 3
 
-This is the primary assignment for writer slot **3**. The permanent assignment is **C068–C100** and the only writable idea destination is `public.ideas_pinky_3` in Supabase project `jqzadwobnfypmytcbpkw`. The current and only active main category is **C079 Cross-Border Trade Services Business Ideas**, slug `cross-border-trade-services-business-ideas`. Complete its ten approved subcategories **in order S01 through S10**, bringing each to ten distinct verified pages before starting the next. Stop after C079 for coordinator review. C068 was completed and handed off with ten per subcategory on 9 October 2026; its record remains in the named work log.
+This is the primary assignment for writer slot **3**. The permanent assignment is **C068–C100** and the only writable idea destination is `public.ideas_pinky_3` in Supabase project `jqzadwobnfypmytcbpkw`. The current and only assigned main category is **C079 Cross-Border Trade Services Business Ideas**, slug `cross-border-trade-services-business-ideas`. Its ten approved subcategories were completed **in order S01 through S10** with ten distinct verified pages each. C079 is complete and awaiting coordinator review; no next category is active. C068 was completed and handed off with ten per subcategory on 9 October 2026; its record remains in the named work log.
 
 The source of current writer rules is [Current_Instruction.md](https://github.com/Pinkycherry/newbusinessideas3/blob/main/docs/agents/Current_Instruction.md), and the approved map is [BBI_Taxonomy.md](https://github.com/Pinkycherry/newbusinessideas3/blob/main/docs/agents/BBI_Taxonomy.md). The lookup tables `public.bbi_expansion_categories` and `public.bbi_expansion_subcategories` are authoritative for exact IDs, names, slugs, and ordering. Do not edit those lookup tables. This document retains the assigned C068–C100 map below for handoff. C089 is **Home-Based Business Ventures**, slug `home-based-business-ventures`; its ten subcategories and existing idea IDs remain unchanged.
 
 ## C079 starting inventory and target
 
 The 9 October 2026 live recount found three pending C079 staging drafts: `PK3-C079-S03-0001`, `PK3-C079-S06-0001`, and `PK3-C079-S10-0001`. Their matching live copies count once and must not be edited. Initial distinct subcategory counts S01–S10 are **0, 0, 1, 0, 0, 1, 0, 0, 0, 1**; 97 new slots remain to reach **ten per subcategory, 100 total**. These three staged drafts are thin and need expansion before the category is complete. Begin with S01 Customs Clearance Services, complete and verify ten there, then S02 Trade Classification, and continue in approved order to S10 Product Adaptation for Export.
+
+### Completion checkpoint — 2026-10-10 00:38:54 IST
+
+C079 has **100 unique pending/free staging IDs**, ten each in S01–S10, with a minimum of **521 visitor-facing words** per page. Three pre-existing staged drafts were expanded; their live copies were not edited. Exact taxonomy, JSON/FAQ shape, required fields, Validate references, unique IDs/slugs and cross-table exact overlaps were checked. The three known live copies count once. The named work log contains batch-by-batch IDs, word counts and read-back results. Stop here for coordinator review.
 
 ## Page writing standard
 
