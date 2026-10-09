@@ -2,6 +2,8 @@
 
 This directory holds the latest agent-facing assignment and work log for the three Pinky writers. Commit each agent's updated document here so a replacement account can resume from the same instructions.
 
+The approved category and subcategory names, IDs and slugs are in [BBI_Taxonomy.md](BBI_Taxonomy.md). C089 is **Home-Based Business Ventures** (`home-based-business-ventures`) so it remains distinct from the older Work From Home Business Ideas category. Its ten C089 subcategories and existing idea IDs stay the same. Pinky 3 must carry this correction into its assignment document before writing more C089 rows.
+
 | Agent | Assignment file | Work log |
 |---|---|---|
 | Pinky 1 | `Pinky_1_Assignment.md` | `Pinky_1_Work_Log.md` |

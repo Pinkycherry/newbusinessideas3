@@ -31,7 +31,7 @@ export const Route = createFileRoute("/browse")({
       {
         property: "og:description",
         content:
-          "Every category and subcategory in the BBI library — free after one sign-in, with honest research for people who cannot afford to lose money on an idea that was never going to work.",
+          "Browse the BBI idea library by category and subcategory. Explore practical business models and use Validate for current local details.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -107,12 +107,10 @@ function BrowsePage() {
             <h1 ref={headingRef} className="mt-4 text-3xl font-bold tracking-tight">
               The full idea library
             </h1>
-            {/* One line, two figures. The third used to be "N subcategories",
-              which was the idea count wearing a different label —
-              subcategory_name is byte-identical to title, so there are exactly
-              as many subcategories as ideas and the number said nothing. */}
+            {/* The total comes from live completed ideas. The new expansion
+                categories are grouped by their ten approved subcategories. */}
             <p className="mt-2 text-sm text-muted-foreground">
-              {data.totalIdeas} researched blueprints across {data.totalCategories} categories
+              {data.totalIdeas} business ideas across {data.totalCategories} categories
             </p>
             {/* Someone landing on the library from search has no idea what it
                 costs, and the answer is the most persuasive thing on the page. */}

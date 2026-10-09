@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { Fragment, useCallback, type CSSProperties } from "react";
 
@@ -6,6 +6,7 @@ import { IdeaCard } from "@/components/idea-card";
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { ExploreBanner, ExploreRail, EXPLORE_BANNER_ROTATION } from "@/components/explore-rail";
 import { categoryImage } from "@/config/category-imagery";
+import { EXPANSION_SUBCATEGORIES } from "@/config/expansion-taxonomy";
 import { getSubcategoryPage } from "@/lib/ideas.functions";
 import { JsonLd, absoluteUrl, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import {
@@ -23,6 +24,26 @@ const subQuery = (categorySlug: string, subcategorySlug: string) =>
   });
 
 export const Route = createFileRoute("/category/$categorySlug/$subcategorySlug")({
+  beforeLoad: ({ params }) => {
+    // C089 used the legacy Work From Home slug for its first three idea pages.
+    // Keep those subcategory links working after giving C089 its own category.
+    if (
+      params.categorySlug === "work-from-home-business-ideas" &&
+      EXPANSION_SUBCATEGORIES["home-based-business-ventures"]?.some(
+        (subcategory) => subcategory.slug === params.subcategorySlug,
+      )
+    ) {
+      throw redirect({
+        to: "/category/$categorySlug/$subcategorySlug",
+        params: {
+          categorySlug: "home-based-business-ventures",
+          subcategorySlug: params.subcategorySlug,
+        },
+        replace: true,
+        statusCode: 301,
+      });
+    }
+  },
   loader: async ({ context, params }) => {
     const data = await context.queryClient.ensureQueryData(
       subQuery(params.categorySlug, params.subcategorySlug),

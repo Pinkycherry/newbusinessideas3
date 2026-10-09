@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { Fragment, useCallback, type CSSProperties } from "react";
@@ -8,6 +8,7 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { AdSlot } from "@/components/AdSlot";
 import { ExploreBanner, EXPLORE_BANNER_ROTATION } from "@/components/explore-rail";
 import { categoryImage } from "@/config/category-imagery";
+import { EXPANSION_SUBCATEGORIES } from "@/config/expansion-taxonomy";
 import { getCategoryPage } from "@/lib/ideas.functions";
 import { JsonLd, absoluteUrl, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import { hideImgIfBroken } from "@/lib/utils";
@@ -34,17 +35,22 @@ export const Route = createFileRoute("/category/$categorySlug/")({
   head: ({ loaderData, params }) => {
     const name = loaderData?.categoryName ?? "Category";
     const image = categoryImage(params.categorySlug);
+    const isExpansionCategory = Boolean(EXPANSION_SUBCATEGORIES[params.categorySlug]);
     return {
       meta: [
         { title: `${name} Business Ideas | BBI – Bro Business Ideas` },
         {
           name: "description",
-          content: `Explore ${loaderData?.ideas.length ?? 0} researched ${name} business ideas with pros, cons, verdicts and trend scores.`,
+          content: isExpansionCategory
+            ? `Explore ten ${name} collections and their practical business ideas for Indian readers.`
+            : `Explore ${loaderData?.ideas.length ?? 0} ${name} business ideas with pros, cons and verdicts.`,
         },
         { property: "og:title", content: `${name} Business Ideas | BBI – Bro Business Ideas` },
         {
           property: "og:description",
-          content: `Researched ${name} business blueprints with pros, cons and verdicts.`,
+          content: isExpansionCategory
+            ? `Browse ten ${name} collections and their business ideas.`
+            : `${name} business ideas with pros, cons and verdicts.`,
         },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },
@@ -76,6 +82,19 @@ function CategoryPage() {
   const categoryName = data.categoryName ?? categorySlug;
   const categoryPath = `/category/${categorySlug}`;
   const featured = categoryImage(categorySlug);
+  const expansionSubcategories = EXPANSION_SUBCATEGORIES[categorySlug];
+  // Preserve older idea cards if another category slug ever overlaps the new taxonomy.
+  const showLegacyGrid =
+    !expansionSubcategories || data.ideas.some((idea) => !idea.ideaId.startsWith("PK"));
+  const subcategoryCounts = new Map<string, number>();
+  if (expansionSubcategories) {
+    for (const idea of data.ideas) {
+      subcategoryCounts.set(
+        idea.subcategorySlug,
+        (subcategoryCounts.get(idea.subcategorySlug) ?? 0) + 1,
+      );
+    }
+  }
 
   const headingRef = useTextReveal<HTMLHeadingElement>();
   // MOTION_SPEC section 3 — gallery grammar. `useElementPointerGroup` puts ONE
@@ -117,7 +136,9 @@ function CategoryPage() {
           collectionPageSchema({
             path: categoryPath,
             name: `${categoryName} Business Ideas`,
-            description: `Researched ${categoryName} business idea blueprints with pros, cons and verdicts.`,
+            description: expansionSubcategories
+              ? `Ten ${categoryName} collections with practical ideas for Indian readers.`
+              : `${categoryName} business ideas with pros, cons and verdicts.`,
             itemCount: data.ideas.length,
             image: featured.src,
           }),
@@ -146,7 +167,11 @@ function CategoryPage() {
             >
               {data.categoryName}
             </h1>
-            <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {expansionSubcategories
+                ? `10 subcategories · ${data.ideas.length} ideas`
+                : `${data.ideas.length} ideas`}
+            </p>
             {/* Category pages are the most common organic landing point after
                 an idea page, and they said nothing about the price. */}
             <p className="mt-1 text-xs uppercase tracking-[0.16em] text-muted-foreground">
@@ -174,17 +199,63 @@ function CategoryPage() {
             </figure>
           </div>
 
+          {expansionSubcategories && (
+            <section className="bbi-depth-front mt-8" aria-labelledby="subcategory-heading">
+              <h2 id="subcategory-heading" className="text-2xl font-semibold tracking-tight">
+                Explore the ten subcategories
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Pick a subject to see its business ideas. Collections fill out as new ideas are
+                added.
+              </p>
+              <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {expansionSubcategories.map((subcategory) => {
+                  const count = subcategoryCounts.get(subcategory.slug) ?? 0;
+                  const content = (
+                    <>
+                      <span className="block text-base font-semibold">{subcategory.name}</span>
+                      <span className="mt-2 block text-sm text-muted-foreground">
+                        {count > 0
+                          ? `${count} ${count === 1 ? "idea" : "ideas"}`
+                          : "Ideas coming soon"}
+                      </span>
+                    </>
+                  );
+                  const className =
+                    "glass block rounded-xl border border-border/50 p-5 transition-colors";
+                  return count > 0 ? (
+                    <Link
+                      key={subcategory.id}
+                      to="/category/$categorySlug/$subcategorySlug"
+                      params={{ categorySlug, subcategorySlug: subcategory.slug }}
+                      className={`${className} hover:border-primary/60`}
+                    >
+                      {content}
+                    </Link>
+                  ) : (
+                    <div key={subcategory.id} className={`${className} opacity-60`}>
+                      {content}
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
           {/* Ad and grid share the FRONT plane so they travel together. Split
               across planes they would converge on each other, and the ad-to-grid
               gap is only 32px. */}
-          <div className="bbi-depth-front mt-8">
-            <AdSlot position="category-above-grid" size="banner" />
-          </div>
+          {showLegacyGrid && (
+            <div className="bbi-depth-front mt-8">
+              <AdSlot position="category-above-grid" size="banner" />
+            </div>
+          )}
 
-          <div
-            ref={gridRef}
-            className="bbi-depth-front mt-8 grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-3"
-          >
+          {showLegacyGrid && (
+            <div
+              ref={gridRef}
+              className="bbi-depth-front mt-8 grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-3"
+            >
             {data.ideas.map((idea, i) => {
               const n = i + 1;
               const interstitial = n % 6 === 0 && n < data.ideas.length;
@@ -213,7 +284,8 @@ function CategoryPage() {
                 </Fragment>
               );
             })}
-          </div>
+            </div>
+          )}
           {/* EDITABLE SECTION END */}
 
           {/* A category page used to end on its last idea card. It now
