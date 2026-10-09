@@ -36,13 +36,16 @@ Never write passwords, keys or tokens here.
 | C001-S05 Packaged Bakery | 10 | 10 |
 | C001-S06 Confectionery | 10 | 10 |
 | C001-S07 Fruit Preserve | 10 | 10 |
-| C001-S08 Breakfast Food | 0 | 10 |
+| C001-S08 Breakfast Food | 10 | 10 |
 | C001-S09 Nutrition Snack | 0 | 10 |
 | C001-S10 Frozen Prepared Food | 0 | 10 |
-| **Total** | **70** | **100** |
+| **Total** | **80** | **100** |
 
 ## Entries
 
+- 2026-10-09T17:29:21+05:30 · START · Batch C001-B09 — Ten new S09 Nutrition Snack ideas (PK1-C001-S09-0001 to 0010), one per insert. Overlap check done: no live or staging title touches soya nuts, seed trail mix, popped rajgira, school snack boxes, vegetable chips, coconut chips, panjiri, trek packs, toddler puffs or bhel kits (only unrelated toddler daycare, toddler music classes and trekking gear rental).
+- 2026-10-09T17:29:21+05:30 · SUCCESS · Batch C001-B08 saved and verified — New rows PK1-C001-S08-0001 to PK1-C001-S08-0010 (instant poha and upma cups; roasted vermicelli packing; small poha mill; fresh thepla supply; dalia packing; puttu, appam and idiyappam flour; overnight oats jars for offices; small-batch natural peanut butter; instant rava idli mix; moong and besan chilla premix). No overlap found. S08 words 587–1360. Read-back of all 80 C001 rows: minimum 555 words, none under 500, Validate in all, taxonomy match against the lookup tables, metadata, JSON, unique IDs and slugs, no duplicates across live and staging, no missing fields. C001 now 80 of 100. S01–S08 complete.
+- 2026-10-09T17:22:56+05:30 · START · Batch C001-B08 — Ten new S08 Breakfast Food ideas (PK1-C001-S08-0001 to 0010), one per insert. Overlap check first.
 - 2026-10-09T17:22:42+05:30 · SUCCESS · Batch C001-B07 saved and verified — New rows PK1-C001-S07-0001 to PK1-C001-S07-0010 (amla murabba and candy; mixed fruit jam for school tiffins; aam papad; small-batch orange marmalade; jackfruit jam and dried bulbs, slug `jackfruit-jam-and-dried-jackfruit-bulbs`; jaggery-sweetened fruit spreads; solar-dried fruit slices; forest fruit preserves with tribal collectors; tutti frutti for bakeries; bake-stable fruit fillings). One wording fix on S07-0008 (updated_at set). S07 words 565–756. Read-back of all 70 C001 rows: minimum 555 words, Validate in all, taxonomy, metadata, JSON, duplicates and fields clean. C001 now 70 of 100. S01–S07 complete.
 - 2026-10-09T17:18:14+05:30 · START · Batch C001-B07 — Ten new S07 Fruit Preserve ideas (PK1-C001-S07-0001 to 0010), one per insert. Overlap check first.
 - 2026-10-09T17:17:59+05:30 · SUCCESS · Batch C001-B06 saved and verified — New rows PK1-C001-S06-0002 to PK1-C001-S06-0010 (imli candy and tamarind toffee; small-batch chocolate from Indian cacao; shelf-stable peda; real-fruit jelly candies; Agra-style petha; soan papdi unit; mukhwas blends; chocolate-coated dry fruits; milk toffee). No overlap found. S06 words range 558–810. Read-back of all 60 C001 rows: minimum 555 words, Validate in all, taxonomy, metadata, JSON, duplicates and fields clean. C001 now 60 of 100. S01–S06 complete.
