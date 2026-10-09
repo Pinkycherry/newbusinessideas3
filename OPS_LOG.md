@@ -8,6 +8,7 @@ One line per change: `- YYYY-MM-DD · where · what · who`. Add yours at the to
 in the same session you made the change. `scripts/session-brief.mjs` prints the
 latest eight lines at the start of every session.
 
+- 2026-10-10 01:44 IST · Supabase · Pinky 3 inserted/read back ten C093-S08 Career Coaching pending/free rows PK3-C093-S08-0001 through 0010 in ideas_pinky_3 only; 81/100 C093 staged. Overviews 208–229, pages 526–606; taxonomy, JSON, reader POV and Validate checked. No live edit. · Pinky 3
 - 2026-10-10 01:41 IST · Supabase · Pinky 3 inserted/read back ten C093-S07 Temporary Staffing pending/free rows PK3-C093-S07-0001 through 0010 in ideas_pinky_3 only; 71/100 C093 staged. Overviews 208–220, pages 530–581; taxonomy, JSON, reader POV and Validate checked. No live edit. · Pinky 3
 - 2026-10-10 01:40 IST · Supabase · Ingested agent rows added after the 01:18 snapshot into bbi_editorial.work_pinky1/2/3 and review_status with pending_new state (36/29/48 new IDs at intake). These are private candidates only; no legacy or public idea mutated. · Codex
 - 2026-10-10 01:37 IST · Supabase · Pinky 3 inserted/read back ten C093-S06 Executive Recruitment pending/free rows PK3-C093-S06-0001 through 0010 in ideas_pinky_3 only; 61/100 C093 staged. Overviews 207–231, pages 578–665; approved taxonomy, JSON, reader POV and Validate checked. No live edit. · Pinky 3
