@@ -92,8 +92,8 @@ function CategoryPage() {
   const showLegacyGrid = !expansionSubcategories;
   const totalIdeas = "totalIdeas" in data ? data.totalIdeas : data.ideas.length;
   const expansionCounts = "subcategoryCounts" in data ? data.subcategoryCounts : [];
-  const subcategoryCounts = new Map(
-    expansionCounts.map((item) => [item.slug, item.ideaCount]),
+  const subcategoryCounts = new Map<string, number>(
+    expansionCounts.map((item): [string, number] => [item.slug, item.ideaCount]),
   );
 
   const headingRef = useTextReveal<HTMLHeadingElement>();
