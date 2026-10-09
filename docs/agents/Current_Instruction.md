@@ -12,15 +12,17 @@ The approved new taxonomy also exists in Supabase as `public.bbi_expansion_categ
 
 ## Work order and counts
 
-## Current category assignments — 2026-10-09 17:57 IST
+## Current category assignments — updated 2026-10-10 00:14 IST
 
 The owner showed screenshots of incomplete public category pages. The immediate next category is now fixed for each slot; do not choose a different category or start several categories at once. These are staging-writing assignments, not publication instructions.
 
 | Slot | Main category to complete now | Existing staged drafts at this checkpoint | Missing to reach 100 |
 |---|---|---:|---:|
 | 1 | C004 Beverage Product Business Ideas | 4 | 96 |
-| 2 | C040 Local Event Services Business Ideas | 6 | 94 |
+| 2 | C041 Apparel and Clothing Retail Business Ideas, after the C035/C040 editorial repair below | 5 | 95 |
 | 3 | C079 Cross-Border Trade Services Business Ideas | 3 | 97 |
+
+Slot 2 has finished C040 (100 staged, ten per subcategory). A coordinator audit found formulaic copy in C035 and C040 despite the length and taxonomy checks passing: 90 C035 and 94 C040 verdicts use “My first test would”; C040 repeatedly uses “I want to” in summaries and “I would charge” at the start of revenue copy. Before adding C041 rows, revise those two completed categories in slot 2's staging table for genuine page-specific voice and varied reasoning, not synonym swaps. Recheck each edited page's 500-word minimum, Validate cue and exact saved content. Keep the named Artifact and repo work log current, and report the repair audit before proceeding to C041. Slots 1 and 3 keep their existing C004 and C079 assignments. C001's repeated verdict opening is a separate slot-1 editorial issue; do not edit it from slot 2.
 
 Re-read your table before writing because counts can change. Work through approved S01 to S10 in order: bring S01 to ten distinct ideas, verify it, then S02, and so on until all ten have ten. Improve existing staged drafts as needed; a matching live copy counts once and stays untouched. Keep the ten subcategory counts in each batch log. Hand off a complete 100-idea category, then stop for the coordinator's review and release. Do not describe staged ideas as already visible on the website. The incomplete public “Ideas coming soon” display is a separate site issue tracked in PENDING #40.
 
