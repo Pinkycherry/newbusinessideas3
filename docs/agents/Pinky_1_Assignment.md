@@ -1,6 +1,6 @@
 # Pinky 1 assignment
 
-Last updated: 2026-10-09 17:39 +05:30 · Writer name: **Pinky 1** · Account: Claude Code (cloud session)
+Last updated: 2026-10-09 18:03 +05:30 · Writer name: **Pinky 1** · Account: Claude Code (cloud session)
 
 ## Permanent slot
 
@@ -12,9 +12,14 @@ Database assignment row `bbi_agent_assignments` (agent `Pinky 1`, status `ready`
 
 ## Active main category
 
-**C001 Packaged Food Business Ideas** (`packaged-food-business-ideas`), started 2026-10-09, **completed 2026-10-09 17:39 IST: 100 of 100 saved and verified, handed to the coordinator for review.** No new category starts until the coordinator signs off.
-Chosen because it is the first category in my range and already has four drafts.
-Name and slug checked: no clash with any of the 20 legacy category names or slugs.
+**C004 Beverage Product Business Ideas** (`beverage-product-business-ideas`), assigned by the coordinator on 2026-10-09 (17:57 IST checkpoint in `Current_Instruction.md`) and started 2026-10-09 18:03 IST. This is my only active category.
+
+- Order is fixed: bring S01 to ten verified ideas, then S02, and so on to S10. No scattering.
+- Target: at least ten distinct staged ideas in each of the ten approved subcategories, at least 100 C004 rows.
+- Starting position (recounted 2026-10-09 18:03 IST): four drafts, all also live (each counts once, live copies untouched). They are PK1-C004-S01-0001 (tulsi and lemongrass tea), PK1-C004-S03-0001 (kokum and aam panna), PK1-C004-S09-0001 (sattu premix) and PK1-C004-S10-0001 (masala chaas). Their word counts are 862, 885, 575 and 661. None mentions Validate, so each gets a fresh Validate line in my staging table only. That means 96 new rows are needed.
+- After S10 reaches ten, I report the S01–S10 counts, total unique C004 IDs, the minimum word count and any open concern, push this document and the work log, and stop for coordinator review. I do not copy anything to `public.ideas` and do not touch the site.
+
+**Previous category:** C001 Packaged Food Business Ideas, completed 2026-10-09 17:39 IST (100 of 100 verified) and handed to the coordinator.
 
 ## Rules (from `docs/agents/Current_Instruction.md`, 2026-10-09)
 
@@ -90,3 +95,20 @@ Already live elsewhere and avoided: pickle/papad/masala, dry spice blend pouchin
 - **S10 Frozen Prepared Food:** Frozen stuffed parathas · Frozen momos for kiosks · Frozen samosas and spring rolls · Frozen grated coconut and coconut milk cubes · Frozen ready curries · Frozen peas and sweet corn · Frozen kebabs for restaurants · Frozen marinated fish · Kulfi for retail freezers · Frozen pizza bases and garlic bread
 
 The plan can change when a duplicate check finds an overlap; every change goes in the work log.
+
+## C004 idea plan (checked against live and staging titles)
+
+Avoided because they already exist live: coffee cart, part-time coffee roasting, kombucha wholesale, packaged drinking water can delivery, fruit chaat and juice cart, milk delivery reselling, RO purifier service and espresso machine descaling.
+
+- **S01 Tea:** Assam CTC blending for kiranas · Small-grower orthodox tea direct to buyers · Masala chai leaf-and-spice blend · Kashmiri kahwa packs · Tea bag contract packing for hotels and offices · Bottled iced tea · Butterfly pea and hibiscus flower teas · Tea gift boxes for weddings and companies · Tea premix for office vending machines
+- **S02 Coffee:** Filter coffee and chicory powder for darshinis · Filter coffee decoction bottles · Cold brew bottles · Instant coffee sachets for offices · Drip coffee bags · Green coffee from small growers to roasters · Multi-estate coffee subscription boxes · Bean-to-cup office coffee supply · Cascara (coffee cherry husk) tea · Sukku malli (dry ginger coriander) coffee
+- **S03 Fruit and Vegetable Drink:** Cold-pressed juice subscription · Bottled sugarcane juice · Easy-open tender coconuts · ABC (apple, beetroot, carrot) juice · Goli soda revival · Orchard litchi and mango nectar · Frozen smoothie packs · Watermelon juice for highway chillers · Cashew apple drink
+- **S04 Packaged Water:** Small bottling plant · Water pouches for rural markets · Custom-label bottles for hotels and companies · Returnable glass-bottle water for restaurants · Village water ATM · Flavoured infused water · Packaged edible ice · Soda water supply to restaurants · Carton-packed water · Cup water for functions and temples
+- **S05 Plant Based:** Peanut milk and curd · Barista oat milk for cafes · Fresh soy milk delivery · Flavoured coconut milk drinks · Almond milk for gyms · Millet milk for children · Nut-milk base paste · Bottled barley water · Plant-based chaas · Panakam
+- **S06 Fermented:** Bottled kanji · Water kefir sodas · Ragi koozh · Brewed ginger beer (non-alcoholic) · Kombucha home-brew kits · Jamun and fruit vinegar shrubs · Pineapple peel tepache · Milk kefir · plus two to be planned after an overlap check
+- **S07 Functional:** Electrolyte drinks for outdoor workers · Aloe and amla juice · Ready-to-drink protein shakes · Ready-to-drink kadha · Sabja and chia drinks · Prebiotic fibre sodas · Natural-caffeine energy drinks · After-meal digestive shots · Ginger shots · Caffeine-free evening herbal drinks
+- **S08 Concentrate:** Rose and khus sharbat · Orange and pineapple squash · Cafe flavour syrups · Thandai concentrate · Panipuri water concentrate · Fountain soda syrups · Bar mocktail mixers · Fruit crush for parlours · Ginger-lemon-honey concentrate · Nannari syrup
+- **S09 Powdered Drink:** Ragi malt · Badam milk mix · Jaljeera and shikanji sachets · Haldi doodh mix · Natural fruit drink powders · Hot chocolate from Indian cocoa · Milkshake premix for juice shops · Chaas masala · Bajra raab mix
+- **S10 Dairy Beverage:** Bottled lassi · Flavoured milk in glass bottles · Cold coffee and milkshake bottles for colleges · Piyush · Jigarthanda · Camel milk drinks · Paneer whey drinks · Mohabbat ka sharbat · Kulhad hot milk counters
+
+The plan can change if an overlap check finds a clash; every change goes in the work log.

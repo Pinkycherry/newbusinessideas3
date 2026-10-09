@@ -25,6 +25,22 @@ Each entry is one line:
 
 Never write passwords, keys or tokens here.
 
+## C004 progress (active category)
+
+| Subcategory | Saved ideas | Target |
+|---|---|---|
+| C004-S01 Tea Product | 1 | 10 |
+| C004-S02 Coffee Product | 0 | 10 |
+| C004-S03 Fruit and Vegetable Drink | 1 | 10 |
+| C004-S04 Packaged Water | 0 | 10 |
+| C004-S05 Plant Based Beverage | 0 | 10 |
+| C004-S06 Fermented Beverage | 0 | 10 |
+| C004-S07 Functional Beverage | 0 | 10 |
+| C004-S08 Beverage Concentrate | 0 | 10 |
+| C004-S09 Powdered Drink | 1 | 10 |
+| C004-S10 Dairy Beverage | 1 | 10 |
+| **Total** | **4** | **100** |
+
 ## C001 progress (complete, awaiting coordinator review)
 
 | Subcategory | Saved ideas | Target |
@@ -43,6 +59,8 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-09T18:03:34+05:30 · SUCCESS · Assignment updated before any C004 write — C004 set as the active category in `Pinky_1_Assignment.md` with the full idea plan, published to Artifacts and pushed. Recount: four C004 drafts, all live, counted once (S01 862, S03 885, S09 575, S10 661 words). None mentions Validate, so each will get a fresh line in my staging table only. 96 new rows are needed.
+- 2026-10-09T18:03:34+05:30 · INSTRUCTION · Coordinator: C004 Beverage Product Business Ideas is the next and only active category — The order is S01 to S10, ten verified ideas each before moving on. The target is at least 100 C004 rows. Use 500+ words, Indian context, a varied first-person voice, specific offers, no recycled noun-swapped text, no invented figures, licences or rules, and a fresh Validate line on each page. Check for duplicate titles, slugs and concepts. Use pending/free status and batches of up to ten, each read back. Update the assignment before the next write and the log after each batch. At the end, report the counts, unique IDs, minimum words and concerns, then stop. Never copy to `public.ideas` or touch the site.
 - 2026-10-09T17:39:53+05:30 · NOTE · C001 handed to the coordinator for review — Category complete. Pinky 1 has stopped and will not start another category until the coordinator reviews C001.
 - 2026-10-09T17:39:53+05:30 · SUCCESS · C001 Packaged Food Business Ideas complete, 100 of 100 — Final read-back of all 100 rows in `ideas_pinky_1` (category C001): S01 Sauce and Condiment 10 · S02 Spice and Seasoning 10 · S03 Ready-to-Cook Food 10 · S04 Savory Snack 10 · S05 Packaged Bakery 10 · S06 Confectionery 10 · S07 Fruit Preserve 10 · S08 Breakfast Food 10 · S09 Nutrition Snack 10 · S10 Frozen Prepared Food 10. All 100 are status `pending`, tier `free`. Words 555–1448, none under 500. Validate mention present in all 100. Category and subcategory IDs, names and slugs match `bbi_expansion_categories` and `bbi_expansion_subcategories` for all 100. SEO title, meta description, focus keyword, FAQ and JSON fields present in all. No duplicate IDs or slugs in the table. No slug or title clash with live `ideas` (other than the 4 original drafts that are the same rows, counted once) or with `ideas_pinky_2` / `ideas_pinky_3`.
 - 2026-10-09T17:39:53+05:30 · SUCCESS · Batch C001-B10 saved and verified — New rows PK1-C001-S10-0001 to PK1-C001-S10-0010 (frozen stuffed parathas; frozen momos for kiosks and stalls; frozen samosas and spring rolls for caterers; frozen grated coconut and coconut milk cubes; frozen ready-to-heat curries and dals; frozen green peas and sweet corn processing; frozen kebabs and tikkis for restaurants; frozen marinated fish; packaged kulfi for shop and restaurant freezers; frozen pizza bases and garlic bread). Meat and seafood ideas carry clear licensing and handling cautions. S10 words 790–904. All checks clean.
