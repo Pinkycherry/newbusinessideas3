@@ -151,3 +151,10 @@
 - New saved IDs: PK3-C068-S01-0005, PK3-C068-S02-0005, PK3-C068-S03-0005, PK3-C068-S04-0005, PK3-C068-S05-0005, PK3-C068-S06-0005, PK3-C068-S07-0005, PK3-C068-S08-0005, PK3-C068-S09-0005, PK3-C068-S10-0005.
 - Visitor-facing word counts in ID order: 632, 606, 632, 591, 587, 611, 581, 574, 599, 612. All ten read back with 37 fields, pending/free, exact drafted content, native arrays and q/a FAQ, correct C068 taxonomy, unique IDs/slugs and no live overlap.
 - Pre-insert review found one near title, cut-size laterite blocks for garden boundary repairs; this bench seating kit differs in buyer, designed use, course layout and first step. Ten subcategory counts S01–S10: **5, 5, 5, 5, 5, 5, 5, 5, 5, 5**. Distinct C068 total 50/100; missing slots 50. Skipped duplicates: none. Errors: none.
+
+## C068 batch 7 — sixth idea in every subcategory
+
+- Read-back verified at: 2026-10-09 17:29:59 IST.
+- New saved IDs: PK3-C068-S01-0006, PK3-C068-S02-0006, PK3-C068-S03-0006, PK3-C068-S04-0006, PK3-C068-S05-0006, PK3-C068-S06-0006, PK3-C068-S07-0006, PK3-C068-S08-0006, PK3-C068-S09-0006, PK3-C068-S10-0006.
+- Visitor-facing words in ID order: 596, 586, 561, 565, 546, 571, 614, 585, 571, 584. Each read back with 37 fields, pending/free, exact drafted content, native arrays and q/a FAQ, correct lookup IDs/names/slugs, unique IDs/slugs and no live overlap. Pre-insert cross-table title/concept review found no duplicates.
+- Ten subcategory counts S01–S10: **6, 6, 6, 6, 6, 6, 6, 6, 6, 6**. Distinct C068 total 60/100; missing slots 40. Skipped duplicates: none. Errors: none.
