@@ -201,3 +201,11 @@
 - Visitor-facing words in ID order: 663, 606, 611, 603, 572, 598, 596, 674, 581, 578. All ten read back with 37 columns, exact drafted content, pending/free, native JSON arrays and q/a FAQs, null metadata, exact lookup IDs/names/slugs, unique IDs/slugs, natural Validate references and no new live ID/slug overlap.
 - A multi-maker spice customs-pack candidate overlapped the furniture cooperative intake model conceptually; replaced before insertion with a split-container status desk for paper distributors. No duplicate inserted. All ten concepts checked against live and all three staging tables. No precise trade-rule claim was needed; service boundaries reserve filing and decisions to appointed qualified parties.
 - Ten C079 subcategory counts S01–S10: **10, 0, 1, 0, 0, 1, 0, 0, 0, 1**. Distinct staged C079 total **13/100**; 87 slots remain. S01 is complete; next is S02 only. Actual errors: none.
+
+## C079 batch 2 — S02 Trade Classification Services complete
+
+- Read-back verified at: 2026-10-09 18:13:41 IST.
+- New saved IDs: PK3-C079-S02-0001, PK3-C079-S02-0002, PK3-C079-S02-0003, PK3-C079-S02-0004, PK3-C079-S02-0005, PK3-C079-S02-0006, PK3-C079-S02-0007, PK3-C079-S02-0008, PK3-C079-S02-0009, PK3-C079-S02-0010.
+- Visitor-facing word counts in ID order: 606, 585, 570, 580, 559, 578, 623, 563, 563, 566. All ten read back with 37 fields, exact drafted content, pending/free, native arrays and q/a FAQ, null metadata, exact taxonomy, unique IDs/slugs, on-page Validate and no new live overlap. Pre-insert comparison covered live and all three staging tables.
+- Replaced a spice-blend composition dossier that overlapped the ceramic composition dossier in offer and workflow with a historical classification-decision migration service for an acquired catalogue. No duplicate inserted. Every page reserves code judgments to qualified advisers and avoids precise unsupported rules.
+- Ten C079 subcategory counts S01–S10: **10, 10, 1, 0, 0, 1, 0, 0, 0, 1**. Distinct staged C079 total **23/100**; 77 slots remain. S02 is complete; next is S03 only. Actual errors: none.
