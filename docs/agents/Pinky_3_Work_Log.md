@@ -107,3 +107,11 @@
 - 2026-10-09 16:41:21 IST: Named assignment and this work log saved as Artifacts. Both named files committed locally to the supplied repository checkout at `f3d5481`. Push failed: `fatal: could not read Username for 'https://github.com': No such device or address` (exit 128). No remote update has been claimed. Checking an authorised session or connector; no idea rows changed.
 - 2026-10-09 16:46:04 IST: The GitHub browser session is signed out; GitHub integration was found but is not installed or connected, and a connection has been suggested. This leaves the required pre-write repository push blocked. No staging rows were inserted or updated. Read-only word counts of the three C068 drafts across existing visitor-facing copy: S02 292, S06 359, S09 478; each needs expansion to at least 500. Distinct subcategory counts remain **0, 1, 0, 0, 0, 1, 0, 0, 1, 0**; confirmed C068 total remains 3/100.
 - 2026-10-09 16:49:30 IST: GitHub connection verified for the Pinkycherry account with push permission to `newbusinessideas3`. Created the named assignment and work log on current `main` via two GitHub commits (`6a0c4f2`, `75690ea`); fetched both files and compared their complete contents byte-for-byte with the Artifacts working copies. The prerequisite repository handoff is now complete. No staging rows changed yet.
+
+## C068 batch 1 — expand existing drafts
+
+- Read-back verified at: 2026-10-09 16:59:18 IST.
+- Updated staging IDs: PK3-C068-S02-0001 (830 visitor-facing words), PK3-C068-S06-0001 (742), PK3-C068-S09-0001 (636). No new IDs inserted; all three also exist live and still count only once.
+- Verification: each row has 37 columns, pending status, matching C068 lookup category/subcategory IDs, names and slugs, native JSON arrays with q/a FAQ objects, a varied on-page Validate instruction, and the intended expanded field content. Existing live copies were not changed.
+- Ten subcategory counts S01–S10: **0, 1, 0, 0, 0, 1, 0, 0, 1, 0**. Distinct C068 total 3/100; missing slots 97. These three drafts now meet the page-word requirement.
+- Actual error: the second update in a multi-call batch returned `McpServerError: Invalid or expired requestState` after S02 saved. A read-only query confirmed S06/S09 unchanged; each was then updated separately and verified. No duplicate retry or extra row.
