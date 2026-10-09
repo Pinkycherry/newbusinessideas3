@@ -61,3 +61,21 @@ Reviewed and rewrote all 17 editable fields (meta_description, business_descript
 | PK2-C038-S07-0001 | 1018 | 199 | 46 | f | f | f | 1 | 5/5/7/5/4 |
 
 No newline or double-quote characters in any prose or JSON string (checked). Fixes after meaning read: removed unsourced growth/trend wording from market_opportunity in C037-S07, C037-S08, C037-S10, C038-S03, C038-S04, C038-S05, C038-S07 and from the first pro of C038-S05; replacement sentences describe the present need without claiming a trend. Railway rules (C037-S06), creche rules (C036-S07), pet food rules (C037-S10) and boarding rules (C037-S08) are left to the reader to check for their state; no legal claim made. Unresolved: none.
+
+### Batch 2: C039, C041 seeds, C042-S03/S05 (9 rows) — logged 2026-10-09 20:54 UTC / 2026-10-10 02:24 IST
+
+All 17 editable fields rewritten by hand in second person; seo_title unchanged (no first person). Titles, slugs, taxonomy and keywords unchanged.
+
+| idea_id | words | bd | minf | fp | dig | spd | val | JSON |
+|---|---|---|---|---|---|---|---|---|
+| PK2-C039-S02-0001 | 1084 | 208 | 49 | f | f | f | 1 | 5/5/7/5/4 |
+| PK2-C039-S04-0001 | 977 | 204 | 43 | f | f | f | 1 | 5/5/7/5/4 |
+| PK2-C039-S05-0001 | 956 | 207 | 44 | f | f | f | 1 | 5/5/7/5/4 |
+| PK2-C039-S06-0001 | 1013 | 208 | 41 | f | f | f | 1 | 5/5/7/5/4 |
+| PK2-C039-S10-0001 | 916 | 200 | 41 | f | f | f | 1 | 5/5/7/5/4 |
+| PK2-C041-S08-0001 | 962 | 204 | 42 | f | f | f | 1 | 5/5/7/5/4 |
+| PK2-C041-S10-0001 | 937 | 201 | 42 | f | f | f | 1 | 5/5/7/5/4 |
+| PK2-C042-S03-0001 | 934 | 209 | 41 | f | f | f | 1 | 5/5/7/5/4 |
+| PK2-C042-S05-0001 | 915 | 206 | 40 | f | f | f | 1 | 5/5/7/5/4 |
+
+Fixes: C039-S04 market_opportunity trend wording (Pilates has gained visibility) replaced with a present-tense statement; C039-S02 FAQ answer about bulk removed a body-outcome claim and now avoids promising results. Tag change logged: PK2-C042-S05-0001 tag B2B footwear (digit) replaced by business footwear supply, only that element changed. Old seed claimed certified safety shoes and licensed makers; new copy tells the reader to confirm the standard markings buyers require and check state workplace safety rules. Fitness rows tell members with health conditions to consult a doctor; no health outcomes claimed. Unresolved: none.
