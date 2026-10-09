@@ -1,6 +1,6 @@
 # Pinky 2 assignment
 
-Updated 2026-10-09 12:10 UTC (17:40 IST).
+Updated 2026-10-09 12:31 UTC (18:01 IST).
 
 | | |
 |---|---|
@@ -8,7 +8,8 @@ Updated 2026-10-09 12:10 UTC (17:40 IST).
 | Writer slot | 2 (permanent) |
 | Only table I may edit | `public.ideas_pinky_2` (37 columns, status pending) |
 | Category range | C035–C067 |
-| Active main category | **C035 Everyday Assistance Business Ideas** (`everyday-assistance-business-ideas`): **complete, awaiting coordinator review** |
+| Active main category | **C040 Local Event Services Business Ideas** (`local-event-services-business-ideas`), assigned by the coordinator 2026-10-09 |
+| Completed, awaiting review | C035 Everyday Assistance Business Ideas (100 rows) |
 | Database assignment row | `bbi_agent_assignments` agent_name Pinky 2: matches this table and range |
 
 ## Rules in force (from docs/agents/Current_Instruction.md)
@@ -61,4 +62,25 @@ All 100 rows are in `public.ideas_pinky_2`, status pending, IDs PK2-C035-S01-000
 
 Final read-back: 100 unique IDs and slugs; visitor-facing words 538 minimum, 718 average, 1,255 maximum; every row mentions Validate; taxonomy IDs, names and slugs match the lookup tables; status pending, tier free; no null required fields; no digits; no money estimates in words; no AI vendor names; 0 slug or title clashes with `ideas`, `ideas_pinky_1`, `ideas_pinky_3` or other Pinky 2 rows.
 
-Next: no new category is started until the coordinator reviews C035. Known issue in my 95 older drafts (C036 to C067): their income and cost text still uses money estimates in words. Each one will be cleaned when its category is worked.
+C035 is closed for writing. Known issue in my 95 older drafts (C036 to C067): their income and cost text still uses money estimates in words. Each one will be cleaned when its category is worked.
+
+## C040 Local Event Services: active (from 2026-10-09 12:31 UTC)
+
+Order: finish S01 to ten verified ideas, then S02, and so on to S10. Batches of up to ten, each read back. At least 500 visitor-facing words, detailed practical bullets, warm first-person founder voice, varied Validate wording, no invented fees, figures, licences or permissions.
+
+Starting position (read 2026-10-09 12:31 UTC): 6 staged rows, 0 live copies.
+
+| Subcategory | Existing drafts | Needed |
+|---|---|---|
+| C040-S01 Event Planning and Coordination | PK2-C040-S01-0001 house-ceremony-event-planner (589 words) | 9 |
+| C040-S02 Venue Setup and Logistics | none | 10 |
+| C040-S03 Event Decoration | none | 10 |
+| C040-S04 Event Equipment Rental | PK2-C040-S04-0001 catering-equipment-rental (589) | 9 |
+| C040-S05 Event Sound and Lighting | PK2-C040-S05-0001 sound-and-lighting-rental-for-small-functions (550) | 9 |
+| C040-S06 Event Photo and Video Services | PK2-C040-S06-0001 same-day-wedding-highlight-reel (493, under minimum) | 9 |
+| C040-S07 Guest Registration Systems | PK2-C040-S07-0001 qr-guest-check-in-service-for-events (543) | 9 |
+| C040-S08 Party Activities and Entertainment | none | 10 |
+| C040-S09 Talent Booking and Production | none | 10 |
+| C040-S10 Community Markets and Fairs | PK2-C040-S10-0001 weekend-makers-market-organiser (521) | 9 |
+
+Fixes needed on the six drafts: none mentions Validate; all six give income estimates in words (thousands, lakhs) that must go; S06-0001 needs more words; S10-0001 has an unsourced thousands of residents claim. 94 new ideas needed.
