@@ -115,3 +115,10 @@
 - Verification: each row has 37 columns, pending status, matching C068 lookup category/subcategory IDs, names and slugs, native JSON arrays with q/a FAQ objects, a varied on-page Validate instruction, and the intended expanded field content. Existing live copies were not changed.
 - Ten subcategory counts S01–S10: **0, 1, 0, 0, 0, 1, 0, 0, 1, 0**. Distinct C068 total 3/100; missing slots 97. These three drafts now meet the page-word requirement.
 - Actual error: the second update in a multi-call batch returned `McpServerError: Invalid or expired requestState` after S02 saved. A read-only query confirmed S06/S09 unchanged; each was then updated separately and verified. No duplicate retry or extra row.
+
+## C068 batch 2 — fill empty subcategories
+
+- Read-back verified at: 2026-10-09 17:03:50 IST.
+- New saved IDs: PK3-C068-S01-0001, PK3-C068-S03-0001, PK3-C068-S04-0001, PK3-C068-S05-0001, PK3-C068-S07-0001, PK3-C068-S08-0001, PK3-C068-S10-0001.
+- Visitor-facing word counts by ID order: 974, 876, 838, 687, 694, 684, 729. All seven have pending status, 37 fields, exact lookup taxonomy, native JSON arrays and q/a FAQs, distinct IDs/slugs, intended saved content and a page-specific Validate reference. No live overlap for these seven IDs/slugs. Pre-insert read across live and all three staging tables found no exact or substantive concept overlap.
+- Ten subcategory counts S01–S10: **1, 1, 1, 1, 1, 1, 1, 1, 1, 1**. Distinct C068 total 10/100; missing slots 90. Errors: none.
