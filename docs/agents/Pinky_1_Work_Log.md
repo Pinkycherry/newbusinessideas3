@@ -35,11 +35,11 @@ Never write passwords, keys or tokens here.
 | C004-S04 Packaged Water | 10 | 10 |
 | C004-S05 Plant Based Beverage | 10 | 10 |
 | C004-S06 Fermented Beverage | 10 | 10 |
-| C004-S07 Functional Beverage | 0 | 10 |
+| C004-S07 Functional Beverage | 10 | 10 |
 | C004-S08 Beverage Concentrate | 0 | 10 |
 | C004-S09 Powdered Drink | 1 | 10 |
 | C004-S10 Dairy Beverage | 1 | 10 |
-| **Total** | **62** | **100** |
+| **Total** | **72** | **100** |
 
 ## C001 progress (complete, awaiting coordinator review)
 
@@ -59,6 +59,8 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-10T00:07:32+05:30 · START · Batch C004-B08 (S08 Beverage Concentrate) — Ten new rows PK1-C004-S08-0001 to 0010.
+- 2026-10-10T00:07:32+05:30 · SUCCESS · Batch C004-B07 saved and verified, S07 complete — New rows PK1-C004-S07-0001 to 0010: salted lemon electrolyte drinks for workers (explicitly not ORS), aloe and amla juice, fresh whey protein shakes for gyms (lab-tested labels), ready-to-heat kadha, sabja and chia drinks, low-sugar fibre sodas, natural-caffeine energy drinks, beetroot shots for running clubs, ginger-turmeric-lemon shots for offices, caffeine-free saunf-gulkand evening drinks. Every page avoids health claims and says to check the applicable category rules. Plan change: the after-meal digestive shot (too close to the jeera infused water in S04) was replaced by beetroot shots for runners. NOTE: the worker process restarted after S07-0008. The DB recount confirmed 0001–0008 intact, with no duplicates or partial writes, and work resumed at 0009. S07 words 604–720. Read-back of all 72 C004 rows: 72 unique IDs, none under 500 words, Validate in every S01–S07 row, taxonomy, metadata, pending/free, FAQ, no duplicates, no missing fields. Counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 10, S08 0, S09 1, S10 1, total 72.
 - 2026-10-09T18:31:24+05:30 · START · Batch C004-B07 (S07 Functional Beverage) — Ten new rows PK1-C004-S07-0001 to 0010. These ideas are claim-sensitive, so the text names ingredients and uses only, never health benefits, and says to check the applicable category rules.
 - 2026-10-09T18:31:24+05:30 · SUCCESS · Batch C004-B06 saved and verified, S06 complete — New rows PK1-C004-S06-0001 to 0010: bottled black carrot kanji, water kefir fruit sodas, ragi and kambu koozh, non-alcoholic brewed ginger beer, kombucha home-brew kits (kits only, live kombucha wholesale avoided), jamun sirka and fruit vinegar shrubs, pineapple peel tepache, milk kefir with a dairy partner, neeragaram for morning walkers, bread kvass from bakery leftovers. Every fermented soda page says alcohol must be controlled and tested and the non-alcoholic rules confirmed, with no limit figure invented. S06 words 638–686. Read-back of all 62 C004 rows: 62 unique IDs, none under 500 words, Validate in every S01–S06 row, taxonomy, metadata, pending/free, FAQ, no duplicates, no missing fields. Counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 0, S08 0, S09 1, S10 1, total 62.
 - 2026-10-09T18:27:08+05:30 · START · Batch C004-B06 (S06 Fermented Beverage) — Ten new rows PK1-C004-S06-0001 to 0010, all non-alcoholic. The live idea 'Small Batch Kombucha Wholesale' is avoided, so kombucha appears only as home-brew kits, not bottles.
