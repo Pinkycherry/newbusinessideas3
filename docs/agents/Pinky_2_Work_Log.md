@@ -132,3 +132,7 @@ CORRECTION: the first save put dash bullets with line breaks inside business_des
 
 Read-back of all C040 rows: words 557 to 1,000; 0 under 500; Validate in every row; taxonomy, status/tier, nulls, digits, line breaks, money words all pass; 0 slug or title clashes with ideas, ideas_pinky_1, ideas_pinky_3 or other Pinky 2 rows.
 C040 counts: S01 6, S02 0, S03 0, S04 1, S05 1, S06 1, S07 1, S08 0, S09 0, S10 1 (total 11). Table total 200.
+
+**2026-10-09 12:39 UTC (18:09 IST) · SUCCESS · C040 S01 batch 2, S01 complete**
+Saved and read back 4 new S01 ideas: PK2-C040-S01-0007 to PK2-C040-S01-0010 (prayer meeting and remembrance gathering coordinator, kids' birthday planner for homes and society halls, engagement and roka planner, college seminar and conference coordinator). S01 words 626 to 1,000. All checks pass on the first read-back: Validate, taxonomy, status/tier, nulls, digits, line breaks, money words, 0 slug or title clashes.
+C040 counts: S01 10, S02 0, S03 0, S04 1, S05 1, S06 1, S07 1, S08 0, S09 0, S10 1 (total 15). Table total 204. Moving to S02.
