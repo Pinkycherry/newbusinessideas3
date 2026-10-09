@@ -1,20 +1,20 @@
 # BBI business ideas taxonomy: 100 categories and 1,000 subcategories
 
-Revised 8 October 2026
+Revised 9 October 2026
 
 ## How to use this map
 
-This file defines collection labels and proposed slugs for the future bbusiness.online directory. It contains **100 main categories** and **10 expandable subcategories under each**. A subcategory is a subject area that can grow to 10, 20, 50, 100 or more distinct ideas over time. The number ten describes subcategories per category, not a limit or quota for ideas.
+This file is the approved expansion map for bbusiness.online. It contains **100 main categories** and **exactly 10 subcategories under each**. The current writing target is **at least 10 distinct ideas per subcategory**, or **at least 100 ideas per completed main category**. A subcategory may grow beyond ten ideas later. Writers finish one main category before moving to the next.
 
 Labels describe the business sector, product family, service family or operating model. Gender, age and life-stage versions are separate future collections assembled from existing idea records, rather than new idea records. Work From Home and Side Hustle are broad, gender-neutral discovery categories. An idea may belong to several relevant collections while remaining one underlying record.
 
-This taxonomy proposes new category and subcategory slugs. It does not change any existing idea, live URL, site code or database. Editorial research will decide which actual ideas belong in each collection.
+The new category pages use this map to display their ten subcategories. Preserve the exact approved IDs, names and slugs for new rows. C089 has been separated from the older Work From Home category as Home-Based Business Ventures; its three existing idea rows were updated in live and Pinky 3 staging. See [Current_Instruction.md](Current_Instruction.md) for the writing and handoff requirements.
 
 ## Food, farming and nature
 
 ### C001 — Packaged Food Business Ideas
 
-Proposed category slug: `packaged-food-business-ideas`
+Category slug: `packaged-food-business-ideas`
 
 1. **C001-S01** Sauce and Condiment Business Ideas — `sauce-and-condiment-business-ideas`
 2. **C001-S02** Spice and Seasoning Business Ideas — `spice-and-seasoning-business-ideas`
@@ -29,7 +29,7 @@ Proposed category slug: `packaged-food-business-ideas`
 
 ### C002 — Foodservice Business Ideas
 
-Proposed category slug: `foodservice-business-ideas`
+Category slug: `foodservice-business-ideas`
 
 1. **C002-S01** Quick Service Restaurant Business Ideas — `quick-service-restaurant-business-ideas`
 2. **C002-S02** Full Service Restaurant Business Ideas — `full-service-restaurant-business-ideas`
@@ -44,7 +44,7 @@ Proposed category slug: `foodservice-business-ideas`
 
 ### C003 — Catering and Meal Service Business Ideas
 
-Proposed category slug: `catering-and-meal-service-business-ideas`
+Category slug: `catering-and-meal-service-business-ideas`
 
 1. **C003-S01** Celebration Catering Business Ideas — `celebration-catering-business-ideas`
 2. **C003-S02** Corporate Catering Business Ideas — `corporate-catering-business-ideas`
@@ -59,7 +59,7 @@ Proposed category slug: `catering-and-meal-service-business-ideas`
 
 ### C004 — Beverage Product Business Ideas
 
-Proposed category slug: `beverage-product-business-ideas`
+Category slug: `beverage-product-business-ideas`
 
 1. **C004-S01** Tea Product Business Ideas — `tea-product-business-ideas`
 2. **C004-S02** Coffee Product Business Ideas — `coffee-product-business-ideas`
@@ -74,7 +74,7 @@ Proposed category slug: `beverage-product-business-ideas`
 
 ### C005 — Food Retail Business Ideas
 
-Proposed category slug: `food-retail-business-ideas`
+Category slug: `food-retail-business-ideas`
 
 1. **C005-S01** Fresh Produce Retail Business Ideas — `fresh-produce-retail-business-ideas`
 2. **C005-S02** Meat Retail Business Ideas — `meat-retail-business-ideas`
@@ -89,7 +89,7 @@ Proposed category slug: `food-retail-business-ideas`
 
 ### C006 — Food Distribution Business Ideas
 
-Proposed category slug: `food-distribution-business-ideas`
+Category slug: `food-distribution-business-ideas`
 
 1. **C006-S01** Restaurant Supply Business Ideas — `restaurant-supply-business-ideas`
 2. **C006-S02** Independent Grocery Supply Business Ideas — `independent-grocery-supply-business-ideas`
@@ -104,7 +104,7 @@ Proposed category slug: `food-distribution-business-ideas`
 
 ### C007 — Field Crop Farming Business Ideas
 
-Proposed category slug: `field-crop-farming-business-ideas`
+Category slug: `field-crop-farming-business-ideas`
 
 1. **C007-S01** Cereal Grain Farming Business Ideas — `cereal-grain-farming-business-ideas`
 2. **C007-S02** Pulse and Legume Farming Business Ideas — `pulse-and-legume-farming-business-ideas`
@@ -119,7 +119,7 @@ Proposed category slug: `field-crop-farming-business-ideas`
 
 ### C008 — Controlled Environment Farming Business Ideas
 
-Proposed category slug: `controlled-environment-farming-business-ideas`
+Category slug: `controlled-environment-farming-business-ideas`
 
 1. **C008-S01** Greenhouse Vegetable Business Ideas — `greenhouse-vegetable-business-ideas`
 2. **C008-S02** Hydroponic Leafy Green Business Ideas — `hydroponic-leafy-green-business-ideas`
@@ -134,7 +134,7 @@ Proposed category slug: `controlled-environment-farming-business-ideas`
 
 ### C009 — Livestock and Poultry Business Ideas
 
-Proposed category slug: `livestock-and-poultry-business-ideas`
+Category slug: `livestock-and-poultry-business-ideas`
 
 1. **C009-S01** Cattle Dairy Business Ideas — `cattle-dairy-business-ideas`
 2. **C009-S02** Small Ruminant Dairy Business Ideas — `small-ruminant-dairy-business-ideas`
@@ -149,7 +149,7 @@ Proposed category slug: `livestock-and-poultry-business-ideas`
 
 ### C010 — Aquaculture Business Ideas
 
-Proposed category slug: `aquaculture-business-ideas`
+Category slug: `aquaculture-business-ideas`
 
 1. **C010-S01** Freshwater Fish Farming Business Ideas — `freshwater-fish-farming-business-ideas`
 2. **C010-S02** Marine Fish Farming Business Ideas — `marine-fish-farming-business-ideas`
@@ -164,7 +164,7 @@ Proposed category slug: `aquaculture-business-ideas`
 
 ### C011 — Agricultural Service Business Ideas
 
-Proposed category slug: `agricultural-service-business-ideas`
+Category slug: `agricultural-service-business-ideas`
 
 1. **C011-S01** Soil Testing Service Business Ideas — `soil-testing-service-business-ideas`
 2. **C011-S02** Crop Monitoring Business Ideas — `crop-monitoring-business-ideas`
@@ -179,7 +179,7 @@ Proposed category slug: `agricultural-service-business-ideas`
 
 ### C012 — Farm Input Business Ideas
 
-Proposed category slug: `farm-input-business-ideas`
+Category slug: `farm-input-business-ideas`
 
 1. **C012-S01** Crop Seed Business Ideas — `crop-seed-business-ideas`
 2. **C012-S02** Fertilizer Business Ideas — `fertilizer-business-ideas`
@@ -194,7 +194,7 @@ Proposed category slug: `farm-input-business-ideas`
 
 ### C013 — Food Processing Equipment Business Ideas
 
-Proposed category slug: `food-processing-equipment-business-ideas`
+Category slug: `food-processing-equipment-business-ideas`
 
 1. **C013-S01** Bakery Equipment Business Ideas — `bakery-equipment-business-ideas`
 2. **C013-S02** Beverage Processing Equipment Business Ideas — `beverage-processing-equipment-business-ideas`
@@ -209,7 +209,7 @@ Proposed category slug: `food-processing-equipment-business-ideas`
 
 ### C014 — Cold Chain and Food Storage Business Ideas
 
-Proposed category slug: `cold-chain-and-food-storage-business-ideas`
+Category slug: `cold-chain-and-food-storage-business-ideas`
 
 1. **C014-S01** Chilled Warehouse Business Ideas — `chilled-warehouse-business-ideas`
 2. **C014-S02** Frozen Warehouse Business Ideas — `frozen-warehouse-business-ideas`
@@ -224,7 +224,7 @@ Proposed category slug: `cold-chain-and-food-storage-business-ideas`
 
 ### C015 — Agricultural Byproduct Business Ideas
 
-Proposed category slug: `agricultural-byproduct-business-ideas`
+Category slug: `agricultural-byproduct-business-ideas`
 
 1. **C015-S01** Soil Amendment Business Ideas — `soil-amendment-business-ideas`
 2. **C015-S02** Crop Residue Material Startup Ideas — `crop-residue-material-startup-ideas`
@@ -239,7 +239,7 @@ Proposed category slug: `agricultural-byproduct-business-ideas`
 
 ### C016 — Forestry and Plant Material Business Ideas
 
-Proposed category slug: `forestry-and-plant-material-business-ideas`
+Category slug: `forestry-and-plant-material-business-ideas`
 
 1. **C016-S01** Sustainable Timber Business Ideas — `sustainable-timber-business-ideas`
 2. **C016-S02** Bamboo and Cane Business Ideas — `bamboo-and-cane-business-ideas`
@@ -254,7 +254,7 @@ Proposed category slug: `forestry-and-plant-material-business-ideas`
 
 ### C017 — Floriculture and Nursery Business Ideas
 
-Proposed category slug: `floriculture-and-nursery-business-ideas`
+Category slug: `floriculture-and-nursery-business-ideas`
 
 1. **C017-S01** Cut Flower Business Ideas — `cut-flower-business-ideas`
 2. **C017-S02** Potted Flower Business Ideas — `potted-flower-business-ideas`
@@ -269,7 +269,7 @@ Proposed category slug: `floriculture-and-nursery-business-ideas`
 
 ### C018 — Companion Animal Product Business Ideas
 
-Proposed category slug: `companion-animal-product-business-ideas`
+Category slug: `companion-animal-product-business-ideas`
 
 1. **C018-S01** Pet Food Business Ideas — `pet-food-business-ideas`
 2. **C018-S02** Pet Treat Business Ideas — `pet-treat-business-ideas`
@@ -284,7 +284,7 @@ Proposed category slug: `companion-animal-product-business-ideas`
 
 ### C019 — Veterinary Support Business Ideas
 
-Proposed category slug: `veterinary-support-business-ideas`
+Category slug: `veterinary-support-business-ideas`
 
 1. **C019-S01** Veterinary Diagnostics Business Ideas — `veterinary-diagnostics-business-ideas`
 2. **C019-S02** Veterinary Pharmacy Business Ideas — `veterinary-pharmacy-business-ideas`
@@ -299,7 +299,7 @@ Proposed category slug: `veterinary-support-business-ideas`
 
 ### C020 — Nature and Outdoor Tourism Business Ideas
 
-Proposed category slug: `nature-and-outdoor-tourism-business-ideas`
+Category slug: `nature-and-outdoor-tourism-business-ideas`
 
 1. **C020-S01** Guided Hiking Business Ideas — `guided-hiking-business-ideas`
 2. **C020-S02** Wildlife Watching Business Ideas — `wildlife-watching-business-ideas`
@@ -316,7 +316,7 @@ Proposed category slug: `nature-and-outdoor-tourism-business-ideas`
 
 ### C021 — Residential Cleaning Business Ideas
 
-Proposed category slug: `residential-cleaning-business-ideas`
+Category slug: `residential-cleaning-business-ideas`
 
 1. **C021-S01** Everyday Home Cleaning Business Ideas — `everyday-home-cleaning-business-ideas`
 2. **C021-S02** Rental Property Cleaning Business Ideas — `rental-property-cleaning-business-ideas`
@@ -331,7 +331,7 @@ Proposed category slug: `residential-cleaning-business-ideas`
 
 ### C022 — Laundry and Garment Care Business Ideas
 
-Proposed category slug: `laundry-and-garment-care-business-ideas`
+Category slug: `laundry-and-garment-care-business-ideas`
 
 1. **C022-S01** Household Laundry Business Ideas — `household-laundry-business-ideas`
 2. **C022-S02** Laundry Pickup and Delivery Business Ideas — `laundry-pickup-and-delivery-business-ideas`
@@ -346,7 +346,7 @@ Proposed category slug: `laundry-and-garment-care-business-ideas`
 
 ### C023 — Property Maintenance Business Ideas
 
-Proposed category slug: `property-maintenance-business-ideas`
+Category slug: `property-maintenance-business-ideas`
 
 1. **C023-S01** Preventive Home Maintenance Business Ideas — `preventive-home-maintenance-business-ideas`
 2. **C023-S02** Rental Property Upkeep Business Ideas — `rental-property-upkeep-business-ideas`
@@ -361,7 +361,7 @@ Proposed category slug: `property-maintenance-business-ideas`
 
 ### C024 — Plumbing and Water Systems Business Ideas
 
-Proposed category slug: `plumbing-and-water-systems-business-ideas`
+Category slug: `plumbing-and-water-systems-business-ideas`
 
 1. **C024-S01** Bathroom Plumbing Business Ideas — `bathroom-plumbing-business-ideas`
 2. **C024-S02** Kitchen Plumbing Business Ideas — `kitchen-plumbing-business-ideas`
@@ -376,7 +376,7 @@ Proposed category slug: `plumbing-and-water-systems-business-ideas`
 
 ### C025 — Electrical and Lighting Services Business Ideas
 
-Proposed category slug: `electrical-and-lighting-services-business-ideas`
+Category slug: `electrical-and-lighting-services-business-ideas`
 
 1. **C025-S01** Residential Wiring and Repairs Business Ideas — `residential-wiring-and-repairs-business-ideas`
 2. **C025-S02** Interior Lighting Business Ideas — `interior-lighting-business-ideas`
@@ -391,7 +391,7 @@ Proposed category slug: `electrical-and-lighting-services-business-ideas`
 
 ### C026 — Heating, Cooling and Ventilation Services Business Ideas
 
-Proposed category slug: `heating-cooling-and-ventilation-services-business-ideas`
+Category slug: `heating-cooling-and-ventilation-services-business-ideas`
 
 1. **C026-S01** Room Cooling Systems Business Ideas — `room-cooling-systems-business-ideas`
 2. **C026-S02** Commercial Cooling Systems Business Ideas — `commercial-cooling-systems-business-ideas`
@@ -406,7 +406,7 @@ Proposed category slug: `heating-cooling-and-ventilation-services-business-ideas
 
 ### C027 — Appliance Repair Business Ideas
 
-Proposed category slug: `appliance-repair-business-ideas`
+Category slug: `appliance-repair-business-ideas`
 
 1. **C027-S01** Refrigeration Appliance Repair Business Ideas — `refrigeration-appliance-repair-business-ideas`
 2. **C027-S02** Laundry Appliance Repair Business Ideas — `laundry-appliance-repair-business-ideas`
@@ -421,7 +421,7 @@ Proposed category slug: `appliance-repair-business-ideas`
 
 ### C028 — Carpentry and Furniture Services Business Ideas
 
-Proposed category slug: `carpentry-and-furniture-services-business-ideas`
+Category slug: `carpentry-and-furniture-services-business-ideas`
 
 1. **C028-S01** Custom Storage Furniture Business Ideas — `custom-storage-furniture-business-ideas`
 2. **C028-S02** Kitchen and Wardrobe Woodwork Business Ideas — `kitchen-and-wardrobe-woodwork-business-ideas`
@@ -436,7 +436,7 @@ Proposed category slug: `carpentry-and-furniture-services-business-ideas`
 
 ### C029 — Painting and Surface Finishing Business Ideas
 
-Proposed category slug: `painting-and-surface-finishing-business-ideas`
+Category slug: `painting-and-surface-finishing-business-ideas`
 
 1. **C029-S01** Interior Wall Finishing Business Ideas — `interior-wall-finishing-business-ideas`
 2. **C029-S02** Exterior Building Painting Business Ideas — `exterior-building-painting-business-ideas`
@@ -451,7 +451,7 @@ Proposed category slug: `painting-and-surface-finishing-business-ideas`
 
 ### C030 — Landscaping and Garden Services Business Ideas
 
-Proposed category slug: `landscaping-and-garden-services-business-ideas`
+Category slug: `landscaping-and-garden-services-business-ideas`
 
 1. **C030-S01** Lawn and Groundcover Care Business Ideas — `lawn-and-groundcover-care-business-ideas`
 2. **C030-S02** Garden Design and Planting Business Ideas — `garden-design-and-planting-business-ideas`
@@ -466,7 +466,7 @@ Proposed category slug: `landscaping-and-garden-services-business-ideas`
 
 ### C031 — Pest Management Business Ideas
 
-Proposed category slug: `pest-management-business-ideas`
+Category slug: `pest-management-business-ideas`
 
 1. **C031-S01** Household Crawling Pest Control Business Ideas — `household-crawling-pest-control-business-ideas`
 2. **C031-S02** Termite Management Business Ideas — `termite-management-business-ideas`
@@ -481,7 +481,7 @@ Proposed category slug: `pest-management-business-ideas`
 
 ### C032 — Security and Safety Services Business Ideas
 
-Proposed category slug: `security-and-safety-services-business-ideas`
+Category slug: `security-and-safety-services-business-ideas`
 
 1. **C032-S01** Home Video Security Business Ideas — `home-video-security-business-ideas`
 2. **C032-S02** Access Control and Smart Locks Business Ideas — `access-control-and-smart-locks-business-ideas`
@@ -496,7 +496,7 @@ Proposed category slug: `security-and-safety-services-business-ideas`
 
 ### C033 — Home Organization Business Ideas
 
-Proposed category slug: `home-organization-business-ideas`
+Category slug: `home-organization-business-ideas`
 
 1. **C033-S01** Wardrobe and Closet Organization Business Ideas — `wardrobe-and-closet-organization-business-ideas`
 2. **C033-S02** Kitchen and Pantry Organization Business Ideas — `kitchen-and-pantry-organization-business-ideas`
@@ -511,7 +511,7 @@ Proposed category slug: `home-organization-business-ideas`
 
 ### C034 — Home Renovation Business Ideas
 
-Proposed category slug: `home-renovation-business-ideas`
+Category slug: `home-renovation-business-ideas`
 
 1. **C034-S01** Kitchen Remodeling Business Ideas — `kitchen-remodeling-business-ideas`
 2. **C034-S02** Bathroom Remodeling Business Ideas — `bathroom-remodeling-business-ideas`
@@ -526,7 +526,7 @@ Proposed category slug: `home-renovation-business-ideas`
 
 ### C035 — Everyday Assistance Business Ideas
 
-Proposed category slug: `everyday-assistance-business-ideas`
+Category slug: `everyday-assistance-business-ideas`
 
 1. **C035-S01** Companionship and Social Visits Business Ideas — `companionship-and-social-visits-business-ideas`
 2. **C035-S02** Errand and Shopping Assistance Business Ideas — `errand-and-shopping-assistance-business-ideas`
@@ -541,7 +541,7 @@ Proposed category slug: `everyday-assistance-business-ideas`
 
 ### C036 — Childcare Services Business Ideas
 
-Proposed category slug: `childcare-services-business-ideas`
+Category slug: `childcare-services-business-ideas`
 
 1. **C036-S01** In-Home Childcare Business Ideas — `in-home-childcare-business-ideas`
 2. **C036-S02** After-School Care Business Ideas — `after-school-care-business-ideas`
@@ -556,7 +556,7 @@ Proposed category slug: `childcare-services-business-ideas`
 
 ### C037 — Pet Care Services Business Ideas
 
-Proposed category slug: `pet-care-services-business-ideas`
+Category slug: `pet-care-services-business-ideas`
 
 1. **C037-S01** Dog Walking and Exercise Business Ideas — `dog-walking-and-exercise-business-ideas`
 2. **C037-S02** In-Home Pet Sitting Business Ideas — `in-home-pet-sitting-business-ideas`
@@ -571,7 +571,7 @@ Proposed category slug: `pet-care-services-business-ideas`
 
 ### C038 — Personal Beauty Services Business Ideas
 
-Proposed category slug: `personal-beauty-services-business-ideas`
+Category slug: `personal-beauty-services-business-ideas`
 
 1. **C038-S01** Haircutting and Styling Business Ideas — `haircutting-and-styling-business-ideas`
 2. **C038-S02** Hair Coloring and Treatment Business Ideas — `hair-coloring-and-treatment-business-ideas`
@@ -586,7 +586,7 @@ Proposed category slug: `personal-beauty-services-business-ideas`
 
 ### C039 — Fitness and Wellness Services Business Ideas
 
-Proposed category slug: `fitness-and-wellness-services-business-ideas`
+Category slug: `fitness-and-wellness-services-business-ideas`
 
 1. **C039-S01** Personal Fitness Coaching Business Ideas — `personal-fitness-coaching-business-ideas`
 2. **C039-S02** Small-Group Strength Training Business Ideas — `small-group-strength-training-business-ideas`
@@ -601,7 +601,7 @@ Proposed category slug: `fitness-and-wellness-services-business-ideas`
 
 ### C040 — Local Event Services Business Ideas
 
-Proposed category slug: `local-event-services-business-ideas`
+Category slug: `local-event-services-business-ideas`
 
 1. **C040-S01** Event Planning and Coordination Business Ideas — `event-planning-and-coordination-business-ideas`
 2. **C040-S02** Venue Setup and Logistics Business Ideas — `venue-setup-and-logistics-business-ideas`
@@ -618,7 +618,7 @@ Proposed category slug: `local-event-services-business-ideas`
 
 ### C041 — Apparel and Clothing Retail Business Ideas
 
-Proposed category slug: `apparel-and-clothing-retail-business-ideas`
+Category slug: `apparel-and-clothing-retail-business-ideas`
 
 1. **C041-S01** Everyday Apparel Business Ideas — `everyday-apparel-business-ideas`
 2. **C041-S02** Ethnic Wear Business Ideas — `ethnic-wear-business-ideas`
@@ -633,7 +633,7 @@ Proposed category slug: `apparel-and-clothing-retail-business-ideas`
 
 ### C042 — Footwear Retail Business Ideas
 
-Proposed category slug: `footwear-retail-business-ideas`
+Category slug: `footwear-retail-business-ideas`
 
 1. **C042-S01** Casual Footwear Business Ideas — `casual-footwear-business-ideas`
 2. **C042-S02** Formal Footwear Business Ideas — `formal-footwear-business-ideas`
@@ -648,7 +648,7 @@ Proposed category slug: `footwear-retail-business-ideas`
 
 ### C043 — Jewelry and Fashion Accessories Business Ideas
 
-Proposed category slug: `jewelry-and-fashion-accessories-business-ideas`
+Category slug: `jewelry-and-fashion-accessories-business-ideas`
 
 1. **C043-S01** Fine Jewelry Business Ideas — `fine-jewelry-business-ideas`
 2. **C043-S02** Fashion Jewelry Business Ideas — `fashion-jewelry-business-ideas`
@@ -663,7 +663,7 @@ Proposed category slug: `jewelry-and-fashion-accessories-business-ideas`
 
 ### C044 — Home Decor Products Business Ideas
 
-Proposed category slug: `home-decor-products-business-ideas`
+Category slug: `home-decor-products-business-ideas`
 
 1. **C044-S01** Wall Decor Business Ideas — `wall-decor-business-ideas`
 2. **C044-S02** Decorative Lighting Business Ideas — `decorative-lighting-business-ideas`
@@ -678,7 +678,7 @@ Proposed category slug: `home-decor-products-business-ideas`
 
 ### C045 — Furniture and Furnishings Retail Business Ideas
 
-Proposed category slug: `furniture-and-furnishings-retail-business-ideas`
+Category slug: `furniture-and-furnishings-retail-business-ideas`
 
 1. **C045-S01** Living Room Furniture Business Ideas — `living-room-furniture-business-ideas`
 2. **C045-S02** Bedroom Furniture Business Ideas — `bedroom-furniture-business-ideas`
@@ -693,7 +693,7 @@ Proposed category slug: `furniture-and-furnishings-retail-business-ideas`
 
 ### C046 — Beauty and Personal Care Products Business Ideas
 
-Proposed category slug: `beauty-and-personal-care-products-business-ideas`
+Category slug: `beauty-and-personal-care-products-business-ideas`
 
 1. **C046-S01** Skincare Business Ideas — `skincare-business-ideas`
 2. **C046-S02** Haircare Business Ideas — `haircare-business-ideas`
@@ -708,7 +708,7 @@ Proposed category slug: `beauty-and-personal-care-products-business-ideas`
 
 ### C047 — Baby and Parenting Products Business Ideas
 
-Proposed category slug: `baby-and-parenting-products-business-ideas`
+Category slug: `baby-and-parenting-products-business-ideas`
 
 1. **C047-S01** Feeding and Weaning Product Business Ideas — `feeding-and-weaning-product-business-ideas`
 2. **C047-S02** Sleep and Soothing Product Business Ideas — `sleep-and-soothing-product-business-ideas`
@@ -723,7 +723,7 @@ Proposed category slug: `baby-and-parenting-products-business-ideas`
 
 ### C048 — Consumer Electronics Retail Business Ideas
 
-Proposed category slug: `consumer-electronics-retail-business-ideas`
+Category slug: `consumer-electronics-retail-business-ideas`
 
 1. **C048-S01** Mobile Device Business Ideas — `mobile-device-business-ideas`
 2. **C048-S02** Personal Computing Business Ideas — `personal-computing-business-ideas`
@@ -738,7 +738,7 @@ Proposed category slug: `consumer-electronics-retail-business-ideas`
 
 ### C049 — Craft and Art Supplies Business Ideas
 
-Proposed category slug: `craft-and-art-supplies-business-ideas`
+Category slug: `craft-and-art-supplies-business-ideas`
 
 1. **C049-S01** Drawing and Painting Supply Business Ideas — `drawing-and-painting-supply-business-ideas`
 2. **C049-S02** Textile Craft Supply Business Ideas — `textile-craft-supply-business-ideas`
@@ -753,7 +753,7 @@ Proposed category slug: `craft-and-art-supplies-business-ideas`
 
 ### C050 — Toys and Games Business Ideas
 
-Proposed category slug: `toys-and-games-business-ideas`
+Category slug: `toys-and-games-business-ideas`
 
 1. **C050-S01** Educational Toy Business Ideas — `educational-toy-business-ideas`
 2. **C050-S02** Pretend Play Toy Business Ideas — `pretend-play-toy-business-ideas`
@@ -768,7 +768,7 @@ Proposed category slug: `toys-and-games-business-ideas`
 
 ### C051 — Books and Learning Materials Business Ideas
 
-Proposed category slug: `books-and-learning-materials-business-ideas`
+Category slug: `books-and-learning-materials-business-ideas`
 
 1. **C051-S01** Fiction Publishing Business Ideas — `fiction-publishing-business-ideas`
 2. **C051-S02** Nonfiction Publishing Business Ideas — `nonfiction-publishing-business-ideas`
@@ -783,7 +783,7 @@ Proposed category slug: `books-and-learning-materials-business-ideas`
 
 ### C052 — Sports Equipment Retail Business Ideas
 
-Proposed category slug: `sports-equipment-retail-business-ideas`
+Category slug: `sports-equipment-retail-business-ideas`
 
 1. **C052-S01** Cricket Equipment Business Ideas — `cricket-equipment-business-ideas`
 2. **C052-S02** Football Equipment Business Ideas — `football-equipment-business-ideas`
@@ -798,7 +798,7 @@ Proposed category slug: `sports-equipment-retail-business-ideas`
 
 ### C053 — Automotive Accessories Retail Business Ideas
 
-Proposed category slug: `automotive-accessories-retail-business-ideas`
+Category slug: `automotive-accessories-retail-business-ideas`
 
 1. **C053-S01** Car Interior Accessory Business Ideas — `car-interior-accessory-business-ideas`
 2. **C053-S02** Car Exterior Accessory Business Ideas — `car-exterior-accessory-business-ideas`
@@ -813,7 +813,7 @@ Proposed category slug: `automotive-accessories-retail-business-ideas`
 
 ### C054 — Reusable and Low-Waste Goods Business Ideas
 
-Proposed category slug: `reusable-and-low-waste-goods-business-ideas`
+Category slug: `reusable-and-low-waste-goods-business-ideas`
 
 1. **C054-S01** Reusable Kitchen Product Business Ideas — `reusable-kitchen-product-business-ideas`
 2. **C054-S02** Refillable Home Cleaning Product Business Ideas — `refillable-home-cleaning-product-business-ideas`
@@ -828,7 +828,7 @@ Proposed category slug: `reusable-and-low-waste-goods-business-ideas`
 
 ### C055 — Bicycle and Micromobility Products Business Ideas
 
-Proposed category slug: `bicycle-and-micromobility-products-business-ideas`
+Category slug: `bicycle-and-micromobility-products-business-ideas`
 
 1. **C055-S01** Urban Cycling Product Business Ideas — `urban-cycling-product-business-ideas`
 2. **C055-S02** Recreational Cycling Product Business Ideas — `recreational-cycling-product-business-ideas`
@@ -843,7 +843,7 @@ Proposed category slug: `bicycle-and-micromobility-products-business-ideas`
 
 ### C056 — Outdoor Recreation Gear Business Ideas
 
-Proposed category slug: `outdoor-recreation-gear-business-ideas`
+Category slug: `outdoor-recreation-gear-business-ideas`
 
 1. **C056-S01** Camping Equipment Business Ideas — `camping-equipment-business-ideas`
 2. **C056-S02** Trekking Gear Business Ideas — `trekking-gear-business-ideas`
@@ -858,7 +858,7 @@ Proposed category slug: `outdoor-recreation-gear-business-ideas`
 
 ### C057 — Photography and Creator Equipment Business Ideas
 
-Proposed category slug: `photography-and-creator-equipment-business-ideas`
+Category slug: `photography-and-creator-equipment-business-ideas`
 
 1. **C057-S01** Camera Equipment Business Ideas — `camera-equipment-business-ideas`
 2. **C057-S02** Photography Lens Business Ideas — `photography-lens-business-ideas`
@@ -873,7 +873,7 @@ Proposed category slug: `photography-and-creator-equipment-business-ideas`
 
 ### C058 — Office and Stationery Products Business Ideas
 
-Proposed category slug: `office-and-stationery-products-business-ideas`
+Category slug: `office-and-stationery-products-business-ideas`
 
 1. **C058-S01** Writing Supply Business Ideas — `writing-supply-business-ideas`
 2. **C058-S02** Office Paper Product Business Ideas — `office-paper-product-business-ideas`
@@ -888,7 +888,7 @@ Proposed category slug: `office-and-stationery-products-business-ideas`
 
 ### C059 — Gifts and Celebration Products Business Ideas
 
-Proposed category slug: `gifts-and-celebration-products-business-ideas`
+Category slug: `gifts-and-celebration-products-business-ideas`
 
 1. **C059-S01** Personalized Gift Business Ideas — `personalized-gift-business-ideas`
 2. **C059-S02** Corporate Gift Business Ideas — `corporate-gift-business-ideas`
@@ -903,7 +903,7 @@ Proposed category slug: `gifts-and-celebration-products-business-ideas`
 
 ### C060 — Collectibles and Memorabilia Business Ideas
 
-Proposed category slug: `collectibles-and-memorabilia-business-ideas`
+Category slug: `collectibles-and-memorabilia-business-ideas`
 
 1. **C060-S01** Coin Collectible Business Ideas — `coin-collectible-business-ideas`
 2. **C060-S02** Stamp Collectible Business Ideas — `stamp-collectible-business-ideas`
@@ -920,7 +920,7 @@ Proposed category slug: `collectibles-and-memorabilia-business-ideas`
 
 ### C061 — Packaging Manufacturing Business Ideas
 
-Proposed category slug: `packaging-manufacturing-business-ideas`
+Category slug: `packaging-manufacturing-business-ideas`
 
 1. **C061-S01** Paper Packaging Business Ideas — `paper-packaging-business-ideas`
 2. **C061-S02** Plastic Packaging Business Ideas — `plastic-packaging-business-ideas`
@@ -935,7 +935,7 @@ Proposed category slug: `packaging-manufacturing-business-ideas`
 
 ### C062 — Commercial Printing and Signage Business Ideas
 
-Proposed category slug: `commercial-printing-and-signage-business-ideas`
+Category slug: `commercial-printing-and-signage-business-ideas`
 
 1. **C062-S01** Commercial Paper Printing Business Ideas — `commercial-paper-printing-business-ideas`
 2. **C062-S02** Digital Print Production Business Ideas — `digital-print-production-business-ideas`
@@ -950,7 +950,7 @@ Proposed category slug: `commercial-printing-and-signage-business-ideas`
 
 ### C063 — Textile Manufacturing Business Ideas
 
-Proposed category slug: `textile-manufacturing-business-ideas`
+Category slug: `textile-manufacturing-business-ideas`
 
 1. **C063-S01** Yarn and Fiber Production Business Ideas — `yarn-and-fiber-production-business-ideas`
 2. **C063-S02** Woven Textiles Business Ideas — `woven-textiles-business-ideas`
@@ -965,7 +965,7 @@ Proposed category slug: `textile-manufacturing-business-ideas`
 
 ### C064 — Metal Fabrication Business Ideas
 
-Proposed category slug: `metal-fabrication-business-ideas`
+Category slug: `metal-fabrication-business-ideas`
 
 1. **C064-S01** Structural Metalwork Business Ideas — `structural-metalwork-business-ideas`
 2. **C064-S02** Precision Metal Components Business Ideas — `precision-metal-components-business-ideas`
@@ -980,7 +980,7 @@ Proposed category slug: `metal-fabrication-business-ideas`
 
 ### C065 — Wood Product Manufacturing Business Ideas
 
-Proposed category slug: `wood-product-manufacturing-business-ideas`
+Category slug: `wood-product-manufacturing-business-ideas`
 
 1. **C065-S01** Timber Processing Business Ideas — `timber-processing-business-ideas`
 2. **C065-S02** Engineered Wood Materials Business Ideas — `engineered-wood-materials-business-ideas`
@@ -995,7 +995,7 @@ Proposed category slug: `wood-product-manufacturing-business-ideas`
 
 ### C066 — Plastics and Rubber Manufacturing Business Ideas
 
-Proposed category slug: `plastics-and-rubber-manufacturing-business-ideas`
+Category slug: `plastics-and-rubber-manufacturing-business-ideas`
 
 1. **C066-S01** Molded Plastic Components Business Ideas — `molded-plastic-components-business-ideas`
 2. **C066-S02** Extruded Plastic Products Business Ideas — `extruded-plastic-products-business-ideas`
@@ -1010,7 +1010,7 @@ Proposed category slug: `plastics-and-rubber-manufacturing-business-ideas`
 
 ### C067 — Industrial Chemicals and Formulations Business Ideas
 
-Proposed category slug: `industrial-chemicals-and-formulations-business-ideas`
+Category slug: `industrial-chemicals-and-formulations-business-ideas`
 
 1. **C067-S01** Industrial Cleaning Chemicals Business Ideas — `industrial-cleaning-chemicals-business-ideas`
 2. **C067-S02** Water Treatment Formulations Business Ideas — `water-treatment-formulations-business-ideas`
@@ -1025,7 +1025,7 @@ Proposed category slug: `industrial-chemicals-and-formulations-business-ideas`
 
 ### C068 — Construction Materials Business Ideas
 
-Proposed category slug: `construction-materials-business-ideas`
+Category slug: `construction-materials-business-ideas`
 
 1. **C068-S01** Cementitious Materials Business Ideas — `cementitious-materials-business-ideas`
 2. **C068-S02** Precast Building Products Business Ideas — `precast-building-products-business-ideas`
@@ -1040,7 +1040,7 @@ Proposed category slug: `construction-materials-business-ideas`
 
 ### C069 — Industrial Equipment Business Ideas
 
-Proposed category slug: `industrial-equipment-business-ideas`
+Category slug: `industrial-equipment-business-ideas`
 
 1. **C069-S01** Factory Production Machinery Business Ideas — `factory-production-machinery-business-ideas`
 2. **C069-S02** Food Processing Machinery Business Ideas — `food-processing-machinery-business-ideas`
@@ -1055,7 +1055,7 @@ Proposed category slug: `industrial-equipment-business-ideas`
 
 ### C070 — Industrial Repair and Maintenance Business Ideas
 
-Proposed category slug: `industrial-repair-and-maintenance-business-ideas`
+Category slug: `industrial-repair-and-maintenance-business-ideas`
 
 1. **C070-S01** Production Machinery Maintenance Business Ideas — `production-machinery-maintenance-business-ideas`
 2. **C070-S02** Electrical Equipment Repair Business Ideas — `electrical-equipment-repair-business-ideas`
@@ -1070,7 +1070,7 @@ Proposed category slug: `industrial-repair-and-maintenance-business-ideas`
 
 ### C071 — Testing and Quality Services Business Ideas
 
-Proposed category slug: `testing-and-quality-services-business-ideas`
+Category slug: `testing-and-quality-services-business-ideas`
 
 1. **C071-S01** Building Materials Testing Business Ideas — `building-materials-testing-business-ideas`
 2. **C071-S02** Food Product Testing Business Ideas — `food-product-testing-business-ideas`
@@ -1085,7 +1085,7 @@ Proposed category slug: `testing-and-quality-services-business-ideas`
 
 ### C072 — Environmental Service Business Ideas
 
-Proposed category slug: `environmental-service-business-ideas`
+Category slug: `environmental-service-business-ideas`
 
 1. **C072-S01** Commercial Waste Management Business Ideas — `commercial-waste-management-business-ideas`
 2. **C072-S02** Industrial Water Management Business Ideas — `industrial-water-management-business-ideas`
@@ -1100,7 +1100,7 @@ Proposed category slug: `environmental-service-business-ideas`
 
 ### C073 — Commercial Cleaning Business Ideas
 
-Proposed category slug: `commercial-cleaning-business-ideas`
+Category slug: `commercial-cleaning-business-ideas`
 
 1. **C073-S01** Workplace Cleaning Business Ideas — `workplace-cleaning-business-ideas`
 2. **C073-S02** Hospitality Property Cleaning Business Ideas — `hospitality-property-cleaning-business-ideas`
@@ -1115,7 +1115,7 @@ Proposed category slug: `commercial-cleaning-business-ideas`
 
 ### C074 — Staffing and Workforce Services Business Ideas
 
-Proposed category slug: `staffing-and-workforce-services-business-ideas`
+Category slug: `staffing-and-workforce-services-business-ideas`
 
 1. **C074-S01** Industrial Workforce Staffing Business Ideas — `industrial-workforce-staffing-business-ideas`
 2. **C074-S02** Administrative Workforce Staffing Business Ideas — `administrative-workforce-staffing-business-ideas`
@@ -1130,7 +1130,7 @@ Proposed category slug: `staffing-and-workforce-services-business-ideas`
 
 ### C075 — B2B Procurement Services Business Ideas
 
-Proposed category slug: `b2b-procurement-services-business-ideas`
+Category slug: `b2b-procurement-services-business-ideas`
 
 1. **C075-S01** Manufacturing Input Procurement Business Ideas — `manufacturing-input-procurement-business-ideas`
 2. **C075-S02** Industrial Supplies Procurement Business Ideas — `industrial-supplies-procurement-business-ideas`
@@ -1145,7 +1145,7 @@ Proposed category slug: `b2b-procurement-services-business-ideas`
 
 ### C076 — Warehousing and Fulfillment Business Ideas
 
-Proposed category slug: `warehousing-and-fulfillment-business-ideas`
+Category slug: `warehousing-and-fulfillment-business-ideas`
 
 1. **C076-S01** General Goods Storage Business Ideas — `general-goods-storage-business-ideas`
 2. **C076-S02** Temperature Controlled Storage Business Ideas — `temperature-controlled-storage-business-ideas`
@@ -1160,7 +1160,7 @@ Proposed category slug: `warehousing-and-fulfillment-business-ideas`
 
 ### C077 — Freight and Logistics Business Ideas
 
-Proposed category slug: `freight-and-logistics-business-ideas`
+Category slug: `freight-and-logistics-business-ideas`
 
 1. **C077-S01** Road Freight Services Business Ideas — `road-freight-services-business-ideas`
 2. **C077-S02** Rail Freight Services Business Ideas — `rail-freight-services-business-ideas`
@@ -1175,7 +1175,7 @@ Proposed category slug: `freight-and-logistics-business-ideas`
 
 ### C078 — Last-Mile Delivery Operations Business Ideas
 
-Proposed category slug: `last-mile-delivery-operations-business-ideas`
+Category slug: `last-mile-delivery-operations-business-ideas`
 
 1. **C078-S01** Urban Parcel Delivery Business Ideas — `urban-parcel-delivery-business-ideas`
 2. **C078-S02** Regional and Rural Delivery Business Ideas — `regional-and-rural-delivery-business-ideas`
@@ -1190,7 +1190,7 @@ Proposed category slug: `last-mile-delivery-operations-business-ideas`
 
 ### C079 — Cross-Border Trade Services Business Ideas
 
-Proposed category slug: `cross-border-trade-services-business-ideas`
+Category slug: `cross-border-trade-services-business-ideas`
 
 1. **C079-S01** Customs Clearance Services Business Ideas — `customs-clearance-services-business-ideas`
 2. **C079-S02** Trade Classification Services Business Ideas — `trade-classification-services-business-ideas`
@@ -1205,7 +1205,7 @@ Proposed category slug: `cross-border-trade-services-business-ideas`
 
 ### C080 — Business Process Outsourcing Business Ideas
 
-Proposed category slug: `business-process-outsourcing-business-ideas`
+Category slug: `business-process-outsourcing-business-ideas`
 
 1. **C080-S01** Customer Support Outsourcing Business Ideas — `customer-support-outsourcing-business-ideas`
 2. **C080-S02** Data Operations Outsourcing Business Ideas — `data-operations-outsourcing-business-ideas`
@@ -1222,7 +1222,7 @@ Proposed category slug: `business-process-outsourcing-business-ideas`
 
 ### C081 — Software Product Business Ideas
 
-Proposed category slug: `software-product-business-ideas`
+Category slug: `software-product-business-ideas`
 
 1. **C081-S01** Retail Software Business Ideas — `retail-software-business-ideas`
 2. **C081-S02** Hospitality Software Business Ideas — `hospitality-software-business-ideas`
@@ -1237,7 +1237,7 @@ Proposed category slug: `software-product-business-ideas`
 
 ### C082 — AI Automation Business Ideas
 
-Proposed category slug: `ai-automation-business-ideas`
+Category slug: `ai-automation-business-ideas`
 
 1. **C082-S01** Customer Service Automation Business Ideas — `customer-service-automation-business-ideas`
 2. **C082-S02** Sales Automation Business Ideas — `sales-automation-business-ideas`
@@ -1252,7 +1252,7 @@ Proposed category slug: `ai-automation-business-ideas`
 
 ### C083 — Cybersecurity Business Ideas
 
-Proposed category slug: `cybersecurity-business-ideas`
+Category slug: `cybersecurity-business-ideas`
 
 1. **C083-S01** Identity Security Business Ideas — `identity-security-business-ideas`
 2. **C083-S02** Endpoint Security Business Ideas — `endpoint-security-business-ideas`
@@ -1267,7 +1267,7 @@ Proposed category slug: `cybersecurity-business-ideas`
 
 ### C084 — Data Analytics Business Ideas
 
-Proposed category slug: `data-analytics-business-ideas`
+Category slug: `data-analytics-business-ideas`
 
 1. **C084-S01** Retail Analytics Business Ideas — `retail-analytics-business-ideas`
 2. **C084-S02** Marketing Analytics Business Ideas — `marketing-analytics-business-ideas`
@@ -1282,7 +1282,7 @@ Proposed category slug: `data-analytics-business-ideas`
 
 ### C085 — Managed IT and Cloud Business Ideas
 
-Proposed category slug: `managed-it-and-cloud-business-ideas`
+Category slug: `managed-it-and-cloud-business-ideas`
 
 1. **C085-S01** Managed Cloud Business Ideas — `managed-cloud-business-ideas`
 2. **C085-S02** IT Help Desk Business Ideas — `it-help-desk-business-ideas`
@@ -1297,7 +1297,7 @@ Proposed category slug: `managed-it-and-cloud-business-ideas`
 
 ### C086 — Web and App Development Business Ideas
 
-Proposed category slug: `web-and-app-development-business-ideas`
+Category slug: `web-and-app-development-business-ideas`
 
 1. **C086-S01** Website Development Business Ideas — `website-development-business-ideas`
 2. **C086-S02** Ecommerce Development Business Ideas — `ecommerce-development-business-ideas`
@@ -1312,7 +1312,7 @@ Proposed category slug: `web-and-app-development-business-ideas`
 
 ### C087 — Digital Marketing Business Ideas
 
-Proposed category slug: `digital-marketing-business-ideas`
+Category slug: `digital-marketing-business-ideas`
 
 1. **C087-S01** Search Marketing Business Ideas — `search-marketing-business-ideas`
 2. **C087-S02** Local Digital Marketing Business Ideas — `local-digital-marketing-business-ideas`
@@ -1327,7 +1327,7 @@ Proposed category slug: `digital-marketing-business-ideas`
 
 ### C088 — Content and Media Production Business Ideas
 
-Proposed category slug: `content-and-media-production-business-ideas`
+Category slug: `content-and-media-production-business-ideas`
 
 1. **C088-S01** Editorial Production Business Ideas — `editorial-production-business-ideas`
 2. **C088-S02** Video Production Business Ideas — `video-production-business-ideas`
@@ -1342,7 +1342,7 @@ Proposed category slug: `content-and-media-production-business-ideas`
 
 ### C089 — Home-Based Business Ventures
 
-Proposed category slug: `home-based-business-ventures`
+Category slug: `home-based-business-ventures`
 
 1. **C089-S01** Home Based Production Business Ideas — `home-based-production-business-ideas`
 2. **C089-S02** Home Based Food Business Ideas — `home-based-food-business-ideas`
@@ -1357,7 +1357,7 @@ Proposed category slug: `home-based-business-ventures`
 
 ### C090 — Design and Branding Business Ideas
 
-Proposed category slug: `design-and-branding-business-ideas`
+Category slug: `design-and-branding-business-ideas`
 
 1. **C090-S01** Brand Identity Business Ideas — `brand-identity-business-ideas`
 2. **C090-S02** Packaging Design Business Ideas — `packaging-design-business-ideas`
@@ -1372,7 +1372,7 @@ Proposed category slug: `design-and-branding-business-ideas`
 
 ### C091 — Academic Tutoring Business Ideas
 
-Proposed category slug: `academic-tutoring-business-ideas`
+Category slug: `academic-tutoring-business-ideas`
 
 1. **C091-S01** Literacy Tutoring Business Ideas — `literacy-tutoring-business-ideas`
 2. **C091-S02** Mathematics Tutoring Business Ideas — `mathematics-tutoring-business-ideas`
@@ -1387,7 +1387,7 @@ Proposed category slug: `academic-tutoring-business-ideas`
 
 ### C092 — Vocational Training Business Ideas
 
-Proposed category slug: `vocational-training-business-ideas`
+Category slug: `vocational-training-business-ideas`
 
 1. **C092-S01** Construction Trade Training Business Ideas — `construction-trade-training-business-ideas`
 2. **C092-S02** Manufacturing Skills Training Business Ideas — `manufacturing-skills-training-business-ideas`
@@ -1402,7 +1402,7 @@ Proposed category slug: `vocational-training-business-ideas`
 
 ### C093 — Career and Recruitment Business Ideas
 
-Proposed category slug: `career-and-recruitment-business-ideas`
+Category slug: `career-and-recruitment-business-ideas`
 
 1. **C093-S01** Technology Recruitment Business Ideas — `technology-recruitment-business-ideas`
 2. **C093-S02** Skilled Trade Recruitment Business Ideas — `skilled-trade-recruitment-business-ideas`
@@ -1417,7 +1417,7 @@ Proposed category slug: `career-and-recruitment-business-ideas`
 
 ### C094 — Bookkeeping and Business Administration Business Ideas
 
-Proposed category slug: `bookkeeping-and-business-administration-business-ideas`
+Category slug: `bookkeeping-and-business-administration-business-ideas`
 
 1. **C094-S01** Bookkeeping Service Business Ideas — `bookkeeping-service-business-ideas`
 2. **C094-S02** Accounts Payable Administration Business Ideas — `accounts-payable-administration-business-ideas`
@@ -1432,7 +1432,7 @@ Proposed category slug: `bookkeeping-and-business-administration-business-ideas`
 
 ### C095 — Financial Education and Tools Business Ideas
 
-Proposed category slug: `financial-education-and-tools-business-ideas`
+Category slug: `financial-education-and-tools-business-ideas`
 
 1. **C095-S01** Budgeting Education Business Ideas — `budgeting-education-business-ideas`
 2. **C095-S02** Savings Education Business Ideas — `savings-education-business-ideas`
@@ -1447,7 +1447,7 @@ Proposed category slug: `financial-education-and-tools-business-ideas`
 
 ### C096 — Legal Operations Support Business Ideas
 
-Proposed category slug: `legal-operations-support-business-ideas`
+Category slug: `legal-operations-support-business-ideas`
 
 1. **C096-S01** Contract Administration Business Ideas — `contract-administration-business-ideas`
 2. **C096-S02** Litigation Support Operations Business Ideas — `litigation-support-operations-business-ideas`
@@ -1462,7 +1462,7 @@ Proposed category slug: `legal-operations-support-business-ideas`
 
 ### C097 — Travel Planning Business Ideas
 
-Proposed category slug: `travel-planning-business-ideas`
+Category slug: `travel-planning-business-ideas`
 
 1. **C097-S01** Domestic Travel Planning Business Ideas — `domestic-travel-planning-business-ideas`
 2. **C097-S02** International Travel Planning Business Ideas — `international-travel-planning-business-ideas`
@@ -1477,7 +1477,7 @@ Proposed category slug: `travel-planning-business-ideas`
 
 ### C098 — Hospitality Service Business Ideas
 
-Proposed category slug: `hospitality-service-business-ideas`
+Category slug: `hospitality-service-business-ideas`
 
 1. **C098-S01** Hotel Operations Business Ideas — `hotel-operations-business-ideas`
 2. **C098-S02** Short Stay Operations Business Ideas — `short-stay-operations-business-ideas`
@@ -1492,7 +1492,7 @@ Proposed category slug: `hospitality-service-business-ideas`
 
 ### C099 — Healthcare Administration Business Ideas
 
-Proposed category slug: `healthcare-administration-business-ideas`
+Category slug: `healthcare-administration-business-ideas`
 
 1. **C099-S01** Clinic Administration Business Ideas — `clinic-administration-business-ideas`
 2. **C099-S02** Hospital Administration Business Ideas — `hospital-administration-business-ideas`
@@ -1507,7 +1507,7 @@ Proposed category slug: `healthcare-administration-business-ideas`
 
 ### C100 — Side Hustle Business Ideas
 
-Proposed category slug: `side-hustle-business-ideas`
+Category slug: `side-hustle-business-ideas`
 
 1. **C100-S01** Weekend Event Business Ideas — `weekend-event-business-ideas`
 2. **C100-S02** After Hours Client Service Business Ideas — `after-hours-client-service-business-ideas`
