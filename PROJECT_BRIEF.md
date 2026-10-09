@@ -243,6 +243,12 @@ The first assigned category for each writer is complete in its own staging table
 
 At this checkpoint the three staging tables contain 196, 195 and 197 rows respectively (588 total), including the first 300 drafts; twelve of those older drafts belong to the three finished categories and were expanded there. Live `public.ideas` remains 879, including 200 previously copied expansion rows; none of the latest new rows was released by this check. Stage/live copies with the same IDs represent the same ideas. Writers stopped after one completed category for coordinator review as instructed.
 
+**6.2 visibility and next-category correction — 2026-10-09 17:57 IST**
+
+The founder's screenshots of C079 Cross-Border Trade Services and C093 Career and Recruitment show why the earlier “Ideas coming soon” allowance is inadequate: each public main category shows ten planned subcategory cards while only three contain a single live idea each. The earlier sentence allowing empty topic cards is superseded for the expansion release experience. Visitors should reach a complete collection: ten approved subcategories and at least ten distinct live ideas in each. Prepare and review each category as one 100-idea unit before release; introduce a site listing/release gate for incomplete new categories while keeping the 679 legacy ideas and indexed routes intact (PENDING #40). Content sitting in staging does not fix an incomplete public page.
+
+The current exclusive staging assignment is C004 Beverage Product for slot 1 (four existing drafts), C040 Local Event Services for slot 2 (six existing drafts), and C079 Cross-Border Trade Services for slot 3 (three existing drafts). Each finishes S01 through S10 in order, taking each subcategory to ten verified ideas before starting the next. Corresponding missing slots at this checkpoint are 96, 94 and 97. Current Instruction and taxonomy in `docs/agents/` are the handoff source. The screenshot's C093 is still incomplete and should follow in a later slot-3 round. These writing assignments do not publish to `public.ideas`.
+
 **6.3 Listicle template (/list/[slug] or similar — pick a slug word freely, it has zero SEO effect per Section 5)**
 
 New template. "50 Zero Investment Business Ideas for India" style. Top 10 get 200–300 words each written directly on the page; remaining ideas display as clickable cards linking to their full /idea/[slug] page. This is our fastest lever for both search volume and internal linking density.
