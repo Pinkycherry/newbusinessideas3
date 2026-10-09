@@ -31,7 +31,7 @@ Never write passwords, keys or tokens here.
 |---|---|---|
 | C005-S01 Fresh Produce Retail | 10 | 10 |
 | C005-S02 Meat Retail | 10 | 10 |
-| C005-S03 Seafood Retail | 1 | 10 |
+| C005-S03 Seafood Retail | 10 | 10 |
 | C005-S04 Bakery Retail | 0 | 10 |
 | C005-S05 Dairy Retail | 0 | 10 |
 | C005-S06 Bulk Food Retail | 1 | 10 |
@@ -39,7 +39,7 @@ Never write passwords, keys or tokens here.
 | C005-S08 Gourmet Food Retail | 1 | 10 |
 | C005-S09 Confectionery Retail | 0 | 10 |
 | C005-S10 Farm Gate Retail | 0 | 10 |
-| **Total** | **23** | **100** |
+| **Total** | **32** | **100** |
 
 ## C004 progress (complete, awaiting coordinator review)
 
@@ -75,6 +75,8 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-10T01:26:21+05:30 · START · Batch C005-B04 (S04 Bakery Retail) — Ten new rows PK1-C005-S04-0001 to 0010 (no seed). These avoid the live custom-cake home bakery, sourdough subscription and whole wheat bread for stores.
+- 2026-10-10T01:26:21+05:30 · SUCCESS · Batch C005-B03 saved and verified, S03 complete — Seed PK1-C005-S03-0001 (cleaned fish doorstep subscription) was fully rewritten in adviser voice, with a 196-word overview after the hero sentence, all fields and an updated seo_title. Title and slug unchanged, live copy untouched. New rows PK1-C005-S03-0002 to 0010: live fish tank shop for eastern Indian families, dry fish store in inland cities, prawn and live crab counter, clean fish market stall, refrigerated sea fish van for inland towns, hilsa and festival fish pre-booking, local pond and reservoir fish shop, boneless fillet counter, take-home seafood shop for coastal tourists. Correction: S03-0002 overview extended to 217 words. Read-back: page words 762–923, words after the hero sentence 184–227, Validate in all, taxonomy, metadata, pending/free, FAQ and fields clean, no duplicates. Voice flags on S03-0002 and 0006 were narrator verdicts ('I would back you', 'I would encourage you'), which are allowed. Counts: S01 10, S02 10, S03 10, S04 0, S05 0, S06 1 (seed), S07 0, S08 1 (seed), S09 0, S10 0.
 - 2026-10-10T01:20:57+05:30 · START · Batch C005-B03 (S03 Seafood Retail) — Rewrite seed PK1-C005-S03-0001 (cleaned fish doorstep subscription) to the new standard (staging only), then insert PK1-C005-S03-0002 to 0010.
 - 2026-10-10T01:20:57+05:30 · SUCCESS · Batch C005-B02 saved and verified, S02 complete — Seed PK1-C005-S02-0001 (chilled chicken cut shop) was fully rewritten in adviser voice: summary, a 190-word overview after the hero sentence, every body field, pros, cons, steps, tools, FAQ and meta. Title, slug and taxonomy unchanged, updated_at set, live copy untouched. New rows PK1-C005-S02-0002 to 0010: mutton shop with custom cuts, country chicken shop, marinated meat counter, pork shop for Northeast/Goan/Coorgi communities, frozen meat store for towns, butcher counter inside a supermarket, speciality poultry (quail, duck, Kadaknath), keema counter for food stalls, portioned raw meat packs for dogs. Corrections: S02-0002, 0004 and 0005 overviews extended past 180 words after the hero sentence. Read-back: page words 807–1013, words after the hero sentence 188–223, Validate in all, taxonomy, metadata, pending/free, FAQ and fields clean, no duplicates. Voice screen flagged S02-0001 for 'I would only steer you towards this' in the verdict, which is narrator advice and allowed. Counts: S01 10, S02 10, S03 1 (seed), S04 0, S05 0, S06 1 (seed), S07 0, S08 1 (seed), S09 0, S10 0.
 - 2026-10-10T01:15:24+05:30 · START · Batch C005-B02 (S02 Meat Retail) — Rewrite seed PK1-C005-S02-0001 (chilled chicken cut shop) in full to the new standard (staging only, live copy untouched), then insert PK1-C005-S02-0002 to 0010.
