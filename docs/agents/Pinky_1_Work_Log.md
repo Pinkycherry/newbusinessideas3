@@ -25,7 +25,19 @@ Each entry is one line:
 
 Never write passwords, keys or tokens here.
 
-## C005 progress (active category)
+## Editorial repair (active, founder hold of 2026-10-10 01:51 IST)
+
+No new ideas, IDs, slugs, categories or subcategories. Every existing row in `public.ideas_pinky_1` is reviewed field by field and repaired where needed, one idea at a time, in small read-back batches. No bulk replacement, nothing copied from `bbi_editorial.work_*`, no edits to `public.ideas`, other writers' tables, the 679 legacy ideas or site code. Report to the founder and stop when every starting row is done.
+
+**Starting count (2026-10-10 ~01:58 IST): 378 rows, 378 unique IDs.** C001 100 · C004 100 · C005 90 (S01–S09 ten each, S10 none) · seeds 88 across C002, C003, C006–C034.
+
+Starting machine triage (a first pass only, every row is still read in full): C001 and C004 have 100/100 overviews under 180 words after the hero sentence and operator-voice candidates in every row. 86 of the 88 seeds have the same two problems. C031's two coordinator-corrected rows passed both checks. C005 rows pass length but 27 carry narrator "I would…" lines, and the batch shares a repeated verdict and body skeleton that needs varying.
+
+**Repair progress:** 0 of 378 starting rows reviewed, 0 changed (updated 2026-10-10T01:56:48+05:30).
+
+Starting ID list: C001 S01–S10 0001–0010 (100); C004 S01–S10 0001–0010 (100); C005 S01–S09 0001–0010 (90); seeds PK1-C002-S01/S07/S08-0001, C003-S01/S02/S08, C006-S01/S09/S10, C007-S02/S05/S07/S08, C008-S02/S07/S08, C009-S08/S09/S10, C010-S03/S06/S07, C011-S08/S09/S10, C012-S07/S08/S10, C013-S01/S05, C014-S04/S05/S08, C015-S03/S07/S09, C016-S02/S04/S10, C017-S01/S07/S09/S10, C018-S04/S07/S08, C019-S01/S05/S09, C020-S03/S04/S07, C021-S02/S07/S10, C022-S05/S06/S07, C023-S03/S04/S05, C024-S03/S06/S09, C025-S03/S05/S06, C026-S04/S06, C027-S08/S09, C028-S02/S04/S08, C029-S06/S07/S08, C030-S03/S04/S05, C031-S02/S05, C032-S02/S06, C033-S01/S06, C034-S07/S10 (each -0001).
+
+## C005 progress (stopped at 90 by the hold)
 
 | Subcategory | Saved ideas | Target |
 |---|---|---|
@@ -75,6 +87,9 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-10T01:56:48+05:30 · START · Editorial repair of all 378 starting rows begins with C001 (S01 first), then C004, seeds C002–C034, then C005 polish.
+- 2026-10-10T01:56:48+05:30 · SUCCESS · Starting state recorded — 378 rows, 378 unique IDs; per-category counts and full ID list in the Editorial repair section above. Assignment rewritten for the hold.
+- 2026-10-10T01:56:48+05:30 · INSTRUCTION · Founder: STOP creating ideas. Do not continue C005 or create any ID, slug, category or subcategory. Repair every existing row in public.ideas_pinky_1 (C001, C004, partial C005, all seeds) field by field in adviser voice, 180+ word overview remainder, >500 informative words per page, Validate cue, no bulk replacement, nothing from bbi_editorial.work_*, no edits to public.ideas or other tables. Log everything, report first, then stop.
 - 2026-10-10T01:53:56+05:30 · START · 2026-10-10 01:53 IST · Batch C005-B10 (S10 Farm Gate Retail) — ten new adviser-voice ideas PK1-C005-S10-0001 to 0010, avoiding live honor-system farm stand and Pinky 2's society farmers' market
 - 2026-10-10T01:53:56+05:30 · SUCCESS · 2026-10-10 01:53 IST · Batch C005-B09 saved and verified, S09 Confectionery Retail complete — PK1-C005-S09-0001 to 0010: neighbourhood mithai shop with small fresh batches, pick-and-mix sweets store, chocolate boutique for Indian bean-to-bar makers, dry-fruit mithai counter, regional sweet shop for a migrant community, jaggery-sweetened mithai shop, festival sweets pop-up in societies and offices, travel sweets counter at stations, nostalgic desi candy store, temple-town prasad sweets shop. Decision: replaced planned corporate sweet boxes with station travel counter (Pinky 2 has corporate festival hampers). Overlap check against live chikki, PK1 C001 chocolate/peda/toffee production rows: none. Read-back: pages 625–679 words, overview after hero 182–225, Validate in all, taxonomy/meta/status/JSON clean, no duplicates. Voice flags S09-0001/0003/0006/0008/0010 are narrator verdicts, allowed.
 - 2026-10-10T01:50:06+05:30 · START · 2026-10-10 01:50 IST · Batch C005-B09 (S09 Confectionery Retail) — ten new adviser-voice ideas PK1-C005-S09-0001 to 0010

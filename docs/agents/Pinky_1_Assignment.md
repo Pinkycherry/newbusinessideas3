@@ -1,6 +1,6 @@
 # Pinky 1 assignment
 
-Last updated: 2026-10-10 01:08 +05:30 · Writer name: **Pinky 1** · Account: Claude Code (cloud session)
+Last updated: 2026-10-10 01:58 +05:30 · Writer name: **Pinky 1** · Account: Claude Code (cloud session)
 
 ## Permanent slot
 
@@ -10,7 +10,23 @@ Last updated: 2026-10-10 01:08 +05:30 · Writer name: **Pinky 1** · Account: Cl
 
 Database assignment row `bbi_agent_assignments` (agent `Pinky 1`, status `ready`, updated 2026-10-09 10:55 UTC) matches this slot, table and range.
 
-## Active main category
+## Active assignment: EDITORIAL HOLD and repair (since 2026-10-10 01:51 IST)
+
+The founder stopped all generation. C005 stays at 90 rows (S01–S09 ten each, S10 none) and is not to be continued. My job is to review and repair **every** existing row in `public.ideas_pinky_1`: 378 rows at receipt (C001 100, C004 100, C005 90, 88 seeds in C002, C003, C006–C034). Database row `bbi_agent_assignments` for Pinky 1 has status `editorial_hold` and says the same.
+
+Rules for the repair:
+- Read each idea as a visitor would, every field: title, summary, business_description, market, customer, money, startup cost, income, competition, steps, tools, pros, cons, verdict, FAQs, SEO title and description, keywords, time to first customer.
+- Voice: the site advises the reader as you/your. It never sells, charges, hires or runs the business ("I sell", "my customers", "I would run this" are wrong). Prefer second person throughout. Read for meaning, not pronouns.
+- business_description: a strong standalone first sentence (the hero), then at least 180 substantial, idea-specific words for "Read the full overview".
+- Whole page more than 500 informative words, normally 500–1,000. Develop existing sections and bullets. Indian reader, practical detail, a distinct approach per idea, no repeated skeleton, no invented earnings, figures, licences or legal claims, no new disclaimer sections.
+- Validate: tell the reader, in varied wording, that they can click the page's Validate button and inspect current information on their own screen. Never imply a known result.
+- Keep IDs, slugs, titles' identity and approved taxonomy. Do not touch `public.ideas`, other writers' tables, the 679 legacy ideas, site code or `bbi_editorial.work_*`. Inspect coordinator-corrected rows (C031) and keep sound corrections.
+- Small batches, each saved and read back (words, overview remainder, voice, duplicates, taxonomy, factual caution). Log reviewed and changed IDs and fields.
+- When every starting row is done: report to the founder first, then stop. No generation and no publishing until a new assignment.
+
+## Superseded: C005 writing assignment
+
+### (was) Active main category
 
 **C005 Food Retail Business Ideas** (`food-retail-business-ideas`), assigned by the coordinator (bbi_agent_assignments row updated 2026-10-10 00:56 IST, editorial override in `Current_Instruction.md` dated 00:53 IST). Started 2026-10-10 01:08 IST. This is my only active category.
 
