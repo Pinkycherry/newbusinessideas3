@@ -1,6 +1,6 @@
 # Pinky 2 assignment
 
-Updated 2026-10-09 13:14 UTC (18:44 IST).
+Updated 2026-10-09 19:38 UTC (01:08, 10 Oct IST).
 
 | | |
 |---|---|
@@ -8,7 +8,7 @@ Updated 2026-10-09 13:14 UTC (18:44 IST).
 | Writer slot | 2 (permanent) |
 | Only table I may edit | `public.ideas_pinky_2` (37 columns, status pending) |
 | Category range | C035–C067 |
-| Active main category | none: waiting for the coordinator's next assignment |
+| Active main category | **C041 Apparel and Clothing Retail Business Ideas** (`apparel-and-clothing-retail-business-ideas`), assigned 2026-10-10 |
 | Completed, awaiting review | C035 Everyday Assistance Business Ideas (100 rows); C040 Local Event Services Business Ideas (100 rows) |
 | Database assignment row | `bbi_agent_assignments` agent_name Pinky 2: matches this table and range |
 
@@ -105,3 +105,23 @@ Fixes needed on the six drafts: none mentions Validate; all six give income esti
 Final read-back: 100 unique IDs, slugs and titles; words 543 minimum, 640 average, 1,000 maximum; 100 distinct Validate sentences; taxonomy, status/tier, required fields, digits, money words, AI vendor names, line breaks and duplicates across live and all staging tables all pass. The six older drafts were improved (Validate line, income wording, S06-0001 length).
 
 Remaining issue (unchanged): my older drafts in other categories still use money estimates in words; each will be cleaned when its category is worked.
+
+## Voice and depth rule in force from 2026-10-09 19:38 UTC (supersedes every earlier first-person rule)
+
+Source: founder prompt for C041 and the 00:53 IST editorial override in `Current_Instruction.md`.
+
+1. The site speaks as an adviser to the reader who might run the shop or service. Operations belong to **you/your**: buying stock, fitting garments, finding customers, pricing, selling, handling returns. Never write "I buy the clothes", "I run the boutique", "my customers", "I would launch". Avoid operator "I" even hypothetically; this pass uses no narrator "I" at all.
+2. Direct, human advice. No repeated greeting, no repeated verdict formula, no reusable paragraph skeleton. Read the meaning of every field, JSON bullet and FAQ, not only pronouns.
+3. `business_description` opens with a self-contained hero sentence, then at least 180 useful, distinct words, because the remainder fills Read the full overview.
+4. Every page has more than 500 informative visitor-facing words, usually 500 to 1,000, longer only when useful. No padding.
+5. Garment-specific detail where it fits: who buys, sizing and fit, stock risk, sourcing and quality checks, alterations or returns, seasonality, delivery or footfall, starting without excess inventory, and a clear reason it may or may not suit the reader.
+6. Natural reference to the page's Validate button; never claim to have seen its result. No invented figures, fees, licences or statistics.
+7. Exact C041 taxonomy; check names, slugs and business models against live and all staging tables; small batches, each read back for word counts, field quality and voice.
+8. Do not rewrite C035/C040 (coordinator owns that repair). Do not touch `public.ideas`, the 679 legacy ideas, taxonomy or other writers' tables.
+
+## C041 starting position (read 2026-10-09 19:38 UTC)
+
+0 live rows. 5 seed drafts, each to be rewritten to this standard before counting:
+PK2-C041-S02-0001 designer-ethnic-wear-rental; PK2-C041-S04-0001 branded-uniforms-for-small-businesses; PK2-C041-S06-0001 cotton-nightwear-brand; PK2-C041-S08-0001 adaptive-clothing-for-elderly-and-patients; PK2-C041-S10-0001 made-to-measure-shirts-business.
+
+Subcategories: S01 Everyday Apparel, S02 Ethnic Wear, S03 Occasionwear, S04 Workwear and Uniform, S05 Activewear and Performance Apparel, S06 Sleepwear and Loungewear, S07 Innerwear and Hosiery, S08 Adaptive Apparel, S09 Sustainable Apparel, S10 Custom and Made-to-Order Apparel. Target: 10 each, 100 total; 95 new rows needed.
