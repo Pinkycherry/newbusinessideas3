@@ -1,5 +1,35 @@
 # Pinky 2 assignment
 
+## ACTIVE: EDITORIAL HOLD and full-table repair (received 2026-10-09 20:26 UTC, 01:56 IST 10 Oct)
+
+New idea generation is **stopped**. No new idea IDs, slugs, categories or subcategories. C041 stays at 62 rows (S07 and S09 empty, S08 and S10 seed only) until the founder assigns otherwise. No publishing to `public.ideas`.
+
+| | |
+|---|---|
+| Writer slot | 2 (permanent) |
+| Only table I may edit | `public.ideas_pinky_2` |
+| Assignment | Review and repair **every** existing row and **every** field |
+| Starting count at receipt | **346** rows: C035 100, C040 100, C041 62, other seeds 84 (C036 5, C037 4, C038 5, C039 5, C042 4, C043 5, C044 4, C045 4, C046 4, C047 5, C048 3, C049 4, C050 4, C051 3, C052 2, C053 2, C054 1, C055 1, C056 1, C057 1, C058 1, C059 1, C060 1, C061 2, C062 2, C063 2, C064 2, C065 2, C066 2, C067 2). Full ID list in the work log. |
+| Backup | `bbi_editorial.backup_pinky2_20261010_0118` (coordinator snapshot, 301 rows). The 45 C041 rows written after 01:18 IST are recorded in the work log. |
+
+### Repair rules (founder hold + docs/agents/Current_Instruction.md ACTIVE EDITORIAL HOLD)
+
+1. Voice: the site speaks **to** the possible founder as you/your. Never operator first person (I charge, I plan, my clients, I would hire), even hypothetically. Rewrite the thought, never a bulk pronoun swap. Read the complete sentence: a reader's FAQ question is not an owner claim.
+2. business_description: standalone hero first sentence, then at least 180 meaningful words for Read the full overview.
+3. Whole page more than 500 useful visitor-facing words, normally 500 to 1,000, longer when useful. Expand existing sections and JSON bullets, no filler, no new sections or disclaimers.
+4. Every field: title, summary, overview, market, buyers, money, costs, income, competition, steps, tools, pros, cons, verdict, FAQs, SEO title, meta description, keywords, time-to-first-customer.
+5. No repeated skeletons: remove My first test would, I want to, I would charge openings, identical verdict sequences, identical cost-line Validate endings and interchangeable examples. Each page gets its own buyer needs, first actions, costs, setbacks and candid verdict for India.
+6. No fabricated numbers, permits, legal claims, earnings, experience or research. Remove unsupported figures and regulatory assertions.
+7. Validate: tell the reader to click Validate on the page and inspect current information on their own screen, wording varied, never claiming a result.
+8. Preserve IDs, slugs, category and subcategory mapping. Edit only `public.ideas_pinky_2`. Never touch `public.ideas`, the 679, taxonomy, other writers' tables, `bbi_editorial.work_*` drafts or the deployment. Keep sound coordinator repairs.
+9. Small batches, read each back: every field, rendered length, meaning, duplicate titles and slugs. Log every reviewed ID, changed fields, failures and unresolved items with timestamps.
+10. When the whole table is done: report to the founder first (counts, per-category and subcategory counts, number reviewed, changed IDs, unresolved issues, before/after examples), then **stop**.
+
+---
+
+*Everything below is history from before the hold and is superseded where it conflicts. Rule 3 below (first-person founder voice) is withdrawn.*
+
+
 Updated 2026-10-09 19:38 UTC (01:08, 10 Oct IST).
 
 | | |
