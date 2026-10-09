@@ -33,13 +33,13 @@ Never write passwords, keys or tokens here.
 | C005-S02 Meat Retail | 10 | 10 |
 | C005-S03 Seafood Retail | 10 | 10 |
 | C005-S04 Bakery Retail | 10 | 10 |
-| C005-S05 Dairy Retail | 0 | 10 |
+| C005-S05 Dairy Retail | 10 | 10 |
 | C005-S06 Bulk Food Retail | 1 | 10 |
 | C005-S07 Specialty Diet Food Retail | 0 | 10 |
 | C005-S08 Gourmet Food Retail | 1 | 10 |
 | C005-S09 Confectionery Retail | 0 | 10 |
 | C005-S10 Farm Gate Retail | 0 | 10 |
-| **Total** | **42** | **100** |
+| **Total** | **52** | **100** |
 
 ## C004 progress (complete, awaiting coordinator review)
 
@@ -75,6 +75,8 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-10T01:37:25+05:30 · START · 2026-10-10 01:37 IST · Batch C005-B06 (S06 Bulk Food Retail) — rewrite seed PK1-C005-S06-0001 (zero waste refill store) in staging only, then insert PK1-C005-S06-0002 to 0010
+- 2026-10-10T01:37:25+05:30 · SUCCESS · 2026-10-10 01:37 IST · Batch C005-B05 saved and verified, S05 Dairy Retail complete — PK1-C005-S05-0001 to 0010: milk parlour with chilled dairy wall, fresh paneer and khoa shop, single-herd milk outlet, set curd and chaas counter, bilona ghee shop, Indian artisan cheese counter, milk vending machine kiosk, scoop parlour of regional ice cream makers, bulk milk and cream counter for tea stalls, dairy cooperative brand parlour. Avoided live milk delivery reselling, restaurant paneer route, part-time ice cream vending and C004 dairy drinks. Read-back: pages 709–904 words, overview after hero 194–261, Validate in all, taxonomy/meta/status/JSON clean, no duplicates. Voice flags were all narrator verdicts. Decision: varied the Validate wording in S05-0007 and 0010 verdicts to avoid a repeated 'I would suggest you' opening; read back.
 - 2026-10-10T01:32:37+05:30 · START · 2026-10-10 01:32 IST · Batch C005-B05 (S05 Dairy Retail) — ten new adviser-voice ideas PK1-C005-S05-0001 to 0010, avoiding live milk delivery reselling and restaurant paneer route
 - 2026-10-10T01:32:37+05:30 · SUCCESS · 2026-10-10 01:32 IST · Batch C005-B04 saved and verified, S04 Bakery Retail complete — PK1-C005-S04-0001 to 0010. Read-back: pages 746–837 words, overview after hero 186–224, Validate present in all, taxonomy/meta/status/JSON clean, no duplicate IDs, titles or slugs against live or staging. One voice flag (S04-0007 'I would recommend it to you') is a narrator remark, allowed. C005 total 42 (S01–S04 10 each, S06 and S08 seeds 1 each).
 - 2026-10-10T01:26:21+05:30 · START · Batch C005-B04 (S04 Bakery Retail) — Ten new rows PK1-C005-S04-0001 to 0010 (no seed). These avoid the live custom-cake home bakery, sourdough subscription and whole wheat bread for stores.
