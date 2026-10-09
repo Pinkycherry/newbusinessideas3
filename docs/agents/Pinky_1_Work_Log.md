@@ -37,12 +37,14 @@ Never write passwords, keys or tokens here.
 | C001-S06 Confectionery | 10 | 10 |
 | C001-S07 Fruit Preserve | 10 | 10 |
 | C001-S08 Breakfast Food | 10 | 10 |
-| C001-S09 Nutrition Snack | 0 | 10 |
+| C001-S09 Nutrition Snack | 10 | 10 |
 | C001-S10 Frozen Prepared Food | 0 | 10 |
-| **Total** | **80** | **100** |
+| **Total** | **90** | **100** |
 
 ## Entries
 
+- 2026-10-09T17:34:47+05:30 · START · Batch C001-B10 — Last ten ideas, S10 Frozen Prepared Food (PK1-C001-S10-0001 to 0010), one per insert. Overlap check done: no live or staging idea covers frozen parathas, momos, samosas, coconut, curries, peas and corn, kebabs, fish, kulfi or pizza bases (the only title hits used the word frozen in unrelated services).
+- 2026-10-09T17:34:47+05:30 · SUCCESS · Batch C001-B09 saved and verified — New rows PK1-C001-S09-0001 to PK1-C001-S09-0010 (roasted masala soya nuts; roasted seed and trail mix packs; popped rajgira and jowar; school snack boxes; dehydrated and baked vegetable chips; toasted coconut chips; packaged panjiri; trek and yatra snack packs; millet and lentil toddler puffs, written with strict compliance cautions; healthy bhel and chaat kits). Taxonomy names and slugs were taken straight from `bbi_expansion_subcategories` in each insert. S09 words 895–1052. Read-back of all 90 C001 rows: minimum 555 words, none under 500, Validate in all, taxonomy, metadata, JSON, unique IDs and slugs, duplicates and fields clean. C001 now 90 of 100. S01–S09 complete.
 - 2026-10-09T17:29:21+05:30 · START · Batch C001-B09 — Ten new S09 Nutrition Snack ideas (PK1-C001-S09-0001 to 0010), one per insert. Overlap check done: no live or staging title touches soya nuts, seed trail mix, popped rajgira, school snack boxes, vegetable chips, coconut chips, panjiri, trek packs, toddler puffs or bhel kits (only unrelated toddler daycare, toddler music classes and trekking gear rental).
 - 2026-10-09T17:29:21+05:30 · SUCCESS · Batch C001-B08 saved and verified — New rows PK1-C001-S08-0001 to PK1-C001-S08-0010 (instant poha and upma cups; roasted vermicelli packing; small poha mill; fresh thepla supply; dalia packing; puttu, appam and idiyappam flour; overnight oats jars for offices; small-batch natural peanut butter; instant rava idli mix; moong and besan chilla premix). No overlap found. S08 words 587–1360. Read-back of all 80 C001 rows: minimum 555 words, none under 500, Validate in all, taxonomy match against the lookup tables, metadata, JSON, unique IDs and slugs, no duplicates across live and staging, no missing fields. C001 now 80 of 100. S01–S08 complete.
 - 2026-10-09T17:22:56+05:30 · START · Batch C001-B08 — Ten new S08 Breakfast Food ideas (PK1-C001-S08-0001 to 0010), one per insert. Overlap check first.
