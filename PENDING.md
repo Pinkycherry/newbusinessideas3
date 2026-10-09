@@ -59,6 +59,8 @@ of the column before writing — the same way the 2026-09-22 repair was done.
 | 19 | **Internal-link anchors on 11 of 589** | The page already renders them; the field is just empty. | Pipeline |
 | 20 | **Two ideas target the same keyword** | IDEA-00010 and IDEA-00350 both use `niche job board business idea`. | **You** pick which one keeps it |
 
+| 43 | **Expand the new-idea “Read the full overview” content and all thin supporting fields** (added 2026-10-10 00:53 IST) | The hero consumes the first sentence of `business_description`; the accordion receives the rest. All 200 live expansion descriptions had fewer than 100 words at the 00:48 snapshot (median 53). Audit and substantively rewrite the live expansion cohort and matching staged copies with at least 180 meaningful overview words, 500+ page words, reader “you” voice, concrete India-relevant detail and field-by-field editorial review. Two C031 pages corrected; the rest remain. Do not edit the original 679 legacy ideas or use a blanket pronoun replacement. | Codex/coordinator |
+
 ## P3 — housekeeping
 
 | # | What | Owner |
