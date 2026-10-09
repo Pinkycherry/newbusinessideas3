@@ -30,7 +30,7 @@ Never write passwords, keys or tokens here.
 | Subcategory | Saved ideas | Target |
 |---|---|---|
 | C005-S01 Fresh Produce Retail | 10 | 10 |
-| C005-S02 Meat Retail | 1 | 10 |
+| C005-S02 Meat Retail | 10 | 10 |
 | C005-S03 Seafood Retail | 1 | 10 |
 | C005-S04 Bakery Retail | 0 | 10 |
 | C005-S05 Dairy Retail | 0 | 10 |
@@ -39,7 +39,7 @@ Never write passwords, keys or tokens here.
 | C005-S08 Gourmet Food Retail | 1 | 10 |
 | C005-S09 Confectionery Retail | 0 | 10 |
 | C005-S10 Farm Gate Retail | 0 | 10 |
-| **Total** | **14** | **100** |
+| **Total** | **23** | **100** |
 
 ## C004 progress (complete, awaiting coordinator review)
 
@@ -75,6 +75,8 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-10T01:20:57+05:30 · START · Batch C005-B03 (S03 Seafood Retail) — Rewrite seed PK1-C005-S03-0001 (cleaned fish doorstep subscription) to the new standard (staging only), then insert PK1-C005-S03-0002 to 0010.
+- 2026-10-10T01:20:57+05:30 · SUCCESS · Batch C005-B02 saved and verified, S02 complete — Seed PK1-C005-S02-0001 (chilled chicken cut shop) was fully rewritten in adviser voice: summary, a 190-word overview after the hero sentence, every body field, pros, cons, steps, tools, FAQ and meta. Title, slug and taxonomy unchanged, updated_at set, live copy untouched. New rows PK1-C005-S02-0002 to 0010: mutton shop with custom cuts, country chicken shop, marinated meat counter, pork shop for Northeast/Goan/Coorgi communities, frozen meat store for towns, butcher counter inside a supermarket, speciality poultry (quail, duck, Kadaknath), keema counter for food stalls, portioned raw meat packs for dogs. Corrections: S02-0002, 0004 and 0005 overviews extended past 180 words after the hero sentence. Read-back: page words 807–1013, words after the hero sentence 188–223, Validate in all, taxonomy, metadata, pending/free, FAQ and fields clean, no duplicates. Voice screen flagged S02-0001 for 'I would only steer you towards this' in the verdict, which is narrator advice and allowed. Counts: S01 10, S02 10, S03 1 (seed), S04 0, S05 0, S06 1 (seed), S07 0, S08 1 (seed), S09 0, S10 0.
 - 2026-10-10T01:15:24+05:30 · START · Batch C005-B02 (S02 Meat Retail) — Rewrite seed PK1-C005-S02-0001 (chilled chicken cut shop) in full to the new standard (staging only, live copy untouched), then insert PK1-C005-S02-0002 to 0010.
 - 2026-10-10T01:15:24+05:30 · SUCCESS · Batch C005-B01 saved and verified, S01 complete — New rows PK1-C005-S01-0001 to 0010: electric vegetable cart round for new colonies, exotic vegetable stall, fruit shop with ripening room, seasonal mango pre-order shop, leafy greens kiosk at commuter exits, imperfect produce discount shop, traceable organic produce shop, pooja and festival produce stall, permanent vegetable kiosk inside a gated society, onion-potato-garlic store. Corrections: overviews on S01-0002, 0003, 0004 and 0006 came out under 180 words after the hero sentence and were extended with idea-specific trial advice (updated_at set). The two failed first inserts of 0003/0004 (bad RETURNING clause, nothing written) were re-sent. Read-back: page words 847–1151, words after the hero sentence 184–227, Validate in all, taxonomy, metadata, pending/free, FAQ and fields clean, no duplicates across live and staging. Voice screen flagged 0001 and 0008. On reading, both are narrator advice in the verdict ('I would suggest this to you', 'I would point you towards'), which is allowed. The body uses 'you/your' throughout, with no operator 'I'. Counts: S01 10, S02 1 (seed), S03 1 (seed), S04 0, S05 0, S06 1 (seed), S07 0, S08 1 (seed), S09 0, S10 0. Total 14 rows, of which 10 meet the new standard.
 - 2026-10-10T01:08:19+05:30 · START · Batch C005-B01 (S01 Fresh Produce Retail) — Ten new rows PK1-C005-S01-0001 to 0010 (no seed in S01), written in adviser voice with a 180+ word overview. One or two per insert call, then read back.
