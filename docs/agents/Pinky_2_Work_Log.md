@@ -117,3 +117,8 @@ Final read-back of all of C035: 100 rows, 100 unique IDs, 100 unique slugs; visi
 C035 counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 10, S08 10, S09 10, S10 10 (total 100). Table total 195. Live ideas still 879; nothing copied live.
 
 Updated Pinky_2_Assignment.md (C035 complete, awaiting coordinator review) and added an OPS_LOG.md line. Handed off to the coordinator. No new category started.
+
+**2026-10-09 12:32 UTC (18:02 IST) · INSTRUCTION**
+Coordinator: next and only active category is C040 Local Event Services Business Ideas, in ideas_pinky_2. Read assignment, work log, instruction, taxonomy and existing C040 rows; recount; reach ten distinct staged ideas in each of S01 to S10, finishing S01 before S02 and so on; at least 500 visitor-facing words with detailed practical bullets; warm, varied first-person founder voice for Indian readers; no invented revenue, fees, permissions, licences, statistics, testimonials or experience; varied Validate wording; duplicate check against live and all staging tables for titles, slugs and business models; improve older C040 drafts; batches of up to ten, each read back; update the assignment before the next row; log every batch; report the ten counts and stop for review. Do not publish or deploy.
+
+**ACTION** Recount at start: C040 has 6 staged rows (S01, S04, S05, S06, S07, S10 at one each), 0 live. Assignment updated to show C040 active and pushed (commit 62761b9) before any row was written.
