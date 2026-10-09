@@ -223,3 +223,10 @@
 - New saved IDs: PK3-C079-S04-0001, PK3-C079-S04-0002, PK3-C079-S04-0003, PK3-C079-S04-0004, PK3-C079-S04-0005, PK3-C079-S04-0006, PK3-C079-S04-0007, PK3-C079-S04-0008, PK3-C079-S04-0009, PK3-C079-S04-0010.
 - Visitor-facing words in ID order: 561, 523, 551, 527, 544, 531, 543, 564, 537, 555. All ten read back with 37 columns, exact content, pending/free, native JSON arrays and q/a FAQs, null metadata, exact approved taxonomy, unique IDs/slugs, Validate references and no new live overlap. Cross-table pre-insert review found only a superficially similar domestic irrigation spare-parts counter; inbound import receiving is a distinct offer and operation.
 - Ten C079 subcategory counts S01–S10: **10, 10, 10, 10, 0, 1, 0, 0, 0, 1**. Distinct staged total **42/100**; 58 new slots remain. S04 complete; S05 next. Skipped duplicates: none. Errors: none.
+
+## C079 batch 5 — S05 Trade Regulatory Support complete
+
+- Read-back verified at: 2026-10-10 00:09:22 IST. Saved IDs: PK3-C079-S05-0001, PK3-C079-S05-0002, PK3-C079-S05-0003, PK3-C079-S05-0004, PK3-C079-S05-0005, PK3-C079-S05-0006, PK3-C079-S05-0007, PK3-C079-S05-0008, PK3-C079-S05-0009, PK3-C079-S05-0010.
+- Visitor-facing words in ID order: 600, 553, 537, 545, 558, 527, 564, 545, 602, 521. All ten read back with 37 fields, pending/free, native arrays and q/a FAQs, null metadata and natural Validate references; approved S05 taxonomy and unique IDs/slugs confirmed. No live copies were changed.
+- A proposed generic trade authorisation calendar overlapped an existing contract obligation calendar and was replaced with an adviser-led sales workshop. The cosmetic supplier-change impact board has a regulatory scope distinct from the S04 supplier proforma change tracker. No duplicate inserted. Precise regulatory claims were avoided.
+- Ten C079 counts S01–S10: **10, 10, 10, 10, 10, 1, 0, 0, 0, 1**. Distinct staged total **52/100**; 48 new slots remain. S05 complete; S06 next. Errors: the initial read-back response was truncated in the tool context; a new read-only query resolved it, with no retry of the insert.
