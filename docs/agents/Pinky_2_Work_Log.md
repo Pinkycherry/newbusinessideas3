@@ -81,3 +81,6 @@ Saved and read back 5 new S06 ideas: PK2-C035-S06-0002 to PK2-C035-S06-0006. Pas
 
 **2026-10-09 11:34 UTC (17:04 IST) · SUCCESS · C035 batch 7**
 Saved and read back 4 new S06 ideas: PK2-C035-S06-0007 to PK2-C035-S06-0010. Passed every check on the first read-back: words 525 to 771, taxonomy, status/tier, nulls, digits, Validate mention, slug and title duplicates. C035 counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 0, S08 0, S09 0, S10 1 (total 61). Table total 156.
+
+**2026-10-09 11:36 UTC (17:06 IST) · SUCCESS · C035 batch 8**
+Saved and read back 5 new S07 ideas: PK2-C035-S07-0001 to PK2-C035-S07-0005. Passed every check on the first read-back: words 548 and up (category minimum 525), taxonomy, status/tier, nulls, digits, Validate mention. Duplicate check for Pinky 2 rows against ideas, ideas_pinky_1, ideas_pinky_3 and own table: 0 slug or title clashes. (A whole-table check shows 200 slug pairs; those are the Pinky 1 and Pinky 3 rows the coordinator copied live, which exist in both staging and live by design.) C035 counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 5, S08 0, S09 0, S10 1 (total 66). Table total 161.
