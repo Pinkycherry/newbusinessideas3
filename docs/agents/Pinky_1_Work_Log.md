@@ -36,10 +36,10 @@ Never write passwords, keys or tokens here.
 | C004-S05 Plant Based Beverage | 10 | 10 |
 | C004-S06 Fermented Beverage | 10 | 10 |
 | C004-S07 Functional Beverage | 10 | 10 |
-| C004-S08 Beverage Concentrate | 0 | 10 |
+| C004-S08 Beverage Concentrate | 10 | 10 |
 | C004-S09 Powdered Drink | 1 | 10 |
 | C004-S10 Dairy Beverage | 1 | 10 |
-| **Total** | **72** | **100** |
+| **Total** | **82** | **100** |
 
 ## C001 progress (complete, awaiting coordinator review)
 
@@ -59,6 +59,8 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-10T00:11:34+05:30 · START · Batch C004-B09 (S09 Powdered Drink) — Add a fresh Validate line to PK1-C004-S09-0001 (sattu, staging only), then insert PK1-C004-S09-0002 to 0010.
+- 2026-10-10T00:11:34+05:30 · SUCCESS · Batch C004-B08 saved and verified, S08 complete — New rows PK1-C004-S08-0001 to 0010: rose and khus sharbat syrups, regional orange and pineapple squashes, cafe flavour syrups, thandai concentrate, panipuri water concentrate, desi fountain soda syrups, mocktail mixers for bars and banquets, fruit crushes for parlours, ginger-lemon-honey concentrate, nannari root syrup. S08 words 596–676. Read-back of all 82 C004 rows: 82 unique IDs, none under 500 words, Validate in every S01–S08 row, taxonomy, metadata, pending/free, FAQ, no duplicates, no missing fields. Counts: S01–S08 10 each, S09 1, S10 1, total 82.
 - 2026-10-10T00:07:32+05:30 · START · Batch C004-B08 (S08 Beverage Concentrate) — Ten new rows PK1-C004-S08-0001 to 0010.
 - 2026-10-10T00:07:32+05:30 · SUCCESS · Batch C004-B07 saved and verified, S07 complete — New rows PK1-C004-S07-0001 to 0010: salted lemon electrolyte drinks for workers (explicitly not ORS), aloe and amla juice, fresh whey protein shakes for gyms (lab-tested labels), ready-to-heat kadha, sabja and chia drinks, low-sugar fibre sodas, natural-caffeine energy drinks, beetroot shots for running clubs, ginger-turmeric-lemon shots for offices, caffeine-free saunf-gulkand evening drinks. Every page avoids health claims and says to check the applicable category rules. Plan change: the after-meal digestive shot (too close to the jeera infused water in S04) was replaced by beetroot shots for runners. NOTE: the worker process restarted after S07-0008. The DB recount confirmed 0001–0008 intact, with no duplicates or partial writes, and work resumed at 0009. S07 words 604–720. Read-back of all 72 C004 rows: 72 unique IDs, none under 500 words, Validate in every S01–S07 row, taxonomy, metadata, pending/free, FAQ, no duplicates, no missing fields. Counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 10, S08 0, S09 1, S10 1, total 72.
 - 2026-10-09T18:31:24+05:30 · START · Batch C004-B07 (S07 Functional Beverage) — Ten new rows PK1-C004-S07-0001 to 0010. These ideas are claim-sensitive, so the text names ingredients and uses only, never health benefits, and says to check the applicable category rules.
