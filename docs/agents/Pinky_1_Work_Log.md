@@ -32,17 +32,22 @@ Never write passwords, keys or tokens here.
 | C001-S01 Sauce and Condiment | 10 | 10 |
 | C001-S02 Spice and Seasoning | 10 | 10 |
 | C001-S03 Ready-to-Cook Food | 10 | 10 |
-| C001-S04 Savory Snack | 0 | 10 |
+| C001-S04 Savory Snack | 10 | 10 |
 | C001-S05 Packaged Bakery | 0 | 10 |
 | C001-S06 Confectionery | 1 | 10 |
 | C001-S07 Fruit Preserve | 0 | 10 |
 | C001-S08 Breakfast Food | 0 | 10 |
 | C001-S09 Nutrition Snack | 0 | 10 |
 | C001-S10 Frozen Prepared Food | 0 | 10 |
-| **Total** | **31** | **100** |
+| **Total** | **41** | **100** |
 
 ## Entries
 
+- 2026-10-09T17:08:27+05:30 · SUCCESS · Batch C001-B04 saved and verified — New rows PK1-C001-S04-0001 to PK1-C001-S04-0010 (Kerala banana chips for local shops; makhana roasting; khakhra unit; bhakarwadi; murukku and chakli for tea shops; masala coated peanuts; baked millet crackers; extruded corn puffs for rural markets; fresh farsan sev and gathiya; roasted chana). Farsan (S04-0009) was thin on first insert and was rewritten (updated_at set). Read-back of all 41 C001 rows: minimum 555 words, Validate present in all, taxonomy, metadata, JSON, duplicates and fields clean. C001 now 41 of 100. S01–S04 complete.
+- 2026-10-09T17:07:21+05:30 · SUCCESS · Workaround applied — Rewrote PK1-C001-S04-0007 (baked millet crackers) section by section without semicolons. Row updated at 11:36 UTC. All later text avoids semicolons.
+- 2026-10-09T17:07:21+05:30 · FAILURE · Database tool timed out on six update calls for PK1-C001-S04-0007 between 11:25 and 11:35 UTC — Error each time: `MCP server "Supabase" tool "execute_sql" timed out after 60s`. Checks after each timeout showed the row unchanged and no running or blocked query in `pg_stat_activity`, so the statement never reached the database. Narrowed down by testing smaller pieces: any text containing a semicolon followed by more text made the call hang. The same text without semicolons saved at once. No duplicate writes happened.
+- 2026-10-09T17:07:21+05:30 · NOTE · Batch C001-B04 progress — Inserted S04-0001 to 0007 so far (banana chips, makhana, khakhra, bhakarwadi, murukku and chakli for tea shops, masala peanuts, baked millet crackers). Khakhra and millet crackers were thin on first insert and were rewritten (updated_at set).
+- 2026-10-09T16:52:20+05:30 · START · Batch C001-B04 — Ten new S04 Savory Snack ideas (PK1-C001-S04-0001 to 0010), inserted two or three at a time to keep every page deep. Overlap check first.
 - 2026-10-09T16:52:04+05:30 · SUCCESS · Batch C001-B03 saved and verified — New rows PK1-C001-S03-0002 to PK1-C001-S03-0010 (biryani kits; onion-tomato gravy base; fresh chilled pasta and noodles; dal-khichdi one-pot packs for hostels; marinated soya chunks; dhokla and handvo mixes; puran poli dough and filling; marinated paneer tikka; vrat fasting kits). Overlap note: live "Meal Kit Business Idea for Cooks With Joint Pain" is a general meal kit, different from a single-dish biryani kit. Rows S03-0004 to 0006 were thin after the first insert and were rewritten before verification (updated_at set). Read-back of all 31 C001 rows: minimum 555 words, Validate in all, taxonomy, metadata, JSON, duplicates and fields clean. C001 now 31 of 100; S03 complete.
 - 2026-10-09T16:47:54+05:30 · START · Batch C001-B03 — Nine new S03 Ready-to-Cook ideas (PK1-C001-S03-0002 to 0010), written in two inserts of five and four. Overlap check first.
 - 2026-10-09T16:47:39+05:30 · SUCCESS · Batch C001-B02 saved and verified — New rows PK1-C001-S02-0002 to PK1-C001-S02-0010 (single-origin whole spice gift boxes; fries and popcorn seasoning shakers; flavour dust for snack makers; herb salt and low-sodium blends; curry leaf and moringa powder; hing compounding; pepper and cardamom grading for growers; custom house blends for restaurants; kokum and amchur souring agents). Overlap check: no slug or title match; nearest live idea "Homemade Dry Spice Blend & Masala Pouching" differs (restaurant contract blending, not retail pouches).
