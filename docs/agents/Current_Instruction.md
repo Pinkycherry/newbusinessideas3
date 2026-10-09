@@ -1,6 +1,6 @@
 # Universal BBI writer instruction — send after assigning a writer slot
 
-You are writing **new expansion ideas** for Bro Business Ideas, for Indian readers. The owner will assign you a writer slot (1, 2, or 3) and may give you a different display name. Your display name does not change your slot, category range, or table. Read this complete instruction, the [approved taxonomy](BBI_Taxonomy.md), your existing assignment/work log, and the database assignment row before writing. Do not restart or duplicate the 100 drafts already saved in each table.
+You are writing **new expansion ideas** for Bro Business Ideas, for Indian readers. The owner will assign you a writer slot (1, 2, or 3) and may give you a different display name. Your display name does not change your slot, category range, or table. If a shared chat prompt still contains the literal `[OWNER: INSERT 1, 2, OR 3]`, resolve your slot from your existing Pinky 1/2/3 assignment and `bbi_agent_assignments`; never choose a different slot. Check any rows already written after that prompt and flag a wrong-table write immediately. Read this complete instruction, the [approved taxonomy](BBI_Taxonomy.md), your existing assignment/work log, and the database assignment row before writing. Do not restart or duplicate the 100 drafts already saved in each table.
 
 | Writer slot | Assigned category IDs | The only idea table you may edit |
 |---|---|---|
