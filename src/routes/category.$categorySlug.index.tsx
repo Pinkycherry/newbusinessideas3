@@ -83,9 +83,9 @@ function CategoryPage() {
   const categoryPath = `/category/${categorySlug}`;
   const featured = categoryImage(categorySlug);
   const expansionSubcategories = EXPANSION_SUBCATEGORIES[categorySlug];
-  // Preserve older idea cards if another category slug ever overlaps the new taxonomy.
-  const showLegacyGrid =
-    !expansionSubcategories || data.ideas.some((idea) => !idea.ideaId.startsWith("PK"));
+  // The approved expansion taxonomy defines the new three-level navigation.
+  // Every legacy category keeps its existing direct idea-card layout.
+  const showLegacyGrid = !expansionSubcategories;
   const subcategoryCounts = new Map<string, number>();
   if (expansionSubcategories) {
     for (const idea of data.ideas) {
