@@ -75,6 +75,14 @@ The no-template quality gate did **not** pass. All 100 C001 verdicts start “I 
 
 Slot 2's next exclusive category is C041 Apparel and Clothing Retail (five existing staged drafts in S02/S04/S06/S08/S10, 95 to add). Its immediate first task is to revise C035/C040 staging copy to remove formulaic scaffolding, verify every revised page stays above 500 visitor-facing words, then fill C041 S01 through S10 to ten each. Slot 1 and 3 continue C004/C079 without interruption; slot 1 later repairs C001. No external database rows or site code were changed by this coordinator audit; the writers' own staging writes are recorded in their logs.
 
+### 2026-10-10 00:26 IST — narrator POV correction, replaces older founder POV instructions
+
+The founder clarified the voice after screenshots of the completed live expansion idea `PK1-C031-S05-0001` (“Bed Bug Treatment for Hostels and PG Accommodations”) showed “I charge”, “I would train staff” and “I would reach them”. This made the website appear to operate the business. The older instruction to write as a “first-person prospective founder” was a coordinator mistake and is **superseded**. The site is a narrator/adviser: “I” may express judgment, caution or encouragement about an idea; “you/your” names the reader who might start, charge, sell, hire or deliver it. No front-of-page disclaimer or explanatory note. Fix the sentences themselves in existing sections.
+
+`docs/agents/Current_Instruction.md` now states this contract and requires a POV read across all visible fields, bullets and FAQs before handoff. The three Supabase `bbi_agent_assignments.task` rows were corrected as well. The pictured idea's six prose fields were edited in both `public.ideas` and `public.ideas_pinky_1` after a local backup; readback matched and its full visitor-facing count is 788 words. The 679 original legacy ideas were not touched.
+
+Read-only pattern screening at about 00:24 IST found this problem well beyond one row: of the 200 previously released expansion ideas, 81 PK1 pages had operator-first-person wording in the money field, 98 in customer acquisition, and 42 in the business description; PK3 had 57 customer-acquisition and 25 description matches. These categories overlap and regex is incomplete; a human must distinguish adviser “I” from operator “I”. The staged first categories also show pervasive operator voice: e.g., C001 99/100 money and 100/100 acquisition; C035 99/100 money and 96/100 acquisition; C040 98/100 money and 100/100 acquisition. The corrected live example is only the first repair, not clearance for the cohort. PENDING #42 tracks careful expansion-only live/stage correction and review. Slots 1 and 2, now available, get repair assignments; slot 3 currently finishes C079 under this new voice rule. The no-template PENDING #41 remains separate and also applies.
+
 ## Who you are here
 
 The founder calls this assistant **Pinky**, after his wife, as a credit to her.
