@@ -75,3 +75,6 @@ Saved and read back 9 new S04 ideas: PK2-C035-S04-0002 to PK2-C035-S04-0010. Fir
 
 **2026-10-09 11:29 UTC (16:59 IST) · SUCCESS · C035 batch 5**
 Saved and read back 10 new S05 ideas: PK2-C035-S05-0001 to PK2-C035-S05-0010. First read-back FAILED the word check on six rows: S05-0004 (488), 0006 (451), 0007 (478), 0008 (442), 0009 (448), 0010 (469); S05-0003 and 0005 were marginal. Fixed by expanding market_opportunity, target_customer, competition_edge and income_potential on S05-0003 to 0010 (updated_at set). Re-check: every C035 row now has at least 547 words; all other checks pass. Process change: remaining C035 batches will be five ideas each so later rows are written at full length the first time. C035 counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 1, S07 0, S08 0, S09 0, S10 1 (total 52). Table total 147.
+
+**2026-10-09 11:32 UTC (17:02 IST) · SUCCESS · C035 batch 6**
+Saved and read back 5 new S06 ideas: PK2-C035-S06-0002 to PK2-C035-S06-0006. Passed every check on the first read-back: words 535 to 997, taxonomy, status/tier, nulls, digits, Validate mention, slug and title duplicates. C035 counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 6, S07 0, S08 0, S09 0, S10 1 (total 57). Table total 152.
