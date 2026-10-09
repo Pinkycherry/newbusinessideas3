@@ -204,3 +204,13 @@ C040 counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 10, S08 10, S09
 **2026-10-09 13:12 UTC (18:42 IST) · SUCCESS · C040 S10 batch 1**
 Saved and read back 5 new S10 ideas: PK2-C040-S10-0002 to PK2-C040-S10-0006 (school fete and fun fair organiser, society weekly organic farmers' market with honest labelling, pre-loved flea market, touring handloom and artisan exhibition, small-town food festival). Kept distinct from live farmers' market vendor booking helper and book swap stall. Permissions are left to the organiser to check; no legal claims. Words 586 to 631; all checks pass.
 C040 counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 10, S08 10, S09 10, S10 6 (total 96). Table total 285.
+
+**2026-10-09 13:14 UTC (18:44 IST) · SUCCESS · C040 S10 batch 2, category complete**
+Saved and read back 4 new S10 ideas: PK2-C040-S10-0007 to PK2-C040-S10-0010 (kids' entrepreneur market, evening night market, pet fair and adoption day with registered welfare groups, bridal and wedding expo for tier-two towns). Correction on S10-0009: replaced unsourced pet ownership growth claims with plain wording.
+
+CORRECTION across C040: only 50 distinct Validate sentences existed in 100 pages. Rewrote the repeated ones on 50 rows so each names its own idea; read-back now shows 100 distinct Validate sentences, no spacing errors, no digits.
+
+Final read-back of all of C040: 100 rows, 100 unique IDs, 100 unique slugs, 100 unique titles; visitor-facing words minimum 543, average 640, maximum 1,000; 0 under 500; 0 missing Validate; 0 taxonomy mismatches; 0 status/tier/meta problems; 0 null required fields; 0 digits; 0 money estimates (lakh, crore, thousand, percent, rupee); 0 AI vendor names; 0 line-break problems; 0 slug or title clashes with ideas, ideas_pinky_1, ideas_pinky_3 or other Pinky 2 rows; 0 C040 rows live.
+C040 counts: S01 10, S02 10, S03 10, S04 10, S05 10, S06 10, S07 10, S08 10, S09 10, S10 10 (total 100). Table total 289. Live ideas still 879.
+
+Handed to the coordinator for review. No publishing, no deployment, no new category started.
