@@ -122,3 +122,10 @@
 - New saved IDs: PK3-C068-S01-0001, PK3-C068-S03-0001, PK3-C068-S04-0001, PK3-C068-S05-0001, PK3-C068-S07-0001, PK3-C068-S08-0001, PK3-C068-S10-0001.
 - Visitor-facing word counts by ID order: 974, 876, 838, 687, 694, 684, 729. All seven have pending status, 37 fields, exact lookup taxonomy, native JSON arrays and q/a FAQs, distinct IDs/slugs, intended saved content and a page-specific Validate reference. No live overlap for these seven IDs/slugs. Pre-insert read across live and all three staging tables found no exact or substantive concept overlap.
 - Ten subcategory counts S01–S10: **1, 1, 1, 1, 1, 1, 1, 1, 1, 1**. Distinct C068 total 10/100; missing slots 90. Errors: none.
+
+## C068 batch 3 — second idea in every subcategory
+
+- Read-back verified at: 2026-10-09 17:08:35 IST.
+- New saved IDs: PK3-C068-S01-0002, PK3-C068-S02-0002, PK3-C068-S03-0002, PK3-C068-S04-0002, PK3-C068-S05-0002, PK3-C068-S06-0002, PK3-C068-S07-0002, PK3-C068-S08-0002, PK3-C068-S09-0002, PK3-C068-S10-0002.
+- Visitor-facing words in that order: 709, 680, 712, 687, 609, 613, 628, 621, 621, 622. Each saved row read back with 37 columns, pending status, native JSON arrays and q/a FAQ, exact C068 lookup IDs/names/slugs, intended content, unique ID/slug and a varied Validate reference. No live overlap for these ten IDs/slugs. Pre-insert comparison across all four tables found no exact or substantive concept overlap.
+- Ten subcategory counts S01–S10: **2, 2, 2, 2, 2, 2, 2, 2, 2, 2**. Distinct C068 total 20/100; missing slots 80. Errors: none.
