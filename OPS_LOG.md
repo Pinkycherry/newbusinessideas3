@@ -8,6 +8,7 @@ One line per change: `- YYYY-MM-DD · where · what · who`. Add yours at the to
 in the same session you made the change. `scripts/session-brief.mjs` prints the
 latest eight lines at the start of every session.
 
+- 2026-10-10 01:29 IST · Supabase · Pinky 3 expanded staged C093-S04-0001 front-desk seed and inserted C093-S04-0002 through 0010 in ideas_pinky_3, read back all ten (180+ overview, >500 page words, taxonomy/POV/JSON/Validate); 41/100 C093 staged. Live copy untouched. · Pinky 3
 - 2026-10-10 01:24 IST · Supabase · Pinky 3 inserted/read back ten C093-S03 Healthcare Recruitment pending/free rows PK3-C093-S03-0001 through 0010 in ideas_pinky_3 only; 32/100 C093 staged. Overview minimum 180, page minimum 518; taxonomy, JSON, POV and Validate checked. No live/legacy edit. · Pinky 3
 - 2026-10-10 01:22 IST · Supabase · Added machine findings for every baseline live/staging expansion row to private bbi_editorial.review_status. Rewrote PK3-C079-S03-0001 across existing text/JSON/metadata in live+p3, read back 298-word overview and 1,109 counted page words with matching hashes, and marked it edited-needs-final-review. Baseline snapshot leaves hundreds of rows pending; automated flags are triage, not a semantic approval. · Codex
 - 2026-10-10 01:21 IST · Supabase · Pinky 3 expanded C093-S02-0001 staged welding seed and inserted C093-S02-0002 through 0010 in ideas_pinky_3, all ten read back with 180+ overview, >500 page words, approved taxonomy and reader POV; 22/100 C093 staged. Live copy untouched. · Pinky 3
