@@ -12,6 +12,18 @@ The approved new taxonomy also exists in Supabase as `public.bbi_expansion_categ
 
 ## Work order and counts
 
+## Current category assignments — 2026-10-09 17:57 IST
+
+The owner showed screenshots of incomplete public category pages. The immediate next category is now fixed for each slot; do not choose a different category or start several categories at once. These are staging-writing assignments, not publication instructions.
+
+| Slot | Main category to complete now | Existing staged drafts at this checkpoint | Missing to reach 100 |
+|---|---|---:|---:|
+| 1 | C004 Beverage Product Business Ideas | 4 | 96 |
+| 2 | C040 Local Event Services Business Ideas | 6 | 94 |
+| 3 | C079 Cross-Border Trade Services Business Ideas | 3 | 97 |
+
+Re-read your table before writing because counts can change. Work through approved S01 to S10 in order: bring S01 to ten distinct ideas, verify it, then S02, and so on until all ten have ten. Improve existing staged drafts as needed; a matching live copy counts once and stays untouched. Keep the ten subcategory counts in each batch log. Hand off a complete 100-idea category, then stop for the coordinator's review and release. Do not describe staged ideas as already visible on the website. The incomplete public “Ideas coming soon” display is a separate site issue tracked in PENDING #40.
+
 Choose **one main category inside your assigned range** and finish it before moving to the next. For its ten approved subcategories, write **at least ten meaningfully distinct idea pages in each**: at least **100 idea pages per completed main category**. Your earlier one-per-subcategory drafts count toward this target after you check and improve them. They do not mean that the category is finished. Read the current rows first, count distinct IDs and slugs by subcategory, and fill the missing slots. Avoid duplicate titles and overlapping business models even when their slugs differ. A staged idea that has also been copied to live counts once, not twice. Do not publish to `public.ideas` yourself; the coordinator will review and sync completed content separately.
 
 Check category names and slugs against the approved taxonomy and existing legacy names/slugs. If there is a genuine overlap, propose one distinctive name fitted to that category; do not use a repeated `New ...` or `Latest ...` formula. Record the proposed change for the coordinator before inserting that category. The **known C089 correction is already applied**: C089 is **Home-Based Business Ventures**, slug `home-based-business-ventures`; the legacy **Work From Home Business Ideas** keeps `work-from-home-business-ideas`. C089's ten subcategories and existing idea IDs remain the same. Use the corrected C089 category fields if slot 3 is yours.
