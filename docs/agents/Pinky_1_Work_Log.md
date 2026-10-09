@@ -32,14 +32,14 @@ Never write passwords, keys or tokens here.
 | C005-S01 Fresh Produce Retail | 10 | 10 |
 | C005-S02 Meat Retail | 10 | 10 |
 | C005-S03 Seafood Retail | 10 | 10 |
-| C005-S04 Bakery Retail | 0 | 10 |
+| C005-S04 Bakery Retail | 10 | 10 |
 | C005-S05 Dairy Retail | 0 | 10 |
 | C005-S06 Bulk Food Retail | 1 | 10 |
 | C005-S07 Specialty Diet Food Retail | 0 | 10 |
 | C005-S08 Gourmet Food Retail | 1 | 10 |
 | C005-S09 Confectionery Retail | 0 | 10 |
 | C005-S10 Farm Gate Retail | 0 | 10 |
-| **Total** | **32** | **100** |
+| **Total** | **42** | **100** |
 
 ## C004 progress (complete, awaiting coordinator review)
 
@@ -75,6 +75,8 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-10T01:32:37+05:30 · START · 2026-10-10 01:32 IST · Batch C005-B05 (S05 Dairy Retail) — ten new adviser-voice ideas PK1-C005-S05-0001 to 0010, avoiding live milk delivery reselling and restaurant paneer route
+- 2026-10-10T01:32:37+05:30 · SUCCESS · 2026-10-10 01:32 IST · Batch C005-B04 saved and verified, S04 Bakery Retail complete — PK1-C005-S04-0001 to 0010. Read-back: pages 746–837 words, overview after hero 186–224, Validate present in all, taxonomy/meta/status/JSON clean, no duplicate IDs, titles or slugs against live or staging. One voice flag (S04-0007 'I would recommend it to you') is a narrator remark, allowed. C005 total 42 (S01–S04 10 each, S06 and S08 seeds 1 each).
 - 2026-10-10T01:26:21+05:30 · START · Batch C005-B04 (S04 Bakery Retail) — Ten new rows PK1-C005-S04-0001 to 0010 (no seed). These avoid the live custom-cake home bakery, sourdough subscription and whole wheat bread for stores.
 - 2026-10-10T01:26:21+05:30 · SUCCESS · Batch C005-B03 saved and verified, S03 complete — Seed PK1-C005-S03-0001 (cleaned fish doorstep subscription) was fully rewritten in adviser voice, with a 196-word overview after the hero sentence, all fields and an updated seo_title. Title and slug unchanged, live copy untouched. New rows PK1-C005-S03-0002 to 0010: live fish tank shop for eastern Indian families, dry fish store in inland cities, prawn and live crab counter, clean fish market stall, refrigerated sea fish van for inland towns, hilsa and festival fish pre-booking, local pond and reservoir fish shop, boneless fillet counter, take-home seafood shop for coastal tourists. Correction: S03-0002 overview extended to 217 words. Read-back: page words 762–923, words after the hero sentence 184–227, Validate in all, taxonomy, metadata, pending/free, FAQ and fields clean, no duplicates. Voice flags on S03-0002 and 0006 were narrator verdicts ('I would back you', 'I would encourage you'), which are allowed. Counts: S01 10, S02 10, S03 10, S04 0, S05 0, S06 1 (seed), S07 0, S08 1 (seed), S09 0, S10 0.
 - 2026-10-10T01:20:57+05:30 · START · Batch C005-B03 (S03 Seafood Retail) — Rewrite seed PK1-C005-S03-0001 (cleaned fish doorstep subscription) to the new standard (staging only), then insert PK1-C005-S03-0002 to 0010.
