@@ -29,17 +29,17 @@ Never write passwords, keys or tokens here.
 
 | Subcategory | Saved ideas | Target |
 |---|---|---|
-| C005-S01 Fresh Produce Retail | 0 | 10 |
-| C005-S02 Meat Retail | 0 | 10 |
-| C005-S03 Seafood Retail | 0 | 10 |
+| C005-S01 Fresh Produce Retail | 10 | 10 |
+| C005-S02 Meat Retail | 1 | 10 |
+| C005-S03 Seafood Retail | 1 | 10 |
 | C005-S04 Bakery Retail | 0 | 10 |
 | C005-S05 Dairy Retail | 0 | 10 |
-| C005-S06 Bulk Food Retail | 0 | 10 |
+| C005-S06 Bulk Food Retail | 1 | 10 |
 | C005-S07 Specialty Diet Food Retail | 0 | 10 |
-| C005-S08 Gourmet Food Retail | 0 | 10 |
+| C005-S08 Gourmet Food Retail | 1 | 10 |
 | C005-S09 Confectionery Retail | 0 | 10 |
 | C005-S10 Farm Gate Retail | 0 | 10 |
-| **Total** | **0** (4 seeds awaiting revision) | **100** |
+| **Total** | **14** | **100** |
 
 ## C004 progress (complete, awaiting coordinator review)
 
@@ -75,6 +75,9 @@ Never write passwords, keys or tokens here.
 
 ## Entries
 
+- 2026-10-10T01:15:24+05:30 · START · Batch C005-B02 (S02 Meat Retail) — Rewrite seed PK1-C005-S02-0001 (chilled chicken cut shop) in full to the new standard (staging only, live copy untouched), then insert PK1-C005-S02-0002 to 0010.
+- 2026-10-10T01:15:24+05:30 · SUCCESS · Batch C005-B01 saved and verified, S01 complete — New rows PK1-C005-S01-0001 to 0010: electric vegetable cart round for new colonies, exotic vegetable stall, fruit shop with ripening room, seasonal mango pre-order shop, leafy greens kiosk at commuter exits, imperfect produce discount shop, traceable organic produce shop, pooja and festival produce stall, permanent vegetable kiosk inside a gated society, onion-potato-garlic store. Corrections: overviews on S01-0002, 0003, 0004 and 0006 came out under 180 words after the hero sentence and were extended with idea-specific trial advice (updated_at set). The two failed first inserts of 0003/0004 (bad RETURNING clause, nothing written) were re-sent. Read-back: page words 847–1151, words after the hero sentence 184–227, Validate in all, taxonomy, metadata, pending/free, FAQ and fields clean, no duplicates across live and staging. Voice screen flagged 0001 and 0008. On reading, both are narrator advice in the verdict ('I would suggest this to you', 'I would point you towards'), which is allowed. The body uses 'you/your' throughout, with no operator 'I'. Counts: S01 10, S02 1 (seed), S03 1 (seed), S04 0, S05 0, S06 1 (seed), S07 0, S08 1 (seed), S09 0, S10 0. Total 14 rows, of which 10 meet the new standard.
+- 2026-10-10T01:08:19+05:30 · START · Batch C005-B01 (S01 Fresh Produce Retail) — Ten new rows PK1-C005-S01-0001 to 0010 (no seed in S01), written in adviser voice with a 180+ word overview. One or two per insert call, then read back.
 - 2026-10-10T01:08:04+05:30 · SUCCESS · Assignment updated before any C005 write — C005 set as the active category in `Pinky_1_Assignment.md` with the corrected rules and a full idea plan, published to Artifacts and pushed. Recount from Supabase: four C005 seeds, all also live (S02, S03, S06 and S08 -0001). Each will be rewritten to the new standard in staging before it counts. 96 new rows needed. Per the override, C001/C004 repair belongs to the coordinator, so no C001/C004 rows will be touched.
 - 2026-10-10T01:08:04+05:30 · INSTRUCTION · Founder/coordinator: C005 Food Retail is the next and only category. The site is an adviser talking to the reader, so operations are written in 'you/your' and never as operator 'I'. business_description needs a standalone hero sentence plus at least 180 meaningful words. Pages need more than 500 informative words, varied structure, no invented facts, and a fresh Validate cue in an existing section. Revise the four seeds before counting them. Order is S01–S10, ten each, exactly 100, in small read-back batches. Update the assignment and log first. Do not touch public.ideas, the legacy rows, taxonomy, other tables or the earlier finished categories. Stop at 100 for review.
 - 2026-10-10T00:19:20+05:30 · NOTE · C004 handed to the coordinator for review — Pinky 1 has stopped. No rows were copied to public.ideas and nothing on the site changed. Open concerns: (1) the four original drafts (S01, S03, S09, S10 -0001) got their Validate line in staging only, so their live copies still lack it until the coordinator resyncs them. (2) Pages get shorter towards the end (S10 551–691 words against S01 815–1059) but are all above 500. (3) The FAQ and getting-started lists repeat a similar shape across pages (for example a 'Do I need a food licence?' question), so an editorial pass for variety is advised before release. (4) Regulatory lines say 'check current rules' and name no figures. Only 'packaged drinking water needs BIS certification' is stated as fact.
