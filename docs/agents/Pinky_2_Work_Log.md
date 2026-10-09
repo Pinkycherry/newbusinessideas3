@@ -122,3 +122,13 @@ Updated Pinky_2_Assignment.md (C035 complete, awaiting coordinator review) and a
 Coordinator: next and only active category is C040 Local Event Services Business Ideas, in ideas_pinky_2. Read assignment, work log, instruction, taxonomy and existing C040 rows; recount; reach ten distinct staged ideas in each of S01 to S10, finishing S01 before S02 and so on; at least 500 visitor-facing words with detailed practical bullets; warm, varied first-person founder voice for Indian readers; no invented revenue, fees, permissions, licences, statistics, testimonials or experience; varied Validate wording; duplicate check against live and all staging tables for titles, slugs and business models; improve older C040 drafts; batches of up to ten, each read back; update the assignment before the next row; log every batch; report the ten counts and stop for review. Do not publish or deploy.
 
 **ACTION** Recount at start: C040 has 6 staged rows (S01, S04, S05, S06, S07, S10 at one each), 0 live. Assignment updated to show C040 active and pushed (commit 62761b9) before any row was written.
+
+**2026-10-09 12:37 UTC (18:07 IST) · SUCCESS · C040 draft fixes and S01 batch 1**
+Improved the six older C040 drafts (S01-0001, S04-0001, S05-0001, S06-0001, S07-0001, S10-0001): added a varied Validate line to each verdict; replaced income estimates in words (thousands, tens of thousands, lakhs) with no-figure wording; expanded S06-0001 market_opportunity, target_customer and competition_edge (was 493 words, now 666); removed unsourced claims in S10-0001 (thousands of residents, home businesses have multiplied). updated_at set.
+
+Saved and read back 5 new S01 ideas: PK2-C040-S01-0002 to PK2-C040-S01-0006 (milestone birthdays for elderly parents, school annual day coordinator, small-company team day and offsite planner, baby shower and seemantham planner, alumni reunion planner). Overlap check before writing: avoided live wedding-day timeline, remote wedding coordination and event vendor automation ideas.
+
+CORRECTION: the first save put dash bullets with line breaks inside business_description. The site joins single line breaks into one paragraph, so the dashes would show inline. Converted them to plain sentences on the five rows; bullets stay in the list fields.
+
+Read-back of all C040 rows: words 557 to 1,000; 0 under 500; Validate in every row; taxonomy, status/tier, nulls, digits, line breaks, money words all pass; 0 slug or title clashes with ideas, ideas_pinky_1, ideas_pinky_3 or other Pinky 2 rows.
+C040 counts: S01 6, S02 0, S03 0, S04 1, S05 1, S06 1, S07 1, S08 0, S09 0, S10 1 (total 11). Table total 200.
