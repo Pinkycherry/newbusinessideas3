@@ -1,14 +1,14 @@
 # BBI agent handoffs
 
-This directory holds the latest agent-facing assignment and work log for the three Pinky writers. Commit each agent's updated document here so a replacement account can resume from the same instructions.
+This directory holds the latest writer assignment and work log for the three permanent slots. The owner may rename agents; the slot number fixes the category range and staging table. Commit each writer's updated documents here so another account can resume.
 
-Give every writer [Current_Instruction.md](Current_Instruction.md) and this folder link. The approved category and subcategory names, IDs and slugs are in [BBI_Taxonomy.md](BBI_Taxonomy.md). C089 is **Home-Based Business Ventures** (`home-based-business-ventures`) so it remains distinct from the older Work From Home Business Ideas category. Its ten C089 subcategories and existing idea IDs stay the same. Pinky 3 must carry this correction into its assignment document before writing more C089 rows.
+Give every writer [Current_Instruction.md](Current_Instruction.md) and this folder link. The approved category and subcategory names, IDs and slugs are in [BBI_Taxonomy.md](BBI_Taxonomy.md). C089 is **Home-Based Business Ventures** (`home-based-business-ventures`) so it remains distinct from the older Work From Home Business Ideas category. Its ten C089 subcategories and existing idea IDs stay the same. The writer assigned slot 3 must carry this correction into its assignment document before writing more C089 rows. The approved lookup tables are `public.bbi_expansion_categories` and `public.bbi_expansion_subcategories`.
 
-| Agent | Assignment file | Work log |
-|---|---|---|
-| Pinky 1 | `Pinky_1_Assignment.md` | `Pinky_1_Work_Log.md` |
-| Pinky 2 | `Pinky_2_Assignment.md` | `Pinky_2_Work_Log.md` |
-| Pinky 3 | `Pinky_3_Assignment.md` | `Pinky_3_Work_Log.md` |
+| Slot | Category range | Staging table | Document naming |
+|---|---|---|---|
+| 1 | C001–C034 | `public.ideas_pinky_1` | Current agent name + `Assignment` / `Work_Log` |
+| 2 | C035–C067 | `public.ideas_pinky_2` | Current agent name + `Assignment` / `Work_Log` |
+| 3 | C068–C100 | `public.ideas_pinky_3` | Current agent name + `Assignment` / `Work_Log` |
 
 Each agent writes only its own named files. The primary assignment document includes its existing category range, table, current 37-column production workflow, and the latest instruction to finish one main category by filling all ten subcategories with at least ten distinct Indian ideas each. The agent also keeps the latest assignment available in its account's Artifacts.
 
