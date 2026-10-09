@@ -12,7 +12,7 @@ The 9 October 2026 live recount found three pending C079 staging drafts: `PK3-C0
 
 ### Completion checkpoint — 2026-10-10 00:38:54 IST
 
-C079 has **100 unique pending/free staging IDs**, ten each in S01–S10, with a minimum of **521 visitor-facing words** per page. Three pre-existing staged drafts were expanded; their live copies were not edited. Exact taxonomy, JSON/FAQ shape, required fields, Validate references, unique IDs/slugs and cross-table exact overlaps were checked. The three known live copies count once. The named work log contains batch-by-batch IDs, word counts and read-back results. Stop here for coordinator review.
+C079 has **100 unique pending/free staging IDs**, ten each in S01–S10, with a final post-edit minimum of **516 visitor-facing words** per page (reverified 2026-10-10 00:42:58 IST). Three pre-existing staged drafts were expanded; their live copies were not edited. Exact taxonomy, JSON/FAQ shape, required fields, Validate references, unique IDs/slugs and cross-table exact overlaps were checked. The three known live copies count once. The named work log contains batch-by-batch IDs, word counts, read-back results and the final Validate wording correction. Stop here for coordinator review.
 
 ## Page writing standard
 
