@@ -172,3 +172,10 @@
 - New saved IDs: PK3-C068-S01-0008, PK3-C068-S02-0008, PK3-C068-S03-0008, PK3-C068-S04-0008, PK3-C068-S05-0008, PK3-C068-S06-0008, PK3-C068-S07-0008, PK3-C068-S08-0008, PK3-C068-S09-0008, PK3-C068-S10-0008.
 - Visitor-facing words in ID order: 548, 545, 560, 528, 551, 552, 550, 553, 549, 560. All ten passed 37-field, pending/free, exact content, JSON/FAQ, approved taxonomy, unique ID/slug and no live overlap checks. Pre-insert comparison across live and all staging found no duplicate candidates.
 - Ten subcategory counts S01–S10: **8, 8, 8, 8, 8, 8, 8, 8, 8, 8**. Distinct C068 total 80/100; missing slots 20. Skipped duplicates: none. Errors: none.
+
+## C068 batch 10 — ninth idea in every subcategory
+
+- Read-back verified at: 2026-10-09 17:43:02 IST.
+- New saved IDs: PK3-C068-S01-0009, PK3-C068-S02-0009, PK3-C068-S03-0009, PK3-C068-S04-0009, PK3-C068-S05-0009, PK3-C068-S06-0009, PK3-C068-S07-0009, PK3-C068-S08-0009, PK3-C068-S09-0009, PK3-C068-S10-0009.
+- Visitor-facing words in ID order: 580, 520, 533, 548, 541, 536, 526, 538, 543, 566. All ten read back with 37 fields, pending/free, exact content, native arrays and q/a FAQs, lookup taxonomy, unique IDs/slugs and no new live overlap. Pre-insert cross-table review found no duplicate candidates.
+- Ten subcategory counts S01–S10: **9, 9, 9, 9, 9, 9, 9, 9, 9, 9**. Distinct C068 total 90/100; missing slots 10. Skipped duplicates: none. Errors: none.
