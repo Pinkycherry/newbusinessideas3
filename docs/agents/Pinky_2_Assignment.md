@@ -1,6 +1,6 @@
 # Pinky 2 assignment
 
-Updated 2026-10-09 11:10 UTC (16:40 IST).
+Updated 2026-10-09 12:10 UTC (17:40 IST).
 
 | | |
 |---|---|
@@ -8,7 +8,7 @@ Updated 2026-10-09 11:10 UTC (16:40 IST).
 | Writer slot | 2 (permanent) |
 | Only table I may edit | `public.ideas_pinky_2` (37 columns, status pending) |
 | Category range | C035–C067 |
-| Active main category | **C035 Everyday Assistance Business Ideas** (`everyday-assistance-business-ideas`) |
+| Active main category | **C035 Everyday Assistance Business Ideas** (`everyday-assistance-business-ideas`): **complete, awaiting coordinator review** |
 | Database assignment row | `bbi_agent_assignments` agent_name Pinky 2: matches this table and range |
 
 ## Rules in force (from docs/agents/Current_Instruction.md)
@@ -41,3 +41,24 @@ Category name and slug checked against the 20 legacy categories: no overlap.
 | C035-S10 Downsizing and Transition Assistance | 1 (PK2-C035-S10-0001) | 884 | 9 |
 
 The five existing drafts need a Validate-button line added. 95 new ideas are planned, one subcategory per batch where possible.
+
+## C035 status: complete, awaiting coordinator review (2026-10-09 12:10 UTC)
+
+All 100 rows are in `public.ideas_pinky_2`, status pending, IDs PK2-C035-S01-0001 to PK2-C035-S10-0010. None are live.
+
+| Subcategory | Verified ideas |
+|---|---|
+| C035-S01 Companionship and Social Visits | 10 |
+| C035-S02 Errand and Shopping Assistance | 10 |
+| C035-S03 At-Home Meal Support | 10 |
+| C035-S04 Transportation Accompaniment | 10 |
+| C035-S05 Everyday Technology Help | 10 |
+| C035-S06 Appointment and Schedule Support | 10 |
+| C035-S07 Light Household Assistance | 10 |
+| C035-S08 Community Activity Facilitation | 10 |
+| C035-S09 Family Update Services | 10 |
+| C035-S10 Downsizing and Transition Assistance | 10 |
+
+Final read-back: 100 unique IDs and slugs; visitor-facing words 538 minimum, 718 average, 1,255 maximum; every row mentions Validate; taxonomy IDs, names and slugs match the lookup tables; status pending, tier free; no null required fields; no digits; no money estimates in words; no AI vendor names; 0 slug or title clashes with `ideas`, `ideas_pinky_1`, `ideas_pinky_3` or other Pinky 2 rows.
+
+Next: no new category is started until the coordinator reviews C035. Known issue in my 95 older drafts (C036 to C067): their income and cost text still uses money estimates in words. Each one will be cleaned when its category is worked.
