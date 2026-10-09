@@ -1,3 +1,7 @@
+### Every field means every field — 2026-10-10 01:05 IST
+
+Include SEO title, meta description, time-to-first-customer, keywords and links in the final page audit, as well as all visible prose and JSON. The audit found operator “I” in some meta descriptions and unsupported “quickly” claims in timing text. Metadata should describe the business honestly and address the potential reader; timing should identify dependencies rather than invent an arrival date. Verify the actual page rendering and saved row when available. Do not insert unverified links or research facts simply to fill an empty field.
+
 ### Length and quality clarification — 2026-10-10 01:01 IST
 
 “500 words” was a floor, not a stopping point. A finished idea needs **more than 500 informative visitor-facing words**, normally around **500–1,000 depending on what that business needs**, with no artificial upper limit and no filler. A section should not be left as a slogan merely because the page total passes. The business_description minimum remains 180 substantial words, with useful content after its first sentence. Expand the other existing prose fields and each relevant JSON step, tool, pro, con and FAQ for actual reader value. Count rendered text, not JSON keys or labels. A page above 500 words can still fail editorial review for false narrator voice, thin fields, repetitive structure or weak practical detail. The coordinator is auditing and editing prior ideas across all three writer tables and matching live copies; writers continue the newly assigned categories in the override above.
