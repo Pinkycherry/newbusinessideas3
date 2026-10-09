@@ -216,3 +216,10 @@
 - Existing staged ID PK3-C079-S03-0001 expanded to 726 visitor-facing words; original created_at preserved and its live copy untouched. New saved IDs: PK3-C079-S03-0002, PK3-C079-S03-0003, PK3-C079-S03-0004, PK3-C079-S03-0005, PK3-C079-S03-0006, PK3-C079-S03-0007, PK3-C079-S03-0008, PK3-C079-S03-0009, PK3-C079-S03-0010.
 - New-row visitor-facing words in ID order: 545, 544, 535, 565, 570, 564, 585, 561, 569. Read back all ten S03 rows with 37 fields, exact content, pending/free, native JSON arrays and q/a FAQs, null metadata, exact lookup taxonomy, unique IDs/slugs, natural Validate references and no live overlap for the nine new rows. The pre-insert comparison covered live and all staging tables; tile load planning differed materially from coir document coordination despite shared generic title words.
 - Ten C079 counts S01–S10: **10, 10, 10, 0, 0, 1, 0, 0, 0, 1**. Distinct staged total **32/100**; 68 new slots remain. S03 complete; S04 is next. No save errors. A local draft-construction JavaScript call failed with `SyntaxError: Unexpected token ':'` due to malformed FAQ syntax before any database mutation; rewritten and validated before insertion.
+
+## C079 batch 4 — S04 Import Operations Support complete
+
+- Read-back verified at: 2026-10-09 18:23:39 IST.
+- New saved IDs: PK3-C079-S04-0001, PK3-C079-S04-0002, PK3-C079-S04-0003, PK3-C079-S04-0004, PK3-C079-S04-0005, PK3-C079-S04-0006, PK3-C079-S04-0007, PK3-C079-S04-0008, PK3-C079-S04-0009, PK3-C079-S04-0010.
+- Visitor-facing words in ID order: 561, 523, 551, 527, 544, 531, 543, 564, 537, 555. All ten read back with 37 columns, exact content, pending/free, native JSON arrays and q/a FAQs, null metadata, exact approved taxonomy, unique IDs/slugs, Validate references and no new live overlap. Cross-table pre-insert review found only a superficially similar domestic irrigation spare-parts counter; inbound import receiving is a distinct offer and operation.
+- Ten C079 subcategory counts S01–S10: **10, 10, 10, 10, 0, 1, 0, 0, 0, 1**. Distinct staged total **42/100**; 58 new slots remain. S04 complete; S05 next. Skipped duplicates: none. Errors: none.
