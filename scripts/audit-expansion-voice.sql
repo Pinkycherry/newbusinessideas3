@@ -57,11 +57,11 @@ WITH params AS (
 ), candidates AS (
   SELECT source, category_id, idea_id, field, copy
   FROM passages
-  WHERE copy ~* '(\\mI\\M[[:space:]]+(would[[:space:]]+|could[[:space:]]+|want[[:space:]]+to[[:space:]]+)?(charge|sell|offer|run|make|treat|train|hire|buy|source|supply|deliver|install|operate|earn|reach|approach|visit|start|build|need|manage|provide|grow|design)[[:space:][:punct:]]|\\mmy[[:space:]]+(buyers|customers|products|stock|staff|business|store|service)\\M)'
+  WHERE copy ~* '(\mI\M[[:space:]]+(would[[:space:]]+|could[[:space:]]+|want[[:space:]]+to[[:space:]]+)?(charge|sell|offer|run|make|treat|train|hire|buy|source|supply|deliver|install|operate|earn|reach|approach|visit|start|build|need|manage|provide|grow|design)[[:space:][:punct:]]|\mmy[[:space:]]+(buyers|customers|products|stock|staff|business|store|service)\M)'
 )
 SELECT source, category_id, idea_id,
        string_agg(field, ', ' ORDER BY field) AS fields_to_read,
-       left(string_agg(field || ': ' || copy, E'\\n' ORDER BY field), 1500) AS context
+       left(string_agg(field || ': ' || copy, E'\n' ORDER BY field), 1500) AS context
 FROM candidates
 GROUP BY source, category_id, idea_id
 ORDER BY source, category_id, idea_id;
