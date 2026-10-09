@@ -35,6 +35,16 @@ remembers the other. The bridge between them is this section.
 5. **Keep PENDING true.** Finish an item, delete its row in the same commit.
    Find a row that is wrong, fix the row.
 
+## Current expansion architecture — 2026-10-09 16:26 IST
+
+The founder reconfirmed the separation of the original **679 indexed ideas** from the new expansion. Keep all original idea rows, category pages, subcategory-style URLs and `/idea/[slug]` URLs as they are. The first new pass saved **300 drafts** in three 37-column `ideas_pinky_N` tables; **200** of those are currently copied to live `ideas`, while the other 100 remain staged. These numbers are a snapshot; re-measure before quoting them.
+
+New main categories C001–C100 follow `/browse` → `/category/[categorySlug]` (ten approved subcategory choices) → `/category/[categorySlug]/[subcategorySlug]` (idea cards) → existing `/idea/[slug]` (full idea). Each new main category needs at least ten distinct ideas in each of its ten subcategories before its writing cycle is complete. The existing 100 drafts per writer are the starting rows, not completed 100-idea categories. This structure is implemented in `src/routes/category.$categorySlug.index.tsx` and `src/routes/category.$categorySlug.$subcategorySlug.tsx`; legacy category routes still show direct idea cards. Never infer cohort from an idea ID alone; use the approved expansion category slug mapping. The existing individual idea URL template stays the same.
+
+Supabase migration `bbi_expansion_approved_taxonomy_001` and `supabase/expansion/001_approved_taxonomy.sql` added read-only public lookup tables `bbi_expansion_categories` (100 rows) and `bbi_expansion_subcategories` (1,000 rows, ten per category), with RLS. They mirror `src/config/expansion-taxonomy.ts` and `docs/agents/BBI_Taxonomy.md`. All 300 staged and 200 live expansion rows matched the approved taxonomy when checked. The three `bbi_agent_assignments` task descriptions were corrected from obsolete “research/39 columns” wording to the 37-column, one-category workflow. C089 is **Home-Based Business Ventures** / `home-based-business-ventures`, distinct from legacy Work From Home Business Ideas; its three matching live/staged rows were renamed, and the old 50 legacy rows were not changed.
+
+The founder has **not yet sent the new prompt to any writer**. The final shared instruction is `docs/agents/Current_Instruction.md`; the writer's display name may change, but slot 1/2/3 fixes its table and range. Each writer keeps updated assignment/work log in its account's Artifacts and commits named handoff copies to `docs/agents/`. The coordinator alone reviews and copies staged content to live. Every new idea page must contain at least 500 visitor-facing words across existing sections, Indian context, varied first-person founder voice and a natural direction to use the on-page Validate button. See `PROJECT_BRIEF.md` §6.2 addendum and `OPS_LOG.md` for the external database changes. The Cloudflare deployment of the latest route changes has not yet been visually verified; see PENDING #38.
+
 ## Who you are here
 
 The founder calls this assistant **Pinky**, after his wife, as a credit to her.
