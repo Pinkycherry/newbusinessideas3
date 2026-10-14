@@ -22,15 +22,15 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** Composite admin story, conversion table, privacy and governance. The original 47 prose blocks had a median around 79 words, and the numbered insight refrain echoed 36. Repair adds short turns, removes the refrain and turns the offer into a compact checklist; the FAQ follows the forward-looking close as planned.
 - **Distinctive material:** Volunteer-to-paid role conversion, contextual information leakage, provider-information half-life, moderation cost, admin-rights handover.
 - **Research and precautions:** Eight inline Meta, MeitY, consumer and registration links, no domain over twice. The group admin is explicitly composite; membership is never treated as permission for marketing or proof of paid demand.
-- **Publication:** First version pushed at `ceb3d24`. Repair checked 2026-10-14 20:03 IST: 4,037 words, ten keyword counts unchanged, eight links unchanged. The article and log are pushed together; the next entry records its remote commit.
+- **Publication:** First version pushed at `ceb3d24`. Repair checked 2026-10-14 20:03 IST: 4,037 words, ten keyword counts unchanged, eight links unchanged. Repair pushed and verified at `ce7ccb3`.
 
 ## Article 38 — retrospective check, 2026-10-14 19:57 IST
 
 - **Opening and close:** Contrarian rejection of treating neighbors as a sales funnel; returns to the person asking for a name at the gate. Intro 10, outro 5.
-- **Body and elevation:** Identity essay and opportunity table; 47 prose blocks, median about 78 words; section rhythm and FAQ echo 36–37. **Composition repair pending.**
+- **Body and elevation:** Identity essay and opportunity table; the initial 47 prose blocks had a median around 78 words. Repair uses short standalone route and proof turns plus a route field note. The essay keeps its place-based identity and callback ending.
 - **Distinctive material:** Route microgeography, unpaid exception ledger, proof transfer to newcomers, seasonal demand, founder-concentration risk.
 - **Research and precautions:** Six inline official/platform links across five domains, no domain over twice. No invented neighborhood founder outcome; service-area, privacy and review claims are bounded by current source text.
-- **Publication:** Pushed and verified at `af44a57`; repair will be separately logged.
+- **Publication:** First version at `af44a57`. Repair checked 2026-10-14 20:05 IST: 4,058 words, keywords and six links unchanged; numbered insight refrain removed. Article and log are pushed together; remote commit to be recorded in the next entry.
 
 ## Article 39 — retrospective check, 2026-10-14 19:57 IST
 
