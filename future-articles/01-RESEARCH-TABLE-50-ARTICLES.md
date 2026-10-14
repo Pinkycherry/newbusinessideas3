@@ -274,7 +274,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The specific mistake, named plainly → H2 Why it happens to smart, careful people → H2 What a healthy loan-to-revenue ratio actually looks like → H2 The MSME loan schemes worth understanding first → H2 How to recover if this mistake already happened → H2 A closing word on borrowing responsibly
 - **Table/elements:** One table — loan scheme vs typical use case vs who it fits.
 - **Pattern:** Cautionary essay with a loan-scheme table
-- **Word band:** 5,100–6,000
+- **Word band:** 4,000–6,000
 - **Intro device:** 11 · **Outro device:** 4
 
 ### Article 18
@@ -288,7 +288,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 A simple question most owners can't answer on the spot → H2 Why this happens even to careful, hardworking owners → H2 The actual calculation, done simply → H2 What changes once you actually know your number → H2 Where margin gets quietly eaten without anyone noticing → H2 A closing word on knowing your own numbers
 - **Table/elements:** One table — worked margin example across 3 different small business types.
 - **Pattern:** Explainer essay with a worked-example table
-- **Word band:** 4,200–5,200
+- **Word band:** 4,000–6,000
 - **Intro device:** 4 · **Outro device:** 6
 
 ### Article 19
@@ -302,7 +302,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The paperwork question every first-time founder asks eventually → H2 Udyam registration, explained plainly → H2 GST registration, explained plainly → H2 Where the two overlap and where they don't → H2 What actually happens if this gets skipped → H2 A closing word on getting this right early
 - **Table/elements:** One table — registration type vs who needs it vs what it unlocks.
 - **Pattern:** Plain-explainer essay with a registration-comparison table
-- **Word band:** 4,080–5,230
+- **Word band:** 4,000–6,000
 - **Intro device:** 15 · **Outro device:** 1
 
 ### Article 20
@@ -316,7 +316,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 Why this question matters more than people realize → H2 The actual legal and tax lines that separate the two → H2 What stays fine as side income → H2 What crosses into needing registration → H2 The risk of staying unregistered too long → H2 A closing word for anyone earning quietly on the side
 - **Table/elements:** One table — income pattern vs likely classification vs registration trigger.
 - **Pattern:** Threshold explainer with a classification table
-- **Word band:** 3,780–4,780
+- **Word band:** 4,000–6,000
 - **Intro device:** 10 · **Outro device:** 8
 
 ---
@@ -408,7 +408,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The chicken-and-egg problem every new consultant hits → H2 What actually substitutes for a case study at the start → H2 The first client, realistically found → H2 Pricing without a track record to point to → H2 How the second client gets easier than the first → H2 A closing word for anyone stuck at zero clients
 - **Table/elements:** One table — credibility-building tactic vs how early it actually works.
 - **Pattern:** Problem-solution essay with a credibility-tactic table
-- **Word band:** 4,320–5,620
+- **Word band:** 4,000–6,000
 - **Intro device:** 3 · **Outro device:** 3
 
 ### Article 27
@@ -422,7 +422,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The specific instinct this business is built on → H2 What "fixing a business" actually involves in practice → H2 Where this service is needed most right now → H2 The hardest part isn't the fix, it's the first conversation → H2 Pricing a turnaround service fairly → H2 A closing word for the natural fixers
 - **Table/elements:** One table — common small business problem vs typical root cause vs fix approach.
 - **Pattern:** Skill-identity essay with a problem-root-cause table
-- **Word band:** 4,260–5,410
+- **Word band:** 4,000–6,000
 - **Intro device:** 9 · **Outro device:** 2
 
 ### Article 28
@@ -436,7 +436,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 How this usually actually happens, almost by accident → H2 The moment free advice should start costing money → H2 What makes a skill service-ready → H2 Structuring the first few paid engagements → H2 The guilt about charging, and why it fades → H2 A closing word for the accidental consultants
 - **Table/elements:** One table — skill type vs service format it fits best (hourly, project, retainer).
 - **Pattern:** Narrative essay with a service-format table
-- **Word band:** 3,960–4,960
+- **Word band:** 4,000–6,000
 - **Intro device:** 8 · **Outro device:** 7
 
 ### Article 29
@@ -450,7 +450,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The specific expertise that goes quiet at retirement → H2 Why small businesses badly need exactly this knowledge → H2 What this consulting service actually looks like → H2 Where ex-bankers have an unfair advantage → H2 Building this without it feeling like moonlighting from the old job → H2 A closing word for a very specific, very valuable kind of expert
 - **Table/elements:** One table — banking-era skill vs how it translates into a consulting offer.
 - **Pattern:** Expertise-translation essay with a skill-mapping table
-- **Word band:** 5,160–6,000
+- **Word band:** 4,000–6,000
 - **Intro device:** 7 · **Outro device:** 1
 
 ### Article 30
@@ -464,7 +464,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 Why this distinction actually has real tax consequences → H2 How freelance income gets taxed differently → H2 How business income gets taxed differently → H2 The point where staying "just a freelancer" stops making sense → H2 What registration actually changes day to day → H2 A closing word for anyone filing taxes as a freelancer right now
 - **Table/elements:** One table — freelancer vs registered business across tax treatment, compliance, and perception.
 - **Pattern:** Plain-explainer essay with a side-by-side comparison table
-- **Word band:** 4,380–5,280
+- **Word band:** 4,000–6,000
 - **Intro device:** 6 · **Outro device:** 4
 
 ---
@@ -482,7 +482,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The gap between the pitch deck version and the real version → H2 What actually eats the margin first → H2 The customer acquisition cost nobody warns you about → H2 Logistics and returns, the unglamorous half of the business → H2 What a realistic first year actually looks like → H2 A closing word before you register the brand name
 - **Table/elements:** One table — D2C cost category vs what founders typically underestimate.
 - **Pattern:** Reality-check essay with a cost-underestimate table
-- **Word band:** 4,920–5,820
+- **Word band:** 4,000–6,000
 - **Intro device:** 1 · **Outro device:** 8
 
 ### Article 32
@@ -496,7 +496,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The appeal of starting on a marketplace, honestly assessed → H2 What marketplace dependency actually costs a brand over time → H2 Business ideas that use Amazon as a channel, not a home → H2 Building toward independence without leaving revenue behind → H2 What a healthy multi-channel mix actually looks like → H2 A closing word on channels versus brands
 - **Table/elements:** One table — marketplace-only vs own-channel across cost, control, and risk.
 - **Pattern:** Strategic comparison essay
-- **Word band:** 3,300–4,300
+- **Word band:** 4,000–6,000
 - **Intro device:** 6 · **Outro device:** 6
 
 ### Article 33
@@ -510,7 +510,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 Why this specific number quietly kills more D2C brands than bad products do → H2 What drives return rates up in the Indian market specifically → H2 The categories where this problem is worst → H2 What actually brings the number down → H2 The cost of a return that founders usually don't calculate → H2 A closing word on building for returns from day one
 - **Table/elements:** One table — product category vs typical return-rate driver vs fix.
 - **Pattern:** Problem-diagnosis essay with a driver-and-fix table
-- **Word band:** 3,480–4,680
+- **Word band:** 4,000–6,000
 - **Intro device:** 3 · **Outro device:** 3
 
 ### Article 34
@@ -524,7 +524,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 Why "do one thing extremely well" is harder than it sounds → H2 What actually has to be true for a single-product model to work → H2 The temptation to expand too early, and why it usually backfires → H2 How a single product earns the right to expand later → H2 What this model asks of a founder emotionally → H2 A closing word on staying narrow on purpose
 - **Table/elements:** One table — single-product advantage vs the trade-off it comes with.
 - **Pattern:** Strategic argument essay with a trade-off table
-- **Word band:** 3,900–5,050
+- **Word band:** 4,000–6,000
 - **Intro device:** 13 · **Outro device:** 2
 
 ### Article 35
@@ -538,7 +538,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The line item founders almost always underbudget → H2 What actually drives packaging cost up → H2 Where it's worth spending more, and where it isn't → H2 How packaging quietly affects return rates too → H2 Budgeting this in from the very first pricing decision → H2 A closing word on the box nobody thinks about until it's a problem
 - **Table/elements:** One table — packaging element vs typical cost driver vs worth-it assessment.
 - **Pattern:** Cost-reality essay with a packaging-element table
-- **Word band:** 3,840–4,790
+- **Word band:** 4,000–6,000
 - **Intro device:** 5 · **Outro device:** 1
 
 ---
@@ -556,7 +556,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The unfair advantage nobody talks about directly → H2 What kind of trust actually converts into paying customers → H2 Business ideas where this advantage matters most → H2 Why this advantage has an expiration date if misused → H2 How to build this if you don't already have it → H2 A closing word on the business asset you can't buy
 - **Table/elements:** One table — trust source (family name, past work, community role) vs business type it supports.
 - **Pattern:** Insight essay with an asset-mapping table
-- **Word band:** 3,660–4,860
+- **Word band:** 4,000–6,000
 - **Intro device:** 14 · **Outro device:** 7
 
 ### Article 37
@@ -570,7 +570,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 How this usually actually starts → H2 The exact moment it stops being "just a group" → H2 What legitimately converts into revenue from here → H2 The trust that got built has to be protected, not sold out → H2 Formalizing this without killing what made it work → H2 A closing word for every unofficial group admin reading this
 - **Table/elements:** One table — group activity type vs realistic business conversion.
 - **Pattern:** Narrative case-study essay with a conversion table
-- **Word band:** 3,720–4,620
+- **Word band:** 4,000–6,000
 - **Intro device:** 9 · **Outro device:** 8
 
 ### Article 38
@@ -584,7 +584,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 Every neighborhood has one of these people → H2 What this person is actually sitting on without realizing it → H2 Business ideas this reputation supports immediately → H2 Where overreach damages the exact thing that made it work → H2 Growing past "the neighborhood" without losing it → H2 A closing word for the person everyone already trusts
 - **Table/elements:** One table — type of local trust vs business direction it supports.
 - **Pattern:** Identity-focused essay with an opportunity table
-- **Word band:** 4,440–5,640
+- **Word band:** 4,000–6,000
 - **Intro device:** 10 · **Outro device:** 5
 
 ### Article 39
@@ -598,7 +598,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 Why ads usually disappoint a brand-new business specifically → H2 What word of mouth actually requires to spread → H2 Business types where this advantage is strongest → H2 Where ads genuinely start to make more sense → H2 Building a referral habit on purpose, not by accident → H2 A closing word on earning attention before buying it
 - **Table/elements:** One table — business type vs word-of-mouth potential vs when ads start to help.
 - **Pattern:** Argument essay with a channel-fit table
-- **Word band:** 4,500–5,650
+- **Word band:** 4,000–6,000
 - **Intro device:** 12 · **Outro device:** 4
 
 ### Article 40
@@ -612,7 +612,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The best market research most founders already did for free → H2 Why a family complaint is a stronger signal than it sounds → H2 Turning the complaint into an actual business model → H2 Validating it beyond just your own household → H2 Where this kind of idea usually stalls → H2 A closing word on paying attention at home
 - **Table/elements:** One table — common household complaint category vs business direction it points to.
 - **Pattern:** Origin-story essay with a complaint-to-idea table
-- **Word band:** 5,220–6,000
+- **Word band:** 4,000–6,000
 - **Intro device:** 4 · **Outro device:** 6
 
 ---
@@ -630,7 +630,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The signs this day is coming, well before it arrives → H2 What actually has to be let go of first → H2 The fear underneath not delegating → H2 What a first real hire or hand-off looks like done well → H2 What doesn't improve just by hiring someone → H2 A closing word for the founder still doing all of it
 - **Table/elements:** One table — task category vs delegation-readiness vs what to hand off first.
 - **Pattern:** Turning-point essay with a delegation-readiness table
-- **Word band:** 3,540–4,540
+- **Word band:** 4,000–6,000
 - **Intro device:** 7 · **Outro device:** 5
 
 ### Article 42
@@ -644,7 +644,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The trap that looks like success for a while → H2 What actually causes the ceiling in these models → H2 Which popular business ideas hit this hardest → H2 What changes have to happen to break through it → H2 Some businesses shouldn't scale, and that's a valid choice → H2 A closing word on knowing which kind you're building
 - **Table/elements:** One table — business type vs why it hits a ceiling vs what breaking through requires.
 - **Pattern:** Contrarian essay with a ceiling-diagnosis table
-- **Word band:** 5,040–6,000
+- **Word band:** 4,000–6,000
 - **Intro device:** 11 · **Outro device:** 4
 
 ### Article 43
@@ -658,7 +658,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The specific way this usually goes wrong → H2 What the budget almost never accounts for → H2 The management skill nobody warns a founder they'll need → H2 What a first hire should actually be trusted with → H2 Recovering from a first hire that didn't work out → H2 A closing word for the founder about to hire for the first time
 - **Table/elements:** One table — common first-hire mistake vs root cause vs fix.
 - **Pattern:** Diagnostic essay with a mistake-and-fix table
-- **Word band:** 4,560–5,860
+- **Word band:** 4,000–6,000
 - **Intro device:** 8 · **Outro device:** 3
 
 ### Article 44
@@ -672,7 +672,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The test every business idea should pass eventually → H2 What "running on memory" actually costs a founder → H2 What a basic system looks like, practically → H2 Business ideas that are naturally easier to systemize → H2 Where systems can go too far, too early → H2 A closing word on building for a version of the business that doesn't need you every hour
 - **Table/elements:** One table — business function vs memory-based version vs systemized version.
 - **Pattern:** Systems-thinking essay with a before-after table
-- **Word band:** 3,000–3,900
+- **Word band:** 4,000–6,000
 - **Intro device:** 15 · **Outro device:** 8
 
 ### Article 45
@@ -686,7 +686,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 Why some business ideas punish you for growing too fast → H2 What "documenting it" actually means in practice → H2 The business types where this matters most → H2 What happens when this step gets skipped → H2 A simple starting point for documenting a business most founders already run → H2 A closing word on writing it down before it's too late to
 - **Table/elements:** One table — business type vs documentation priority vs what to document first.
 - **Pattern:** Prescriptive essay with a priority table
-- **Word band:** 3,240–4,440
+- **Word band:** 4,000–6,000
 - **Intro device:** 2 · **Outro device:** 1
 
 ---
@@ -704,7 +704,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 Why "sounds good" is the wrong test → H2 The specific signs worth taking seriously → H2 A real example of an idea I talked someone out of → H2 What walking away actually protects → H2 The difference between quitting and recognizing a bad fit → H2 A closing word on the courage to say no to your own idea
 - **Table/elements:** One table — warning sign vs what it usually means.
 - **Pattern:** Opinionated essay with a warning-sign table
-- **Word band:** 4,800–5,900
+- **Word band:** 4,000–6,000
 - **Intro device:** 5 · **Outro device:** 6
 
 ### Article 47
@@ -718,7 +718,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 Why this advice sounds right and usually isn't → H2 What actually predicts a first business's survival better → H2 Where passion genuinely does matter, just not first → H2 A better question to ask instead → H2 What happens to passion once the business is actually profitable → H2 A closing word for anyone choosing between what they love and what works
 - **Table/elements:** One table — passion-led vs need-led business idea across a few real criteria.
 - **Pattern:** Contrarian argument essay with a criteria table
-- **Word band:** 3,060–4,060
+- **Word band:** 4,000–6,000
 - **Intro device:** 8 · **Outro device:** 2
 
 ### Article 48
@@ -732,7 +732,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 What pitch decks never mention because it isn't flattering → H2 The unglamorous reasons that actually show up most → H2 A specific example of this, told honestly → H2 How to stress-test an idea against these reasons early → H2 What separates ideas that survive this from ones that don't → H2 A closing word on the boring risks that matter more than the exciting ones
 - **Table/elements:** One table — unglamorous failure reason vs how early it can be caught.
 - **Pattern:** Honest-assessment essay with a failure-reason table
-- **Word band:** 4,860–6,000
+- **Word band:** 4,000–6,000
 - **Intro device:** 14 · **Outro device:** 7
 
 ### Article 49
@@ -746,7 +746,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 Why this question gets asked constantly, and why it's the wrong one → H2 What I actually ask back before answering → H2 The real factors that decide fit, not hype → H2 A framework anyone can run on their own shortlist → H2 Why the same idea is "the best one" for one person and a mistake for another → H2 A closing word for whoever's asking me this right now
 - **Table/elements:** One table — personal factor (time, capital, risk tolerance, skill) vs how it narrows the shortlist.
 - **Pattern:** Direct-address essay with a personal-fit framework table
-- **Word band:** 4,620–5,820
+- **Word band:** 4,000–6,000
 - **Intro device:** 4 · **Outro device:** 8
 
 ### Article 50
@@ -760,7 +760,7 @@ Copy everything after the colon. Rules for these fields are in
 - **Structure:** H1 → H2 The question, stated plainly, up front → H2 Why so many good ideas fail this exact question → H2 What answering it honestly actually requires → H2 Working through it with a real example → H2 What to do once an idea has genuinely passed → H2 A closing word, and a nod to where this whole batch of articles started
 - **Table/elements:** One table — idea vs the specific answer to "who pays, and why" for each.
 - **Pattern:** Closing-essay, reflective, ties back to the batch's opening themes
-- **Word band:** 3,420–4,420
+- **Word band:** 4,000–6,000
 - **Intro device:** 3 · **Outro device:** 6
 
 ---

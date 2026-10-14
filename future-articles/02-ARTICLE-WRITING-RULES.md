@@ -49,12 +49,7 @@ bar for this batch, not a nice-to-have on top of it.
 
 ## Length
 
-**3,000–6,000 words.** Each article in the research table gets its own
-word-count *band* (e.g. 3,000–4,200; 4,100–5,300), never a single fixed
-number, and the bands themselves don't step down the list in a visible
-sequence — picked per-topic, same discipline as every other batch here.
-Write to what the topic actually needs inside its band; don't pad to hit
-a ceiling, don't stop short of the floor.
+**4,000–6,000 words.** Every article has a 2,000-word play area. Do not aim for a template number. Each topic picks its own length inside the range, and lengths differ from article to article. Do not pad to reach a ceiling or stop short of the floor.
 
 ## Keywords — ten per article, placed naturally
 
