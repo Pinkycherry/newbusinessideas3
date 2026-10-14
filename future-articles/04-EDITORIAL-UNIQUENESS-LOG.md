@@ -65,6 +65,15 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** Early five-model table, distinct ceiling mechanisms, four-step audit, category-specific examples and an explicit deliberate-smallness argument. Short standalone turns interrupt procedural paragraphs; no serial “first to fifth insight” framing. FAQ precedes the direct reader invitation.
 - **Distinctive material:** Exception density, quality observability, cash conversion lag, demand concentration and post-sale support tail. The memo and exit rule keep growth experiments reversible. No fabricated founder outcome.
 - **Research and precautions:** Five inline primary links: ONS original survey analysis, MSME cluster/scheme material, Lean MSME eligibility and Labour Ministry handbook. ONS correlation is not transferred as causal evidence to Indian microfirms. No unsupported funding entitlement or universal scaling threshold. Word count 4,037; focus in H1 and two H2s, nine additional keywords twice each; zero em dash.
+- **Publication:** Article, row and log pushed and verified at `5661dd4`.
+
+## Article 43 — prepublication check, 2026-10-14 20:24 IST
+
+- **Compared with:** 40–42. Article 41 diagnoses what the owner can hand off; 43 diagnoses the employer's duties after a person accepts a role. The opening is an admission about the misleading promise of “free time,” not 41's direct shop-owner address.
+- **Opening and close:** Personal admission without invented client or career history; reflective final sentence about the written promise to a worker. Intro 8, outro 3.
+- **Body and elevation:** First-week failure map appears before the financial discussion; mistake/root-cause table follows the cost analysis rather than opening the article; management feedback and fair exit come later. Brief standalone pivots and longer diagnostic paragraphs vary the cadence. FAQ precedes the one-sentence reframe.
+- **Distinctive material:** Recruitment expectation debt, supervisory capacity as a cost, feedback delay, founder-origin errors, customer trust transfer and continuity when a worker exits. No invented “bad hire costs X” statistic or claimed employment outcome.
+- **Research and precautions:** Five inline official links: Labour Ministry, EPFO, ESIC, MSME and MeitY; current obligations depend on the particular establishment, worker, location and notification. Word count 4,001; focus in H1 and two H2s, nine additional phrases twice each; zero em dash.
 - **Publication:** Article, row and log are pushed together; remote commit to be recorded in the next entry.
 
 ## Protocol for articles 41–45
