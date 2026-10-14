@@ -14,15 +14,15 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** Trust types, mapping table, paid offer boundary. Initial paragraphs were tightly uniform (46 prose blocks, median about 82 words); the explicit first-to-fifth insight labels and FAQ placement resembled 37–39. Repaired with short standalone decisions and a closing after the FAQ.
 - **Distinctive material:** Borrowed-trust boundary, user versus payer, recovery trust, provider verification decay, consent-based institutional memory.
 - **Research and precautions:** Six inline official/platform-primary links across six domains; checked privacy purpose, consumer claims, free Udyam registration, review incentives and service-area representation. No claimed real caregiver case or guaranteed screening result. No one can prove an idea has never been discussed elsewhere.
-- **Publication:** Article version pushed and verified at `008f722`. Repair checked 2026-10-14 20:01 IST: 4,155 words; keywords and links unchanged; removed the enumerated insight labels, varied the rhythm, moved the FAQ before the last reflection. Repair and log are pushed together; the next entry records its remote commit.
+- **Publication:** Article version pushed at `008f722`. Repair checked 2026-10-14 20:01 IST: 4,155 words; keywords and links unchanged; removed the enumerated insight labels, varied the rhythm, moved the FAQ before the last reflection. Repair pushed and verified at `6b0ebce`.
 
 ## Article 37 — retrospective check, 2026-10-14 19:57 IST
 
 - **Opening and close:** Reader's question about a neighborhood chat changing purpose; forward-looking ending protects the original conversation. Intro 9, outro 8.
-- **Body and elevation:** Composite admin story, conversion table, privacy and governance. Forty-seven prose blocks have a median around 79 words, and the numbered insight refrain/FAQ echo 36. **Composition repair pending.**
+- **Body and elevation:** Composite admin story, conversion table, privacy and governance. The original 47 prose blocks had a median around 79 words, and the numbered insight refrain echoed 36. Repair adds short turns, removes the refrain and turns the offer into a compact checklist; the FAQ follows the forward-looking close as planned.
 - **Distinctive material:** Volunteer-to-paid role conversion, contextual information leakage, provider-information half-life, moderation cost, admin-rights handover.
 - **Research and precautions:** Eight inline Meta, MeitY, consumer and registration links, no domain over twice. The group admin is explicitly composite; membership is never treated as permission for marketing or proof of paid demand.
-- **Publication:** Pushed and verified at `ceb3d24`; repair will be separately logged.
+- **Publication:** First version pushed at `ceb3d24`. Repair checked 2026-10-14 20:03 IST: 4,037 words, ten keyword counts unchanged, eight links unchanged. The article and log are pushed together; the next entry records its remote commit.
 
 ## Article 38 — retrospective check, 2026-10-14 19:57 IST
 
