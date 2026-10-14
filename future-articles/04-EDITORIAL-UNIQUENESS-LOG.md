@@ -11,10 +11,10 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 ## Article 36 — retrospective check, 2026-10-14 19:57 IST
 
 - **Opening and close:** Direct urgent trust decision about a caregiver introduction; ends by naming who should walk away from a fee-based recommendation. Intro device 14, outro 7.
-- **Body and elevation:** Trust types, mapping table, paid offer boundary. Paragraphs are tightly uniform (46 prose blocks, median about 82 words); the explicit first-to-fifth insight labels and FAQ placement resemble 37–39. **Composition repair pending.**
+- **Body and elevation:** Trust types, mapping table, paid offer boundary. Initial paragraphs were tightly uniform (46 prose blocks, median about 82 words); the explicit first-to-fifth insight labels and FAQ placement resembled 37–39. Repaired with short standalone decisions and a closing after the FAQ.
 - **Distinctive material:** Borrowed-trust boundary, user versus payer, recovery trust, provider verification decay, consent-based institutional memory.
 - **Research and precautions:** Six inline official/platform-primary links across six domains; checked privacy purpose, consumer claims, free Udyam registration, review incentives and service-area representation. No claimed real caregiver case or guaranteed screening result. No one can prove an idea has never been discussed elsewhere.
-- **Publication:** Article version pushed and verified at commit `008f722`; future repair will receive its own timestamp and commit.
+- **Publication:** Article version pushed and verified at `008f722`. Repair checked 2026-10-14 20:01 IST: 4,155 words; keywords and links unchanged; removed the enumerated insight labels, varied the rhythm, moved the FAQ before the last reflection. Repair and log are pushed together; the next entry records its remote commit.
 
 ## Article 37 — retrospective check, 2026-10-14 19:57 IST
 
