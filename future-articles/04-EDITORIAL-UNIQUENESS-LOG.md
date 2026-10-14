@@ -30,15 +30,15 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** Identity essay and opportunity table; the initial 47 prose blocks had a median around 78 words. Repair uses short standalone route and proof turns plus a route field note. The essay keeps its place-based identity and callback ending.
 - **Distinctive material:** Route microgeography, unpaid exception ledger, proof transfer to newcomers, seasonal demand, founder-concentration risk.
 - **Research and precautions:** Six inline official/platform links across five domains, no domain over twice. No invented neighborhood founder outcome; service-area, privacy and review claims are bounded by current source text.
-- **Publication:** First version at `af44a57`. Repair checked 2026-10-14 20:05 IST: 4,058 words, keywords and six links unchanged; numbered insight refrain removed. Article and log are pushed together; remote commit to be recorded in the next entry.
+- **Publication:** First version at `af44a57`. Repair checked 2026-10-14 20:05 IST: 4,058 words, keywords and six links unchanged; numbered insight refrain removed. Repair pushed and verified at `0d8bffd`.
 
 ## Article 39 — retrospective check, 2026-10-14 19:57 IST
 
 - **Opening and close:** Explicitly hypothetical power-cut scene; asks the reader to identify where their sales journey breaks. Intro 12, outro 4.
-- **Body and elevation:** Channel-fit table and argument; 47 prose blocks, median about 79 words; same six-section/FAQ finish. **Composition repair pending.**
+- **Body and elevation:** Channel-fit table and argument; the original 47 prose blocks had a median around 79 words. Repair replaces the enumerated insight refrain with short argumentative turns and a one-page channel ledger. The invited reader response remains the close.
 - **Distinctive material:** Denominator discipline, referral fit drift, bottleneck in one recommender, attribution versus incremental demand, channel collision, portable proof.
 - **Research and precautions:** Six primary links, at most two per domain, including an original referral-program study and Google measurement guidance. The original “referrals outperform” claim was replaced with a conditional comparison; the shop scene is hypothetical and no study result is generalized to India.
-- **Publication:** Pushed and verified at `6eed7ec`; repair will be separately logged.
+- **Publication:** First version at `6eed7ec`. Repair checked 2026-10-14 20:07 IST: 4,113 words; keyword counts and six links unchanged. Article and log are pushed together; the next entry records the remote commit.
 
 ## Article 40 — prepublication check, 2026-10-14 19:57 IST
 
