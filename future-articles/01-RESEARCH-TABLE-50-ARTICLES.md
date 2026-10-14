@@ -634,18 +634,18 @@ Copy everything after the colon. Rules for these fields are in
 - **Intro device:** 7 · **Outro device:** 5
 
 ### Article 42
-- **SEO title:** Business Ideas That Are Easy to Start and Brutal to Scale
-- **Slug:** `business-ideas-easy-to-start-brutal-to-scale`
-- **Focus keyword:** business ideas easy to start hard to scale
-- **Additional keywords (9):** business ideas that dont scale well, low investment business ideas with a growth ceiling, service business scaling challenges, business ideas limited by the founder's time, why some businesses stay small forever, business model scalability india, business ideas with hidden scaling problems, founder dependent business ideas, business ideas needing a model change to grow
-- **Rank Math keywords (focus first, paste as-is):** business ideas easy to start hard to scale, business ideas that dont scale well, low investment business ideas with a growth ceiling, service business scaling challenges, business ideas limited by the founder's time, why some businesses stay small forever, business model scalability india, business ideas with hidden scaling problems, founder dependent business ideas, business ideas needing a model change to grow
-- **SEO meta description (158 chars):** Business ideas easy to start, hard to scale: why the ceiling arrives, which popular ideas hit it hardest, what breaks through, and when staying small is fine.
+- **SEO title:** Business ideas that are easy to start but hard to scale: the ceiling
+- **Slug:** `business-ideas-that-are-easy-to-start-but-hard-to-scale`
+- **Focus keyword:** business ideas that are easy to start but hard to scale
+- **Additional keywords (9):** business ideas that do not scale well, low investment business ideas with a growth ceiling, service business scaling challenges, business ideas limited by the founder's time, why some businesses stay small forever, business model scalability in India, business ideas with hidden scaling problems, founder dependent business ideas, business ideas needing a model change to grow
+- **Rank Math keywords (focus first, paste as-is):** business ideas that are easy to start but hard to scale, business ideas that do not scale well, low investment business ideas with a growth ceiling, service business scaling challenges, business ideas limited by the founder's time, why some businesses stay small forever, business model scalability in India, business ideas with hidden scaling problems, founder dependent business ideas, business ideas needing a model change to grow
+- **SEO meta description (155 chars):** Business ideas that are easy to start but hard to scale: test founder time, quality, cash and demand ceilings before hiring, buying equipment or expanding.
 - **WordPress tags:** Scaling a Business, Business Models, Founder Decisions, Business Systems, Small Business India
-- **Structure:** H1 → H2 The trap that looks like success for a while → H2 What actually causes the ceiling in these models → H2 Which popular business ideas hit this hardest → H2 What changes have to happen to break through it → H2 Some businesses shouldn't scale, and that's a valid choice → H2 A closing word on knowing which kind you're building
+- **Structure:** H1 → early ceiling table → H2 The trap that looks like success for a while → H2 What causes business ideas that are easy to start but hard to scale to stall → H2 Which business ideas that are easy to start but hard to scale hit this hardest → H2 What changes have to happen to break through it → H2 Some businesses should not scale, and that is a valid choice → H2 Frequently asked questions about a growth ceiling → H2 A closing word on knowing which kind you're building
 - **Table/elements:** One table — business type vs why it hits a ceiling vs what breaking through requires.
 - **Pattern:** Contrarian essay with a ceiling-diagnosis table
 - **Word band:** 4,000–6,000
-- **Intro device:** 11 · **Outro device:** 4
+- **Intro device:** 13 (11 retired in persona guide) · **Outro device:** 4
 
 ### Article 43
 - **SEO title:** Why Most Small Businesses Never Survive Their First Hire
@@ -809,6 +809,7 @@ stays blank — the plan above is not the same as the work being done.
 | 39 | Yes | 12 | 4 | Channel-fit argument with a comparison table and one-page channel ledger | 4,113 words after editorial repair at 2026-10-14 20:07 IST; keyword counts in row order: 4, 2, 2, 3, 2, 2, 2, 2, 3, 2; focus in H1 and two H2s. Six primary links, no domain over twice. Denominator discipline, referral-fit drift, referral bottlenecks, incremental demand, channel collision and portable proof are expressed as decisions, not a numbered refrain. No universal outperformance claim; shop is hypothetical. Duplicate post-sitemap check unresolved. |
 | 40 | Yes | 4 | 6 | Origin-to-validation essay with a complaint/model table and numbered evidence ladder | 4,118 words; keyword counts in row order: 4, 2, 2, 2, 2, 2, 2, 2, 2, 2; focus in H1 and two H2s. Seven inline official links checked on 2026-10-14, no domain over twice. Six less-discussed points: workaround competition, silent household veto, coping-cost versus payment, environmental prerequisites, problem timing, buyer-role false negatives. Opening callbacks to 39 and teases 41; plain sign-off. SEO title/slug and an awkward keyword corrected. Editorial composition audit and precautions recorded in 04-EDITORIAL-UNIQUENESS-LOG.md. Duplicate post-sitemap check unresolved. |
 | 41 | Yes | 7 | 5 | Turning-point essay with a delegation-readiness table and staged handoff | 4,041 words; keyword counts in row order: 3, 2, 2, 2, 2, 2, 2, 2, 2, 2; focus in H1 and two H2s. Six inline primary official links checked on 2026-10-14, one per domain. Decision debt, handoff residue, visibility, founder identity, authority mismatch and exception concentration are specific operating insights. Focus/SEO title/slug/meta revised for grammar. Current labor-code and data rules referenced without unsupported universal thresholds. Editorial check 2026-10-14 20:12 IST; post-sitemap duplicate check unresolved. |
+| 42 | Yes | 13 | 4 | Contrarian ceiling diagnosis with table before H2s and a ceiling audit list | 4,037 words; keyword counts in row order: 4, 2, 2, 2, 2, 2, 2, 2, 2, 2; focus in H1 and two H2s. Five inline primary sources checked on 2026-10-14, at most two per domain. Exceptions, quality observability, cash timing, demand concentration and support tail are integrated as operating tests. Intro device 11 replaced because retired, focus and two ungrammatical keywords corrected. British management research described as correlation, not Indian causal proof. Editorial check 2026-10-14 20:18 IST; sitemap duplicate check unresolved. |
 | ... | No | | | | |
 | 50 | No | | | | |
 

@@ -56,7 +56,16 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** Queue-time diagnosis precedes a delegation-readiness table, followed by a staged handoff list, worker/owner authority analysis and a FAQ before the reflective close. Short standalone turns interrupt longer procedural paragraphs; the repeated numbered-insight frame was removed before publication.
 - **Distinctive material:** Decision debt, handoff residue, control versus visibility, identity choice, authority mismatch and exception concentration. The first-hire budget includes supervisory time and a slow-month scenario without inventing a market wage.
 - **Research and precautions:** Six inline official links, one per domain: MSME training, Startup India lifecycle, Labour Ministry employer handbook, ESIC, EPFO and MeitY rules. Checked current sources and avoided fixed thresholds that depend on establishment, worker and notification. No fabricated hiring outcome or legal assurance. Word count 4,041; focus in H1 and two H2s, nine additional phrases twice each; no em dash.
-- **Publication:** Article, row and this entry pushed together; remote verification and commit to be recorded in the next entry.
+- **Publication:** Article, row and entry pushed and verified at `6aa00d5`.
+
+## Article 42 — prepublication check, 2026-10-14 20:18 IST
+
+- **Compared with:** 39–41. Article 41 begins with a direct working-owner address, places its table after the first diagnosis and ends by returning to the opening shop; 42 begins with a personal admission and puts the model table before any H2.
+- **Opening and close:** One-line admission about a full order book being a warning; ends by asking the reader which of the next ten orders exposes the ceiling. Intro 13 replaces retired intro 11, outro 4.
+- **Body and elevation:** Early five-model table, distinct ceiling mechanisms, four-step audit, category-specific examples and an explicit deliberate-smallness argument. Short standalone turns interrupt procedural paragraphs; no serial “first to fifth insight” framing. FAQ precedes the direct reader invitation.
+- **Distinctive material:** Exception density, quality observability, cash conversion lag, demand concentration and post-sale support tail. The memo and exit rule keep growth experiments reversible. No fabricated founder outcome.
+- **Research and precautions:** Five inline primary links: ONS original survey analysis, MSME cluster/scheme material, Lean MSME eligibility and Labour Ministry handbook. ONS correlation is not transferred as causal evidence to Indian microfirms. No unsupported funding entitlement or universal scaling threshold. Word count 4,037; focus in H1 and two H2s, nine additional keywords twice each; zero em dash.
+- **Publication:** Article, row and log are pushed together; remote commit to be recorded in the next entry.
 
 ## Protocol for articles 41–45
 
