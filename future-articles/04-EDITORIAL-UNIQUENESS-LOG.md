@@ -38,7 +38,7 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** Channel-fit table and argument; the original 47 prose blocks had a median around 79 words. Repair replaces the enumerated insight refrain with short argumentative turns and a one-page channel ledger. The invited reader response remains the close.
 - **Distinctive material:** Denominator discipline, referral fit drift, bottleneck in one recommender, attribution versus incremental demand, channel collision, portable proof.
 - **Research and precautions:** Six primary links, at most two per domain, including an original referral-program study and Google measurement guidance. The original “referrals outperform” claim was replaced with a conditional comparison; the shop scene is hypothetical and no study result is generalized to India.
-- **Publication:** First version at `6eed7ec`. Repair checked 2026-10-14 20:07 IST: 4,113 words; keyword counts and six links unchanged. Article and log are pushed together; the next entry records the remote commit.
+- **Publication:** First version at `6eed7ec`. Repair checked 2026-10-14 20:07 IST: 4,113 words; keyword counts and six links unchanged. Repair pushed and verified at `6762cbd`.
 
 ## Article 40 — prepublication check, 2026-10-14 19:57 IST
 
@@ -47,7 +47,16 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** Origin-to-validation movement, complaint-to-model table, short standalone turns, split role/prerequisite passages, and a numbered evidence ladder. At final check 4,118 words, 54 prose blocks, median 76 words with several brief 9–40-word passages. The mandated FAQ remains, but the operational insights are woven into the reasoning instead of appearing as a repeated numbered refrain.
 - **Distinctive material:** The workaround as competitor, household silent veto, coping cost versus willingness to pay, hidden environmental prerequisites, timing of a complaint, buyer-role false negatives. These are testable observations and inferences, not claims of priority over other writers.
 - **Research and precautions:** Seven inline links from Startup India, BIS, Seed Fund, FSSAI and National Consumer Helpline, at most two per domain; check product/food requirements for the actual category; a home trial does not certify safety or market demand. No invented family anecdote or success rate.
-- **Publication:** Article and log in the same push; branch verification follows. The next entry will record the remote commit.
+- **Publication:** Article and log pushed and verified at `51ac30c`.
+
+## Article 41 — prepublication check, 2026-10-14 20:12 IST
+
+- **Compared with:** 38–40 and the cadence repair notes for 36–39. This is a turning-point decision for a working owner, not another community opportunity inventory.
+- **Opening and close:** Direct address to an owner who opens and closes the shop; the last paragraph returns to that day's queue. Intro 7, outro 5. No asserted real shop case.
+- **Body and elevation:** Queue-time diagnosis precedes a delegation-readiness table, followed by a staged handoff list, worker/owner authority analysis and a FAQ before the reflective close. Short standalone turns interrupt longer procedural paragraphs; the repeated numbered-insight frame was removed before publication.
+- **Distinctive material:** Decision debt, handoff residue, control versus visibility, identity choice, authority mismatch and exception concentration. The first-hire budget includes supervisory time and a slow-month scenario without inventing a market wage.
+- **Research and precautions:** Six inline official links, one per domain: MSME training, Startup India lifecycle, Labour Ministry employer handbook, ESIC, EPFO and MeitY rules. Checked current sources and avoided fixed thresholds that depend on establishment, worker and notification. No fabricated hiring outcome or legal assurance. Word count 4,041; focus in H1 and two H2s, nine additional phrases twice each; no em dash.
+- **Publication:** Article, row and this entry pushed together; remote verification and commit to be recorded in the next entry.
 
 ## Protocol for articles 41–45
 
