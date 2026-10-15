@@ -694,16 +694,16 @@ Copy everything after the colon. Rules for these fields are in
 ## Cluster J — Mindset and decision-making for founders
 
 ### Article 46
-- **SEO title:** The Business Idea You Should Walk Away From, Even If It Sounds Good
-- **Slug:** `the-business-idea-you-should-walk-away-from`
+- **SEO title:** Business ideas to walk away from: a founder's honest decision test
+- **Slug:** `business-ideas-to-walk-away-from-founder-test`
 - **Focus keyword:** business ideas to walk away from
-- **Additional keywords (9):** signs a business idea wont work, how to say no to a good sounding business idea, business idea red flags, evaluating a business idea honestly, business ideas that sound good but fail, founder fit vs idea quality, business ideas worth rejecting, knowing when to abandon a business idea, realistic business idea evaluation
-- **Rank Math keywords (focus first, paste as-is):** business ideas to walk away from, signs a business idea wont work, how to say no to a good sounding business idea, business idea red flags, evaluating a business idea honestly, business ideas that sound good but fail, founder fit vs idea quality, business ideas worth rejecting, knowing when to abandon a business idea, realistic business idea evaluation
-- **SEO meta description (155 chars):** Business ideas to walk away from, even when they sound good: the warning signs, an idea I talked someone out of, and quitting versus recognizing a bad fit.
+- **Additional keywords (9):** signs a business idea won't work, how to say no to a good sounding business idea, business idea red flags, evaluating a business idea honestly, business ideas that sound good but fail, founder fit vs idea quality, business ideas worth rejecting, knowing when to abandon a business idea, realistic business idea evaluation
+- **Rank Math keywords (focus first, paste as-is):** business ideas to walk away from, signs a business idea won't work, how to say no to a good sounding business idea, business idea red flags, evaluating a business idea honestly, business ideas that sound good but fail, founder fit vs idea quality, business ideas worth rejecting, knowing when to abandon a business idea, realistic business idea evaluation
+- **SEO meta description (145 chars):** Business ideas to walk away from: test demand, delivery, founder fit and downside before a tempting concept becomes a fixed financial obligation.
 - **WordPress tags:** Idea Validation, Founder Decisions, Bad Business Ideas, Founder Fit, Small Business India
-- **Structure:** H1 → H2 Why "sounds good" is the wrong test → H2 The specific signs worth taking seriously → H2 A real example of an idea I talked someone out of → H2 What walking away actually protects → H2 The difference between quitting and recognizing a bad fit → H2 A closing word on the courage to say no to your own idea
+- **Structure:** H1 → H2 Why “sounds good” is the wrong test → H2 The specific signs worth taking seriously → H2 A rejection case, clearly hypothetical → H2 What walking away protects → H2 The difference between quitting and recognizing a bad fit → H2 A test that respects the founder’s downside → H2 Frequently asked questions about rejecting an idea → H2 A closing word on the courage to say no
 - **Table/elements:** One table — warning sign vs what it usually means.
-- **Pattern:** Opinionated essay with a warning-sign table
+- **Pattern:** Rejection memo with warning-sign table and bounded pilot
 - **Word band:** 4,000–6,000
 - **Intro device:** 5 · **Outro device:** 6
 
@@ -813,6 +813,7 @@ stays blank — the plan above is not the same as the work being done.
 | 43 | Yes | 8 | 3 | First-hire diagnostic with a first-week failure map and mistake/root-cause table | 4,001 words; keyword counts in row order: 4, 2, 2, 2, 2, 2, 2, 2, 2, 2; focus in H1 and two H2s. Five inline official links checked on 2026-10-14 from distinct domains. Expectation debt, manager capacity, feedback delay, founder-caused errors, customer trust transfer and exit continuity are embedded in the workflow. Unsupported “most never survive” title corrected; India keyword made grammatical. Current employer duties are qualified by activity and location. Editorial check 2026-10-14 20:24 IST; sitemap duplicate check unresolved. |
 | 44 | Yes | 14 | 8 | Founder-absence systems test with a before/after function table | 4,011 words; ten keyword counts checked, six primary links, six distinctive handoff and record failure modes. Editorial check 2026-10-15 06:31 IST; separate push verified at `82df1d1`. |
 | 45 | Yes | 2 | 1 | Handoff-first field guide with priority table and blind test | 4,006 words; ten keyword counts checked, six primary links. Trigger, evidence, exception economics, local variation, ambiguous changes and version history are operational tests. Editorial check 2026-10-15 06:31 IST; separate push pending. |
+| 46 | Yes | 5 | 6 | Rejection memo with warning-sign table and bounded pilot | 4,054 words; ten keyword counts checked, five official links. The old planned “real example” became an explicitly hypothetical meal-subscription case; no false client story. Editorial check 2026-10-15 06:34 IST; separate push pending. |
 | ... | No | | | | |
 | 50 | No | | | | |
 

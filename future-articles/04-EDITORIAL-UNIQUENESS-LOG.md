@@ -92,7 +92,16 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** Longer reasoning sections alternate with compact decisions and a concrete document schema; a deliberately ambiguous specification change and comparison of two orders test the model. FAQ precedes the challenge. No fabricated client anecdote or invented outcome.
 - **Distinctive material:** Trigger-state ambiguity, procedure-versus-event evidence, unpriced goodwill exceptions, local variation authority, hidden personal-device custody, and process version history. These are underexplored tests, not claims of novelty on the entire internet.
 - **Research and precautions:** Six inline primary links across MSME Lean, ISO committee guidance, Startup India, FSSAI, NIST and MeitY, one per domain; scheme eligibility, certification, franchise legal work, food and privacy obligations are qualified. Word count 4,006; focus in H1 and two H2s, each of nine additional phrases twice, no em dash. SEO title 66 and meta 154 chars.
-- **Publication:** Article, row and log ready for separate push; verification commit recorded in the next entry.
+- **Publication:** Article, row and log ready for separate push; verified at `b5f6899`.
+
+## Article 46 — prepublication check, 2026-10-15 06:34 IST
+
+- **Compared with:** 43–45. The waiting-room fragment frames a capital-allocation judgment rather than a founder absence or documentation handoff. A warning-sign table sits early, then a hypothetical rejection case, opportunity-cost argument and downside-limited test; the close is plain, with no challenge or future tease.
+- **Opening and close:** An unattributed waiting-room proposition about fitting a business around a job; closes with an instruction to preserve the freedom to choose. Intro 5, outro 6.
+- **Body and elevation:** Short punchy decisions among longer analytical passages, a table with warning/test columns, a transparent hypothetical meal-subscription case and a three-budget pilot. FAQ follows the substantive decision test.
+- **Distinctive material:** Unpaid household support as input, reversible-versus-fixed obligations, remedy tail after sale, acquisition through one gatekeeper, evidence type separation, and pilot cost in cash/time/reputation. These are testable less-covered angles, never asserted as internet-first discoveries.
+- **Research and precautions:** Five inline official links from Startup India twice, FSSAI, Udyam and NIST. The NIST framing is explicitly non-Indian; food duties require specific checking. No fabricated client conversation, market rate or success claim. 4,054 words; focus in H1 and two H2s, additional nine twice each, zero em dash. SEO title 66 and meta 145 chars.
+- **Publication:** Article, row and log ready for separate push; verification commit to be recorded next.
 
 ## Protocol for articles 41–50
 
