@@ -158,4 +158,13 @@ Before each draft, read the latest three articles and this log. Record a composi
 - **Body and elevation:** Cash-cycle argument, four-column mechanism table, two parallel loan sketches, adverse scenario and written lender questions. Different from 16's month-by-month account and from 21's town catalogue; short decisive paragraphs break detailed financial checks.
 - **Distinctive material:** Asset commissioning lag, same instalment/different cash risk, use-of-funds contamination, revolving credit concealing operating loss, household guarantee consent, and early warning in the instalment-versus-collection calendar.
 - **Research and precautions:** Six inline links to RBI KFS annual report and TReDS FAQ, CGTMSE, Udyam, PMEGP and SIDBI. Registration, guarantee and subsidy are not loan approval; lender terms and suitability depend on the actual applicant. No universal ratio, fabricated rate or customer revenue claim. Word count 4,060; focus in H1 and two H2s, all nine additional phrases twice or more, zero em dash. SEO title 70, meta 149 chars.
-- **Publication:** Prepared for individual push; remote commit recorded in article 18 entry.
+- **Publication:** Prepared for individual push; verified at `5f392df`.
+
+## Article 18 — prepublication check, 2026-10-15 07:15 IST
+
+- **Compared with:** 16, 17 and 21. Article 17 opens with loan sanction and puts its table after diagnosis; 18 starts with a returned order, shows three illustrative margin calculations before the first H2, then uses a two-shop field note late in the piece. The ending is a plain accounting habit rather than 17's reader invitation.
+- **Opening and close:** One receipt and the question of what survives a return; closes with the practical value of following a completed job to its end. Intro 4 carries a brief callback to 17, outro 6.
+- **Body and elevation:** Early numeric table, margin definitions, an order ledger, mix and break-even arithmetic, then parallel channel examples. Brief propositions interrupt the longer explanations; the FAQ follows the field note.
+- **Distinctive material:** Tax-inclusive versus tax-exclusive revenue, owner work as an economic cost, promotion changing the margin denominator, a product mix defeating a unit break-even target, platform settlement deductions, and returns crossing reporting periods.
+- **Research and precautions:** Five inline primary links to US SBA break-even guidance (explicitly non-Indian), GST GSTR-1 and GSTR-2B help, MSME Lean and ICAI cost-accounting material. GST credit depends on current eligibility and records; no industry-average margin is asserted. All rupee examples are labeled hypothetical, with ₹250/₹1,000=25%, ₹600/₹1,000=60%, ₹400/₹1,000=40%, ₹50/₹800=6.25%, and ₹20,000/₹400=50 checked. Word count 4,001; focus in H1 and two H2s, nine additional phrases twice each, zero em dash. SEO title 67, meta 145 chars.
+- **Publication:** Ready for separate push; remote commit to be recorded with article 19.
