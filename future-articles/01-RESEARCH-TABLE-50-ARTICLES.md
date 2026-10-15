@@ -708,16 +708,16 @@ Copy everything after the colon. Rules for these fields are in
 - **Intro device:** 5 · **Outro device:** 6
 
 ### Article 47
-- **SEO title:** Why "Do What You Love" Is Bad Advice for a First Business
-- **Slug:** `do-what-you-love-is-bad-advice-first-business`
-- **Focus keyword:** do what you love bad business advice
-- **Additional keywords (9):** passion vs profit business advice, first business idea selection criteria, realistic business advice for beginners, business ideas based on market need not passion, common bad startup advice india, choosing a business idea strategically, passion business ideas that fail, business idea selection mistakes, practical vs passionate business planning
-- **Rank Math keywords (focus first, paste as-is):** do what you love bad business advice, passion vs profit business advice, first business idea selection criteria, realistic business advice for beginners, business ideas based on market need not passion, common bad startup advice india, choosing a business idea strategically, passion business ideas that fail, business idea selection mistakes, practical vs passionate business planning
-- **SEO meta description (153 chars):** "Do what you love": bad business advice for a first venture. What predicts survival better, where passion matters later on, and a better question to ask.
+- **SEO title:** Passion in a first business: why “do what you love” falls short
+- **Slug:** `passion-in-a-first-business-founder-decision`
+- **Focus keyword:** passion in a first business
+- **Additional keywords (9):** passion vs profit business advice, first business idea selection criteria, realistic business advice for beginners, business ideas based on market need rather than passion, common bad startup advice in India, choosing a business idea strategically, passion business ideas that fail, business idea selection mistakes, practical versus passionate business planning
+- **Rank Math keywords (focus first, paste as-is):** passion in a first business, passion vs profit business advice, first business idea selection criteria, realistic business advice for beginners, business ideas based on market need rather than passion, common bad startup advice in India, choosing a business idea strategically, passion business ideas that fail, business idea selection mistakes, practical versus passionate business planning
+- **SEO meta description (143 chars):** Passion in a first business: test buyer need, price, working hours and the founder’s actual role before turning a beloved craft into a company.
 - **WordPress tags:** Founder Decisions, Passion vs Profit, First Business, Founder Fit, Small Business India
-- **Structure:** H1 → H2 Why this advice sounds right and usually isn't → H2 What actually predicts a first business's survival better → H2 Where passion genuinely does matter, just not first → H2 A better question to ask instead → H2 What happens to passion once the business is actually profitable → H2 A closing word for anyone choosing between what they love and what works
+- **Structure:** H1 → H2 What passion in a first business cannot answer → H2 What to test before choosing a first business → H2 Where passion in a first business earns a place → H2 A better question to ask instead → H2 What happens to passion once the business earns its keep → H2 Frequently asked questions about passion and a first business → H2 A two-column trial of the work itself → H2 A closing word for a person choosing between what they love and what works
 - **Table/elements:** One table — passion-led vs need-led business idea across a few real criteria.
-- **Pattern:** Contrarian argument essay with a criteria table
+- **Pattern:** Contrarian craft-versus-owner essay with criteria table and two-column field trial
 - **Word band:** 4,000–6,000
 - **Intro device:** 8 · **Outro device:** 2
 
@@ -814,6 +814,7 @@ stays blank — the plan above is not the same as the work being done.
 | 44 | Yes | 14 | 8 | Founder-absence systems test with a before/after function table | 4,011 words; ten keyword counts checked, six primary links, six distinctive handoff and record failure modes. Editorial check 2026-10-15 06:31 IST; separate push verified at `82df1d1`. |
 | 45 | Yes | 2 | 1 | Handoff-first field guide with priority table and blind test | 4,006 words; ten keyword counts checked, six primary links. Trigger, evidence, exception economics, local variation, ambiguous changes and version history are operational tests. Editorial check 2026-10-15 06:31 IST; separate push pending. |
 | 46 | Yes | 5 | 6 | Rejection memo with warning-sign table and bounded pilot | 4,054 words; ten keyword counts checked, five official links. The old planned “real example” became an explicitly hypothetical meal-subscription case; no false client story. Editorial check 2026-10-15 06:34 IST; separate push pending. |
+| 47 | Yes | 8 | 2 | Craft-versus-owner argument with criteria table and two-column field trial | 4,079 words; ten keyword counts checked, six primary links. Focus and several awkward phrases revised for natural grammar; no unsupported predictor of survival. FAQ moved before the field trial to vary the close. Editorial check 2026-10-15 06:38 IST; separate push pending. |
 | ... | No | | | | |
 | 50 | No | | | | |
 

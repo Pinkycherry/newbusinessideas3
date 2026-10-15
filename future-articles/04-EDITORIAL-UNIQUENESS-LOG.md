@@ -101,7 +101,16 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** Short punchy decisions among longer analytical passages, a table with warning/test columns, a transparent hypothetical meal-subscription case and a three-budget pilot. FAQ follows the substantive decision test.
 - **Distinctive material:** Unpaid household support as input, reversible-versus-fixed obligations, remedy tail after sale, acquisition through one gatekeeper, evidence type separation, and pilot cost in cash/time/reputation. These are testable less-covered angles, never asserted as internet-first discoveries.
 - **Research and precautions:** Five inline official links from Startup India twice, FSSAI, Udyam and NIST. The NIST framing is explicitly non-Indian; food duties require specific checking. No fabricated client conversation, market rate or success claim. 4,054 words; focus in H1 and two H2s, additional nine twice each, zero em dash. SEO title 66 and meta 145 chars.
-- **Publication:** Article, row and log ready for separate push; verification commit to be recorded next.
+- **Publication:** Article, row and log ready for separate push; verified at `b38f7ef`.
+
+## Article 47 — prepublication check, 2026-10-15 06:38 IST
+
+- **Compared with:** 44–46. This opens as a personal admission about advice, unlike 46's waiting-room proposition. It compares love of craft with ownership duties; the table sits in the first major test section, and a two-column field trial follows the FAQ, so the practical exercise, then a specific next-topic tease, form the ending.
+- **Opening and close:** A self-correction without a made-up personal incident; closes with a reader-directed reassurance and a concrete tease of article 48. Intro 8, outro 2.
+- **Body and elevation:** Argument, test criteria, table, passion's legitimate role, first-offer question, profitable practice, FAQ, then a working-week trial. Varied short and longer paragraphs; no repeated numbered-insight scaffold.
+- **Distinctive material:** Craft-versus-owner time split, buyer-valued quality versus founder-preferred detail, a shadow price on founder time, passion's preferred pace versus buyer hours, joy reservation after an economic test, and transferability beyond forgiving first customers.
+- **Research and precautions:** Six primary links: Startup India twice, MSME ESDP, US SBA, FSSAI, Udyam. US planning advice is not presented as Indian regulation; food requirements require current activity-specific checking. No numerical survival prediction or invented founder outcome. Word count 4,079; focus in H1 and two H2s, nine additional phrases twice each after grammatical corrections, zero em dash. SEO title 63, meta 143 chars.
+- **Publication:** Article, row and log ready for separate push; verification commit in next entry.
 
 ## Protocol for articles 41–50
 
