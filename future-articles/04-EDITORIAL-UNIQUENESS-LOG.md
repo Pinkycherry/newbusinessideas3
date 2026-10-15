@@ -110,6 +110,15 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** Argument, test criteria, table, passion's legitimate role, first-offer question, profitable practice, FAQ, then a working-week trial. Varied short and longer paragraphs; no repeated numbered-insight scaffold.
 - **Distinctive material:** Craft-versus-owner time split, buyer-valued quality versus founder-preferred detail, a shadow price on founder time, passion's preferred pace versus buyer hours, joy reservation after an economic test, and transferability beyond forgiving first customers.
 - **Research and precautions:** Six primary links: Startup India twice, MSME ESDP, US SBA, FSSAI, Udyam. US planning advice is not presented as Indian regulation; food requirements require current activity-specific checking. No numerical survival prediction or invented founder outcome. Word count 4,079; focus in H1 and two H2s, nine additional phrases twice each after grammatical corrections, zero em dash. SEO title 63, meta 143 chars.
+- **Publication:** Article, row and log ready for separate push; verified at `6107d6c`.
+
+## Article 48 — prepublication check, 2026-10-15 06:42 IST
+
+- **Compared with:** 45–47. The cold open begins with a false “complete” state, not an autobiographical admission or a waiting-room idea. A transaction-state investigation follows: deck blind spot, early-signal table, hypothetical service order, stress test, surviving mechanisms, FAQ, and a three-ledger reconciliation just before the ending.
+- **Opening and close:** No scene setup beyond an unresolved order; closes by treating record keeping as an economic test. Intro 14, outro 7 (the model is unsuitable when accurate fulfillment cannot be financed).
+- **Body and elevation:** Causal paragraphs and compact statements lead into a multi-step hypothetical case. The final reconciliation separates order state, cash state and customer outcome; it was placed after the FAQ for a distinct practical close.
+- **Distinctive material:** The denominator of conversion rates, post-sale remedy tail, mismatch between accepted scope and provider card, aging receivable versus collected cash, channel quality versus lead count, and automation of misleading “closed” states.
+- **Research and precautions:** Six official inline links: MSME Lean, RBI TReDS, MSME Samadhaan and current ODR redirect, National Consumer Helpline, NIST small-business guide. Eligibility and redress details require current case-specific checking; no invented failure statistics or real founder story. 4,037 words; focus in H1 and two H2s, nine additional phrases twice each, zero em dash. SEO title 64, meta 146 chars.
 - **Publication:** Article, row and log ready for separate push; verification commit in next entry.
 
 ## Protocol for articles 41–50

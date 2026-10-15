@@ -722,16 +722,16 @@ Copy everything after the colon. Rules for these fields are in
 - **Intro device:** 8 · **Outro device:** 2
 
 ### Article 48
-- **SEO title:** Business Ideas That Fail for a Reason Nobody Puts in a Pitch Deck
-- **Slug:** `business-ideas-fail-for-reasons-not-in-a-pitch-deck`
+- **SEO title:** Why business ideas fail: handoffs and cash beyond the pitch deck
+- **Slug:** `why-business-ideas-fail-handoffs-cash-founders`
 - **Focus keyword:** why business ideas fail
 - **Additional keywords (9):** real reasons small businesses fail india, business failure reasons beyond funding, unglamorous reasons startups fail, hidden business idea risks, business ideas that fail quietly, common small business failure causes, practical startup failure reasons, business idea risks not obvious at first, why good ideas still fail in execution
 - **Rank Math keywords (focus first, paste as-is):** why business ideas fail, real reasons small businesses fail india, business failure reasons beyond funding, unglamorous reasons startups fail, hidden business idea risks, business ideas that fail quietly, common small business failure causes, practical startup failure reasons, business idea risks not obvious at first, why good ideas still fail in execution
-- **SEO meta description (157 chars):** Why business ideas fail, for reasons no pitch deck mentions: the unglamorous causes that show up most, an honest example, and how to stress-test ideas early.
+- **SEO meta description (146 chars):** Why business ideas fail: follow a customer promise through delivery, remedy and cash to find the handoff and timing risks a pitch deck leaves out.
 - **WordPress tags:** Why Businesses Fail, Idea Validation, Pitch Decks, Founder Decisions, Small Business India
-- **Structure:** H1 → H2 What pitch decks never mention because it isn't flattering → H2 The unglamorous reasons that actually show up most → H2 A specific example of this, told honestly → H2 How to stress-test an idea against these reasons early → H2 What separates ideas that survive this from ones that don't → H2 A closing word on the boring risks that matter more than the exciting ones
+- **Structure:** H1 → H2 Why business ideas fail between sale and outcome → H2 Why business ideas fail when small errors accumulate → H2 One service example, explicitly hypothetical → H2 How to stress-test the idea before commitments harden → H2 What the surviving idea does differently → H2 Frequently asked questions about quiet failure → H2 Reconcile the three stories before believing the growth story → H2 A closing word on the boring risks
 - **Table/elements:** One table — unglamorous failure reason vs how early it can be caught.
-- **Pattern:** Honest-assessment essay with a failure-reason table
+- **Pattern:** Transaction-state investigation with an early signal table and three-ledger reconciliation
 - **Word band:** 4,000–6,000
 - **Intro device:** 14 · **Outro device:** 7
 
@@ -815,6 +815,7 @@ stays blank — the plan above is not the same as the work being done.
 | 45 | Yes | 2 | 1 | Handoff-first field guide with priority table and blind test | 4,006 words; ten keyword counts checked, six primary links. Trigger, evidence, exception economics, local variation, ambiguous changes and version history are operational tests. Editorial check 2026-10-15 06:31 IST; separate push pending. |
 | 46 | Yes | 5 | 6 | Rejection memo with warning-sign table and bounded pilot | 4,054 words; ten keyword counts checked, five official links. The old planned “real example” became an explicitly hypothetical meal-subscription case; no false client story. Editorial check 2026-10-15 06:34 IST; separate push pending. |
 | 47 | Yes | 8 | 2 | Craft-versus-owner argument with criteria table and two-column field trial | 4,079 words; ten keyword counts checked, six primary links. Focus and several awkward phrases revised for natural grammar; no unsupported predictor of survival. FAQ moved before the field trial to vary the close. Editorial check 2026-10-15 06:38 IST; separate push pending. |
+| 48 | Yes | 14 | 7 | Transaction-state investigation with early signal table and three-ledger reconciliation | 4,037 words; ten keyword counts checked, six official links, including current MSME ODR redirection. The local service case is explicitly hypothetical. FAQ moved before the final reconciliation. Editorial check 2026-10-15 06:42 IST; separate push pending. |
 | ... | No | | | | |
 | 50 | No | | | | |
 
