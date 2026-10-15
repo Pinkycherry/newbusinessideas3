@@ -100,7 +100,7 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Opening and close:** An unattributed waiting-room proposition about fitting a business around a job; closes with an instruction to preserve the freedom to choose. Intro 5, outro 6.
 - **Body and elevation:** Short punchy decisions among longer analytical passages, a table with warning/test columns, a transparent hypothetical meal-subscription case and a three-budget pilot. FAQ follows the substantive decision test.
 - **Distinctive material:** Unpaid household support as input, reversible-versus-fixed obligations, remedy tail after sale, acquisition through one gatekeeper, evidence type separation, and pilot cost in cash/time/reputation. These are testable less-covered angles, never asserted as internet-first discoveries.
-- **Research and precautions:** Five inline official links from Startup India twice, FSSAI, Udyam and NIST. The NIST framing is explicitly non-Indian; food duties require specific checking. No fabricated client conversation, market rate or success claim. 4,054 words; focus in H1 and two H2s, additional nine twice each, zero em dash. SEO title 66 and meta 145 chars.
+- **Research and precautions:** Five inline official links from Startup India twice, FSSAI, Udyam and NIST. The NIST framing is explicitly non-Indian; food duties require specific checking. No fabricated client conversation, market rate or success claim. 4,061 words after final heading correction; focus in H1 and two H2s, additional nine twice each, zero em dash. SEO title 66 and meta 145 chars.
 - **Publication:** Article, row and log ready for separate push; verified at `b38f7ef`.
 
 ## Article 47 — prepublication check, 2026-10-15 06:38 IST
@@ -118,7 +118,7 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Opening and close:** No scene setup beyond an unresolved order; closes by treating record keeping as an economic test. Intro 14, outro 7 (the model is unsuitable when accurate fulfillment cannot be financed).
 - **Body and elevation:** Causal paragraphs and compact statements lead into a multi-step hypothetical case. The final reconciliation separates order state, cash state and customer outcome; it was placed after the FAQ for a distinct practical close.
 - **Distinctive material:** The denominator of conversion rates, post-sale remedy tail, mismatch between accepted scope and provider card, aging receivable versus collected cash, channel quality versus lead count, and automation of misleading “closed” states.
-- **Research and precautions:** Six official inline links: MSME Lean, RBI TReDS, MSME Samadhaan and current ODR redirect, National Consumer Helpline, NIST small-business guide. Eligibility and redress details require current case-specific checking; no invented failure statistics or real founder story. 4,037 words; focus in H1 and two H2s, nine additional phrases twice each, zero em dash. SEO title 64, meta 146 chars.
+- **Research and precautions:** Six official inline links: MSME Lean, RBI TReDS, MSME Samadhaan and current ODR redirect, National Consumer Helpline, NIST small-business guide. Eligibility and redress details require current case-specific checking; no invented failure statistics or real founder story. 4,039 words; focus in H1 and two H2s, nine additional phrases twice each, zero em dash. SEO title 64, meta 146 chars.
 - **Publication:** Article, row and log ready for separate push; verified at `0fa40d5`.
 
 ## Article 49 — prepublication check, 2026-10-15 06:45 IST
@@ -128,7 +128,20 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** Direct questions, one personal-fit table, hard gates, then a three-offer comparison and buyer-interview protocol. Short clarifying pivots break longer decision paragraphs. FAQ follows the decision cards.
 - **Distinctive material:** The founder's Tuesday as a constraint, veto gates instead of additive scores, learning cost of a pilot, reversibility as an asset, hidden household consent, and a reversal test for channel or worker loss.
 - **Research and precautions:** Six official links: Startup India, FSSAI, US SBA, RBI TReDS, Udyam, MSME ESDP. Foreign planning material is not Indian regulation; financing and food paths are eligibility dependent. All founder profiles are explicitly hypothetical. 4,028 words; focus in H1 and two H2s, nine additional phrases twice each, no em dash. SEO title 65, meta 148 chars.
-- **Publication:** Article, row and log ready for separate push; verification commit in next entry.
+- **Publication:** Article, row and log ready for separate push; verified at `6954ad2`.
+
+## Article 50 — prepublication check, 2026-10-15 06:49 IST
+
+- **Compared with:** 47–49. The final piece states its question in the first sentence, not 49's serial callback; it moves from buyer and payer to failed answers, a comparative payer table, one clearly hypothetical service trial, conditional growth, FAQ, then an evidence ladder before a batch callback.
+- **Opening and close:** Direct question about who pays for a repeatably deliverable result; the last two paragraphs return to the fifty-article project's purpose and end plainly. Intro 9 (reader question), outro 6.
+- **Body and elevation:** A single question threads a table, transaction trace and evidence ladder. The FAQ is placed before the final analysis, unlike 49's placement near the end. Brief propositions interrupt detailed operating examples.
+- **Distinctive material:** Buyer-versus-user-versus-payer, customer substitute friction, post-sale remedy as a condition of viability, repeatable acquisition versus repeat purchase, stage-specific evidence, and conditions under which a first model's proof expires.
+- **Research and precautions:** Six inline official links: Startup India learning, US SBA, FSSAI, Udyam, National Consumer Helpline, Startup India Seed Fund FAQ. Funding and food eligibility are conditional; the repair coordination case is explicitly hypothetical and never presented as the author's client. No promise of business survival. 4,065 words; focus in H1 and two H2s, nine additional phrases twice each, zero em dash. SEO title 71 and meta 152 chars.
+- **Publication:** Article, row and log ready for separate push; remote verification to be recorded below.
+
+## Cross-article QA correction — 2026-10-15 06:49 IST
+
+A batch script compared actual files against the index for articles 44–50. Article 46's focus was in H1 but no H2 despite its original check note; two meaningful H2s were corrected. Article 48's first secondary phrase was ungrammatical in the index and did not match the twice-used article wording; corrected to “real reasons small businesses fail in India.” Article 48's final word count is 4,039 after title edits. Table descriptions for 44, 45, 48, 49 and 50 were made faithful to the actual columns. This correction ships with article 50 and the final log, making the prior checks auditable rather than silently leaving their false positives.
 
 ## Protocol for articles 41–50
 

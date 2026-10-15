@@ -20,7 +20,7 @@ The [Startup India learning programme](https://www.startupindia.gov.in/santhali/
 
 A warning also needs a stopping rule. Without one, founders turn each new cost into a reason to spend more so the earlier cost will not feel wasted. Before a trial, specify what must be true at the end: paid repeat demand, a feasible delivery window, enough contribution after direct costs and a tolerable workload. If the test fails, the default is pause and redesign. Sunk effort is not evidence that the next order will improve.
 
-## The specific signs worth taking seriously
+## Business ideas to walk away from when constraints are binding
 
 The strongest business idea red flags are causal. “Competition exists” is too vague; “the only affordable location is inaccessible to the target customer during buying hours” is a testable constraint. “I lack experience” is vague; “the activity requires qualified supervision that I cannot arrange” is actionable. Translate anxiety into a condition, evidence and a possible remedy. If the remedy costs more than the founder can risk, walk away for now.
 
@@ -97,7 +97,7 @@ Business ideas worth rejecting can be exciting precisely because they promise a 
 
 The [NIST small-manufacturer continuity resource](https://www.nist.gov/mep/business-continuity-planning) is written for a different national context, but its disruption framing is useful as a stress-test prompt, not Indian legal guidance. Ask what happens if a phone, supplier or key worker becomes unavailable during the pilot. If one ordinary absence breaks the customer promise and there is no feasible backup at the proposed price, the model needs redesign before scale.
 
-## A test that respects the founder's downside
+## Business ideas to walk away from after a bounded test
 
 Before rejecting an idea, ask whether a smaller version can answer the uncertainty without creating a misleading or unsafe promise. A repair coordinator could take bookings for one clearly defined type of job with qualified providers and agreed scope. A maker could sell a small batch of one item after checking the applicable requirements. A training founder could teach one clearly bounded skill to a small group and measure what learners can perform. The question is what evidence the trial yields, not how much it resembles the eventual brand.
 
