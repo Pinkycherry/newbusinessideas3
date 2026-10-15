@@ -137,11 +137,15 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** A single question threads a table, transaction trace and evidence ladder. The FAQ is placed before the final analysis, unlike 49's placement near the end. Brief propositions interrupt detailed operating examples.
 - **Distinctive material:** Buyer-versus-user-versus-payer, customer substitute friction, post-sale remedy as a condition of viability, repeatable acquisition versus repeat purchase, stage-specific evidence, and conditions under which a first model's proof expires.
 - **Research and precautions:** Six inline official links: Startup India learning, US SBA, FSSAI, Udyam, National Consumer Helpline, Startup India Seed Fund FAQ. Funding and food eligibility are conditional; the repair coordination case is explicitly hypothetical and never presented as the author's client. No promise of business survival. 4,065 words; focus in H1 and two H2s, nine additional phrases twice each, zero em dash. SEO title 71 and meta 152 chars.
-- **Publication:** Article, row and log ready for separate push; remote verification to be recorded below.
+- **Publication:** Article, row and log ready for separate push; published and remote article verified at `7ecdbe0`.
 
 ## Cross-article QA correction — 2026-10-15 06:49 IST
 
 A batch script compared actual files against the index for articles 44–50. Article 46's focus was in H1 but no H2 despite its original check note; two meaningful H2s were corrected. Article 48's first secondary phrase was ungrammatical in the index and did not match the twice-used article wording; corrected to “real reasons small businesses fail in India.” Article 48's final word count is 4,039 after title edits. Table descriptions for 44, 45, 48, 49 and 50 were made faithful to the actual columns. This correction ships with article 50 and the final log, making the prior checks auditable rather than silently leaving their false positives.
+
+## Final publication verification — 2026-10-15 06:51 IST
+
+Articles 44, 45, 46, 47, 48, 49 and 50 were each published in separate commits and their remote article files fetched after each ref update: `82df1d1`, `b5f6899`, `b38f7ef`, `6107d6c`, `0fa40d5`, `6954ad2`, `7ecdbe0`. The final article commit also corrected article 46 headings and article 48's index phrase after the cross-article script exposed those misses. A second script checked all seven articles against the 4,000–6,000-word band, 60–80-character SEO titles, 140–160-character metas with matching stated lengths, ten keyword counts of at least two, focus in two H2s, five to ten inline links with at most two per domain, and zero em dashes. All seven pass after the correction. Each operational scenario that might otherwise imply a real client is labeled hypothetical or remains general. Source links were checked through official search/open results; external pages can change after this timestamp. The separate site-sitemap duplicate check remains unresolved, as logged in earlier entries; no claim of universal internet novelty is made.
 
 ## Protocol for articles 41–50
 
