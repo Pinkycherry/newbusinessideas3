@@ -150,3 +150,12 @@ Articles 44, 45, 46, 47, 48, 49 and 50 were each published in separate commits a
 ## Protocol for articles 41–50
 
 Before each draft, read the latest three articles and this log. Record a composition choice that differs in section order, paragraph cadence and use of tables or structured blocks while retaining the planned SEO fields, 4,000–6,000-word band, keyword counts and FAQ format. Use sources to answer a concrete operational question. After final QA, update this artifact with the actual timestamp, precautions, word/keyword/link checks, and commit, then push and verify before starting the next article. Do not invent anecdotes to satisfy the persona's experience cue; demonstrate experience through accurate operational questions and clearly marked hypothetical examples.
+
+## Article 17 — prepublication check, 2026-10-15 07:11 IST
+
+- **Compared with:** 15, 16 and 21. Article 16 narrates a half-year reserve and a bus advertisement; 17 opens at loan approval, uses a repayment calendar, splits equipment and receivable borrowing into parallel hypothetical cases and closes with a reader-specific question. No fake borrower outcome.
+- **Opening and close:** Immediate assertion about what sanction can and cannot establish; closes by inviting the founder to name purpose, collection date and delayed-receipt plan. Intro 14 replaces retired 11; outro 4.
+- **Body and elevation:** Cash-cycle argument, four-column mechanism table, two parallel loan sketches, adverse scenario and written lender questions. Different from 16's month-by-month account and from 21's town catalogue; short decisive paragraphs break detailed financial checks.
+- **Distinctive material:** Asset commissioning lag, same instalment/different cash risk, use-of-funds contamination, revolving credit concealing operating loss, household guarantee consent, and early warning in the instalment-versus-collection calendar.
+- **Research and precautions:** Six inline links to RBI KFS annual report and TReDS FAQ, CGTMSE, Udyam, PMEGP and SIDBI. Registration, guarantee and subsidy are not loan approval; lender terms and suitability depend on the actual applicant. No universal ratio, fabricated rate or customer revenue claim. Word count 4,060; focus in H1 and two H2s, all nine additional phrases twice or more, zero em dash. SEO title 70, meta 149 chars.
+- **Publication:** Prepared for individual push; remote commit recorded in article 18 entry.
