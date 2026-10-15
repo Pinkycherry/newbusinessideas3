@@ -662,18 +662,18 @@ Copy everything after the colon. Rules for these fields are in
 - **Intro device:** 8 · **Outro device:** 3
 
 ### Article 44
-- **SEO title:** Business Ideas That Run on Systems Instead of the Founder's Memory
-- **Slug:** `business-ideas-that-run-on-systems-not-memory`
+- **SEO title:** Business ideas running on systems: when founder memory is not enough
+- **Slug:** `business-ideas-running-on-systems`
 - **Focus keyword:** business ideas running on systems
-- **Additional keywords (9):** building systems in a small business, sop for small business india, business ideas that work without the founder present, documenting processes small business, business ideas built for delegation, standard operating procedures small business, business ideas designed to scale beyond one person, systemizing a small business, business ideas that survive the founder taking a break
-- **Rank Math keywords (focus first, paste as-is):** business ideas running on systems, building systems in a small business, sop for small business india, business ideas that work without the founder present, documenting processes small business, business ideas built for delegation, standard operating procedures small business, business ideas designed to scale beyond one person, systemizing a small business, business ideas that survive the founder taking a break
+- **Additional keywords (9):** building systems in a small business, SOP for small business in India, business ideas that work without the founder present, documenting processes small business, business ideas built for delegation, standard operating procedures small business, business ideas designed to scale beyond one person, systemizing a small business, business ideas that survive the founder taking a break
+- **Rank Math keywords (focus first, paste as-is):** business ideas running on systems, building systems in a small business, SOP for small business in India, business ideas that work without the founder present, documenting processes small business, business ideas built for delegation, standard operating procedures small business, business ideas designed to scale beyond one person, systemizing a small business, business ideas that survive the founder taking a break
 - **SEO meta description (155 chars):** Business ideas running on systems instead of the founder's memory: what memory costs you, what a basic system looks like, and which ideas systemize easily.
 - **WordPress tags:** Business Systems, Processes, Scaling a Business, Documentation, Small Business India
-- **Structure:** H1 → H2 The test every business idea should pass eventually → H2 What "running on memory" actually costs a founder → H2 What a basic system looks like, practically → H2 Business ideas that are naturally easier to systemize → H2 Where systems can go too far, too early → H2 A closing word on building for a version of the business that doesn't need you every hour
+- **Structure:** H1 → H2 The test every business idea should pass eventually → H2 What running on memory actually costs a founder → H2 What business ideas running on systems look like in practice → H2 Business ideas running on systems are easier to choose early → H2 Where systems can go too far, too early → H2 Frequently asked questions about systems in a small business → H2 A closing word on building for a business that does not need you every hour
 - **Table/elements:** One table — business function vs memory-based version vs systemized version.
 - **Pattern:** Systems-thinking essay with a before-after table
 - **Word band:** 4,000–6,000
-- **Intro device:** 15 · **Outro device:** 8
+- **Intro device:** 14 (15 would require an unverified client story) · **Outro device:** 8
 
 ### Article 45
 - **SEO title:** The Business Idea That Only Works If You Document It Before You Grow It

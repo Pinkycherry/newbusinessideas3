@@ -74,8 +74,17 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** First-week failure map appears before the financial discussion; mistake/root-cause table follows the cost analysis rather than opening the article; management feedback and fair exit come later. Brief standalone pivots and longer diagnostic paragraphs vary the cadence. FAQ precedes the one-sentence reframe.
 - **Distinctive material:** Recruitment expectation debt, supervisory capacity as a cost, feedback delay, founder-origin errors, customer trust transfer and continuity when a worker exits. No invented “bad hire costs X” statistic or claimed employment outcome.
 - **Research and precautions:** Five inline official links: Labour Ministry, EPFO, ESIC, MSME and MeitY; current obligations depend on the particular establishment, worker, location and notification. Word count 4,001; focus in H1 and two H2s, nine additional phrases twice each; zero em dash.
-- **Publication:** Article, row and log are pushed together; remote commit to be recorded in the next entry.
+- **Publication:** Article, row and log are pushed together; verified at `4469922`.
 
-## Protocol for articles 41–45
+## Article 44 — prepublication check, 2026-10-15 06:27 IST
+
+- **Compared with:** 41–43. This begins with a hypothetical changed-address handoff, not the employer's admission in 43, and moves through a founder-absence test, memory cost, worked repair workflow, idea selection and a restraint argument.
+- **Opening and close:** A planned day away exposes two conflicting order records; the close returns to a worker safely holding a shipment and reporting a dated correction. Intro 14, outro 8.
+- **Body and elevation:** Before/after process table in the memory-cost section, short isolated failure statements among longer practical passages, two different scenario walk-throughs, and FAQ before the final picture. The documentation emphasis distinguishes it from 45's planned priority and replication guide.
+- **Distinctive material:** Conflicting versions of a promise, absent exception authority, misleading green statuses, staff workarounds, ownership of records, and an offline current-record rule. These are testable operating hypotheses, not an internet-first claim.
+- **Research and precautions:** Six inline primary links, at most two per domain (ISO, NIST, MSME Lean/ZED, MeitY). Certification, eligibility, privacy and continuity claims are bounded to the cited source and actual enterprise context. The shipping scene is explicitly hypothetical; no invented client result. 4,011 words; focus in H1 and two H2s, nine phrases checked at least twice, zero em dash.
+- **Publication:** Article, row and log prepared for separate push; remote commit recorded after verification in the next entry.
+
+## Protocol for articles 41–50
 
 Before each draft, read the latest three articles and this log. Record a composition choice that differs in section order, paragraph cadence and use of tables or structured blocks while retaining the planned SEO fields, 4,000–6,000-word band, keyword counts and FAQ format. Use sources to answer a concrete operational question. After final QA, update this artifact with the actual timestamp, precautions, word/keyword/link checks, and commit, then push and verify before starting the next article. Do not invent anecdotes to satisfy the persona's experience cue; demonstrate experience through accurate operational questions and clearly marked hypothetical examples.
