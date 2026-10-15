@@ -676,16 +676,16 @@ Copy everything after the colon. Rules for these fields are in
 - **Intro device:** 14 (15 would require an unverified client story) · **Outro device:** 8
 
 ### Article 45
-- **SEO title:** The Business Idea That Only Works If You Document It Before You Grow It
-- **Slug:** `business-idea-that-only-works-if-documented-first`
+- **SEO title:** Documenting a business idea before growing it: a founder's handoff
+- **Slug:** `documenting-a-business-idea-before-growing-it-founder`
 - **Focus keyword:** documenting a business idea before growing it
 - **Additional keywords (9):** process documentation for small business, business ideas needing early documentation, franchise ready business documentation, sop before scaling a business, business ideas built to be replicated, documenting a business model early, business ideas that need consistency to scale, standard process business ideas, preparing a business idea for growth
 - **Rank Math keywords (focus first, paste as-is):** documenting a business idea before growing it, process documentation for small business, business ideas needing early documentation, franchise ready business documentation, sop before scaling a business, business ideas built to be replicated, documenting a business model early, business ideas that need consistency to scale, standard process business ideas, preparing a business idea for growth
-- **SEO meta description (153 chars):** Documenting a business idea before growing it: what documenting means in practice, the business types where it matters most, and a simple place to start.
+- **SEO meta description (154 chars):** Documenting a business idea before growing it: define the customer promise, test a second operator, trace exceptions and decide when the model can travel.
 - **WordPress tags:** Business Systems, Documentation, Scaling a Business, Processes, Small Business India
-- **Structure:** H1 → H2 Why some business ideas punish you for growing too fast → H2 What "documenting it" actually means in practice → H2 The business types where this matters most → H2 What happens when this step gets skipped → H2 A simple starting point for documenting a business most founders already run → H2 A closing word on writing it down before it's too late to
+- **Structure:** H1 → H2 Why documenting a business idea before growing it has a deadline → H2 What the first document needs to settle → H2 The business types where the first page matters most → H2 What happens when the step is skipped → H2 A starting point for documenting a business idea before growing it → H2 Frequently asked questions about early documentation → H2 A closing word on writing it down while you can still watch it happen
 - **Table/elements:** One table — business type vs documentation priority vs what to document first.
-- **Pattern:** Prescriptive essay with a priority table
+- **Pattern:** Handoff-first field guide with a priority table and blind test
 - **Word band:** 4,000–6,000
 - **Intro device:** 2 · **Outro device:** 1
 
@@ -811,6 +811,8 @@ stays blank — the plan above is not the same as the work being done.
 | 41 | Yes | 7 | 5 | Turning-point essay with a delegation-readiness table and staged handoff | 4,041 words; keyword counts in row order: 3, 2, 2, 2, 2, 2, 2, 2, 2, 2; focus in H1 and two H2s. Six inline primary official links checked on 2026-10-14, one per domain. Decision debt, handoff residue, visibility, founder identity, authority mismatch and exception concentration are specific operating insights. Focus/SEO title/slug/meta revised for grammar. Current labor-code and data rules referenced without unsupported universal thresholds. Editorial check 2026-10-14 20:12 IST; post-sitemap duplicate check unresolved. |
 | 42 | Yes | 13 | 4 | Contrarian ceiling diagnosis with table before H2s and a ceiling audit list | 4,037 words; keyword counts in row order: 4, 2, 2, 2, 2, 2, 2, 2, 2, 2; focus in H1 and two H2s. Five inline primary sources checked on 2026-10-14, at most two per domain. Exceptions, quality observability, cash timing, demand concentration and support tail are integrated as operating tests. Intro device 11 replaced because retired, focus and two ungrammatical keywords corrected. British management research described as correlation, not Indian causal proof. Editorial check 2026-10-14 20:18 IST; sitemap duplicate check unresolved. |
 | 43 | Yes | 8 | 3 | First-hire diagnostic with a first-week failure map and mistake/root-cause table | 4,001 words; keyword counts in row order: 4, 2, 2, 2, 2, 2, 2, 2, 2, 2; focus in H1 and two H2s. Five inline official links checked on 2026-10-14 from distinct domains. Expectation debt, manager capacity, feedback delay, founder-caused errors, customer trust transfer and exit continuity are embedded in the workflow. Unsupported “most never survive” title corrected; India keyword made grammatical. Current employer duties are qualified by activity and location. Editorial check 2026-10-14 20:24 IST; sitemap duplicate check unresolved. |
+| 44 | Yes | 14 | 8 | Founder-absence systems test with a before/after function table | 4,011 words; ten keyword counts checked, six primary links, six distinctive handoff and record failure modes. Editorial check 2026-10-15 06:31 IST; separate push verified at `82df1d1`. |
+| 45 | Yes | 2 | 1 | Handoff-first field guide with priority table and blind test | 4,006 words; ten keyword counts checked, six primary links. Trigger, evidence, exception economics, local variation, ambiguous changes and version history are operational tests. Editorial check 2026-10-15 06:31 IST; separate push pending. |
 | ... | No | | | | |
 | 50 | No | | | | |
 

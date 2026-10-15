@@ -83,7 +83,16 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** Before/after process table in the memory-cost section, short isolated failure statements among longer practical passages, two different scenario walk-throughs, and FAQ before the final picture. The documentation emphasis distinguishes it from 45's planned priority and replication guide.
 - **Distinctive material:** Conflicting versions of a promise, absent exception authority, misleading green statuses, staff workarounds, ownership of records, and an offline current-record rule. These are testable operating hypotheses, not an internet-first claim.
 - **Research and precautions:** Six inline primary links, at most two per domain (ISO, NIST, MSME Lean/ZED, MeitY). Certification, eligibility, privacy and continuity claims are bounded to the cited source and actual enterprise context. The shipping scene is explicitly hypothetical; no invented client result. 4,011 words; focus in H1 and two H2s, nine phrases checked at least twice, zero em dash.
-- **Publication:** Article, row and log prepared for separate push; remote commit recorded after verification in the next entry.
+- **Publication:** Article, row and log prepared for separate push; verified at `82df1d1`.
+
+## Article 45 — prepublication check, 2026-10-15 06:31 IST
+
+- **Compared with:** 42–44. Article 44 uses a systems absence test and before/after table; 45 opens with a movie interruption and treats the second operator as an editorial through-line. The business-type priority table sits between a one-page specimen and an incident analysis.
+- **Opening and close:** An unnamed advertisement interrupts a film; the close challenges the reader to draft and blind-test one real job in the next seven days. Intro 2, outro 1.
+- **Body and elevation:** Longer reasoning sections alternate with compact decisions and a concrete document schema; a deliberately ambiguous specification change and comparison of two orders test the model. FAQ precedes the challenge. No fabricated client anecdote or invented outcome.
+- **Distinctive material:** Trigger-state ambiguity, procedure-versus-event evidence, unpriced goodwill exceptions, local variation authority, hidden personal-device custody, and process version history. These are underexplored tests, not claims of novelty on the entire internet.
+- **Research and precautions:** Six inline primary links across MSME Lean, ISO committee guidance, Startup India, FSSAI, NIST and MeitY, one per domain; scheme eligibility, certification, franchise legal work, food and privacy obligations are qualified. Word count 4,006; focus in H1 and two H2s, each of nine additional phrases twice, no em dash. SEO title 66 and meta 154 chars.
+- **Publication:** Article, row and log ready for separate push; verification commit recorded in the next entry.
 
 ## Protocol for articles 41–50
 
