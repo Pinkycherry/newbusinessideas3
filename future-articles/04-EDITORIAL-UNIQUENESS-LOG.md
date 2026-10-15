@@ -119,6 +119,15 @@ The source and E-E-A-T standard for this batch: checked primary or official link
 - **Body and elevation:** Causal paragraphs and compact statements lead into a multi-step hypothetical case. The final reconciliation separates order state, cash state and customer outcome; it was placed after the FAQ for a distinct practical close.
 - **Distinctive material:** The denominator of conversion rates, post-sale remedy tail, mismatch between accepted scope and provider card, aging receivable versus collected cash, channel quality versus lead count, and automation of misleading “closed” states.
 - **Research and precautions:** Six official inline links: MSME Lean, RBI TReDS, MSME Samadhaan and current ODR redirect, National Consumer Helpline, NIST small-business guide. Eligibility and redress details require current case-specific checking; no invented failure statistics or real founder story. 4,037 words; focus in H1 and two H2s, nine additional phrases twice each, zero em dash. SEO title 64, meta 146 chars.
+- **Publication:** Article, row and log ready for separate push; verified at `0fa40d5`.
+
+## Article 49 — prepublication check, 2026-10-15 06:45 IST
+
+- **Compared with:** 46–48. The direct callback to 48 and tease of 50 are deliberate serial writing; the body interviews the reader's Tuesday rather than diagnosing one model's failure. The table maps personal factors to evidence, followed by three hypothetical decision cards, not 48's transaction reconciliation.
+- **Opening and close:** Explicit link in prose to yesterday's operational failure theme and tomorrow's viability question; a forward-looking year-later image closes. Intro 4, outro 8.
+- **Body and elevation:** Direct questions, one personal-fit table, hard gates, then a three-offer comparison and buyer-interview protocol. Short clarifying pivots break longer decision paragraphs. FAQ follows the decision cards.
+- **Distinctive material:** The founder's Tuesday as a constraint, veto gates instead of additive scores, learning cost of a pilot, reversibility as an asset, hidden household consent, and a reversal test for channel or worker loss.
+- **Research and precautions:** Six official links: Startup India, FSSAI, US SBA, RBI TReDS, Udyam, MSME ESDP. Foreign planning material is not Indian regulation; financing and food paths are eligibility dependent. All founder profiles are explicitly hypothetical. 4,028 words; focus in H1 and two H2s, nine additional phrases twice each, no em dash. SEO title 65, meta 148 chars.
 - **Publication:** Article, row and log ready for separate push; verification commit in next entry.
 
 ## Protocol for articles 41–50

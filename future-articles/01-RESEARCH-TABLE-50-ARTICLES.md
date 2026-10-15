@@ -736,16 +736,16 @@ Copy everything after the colon. Rules for these fields are in
 - **Intro device:** 14 · **Outro device:** 7
 
 ### Article 49
-- **SEO title:** What I Tell People Who Ask Me Which Business Idea Is "the Best One"
-- **Slug:** `what-i-tell-people-who-ask-which-business-idea-is-best`
+- **SEO title:** Which business idea is the best one for you? A decision interview
+- **Slug:** `which-business-idea-is-the-best-one-for-you-founders`
 - **Focus keyword:** which business idea is the best one
 - **Additional keywords (9):** how to choose the right business idea, best business idea for me quiz style thinking, business idea selection framework, matching a business idea to yourself, business idea fit over business idea hype, personalized business idea advice, choosing between multiple business ideas, business idea decision making framework, there is no single best business idea
 - **Rank Math keywords (focus first, paste as-is):** which business idea is the best one, how to choose the right business idea, best business idea for me quiz style thinking, business idea selection framework, matching a business idea to yourself, business idea fit over business idea hype, personalized business idea advice, choosing between multiple business ideas, business idea decision making framework, there is no single best business idea
-- **SEO meta description (149 chars):** Which business idea is the best one? The questions worth asking back, the real factors that decide fit, and a framework to run on your own shortlist.
+- **SEO meta description (148 chars):** Which business idea is the best one for you? Compare buyer need, time, skills, cash risk and a paid test before choosing from a realistic shortlist.
 - **WordPress tags:** Choosing a Business Idea, Founder Fit, Idea Validation, Founder Decisions, Small Business India
-- **Structure:** H1 → H2 Why this question gets asked constantly, and why it's the wrong one → H2 What I actually ask back before answering → H2 The real factors that decide fit, not hype → H2 A framework anyone can run on their own shortlist → H2 Why the same idea is "the best one" for one person and a mistake for another → H2 A closing word for whoever's asking me this right now
+- **Structure:** H1 → H2 Why the question gets asked → H2 What I would ask before suggesting a shortlist → H2 The factors that decide fit in an actual week → H2 Which business idea is the best one after a paid test? → H2 Which business idea is the best one for two different people? → H2 Three decision cards for the same founder → H2 Frequently asked questions about choosing an idea → H2 A closing word to the person asking me today
 - **Table/elements:** One table — personal factor (time, capital, risk tolerance, skill) vs how it narrows the shortlist.
-- **Pattern:** Direct-address essay with a personal-fit framework table
+- **Pattern:** Direct-address interview with a fit table and three hypothetical decision cards
 - **Word band:** 4,000–6,000
 - **Intro device:** 4 · **Outro device:** 8
 
@@ -816,6 +816,7 @@ stays blank — the plan above is not the same as the work being done.
 | 46 | Yes | 5 | 6 | Rejection memo with warning-sign table and bounded pilot | 4,054 words; ten keyword counts checked, five official links. The old planned “real example” became an explicitly hypothetical meal-subscription case; no false client story. Editorial check 2026-10-15 06:34 IST; separate push pending. |
 | 47 | Yes | 8 | 2 | Craft-versus-owner argument with criteria table and two-column field trial | 4,079 words; ten keyword counts checked, six primary links. Focus and several awkward phrases revised for natural grammar; no unsupported predictor of survival. FAQ moved before the field trial to vary the close. Editorial check 2026-10-15 06:38 IST; separate push pending. |
 | 48 | Yes | 14 | 7 | Transaction-state investigation with early signal table and three-ledger reconciliation | 4,037 words; ten keyword counts checked, six official links, including current MSME ODR redirection. The local service case is explicitly hypothetical. FAQ moved before the final reconciliation. Editorial check 2026-10-15 06:42 IST; separate push pending. |
+| 49 | Yes | 4 | 8 | Direct-address interview with fit table and three hypothetical decision cards | 4,028 words; ten keyword counts checked, six primary official links. Explicitly hypothetical three-card comparison; no universal “best” ranking or fake client dialogue. Editorial check 2026-10-15 06:45 IST; separate push pending. |
 | ... | No | | | | |
 | 50 | No | | | | |
 
