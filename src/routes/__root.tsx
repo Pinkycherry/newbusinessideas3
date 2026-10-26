@@ -268,6 +268,13 @@ function RootShell({ children }: { children: ReactNode }) {
         <FontStylesheet />
         <CanonicalLink />
         <RobotsMeta />
+        {/* Google AdSense: site verification and the ads script (owner, ca-pub-8835654119501794). */}
+        <meta name="google-adsense-account" content="ca-pub-8835654119501794" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8835654119501794"
+          crossOrigin="anonymous"
+        />
         {/* The publishing entity, declared once for the whole site rather than
             per route. Every page already said what it was about; none said who
             stands behind it, which is the E-E-A-T signal that was missing. */}
