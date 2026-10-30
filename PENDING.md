@@ -83,3 +83,10 @@ of the column before writing — the same way the 2026-09-22 repair was done.
 | 28 | Title case: "Work from Home" or "Work From Home"? | One word from you and it is applied to every title. |
 | 29 | Golden Tree transparency — paused at your request. | Only with a real alpha-channel export of the artwork and a screenshot check. |
 | 30 | A full mobile pass, every page on a real phone. | Worth doing before applying for AdSense. |
+
+## 2026-10-30 — comparison and provider handoff verification
+
+| # | What | Why it remains open | Owner |
+|---|---|---|---|
+| 44 | **Verify Grok prefilled-question handoff on the live site** | The server now sends Grok a compact, evidence-led prompt and the browser reserves the destination tab during the click. The URL still uses Grok's consumer `?q=` handoff, which must be tested in a real signed-in desktop and mobile session; Grok can change or ignore this behaviour independently of BBI. | Founder / next live-browser QA |
+| 45 | **Visual QA for the four-idea comparison tray and mobile comparison cards** | The shortlist now supports four ideas, exposes the full India Atlas comparison fields, and adds ChatGPT, Claude, Perplexity and Grok handoffs. Responsive CSS is implemented but has not been verified at 320px, 390px, tablet and desktop widths or against the deployed site. | Founder / next live-browser QA |
