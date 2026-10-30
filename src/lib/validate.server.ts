@@ -42,27 +42,6 @@ function buildValidationPrompt(idea: IdeaDetail, extraContext?: string): string 
   return lines.join("\n");
 }
 
-/**
- * Grok's consumer web handoff is less reliable with long query strings.
- * Keep its URL brief while retaining the idea, founder context and the
- * evidence-first report requirements. Other providers keep the full prompt.
- */
-function buildGrokValidationPrompt(idea: IdeaDetail, extraContext?: string): string {
-  const compact = (value: string | undefined, max: number) =>
-    (value || "").replace(/\s+/g, " ").trim().slice(0, max);
-  const lines = [
-    "Validate this business idea for an Indian founder. Write a practical, evidence-led Markdown report. Cite current sources with URLs and dates. Separate verified facts, estimates, assumptions and unknowns. Never invent demand, market size, buyer results, costs, legal rules or success odds.",
-    "Idea: " + compact(idea.title, 100),
-    "Category: " + compact(idea.categoryName, 55) + " / " + compact(idea.subcategoryName, 55),
-    "Description: " + compact(idea.businessDescription || idea.summary, 380),
-    idea.pros.length ? "Source strengths: " + compact(idea.pros.join("; "), 120) : "",
-    idea.cons.length ? "Source risks: " + compact(idea.cons.join("; "), 120) : "",
-    extraContext?.trim() ? "Founder context: " + compact(extraContext, 300) : "",
-    "Cover the reachable buyer and problem; alternatives and demand evidence; competitors; revenue and pricing; startup and working-capital cash timing; key risks and checks; a 30-day route to a first customer; and the cheapest reversible test. Ask up to three essential questions first only if missing location or budget materially changes the answer; otherwise state assumptions.",
-  ];
-  return lines.filter(Boolean).join("\n");
-}
-
 // PROJECT_BRIEF.md Section 3.3 — ChatGPT (2026-10-02, replacing Gemini) and
 // Grok in the platform roster. Claude and Perplexity's `?q=` deep links are
 // confirmed working (tested live, per Section 8). ChatGPT's and Grok's are the
@@ -93,5 +72,5 @@ export async function buildValidateUrl(
   if (error) throw new Error(error.message);
   if (!data) throw new Error("That idea does not exist in the library.");
   const idea = toIdeaDetail(data as IdeaRow);
-  return platformUrl(platform, platform === "grok" ? buildGrokValidationPrompt(idea, extraContext) : buildValidationPrompt(idea, extraContext));
+  return platformUrl(platform, buildValidationPrompt(idea, extraContext));
 }

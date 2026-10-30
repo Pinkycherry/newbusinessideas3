@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useNavigate } from "@tanstack/react-router";
 import type { IconType } from "react-icons";
 import { SiClaude, SiPerplexity } from "react-icons/si";
 import { RiOpenaiFill } from "react-icons/ri";
+import { Sparkles } from "lucide-react";
 
 import { getValidateUrl } from "@/lib/validate.functions";
 import { VALIDATE_PLATFORMS, type ValidatePlatform } from "@/lib/validate-shared";
@@ -16,36 +17,29 @@ import { useMagnet } from "@/motion";
 
 /**
  * PROJECT_BRIEF.md Section 8 — Validate for Free, with Section 3.2's Step 0
- * The prompt is built server-side. Provider selection opens the chosen
- * destination with the prepared question; the user reviews and sends it there.
+ * precondition: an active paid plan is required before either platform
+ * button actually fires. The master prompt itself is still built entirely
+ * server-side and never rendered or copyable in our UI — only the button
+ * labels/icons name the destinations, which is fine for this functional
+ * picker (the mechanism-hiding rule is about marketing copy elsewhere on
+ * the site, not this screen, which the user only reaches by already using
+ * the feature).
  *
  * PROJECT_BRIEF.md Section 3.3 (2026-09-16) added Gemini and Grok; on
  * 2026-10-02 the founder replaced Gemini with ChatGPT in the same slot.
- * Use the provider marks for Claude, Perplexity and ChatGPT, plus Grok's
- * own favicon for its button. The text label remains visible beside every mark.
+ * react-icons/si carries a real mark for Claude and Perplexity, and
+ * react-icons/ri carries the OpenAI mark (`RiOpenaiFill`) used for ChatGPT;
+ * there is no Grok mark at all (confirmed — the library's only "grok" hit is
+ * `SiNgrok`, the tunnelling tool, unrelated and not used here). Grok's
+ * button falls back to a generic icon; the visible label text still names
+ * it correctly either way.
  */
-const PLATFORM_ICONS: Partial<Record<ValidatePlatform, IconType>> = {
+const PLATFORM_ICONS: Record<ValidatePlatform, IconType> = {
   claude: SiClaude,
   perplexity: SiPerplexity,
   chatgpt: RiOpenaiFill,
+  grok: Sparkles,
 };
-
-function PlatformMark({ platform }: { platform: ValidatePlatform }) {
-  if (platform === "grok") {
-    return (
-      <img
-        src="https://grok.com/images/favicon.svg"
-        alt=""
-        aria-hidden="true"
-        className="h-5 w-5 shrink-0 object-contain"
-        width={20}
-        height={20}
-      />
-    );
-  }
-  const Icon = PLATFORM_ICONS[platform];
-  return Icon ? <Icon aria-hidden className="h-5 w-5 shrink-0" /> : null;
-}
 
 /**
  * `primary` marks the one button on the idea page that carries the page's
@@ -76,6 +70,8 @@ function PlatformButton({
 }) {
   const pill = usePillInteraction<HTMLButtonElement>();
   const magnetRef = useMagnet<HTMLButtonElement>();
+  const Icon = PLATFORM_ICONS[platform.id];
+
   const motionProps = primary
     ? { ref: magnetRef }
     : {
@@ -94,7 +90,7 @@ function PlatformButton({
         onClick={() => onSelect(platform.id)}
         className={primary ? "cm-btn cm-btn-primary bbi-bare" : "cm-btn cm-btn-secondary bbi-bare"}
       >
-        <PlatformMark platform={platform.id} />
+        <Icon aria-hidden className="h-5 w-5 shrink-0" />
         <span>{isOpening ? "Opening…" : `Continue with ${platform.label}`}</span>
       </button>
     );
@@ -109,7 +105,7 @@ function PlatformButton({
         {...motionProps}
         className="glass-pill inline-flex items-center gap-2.5 rounded-md px-6 py-3 text-sm font-semibold disabled:cursor-wait disabled:opacity-70"
       >
-        <PlatformMark platform={platform.id} />
+        <Icon aria-hidden className="h-5 w-5 shrink-0" />
         <span>{isOpening ? "Opening…" : `Continue with ${platform.label}`}</span>
       </button>
     </Spotlight>
@@ -129,32 +125,16 @@ export function ValidateButton({ slug, cinema = false }: { slug: string; cinema?
   const navigate = useNavigate();
   const [context, setContext] = useState("");
   const [activePlatform, setActivePlatform] = useState<ValidatePlatform | null>(null);
-  const [fallback, setFallback] = useState<{ url: string; platform: ValidatePlatform } | null>(null);
-  const popupRef = useRef<Window | null>(null);
 
   const run = useServerFn(getValidateUrl);
   const go = useMutation({
     mutationFn: (platform: ValidatePlatform) =>
       run({ data: { slug, platform, context: context.trim() || undefined } }),
-    onSuccess: (url, platform) => {
-      const popup = popupRef.current;
-      popupRef.current = null;
-      if (popup && !popup.closed) {
-        try {
-          popup.location.replace(url);
-        } catch {
-          setFallback({ url, platform });
-        }
-      } else {
-        setFallback({ url, platform });
-      }
+    onSuccess: (url) => {
+      window.open(url, "_blank", "noopener,noreferrer");
       setActivePlatform(null);
     },
-    onError: () => {
-      popupRef.current?.close();
-      popupRef.current = null;
-      setActivePlatform(null);
-    },
+    onError: () => setActivePlatform(null),
   });
 
   const handleSelect = (platform: ValidatePlatform) => {
@@ -165,12 +145,6 @@ export function ValidateButton({ slug, cinema = false }: { slug: string; cinema?
       navigate({ to: "/sign-in", search: { redirect: ideaPath } });
       return;
     }
-    setFallback(null);
-    // Reserve the new tab during the user's click. Opening it only after the
-    // server request can be blocked by browsers because the gesture has ended.
-    const popup = window.open("about:blank", "_blank");
-    if (popup) popup.opener = null;
-    popupRef.current = popup;
     setActivePlatform(platform);
     go.mutate(platform);
   };
@@ -182,8 +156,8 @@ export function ValidateButton({ slug, cinema = false }: { slug: string; cinema?
       <p className="t-eyebrow">Free · no extra cost, no limit</p>
       <h2 className="mt-2 font-display text-xl font-bold tracking-tight">Validate this idea</h2>
       <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
-        We do not charge for validation. We prepare a research prompt for the AI tool you choose.
-        The provider's own access and usage limits still apply.
+        We do not charge for validation. You get a fully researched write-up on this idea — free,
+        using AI tools you already pay for, as many times as you want.
       </p>
 
       <div className="mt-6 flex flex-wrap gap-3">
@@ -215,25 +189,9 @@ export function ValidateButton({ slug, cinema = false }: { slug: string; cinema?
         </p>
       )}
 
-      {fallback && (
-        <div className="mt-5 rounded-2xl border border-border bg-background/70 px-4 py-3" role="status">
-          <p className="text-sm text-muted-foreground">
-            Your browser blocked the new tab. Open {VALIDATE_PLATFORMS.find((item) => item.id === fallback.platform)?.label ?? "the selected tool"} with the prepared question here.
-          </p>
-          <a
-            href={fallback.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 inline-flex min-h-10 items-center rounded-lg border border-border px-4 py-2 text-sm font-semibold text-foreground underline underline-offset-4"
-          >
-            Open {VALIDATE_PLATFORMS.find((item) => item.id === fallback.platform)?.label ?? "selected tool"}
-          </a>
-        </div>
-      )}
-
       <p className="mt-5 text-xs leading-relaxed text-muted-foreground">
-        Choose a tool to open the prepared question. Review it there and send it when you are ready.
-        Grok receives a shorter handoff to reduce URL-length problems.
+        Pick one above and your research opens in a new tab with everything filled in — just hit
+        enter. Not signed in there yet? Sign in, then tap Validate again.
       </p>
     </section>
   );

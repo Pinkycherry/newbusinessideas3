@@ -129,7 +129,7 @@ The free Gemini tier is a quota-constrained pilot, not unlimited infrastructure.
 Name: **BBI India Idea Atlas**. Keep crimson `#ca0808`, ink `#120404`, deep red `#270a0a`, paper `#fff1e8`. Poppins in the real implementation, existing font assets where available. The accompanying standalone HTML uses a system fallback to make the preview self-contained.
 
 - Directory: editorial split hero, large type, physical index tabs, an integrated search field, grouped filter controls, compact numbered set rows and a small cream “start here” selection guide. No image grid.
-- Detail: folded dossier header, sticky local contents rail on desktop, compact ranked idea rows with progressive disclosure, and a maximum-four-item comparison tray. Mobile keeps one column and a reachable filter trigger.
+- Detail: folded dossier header, sticky local contents rail on desktop, compact ranked idea rows with progressive disclosure, and a maximum-three-item comparison tray. Mobile keeps one column and a reachable filter trigger.
 - Different hero compositions for budget, AI, gaming and local-service families, built from a few reusable CSS/SVG variants. Do not hand-code an entire page for every set.
 - Finite interactions: sliding index underline, subtle paper lift, rotating disclosure indicator, short button-arrow movement and a one-time comparison-tray entrance. No continuous motion, huge blur, canvas, autoplay or scroll hijacking.
 - SSR first-page content; paginate the directory at 24 sets and long lists at 20 ideas. Fetch only needed columns. Index set status/family/slug and membership set/rank. Never download the complete idea database to render a list.
