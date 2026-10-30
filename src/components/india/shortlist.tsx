@@ -16,7 +16,7 @@ import { getIndiaIdeas } from "@/lib/india.functions";
 import { INDIA_SHORTLIST_MAX, budgetLabel, hoursLabel, type IndiaIdea } from "@/lib/india-shared";
 
 /**
- * Compare up to three ideas. Only the ideas' public keys are stored, in
+ * Compare up to four ideas. Only the ideas' public keys are stored, in
  * localStorage, and storage that throws (private mode, blocked) just means the
  * shortlist lasts for this page view. No sign-in, nothing sent anywhere.
  */
@@ -80,7 +80,7 @@ export function ShortlistProvider({
     });
   }, [pageIdeas]);
 
-  // Saved ideas from another page or set: fetch just those (max three).
+  // Saved ideas from another page or set: fetch just those (max four).
   useEffect(() => {
     const missing = keys.filter((k) => !known[k]);
     if (!missing.length) return;
@@ -116,7 +116,7 @@ export function ShortlistProvider({
         update(keys.filter((k) => k !== idea.key));
         setStatus(`Removed "${idea.title}".`);
       } else if (keys.length >= INDIA_SHORTLIST_MAX) {
-        setStatus("Your shortlist holds three ideas. Remove one to add another.");
+        setStatus("Your shortlist holds four ideas. Remove one to add another.");
       } else {
         update([...keys, idea.key]);
         setStatus(`Added "${idea.title}". ${keys.length + 1} of ${INDIA_SHORTLIST_MAX} selected.`);
@@ -273,7 +273,7 @@ export function ShortlistProvider({
           says so.
         </p>
         <div className="ia-compare-scroll">
-          <table className="ia-compare">
+          <table className="ia-compare ia-compare-desktop">
             <thead>
               <tr>
                 <td />
