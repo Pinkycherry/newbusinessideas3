@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useNavigate } from "@tanstack/react-router";
 import type { IconType } from "react-icons";
 import { SiClaude, SiPerplexity } from "react-icons/si";
 import { RiOpenaiFill } from "react-icons/ri";
-import { Sparkles } from "lucide-react";
 
 import { getValidateUrl } from "@/lib/validate.functions";
 import { VALIDATE_PLATFORMS, type ValidatePlatform } from "@/lib/validate-shared";
@@ -34,12 +33,28 @@ import { useMagnet } from "@/motion";
  * button falls back to a generic icon; the visible label text still names
  * it correctly either way.
  */
-const PLATFORM_ICONS: Record<ValidatePlatform, IconType> = {
+const PLATFORM_ICONS: Partial<Record<ValidatePlatform, IconType>> = {
   claude: SiClaude,
   perplexity: SiPerplexity,
   chatgpt: RiOpenaiFill,
-  grok: Sparkles,
 };
+
+function PlatformMark({ platform }: { platform: ValidatePlatform }) {
+  if (platform === "grok") {
+    return (
+      <img
+        src="https://grok.com/images/favicon.svg"
+        alt=""
+        aria-hidden="true"
+        className="h-5 w-5 shrink-0 object-contain"
+        width={20}
+        height={20}
+      />
+    );
+  }
+  const Icon = PLATFORM_ICONS[platform];
+  return Icon ? <PlatformMark platform={platform.id} /> : null;
+}
 
 /**
  * `primary` marks the one button on the idea page that carries the page's
@@ -125,16 +140,32 @@ export function ValidateButton({ slug, cinema = false }: { slug: string; cinema?
   const navigate = useNavigate();
   const [context, setContext] = useState("");
   const [activePlatform, setActivePlatform] = useState<ValidatePlatform | null>(null);
+  const [fallback, setFallback] = useState<{ url: string; platform: ValidatePlatform } | null>(null);
+  const popupRef = useRef<Window | null>(null);
 
   const run = useServerFn(getValidateUrl);
   const go = useMutation({
     mutationFn: (platform: ValidatePlatform) =>
       run({ data: { slug, platform, context: context.trim() || undefined } }),
-    onSuccess: (url) => {
-      window.open(url, "_blank", "noopener,noreferrer");
+    onSuccess: (url, platform) => {
+      const popup = popupRef.current;
+      popupRef.current = null;
+      if (popup && !popup.closed) {
+        try {
+          popup.location.replace(url);
+        } catch {
+          setFallback({ url, platform });
+        }
+      } else {
+        setFallback({ url, platform });
+      }
       setActivePlatform(null);
     },
-    onError: () => setActivePlatform(null),
+    onError: () => {
+      popupRef.current?.close();
+      popupRef.current = null;
+      setActivePlatform(null);
+    },
   });
 
   const handleSelect = (platform: ValidatePlatform) => {
@@ -145,6 +176,12 @@ export function ValidateButton({ slug, cinema = false }: { slug: string; cinema?
       navigate({ to: "/sign-in", search: { redirect: ideaPath } });
       return;
     }
+    setFallback(null);
+    // Reserve the new tab during the user's click. Opening it only after the
+    // server request can be blocked by browsers because the gesture has ended.
+    const popup = window.open("about:blank", "_blank");
+    if (popup) popup.opener = null;
+    popupRef.current = popup;
     setActivePlatform(platform);
     go.mutate(platform);
   };
@@ -156,8 +193,8 @@ export function ValidateButton({ slug, cinema = false }: { slug: string; cinema?
       <p className="t-eyebrow">Free · no extra cost, no limit</p>
       <h2 className="mt-2 font-display text-xl font-bold tracking-tight">Validate this idea</h2>
       <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
-        We do not charge for validation. You get a fully researched write-up on this idea — free,
-        using AI tools you already pay for, as many times as you want.
+        We do not charge for validation. We prepare a research prompt for the AI tool you choose.
+        The provider's own access and usage limits still apply.
       </p>
 
       <div className="mt-6 flex flex-wrap gap-3">
@@ -189,9 +226,25 @@ export function ValidateButton({ slug, cinema = false }: { slug: string; cinema?
         </p>
       )}
 
+      {fallback && (
+        <div className="mt-5 rounded-2xl border border-border bg-background/70 px-4 py-3" role="status">
+          <p className="text-sm text-muted-foreground">
+            Your browser blocked the new tab. Open {VALIDATE_PLATFORMS.find((item) => item.id === fallback.platform)?.label ?? "the selected tool"} with the prepared question here.
+          </p>
+          <a
+            href={fallback.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex min-h-10 items-center rounded-lg border border-border px-4 py-2 text-sm font-semibold text-foreground underline underline-offset-4"
+          >
+            Open {VALIDATE_PLATFORMS.find((item) => item.id === fallback.platform)?.label ?? "selected tool"}
+          </a>
+        </div>
+      )}
+
       <p className="mt-5 text-xs leading-relaxed text-muted-foreground">
-        Pick one above and your research opens in a new tab with everything filled in — just hit
-        enter. Not signed in there yet? Sign in, then tap Validate again.
+        Choose a tool to open the prepared question. Review it there and send it when you are ready.
+        Grok receives a shorter handoff to reduce URL-length problems.
       </p>
     </section>
   );
