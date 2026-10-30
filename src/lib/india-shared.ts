@@ -9,7 +9,7 @@ import { z } from "zod";
 
 export const INDIA_SETS_PER_PAGE = 24;
 export const INDIA_IDEAS_PER_PAGE = 20;
-export const INDIA_SHORTLIST_MAX = 3;
+export const INDIA_SHORTLIST_MAX = 4;
 
 export const INDIA_FAMILIES = {
   budget: "Budget",
