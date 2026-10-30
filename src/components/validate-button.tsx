@@ -16,22 +16,13 @@ import { useMagnet } from "@/motion";
 
 /**
  * PROJECT_BRIEF.md Section 8 — Validate for Free, with Section 3.2's Step 0
- * precondition: an active paid plan is required before either platform
- * button actually fires. The master prompt itself is still built entirely
- * server-side and never rendered or copyable in our UI — only the button
- * labels/icons name the destinations, which is fine for this functional
- * picker (the mechanism-hiding rule is about marketing copy elsewhere on
- * the site, not this screen, which the user only reaches by already using
- * the feature).
+ * The prompt is built server-side. Provider selection opens the chosen
+ * destination with the prepared question; the user reviews and sends it there.
  *
  * PROJECT_BRIEF.md Section 3.3 (2026-09-16) added Gemini and Grok; on
  * 2026-10-02 the founder replaced Gemini with ChatGPT in the same slot.
- * react-icons/si carries a real mark for Claude and Perplexity, and
- * react-icons/ri carries the OpenAI mark (`RiOpenaiFill`) used for ChatGPT;
- * there is no Grok mark at all (confirmed — the library's only "grok" hit is
- * `SiNgrok`, the tunnelling tool, unrelated and not used here). Grok's
- * button falls back to a generic icon; the visible label text still names
- * it correctly either way.
+ * Use the provider marks for Claude, Perplexity and ChatGPT, plus Grok's
+ * own favicon for its button. The text label remains visible beside every mark.
  */
 const PLATFORM_ICONS: Partial<Record<ValidatePlatform, IconType>> = {
   claude: SiClaude,
@@ -53,7 +44,7 @@ function PlatformMark({ platform }: { platform: ValidatePlatform }) {
     );
   }
   const Icon = PLATFORM_ICONS[platform];
-  return Icon ? <PlatformMark platform={platform.id} /> : null;
+  return Icon ? <Icon aria-hidden className="h-5 w-5 shrink-0" /> : null;
 }
 
 /**
@@ -85,8 +76,6 @@ function PlatformButton({
 }) {
   const pill = usePillInteraction<HTMLButtonElement>();
   const magnetRef = useMagnet<HTMLButtonElement>();
-  const Icon = PLATFORM_ICONS[platform.id];
-
   const motionProps = primary
     ? { ref: magnetRef }
     : {
