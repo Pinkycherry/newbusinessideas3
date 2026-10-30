@@ -94,7 +94,7 @@ function PlatformButton({
         onClick={() => onSelect(platform.id)}
         className={primary ? "cm-btn cm-btn-primary bbi-bare" : "cm-btn cm-btn-secondary bbi-bare"}
       >
-        <Icon aria-hidden className="h-5 w-5 shrink-0" />
+        <PlatformMark platform={platform.id} />
         <span>{isOpening ? "Opening…" : `Continue with ${platform.label}`}</span>
       </button>
     );
@@ -109,7 +109,7 @@ function PlatformButton({
         {...motionProps}
         className="glass-pill inline-flex items-center gap-2.5 rounded-md px-6 py-3 text-sm font-semibold disabled:cursor-wait disabled:opacity-70"
       >
-        <Icon aria-hidden className="h-5 w-5 shrink-0" />
+        <PlatformMark platform={platform.id} />
         <span>{isOpening ? "Opening…" : `Continue with ${platform.label}`}</span>
       </button>
     </Spotlight>
