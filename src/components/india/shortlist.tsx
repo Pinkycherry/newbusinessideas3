@@ -1,4 +1,6 @@
 import { createPortal } from "react-dom";
+import { SiClaude, SiPerplexity } from "react-icons/si";
+import { RiOpenaiFill } from "react-icons/ri";
 import {
   createContext,
   useCallback,
@@ -128,6 +130,58 @@ export function ShortlistProvider({
     [keys, toggle],
   );
   const selected = keys.map((k) => known[k]).filter((i): i is IndiaIdea => Boolean(i));
+  const comparisonRows: [string, (idea: IndiaIdea) => string][] = [
+    ["Who pays", (idea) => idea.customer],
+    ["Problem", (idea) => idea.problem],
+    ["The offer", (idea) => idea.offer],
+    ["How to reach the buyer", (idea) => idea.customerReach],
+    ["Revenue model", (idea) => idea.revenueModel],
+    [
+      "Budget estimate",
+      (idea) => {
+        const basis = idea.budgetBasis ? `. ${idea.budgetBasis}` : "";
+        const excludes = idea.budgetExcludes ? ` Excludes: ${idea.budgetExcludes}` : "";
+        return budgetLabel(idea) + basis + excludes;
+      },
+    ],
+    ["Assumptions", (idea) => idea.assumptions || "Not estimated"],
+    ["Effort", (idea) => hoursLabel(idea)],
+    ["Skills", (idea) => (idea.skillTags.length ? idea.skillTags.join(", ") : "Not estimated")],
+    ["First test", (idea) => idea.firstTest],
+    ["Main risk", (idea) => idea.mainRisk],
+  ];
+  const comparisonPrompt = [
+    "Compare these selected business ideas for a founder in India. Use the same criteria for every idea. Distinguish source details, current evidence, estimates and assumptions. Do not invent demand, costs, customer results, market size or success probabilities. Cite current sources with URLs and dates.",
+    ...selected.map((idea, index) => [
+      "IDEA " + (index + 1) + ": " + idea.title,
+      "Buyer: " + idea.customer,
+      "Problem: " + idea.problem,
+      "Offer: " + idea.offer,
+      "Customer reach: " + idea.customerReach,
+      "Revenue model: " + idea.revenueModel,
+      "Budget: " + budgetLabel(idea) + (idea.budgetBasis ? " — " + idea.budgetBasis : ""),
+      "Assumptions: " + (idea.assumptions || "Not estimated"),
+      "Time: " + hoursLabel(idea),
+      "Skills: " + (idea.skillTags.join(", ") || "Not estimated"),
+      "First test: " + idea.firstTest,
+      "Main risk: " + idea.mainRisk,
+    ].join("\n")),
+    "Compare buyer access, evidence of a real problem, alternatives, revenue, cash needed before collection, delivery effort, risks and the cheapest next test. Identify missing evidence instead of filling gaps with guesses. Do not declare a winner unless the evidence supports a clear, qualified recommendation.",
+  ].join("\n\n");
+  const grokComparisonPrompt = [
+    "Compare these business ideas for an Indian founder. Use current sources with URLs and dates. Separate facts, assumptions and unknowns; never invent demand or success odds.",
+    ...selected.map((idea) => [
+      "IDEA: " + idea.title,
+      "Buyer: " + idea.customer.slice(0, 75),
+      "Problem: " + idea.problem.slice(0, 75),
+      "Offer: " + idea.offer.slice(0, 75),
+      "Revenue: " + idea.revenueModel.slice(0, 75),
+      "Budget: " + budgetLabel(idea),
+      "First test: " + idea.firstTest.slice(0, 75),
+      "Risk: " + idea.mainRisk.slice(0, 75),
+    ].join("\n")),
+    "Compare buyer access, demand evidence, cash, revenue, effort and risk. Recommend the cheapest next test; do not invent facts.",
+  ].join("\n\n");
 
   useEffect(() => {
     if (!keys.length && dialogRef.current?.open) dialogRef.current.close();
@@ -238,24 +292,7 @@ export function ShortlistProvider({
               </tr>
             </thead>
             <tbody>
-              {(
-                [
-                  ["Who pays", (i) => i.customer],
-                  ["The offer", (i) => i.offer],
-                  [
-                    "Budget estimate",
-                    (i) => (i.budgetBasis ? `${budgetLabel(i)}. ${i.budgetBasis}` : budgetLabel(i)),
-                  ],
-                  ["Assumptions", (i) => i.assumptions ?? "Not estimated"],
-                  ["Effort", (i) => hoursLabel(i)],
-                  [
-                    "Skills",
-                    (i) => (i.skillTags.length ? i.skillTags.join(", ") : "Not estimated"),
-                  ],
-                  ["First test", (i) => i.firstTest],
-                  ["Main risk", (i) => i.mainRisk],
-                ] as [string, (i: IndiaIdea) => string][]
-              ).map(([label, get]) => (
+              {comparisonRows.map(([label, get]) => (
                 <tr key={label}>
                   <th scope="row">{label}</th>
                   {selected.map((idea) => (
@@ -266,6 +303,50 @@ export function ShortlistProvider({
             </tbody>
           </table>
         </div>
+        <div className="ia-compare-mobile" aria-label="Mobile idea comparison">
+          {selected.map((idea) => (
+            <article key={idea.key} className="ia-compare-card">
+              <h3>{idea.title}</h3>
+              <dl>
+                {comparisonRows.map(([label, get]) => (
+                  <div key={label}>
+                    <dt>{label}</dt>
+                    <dd>{get(idea)}</dd>
+                  </div>
+                ))}
+              </dl>
+              <button
+                type="button"
+                className="bbi-bare ia-remove"
+                onClick={() => toggle(idea)}
+              >
+                Remove this idea
+              </button>
+            </article>
+          ))}
+        </div>
+        {selected.length >= 2 && (
+          <section className="ia-ai-handoff" aria-labelledby="ia-ai-handoff-title">
+            <h3 id="ia-ai-handoff-title">Research this comparison with AI</h3>
+            <p>Choose a tool. The prepared question includes all selected ideas and asks it to compare the same evidence across each one.</p>
+            <div className="ia-ai-providers">
+              <a href={`https://chatgpt.com/?q=${encodeURIComponent(comparisonPrompt)}`} target="_blank" rel="noopener noreferrer">
+                <RiOpenaiFill aria-hidden="true" /> <span>ChatGPT</span>
+              </a>
+              <a href={`https://claude.ai/new?q=${encodeURIComponent(comparisonPrompt)}`} target="_blank" rel="noopener noreferrer">
+                <SiClaude aria-hidden="true" /> <span>Claude</span>
+              </a>
+              <a href={`https://www.perplexity.ai/search?q=${encodeURIComponent(comparisonPrompt)}`} target="_blank" rel="noopener noreferrer">
+                <SiPerplexity aria-hidden="true" /> <span>Perplexity</span>
+              </a>
+              <a href={`https://grok.com/?q=${encodeURIComponent(grokComparisonPrompt)}`} target="_blank" rel="noopener noreferrer">
+                <img src="https://grok.com/images/favicon.svg" alt="" aria-hidden="true" width={22} height={22} />
+                <span>Grok</span>
+              </a>
+            </div>
+            <p className="ia-ai-note">Review the question in the selected tool and send it there. Provider access and URL-prefill behaviour can vary.</p>
+          </section>
+        )}
       </dialog>
     </ShortlistContext.Provider>
   );
