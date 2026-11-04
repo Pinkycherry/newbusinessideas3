@@ -1,3 +1,4 @@
+- 2026-11-04 IST: Added public/ads.txt (Google AdSense pub-8835654119501794) so https://bbusiness.online/ads.txt serves; it returned 404 before.
 # OPS_LOG
 
 Changes made **outside this repo**, newest first. Git history records code;
