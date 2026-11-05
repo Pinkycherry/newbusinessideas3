@@ -297,16 +297,7 @@ function formatDay(iso: string | null) {
  * says so and links to how scores should be read.
  */
 function DemandSignal({ score, scoredOn }: { score: number | null; scoredOn: string | null }) {
-  if (score === null) {
-    return (
-      <section className="cm-signal" aria-labelledby="cm-demand-h">
-        <h2 id="cm-demand-h" className="cm-signal-label text-xs">
-          Demand score
-        </h2>
-        <p className="cm-signal-note">This blueprint has no demand score yet.</p>
-      </section>
-    );
-  }
+  if (score === null) return null;
   const pct = Math.max(0, Math.min(100, score));
   const band = pct >= 85 ? "Strong momentum" : pct >= 70 ? "Steady demand" : "Niche, but real";
   return (
@@ -507,7 +498,6 @@ export function IdeaCinemaPage({
           <div className="cm-hero-aside">
             <DemandSignal score={idea.trendScore} scoredOn={scoredOn} />
             <div className="cm-hero-meta">
-              <span className="cm-hero-id">{idea.ideaId}</span>
               <CinemaContents sections={sections} variant="hero" />
             </div>
             {idea.keywords.length > 0 && (
@@ -632,7 +622,9 @@ export function IdeaCinemaPage({
                 </div>
               )}
               <p className="cm-ledger-note">
-                {hasFigures
+                {hasFigures && idea.externalLinks.length === 0
+                  ? "This is a rough starting range. Check it against current local prices before you rely on it."
+                  : hasFigures
                   ? "Figures are quoted from the sources listed under Useful resources on this page. Check them against current local prices before you rely on them."
                   : "No sourced cost or earnings figures exist for this idea yet, so none are shown. Nothing here is an estimate."}
               </p>
