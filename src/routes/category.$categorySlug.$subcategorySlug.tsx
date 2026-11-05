@@ -18,6 +18,8 @@ import {
   useTextReveal,
 } from "@/motion";
 
+/** New category and subcategory names already end in "Business Ideas"; never print it twice. */
+const asIdeas = (name: string) => (/business ideas$/i.test(name.trim()) ? name.trim() : `${name} Business Ideas`);
 const subQuery = (categorySlug: string, subcategorySlug: string) =>
   queryOptions({
     queryKey: ["subcategory", categorySlug, subcategorySlug],
@@ -55,12 +57,12 @@ export const Route = createFileRoute("/category/$categorySlug/$subcategorySlug")
     const image = categoryImage(params.categorySlug);
     return {
       meta: [
-        { title: `${name} Ideas | BBI – Bro Business Ideas` },
+        { title: `${asIdeas(name)} | BBI – Bro Business Ideas` },
         {
           name: "description",
           content: `Business idea blueprints in ${name}: what the business is, who it serves, pros, cons and a founder-fit verdict.`,
         },
-        { property: "og:title", content: `${name} Ideas | BBI – Bro Business Ideas` },
+        { property: "og:title", content: `${asIdeas(name)} | BBI – Bro Business Ideas` },
         {
           property: "og:description",
           content: `Business idea blueprints in ${name} with pros, cons and a founder-fit verdict.`,
@@ -125,7 +127,7 @@ function SubcategoryPage() {
         schema={[
           collectionPageSchema({
             path: subcategoryPath,
-            name: `${subcategoryName} Business Ideas`,
+            name: asIdeas(subcategoryName),
             description: `Business idea blueprints in ${subcategoryName}: what the business is, who it serves, pros, cons and a founder-fit verdict.`,
             itemCount: data.ideas.length,
             image: categoryImage(categorySlug).src,

@@ -22,6 +22,8 @@ import {
   useTextReveal,
 } from "@/motion";
 
+/** New category and subcategory names already end in "Business Ideas"; never print it twice. */
+const asIdeas = (name: string) => (/business ideas$/i.test(name.trim()) ? name.trim() : `${name} Business Ideas`);
 const categoryQuery = (categorySlug: string) =>
   queryOptions({
     queryKey: ["category", categorySlug],
@@ -48,14 +50,14 @@ export const Route = createFileRoute("/category/$categorySlug/")({
     const isExpansionCategory = Boolean(EXPANSION_SUBCATEGORIES[params.categorySlug]);
     return {
       meta: [
-        { title: `${name} Business Ideas | BBI – Bro Business Ideas` },
+        { title: `${asIdeas(name)} | BBI – Bro Business Ideas` },
         {
           name: "description",
           content: isExpansionCategory
             ? `Explore ten ${name} collections and their practical business ideas for Indian readers.`
             : `Explore ${loaderData?.ideas.length ?? 0} ${name} business ideas with pros, cons and verdicts.`,
         },
-        { property: "og:title", content: `${name} Business Ideas | BBI – Bro Business Ideas` },
+        { property: "og:title", content: `${asIdeas(name)} | BBI – Bro Business Ideas` },
         {
           property: "og:description",
           content: isExpansionCategory
@@ -141,7 +143,7 @@ function CategoryPage() {
         schema={[
           collectionPageSchema({
             path: categoryPath,
-            name: `${categoryName} Business Ideas`,
+            name: asIdeas(categoryName),
             description: expansionSubcategories
               ? `Ten ${categoryName} collections with practical ideas for Indian readers.`
               : `${categoryName} business ideas with pros, cons and verdicts.`,
