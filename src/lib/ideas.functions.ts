@@ -1,3 +1,4 @@
+import { OLD_CATEGORY_REDIRECTS } from "@/config/old-category-redirects";
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import { queryOptions } from "@tanstack/react-query";
@@ -206,6 +207,11 @@ export const getIdeaBySlug = createServerFn({ method: "GET" })
       .maybeSingle();
     if (error) throw new Error(error.message);
     if (!data) return null;
+    // AdSense approval: old ideas are kept in the database but never shown; their URL moves to the closest new category.
+    if ((data as IdeaRow).status === "old") {
+      const cat = (data as IdeaRow).category_slug;
+      return { moved: `/category/${OLD_CATEGORY_REDIRECTS[cat] ?? cat}` } as never;
+    }
     const detail = toIdeaDetail(data as IdeaRow);
 
     /* Section 9 — every one of these is ORDER BY random() LIMIT n at the query

@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { db } from "./ideas.functions";
+import { EXPANSION_CATEGORY_NAMES } from "@/config/expansion-taxonomy";
 import type { IdeaCard } from "./ideas-shared";
 
 /**
@@ -28,7 +29,7 @@ export const getExpansionCategoryPage = createServerFn({ method: "GET" })
     ).map((row) => ({ slug: row.subcategory_slug, ideaCount: Number(row.idea_count) || 0 }));
 
     return {
-      categoryName: categoryResult.data?.name ?? null,
+      categoryName: categoryResult.data?.name ?? EXPANSION_CATEGORY_NAMES[input.categorySlug] ?? null,
       categorySlug: input.categorySlug,
       ideas: [] as IdeaCard[],
       totalIdeas: subcategoryCounts.reduce((sum, item) => sum + item.ideaCount, 0),
