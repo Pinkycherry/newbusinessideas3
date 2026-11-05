@@ -1014,7 +1014,7 @@ function BrandStatementBanner() {
             it shows everything rather than nothing. */}
         <HomeCopy
           className="max-w-[62ch] text-base leading-relaxed text-muted-foreground sm:text-lg"
-          words={`We have been where you are. We paid for those $20 "validation" platforms too. We got a few generic lines back, spent our money, and got nothing real in return. When we asked for help, no one answered. That hurt. So we built the thing we needed back then — a free, honest library of small business ideas and side hustles, with real research, not empty hype. Browse for free, always. Validate as many times as you want, at no extra cost. Free after one sign-in. Never a bill, ever.`}
+          words={`We have been where you are. We paid for those $20 "validation" platforms too. We got a few generic lines back, spent our money, and got nothing real in return. When we asked for help, no one answered. That hurt. So we built the thing we needed back then — a free, honest library of small business ideas and side hustles, with real research, not empty hype. Browse for free, always. Validate as many times as you want, at no extra cost. Free for everyone, always.`}
         />
       </div>
     </section>
