@@ -17,7 +17,7 @@ export const templateImages = {
     focus: "business planning templates",
     keywords: ["Indian founders", "buyer research", "startup costs"],
     longTail: ["business planning templates for Indian first time founders", "how to examine buyers and startup costs before launching"],
-    description: "BusinessIdea.io business planning templates bring buyer research, startup costs and the next founder decision into one working draft.",
+    description: "bbusiness.online business planning templates bring buyer research, startup costs and the next founder decision into one working draft.",
     width: 1600, height: 900,
   },
   interview: {
@@ -26,7 +26,7 @@ export const templateImages = {
     focus: "customer interview template",
     keywords: ["customer persona", "Indian founders", "buyer evidence"],
     longTail: ["customer interview template for Indian business founders", "how to record buyer evidence for a customer persona"],
-    description: "BusinessIdea.io customer interview and persona templates help founders listen to buyers and separate observed evidence from assumptions.",
+    description: "bbusiness.online customer interview and persona templates help founders listen to buyers and separate observed evidence from assumptions.",
     width: 1600, height: 900,
   },
   canvas: {
@@ -35,7 +35,7 @@ export const templateImages = {
     focus: "lean canvas template",
     keywords: ["SaaS business plan", "Indian founders", "business decisions"],
     longTail: ["lean canvas template for Indian software founders", "how to organise a SaaS business plan before launch"],
-    description: "BusinessIdea.io lean canvas and SaaS business plan templates organise a founder's buyer, offer, revenue and costs for the next decision.",
+    description: "bbusiness.online lean canvas and SaaS business plan templates organise a founder's buyer, offer, revenue and costs for the next decision.",
     width: 1600, height: 900,
   },
 } as const satisfies Record<string, TemplateImage>;

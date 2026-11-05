@@ -19,7 +19,7 @@ export const Route = createFileRoute("/startup-guides/$slug")({
     const guide = getGuideBySlug(params.slug);
     const art = guide ? guideImage(guide.slug) : null;
     return { meta: [
-      { title: guide ? `${guide.title} | BusinessIdea.io` : "Guide not found | BusinessIdea.io" },
+      { title: guide ? `${guide.title} | bbusiness.online` : "Guide not found | bbusiness.online" },
       { name: "description", content: guide?.description ?? "Explore practical startup guides." },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },

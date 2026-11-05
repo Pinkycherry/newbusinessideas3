@@ -8,7 +8,7 @@ import { getListsHub } from "@/lib/lists.functions";
 export const Route = createFileRoute("/all-business-ideas")({
   loader: () => getListsHub(),
   head: () => ({ meta: [
-    { title: "All Business Idea Lists | BusinessIdea.io" },
+    { title: "All Business Idea Lists | bbusiness.online" },
     { name: "description", content: "Search every published business idea list and filter the library by category." },
   ] }),
   component: AllBusinessIdeasPage,

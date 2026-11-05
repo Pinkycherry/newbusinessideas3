@@ -9,7 +9,7 @@ export const Route = createFileRoute("/tools")({
     return { hub, posts: blog.posts };
   },
   head: () => ({ meta: [
-    { title: "Founder Tools and Resources | BusinessIdea.io" },
+    { title: "Founder Tools and Resources | bbusiness.online" },
     { name: "description", content: "Explore external founder tools by stage, then use our business calculators, guides and idea lists to make your next decision." },
   ] }),
   component: ToolsPage,

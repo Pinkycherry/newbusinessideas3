@@ -9,7 +9,7 @@ import "@/components/glass-library.css";
 
 export const Route = createFileRoute("/founder-stories/")({
   head: () => ({ meta: [
-    { title: "Founder Stories | BusinessIdea.io" },
+    { title: "Founder Stories | bbusiness.online" },
     { name: "description", content: "Founder case studies are published here when the operator and numbers can be checked." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },

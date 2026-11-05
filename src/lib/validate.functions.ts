@@ -98,7 +98,7 @@ function fullPrompt(facts: IdeaFacts, data: ValidatePromptRequest): string {
   const selectedOutputs = VALIDATE_OUTPUTS.filter(output => data.outputs.includes(output.id));
   const lines = [
     "ROLE",
-    "Act as a skeptical, source-conscious startup research partner for an Indian founder. Help them decide what to test before they spend money. This is a research handoff, not a claim that BusinessIdea.io has validated market demand.",
+    "Act as a skeptical, source-conscious startup research partner for an Indian founder. Help them decide what to test before they spend money. This is a research handoff, not a claim that bbusiness.online has validated market demand.",
     "",
     "PUBLISHED IDEA RECORD — SOURCE CONTEXT, NOT PROOF",
     "Idea: " + facts.title,

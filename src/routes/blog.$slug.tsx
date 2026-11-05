@@ -26,11 +26,11 @@ export const Route = createFileRoute("/blog/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [
-      { title: "Article not found | BusinessIdea.io" },
+      { title: "Article not found | bbusiness.online" },
       { name: "robots", content: "noindex" },
     ] };
     const { post } = loaderData;
-    const title = `${post.title} | BusinessIdea.io`;
+    const title = `${post.title} | bbusiness.online`;
     return { meta: [
       { title }, { name: "description", content: post.excerpt },
       { property: "og:title", content: title },

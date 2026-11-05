@@ -20,7 +20,7 @@ import { getBrowseIdeas } from "@/lib/browse.functions";
 
 export const Route = createFileRoute("/product")({
   head: () => ({ meta: [
-    { title: "Business Idea Validation Workbench in India | BusinessIdea.io" },
+    { title: "Business Idea Validation Workbench in India | bbusiness.online" },
     { name: "description", content: "Build a practical, India-focused validation prompt from published business ideas, local constraints and the output you need. Continue in ChatGPT, Claude, Grok or Perplexity without BBI AI credits." },
     { name: "robots", content: "noindex,nofollow,noarchive,noimageindex" },
   ] }),
@@ -107,12 +107,12 @@ function ProductPage() {
         <div className={wrap}>
           <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-bold text-blue-800">Your founder workspace</span>
           <h1 className="mt-5 max-w-3xl text-4xl font-bold leading-tight tracking-tight md:text-5xl">Turn your idea and real constraints into the next decision.</h1>
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">Choose a published idea, add your own location, budget and available time, then prepare a specific prompt for ChatGPT, Claude, Grok or Perplexity. BusinessIdea.io does not run the AI request.</p>
+          <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">Choose a published idea, add your own location, budget and available time, then prepare a specific prompt for ChatGPT, Claude, Grok or Perplexity. bbusiness.online does not run the AI request.</p>
           <div className="mt-7 flex flex-wrap gap-3">
             <a href="#my-ideas" className={button}>Use my saved ideas <ArrowRight size={17}/></a>
             <a href="#founder-context" className="inline-flex min-h-11 items-center rounded-xl border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-800 hover:border-blue-500">Set my constraints</a>
           </div>
-          <p className="mt-4 text-sm text-slate-500">Your shortlist and context stay in this browser. They are not uploaded to BusinessIdea.io.</p>
+          <p className="mt-4 text-sm text-slate-500">Your shortlist and context stay in this browser. They are not uploaded to bbusiness.online.</p>
         </div>
       </section>
 
@@ -168,12 +168,12 @@ function ProductPage() {
       </section>
 
       <section className="py-12 lg:py-16">
-        <div className={wrap}><div className="grid gap-8 lg:grid-cols-2 lg:items-center"><div><p className="text-sm font-bold uppercase tracking-wide text-blue-700">The honest boundary</p><h2 className="mt-2 text-3xl font-bold">A prompt is not proof of demand.</h2><p className="mt-3 leading-7 text-slate-600">The prepared prompt asks for source links and dates, but the model may still be wrong or out of date. Verify consequential claims, then ask a real potential buyer about what happened last time. BusinessIdea.io does not store the external model's answer or charge for its inference.</p><div className="mt-5 flex flex-wrap gap-3"><a href="/business-idea-research-india" className="inline-flex min-h-11 items-center rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white hover:bg-blue-800">Open the evidence desk</a><a href="/business-idea-pivot-or-stop" className="inline-flex min-h-11 items-center rounded-xl border border-slate-300 bg-white px-5 py-3 font-semibold">Set a stop boundary</a></div></div><div className={card}><h3 className="text-lg font-bold">What gets carried into the prompt</h3><ul className="mt-4 list-disc space-y-2 pl-5 leading-6 text-slate-600"><li>Selected published record(s)</li><li>Your chosen city/market and actual rupee budget, if supplied</li><li>Available hours, skills and target buyer, if supplied</li><li>Your problem, current workaround and proposed small offer</li><li>Your selected task and optional extra notes</li></ul><p className="mt-4 text-sm text-slate-500">The prompt is prefilled when supported. Review it in the selected tool before confirming.</p></div></div></div>
+        <div className={wrap}><div className="grid gap-8 lg:grid-cols-2 lg:items-center"><div><p className="text-sm font-bold uppercase tracking-wide text-blue-700">The honest boundary</p><h2 className="mt-2 text-3xl font-bold">A prompt is not proof of demand.</h2><p className="mt-3 leading-7 text-slate-600">The prepared prompt asks for source links and dates, but the model may still be wrong or out of date. Verify consequential claims, then ask a real potential buyer about what happened last time. bbusiness.online does not store the external model's answer or charge for its inference.</p><div className="mt-5 flex flex-wrap gap-3"><a href="/business-idea-research-india" className="inline-flex min-h-11 items-center rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white hover:bg-blue-800">Open the evidence desk</a><a href="/business-idea-pivot-or-stop" className="inline-flex min-h-11 items-center rounded-xl border border-slate-300 bg-white px-5 py-3 font-semibold">Set a stop boundary</a></div></div><div className={card}><h3 className="text-lg font-bold">What gets carried into the prompt</h3><ul className="mt-4 list-disc space-y-2 pl-5 leading-6 text-slate-600"><li>Selected published record(s)</li><li>Your chosen city/market and actual rupee budget, if supplied</li><li>Available hours, skills and target buyer, if supplied</li><li>Your problem, current workaround and proposed small offer</li><li>Your selected task and optional extra notes</li></ul><p className="mt-4 text-sm text-slate-500">The prompt is prefilled when supported. Review it in the selected tool before confirming.</p></div></div></div>
       </section>
 
       <SellerFaq title="How this workbench handles your data" faq={[
-        { q: "Does BusinessIdea.io run the AI analysis?", a: "No. It prepares a prompt and opens the selected AI tool. You review the prompt and confirm sending there." },
-        { q: "Are my ideas and constraints saved to a server?", a: "No. The selected ideas and context are stored in browser local storage. They are not uploaded to BusinessIdea.io by this workbench. Browser data or device changes can remove them." },
+        { q: "Does bbusiness.online run the AI analysis?", a: "No. It prepares a prompt and opens the selected AI tool. You review the prompt and confirm sending there." },
+        { q: "Are my ideas and constraints saved to a server?", a: "No. The selected ideas and context are stored in browser local storage. They are not uploaded to bbusiness.online by this workbench. Browser data or device changes can remove them." },
         { q: "Can I use the result as proof that customers will buy?", a: "No. Use the outside model to find assumptions and research sources. Verify the source/date and run a suitable test with real buyers before committing money." },
         { q: "Do all outside AI accounts have the same free limits?", a: "No. Access, features and usage limits vary by provider and plan. This site does not guarantee unlimited free use or pay the provider for you." },
       ]} />

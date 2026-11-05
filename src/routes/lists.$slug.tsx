@@ -27,7 +27,7 @@ export const Route = createFileRoute("/lists/$slug")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: loaderData ? `${loaderData.name} | BusinessIdea.io` : "Business idea list | BusinessIdea.io" },
+      { title: loaderData ? `${loaderData.name} | bbusiness.online` : "Business idea list | bbusiness.online" },
       { name: "robots", content: "noindex,nofollow,noarchive,noimageindex" },
     ],
   }),
@@ -85,7 +85,7 @@ function Tldr({ p, title, month }: { p: ListPage; title: string; month: string }
       </div>
       <p className="text-base lg:text-lg leading-relaxed text-foreground/90">
         As of {month}, this page presents published entries for {title}. Each entry lists the opportunity, who it is for, the money
-        needed to start and the main risk, using the live BusinessIdea.io library.
+        needed to start and the main risk, using the live bbusiness.online library.
       </p>
     </div>
   );

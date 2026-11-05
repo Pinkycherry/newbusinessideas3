@@ -36,9 +36,9 @@ const decimal=(n:number)=>new Intl.NumberFormat("en-IN",{maximumFractionDigits:1
 
 export const Route=createFileRoute("/coaching-batch-business-idea-india")({
   head:()=>({meta:[
-    {title:"Coaching Batch Business Idea in India: Plan Time, Seats and Fees | BusinessIdea.io"},
+    {title:"Coaching Batch Business Idea in India: Plan Time, Seats and Fees | bbusiness.online"},
     {name:"description",content:"Build one after-office coaching batch around a real class slot. Test learner seats, preparation, feedback hours and a four-week fee scenario before committing."},
-    {property:"og:title",content:"Can a coaching batch fit your working week? | BusinessIdea.io"},
+    {property:"og:title",content:"Can a coaching batch fit your working week? | bbusiness.online"},
     {property:"og:type",content:"website"},
     {property:"og:image",content:absoluteUrl(art)},
     {property:"og:image:alt",content:"Original part-time business ideas artwork showing evening, weekend and teaching work"},

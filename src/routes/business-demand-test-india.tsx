@@ -35,9 +35,9 @@ function ideaForShortlist(idea: { slug: string; title: string; hook?: string; su
 
 export const Route = createFileRoute("/business-demand-test-india")({
   head: () => ({ meta: [
-    { title: "Test Demand for a Business Idea in India | BusinessIdea.io" },
+    { title: "Test Demand for a Business Idea in India | bbusiness.online" },
     { name: "description", content: "Design a small, honest demand test for a startup idea in India. Define the offer, audience and action, then separate polite interest from a booking or payment." },
-    { property: "og:title", content: "Test demand for a business idea in India | BusinessIdea.io" },
+    { property: "og:title", content: "Test demand for a business idea in India | bbusiness.online" },
     { property: "og:type", content: "article" },
   ] }),
   loader: async () => {
@@ -127,7 +127,7 @@ function DemandPage() {
           <label className="text-sm font-semibold">Asked for details<input className="mt-2 block min-h-11 w-full rounded-xl border px-3 font-normal" type="number" min="0" value={test.details} onChange={event=>updateTest("details",event.target.value)}/></label>
           <label className="text-sm font-semibold">Took the requested action<input className="mt-2 block min-h-11 w-full rounded-xl border px-3 font-normal" type="number" min="0" value={test.commitments} onChange={event=>updateTest("commitments",event.target.value)}/></label>
           <label className="text-sm font-semibold sm:col-span-2">What did people actually say or do?<textarea className="mt-2 block min-h-24 w-full rounded-xl border p-3 font-normal" rows={3} value={test.notes} onChange={event=>updateTest("notes",event.target.value)} placeholder="Record direct observations; remove private identifiers"/></label>
-          <p className="text-xs text-slate-500 sm:col-span-2">Saved locally in this browser. It is not sent to the BusinessIdea.io database. Avoid storing personal or confidential customer information.</p>
+          <p className="text-xs text-slate-500 sm:col-span-2">Saved locally in this browser. It is not sent to the bbusiness.online database. Avoid storing personal or confidential customer information.</p>
         </div>
         <aside className="rounded-2xl border border-blue-100 bg-blue-50 p-4 sm:p-6" aria-live="polite"><h3 className="text-xl font-bold">Your test snapshot</h3><div className="mt-5 grid grid-cols-2 gap-3"><div className="rounded-xl bg-white p-3"><span className="text-xs text-slate-600">Reached</span><strong className="mt-1 block text-2xl">{reached}</strong></div><div className="rounded-xl bg-white p-3"><span className="text-xs text-slate-600">Asked details</span><strong className="mt-1 block text-2xl">{details}</strong></div><div className="rounded-xl bg-white p-3"><span className="text-xs text-slate-600">Took action</span><strong className="mt-1 block text-2xl">{commitments}</strong></div><div className="rounded-xl bg-white p-3"><span className="text-xs text-slate-600">Action / reached</span><strong className="mt-1 block text-2xl">{commitmentRate === null ? "—" : commitmentRate + "%"}</strong></div></div><p className="mt-4 text-sm text-slate-700">Asked-for-details rate: <strong>{detailRate === null ? "—" : detailRate + "%"}</strong>. These are counts from your entries, not a market benchmark or proof of demand.</p><div className="mt-4 rounded-xl bg-white p-3"><span className="text-sm font-semibold">Your pre-set success condition</span><p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">{test.success || "Set your own condition before interpreting the responses."}</p></div><div className="mt-4 rounded-xl bg-white p-3"><span className="text-sm font-semibold">What happens next?</span><p className="mt-1 text-sm text-slate-700">If people show interest but do not act, inspect price, timing, trust and scope. If they act, fulfil the small promise and record the real cost and repeat choice.</p></div></aside>
       </div>

@@ -8,7 +8,7 @@ import { useFounderWorkspace, removeShortlistIdea, clearShortlist, MAX_SHORTLIST
 
 /**
  * Header and footer of the purchased page architecture, converted to React.
- * Purchased layout with approved BusinessIdea.io routes and taxonomy.
+ * Purchased layout with approved bbusiness.online routes and taxonomy.
  * Also rendered to static markup for the purchased HTML pages.
  */
 
@@ -306,8 +306,8 @@ const MEGA = [
 ];
 
 function Logo({ footer = false }: { footer?: boolean }) {
-  return <a className={footer ? "mm-brand mm-brand-footer" : "mm-brand"} href="/" aria-label="BusinessIdea.io home">
-    Business<span>Idea</span>.io
+  return <a className={footer ? "mm-brand mm-brand-footer" : "mm-brand"} href="/" aria-label="bbusiness.online home">
+    bbusiness<span>.online</span>
   </a>;
 }
 
@@ -435,7 +435,7 @@ export function Footer() {
           </div>
         </div>
         <div className="v2-footer-bottom">
-          <p>© {new Date().getFullYear()} BusinessIdea.io</p>
+          <p>© {new Date().getFullYear()} bbusiness.online</p>
           <nav aria-label="Footer">
             {LEGAL.map((l) => (
               <a key={l.href} href={l.href}>

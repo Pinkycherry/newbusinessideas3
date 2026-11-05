@@ -22,9 +22,9 @@ const lenses = [
 ] as const;
 export const Route = createFileRoute("/startup-idea-comparison")({
   head: () => ({ meta: [
-    { title: "Compare Two Startup Ideas in India with Evidence | BusinessIdea.io" },
+    { title: "Compare Two Startup Ideas in India with Evidence | bbusiness.online" },
     { name: "description", content: "Compare two business ideas in India by buyer access, observed need, cash, first-sale economics and the time you can truly give. Choose a small next test without a fake score." },
-    { property: "og:title", content: "Compare two startup ideas in India | BusinessIdea.io" },
+    { property: "og:title", content: "Compare two startup ideas in India | bbusiness.online" },
     { property: "og:type", content: "article" },
   ] }),
   component: ComparisonPage,
@@ -231,9 +231,9 @@ function ComparisonPage() {
       <V2PageSection className="ic-cost" aria-labelledby="ic-cost-title"><div><p className="gh-eyebrow">THE RISK YOU FEEL AT HOME</p><h2 id="ic-cost-title">A rupee at risk is personal.</h2><p>A deposit, unsold stock or four nights a week can take room from a household. Compare the smallest useful version of each idea, then check the timing of bills rather than only total cost.</p></div><div className="ic-cost-actions"><Link to="/startup-costs-india"><strong>What must I spend first?</strong><span>Map one-time and monthly cash requirements.</span><ArrowUpRight size={17}/></Link><Link to="/startup-cash-flow-india"><strong>When does cash run out?</strong><span>Place bills beside the date customer payment arrives.</span><ArrowUpRight size={17}/></Link></div></V2PageSection>
 
       <SellerFaq title="Questions about your comparison" faq={[
-        {q:"Does this page save selected ideas?",a:<><p>The shortlist is stored in this browser. It is not uploaded to BusinessIdea.io; browser data or device changes can remove it.</p></>},
+        {q:"Does this page save selected ideas?",a:<><p>The shortlist is stored in this browser. It is not uploaded to bbusiness.online; browser data or device changes can remove it.</p></>},
         {q:"Does the table tell me which business will succeed?",a:<><p>No. It shows published source fields and flags missing details. Neither the table nor an AI answer proves demand in your market.</p></>},
-        {q:"What happens when I continue to an AI tool?",a:<><p>The selected ideas and your comparison notes are included in a prepared prompt. The selected tool opens separately; review the prompt and confirm sending there. BusinessIdea.io does not run the AI inference or store the response.</p></>},
+        {q:"What happens when I continue to an AI tool?",a:<><p>The selected ideas and your comparison notes are included in a prepared prompt. The selected tool opens separately; review the prompt and confirm sending there. bbusiness.online does not run the AI inference or store the response.</p></>},
       ]} />
       <V2PageCta className="ic-final"><div><p className="gh-eyebrow">THE NEXT TUESDAY</p><h2>Choose a test you can finish.</h2><p>Take the idea whose next uncertainty you can resolve responsibly. If the shortlist is empty, begin with published records instead of guessing.</p></div><div><Link to="/startup-idea-validation" className="gh-button gh-button-primary">Plan a validation test <ArrowUpRight size={17}/></Link><Link to="/browse" className="gh-button gh-button-secondary">Find published ideas <ArrowUpRight size={17}/></Link></div></V2PageCta>
     </div></GlassShell>

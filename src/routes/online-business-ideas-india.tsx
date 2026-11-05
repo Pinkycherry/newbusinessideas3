@@ -17,7 +17,7 @@ const paths=[
  {name:"Digital marketing ideas",slug:"digital-marketing-business-ideas",image:"/images/categories/creator-media-business-ideas-content-creator-youtube-podcast-online-income.webp",alt:"Original creator business ideas artwork, fully visible",question:"Consider service and audience building routes."}
 ] as const;
 export const Route=createFileRoute("/online-business-ideas-india")({
- head:()=>({meta:[{title:"Online Business Ideas in India: Find the Buyer Before the Platform | BusinessIdea.io"},{name:"description",content:"Explore real online business idea blueprints in India, compare acquisition channels, calculate one sale after fees and returns, and read the original source articles."},{property:"og:title",content:"Online business ideas in India | BusinessIdea.io"}]}),
+ head:()=>({meta:[{title:"Online Business Ideas in India: Find the Buyer Before the Platform | bbusiness.online"},{name:"description",content:"Explore real online business idea blueprints in India, compare acquisition channels, calculate one sale after fees and returns, and read the original source articles."},{property:"og:title",content:"Online business ideas in India | bbusiness.online"}]}),
  loader:async()=>{const hub=await getListsHub();const category=hub.categories.find(item=>/^online|e-commerce/i.test(item.name));const ideas=await getBrowseIdeas({data:{q:"",category:category?.code??"",investment:"",time:"",skill:"",page:1}});return {hub,ideas:ideas.ideas};},
  component:OnlineBusinessPage
 });

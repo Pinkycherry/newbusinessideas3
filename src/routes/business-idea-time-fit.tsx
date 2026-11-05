@@ -17,9 +17,9 @@ const card = "rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transit
 const primary = "inline-flex min-h-11 items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700";
 export const Route = createFileRoute("/business-idea-time-fit")({
   head: () => ({ meta: [
-    { title: "Business Idea Time Fit for Founders in India | BusinessIdea.io" },
+    { title: "Business Idea Time Fit for Founders in India | bbusiness.online" },
     { name: "description", content: "Map the hours a first sale requires around a job, care or studies. A practical founder checklist for a delivery promise you can keep." },
-    { property: "og:title", content: "Can this business idea fit your week? | BusinessIdea.io" },
+    { property: "og:title", content: "Can this business idea fit your week? | bbusiness.online" },
   ] }),
   loader: async () => {
     const hub = await getListsHub();

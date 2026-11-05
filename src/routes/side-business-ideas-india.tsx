@@ -17,7 +17,7 @@ const paths=[
  {name:"Work-from-home ideas",slug:"work-from-home-business-ideas",image:"/images/categories/work-from-home-business-ideas-remote-online-jobs-home-based-self-employed.webp",alt:"Original work-from-home business ideas artwork, fully contained in a 16:9 stage",question:"Can the whole offer be delivered from home?"},
 ] as const;
 export const Route=createFileRoute("/side-business-ideas-india")({
- head:()=>({meta:[{title:"Side Business Ideas in India That Fit Your Real Week | BusinessIdea.io"},{name:"description",content:"Explore real part-time business idea blueprints, evening and weekend work patterns, source articles, first-sale tests and an honest time-fit worksheet."},{property:"og:title",content:"Side business ideas for the week you have | BusinessIdea.io"}]}),
+ head:()=>({meta:[{title:"Side Business Ideas in India That Fit Your Real Week | bbusiness.online"},{name:"description",content:"Explore real part-time business idea blueprints, evening and weekend work patterns, source articles, first-sale tests and an honest time-fit worksheet."},{property:"og:title",content:"Side business ideas for the week you have | bbusiness.online"}]}),
  loader:async()=>{const hub=await getListsHub();const category=hub.categories.find(item=>/side|part.time/i.test(item.name));const ideas=await getBrowseIdeas({data:{q:"",category:category?.code??"",investment:"",time:"",skill:"",page:1}});return {hub,ideas:ideas.ideas};},
  component:SideBusinessPage
 });

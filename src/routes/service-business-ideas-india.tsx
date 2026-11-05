@@ -22,7 +22,7 @@ const paths=[
  {name:"Local service ideas",slug:"local-service-business-ideas",image:"/images/categories/small-town-business-ideas-india-local-market-shop-service-youth.webp",alt:"Original local market and service business artwork, fully visible"}
 ] as const;
 export const Route=createFileRoute("/service-business-ideas-india")({
- head:()=>({meta:[{title:"Service Business Ideas in India: Sell a Clear First Promise | BusinessIdea.io"},{name:"description",content:"Explore published service business ideas for India, scope a first paid offer, set a revision and delivery boundary, and test one buyer before expanding."},{property:"og:title",content:"Service business ideas in India | BusinessIdea.io"}]}),
+ head:()=>({meta:[{title:"Service Business Ideas in India: Sell a Clear First Promise | bbusiness.online"},{name:"description",content:"Explore published service business ideas for India, scope a first paid offer, set a revision and delivery boundary, and test one buyer before expanding."},{property:"og:title",content:"Service business ideas in India | bbusiness.online"}]}),
  loader:async()=>{const hub=await getListsHub();const category=hub.categories.find(item=>/skill.based|freelance|local service/i.test(item.name));const ideas=await getBrowseIdeas({data:{q:"",category:category?.code??"",investment:"",time:"",skill:"",page:1}});return {hub,ideas:ideas.ideas};},
  component:ServiceBusinessPage
 });

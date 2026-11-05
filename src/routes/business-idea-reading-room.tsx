@@ -23,7 +23,7 @@ const trails=[
 ] as const;
 export const Route=createFileRoute("/business-idea-reading-room")({
  loader:({context})=>context.queryClient.ensureQueryData(postsQuery),
- head:()=>({meta:[{title:"Business Idea Reading Room: 20 Guides and 23 Articles | BusinessIdea.io"},{name:"description",content:"Read the original 20 startup guides and 23 founder journal articles by the decision you face, with source imagery and routes to working India-first tools."},{property:"og:title",content:"Business idea reading room | BusinessIdea.io"}]}),
+ head:()=>({meta:[{title:"Business Idea Reading Room: 20 Guides and 23 Articles | bbusiness.online"},{name:"description",content:"Read the original 20 startup guides and 23 founder journal articles by the decision you face, with source imagery and routes to working India-first tools."},{property:"og:title",content:"Business idea reading room | bbusiness.online"}]}),
  component:ReadingRoomPage,
  errorComponent:()=> <GlassShell><div className="rr-page"><h1>The reading room could not load.</h1><p>Open the original collections directly.</p><Link to="/startup-guides">Startup guides</Link> <Link to="/blog">Founder journal</Link></div></GlassShell>
 });

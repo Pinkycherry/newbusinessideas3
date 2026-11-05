@@ -29,9 +29,9 @@ function normaliseResearchEntry(value: unknown): ResearchEntry | null {
 
 export const Route = createFileRoute("/business-idea-research-india")({
   head: () => ({ meta: [
-    { title: "Research a Business Idea in India: Buyer, Alternative, Evidence | BusinessIdea.io" },
+    { title: "Research a Business Idea in India: Buyer, Alternative, Evidence | bbusiness.online" },
     { name: "description", content: "A practical India-first business idea research desk. Observe the buyer's workaround, compare real alternatives, record sources and test what would change your mind." },
-    { property: "og:title", content: "Research a business idea in India | BusinessIdea.io" },
+    { property: "og:title", content: "Research a business idea in India | bbusiness.online" },
     { property: "og:type", content: "article" },
   ] }), component: ResearchPage,
 });
@@ -63,7 +63,7 @@ function ResearchPage() {
   const clearEntries = () => { if (window.confirm("Clear every saved observation from this browser?")) setEntries([]); };
   const exportEntries = () => {
     const text = entries.map((entry,index) => ["## Observation "+(index+1)+" — "+entry.date,"Buyer: "+entry.buyer,"Market: "+entry.market,"Problem: "+entry.problem,"Workaround: "+entry.workaround,"Alternative: "+entry.alternative,"Observed spend: "+entry.spend,"Source: "+entry.source,"Observation: "+entry.observation,"Evidence against: "+entry.counterEvidence,"Next question: "+entry.nextQuestion].join("\n")).join("\n\n");
-    const url = URL.createObjectURL(new Blob(["# BusinessIdea.io field research log\n\n"+text],{type:"text/markdown;charset=utf-8"}));
+    const url = URL.createObjectURL(new Blob(["# bbusiness.online field research log\n\n"+text],{type:"text/markdown;charset=utf-8"}));
     const anchor = document.createElement("a"); anchor.href=url; anchor.download="businessidea-field-research-notes.md"; anchor.click(); window.setTimeout(()=>URL.revokeObjectURL(url),1000);
   };
   const notes = entries.slice(0,6).map(entry => [entry.date,"Buyer: "+entry.buyer,"Problem: "+entry.problem,"Workaround: "+entry.workaround,"Alternative: "+entry.alternative,"Spend: "+entry.spend,"Source: "+entry.source,"Observation: "+entry.observation,"Counter-evidence: "+entry.counterEvidence,"Next question: "+entry.nextQuestion].filter(Boolean).join(" | ")).join("\n").slice(0,1800);
@@ -102,7 +102,7 @@ function ResearchPage() {
           <div className="mt-5 flex flex-wrap items-center gap-3"><button type="submit" className={primary}>Save this observation <ArrowRight size={17}/></button><p className="text-sm text-slate-500">Saved only in this browser. No database account or AI request is involved.</p></div>
         </form>
         <div className="mt-7 grid gap-4">{entries.length===0 ? <div className="rounded-2xl border border-dashed border-blue-300 bg-white p-6 text-slate-600"><h3 className="font-bold text-slate-900">Your notebook is empty</h3><p className="mt-2">Start with one recent buyer event. Record a refusal as carefully as a positive response.</p></div> : entries.map(entry=><article key={entry.id} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"><div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-sm font-semibold text-blue-700">{entry.date} · {entry.market || "Location not recorded"}</p><h3 className="mt-1 text-lg font-bold text-slate-950">{entry.buyer}</h3></div><button type="button" onClick={()=>removeEntry(entry.id)} className="inline-flex min-h-9 items-center gap-2 rounded-lg border px-3 py-2 text-sm font-semibold"><Trash2 size={15}/> Remove</button></div><div className="mt-4 grid gap-3 md:grid-cols-2"><div><p className="text-xs font-bold uppercase text-slate-500">Problem / trigger</p><p className="mt-1 whitespace-pre-wrap text-slate-700">{entry.problem}</p></div><div><p className="text-xs font-bold uppercase text-slate-500">What happened</p><p className="mt-1 whitespace-pre-wrap text-slate-700">{entry.observation}</p></div>{entry.workaround && <div><p className="text-xs font-bold uppercase text-slate-500">Workaround</p><p className="mt-1 whitespace-pre-wrap text-slate-700">{entry.workaround}</p></div>}{entry.alternative && <div><p className="text-xs font-bold uppercase text-slate-500">Alternative</p><p className="mt-1 whitespace-pre-wrap text-slate-700">{entry.alternative}</p></div>}{entry.spend && <div><p className="text-xs font-bold uppercase text-slate-500">Observed spend</p><p className="mt-1 whitespace-pre-wrap text-slate-700">{entry.spend}</p></div>}{entry.source && <div><p className="text-xs font-bold uppercase text-slate-500">Source / reference</p><p className="mt-1 break-words text-slate-700">{entry.source}</p></div>}{entry.counterEvidence && <div><p className="text-xs font-bold uppercase text-slate-500">Evidence against</p><p className="mt-1 whitespace-pre-wrap text-slate-700">{entry.counterEvidence}</p></div>}{entry.nextQuestion && <div><p className="text-xs font-bold uppercase text-slate-500">Next question</p><p className="mt-1 whitespace-pre-wrap text-slate-700">{entry.nextQuestion}</p></div>}</div></article>)}</div>
-        <div className="mt-8"><ProviderPromptActions prompt={researchPrompt} prefillPrompt={compactPrompt} title="Review your evidence with an AI research partner"/><p className="mt-3 text-xs leading-5 text-slate-500">Your notes are included only when you choose a provider. BusinessIdea.io does not send them automatically; the external provider handles anything you choose to submit.</p></div>
+        <div className="mt-8"><ProviderPromptActions prompt={researchPrompt} prefillPrompt={compactPrompt} title="Review your evidence with an AI research partner"/><p className="mt-3 text-xs leading-5 text-slate-500">Your notes are included only when you choose a provider. bbusiness.online does not send them automatically; the external provider handles anything you choose to submit.</p></div>
       </div>
     </section>
 

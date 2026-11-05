@@ -43,7 +43,7 @@ export function ContentPage({
 }
 
 function EditorialNext() {
-  return <V2PageAsideCta className="gl-editorial-next" aria-label="Explore more at BusinessIdea.io">
+  return <V2PageAsideCta className="gl-editorial-next" aria-label="Explore more at bbusiness.online">
     <div><p className="gh-eyebrow">FOLLOW THE NEXT QUESTION</p><h2>Keep your momentum.</h2><p>Choose a real page that helps you turn what you have read into a decision.</p></div>
     <div className="gl-editorial-next-links">
       <Link to="/blueprints"><strong>Read a blueprint</strong><span>Explore published ideas →</span></Link>

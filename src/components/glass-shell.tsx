@@ -49,9 +49,9 @@ export function GlassHeader() {
   return (
     <header className="gh-header">
       <div className="gh-nav">
-        <Link to="/" className="gh-brand" aria-label="BusinessIdea.io home" onClick={() => setMenuOpen(false)}>
+        <Link to="/" className="gh-brand" aria-label="bbusiness.online home" onClick={() => setMenuOpen(false)}>
           <span className="gh-brand-mark" aria-hidden="true">b<span>.</span></span>
-          <span className="gh-brand-name">businessidea<span>.io</span></span>
+          <span className="gh-brand-name">bbusiness<span>.online</span></span>
         </Link>
         <nav className="gh-nav-links" aria-label="Main navigation">
           {navGroups.map((group) => (

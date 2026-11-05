@@ -20,9 +20,9 @@ const button = "inline-flex min-h-11 items-center gap-2 rounded-xl bg-blue-600 p
 const input = "mt-2 block min-h-11 w-full rounded-xl border bg-white px-3 outline-none focus:border-blue-600";
 export const Route = createFileRoute("/unit-economics-india")({
   head: () => ({ meta: [
-    { title: "Unit Economics in India: Is One Business Sale Worth Repeating? | BusinessIdea.io" },
+    { title: "Unit Economics in India: Is One Business Sale Worth Repeating? | bbusiness.online" },
     { name: "description", content: "Calculate contribution per sale, owner work, monthly commitments and transparent break-even for a startup idea in India." },
-    { property: "og:title", content: "One sale under pressure | BusinessIdea.io" },
+    { property: "og:title", content: "One sale under pressure | bbusiness.online" },
   ] }),
   loader: async () => {
     const hub = await getListsHub();

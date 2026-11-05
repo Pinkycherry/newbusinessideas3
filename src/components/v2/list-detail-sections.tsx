@@ -17,7 +17,7 @@ export function ListReportPromo({p}:{p:ListPage}) {
 }
 
 export function ListCitation({p,updated,path=`/lists/${p.slug}`}:{p:ListPage;updated:string;path?:string}) {
-  return <section id="cite-this-page" className="mt-10 rounded-xl border bg-muted/20 p-5"><h2 className="text-base font-semibold">Cite this page</h2><p className="mt-2 break-words text-sm leading-7 text-muted-foreground">BusinessIdea.io. “{p.name}.” Updated {updated}. <a className="text-primary underline" href={path}>bbinewcopy.vercel.app{path}</a></p></section>;
+  return <section id="cite-this-page" className="mt-10 rounded-xl border bg-muted/20 p-5"><h2 className="text-base font-semibold">Cite this page</h2><p className="mt-2 break-words text-sm leading-7 text-muted-foreground">bbusiness.online. “{p.name}.” Updated {updated}. <a className="text-primary underline" href={path}>bbinewcopy.vercel.app{path}</a></p></section>;
 }
 
 export function ListDeeperAnswers({p}:{p:ListPage}) {

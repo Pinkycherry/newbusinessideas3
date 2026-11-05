@@ -154,7 +154,7 @@ export function ValidateButton({ slug }: { slug: string }) {
         {loading ? "Getting ready…" : "Validate this idea"}
         {!loading && <ArrowRight size={17}/>}
       </button>
-      <p className="text-xs leading-5 text-slate-500">The AI tool you pick does the research in a new tab. BusinessIdea.io never sees or stores the answer.</p>
+      <p className="text-xs leading-5 text-slate-500">The AI tool you pick does the research in a new tab. bbusiness.online never sees or stores the answer.</p>
     </form>
 
     {error && <p className="mt-4 rounded-lg bg-red-50 p-3 text-sm text-red-800" role="alert">{error}</p>}

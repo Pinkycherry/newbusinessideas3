@@ -8,8 +8,8 @@ import "@/components/glass-library.css";
 export const Route = createFileRoute("/sign-in")({
   validateSearch: z.object({ redirect: z.string().optional() }),
   head: () => ({ meta: [
-    { title: "Sign In | BusinessIdea.io" },
-    { name: "description", content: "Explore BusinessIdea.io while account sign-in is being configured." },
+    { title: "Sign In | bbusiness.online" },
+    { name: "description", content: "Explore bbusiness.online while account sign-in is being configured." },
     { name: "robots", content: "noindex,follow" },
   ] }),
   component: SignInPage,

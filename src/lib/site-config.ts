@@ -6,7 +6,7 @@
  */
 export function siteUrl(): string {
   const fromEnv = typeof process !== "undefined" ? process.env?.["SITE_URL"] : undefined;
-  return (fromEnv?.trim() || "https://businessidea.io").replace(/\/+$/, "");
+  return (fromEnv?.trim() || "https://bbusiness.online").replace(/\/+$/, "");
 }
 
 /**
@@ -33,7 +33,7 @@ export function canonicalUrl(pathname: string): string {
  * SINGLE SOURCE OF TRUTH for the contact-address domain.
  *
  * Eight addresses were typed across `contact.tsx` and the policy pages, so
- * the trial deployment served `hello@businessidea.io` on bbusiness.online — a
+ * the trial deployment served `hello@bbusiness.online` on bbusiness.online — a
  * domain the visitor was not on, naming a mailbox nobody reads. A domain is
  * infrastructure, not a brand name; the brand is BBI and Bro Business Ideas,
  * and the host follows the deployment.

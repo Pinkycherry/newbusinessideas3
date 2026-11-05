@@ -19,7 +19,7 @@ const postsQuery = queryOptions({ queryKey: ["blog", "posts", 1], queryFn: () =>
 export const Route = createFileRoute("/learning-resources/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(postsQuery),
   head: () => ({ meta: [
-    { title: "Founder Learning Resources & Toolkit | BusinessIdea.io" },
+    { title: "Founder Learning Resources & Toolkit | bbusiness.online" },
     { name: "description", content: "Practical startup guides, calculators, founder stories, glossary terms and useful operating frameworks." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },

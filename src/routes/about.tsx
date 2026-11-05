@@ -20,7 +20,7 @@ import { COMMUNITY, communityMembers, contactEmail, TEAM } from "@/lib/site-conf
 export const Route = createFileRoute("/about")({
   head: () =>
     metaFor(
-      "About | BusinessIdea.io",
+      "About | bbusiness.online",
       "BBI is a free library of researched business blueprints, built by four engineers from Madurai after paying three platforms to validate four ideas and getting templated answers back.",
     ),
   component: AboutPage,

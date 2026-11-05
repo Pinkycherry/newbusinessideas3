@@ -18,7 +18,7 @@ const paths=[
 ] as const;
 const money=(n:number)=>new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(n);
 export const Route=createFileRoute("/product-business-ideas-india")({
- head:()=>({meta:[{title:"Product Business Ideas in India: Count the First Batch | BusinessIdea.io"},{name:"description",content:"Explore published product business ideas in India, model the first batch and cash left in unsold stock, inspect original source articles and test buyers before scaling inventory."},{property:"og:title",content:"Product business ideas in India | BusinessIdea.io"}]}),
+ head:()=>({meta:[{title:"Product Business Ideas in India: Count the First Batch | bbusiness.online"},{name:"description",content:"Explore published product business ideas in India, model the first batch and cash left in unsold stock, inspect original source articles and test buyers before scaling inventory."},{property:"og:title",content:"Product business ideas in India | bbusiness.online"}]}),
  loader:async()=>{const hub=await getListsHub();const category=hub.categories.find(item=>/food processing|handmade product|e-commerce selling/i.test(item.name));const ideas=await getBrowseIdeas({data:{q:"",category:category?.code??"",investment:"",time:"",skill:"",page:1}});return {hub,ideas:ideas.ideas};},
  component:ProductBusinessPage
 });

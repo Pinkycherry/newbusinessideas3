@@ -9,7 +9,7 @@ export const Route = createFileRoute("/calculator/")({
     return { hub, posts: blog.posts };
   },
   head: () => ({ meta: [
-    { title: "Startup Calculators | BusinessIdea.io" },
+    { title: "Startup Calculators | bbusiness.online" },
     { name: "description", content: "Business calculators with visible source formulas, inputs and results." },
   ] }),
   component: CalculatorPage,

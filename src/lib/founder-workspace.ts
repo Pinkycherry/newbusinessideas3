@@ -155,7 +155,7 @@ export function toggleShortlistIdea(value: WorkspaceIdea): { ok: boolean; select
   }
   workspace.shortlist = [...workspace.shortlist, idea];
   const ok = writeWorkspace(workspace);
-  return { ok, selected: ok, message: ok ? "Saved on this browser. It has not been sent to BusinessIdea.io." : "Browser storage is unavailable. Your idea was not saved." };
+  return { ok, selected: ok, message: ok ? "Saved on this browser. It has not been sent to bbusiness.online." : "Browser storage is unavailable. Your idea was not saved." };
 }
 
 export function removeShortlistIdea(slug: string): boolean {

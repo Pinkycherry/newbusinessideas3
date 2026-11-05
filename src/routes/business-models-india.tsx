@@ -21,9 +21,9 @@ const primary = "inline-flex min-h-11 items-center gap-2 rounded-xl bg-blue-600 
 
 export const Route = createFileRoute("/business-models-india")({
   head: () => ({ meta: [
-    { title: "Business Models in India: Compare How an Idea Earns | BusinessIdea.io" },
+    { title: "Business Models in India: Compare How an Idea Earns | bbusiness.online" },
     { name: "description", content: "Compare five business models through Indian buyer examples, delivery obligations, payment timing, hidden costs and the evidence to collect before committing." },
-    { property: "og:title", content: "Business Models in India | BusinessIdea.io" },
+    { property: "og:title", content: "Business Models in India | bbusiness.online" },
     { property: "og:type", content: "article" },
   ] }),
   loader: async () => {

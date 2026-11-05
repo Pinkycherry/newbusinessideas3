@@ -12,7 +12,7 @@ import "@/components/glass-library.css";
 
 export const Route = createFileRoute("/founder-glossary/")({
   head: () => ({ meta: [
-    { title: "Founder Glossary | BusinessIdea.io" },
+    { title: "Founder Glossary | bbusiness.online" },
     { name: "description", content: "Clear definitions and practical context for founder, finance and startup terms." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },

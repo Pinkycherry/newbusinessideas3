@@ -51,7 +51,7 @@ export const Route = createFileRoute("/idea/$slug")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData?.title ?? "Business idea"} | BusinessIdea.io` },
+      { title: `${loaderData?.title ?? "Business idea"} | bbusiness.online` },
       // AdSense approval: individual idea pages are templated, so they stay out of the index.
       { name: "robots", content: "noindex, follow" },
       { name: "description", content: loaderData?.summary ?? "" },

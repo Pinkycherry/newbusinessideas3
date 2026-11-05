@@ -17,9 +17,9 @@ const card = "rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transit
 const primary = "inline-flex min-h-11 items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700";
 export const Route = createFileRoute("/startup-launch-plan-india")({
   head: () => ({ meta: [
-    { title: "Startup Launch Plan in India: Four Evidence Gates | BusinessIdea.io" },
+    { title: "Startup Launch Plan in India: Four Evidence Gates | bbusiness.online" },
     { name: "description", content: "A practical startup launch plan for India: buyer, offer, cash and fulfilment gates with evidence questions and working founder tools." },
-    { property: "og:title", content: "Startup launch plan for Indian founders | BusinessIdea.io" },
+    { property: "og:title", content: "Startup launch plan for Indian founders | bbusiness.online" },
   ] }),
   loader: async () => {
     const hub = await getListsHub();

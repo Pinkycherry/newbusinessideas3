@@ -29,9 +29,9 @@ const val=(s:string)=>Number(s);
 
 export const Route=createFileRoute("/weekend-market-stall-profit-check")({
   head:()=>({meta:[
-    {title:"Weekend Market Stall Profit Check in India | BusinessIdea.io"},
+    {title:"Weekend Market Stall Profit Check in India | bbusiness.online"},
     {name:"description",content:"A market-day worksheet for an Indian founder: subtract sold-stock cost, spoilage, stall fee, travel, packaging, payment fees and paid help from actual takings."},
-    {property:"og:title",content:"Did your weekend market stall actually make money? | BusinessIdea.io"},
+    {property:"og:title",content:"Did your weekend market stall actually make money? | bbusiness.online"},
     {property:"og:type",content:"website"},
     {property:"og:image",content:absoluteUrl("/images/blog/realistic-part-time-business-ideas-extra-income-evening-hustles-weekend-jobs-skills.webp")},
     {name:"twitter:card",content:"summary_large_image"},

@@ -4,7 +4,7 @@ import { ArrowRight, BookOpen, ChevronRight } from "lucide-react";
 import { V2Frame } from "@/components/v2/frame";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
 
-export const Route=createFileRoute("/startup-guides/")({head:()=>({meta:[{title:"Startup Guides | BusinessIdea.io"},{name:"description",content:"Explore 20 published startup guides across customer validation, market research, pricing, cash flow, distribution, product development, retention, hiring and bootstrapping."}]}),component:GuidesIndex});
+export const Route=createFileRoute("/startup-guides/")({head:()=>({meta:[{title:"Startup Guides | bbusiness.online"},{name:"description",content:"Explore 20 published startup guides across customer validation, market research, pricing, cash flow, distribution, product development, retention, hiring and bootstrapping."}]}),component:GuidesIndex});
 const wrap="mx-auto max-w-6xl px-4 md:px-6";
 const card="group block rounded-xl border bg-card p-5 shadow-sm transition hover:border-primary/50";
 const categories=["All",...new Set(STARTUP_GUIDES.map(g=>g.category))];

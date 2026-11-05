@@ -1,5 +1,5 @@
 /**
- * GENERATED from the approved BusinessIdea.io category architecture
+ * GENERATED from the approved bbusiness.online category architecture
  * (100 main categories x 10 subcategories). Do not hand-edit names or slugs:
  * regenerate from the source sheet instead. Two hand-typed slugs shipped
  * broken on the old site; nothing here is typed by hand.

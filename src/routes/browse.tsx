@@ -14,7 +14,7 @@ import { useFounderWorkspace, type WorkspaceIdea } from '@/lib/founder-workspace
 const initial:BrowseFilters={q:'',category:'',investment:'',time:'',skill:'',page:1};
 export const Route=createFileRoute('/browse')({
   loader:async()=>{const [hub,results,resources]=await Promise.all([getListsHub(),getBrowseIdeas({data:initial}),getPageResources()]);return {hub,results,resources};},
-  head:()=>({meta:[{title:'Browse Published Business Ideas | BusinessIdea.io'},{name:'description',content:'Browse published Indian business ideas by category and focused list.'}]}),
+  head:()=>({meta:[{title:'Browse Published Business Ideas | bbusiness.online'},{name:'description',content:'Browse published Indian business ideas by category and focused list.'}]}),
   component:BrowsePage,
 });
 const wrap='mx-auto max-w-6xl px-4 md:px-6';

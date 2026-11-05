@@ -24,7 +24,7 @@ export const Route = createFileRoute("/category/$categorySlug/$subcategorySlug")
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData?.name ?? "Business ideas"} in India | BusinessIdea.io` },
+      { title: `${loaderData?.name ?? "Business ideas"} in India | bbusiness.online` },
       { name: "description", content: loaderData?.intro ?? "Browse published ideas in this category." },
     ],
   }),

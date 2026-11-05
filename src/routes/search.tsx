@@ -8,7 +8,7 @@ import { searchTaxonomy } from "@/lib/catalog";
 export const Route = createFileRoute("/search")({
   validateSearch: z.object({ q: z.string().optional() }),
   head: () => ({ meta: [
-    { title: "Search Business Idea Paths | BusinessIdea.io" },
+    { title: "Search Business Idea Paths | bbusiness.online" },
     { name: "robots", content: "noindex,follow" },
     { name: "description", content: "Search approved business idea categories and subcategories for India." },
   ] }),

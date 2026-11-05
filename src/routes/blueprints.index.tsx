@@ -12,7 +12,7 @@ export const Route = createFileRoute("/blueprints/")({
   validateSearch: z.object({ q:z.string().optional(), page:z.coerce.number().int().min(1).default(1) }),
   loaderDeps: ({search}) => ({q:search.q??"",page:search.page}),
   loader: ({deps}) => getLegacyIdeaCards({data:{q:deps.q,page:deps.page}}),
-  head: () => ({meta:[{title:"Published Business Idea Blueprints | BusinessIdea.io"},{name:"robots",content:"noindex,follow"},{name:"description",content:"Published Indian business ideas with buyer, revenue and risk details."}]}),
+  head: () => ({meta:[{title:"Published Business Idea Blueprints | bbusiness.online"},{name:"robots",content:"noindex,follow"},{name:"description",content:"Published Indian business ideas with buyer, revenue and risk details."}]}),
   component: BlueprintLibrary,
 });
 const wrap="mx-auto w-full max-w-6xl px-4 md:px-6";

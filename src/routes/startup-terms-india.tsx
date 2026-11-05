@@ -15,7 +15,7 @@ const moments=[
  {name:"Protect the cash",question:"How long can this commitment continue?",slugs:["burn-rate","runway","deferred-revenue"],route:"/startup-cash-flow-india",action:"Date the cash movement"}
 ] as const;
 export const Route=createFileRoute("/startup-terms-india")({
- head:()=>({meta:[{title:"Startup Terms in India: Definitions for the Next Founder Decision | BusinessIdea.io"},{name:"description",content:"Search 159 real founder glossary definitions and explore buyer, pricing, product and cash terms beside the decision where they matter."},{property:"og:title",content:"Startup terms for founders in India | BusinessIdea.io"}]}),
+ head:()=>({meta:[{title:"Startup Terms in India: Definitions for the Next Founder Decision | bbusiness.online"},{name:"description",content:"Search 159 real founder glossary definitions and explore buyer, pricing, product and cash terms beside the decision where they matter."},{property:"og:title",content:"Startup terms for founders in India | bbusiness.online"}]}),
  component:StartupTermsPage
 });
 function StartupTermsPage(){

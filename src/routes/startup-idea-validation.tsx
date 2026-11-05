@@ -11,9 +11,9 @@ import "@/components/validation-field.css";
 
 export const Route = createFileRoute("/startup-idea-validation")({
   head: () => ({ meta: [
-    { title: "How to Validate a Startup Idea in India | BusinessIdea.io" },
+    { title: "How to Validate a Startup Idea in India | bbusiness.online" },
     { name: "description", content: "A practical founder field guide: name a buyer, interview without leading, test an offer, check startup costs and decide what evidence you still need." },
-    { property: "og:title", content: "How to Validate a Startup Idea in India | BusinessIdea.io" },
+    { property: "og:title", content: "How to Validate a Startup Idea in India | bbusiness.online" },
     { property: "og:description", content: "Before the business becomes a bill, get close to the buyer, the cash and the reasons it might fail." },
     { property: "og:type", content: "article" },
   ] }),

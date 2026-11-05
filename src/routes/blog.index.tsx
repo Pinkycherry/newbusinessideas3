@@ -15,7 +15,7 @@ const postsQuery = queryOptions({ queryKey: ["blog", "posts", 1], queryFn: () =>
 export const Route = createFileRoute("/blog/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(postsQuery),
   head: () => ({ meta: [
-    { title: "Founder Journal: Business Ideas and First Moves in India | BusinessIdea.io" },
+    { title: "Founder Journal: Business Ideas and First Moves in India | bbusiness.online" },
     { name: "description", content: "Read original articles on first customers, side businesses, pricing and local business ideas in India, with the published featured imagery." },
     { property: "og:type", content: "website" },
   ] }),

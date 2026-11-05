@@ -14,10 +14,10 @@ const stops=[
 const routes=[
  {label:"Village and small town",slug:"village-and-small-town-business-ideas",image:"/images/categories/small-town-business-ideas-india-local-market-shop-service-youth.webp",alt:"Original small town business ideas artwork with a local market and service work"},
  {label:"Agriculture and farming",slug:"agriculture-and-farming-business-ideas",image:"/images/categories/agriculture-farming-business-ideas-rural-india-agri-startup-youth.webp",alt:"Original agriculture business ideas artwork showing rural India farm enterprise"},
- {label:"Local services",slug:"local-service-business-ideas",image:"/images/categories/researched-business-ideas-library-startup-opportunity-blueprints-free.webp",alt:"Original BusinessIdea.io researched blueprints artwork for local service paths"},
+ {label:"Local services",slug:"local-service-business-ideas",image:"/images/categories/researched-business-ideas-library-startup-opportunity-blueprints-free.webp",alt:"Original bbusiness.online researched blueprints artwork for local service paths"},
 ] as const;
 export const Route=createFileRoute("/local-business-ideas-india")({
- head:()=>({meta:[{title:"Local Business Ideas in India: Start with the Buyer Nearby | BusinessIdea.io"},{name:"description",content:"Explore real town and village business idea blueprints, observe local alternatives, record buyer evidence and test one priced service before a lease."},{property:"og:title",content:"Local business ideas in India | BusinessIdea.io"}]}),
+ head:()=>({meta:[{title:"Local Business Ideas in India: Start with the Buyer Nearby | bbusiness.online"},{name:"description",content:"Explore real town and village business idea blueprints, observe local alternatives, record buyer evidence and test one priced service before a lease."},{property:"og:title",content:"Local business ideas in India | bbusiness.online"}]}),
  loader:async()=>{const hub=await getListsHub();const category=hub.categories.find(item=>/local service|village|small town/i.test(item.name));const ideas=await getBrowseIdeas({data:{q:"",category:category?.code??"",investment:"",time:"",skill:"",page:1}});return {hub,ideas:ideas.ideas};},
  component:LocalBusinessPage
 });

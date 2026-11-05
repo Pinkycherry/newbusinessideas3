@@ -21,7 +21,7 @@ const rupees = (n: number) => new Intl.NumberFormat("en-IN", { style: "currency"
 const value = (s: string) => Math.max(0, Number(s) || 0);
 export const Route = createFileRoute("/business-idea-risk-check")({
   head: () => ({ meta: [
-    { title: "Business Idea Risk Check for Founders in India | BusinessIdea.io" },
+    { title: "Business Idea Risk Check for Founders in India | bbusiness.online" },
     { name: "description", content: "Map cash and time at risk in a startup idea in India. Choose a smaller first promise and test buyer demand before locking in fixed costs." },
   ] }),
   loader: async () => {

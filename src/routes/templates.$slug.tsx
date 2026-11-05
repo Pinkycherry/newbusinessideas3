@@ -38,7 +38,7 @@ export const Route = createFileRoute("/templates/$slug")({
     return { template, article, examples };
   },
   head: ({ loaderData }) => ({ meta: [
-    { title: `${loaderData?.template.title ?? "Template"} Guide for Indian Founders | BusinessIdea.io` },
+    { title: `${loaderData?.template.title ?? "Template"} Guide for Indian Founders | bbusiness.online` },
     { name: "description", content: loaderData?.template.short ?? "Practical founder template guide for India." },
     { property: "og:image", content: loaderData?.template.image.src ?? "/images/templates/indian-founder-business-planning-template-lean-canvas-businessidea.webp" },
     { property: "og:image:alt", content: loaderData?.template.image.alt ?? "Indian business planning templates help founders examine buyers and costs." },

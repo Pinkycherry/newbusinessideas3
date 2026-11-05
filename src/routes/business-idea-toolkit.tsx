@@ -17,9 +17,9 @@ const questions = [
 
 export const Route = createFileRoute("/business-idea-toolkit")({
   head: () => ({ meta: [
-    { title: "Business Idea Toolkit in India: Calculators and Validation | BusinessIdea.io" },
+    { title: "Business Idea Toolkit in India: Calculators and Validation | bbusiness.online" },
     { name: "description", content: "Choose a founder question, use the available specifically modeled calculators with your own figures, and open the real four-model validation choice on a published business idea." },
-    { property: "og:title", content: "The business idea toolkit | BusinessIdea.io" }
+    { property: "og:title", content: "The business idea toolkit | bbusiness.online" }
   ] }),
   component: ToolkitPage
 });

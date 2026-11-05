@@ -5,7 +5,7 @@ import { getFaqDirectory } from "@/lib/faq.functions";
 export const Route = createFileRoute("/faq/")({
   loader: () => getFaqDirectory(),
   head: () => ({ meta: [
-    { title: "Business Idea Questions | BusinessIdea.io" },
+    { title: "Business Idea Questions | bbusiness.online" },
     { name: "description", content: "Answers from published business idea lists and ideas, organized by category." },
   ] }),
   component: () => <FaqDirectory groups={Route.useLoaderData()} />,

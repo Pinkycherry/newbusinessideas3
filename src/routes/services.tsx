@@ -5,7 +5,7 @@ import { Bullets, ContentPage, Section, metaFor } from "@/components/glass-edito
 
 export const Route = createFileRoute("/services")({
   head: () => metaFor(
-    "What You Can Do Here | BusinessIdea.io",
+    "What You Can Do Here | bbusiness.online",
     "Explore completed business blueprints, check your numbers, learn with practical guides and take a prepared validation prompt to your choice of AI research tool.",
   ),
   component: ServicesPage,

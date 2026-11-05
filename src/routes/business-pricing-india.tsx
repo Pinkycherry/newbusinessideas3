@@ -34,9 +34,9 @@ function ideaForShortlist(idea: { slug: string; title: string; hook?: string; su
 
 export const Route = createFileRoute("/business-pricing-india")({
   head: () => ({ meta: [
-    { title: "Business Pricing in India: Quote a First Sale with Real Costs | BusinessIdea.io" },
+    { title: "Business Pricing in India: Quote a First Sale with Real Costs | bbusiness.online" },
     { name: "description", content: "Build a transparent first-price worksheet for a business idea in India. Compare direct cost, owner time, monthly commitments and realistic sales capacity." },
-    { property: "og:title", content: "Business pricing in India | BusinessIdea.io" },
+    { property: "og:title", content: "Business pricing in India | bbusiness.online" },
     { property: "og:type", content: "article" },
   ] }),
   loader: async () => {

@@ -10,7 +10,7 @@ import "@/components/founder-decision-journal.css";
 
 type Entry={id:number;date:string;idea:string;claim:string;source:string;observed:string;against:string;decision:string};
 export const Route=createFileRoute("/founder-decision-journal")({
- head:()=>({meta:[{title:"Founder Decision Journal: Record Business Idea Evidence | BusinessIdea.io"},{name:"description",content:"A browser-local founder decision journal for a business idea in India: date the claim, source, observation, counterevidence and next decision before revising the plan."},{property:"og:title",content:"Founder decision journal | BusinessIdea.io"}]}),
+ head:()=>({meta:[{title:"Founder Decision Journal: Record Business Idea Evidence | bbusiness.online"},{name:"description",content:"A browser-local founder decision journal for a business idea in India: date the claim, source, observation, counterevidence and next decision before revising the plan."},{property:"og:title",content:"Founder decision journal | bbusiness.online"}]}),
  component:DecisionJournalPage
 });
 function DecisionJournalPage(){

@@ -9,7 +9,7 @@ import { getCaseStudyBySlug, CASE_STUDIES } from "@/lib/case-studies-data";
 export const Route = createFileRoute("/founder-stories/$slug")({
   head: ({ params }) => {
     const study = getCaseStudyBySlug(params.slug);
-    const title = study ? `${study.title} | Source-backed Founder Story` : "Founder Story Not Found | BusinessIdea.io";
+    const title = study ? `${study.title} | Source-backed Founder Story` : "Founder Story Not Found | bbusiness.online";
     const description = study
       ? `A source-backed founder story about ${study.story_theme}. Review the evidence links and stated limitations.`
       : "This founder story is not part of the published, source-checked collection.";

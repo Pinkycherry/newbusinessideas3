@@ -44,9 +44,9 @@ function ideaForShortlist(idea: { slug:string; title:string; hook?:string; summa
 
 export const Route = createFileRoute("/first-customer-india")({
   head: () => ({ meta: [
-    { title: "Find Your First Customer in India: A Practical Business Idea Field Map | BusinessIdea.io" },
+    { title: "Find Your First Customer in India: A Practical Business Idea Field Map | bbusiness.online" },
     { name: "description", content: "Locate a first customer for a business idea in India. Map the trigger, current alternative, payer and evidence of a real commitment." },
-    { property: "og:title", content: "Find your first customer in India | BusinessIdea.io" },
+    { property: "og:title", content: "Find your first customer in India | bbusiness.online" },
     { property: "og:type", content: "article" },
   ] }),
   loader: async () => {
@@ -115,7 +115,7 @@ function FirstCustomerPage() {
       "- Amount discussed (INR): " + (item.amount || "Not recorded"),
       "- Observation: " + (item.notes || "Not recorded"),
     ].join("\n")).join("\n\n");
-    const content = "# BusinessIdea.io first-customer conversation log\n\n" + body + "\n\nThese are founder-entered observations, not independently verified customer commitments.";
+    const content = "# bbusiness.online first-customer conversation log\n\n" + body + "\n\nThese are founder-entered observations, not independently verified customer commitments.";
     const url = URL.createObjectURL(new Blob([content], { type: "text/markdown;charset=utf-8" }));
     const anchor = document.createElement("a");
     anchor.href = url;

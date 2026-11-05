@@ -17,7 +17,7 @@ const card="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transitio
 const primary="inline-flex min-h-11 items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700";
 export const Route=createFileRoute("/business-ideas-india")({
   loader:()=>getListsHub(),
-  head:()=>({meta:[{title:"Business Ideas in India for Real Life | BusinessIdea.io"},{name:"description",content:"Explore business ideas in India by your time, place and obligations. Read completed blueprints, test customer demand and check startup costs before you commit."},{property:"og:title",content:"Business Ideas in India for Real Life | BusinessIdea.io"},{property:"og:type",content:"website"}]}),
+  head:()=>({meta:[{title:"Business Ideas in India for Real Life | bbusiness.online"},{name:"description",content:"Explore business ideas in India by your time, place and obligations. Read completed blueprints, test customer demand and check startup costs before you commit."},{property:"og:title",content:"Business Ideas in India for Real Life | bbusiness.online"},{property:"og:type",content:"website"}]}),
   component:IndiaBusinessIdeasPage,
 });
 function IndiaBusinessIdeasPage(){

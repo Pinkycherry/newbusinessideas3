@@ -49,14 +49,14 @@ const amount = (raw: string) => (raw.trim() === "" ? null : Number(raw));
 export const Route = createFileRoute("/business-idea-pivot-or-stop")({
   head: () => ({
     meta: [
-      { title: "When to Pivot or Stop a Business Idea in India | BusinessIdea.io" },
+      { title: "When to Pivot or Stop a Business Idea in India | bbusiness.online" },
       {
         name: "description",
         content:
           "Use buyer evidence, a cash boundary and one smaller test to decide whether to adjust, pause or stop a business idea in India.",
       },
       { name: "robots", content: "noindex,nofollow" },
-      { property: "og:title", content: "When to pivot or stop a business idea | BusinessIdea.io" },
+      { property: "og:title", content: "When to pivot or stop a business idea | bbusiness.online" },
       { property: "og:type", content: "article" },
     ],
   }),
