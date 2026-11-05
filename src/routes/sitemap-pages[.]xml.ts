@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { guideImage } from "@/config/guide-imagery";
 import { urlsetXml, xmlResponse } from "@/lib/sitemap";
-import { CALCULATORS } from "@/lib/calculators";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
 import { CASE_STUDIES } from "@/lib/case-studies-data";
 
@@ -61,7 +60,7 @@ export const Route = createFileRoute("/sitemap-pages.xml")({
         xmlResponse(
           urlsetXml([
             ...STATIC_PAGES.map((path) => ({ path })),
-            ...CALCULATORS.map((calculator) => ({ path: `/calculator/${calculator.slug}` })),
+            // AdSense approval: individual calculators are noindex, so only the /calculator hub is listed.
             ...STARTUP_GUIDES.map((guide) => {
               const image = guideImage(guide.slug);
               return {

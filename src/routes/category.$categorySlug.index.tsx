@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound , redirect} from "@tanstack/react-router";
 
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { Fragment, useCallback, type CSSProperties } from "react";
@@ -9,6 +9,7 @@ import { AdSlot } from "@/components/AdSlot";
 import { ExploreBanner, EXPLORE_BANNER_ROTATION } from "@/components/explore-rail";
 import { categoryImage } from "@/config/category-imagery";
 import { EXPANSION_SUBCATEGORIES } from "@/config/expansion-taxonomy";
+import { OLD_CATEGORY_REDIRECTS } from "@/config/old-category-redirects";
 import { getExpansionCategoryPage } from "@/lib/expansion-category.functions";
 import { getCategoryPage } from "@/lib/ideas.functions";
 import { JsonLd, absoluteUrl, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
@@ -31,6 +32,11 @@ const categoryQuery = (categorySlug: string) =>
   });
 
 export const Route = createFileRoute("/category/$categorySlug/")({
+  beforeLoad: ({ params }) => {
+    // AdSense approval: old categories moved to the closest new category.
+    const moved = OLD_CATEGORY_REDIRECTS[params.categorySlug];
+    if (moved) throw redirect({ href: `/category/${moved}`, replace: true, statusCode: 301 });
+  },
   loader: async ({ context, params }) => {
     const data = await context.queryClient.ensureQueryData(categoryQuery(params.categorySlug));
     if (!data.categoryName) throw notFound();

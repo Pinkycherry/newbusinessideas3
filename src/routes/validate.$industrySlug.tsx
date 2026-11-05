@@ -1,3 +1,5 @@
+import { redirect } from "@tanstack/react-router";
+import { OLD_CATEGORY_REDIRECTS } from "@/config/old-category-redirects";
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
@@ -39,6 +41,11 @@ const industryQuery = (categorySlug: string) =>
   });
 
 export const Route = createFileRoute("/validate/$industrySlug")({
+  beforeLoad: ({ params }) => {
+    // AdSense approval: old categories moved to the closest new category.
+    const moved = OLD_CATEGORY_REDIRECTS[params.industrySlug];
+    if (moved) throw redirect({ href: `/validate/${moved}`, replace: true, statusCode: 301 });
+  },
   loader: async ({ context, params }) => {
     const data = await context.queryClient.ensureQueryData(industryQuery(params.industrySlug));
     // No name means no such category; no ideas means we would be publishing an

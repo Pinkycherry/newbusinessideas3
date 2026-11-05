@@ -1,4 +1,4 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+import { createFileRoute, notFound, Link, redirect } from "@tanstack/react-router";
 import { queryOptions } from "@tanstack/react-query";
 import { IdeaCinemaPage } from "@/components/idea-cinema/idea-cinema";
 
@@ -94,6 +94,8 @@ export const Route = createFileRoute("/idea/$slug")({
   loader: async ({ context, params }) => {
     const data = await context.queryClient.ensureQueryData(ideaDetailQuery(params.slug));
     if (!data) throw notFound();
+    const moved = (data as unknown as { moved?: string }).moved;
+    if (moved) throw redirect({ href: moved, replace: true, statusCode: 301 });
     return data;
   },
   head: ({ loaderData }) => {
@@ -116,6 +118,8 @@ export const Route = createFileRoute("/idea/$slug")({
     return {
       meta: [
         { title },
+        // AdSense approval: individual idea pages are templated, so they stay out of the index.
+        { name: "robots", content: "noindex, follow" },
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },

@@ -1,3 +1,5 @@
+import { redirect } from "@tanstack/react-router";
+import { OLD_CATEGORY_REDIRECTS } from "@/config/old-category-redirects";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { queryOptions } from "@tanstack/react-query";
 import { useCallback } from "react";
@@ -28,6 +30,11 @@ const listicleQuery = (categorySlug: string) =>
   });
 
 export const Route = createFileRoute("/list/$slug")({
+  beforeLoad: ({ params }) => {
+    // AdSense approval: old categories moved to the closest new category.
+    const moved = OLD_CATEGORY_REDIRECTS[params.slug];
+    if (moved) throw redirect({ href: `/list/${moved}`, replace: true, statusCode: 301 });
+  },
   // Read through Route.useLoaderData() in the component rather than
   // useSuspenseQuery: this app's QueryClient is not dehydrated to the client,
   // so a client-side suspense read would re-run the query against a cold cache

@@ -1,4 +1,5 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+import { createFileRoute, notFound, Link, redirect } from "@tanstack/react-router";
+import { OLD_CATEGORY_REDIRECTS } from "@/config/old-category-redirects";
 
 import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { ExploreRail } from "@/components/explore-rail";
@@ -20,6 +21,10 @@ import { useDepthScene, useTextReveal } from "@/motion";
  * renders show the same draw.
  */
 export const Route = createFileRoute("/faq/$categorySlug")({
+  beforeLoad: ({ params }) => {
+    const moved = OLD_CATEGORY_REDIRECTS[params.categorySlug];
+    if (moved) throw redirect({ href: `/faq/${moved}`, replace: true, statusCode: 301 });
+  },
   loader: async ({ params }) => {
     const catalog = await getCatalog();
     const category = catalog.categories.find((c) => c.categorySlug === params.categorySlug);

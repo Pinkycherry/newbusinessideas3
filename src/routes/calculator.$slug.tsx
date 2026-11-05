@@ -46,6 +46,8 @@ export const Route = createFileRoute("/calculator/$slug")({
     return {
       meta: [
         { title },
+        // AdSense approval: individual calculators are templated, so they stay out of the index.
+        { name: "robots", content: "noindex, follow" },
         { name: "description", content: calculator.description },
         { property: "og:title", content: title },
         { property: "og:description", content: calculator.description },

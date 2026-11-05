@@ -32,12 +32,8 @@ export const Route = createFileRoute("/sitemap-ideas/$page")({
           return new Response("Not found", { status: 404 });
         }
 
-        const rows = await fetchIdeaTranche(page);
-        if (rows.length === 0) return new Response("Not found", { status: 404 });
-
-        return xmlResponse(
-          urlsetXml(rows.map((row) => ({ path: `/idea/${row.slug}`, lastmod: row.lastmod }))),
-        );
+        // AdSense approval: idea pages are noindex, so their sitemap is empty.
+        return xmlResponse(urlsetXml([]));
       },
     },
   },

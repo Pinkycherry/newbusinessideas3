@@ -7,6 +7,7 @@ import { SiteShell, Breadcrumbs } from "@/components/site-shell";
 import { ExploreBanner, ExploreRail, EXPLORE_BANNER_ROTATION } from "@/components/explore-rail";
 import { categoryImage } from "@/config/category-imagery";
 import { EXPANSION_SUBCATEGORIES } from "@/config/expansion-taxonomy";
+import { OLD_CATEGORY_REDIRECTS } from "@/config/old-category-redirects";
 import { getSubcategoryPage } from "@/lib/ideas.functions";
 import { JsonLd, absoluteUrl, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
 import {
@@ -27,21 +28,12 @@ export const Route = createFileRoute("/category/$categorySlug/$subcategorySlug")
   beforeLoad: ({ params }) => {
     // C089 used the legacy Work From Home slug for its first three idea pages.
     // Keep those subcategory links working after giving C089 its own category.
-    if (
-      params.categorySlug === "work-from-home-business-ideas" &&
-      EXPANSION_SUBCATEGORIES["home-based-business-ventures"]?.some(
-        (subcategory) => subcategory.slug === params.subcategorySlug,
-      )
-    ) {
-      throw redirect({
-        to: "/category/$categorySlug/$subcategorySlug",
-        params: {
-          categorySlug: "home-based-business-ventures",
-          subcategorySlug: params.subcategorySlug,
-        },
-        replace: true,
-        statusCode: 301,
-      });
+    // AdSense approval: old categories and their subcategories moved to the closest new category.
+    const moved = OLD_CATEGORY_REDIRECTS[params.categorySlug];
+    const approved = EXPANSION_SUBCATEGORIES[params.categorySlug];
+    const target = moved ?? (approved && !approved.some((s) => s.slug === params.subcategorySlug) ? params.categorySlug : null);
+    if (target) {
+      throw redirect({ href: `/category/${target}`, replace: true, statusCode: 301 });
     }
   },
   loader: async ({ context, params }) => {

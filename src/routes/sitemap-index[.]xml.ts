@@ -40,10 +40,6 @@ export const Route = createFileRoute("/sitemap-index.xml")({
           // India Idea Atlas (BBI_EXPANSION.md). Empty until a set is published.
           { path: "/sitemap-india.xml" },
           { path: "/sitemap-blog.xml", lastmod: blogLastmod },
-          ...Array.from({ length: tranches }, (_unused, index) => ({
-            path: `/sitemap-ideas/${index + 1}`,
-            lastmod: lastmods[index] ?? null,
-          })),
         ];
 
         return xmlResponse(sitemapIndexXml(children));
