@@ -44,9 +44,60 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+/**
+ * AdSense approval (6 Nov 2026): the free Workers plan stops a request at ~10 ms of CPU, and a
+ * full page render needs ~20 ms, so about a third of renders failed with Cloudflare error 1102.
+ * Public pages are the same for every visitor, so a rendered page is kept in Cloudflare's edge
+ * cache for an hour and served from there without rendering again.
+ */
+const EDGE_TTL_SECONDS = 3600;
+
+function isCacheablePage(request: Request): boolean {
+  if (request.method !== "GET") return false;
+  const url = new URL(request.url);
+  if (url.pathname.startsWith("/_serverFn") || url.pathname.startsWith("/api")) return false;
+  if (url.search) return false;
+  const cookie = request.headers.get("cookie") ?? "";
+  return !/sb-|auth|session/i.test(cookie);
+}
+
+function edgeCache(): Cache | undefined {
+  const store = (globalThis as { caches?: { default?: Cache } }).caches;
+  return store?.default;
+}
+
+async function renderAndMaybeCache(request: Request, env: unknown, ctx: unknown): Promise<Response> {
+  const handler = await getServerEntry();
+  const response = await normalizeCatastrophicSsrResponse(await handler.fetch(request, env, ctx));
+  const cache = edgeCache();
+  const type = response.headers.get("content-type") ?? "";
+  const storable =
+    (response.status === 200 && (type.includes("text/html") || type.includes("xml"))) ||
+    response.status === 301;
+  if (cache && storable && !response.headers.has("set-cookie")) {
+    const copy = new Response(response.clone().body, response);
+    copy.headers.set("cache-control", `public, max-age=${EDGE_TTL_SECONDS}`);
+    const put = cache.put(request, copy).catch(() => undefined);
+    const waitUntil = (ctx as { waitUntil?: (p: Promise<unknown>) => void } | undefined)?.waitUntil;
+    if (waitUntil) waitUntil.call(ctx, put);
+  }
+  return response;
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      if (isCacheablePage(request)) {
+        const cache = edgeCache();
+        const hit = cache ? await cache.match(request) : undefined;
+        if (hit) {
+          const served = new Response(hit.body, hit);
+          served.headers.set("cache-control", "public, max-age=0, must-revalidate");
+          served.headers.set("x-bbi-edge", "hit");
+          return served;
+        }
+        return await renderAndMaybeCache(request, env, ctx);
+      }
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);
