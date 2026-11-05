@@ -77,9 +77,8 @@ async function renderAndMaybeCache(request: Request, env: unknown, ctx: unknown)
   if (cache && storable && !response.headers.has("set-cookie")) {
     const copy = new Response(response.clone().body, response);
     copy.headers.set("cache-control", `public, max-age=${EDGE_TTL_SECONDS}`);
-    const put = cache.put(request, copy).catch(() => undefined);
-    const waitUntil = (ctx as { waitUntil?: (p: Promise<unknown>) => void } | undefined)?.waitUntil;
-    if (waitUntil) waitUntil.call(ctx, put);
+    // Awaited: under nitro the worker ctx is not always passed through, so waitUntil is unreliable.
+    await cache.put(request, copy).catch((error: unknown) => console.error("edge cache put", error));
   }
   return response;
 }
