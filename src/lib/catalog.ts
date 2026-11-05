@@ -27,26 +27,33 @@ export type Catalog = {
   totalIdeas: number;
 };
 
-const CATEGORIES: CategoryNode[] = TAXONOMY.map((c) => ({
-  categoryName: c.name,
-  categorySlug: c.slug,
-  shortName: c.short,
-  position: c.n,
-  subcategoryCount: c.subcategories.length,
-  ideaCount: 0,
-}));
-
-export const CATALOG: Catalog = {
-  categories: CATEGORIES,
-  totalCategories: CATEGORIES.length,
-  totalSubcategories: TAXONOMY.reduce((sum, c) => sum + c.subcategories.length, 0),
-  totalIdeas: 0,
-};
+// Built on first use, not at module load: the server bundle can load this module before
+// @/data/taxonomy has finished evaluating (a chunk cycle), and a top-level TAXONOMY.map then
+// crashes every page (6 Nov 2026).
+let catalogCache: Catalog | undefined;
+function buildCatalog(): Catalog {
+  if (catalogCache) return catalogCache;
+  const categories: CategoryNode[] = TAXONOMY.map((c) => ({
+    categoryName: c.name,
+    categorySlug: c.slug,
+    shortName: c.short,
+    position: c.n,
+    subcategoryCount: c.subcategories.length,
+    ideaCount: 0,
+  }));
+  catalogCache = {
+    categories,
+    totalCategories: categories.length,
+    totalSubcategories: TAXONOMY.reduce((sum, c) => sum + c.subcategories.length, 0),
+    totalIdeas: 0,
+  };
+  return catalogCache;
+}
 
 /** Kept as a query so every existing `useSuspenseQuery(catalogQuery)` works unchanged. */
 export const catalogQuery = queryOptions({
   queryKey: ["catalog"],
-  queryFn: async () => CATALOG,
+  queryFn: async () => buildCatalog(),
   staleTime: Infinity,
 });
 

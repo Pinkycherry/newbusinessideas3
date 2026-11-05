@@ -45,7 +45,7 @@ export default defineConfig(({ command, mode }) => {
         // New layouts (6 Nov 2026): keep TanStack's CSRF middleware in its own server chunk. Without
         // this the server chunk imports itself in a cycle and every page returns 500.
         rolldownConfig: {
-          output: { codeSplitting: { groups: [{ test: /createCsrfMiddleware|rolldown-runtime/, name: "csrf-middleware", priority: 100 }] } },
+          output: { codeSplitting: { groups: [{ test: /createCsrfMiddleware|rolldown-runtime/, name: "csrf-middleware", priority: 100 }, { test: /taxonomy-data/, name: "taxonomy-data", priority: 90 }] } },
         },
       }),
     );
@@ -62,6 +62,15 @@ export default defineConfig(({ command, mode }) => {
       ...envDefine,
       __BBI_COMMIT__: JSON.stringify(buildCommit()),
       __BBI_BUILT_AT__: JSON.stringify(new Date().toISOString()),
+    },
+    // 6 Nov 2026: the taxonomy data gets its own chunk so the server bundle cannot load it
+    // through a chunk cycle (that crashed every page with "reading 'map'" of undefined).
+    build: {
+      rolldownOptions: {
+        output: {
+          codeSplitting: { groups: [{ name: "taxonomy-data", test: /src[\\/]data[\\/]taxonomy\.ts/, priority: 100 }] },
+        },
+      },
     },
     css: { transformer: "lightningcss" },
     resolve: {
