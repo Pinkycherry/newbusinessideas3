@@ -10,6 +10,16 @@ EDIT 2026-10-10 01:05 IST: Expanded the cohort audit to SEO/meta/keyword/timing/
 
 EDIT 2026-10-10 01:01 IST: The founder specified **more than 500 informative words** per idea page, normally 500–1,000 according to the business, without filler or a hard maximum. The separate business_description floor is 180 substantive words because the accordion displays its remainder. Field-by-field cohort census showed thin summaries, money/cost/income/edge fields and JSON bullets throughout all three writer tables, plus widespread operator “I”. An approximate database count (including JSON punctuation/keys, so it can overstate rendered words) found at or below 500: 99/200 live, 0/292 p1, 30/289 p2, 97/294 p3. This is an audit of all row/field lengths and voice candidates, not a completed human edit of all rows. Coordinator owns the old cohort repair. Corrected a third live+stage page PK3-C068-S02-0001 and a staged p2 page PK2-C040-S01-0001 across all existing visible fields; see OPS_LOG. Open PENDING #42/#43 remain.
 
+## The one goal: AdSense approval (founder, 5 Nov 2026)
+
+bbusiness.online is under Google AdSense review. Every change is judged by one question: does it help Google approve the site?
+
+- Google already knows the old URLs (sitemaps were submitted). Never make them unreachable: every old idea, category and subcategory URL gets a permanent 301 redirect to the closest new page, at the same moment the new data goes live.
+- No broken links, no empty or half-built pages, no duplicate or thin topics live, not even for a short time. Swap everything in one step.
+- Templated pages (individual ideas, individual calculators) stay noindex and out of sitemaps. Hubs (categories, subcategories, the calculators hub) and hand-written pages are indexed.
+- Policy and trust pages (about, author, contact, privacy, terms, disclaimer) must be complete and reachable from every page.
+- If a task does not serve approval, it waits.
+
 ## Expansion editorial correction — 2026-10-10 00:53 IST
 
 The founder clarified that the site's narrator speaks to the reader as **you**, offering advice about a business the reader might start. Do not write operator-first-person (“I charge”, “I will sell”, “my customers”). The “Read the full overview” panel is the remainder of `business_description` after the hero's first sentence (`src/components/idea-cinema/idea-cinema.tsx`), so a two-sentence description makes the panel almost empty. New/revised expansion descriptions now need at least 180 meaningful words, usually 200–300, with a strong standalone first sentence; page-wide visitor-facing copy remains at least 500 words, and every existing section/JSON bullet should be specific. See `docs/agents/Current_Instruction.md`.
