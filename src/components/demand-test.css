@@ -1,0 +1,73 @@
+/* A small real-world demand test, without a fictitious score. */
+.glass-home .dt-page{width:min(100% - 2.5rem,1320px);margin:auto;padding-bottom:3.5rem;color:#282943}
+.glass-home .dt-page *{box-sizing:border-box}
+.glass-home .dt-page .gl-breadcrumb{padding:1.4rem 0 .9rem}
+.glass-home .dt-page h1,.glass-home .dt-page h2,.glass-home .dt-page h3{color:#282943;letter-spacing:-.035em}
+.glass-home .dt-page h2{font-size:clamp(1.9rem,3vw,2.8rem);line-height:1.12;margin:.35rem 0 .8rem}
+.glass-home .dt-page p{line-height:1.58}
+.glass-home .dt-page section{scroll-margin-top:90px;padding:clamp(1.8rem,3vw,2.8rem) 0}
+.glass-home .dt-page a:not(.gh-button){display:inline-flex;align-items:center;gap:.4rem;color:#59449e;font-weight:750;text-decoration:none}
+.glass-home .dt-page a:hover{text-decoration:underline}
+.glass-home .dt-hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.7fr);gap:2rem;align-items:center;padding:clamp(1.5rem,3vw,2.8rem);border:1px solid #fff;border-radius:27px 65px 27px 27px;background:linear-gradient(120deg,#fff,#e9e7f8 58%,#e6f4f4)}
+.glass-home .dt-hero>*{min-width:0}
+.glass-home .dt-hero h1{max-width:18ch;font-size:clamp(2.7rem,4.3vw,4.1rem);line-height:1.06;margin:.5rem 0 .8rem}
+.glass-home .dt-hero h1 em{font-style:normal;color:#765dc6}
+.glass-home .dt-hero p{max-width:65ch;color:#565d70}
+.glass-home .dt-hero aside{padding:1.3rem;border:1px solid #fff;border-radius:18px;background:#ffffffdc}
+.glass-home .dt-hero aside>strong{display:block;font-size:1.12rem;margin-bottom:.7rem}
+.glass-home .dt-hero aside div{display:flex;gap:1rem;align-items:baseline;border-top:1px solid #ddd9ea;padding:.5rem 0}
+.glass-home .dt-hero aside span{min-width:54px;color:#6f59b7;font-size:.68rem;font-weight:800}
+.glass-home .dt-hero aside p{margin:0;font-size:.85rem}
+.glass-home .dt-before,.glass-home .dt-friction,.glass-home .dt-score,.glass-home .dt-interpret,.glass-home .dt-cash,.glass-home .dt-faq{display:grid;grid-template-columns:minmax(0,.38fr) minmax(0,.62fr);gap:2rem}
+.glass-home .dt-before>*,.glass-home .dt-friction>*,.glass-home .dt-score>*,.glass-home .dt-interpret>*,.glass-home .dt-cash>*,.glass-home .dt-faq>*{min-width:0}
+.glass-home .dt-before>div:first-child p:not(.gh-eyebrow),.glass-home .dt-friction>div p:not(.gh-eyebrow),.glass-home .dt-score>div:first-child p:not(.gh-eyebrow),.glass-home .dt-cash>div:first-child p:not(.gh-eyebrow){color:#596074}
+.glass-home .dt-before-list{align-self:start;padding:1rem 1.3rem;border:1px solid #fff;border-radius:17px;background:#ffffffcf}
+.glass-home .dt-before-list p{padding:.65rem 0;border-bottom:1px solid #dedbe9;margin:0;font-size:.9rem}
+.glass-home .dt-before-list a{margin-top:.8rem}
+.glass-home .dt-design{padding:clamp(1.4rem,3vw,2.5rem)!important;border:1px solid #fff;border-radius:24px 60px 24px 24px;background:#eae7f8}
+.glass-home .dt-intro{max-width:72ch}.glass-home .dt-intro p:not(.gh-eyebrow){color:#596074}
+.glass-home .dt-options{display:flex;gap:.55rem;flex-wrap:wrap;margin:1.1rem 0}
+.glass-home .dt-options button{min-height:44px;padding:.55rem .9rem;border:1px solid #bdb3df;border-radius:10px;background:#fff;color:#59449e;font-weight:750;cursor:pointer}
+.glass-home .dt-options button[aria-pressed=true]{background:#332c61;color:#fff;border-color:#332c61}
+.glass-home .dt-choice{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:.6rem}
+.glass-home .dt-choice>div{min-width:0;padding:1.15rem;border-radius:15px;background:#fff}
+.glass-home .dt-choice span,.glass-home .dt-interpret span{font-size:.69rem;color:#6e59b6;font-weight:800;letter-spacing:.07em}
+.glass-home .dt-choice p{font-size:.86rem;color:#555d70;margin:.45rem 0 0}
+.glass-home .dt-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;margin-top:1rem}
+.glass-home .dt-form label,.glass-home .dt-counts label{display:block;min-width:0;color:#4d5368;font-size:.83rem;font-weight:750}
+.glass-home .dt-form input,.glass-home .dt-form textarea,.glass-home .dt-counts input{display:block;width:100%;min-width:0;min-height:44px;margin-top:.4rem;padding:.65rem .75rem;border:1px solid #c9c5da;border-radius:9px;background:#fff;color:#282943;font:inherit}
+.glass-home .dt-form textarea{resize:vertical}
+.glass-home .dt-form input:focus-visible,.glass-home .dt-form textarea:focus-visible,.glass-home .dt-counts input:focus-visible,.glass-home .dt-page button:focus-visible{outline:3px solid #755dcb;outline-offset:2px}
+.glass-home .dt-friction ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;align-items:start;list-style:none;padding:0;margin:0}
+.glass-home .dt-friction li{padding:1rem;border:1px solid #fff;border-radius:16px;background:#fff}
+.glass-home .dt-friction li span{display:block;color:#6e58b7;font-size:.68rem;font-weight:800}
+.glass-home .dt-friction li strong{display:block;margin:.5rem 0}
+.glass-home .dt-friction li p{font-size:.82rem;color:#596074}
+.glass-home .dt-readout{align-self:start;border:1px solid #fff;border-radius:19px;background:#fff;padding:1.2rem}
+.glass-home .dt-counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem}
+.glass-home .dt-readout aside{margin-top:1rem;padding:1rem;border-radius:13px;background:#292b4a;color:#fff}
+.glass-home .dt-readout aside strong{font-size:1.1rem}
+.glass-home .dt-readout aside p{color:#f0eff8;margin:.3rem 0}
+.glass-home .dt-readout aside small{color:#c9cae1}
+.glass-home .dt-art-section{display:grid;grid-template-columns:minmax(0,.55fr) minmax(0,.45fr);gap:2rem;align-items:center;padding:1rem!important;border-radius:22px;background:#fff}
+.glass-home .dt-art-section>*{min-width:0}
+.glass-home .dt-art{aspect-ratio:16/9;display:grid;place-items:center;overflow:hidden;border-radius:14px;background:#e7e4ef}
+.glass-home .dt-art img{display:block;width:100%;height:100%;object-fit:contain}
+.glass-home .dt-art-section>div:last-child{padding:1rem}
+.glass-home .dt-art-section p:not(.gh-eyebrow){color:#596074}
+.glass-home .dt-art-section a{margin:0 .8rem .35rem 0}
+.glass-home .dt-interpret>div:last-child{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:.6rem}
+.glass-home .dt-interpret article{padding:1rem;border:1px solid #fff;border-radius:15px;background:#fff}
+.glass-home .dt-interpret article p{font-size:.84rem;color:#596074}
+.glass-home .dt-cash-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:.6rem}
+.glass-home .dt-cash-links a{display:grid!important;gap:.4rem;padding:1rem;border:1px solid #fff;border-radius:15px;background:#fff}
+.glass-home .dt-cash-links a span{font-size:.84rem;font-weight:400;color:#5c6375}
+.glass-home .dt-faq details{padding:1rem 0;border-bottom:1px solid #d9d7e6}
+.glass-home .dt-faq summary{cursor:pointer;font-weight:750}
+.glass-home .dt-faq details p{color:#5b6275}
+.glass-home .dt-final{display:flex;align-items:end;justify-content:space-between;gap:2rem;padding:2rem;border:1px solid #fff;border-radius:24px;background:linear-gradient(120deg,#e8e5f8,#fff,#e7f4f4)}
+.glass-home .dt-final>div:first-child{max-width:67ch}
+.glass-home .dt-final p:not(.gh-eyebrow){color:#596074}
+.glass-home .dt-final>div:last-child{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:flex-end}
+@media(max-width:1000px){.glass-home .dt-friction ol,.glass-home .dt-interpret>div:last-child{grid-template-columns:1fr}}
+@media(max-width:760px){.glass-home .dt-page{width:min(100% - 1.25rem,1320px)}.glass-home .dt-hero,.glass-home .dt-before,.glass-home .dt-friction,.glass-home .dt-score,.glass-home .dt-art-section,.glass-home .dt-interpret,.glass-home .dt-cash,.glass-home .dt-faq{grid-template-columns:1fr;gap:1rem}.glass-home .dt-hero{padding:1.3rem;border-radius:22px}.glass-home .dt-hero h1{font-size:clamp(2.1rem,9vw,2.7rem)}.glass-home .dt-page h2{font-size:clamp(1.65rem,7vw,2rem)}.glass-home .dt-page section{padding:2.4rem 0}.glass-home .dt-choice,.glass-home .dt-form,.glass-home .dt-counts,.glass-home .dt-cash-links{grid-template-columns:1fr}.glass-home .dt-design{border-radius:20px}.glass-home .dt-art-section{padding:.6rem!important}.glass-home .dt-art-section>div:last-child{padding:.6rem}.glass-home .dt-final{display:block}.glass-home .dt-final>div:last-child{justify-content:flex-start;margin-top:1rem}}

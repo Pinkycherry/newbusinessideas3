@@ -1,0 +1,59 @@
+/* Shared page sections use the seller palette and proportions. Legacy route
+   selectors still position their content; these components own the surface. */
+.v2 .v2p-hero {
+  border: 1px solid #e9e2f4;
+  border-radius: 1.25rem;
+  background: linear-gradient(145deg, #f5f0ff 0%, #fff 70%);
+  color: #0f172a;
+}
+.v2 .v2p-hero h1 { color: #0f172a; letter-spacing: -.045em; }
+.v2 .v2p-hero h1 em { color: #4643ba; font-style: normal; -webkit-text-fill-color: currentColor; }
+.v2 .v2p-section { color: #0f172a; }
+.v2 .v2p-section > :is(h2,h3), .v2 .v2p-section > div > h2 { letter-spacing: -.025em; }
+.v2 .v2p-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 1px 2px #0f172a0d;
+}
+.v2 .v2p-faq details { border: 1px solid #e2e8f0; border-radius: .75rem; background: #fff; }
+.v2 .v2p-faq summary { cursor: pointer; }
+.v2 .v2p-comparison :is(table, [class*="comparison-row"]) { border-color: #e2e8f0; }
+.v2 .v2p-cta {
+  border: 1px solid #dad9f2;
+  border-radius: 1rem;
+  background: #f5f0ff;
+  color: #0f172a;
+}
+.v2 .v2p-cta :is(h2,h3) { color: #0f172a; }
+
+/* Order 4: prevent the global link/typography rules from collapsing card CTAs.
+   Keep button geometry scoped to seller page content rather than mega-menu. */
+.v2 main a.gl-idea-action,
+.v2 main a.gh-button,
+.v2 main button.gh-button,
+.v2 main a.btn-primary,
+.v2 main a[class~="bg-violet-700"] {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .7rem 1.15rem;
+  border-radius: .75rem;
+  line-height: 1.35;
+  font-size: .9rem;
+  font-weight: 600;
+  white-space: normal;
+  text-decoration: none;
+  background-color: #4643ba;
+  color: #fff;
+}
+.v2 main a.gl-idea-action:hover,
+.v2 main a.gh-button:hover,
+.v2 main button.gh-button:hover,
+.v2 main a.btn-primary:hover,
+.v2 main a[class~="bg-violet-700"]:hover { background-color: #3a37a0; color: #fff; }
+.v2 main :is(.gl-blueprint-card,.v2p-card) a.gl-idea-action { margin-top: auto; }

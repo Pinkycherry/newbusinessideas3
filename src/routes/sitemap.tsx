@@ -5,12 +5,8 @@ import { ContentPage, Section, metaFor } from "@/components/page-layout";
 import { CALCULATORS } from "@/lib/calculators";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
 import { CASE_STUDIES } from "@/lib/case-studies-data";
-import {
-  fetchBlogPostsForHub,
-  fetchIdeasForHub,
-  type HubBlogPost,
-  type HubIdea,
-} from "@/lib/sitemap.server";
+import { TAXONOMY } from "@/data/taxonomy";
+import { fetchBlogPostsForHub, type HubBlogPost } from "@/lib/sitemap.server";
 
 /**
  * The HTML sitemap — one page that links to every page on this site.
@@ -63,9 +59,11 @@ import {
  * button on the site depends on it.
  */
 const getSitemapData = createServerFn({ method: "GET" }).handler(
-  async (): Promise<{ ideas: HubIdea[]; blogPosts: HubBlogPost[] }> => {
-    const [ideas, blogPosts] = await Promise.all([fetchIdeasForHub(), fetchBlogPostsForHub()]);
-    return { ideas, blogPosts };
+  async (): Promise<{ blogPosts: HubBlogPost[] }> => {
+    // The blog is the one database-backed list here; a failed read must not
+    // take the category links down with it.
+    const blogPosts = await fetchBlogPostsForHub().catch(() => []);
+    return { blogPosts };
   },
 );
 
@@ -73,7 +71,7 @@ export const Route = createFileRoute("/sitemap")({
   head: () =>
     metaFor(
       "Site Map | BBI – Bro Business Ideas",
-      "Every page on BBI in one place: business idea blueprints by category, calculators, startup guides, founder stories and reference pages.",
+      "Every page on BBI in one place: business idea categories, focused paths, calculators, startup guides, founder stories and reference pages.",
     ),
   loader: () => getSitemapData(),
   component: SitemapPage,
@@ -85,10 +83,9 @@ const PAGE_GROUPS: { heading: string; links: { to: string; label: string }[] }[]
     heading: "Browse the library",
     links: [
       { to: "/", label: "Home" },
-      { to: "/browse", label: "Browse all ideas" },
-      { to: "/list", label: "Curated lists" },
+      { to: "/browse", label: "Browse all categories" },
+      { to: "/blueprints", label: "Published blueprints" },
       { to: "/blog", label: "Blog" },
-      { to: "/faq", label: "Questions and answers" },
     ],
   },
   {
@@ -184,21 +181,7 @@ function packByWidth<T>(items: readonly T[], label: (item: T) => string): T[] {
 }
 
 function SitemapPage() {
-  const { ideas, blogPosts } = Route.useLoaderData();
-
-  // Grouped by category so the page has the same shape as the site, and so
-  // each category heading links to the category page a crawler should also see.
-  const byCategory = new Map<string, { slug: string; ideas: HubIdea[] }>();
-  for (const idea of ideas) {
-    const existing = byCategory.get(idea.categoryName);
-    if (existing) existing.ideas.push(idea);
-    else byCategory.set(idea.categoryName, { slug: idea.categorySlug, ideas: [idea] });
-  }
-  // Insertion order, not alphabetical. The rows are packed by width below,
-  // and re-sorting the groups by name on top of that only shuffles blocks
-  // around without helping anyone find anything.
-  const categories = [...byCategory.entries()];
-
+  const { blogPosts } = Route.useLoaderData();
   return (
     <ContentPage
       wide
@@ -206,7 +189,7 @@ function SitemapPage() {
       eyebrow="Site map"
       title="Every page on"
       highlight="BBI"
-      intro={`${ideas.length} idea blueprints across ${categories.length} categories, plus ${CALCULATORS.length} calculators, ${STARTUP_GUIDES.length} startup guides, ${CASE_STUDIES.length} founder stories and ${blogPosts.length} blog posts — every one of them linked from this page.`}
+      intro="Browse the business idea categories, focused paths, calculators, startup guides, founder stories and journal posts. Search the separate index of completed source blueprints from the links below."
     >
       {PAGE_GROUPS.map((group) => (
         <Section key={group.heading} heading={group.heading}>
@@ -218,7 +201,7 @@ function SitemapPage() {
         </Section>
       ))}
 
-      <Section heading={`Calculators (${CALCULATORS.length})`}>
+      <Section heading="Calculators">
         <PillRow>
           {packByWidth(CALCULATORS, (c) => c.title).map((calculator) => (
             <Chip
@@ -231,7 +214,7 @@ function SitemapPage() {
         </PillRow>
       </Section>
 
-      <Section heading={`Startup guides (${STARTUP_GUIDES.length})`}>
+      <Section heading="Startup guides">
         <PillRow>
           {packByWidth(STARTUP_GUIDES, (g) => g.title).map((guide) => (
             <Chip
@@ -244,7 +227,7 @@ function SitemapPage() {
         </PillRow>
       </Section>
 
-      <Section heading={`Founder stories (${CASE_STUDIES.length})`}>
+      <Section heading="Founder stories">
         <PillRow>
           {packByWidth(CASE_STUDIES, (c) => c.title).map((study) => (
             <Chip
@@ -257,7 +240,7 @@ function SitemapPage() {
         </PillRow>
       </Section>
 
-      <Section heading={`Blog posts (${blogPosts.length})`}>
+      <Section heading="Blog posts">
         <PillRow>
           {packByWidth(blogPosts, (p) => p.title).map((post) => (
             <Chip
@@ -270,34 +253,26 @@ function SitemapPage() {
         </PillRow>
       </Section>
 
-      <Section heading={`Idea blueprints (${ideas.length})`}>
+      <Section heading="Categories and subcategories">
         <div className="space-y-5">
-          {categories.map(([categoryName, group]) => (
-            <div key={categoryName}>
-              {/* Same element, same size, every category. No `font-display`
-                  class: the global `h1, h2, h3, h4` rule in styles.css already
-                  sets `--font-sans`, which is what the homepage and category
-                  headings use, so overriding it here is what made this page
-                  look like a different site. */}
+          {TAXONOMY.map((category) => (
+            <div key={category.slug}>
               <h3 className="mb-2.5 text-base font-semibold tracking-tight text-foreground">
                 <Link
                   to="/category/$categorySlug"
-                  params={{ categorySlug: group.slug }}
+                  params={{ categorySlug: category.slug }}
                   className="transition-colors hover:text-primary"
                 >
-                  {categoryName}
+                  {category.name}
                 </Link>
-                <span className="ml-2 text-xs font-normal tabular-nums text-muted-foreground">
-                  {group.ideas.length}
-                </span>
               </h3>
               <PillRow>
-                {packByWidth(group.ideas, (i) => i.title).map((idea) => (
+                {packByWidth(category.subcategories, (s) => s.name).map((sub) => (
                   <Chip
-                    key={idea.slug}
-                    to="/idea/$slug"
-                    params={{ slug: idea.slug }}
-                    label={idea.title}
+                    key={sub.slug}
+                    to="/category/$categorySlug/$subcategorySlug"
+                    params={{ categorySlug: category.slug, subcategorySlug: sub.slug }}
+                    label={sub.name.replace(/ Business Ideas$/, "")}
                   />
                 ))}
               </PillRow>

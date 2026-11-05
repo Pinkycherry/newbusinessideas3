@@ -969,6 +969,13 @@ export const CALCULATORS: readonly Calculator[] = [
   ...GENERATED_CALCULATORS,
 ];
 
+/** Preserve every calculator in the source archive. Generated metric definitions retain their source arithmetic and are labelled for formula review in the UI. */
+const VERIFIED_SLUGS = new Set(["break-even", "startup-cost", "roi", "funding-needed", "customer-acquisition-cost"]);
+export function isVerifiedCalculator(calculator: Calculator): boolean { return VERIFIED_SLUGS.has(calculator.slug); }
+export function isReadyCalculator(calculator: Calculator): boolean { return Boolean(calculator.fields.length && calculator.compute); }
+export const READY_CALCULATORS = CALCULATORS.filter(isReadyCalculator);
+export const REVIEW_CALCULATORS = CALCULATORS.filter(calculator => !isVerifiedCalculator(calculator));
+
 export function findCalculator(slug: string): Calculator | undefined {
   return CALCULATORS.find((calculator) => calculator && calculator.slug === slug);
 }

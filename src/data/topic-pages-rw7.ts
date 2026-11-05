@@ -1,0 +1,232 @@
+import type { TopicPage } from "@/bought/topic-page";
+import { PARENT, UPDATED, UPDATED_ON, IMG, SRC, TOOLS, CALCS, EXPLORE, CTA } from "./topic-pages-shared";
+
+const NRLM = { label: "DAY-NRLM (Ministry of Rural Development)", href: "https://aajeevika.gov.in/", note: "Self-help groups, revolving funds and rural livelihoods." };
+
+/**
+ * Rewrite 7 (owner review: previous version failed as thin and generic).
+ * Seller layout: question page (/questions/what-is-bootstrapping), sections in the seller's order:
+ * takeaways, step by step, benchmarks, pitfalls, real situations, FAQ, expert tips, sources, compare,
+ * related questions, CTA, keep reading, deeper answers, tools, calculators, explore.
+ * No researched figures: every number is a [Validate: ...] marker or a blank the reader fills in.
+ */
+export const bootstrapping: TopicPage = {
+  slug: "how-to-start-a-business-without-investors-in-india",
+  updated: UPDATED_ON,
+  sellerRef: "https://ideaproof.io/questions/what-is-bootstrapping",
+  parent: PARENT,
+  explore: { guideCategory: "Bootstrapping", categories: ["freelance-business-ideas", "home-based-business-ideas", "local-service-business-ideas", "home-kitchen-food-business-ideas", "reselling-business-ideas", "digital-marketing-business-ideas", "tuition-and-coaching-business-ideas", "repair-and-maintenance-business-ideas"] },
+  seo: {
+    title: "How to Start a Business Without Investors in India: Bootstrapping Step by Step",
+    description: "Start and grow a business in India on your own savings and customers' money: sell before you build, take UPI advances, keep fixed costs tiny, manage udhaar and weekly cash, pay yourself, and know when a MUDRA loan or investor makes sense. Worksheet, examples and a 7-day plan.",
+  },
+  hero: {
+    eyebrow: "Bootstrapping",
+    h1: "How to Start a Business Without Investors in India",
+    highlight: "Without Investors",
+    intro: "Most businesses in India, from the kirana down the road to the textile trader in Surat to the software studio in Kochi, were never funded by an investor. They grew from the owner's savings, family help and, above all, customers' money. That is bootstrapping. You keep full control, you answer only to your customers, and every rupee has to earn its place.",
+    sub: "This page shows you how to start selling before you build, how to get paid in advance, how to keep costs tiny, how to manage cash week by week, and when a bank loan or investor actually makes sense.",
+    updated: UPDATED,
+    primary: { label: "Start bootstrapping", href: "#step-by-step-how-to-bootstrap-a-business-in-india" },
+    secondary: { label: "Compare with funding", href: "/how-to-get-funding-for-a-small-business-in-india" },
+    image: IMG.funding,
+    imageAlt: "A founder growing a business from its own sales",
+  },
+  sections: [
+    {
+      type: "takeaways",
+      heading: "Key takeaways",
+      items: [
+        "**Bootstrapping means growing from your own savings and your customers' payments**, not from investors. You own the whole business and make every decision.",
+        "**Cash flow is everything.** Your growth is paced by how quickly money comes in, so advances, short credit and low fixed costs matter more than anything else.",
+        "**It suits businesses that can earn from the first month**: services, food, trading, local shops, agencies, coaching, repairs and reselling.",
+        "**A bank loan is not giving away ownership.** You can bootstrap and still take a MUDRA loan for a machine, as long as sales can repay the EMI.",
+        "**Sell first, build second.** Take an order, an advance or a booking before you buy stock, rent a shop or build an app.",
+        "**Pay yourself something.** A business that never pays its owner is a costly hobby, and the family will feel it before you admit it.",
+      ],
+    },
+    {
+      type: "rich",
+      heading: "Step by step: how to bootstrap a business in India",
+      blocks: [
+        { kind: "h3", text: "Step 1: Pick something you can sell within thirty days" },
+        { kind: "p", text: "A service you already know (tuition, tailoring, accounts, design, repairs), a pre-order product (cakes, pickles, festival hampers, custom T-shirts), or a small batch of stock you can resell. If your idea needs months of building before the first sale, find a smaller first version you can sell now. Our [low-investment MVP guide](/how-to-build-an-mvp-with-low-investment-in-india) shows how." },
+        { kind: "h3", text: "Step 2: Get paid before or at delivery" },
+        { kind: "p", text: "Ask for advances on custom orders, monthly plans paid at the start of the month (tiffin, tuition, cleaning, gym), and deposits for event bookings. UPI makes small advances easy and leaves a clear record. In many Indian markets a part-advance is normal; customers who refuse every advance are often the ones who pay late." },
+        { kind: "h3", text: "Step 3: Keep fixed costs tiny" },
+        { kind: "p", text: "Work from home or a shared space; hire part-time help or family members with a fair, written arrangement; rent equipment for events; buy second-hand; use free tools (WhatsApp Business, Google Business Profile, UPI, free accounting apps). Rent, salaries and EMIs are what sink bootstrapped businesses in a slow month." },
+        { kind: "h3", text: "Step 4: Control udhaar from day one" },
+        { kind: "p", text: "Credit is expected in many Indian trades, especially with shops, offices and regular customers. Decide your rules before you start: who gets credit, how much, and the collection day. Write it in the notebook or the billing app. For B2B buyers who pay late, register on Udyam: micro and small enterprises are protected by delayed-payment rules and can file on the government's MSME Samadhaan portal. [Validate: current MSMED Act payment deadline for buyers of micro and small enterprises]" },
+        { kind: "h3", text: "Step 5: Reinvest profit in what brings customers back" },
+        { kind: "p", text: "Better quality, faster delivery, a second product for existing buyers, better packaging, an FSSAI licence upgrade so you can sell to shops. Growth from repeat customers is the cheapest growth there is. See [customer acquisition cost](/what-is-customer-acquisition-cost-for-a-small-business-in-india) for why." },
+        { kind: "h3", text: "Step 6: Review cash every week" },
+        { kind: "p", text: "Every Sunday night, write three lines: money in this week, money out this week, and money due in and out next week. The [cash-flow calendar](/startup-cash-flow-india) shows you the month your money will run short, before it happens." },
+        { kind: "h3", text: "Step 7: Borrow only on proof, and only what sales can repay" },
+        { kind: "p", text: "When a machine, a second outlet or bigger stock would clearly bring more sales, a bank loan can be the right next step. Walk in with a few months of sales in a separate current account. Read [how to get funding for a small business](/how-to-get-funding-for-a-small-business-in-india) for the MUDRA, PMEGP and CGTMSE routes." },
+        { kind: "h3", text: "Worked rupee example: a weekly cash sheet for a tailoring unit" },
+        { kind: "table", columns: ["Line", "How to work it out", "This week"], rows: [
+          ["Advances received", "Sum of UPI and cash advances on new orders", "₹ ______"],
+          ["Balance payments on delivery", "Orders delivered × balance due on each", "₹ ______"],
+          ["Udhaar collected", "From your credit notebook", "₹ ______"],
+          ["**Money in (A)**", "Add the three lines", "₹ ______"],
+          ["Fabric, thread, buttons", "Bills from the wholesaler", "₹ ______"],
+          ["Helper wages", "Days worked × agreed daily wage", "₹ ______"],
+          ["Electricity and phone share", "Monthly bill ÷ weeks", "₹ ______"],
+          ["Your own draw", "The amount you take home", "₹ ______"],
+          ["**Money out (B)**", "Add the lines", "₹ ______"],
+          ["**Cash left (A − B)**", "Subtract", "₹ ______"],
+          ["Udhaar still pending", "Total owed to you", "₹ ______"],
+        ] },
+        { kind: "p", text: "If cash left is negative for two weeks in a row, or pending udhaar keeps growing, stop extending credit and push for advances before taking any new order." },
+      ],
+    },
+    {
+      type: "rich",
+      heading: "When bootstrapping fits, and when it struggles",
+      blocks: [
+        { kind: "table", columns: ["Situation", "Bootstrapping fits?", "What may help"], rows: [
+          ["You can earn from month one", "Yes", "Nothing extra yet"],
+          ["Customers pay before or soon after delivery", "Yes", "Nothing extra yet"],
+          ["Customers (offices, shops, government) pay late", "Hard", "Udyam registration, part-advance, a working-capital limit from your bank"],
+          ["Big machines or licences before any sale", "Hard", "A bank loan, PMEGP, or job-work through an existing unit first"],
+          ["A product that needs a long build before revenue", "Hard", "Client work on the side, the Startup India Seed Fund, an incubator or an angel"],
+          ["A market where the fastest player wins everything", "Risky", "Investors"],
+        ] },
+        { kind: "h3", text: "Metro, small town and village differences" },
+        { kind: "list", items: [
+          "**Metros:** high rent makes home-based and shared-space starts more important. Buyers pay digitally and accept advances for services more readily.",
+          "**Tier 2 and tier 3 towns:** lower costs make bootstrapping easier, but credit expectations are stronger. Family premises and family labour are common advantages; write down who owns what.",
+          "**Villages:** self-help groups, their revolving funds and SHG-bank linkage under [DAY-NRLM](https://aajeevika.gov.in/) are a common way to bootstrap with small, low-cost credit. Weekly haats let you test products without a shop.",
+        ] },
+        { kind: "h3", text: "Sector differences" },
+        { kind: "list", items: [
+          "**Services** (tuition, beauty, repairs, design, accounts): the easiest to bootstrap; your skill is the main asset.",
+          "**Food:** start with pre-orders and a fixed menu; FSSAI registration is needed from the start.",
+          "**Trading and reselling:** stock ties up cash; order small, sell before you reorder, and negotiate short supplier credit.",
+          "**Manufacturing:** the hardest to bootstrap fully; job-work and second-hand machines help.",
+          "**Software and apps:** many Indian studios fund their own product with client projects first.",
+        ] },
+      ],
+    },
+    {
+      type: "rich",
+      heading: "Bootstrapping mistakes Indian founders make",
+      blocks: [
+        { kind: "h3", text: "Not paying yourself anything" },
+        { kind: "p", text: "If the business cannot pay you at least a little over time, it is quietly being funded by your household. Plan a minimum draw from the start, even a small one, and raise it as profit grows." },
+        { kind: "h3", text: "Giving long credit to win customers" },
+        { kind: "p", text: "Long payment terms to offices, shops and distributors can starve a small business. Ask for part-advance, keep credit short, and stop new orders to anyone who has not cleared the last bill." },
+        { kind: "h3", text: "Saying yes to every custom request" },
+        { kind: "p", text: "Custom orders eat time and materials. Price them properly, take a bigger advance, or politely say no." },
+        { kind: "h3", text: "Mixing household and business money" },
+        { kind: "p", text: "When the same wallet pays for groceries and raw material, you cannot tell if the business earns. Open a separate current account and pay yourself a fixed draw from it." },
+        { kind: "h3", text: "Expanding on borrowed money too early" },
+        { kind: "p", text: "A second outlet or a big machine on a loan before the first one is steady is the most common way bootstrapped businesses fail. Grow one step at a time." },
+        { kind: "h3", text: "Borrowing from moneylenders for working capital" },
+        { kind: "p", text: "Informal loans at high interest to cover a gap in a slow month can trap a small business for years. Plan a buffer, or ask your bank about a small working-capital facility once you have records." },
+      ],
+    },
+    {
+      type: "cards",
+      heading: "Real situations from India",
+      intro: "Everyday examples of founders who grew from their own sales.",
+      items: [
+        { title: "Digital marketing freelancer, Bhubaneswar", body: "Started with two local clients paying monthly in advance. He hired an assistant only when a third client signed, and kept working from home for the first year." },
+        { title: "Pickle brand from a home kitchen, Guntur", body: "Sold to relatives and a local store first, then used profit for better jars, labels and FSSAI registration before listing online." },
+        { title: "Software studio, Kolkata", body: "Two friends took client projects to fund their own product slowly, instead of raising money early. They kept full ownership." },
+        { title: "Festival hamper seller, Ludhiana", body: "Took corporate Diwali orders with an advance, bought stock only against confirmed orders, and never held unsold hampers." },
+        { title: "AC repair service, Chennai", body: "Started with his own tools and a two-wheeler. He used annual maintenance contracts paid upfront by housing societies to buy a second set of tools and hire a helper." },
+        { title: "SHG papad unit, a village near Nashik", body: "Members pooled savings, took a small SHG loan, sold at the weekly haat and to two shops, and added a packing machine only after steady orders." },
+      ],
+    },
+    { type: "dbfaq", heading: "Bootstrapping questions founders ask", intro: "Real questions from our published idea guides about starting with your own money. More on our [founder FAQ page](/faq).", categories: ["freelance-business-ideas", "home-based-business-ideas", "local-service-business-ideas", "home-kitchen-food-business-ideas", "reselling-business-ideas", "tuition-and-coaching-business-ideas", "repair-and-maintenance-business-ideas", "village-and-small-town-business-ideas"], match: "(without|own money|savings|low investment|small investment|start with|no money|loan|profit)", limit: 10 },
+    {
+      type: "rich",
+      heading: "Expert tips",
+      blocks: [
+        { kind: "list", items: [
+          "**Sell first, build second.** One paid order teaches you more than a month of planning.",
+          "**Ask every happy customer for one referral**, with a ready-to-forward WhatsApp message.",
+          "**Track monthly profit, not just sales.** A busy month can still lose money. See [business numbers to track](/business-numbers-every-small-business-in-india-should-track).",
+          "**Negotiate supplier credit** once you are a regular buyer; it is the cheapest working capital you will ever get.",
+          "**Register on Udyam early.** It is free, helps with bank loans, and gives you delayed-payment protection with B2B buyers.",
+          "**Write family arrangements down.** Who put in money, who works for what, what happens if it closes. It saves relationships later.",
+        ] },
+        { kind: "checklist", title: "Bootstrapping readiness check", items: [
+          "I can sell something within thirty days",
+          "I know who will pay me first",
+          "I will take an advance or upfront payment where possible",
+          "My fixed costs are as low as I can make them",
+          "I have written credit (udhaar) rules",
+          "I have a separate business bank account",
+          "I will review cash every week",
+          "I have set a minimum draw for myself",
+        ] },
+      ],
+    },
+    { type: "sources", heading: "Sources", items: [SRC.udyam, { label: "MSME Samadhaan: delayed payment portal", href: "https://samadhaan.msme.gov.in/", note: "Micro and small enterprises can file cases against buyers who pay late." }, SRC.mudra, NRLM, SRC.npci, SRC.seedFund] },
+    {
+      type: "table",
+      heading: "Compare your options",
+      columns: ["Route", "Control", "Speed", "Risk to you"],
+      rows: [
+        ["Bootstrapping", "Full", "Paced by sales", "Your savings and your time"],
+        ["Family money", "Full, if terms are written down", "Quick", "Family relationships if it fails"],
+        ["SHG or cooperative credit", "Full", "Small amounts, quickly", "Group trust and repayment"],
+        ["Bank loan (MUDRA, PMEGP, CGTMSE)", "Full", "Faster setup", "EMI even in a slow month"],
+        ["Angel or VC money", "Shared", "Fastest", "Pressure to grow fast; you own less"],
+      ],
+    },
+    {
+      type: "chips",
+      heading: "Related questions",
+      items: [
+        { label: "How much money is needed to start a business in India?", href: "/how-much-money-is-needed-to-start-a-business-in-india" },
+        { label: "How to get funding for a small business", href: "/how-to-get-funding-for-a-small-business-in-india" },
+        { label: "How to raise funds for a startup", href: "/how-to-raise-funds-for-a-startup-in-india" },
+        { label: "How to build an MVP with low investment", href: "/how-to-build-an-mvp-with-low-investment-in-india" },
+        { label: "Zero-investment business models", href: "/startup-guides/zero-investment-business-models" },
+      ],
+    },
+    { ...CTA, heading: "Let customers fund your growth.", body: "Find one thing you can sell this month and take the first advance. Then check the biggest risk in your idea, free." },
+    {
+      type: "rich",
+      heading: "What to do this week",
+      blocks: [
+        { kind: "table", columns: ["Day", "Task"], rows: [
+          ["Day 1", "Write the one thing you can sell within thirty days and who will buy it"],
+          ["Day 2", "Set your price with the [first-price workbench](/business-pricing-india) and your advance rule"],
+          ["Day 3", "Open a separate current account; set up a UPI QR code and WhatsApp Business"],
+          ["Day 4", "Register on Udyam; write your udhaar rules"],
+          ["Day 5", "Message twenty people who match your buyer and offer the first order"],
+          ["Day 6", "Take the first advance; deliver or schedule the first order"],
+          ["Day 7", "Fill the weekly cash sheet above for the first time"],
+        ] },
+      ],
+    },
+    {
+      type: "cards",
+      heading: "Keep reading",
+      items: [
+        { title: "Cash-flow calendar", body: "The tool bootstrapped founders use most.", href: "/startup-cash-flow-india", cta: "Open" },
+        { title: "Service business ideas", body: "Ideas that can earn from the first month.", href: "/service-business-ideas-india", cta: "Browse" },
+        { title: "Common startup mistakes", body: "The traps that drain your own money.", href: "/common-mistakes-to-avoid-when-starting-a-business-in-india", cta: "Read" },
+      ],
+    },
+    {
+      type: "chips",
+      heading: "Deeper answers founders ask for",
+      items: [
+        { label: "Customer acquisition cost", href: "/what-is-customer-acquisition-cost-for-a-small-business-in-india" },
+        { label: "Unit economics", href: "/unit-economics-india" },
+        { label: "First customer in India", href: "/first-customer-india" },
+        { label: "Freelance business ideas", href: "/category/freelance-business-ideas" },
+        { label: "Home-based business ideas", href: "/category/home-based-business-ideas" },
+        { label: "Side business ideas", href: "/side-business-ideas-india" },
+      ],
+    },
+    TOOLS,
+    CALCS,
+    EXPLORE,
+  ],
+};

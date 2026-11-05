@@ -1,0 +1,516 @@
+{
+  "subcategory": {
+    "code": "C009-S08",
+    "intro": "Village function catering is personal work. A family remembers whether guests ate comfortably, whether elders were served on time and whether the kitchen was left clean. The food may be simple, but the planning cannot be casual. A small naming ceremony at home, a harvest lunch in a field and a wedding breakfast at a hall each need a different setup. Begin with the dishes you can cook well for a known number of people. Agree on the menu, guest estimate, serving time, water, utensils, transport, cleanup and payment before buying ingredients. Give the family a written list of what you provide and what the venue must provide. Follow food business and local event requirements, keep ingredients safe in the heat and use clean water. Do not accept an allergy restriction you cannot reliably manage. In villages, helpers may be neighbours or relatives, but paid work needs clear roles and a backup when someone is absent. Count portions carefully without pretending that a guest estimate is exact. Keep some contingency in the plan and explain how extra guests are charged. The ten ideas below focus on different occasions and portions of the catering job. Some deliver ready food; others cook at the venue or serve a narrow breakfast or snack menu. Choose the event size your equipment and team can manage. A good first booking is one that lets you learn the route, cooking time and handover process without risking a family's most important day. After each function, note what ran out, what was returned and what the hosts said. That record will improve the next event more than a large menu printed on a card.",
+    "how_to_choose": "Think about the kitchen and helpers you can count on, then choose the occasion. A packed school snack order needs strict timing and child allergy care; a wedding breakfast needs larger equipment and coordinated serving. On site cooking requires transport and water, while ready tray delivery needs food that travels safely. If you make one regional dish especially well, begin with a narrow menu and modest events. Ask a prospective host for the venue, guest estimate and serving time before quoting. Run one paid smaller function, compare actual ingredient and labour costs, and expand only after you can repeat the result calmly.",
+    "faq": [
+      {
+        "q": "Do you need food registration for catering?",
+        "a": "Check the current requirements for the size and type of food service you plan. A home kitchen, temporary event kitchen and packaged snack delivery can carry different duties. Confirm before taking regular paid bookings."
+      },
+      {
+        "q": "How should you handle extra guests?",
+        "a": "Agree on an estimate, a sensible buffer and a price or procedure for additional portions before the event. Keep the host informed when attendance rises. Do not quietly reduce everyone's portion to hide a shortfall."
+      },
+      {
+        "q": "Who provides plates, water and cleanup?",
+        "a": "Write down each responsibility in the quote. If the host supplies water or plates, inspect the arrangement before the function. Cleanup should be priced and assigned rather than assumed to be someone else's job."
+      },
+      {
+        "q": "Should you accept several functions on one day?",
+        "a": "Only if kitchens, transport, helpers and serving times remain genuinely separate and reliable. One late delivery can spoil a family's event. Start with a single booking at a time until capacity is proven."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C009-S08-I01",
+      "slug": "village-wedding-breakfast-catering-team",
+      "title": "Village Wedding Breakfast Catering Team",
+      "hook": "Wedding guests often arrive early, and a reliable breakfast can make the whole morning feel less rushed.",
+      "summary": "You specialise in a limited wedding breakfast menu served at a village venue. Preparation begins before dawn, with hot food, clean serving and exact handover roles. A narrow menu can be more dependable than offering every meal of the celebration.",
+      "what_it_is": "You meet the family at the venue and agree on arrival time, expected guests, breakfast dishes, tea or coffee, water, serving equipment and cleanup. You prepare batter and dry components under safe conditions, then cook or finish hot items close to service. Assign helpers to cooking, replenishing and clearing so nobody waits while the cook leaves the stove. You keep vegetarian and other agreed food requirements clear, and use separate handling where you can genuinely provide it. You count served portions and extras at the end with the host. You do not accept a second event that makes you late for the first wedding morning.",
+      "who_pays_you": "Families hosting weddings in village halls, schools used as venues or home courtyards pay for the breakfast service. A local wedding organiser may refer you, but the family should approve the menu and responsibilities. Guests arrive in waves, so the host values a team that can replenish food without a long empty table. You start with venues you can reach reliably before dawn.",
+      "how_money_comes": "You quote one clear package for an agreed guest range and menu, with separate terms for extra people, travel and serving utensils. You take a booking deposit and a later payment schedule that funds ingredients and helpers. A tightly planned breakfast avoids the risk of cooking an entire wedding feast without enough equipment. Leftovers and shortages both cost money, so review actual portions after each booking. Validate current local ingredient and labour costs before quoting.",
+      "what_you_need": "Food handling compliance, large clean vessels, safe cooking fuel, transport, hot holding or on site cooking plan and dependable early helpers. You need a venue checklist and a backup for power or water problems. You keep raw and cooked items protected. You confirm local event and food requirements before taking a major booking.",
+      "first_30_days": [
+        "Visit likely venues and measure the kitchen, water, serving and vehicle access available at dawn.",
+        "Test a small breakfast menu at a paid family event with the helpers you will use.",
+        "Write a quote covering portions, extra guests, equipment and cleanup.",
+        "Review serving speed and food left over before booking a larger wedding."
+      ],
+      "what_hurts": "A wedding schedule can shift overnight, while guests may arrive all at once. A missing helper or failed gas supply before sunrise leaves little time to recover. Hosts may assume tea, plates and cleanup were included when they were not discussed. You inspect the site, keep backup essentials and put every duty in writing. Refuse a guest count beyond your tested capacity.",
+      "verdict": "Build this if you can coordinate an early team and serve a narrow breakfast reliably. Walk away if you would take a large wedding without tested equipment, helpers or written event terms.",
+      "faq": [
+        {
+          "q": "Should you prepare all breakfast at home?",
+          "a": "Only when safe transport and holding make sense for the dishes and distance. Many hot items are better finished at the venue with suitable water and equipment."
+        },
+        {
+          "q": "How do you plan for uncertain arrivals?",
+          "a": "Agree on a guest range and buffer with the family. Set a clear process for additional portions so you can respond without quietly shrinking servings."
+        },
+        {
+          "q": "Can you cater lunch as well?",
+          "a": "Add it only after the breakfast team and kitchen capacity are proven. Two services extend hours, ingredients and staffing far beyond a single meal."
+        }
+      ],
+      "validate_prompt": "I want to cater village wedding breakfasts in India. What food compliance, equipment, staff, current ingredient costs and guest terms should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "field",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S08-I02",
+      "slug": "home-naming-ceremony-meal-trays",
+      "title": "Home Naming Ceremony Meal Trays",
+      "hook": "A family welcoming a baby wants to be with guests, not spend the whole ceremony watching several pots.",
+      "summary": "You deliver ready meal trays for small naming ceremonies and other home gatherings. The menu is limited, portions are agreed in advance and the host handles serving unless they book help separately. Reliable timing and safe transport make the service useful.",
+      "what_it_is": "You offer a small selection of dishes that travel and hold safely for the planned journey. You discuss the ceremony timing, food preferences, allergies and expected guests with the family, then give a written menu and delivery window. Cook in a compliant clean kitchen, pack hot and cold items appropriately and label them for the host. You explain how long food should be held and what utensils or reheating the home needs. You deliver at a time that does not interrupt the ceremony, check every tray against the order and leave clear serving instructions. You do not imply staff are included in a tray only package.",
+      "who_pays_you": "Parents, grandparents or relatives hosting a small family function at home are the buyers. They may have space for guests but not enough kitchen capacity for several dishes. A calm conversation about their preferred regional food matters more than offering a huge printed menu. You serve homes within a distance where your transport plan keeps food safe and punctual.",
+      "how_money_comes": "You charge by the agreed tray sizes and menu, with delivery and optional serving help quoted separately. A deposit pays for special ingredients and reserves the kitchen slot. Extra guests require an agreed procedure before the cooking day. Small events can fill weekdays between larger bookings, but avoid accepting several deliveries in one narrow time window. You check current local food and transport costs with Validate.",
+      "what_you_need": "A registered or appropriately compliant cooking setup, containers that hold food safely, clean preparation space, transport and a detailed packing checklist. You need enough equipment for the chosen dishes and a way to manage allergies honestly. You check the relevant food rules, and never leave perishable trays in heat while waiting for a host to answer the door.",
+      "first_30_days": [
+        "Ask families which home functions they struggle to cook for and what dishes travel well locally.",
+        "Test the packed food after a full delivery length, including texture and safe holding.",
+        "Offer a paid small ceremony order with an itemised tray and delivery quote.",
+        "Check host feedback and packing errors before increasing the menu."
+      ],
+      "what_hurts": "A ceremony may run late while food waits, or a narrow doorway may make a heavy tray hard to carry. The host may expect servers although only delivery was quoted. Food texture changes in transit, and a wrong allergy claim can be serious. You keep the menu simple, label clearly and agree on handover and holding responsibilities before the day.",
+      "verdict": "Build this if your food travels safely and you can deliver a small family menu on time. Walk away if the route or packing makes quality uncertain by the time guests eat.",
+      "faq": [
+        {
+          "q": "Who serves the food at home?",
+          "a": "State whether the family serves from the trays or you provide paid staff. Do not let this important task remain an assumption on event day."
+        },
+        {
+          "q": "Can the host change dishes at the last moment?",
+          "a": "Set a menu confirmation deadline based on shopping and preparation. You can accommodate a change only when ingredients, safety and timing still allow it."
+        },
+        {
+          "q": "What if the ceremony runs late?",
+          "a": "Give the family clear safe holding guidance and agree on the delivery time beforehand. Do not leave perishable food unrefrigerated for an indefinite delay."
+        }
+      ],
+      "validate_prompt": "I want to deliver meal trays for small home ceremonies in an Indian village. What food rules, packaging, current pricing and delivery terms should I check?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "home",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S08-I03",
+      "slug": "harvest-workday-field-lunch-catering",
+      "title": "Harvest Workday Field Lunch Catering",
+      "hook": "A farm crew working far from home needs a dependable lunch without leaving the field during a short break.",
+      "summary": "You prepare and deliver a planned meal for farm crews on harvest or other long workdays. The farm organiser books quantities and a safe handover point. Filling food, clean water arrangements and strict delivery timing matter more than decorative service.",
+      "what_it_is": "You agree with the farm organiser on crew count, lunch break, location, diet needs and whether clean drinking water is part of the order. Cook a limited sturdy menu in a compliant kitchen and pack portions so they remain safe during transport and service. You deliver to a shaded accessible point away from active machinery. You count handovers with the organiser and collect reusable vessels promptly under agreed terms. You do not promise an open ended number of extra meals because the crew may change by midday. You check the weather and road before departure and keep a contact method when field locations are hard to describe.",
+      "who_pays_you": "Farm owners, labour contractors or producer groups who coordinate a crew pay the bill. Workers are the eaters and deserve adequate portions and safe food, even when the payer is someone else. A farm close enough for timely delivery is the best first customer. Seasonal demand follows work cycles, so consider the arrangement a planned event service rather than a daily subscription for every field.",
+      "how_money_comes": "You quote per agreed meal count, including transport and any water or serving equipment. You take a confirmation or advance before buying ingredients for a large crew. Extra meals can be charged at a preagreed rate only if you can safely supply them. Harvest bookings may cluster in a short season, so do not rent a large kitchen solely on that expectation. Validate current ingredient, labour and travel costs before quoting.",
+      "what_you_need": "Food handling compliance, bulk cooking ability, sealed or covered transport containers, a reliable vehicle and helpers for safe field handover. You need a precise location, weather plan and enough safe drinking water if it is included. You keep food away from farm chemicals and dust during service. You check local requirements for event catering.",
+      "first_30_days": [
+        "Speak to farm organisers about crew lunch timing and where food can be handed over safely.",
+        "Test a filling menu after the actual travel and holding time.",
+        "Take a small paid field lunch order with a confirmed count and location.",
+        "Review portion use, route delays and vessel returns before accepting a larger crew."
+      ],
+      "what_hurts": "Rain or a muddy road can keep your vehicle away from the field, while a changed crew size can create waste or shortage. A field offers little clean workspace, and food left near chemicals or in heat can become unsafe. You do not assume the organiser will provide water or shade. You agree on the site and contingency plan, then refuse a route you cannot serve safely.",
+      "verdict": "Build this if farms nearby have planned crew meals and you can deliver safe food at their break. Walk away if the road or serving site makes timely clean handover impossible.",
+      "faq": [
+        {
+          "q": "Who decides the meal count?",
+          "a": "Ask the organiser to confirm by a clear cutoff. Write down how extra workers will be handled rather than guessing portions on the cooking morning."
+        },
+        {
+          "q": "Should you serve directly in the field?",
+          "a": "Use a shaded safe spot away from machinery and chemicals, with clean handover equipment. If no suitable place exists, agree on another pickup point."
+        },
+        {
+          "q": "Can workers pay you individually?",
+          "a": "That is a different collection model and can delay the break. Begin with one organiser who pays for the agreed crew and keep the terms simple."
+        }
+      ],
+      "validate_prompt": "I want to cater field lunches for harvest crews in India. What food safety, route, seasonal demand and current per meal costs should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village"
+      ],
+      "work_mode": "field",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S08-I04",
+      "slug": "school-annual-day-sealed-snack-boxes",
+      "title": "School Annual Day Sealed Snack Boxes",
+      "hook": "A school event can serve children more smoothly with a clearly labelled snack box than a crowded food queue.",
+      "summary": "You prepare individually packed event snacks for schools under an approved order, with allergy details and handover time confirmed. The school distributes boxes to pupils. Food safety, packaging accuracy and a written count matter more than a complicated menu.",
+      "what_it_is": "You meet an authorised school organiser to agree on the snack contents, age group, allergy restrictions, exact box count and delivery point. You choose food that remains safe and pleasant through the event schedule. You prepare in a compliant kitchen, label boxes with contents and relevant handling information, then count them in batches before leaving. You deliver early enough for the school to check the order without leaving perishable food exposed. You ask the school how pupils with special dietary needs will be identified and served separately. You do not claim that every box is allergy free when your kitchen cannot prevent cross contact.",
+      "who_pays_you": "Schools, parent committees or an authorised event organiser pay for the boxes. Children eat them, so portion size, safe ingredients and clear labels matter. A teacher may make the introduction, but obtain a formal order from whoever can approve payment. Smaller school programmes are a sensible first booking before trying a large annual celebration.",
+      "how_money_comes": "You quote a per box price including food, safe packaging, labels, delivery and a reasonable preparation buffer. You confirm count and payment schedule before buying ingredients. A last minute change can leave printed boxes or perishable goods unused, so set a cutoff. Repeat events may come each school term, but do not plan daily income from occasional functions. Validate current local costs before submitting a quote.",
+      "what_you_need": "Food business compliance, clean kitchen, sealed or secure packs, accurate labels, allergy handling process, delivery transport and a box count checklist. You need an authorised school contact and written order. You check any school procurement rules. You avoid products that spoil in the expected temperature and holding period.",
+      "first_30_days": [
+        "Ask a school organiser about event timing, approved vendor rules and snack restrictions.",
+        "Test a simple box after the likely holding time and travel conditions.",
+        "Quote a small paid event with count, labels and delivery responsibility in writing.",
+        "Reconcile boxes at handover and ask teachers which items were actually eaten."
+      ],
+      "what_hurts": "A child may have an allergy that the school or you did not record, and one wrong label can affect many boxes. Event schedules change, leaving food waiting. Schools may pay through slow administrative steps. You agree on special boxes and payment in advance, verify counts twice and decline a menu you cannot hold safely until distribution.",
+      "verdict": "Build this if you can pack and label every child snack accurately under school terms. Walk away if allergy information or event holding time is too uncertain for your kitchen to manage.",
+      "faq": [
+        {
+          "q": "Can the school order without a written purchase note?",
+          "a": "Ask for clear approval from the person who can authorise payment and confirm the count. A casual conversation with a teacher may not secure an invoice."
+        },
+        {
+          "q": "How do you handle a special diet box?",
+          "a": "Agree on ingredients, separation and a clearly marked handover to the responsible adult. Decline a severe requirement if your kitchen cannot reliably meet it."
+        },
+        {
+          "q": "Should you include fresh cream sweets?",
+          "a": "Only if safe preparation, transport and holding can be guaranteed. Simpler foods that remain safe through the event are often the better choice."
+        }
+      ],
+      "validate_prompt": "I want to make packed snacks for school functions in India. What food registration, allergy controls, school ordering and current box costs should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "village"
+      ],
+      "work_mode": "home",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S08-I05",
+      "slug": "village-meeting-tea-and-snack-service",
+      "title": "Village Meeting Tea and Snack Service",
+      "hook": "A local committee meeting needs tea arriving at the break, without asking its volunteers to leave the discussion.",
+      "summary": "You cater tea and a small snack menu for meetings, training sessions and community gatherings. The organiser books a headcount and time, while you bring clean service equipment or packed portions. Short repeat events can fit around other kitchen work.",
+      "what_it_is": "You ask the meeting organiser about venue access, expected participants, break time, water, cups and cleanup responsibility. You offer a narrow menu of tea, a suitable alternative drink and simple snacks that you can prepare consistently. You bring covered containers and serve at the agreed time, or hand over packed items when the organiser prefers. You count reusable cups and equipment at the end and leave the serving area clean. You keep food safe even when a meeting runs late; agree on a revised service window rather than leaving milk tea standing in the heat for hours.",
+      "who_pays_you": "Local associations, training organisers, self help groups, small offices and families hosting a planning meeting may pay. One organiser should approve the order and bill even when several participants request changes. A regular group meeting can become repeat business if you arrive on time and keep the menu simple. You do not assume every community meeting has a paid refreshments budget.",
+      "how_money_comes": "You quote per confirmed headcount or a minimum service package that includes travel, cups and cleanup as stated. You collect an advance for larger orders, with a clear final count cutoff. Short meetings can fill weekdays but each requires setup and transport, so a tiny distant booking may not pay. You check current tea, fuel and labour costs locally with Validate before offering a repeat rate.",
+      "what_you_need": "Appropriate food compliance, clean beverage containers, cups or packed service materials, reliable transport and an organiser contact. You need a safe hot holding plan and careful milk handling. You check venue restrictions and whether disposable waste must be removed by you. A simple checklist prevents forgotten sugar, spoons or water.",
+      "first_30_days": [
+        "Ask local meeting organisers whether refreshment timing or cleanup is a recurring problem.",
+        "Test a narrow tea and snack service at a small paid gathering.",
+        "Write a quote showing headcount, travel, cups, serving and cleanup.",
+        "Track actual setup and return travel time before offering regular bookings."
+      ],
+      "what_hurts": "Meetings start late, attendance changes and a break may be moved without warning. Milk tea can lose quality or safety if held badly, and reusable cups may go missing. Organisers often assume cleanup is included while you assume it is not. You put the details on the quote and ask for a new serving time promptly when the programme shifts.",
+      "verdict": "Build this if you can serve a simple menu at the exact break with safe handling. Walk away if distant tiny bookings or unpredictable waits leave no value after travel and cleanup.",
+      "faq": [
+        {
+          "q": "Who supplies cups?",
+          "a": "Agree in the quote whether you bring cups, the venue does, or portions arrive packed. Include collection and cleaning when reusable cups are yours."
+        },
+        {
+          "q": "What if the meeting is delayed?",
+          "a": "Contact the organiser and adjust preparation where possible. Do not keep perishable drinks at unsafe conditions while waiting without a revised plan."
+        },
+        {
+          "q": "Can you take recurring committee orders?",
+          "a": "Yes, agree on the usual menu and day but confirm each headcount and time. A standing relationship does not eliminate the need for a clear event order."
+        }
+      ],
+      "validate_prompt": "I want to cater tea and snacks for village meetings in India. What food safety, transport, service terms and current local prices should I check?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "field",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S08-I06",
+      "slug": "on-site-village-courtyard-cooking-team",
+      "title": "On Site Village Courtyard Cooking Team",
+      "hook": "Some homes have room for a function but no team to cook a large meal in their courtyard.",
+      "summary": "You bring a trained cooking team and essential equipment to a host's courtyard for a planned family function. Food is prepared and served on site under clear water, fuel and cleanup arrangements. The model offers freshness but adds venue and staffing responsibility.",
+      "what_it_is": "Visit the home before quoting and inspect cooking space, water, drainage, safe fuel location and guest access. You agree whether the family buys ingredients from an approved list or you purchase them, then write a full menu and serving schedule. You bring clean vessels, trained helpers and a food safety plan that keeps raw ingredients separate from cooked food. You set up away from children and foot traffic, serve at the agreed time and clean the area before leaving under the contract. Refuse a cramped or unsafe courtyard rather than putting hot vessels where guests must pass.",
+      "who_pays_you": "Families hosting weddings, naming ceremonies or other gatherings at home pay for the team. They may want their own regional recipes, so agree on dishes you can actually reproduce in quantity. The host controls the venue, but your team must be able to insist on safe cooking conditions. Begin with a manageable gathering before taking a very large guest list.",
+      "how_money_comes": "You quote a cooking and service fee that reflects staff hours, equipment, transport and cleaning, plus ingredients if you supply them. A booking advance reserves the date and covers purchases. Extra menu dishes or guest increases need a written price adjustment. On site work may take most of a day even when serving is brief, so include setup and return time. Validate current labour, fuel and equipment costs.",
+      "what_you_need": "Food service compliance, trained helpers, large clean vessels, safe burners, transport and a venue checklist. You need a fallback for water and power issues or a clear condition that the host supplies them. Know how to store ingredients safely outdoors. You check local event and fire rules before using temporary cooking equipment.",
+      "first_30_days": [
+        "Inspect a potential courtyard and list what a safe cooking team would need there.",
+        "Run a paid small event with a limited menu and trained helpers.",
+        "Record setup, cooking, serving and cleanup time separately for pricing.",
+        "Refine the written host responsibility checklist before booking a larger function."
+      ],
+      "what_hurts": "The promised water tap may fail, rain can enter an open kitchen and guests may crowd hot equipment. Helpers who are unavailable on the day leave you with too much work. A family may add dishes after ingredients have been bought. Walk the venue, confirm backup staff and say no when safety or capacity is not there.",
+      "verdict": "Build this if your team can cook safely on site and has tested the full event workflow. Walk away if the venue cannot provide a safe kitchen area or dependable water.",
+      "faq": [
+        {
+          "q": "Can the host supply all ingredients?",
+          "a": "Yes, with an agreed quality, quantity and delivery list. Clarify who handles missing or unsuitable goods before the cooking team arrives."
+        },
+        {
+          "q": "Who is responsible for leftover food?",
+          "a": "Agree on safe handover and containers with the host. Do not leave perishable food exposed after service or assume your team will transport it back."
+        },
+        {
+          "q": "Should you inspect every venue first?",
+          "a": "For an unfamiliar on site kitchen, yes. Photos help but do not always reveal water, drainage or dangerous traffic around burners."
+        }
+      ],
+      "validate_prompt": "I want to cater functions by cooking in village courtyards in India. What food, fire, staffing, equipment and current pricing needs should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "field",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S08-I07",
+      "slug": "community-remembrance-meal-catering",
+      "title": "Community Remembrance Meal Catering",
+      "hook": "A bereaved family may need a simple respectful meal for visitors while it has little energy to organise a kitchen.",
+      "summary": "You cater a modest, agreed meal for families holding remembrance gatherings. The work is quiet and flexible about timing, without pushing a celebration package. Clear portions, dietary customs and compassionate communication matter more than decoration.",
+      "what_it_is": "You speak with one family contact about the gathering time, guest range, food customs and where the meal will be served. You offer a short menu you can prepare quickly and safely, with no pressure to add expensive dishes. You confirm whether serving and cleanup are included, then arrange a team that understands the setting. You deliver covered food or cook on site only where conditions allow, and make changes through the chosen contact rather than asking grieving family members repeatedly. You keep payment terms clear but handle the conversation with care. Respect different communities' practices without claiming to know them better than the host.",
+      "who_pays_you": "Families and community groups arranging a remembrance or condolence meal pay for the service. A neighbour may make the first call, but identify who has authority to approve the order and bill. Guests need a meal served without fuss. Referrals may come from people who saw you behave respectfully, not from promoting yourself during a difficult gathering.",
+      "how_money_comes": "You quote a simple package by menu and guest range, with a clear price for extra portions and travel. Because notice may be short, keep supplier relationships and a limited flexible menu rather than large perishable stock. You take payment in a manner agreed with the authorised contact, and record any changes gently but clearly. You do not offer credit you cannot afford or use the family's situation to impose a premium. You check current local costs before fixing a package.",
+      "what_you_need": "Food handling compliance, reliable ingredient suppliers, covered containers, a calm serving team and clear written order notes. You learn to ask about dietary customs without assuming. You need an honest capacity limit when notice is short. You check venue and local service requirements, and protect food from unsafe holding during a gathering whose schedule may change.",
+      "first_30_days": [
+        "Prepare a short respectful menu that can be cooked reliably with available ingredients.",
+        "Discuss service and cleanup responsibilities with helpers before accepting a short notice event.",
+        "Trial the package at a small paid gathering where timing can be measured.",
+        "Write a simple order form that asks only the practical questions the family needs to answer."
+      ],
+      "what_hurts": "Attendance may change quickly and the family may not have time to approve every detail. Customs vary, so an assumption about ingredients can cause hurt. A rushed supplier run may make the menu impossible. You keep one clear contact, confirm essentials in writing and decline an event you cannot serve respectfully and safely.",
+      "verdict": "Build this if you can offer quiet dependable help and follow each family's food customs. Walk away if you would push extras or cannot manage short notice without sacrificing safety.",
+      "faq": [
+        {
+          "q": "How do you ask about dietary customs?",
+          "a": "Ask the appointed family contact for the exact menu restrictions and avoid guesses based on community identity. Repeat the agreed dishes back before shopping."
+        },
+        {
+          "q": "Can you change the guest count on the day?",
+          "a": "Have a small agreed buffer and explain when extra portions are possible. Do not promise unlimited food with a kitchen prepared for a fixed group."
+        },
+        {
+          "q": "When should payment be discussed?",
+          "a": "Explain the simple quote to the authorised contact before work begins, then follow the agreed schedule discreetly. Clarity prevents an awkward dispute later."
+        }
+      ],
+      "validate_prompt": "I want to provide simple remembrance meal catering in an Indian village. What food safety, short notice capacity, local customs and fair pricing should I check?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "mixed",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S08-I08",
+      "slug": "village-festival-sweet-preorder-kitchen",
+      "title": "Village Festival Sweet Preorder Kitchen",
+      "hook": "Families want familiar sweets for a festival, but making several batches at home can take the whole previous day.",
+      "summary": "You take advance orders for a narrow range of regional sweets and deliver or arrange pickup before the festival. Cooking happens in controlled batches with clear ingredient and storage information. Preorders reduce waste, while timing and food safety remain demanding.",
+      "what_it_is": "You choose a few sweets you can make consistently and test their shelf life under the actual storage and travel conditions. Publish sizes, ingredients, allergen information, order cutoff and pickup or delivery time. Buy ingredients against confirmed paid orders, cook in a compliant kitchen and pack each family's boxes with labels and handling guidance. You keep nuts and other allergens controlled, and avoid claiming a shelf life you have not established. Close orders when kitchen capacity is full. A festival customer wants the familiar taste and a reliable pickup, not a photograph of a box you cannot deliver.",
+      "who_pays_you": "Village households, relatives visiting from town and small offices arranging festival gifts may buy. Some will compare you with local sweet shops, so give a reason rooted in quality, regional recipe or convenient pickup. You ask customers which sweets they actually serve before investing in packaging for a long menu. Repeat festival orders follow good experience rather than a one time discount.",
+      "how_money_comes": "You take an advance or full payment for confirmed preorders under a fair cancellation policy. You price each box to cover ingredients, cooking fuel, labour, packaging and delivery. A small extra batch can serve walk ins, but unsold sweets are a costly and potentially unsafe gamble. Festive income is seasonal, so avoid permanent rent based on one peak. Validate current ingredient and packaging costs before publishing prices.",
+      "what_you_need": "Food business compliance, clean kitchen, recipe consistency, allergen records, suitable packaging and a way to hold sweets safely until collection. You need a booking ledger and realistic production schedule. You check labelling and shelf life rules for any packaged line. You avoid using old ingredients just to protect margin during a price spike.",
+      "first_30_days": [
+        "Test a tiny menu for taste, travel and realistic shelf life before taking orders.",
+        "Ask families which regional sweets and box sizes they would pay for this season.",
+        "Publish ingredients, cutoff, payment and pickup terms clearly.",
+        "Run a limited paid batch and reconcile each labelled box before handover."
+      ],
+      "what_hurts": "Ingredient prices can rise between quoting and buying, and a late kitchen batch can miss the festival visit. Nuts or dairy create allergen and storage concerns. A large menu spreads equipment and attention too thin. You limit orders, label accurately and refuse a claimed long shelf life that the product and packing do not support.",
+      "verdict": "Build this if your tested sweets travel well and you can hold a firm order cutoff. Walk away if you rely on untested shelf life or need huge unsold stock to make the festival worthwhile.",
+      "faq": [
+        {
+          "q": "Can you make extra boxes for last minute buyers?",
+          "a": "Only a small safe amount after confirmed orders are covered. Perishable leftovers can wipe out the profit from a busy festival day."
+        },
+        {
+          "q": "How do you handle nut allergies?",
+          "a": "List ingredients accurately and control cross contact where you can. Decline a severe allergy order if your kitchen cannot safely meet the requirement."
+        },
+        {
+          "q": "Should you promise delivery on festival morning?",
+          "a": "Only within a route and capacity you have tested. A reliable earlier pickup may suit families better than a late promise across several villages."
+        }
+      ],
+      "validate_prompt": "I want to sell preordered regional festival sweets in an Indian village. What food registration, labelling, shelf life and current ingredient costs should I validate?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "home",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S08-I09",
+      "slug": "women-group-village-function-catering",
+      "title": "Women Group Village Function Catering",
+      "hook": "A skilled group of home cooks can handle a larger village function when roles, payments and kitchen standards are agreed first.",
+      "summary": "You coordinate a women's group that caters family events with a tested menu and assigned cooking, packing and serving roles. Shared capacity allows bigger bookings than one home kitchen. Transparent group accounting and consistent food safety keep the arrangement fair.",
+      "what_it_is": "You agree as a group on the menu, food preparation site, helper roles, daily pay or surplus division, equipment ownership and who can accept a booking. You give one member responsibility for the host's written order and another for ingredient and portion records. Cook through an appropriately compliant setup, supervise safe transport and assign serving and cleanup teams. Reconcile the event bill, ingredient purchases and member payments openly afterward. The group should not split dishes across unrelated kitchens without a process that keeps food handling and timing consistent. Begin with an event size the members have rehearsed together.",
+      "who_pays_you": "Village families hosting weddings or milestone gatherings, local associations and event organisers may book the group. They need one accountable contact even when several women cook. Group members earn wages or a share under their agreement. A host may prefer familiar regional food, but still expects a professional written menu and a way to resolve a problem on the day.",
+      "how_money_comes": "The group quotes a package with ingredients, equipment, labour, travel and a reserve for unexpected guests. A deposit secures the date and purchases. You pay agreed member wages and replace used supplies before dividing any surplus, so the final amount is not a mystery. You keep a repair fund for shared vessels and burners. Validate current local costs and the group's capacity before taking a large advance.",
+      "what_you_need": "A clear group agreement, food compliance, trained kitchen and serving members, shared equipment records, safe transport and one booking calendar. You need a backup cook and a transparent cash ledger. You check local food and event rules. Every member should understand hygiene and the agreed recipe, not just the person who spoke to the host.",
+      "first_30_days": [
+        "Hold a group meeting on ownership, roles, wages and who may sign a catering order.",
+        "Test a short menu together at a small paid event using the planned equipment.",
+        "Reconcile food, labour and payment openly with all members after service.",
+        "Increase booking size only when timing and quality stayed consistent."
+      ],
+      "what_hurts": "A missing member, uneven workload or disputed profit split can break a group faster than a poor menu. Several kitchens may produce dishes with different taste or unsafe holding. A host sees one catering team and will not care which member forgot a pot. You put governance and food standards in writing, keep backups and refuse an event larger than the group can serve.",
+      "verdict": "Build this if members agree on fair work and payment and can deliver one consistent service. Walk away if the group accepts large deposits before settling responsibilities and food safety controls.",
+      "faq": [
+        {
+          "q": "Who speaks to the host?",
+          "a": "Choose one accountable booking contact and a backup. The host should receive one confirmed menu and price rather than several conflicting promises from group members."
+        },
+        {
+          "q": "How should members be paid?",
+          "a": "Agree on wages or shares before each event and record actual hours and duties. Reserve ingredient and equipment costs before splitting the surplus."
+        },
+        {
+          "q": "Can everyone cook in their own home?",
+          "a": "Only with a coordinated compliant food handling and transport plan. Separate kitchens without shared standards can create timing and safety problems."
+        }
+      ],
+      "validate_prompt": "I want to organise a women's group for village function catering in India. What group terms, food compliance, current package costs and capacity should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "mixed",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S08-I10",
+      "slug": "town-office-function-lunch-buffet",
+      "title": "Town Office Function Lunch Buffet",
+      "hook": "A small office celebration needs lunch served smoothly without turning the staff room into a crowded improvised kitchen.",
+      "summary": "You cater a limited buffet lunch for small town offices and training centres, with a confirmed headcount and serving window. Hot holding, clean setup and punctual clearing are part of the package. It is more structured than a tray drop off.",
+      "what_it_is": "Visit the office to check access, tables, water and where staff will queue. You agree on a compact menu, dietary needs, headcount, serving time and cleanup. Cook in a compliant kitchen and transport food under suitable conditions, then set up hot or cold holding as required. Assign someone to replenish dishes and keep serving utensils clean. You count extras and clear the space at the agreed time so work can resume. You give the office one invoice matching its approval process. You avoid assuming every workplace permits cooking or open flames on site.",
+      "who_pays_you": "Small businesses, training centres and local organisations hosting a staff meal or workshop pay. An office manager may place the order, but confirm who approves the budget and invoice. Staff need a workable lunch break, so serving speed and a clean room matter. Begin with offices close enough for safe delivery and setup before the scheduled break.",
+      "how_money_comes": "You charge a buffet package based on menu and guest range, with transport, serving staff and equipment included or itemised clearly. You take a deposit for special ingredients if the office's payment cycle is slow. Extra heads need an agreed rate. Corporate looking work can hide long invoice delays, so match your cash flow to the contract. You check current local ingredient and staff costs with Validate.",
+      "what_you_need": "Food service compliance, transport containers, clean buffet vessels, safe holding equipment, trained server and a setup checklist. You need an authorised office contact, invoice records and venue permission. You do not use extension cords or burners where workplace safety rules prohibit them. You prepare a plan for a late meeting or postponed lunch.",
+      "first_30_days": [
+        "Ask nearby offices how they currently handle staff event lunches and payment approvals.",
+        "Test a small buffet setup and the full travel and clearing time.",
+        "Take a paid function with menu, headcount, equipment and invoice terms in writing.",
+        "Review queue speed, leftovers and payment timing before accepting repeat orders."
+      ],
+      "what_hurts": "A meeting can overrun, leaving food held longer than planned. The office may have no suitable power or wash area, and an invoice may be delayed for internal approval. A narrow hallway creates a slow queue. You inspect before quoting, keep food safe and do not let a professional looking venue tempt you into vague payment terms.",
+      "verdict": "Build this if you can set up, serve and clear a small buffet on a firm office schedule. Walk away if the venue lacks safe holding space or payment approval remains uncertain.",
+      "faq": [
+        {
+          "q": "Can you cook inside an office?",
+          "a": "Only with explicit permission and a suitable safe kitchen setup. Most small buffets are prepared elsewhere and brought in for controlled service."
+        },
+        {
+          "q": "Who approves the invoice?",
+          "a": "Ask before the event and put the authorised contact on the order. A staff member who likes the menu may not have authority to pay."
+        },
+        {
+          "q": "What if the meeting delays lunch?",
+          "a": "Agree on a revised window and keep food within safe holding limits. Discard unsafe items rather than serving them because the office is finally ready."
+        }
+      ],
+      "validate_prompt": "I want to cater small office lunch buffets in an Indian town. What food safety, workplace setup, current pricing and invoice terms should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "mixed",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    }
+  ]
+}

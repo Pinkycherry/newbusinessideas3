@@ -1,0 +1,509 @@
+{
+  "subcategory": {
+    "code": "C009-S06",
+    "intro": "A village spice and flour mill turns a family's grain or whole spices into food they can use at home. People bring you something valuable and expect the same clean material back, at the texture they requested. That makes trust, weighing and cleaning more important than a loud machine. Wheat flour, millet flour and spice powders need different settings and careful separation. Before you accept an allergen sensitive order, understand whether your equipment can really prevent cross contact. A dedicated line may be necessary; never promise purity after an ordinary quick sweep. Check food business registration, local premises rules, power capacity and safe machine operation before buying equipment. Dust control, ventilation and regular maintenance protect both the operator and customers. In a small town, households may come after market day with a few kilos, while a local mess may need a planned larger batch. You can operate a fixed grinding counter, arrange a village pickup route or specialise in a crop grown nearby. Each model has different transport, storage and capacity costs. Write a receipt for the incoming weight and container, label every bag, and agree on the expected output and any normal processing loss before grinding. Store customer grain separately from your own stock. Do not sell an unknown batch as a premium branded flour. The ten ideas below include routine household milling, specialised grains, spice work and planned institutional orders. Choose the machine and customer first, then set working hours that fit power supply and your neighbours' tolerance for noise. Begin with test batches and paid repeat customers before investing in a larger mill. A clean dependable operator can keep families coming back even when a bigger machine is available in town.",
+    "how_to_choose": "Look at which grains and spices families already bring to a mill and how far they travel. A wheat atta counter needs routine volume; a millet line needs real local growers and careful settings. Whole spice grinding may pay for smaller batches, but strong smells demand thorough cleaning. A pickup route helps distant villages only when bags can be labelled and returned accurately. If you have steady commercial customers, plan capacity and food handling before promising bulk delivery. Choose one main material and learn the machine's output, dust and cleaning demands. Add a second line only when the first can run reliably without mixing orders.",
+    "faq": [
+      {
+        "q": "Do you need food business registration for a village mill?",
+        "a": "Check the current requirements for the exact processing and sale activity you plan to run. Registration or licensing, premises and labelling duties can differ when you grind customer grain versus sell your own packaged flour. Confirm before opening."
+      },
+      {
+        "q": "How do you stop customers' grain getting mixed?",
+        "a": "Give each bag a dated receipt and a matching label, process one customer's material at a time and clean the machine as needed. Explain any unavoidable carryover honestly. Never claim allergen separation you cannot verify."
+      },
+      {
+        "q": "Should you charge by incoming weight or output weight?",
+        "a": "Choose a clear method and display it before accepting a bag. Weigh at handover, explain processing loss and provide a receipt. Customers should not learn your calculation only after the flour is ready."
+      },
+      {
+        "q": "What if electricity goes off during a batch?",
+        "a": "Stop safely and keep the partly processed material identified. Tell the customer a realistic revised collection time. A power backup or planned schedule may be worthwhile, but never operate equipment unsafely to finish an order."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C009-S06-I01",
+      "slug": "neighbourhood-fresh-wheat-atta-chakki",
+      "title": "Neighbourhood Fresh Wheat Atta Chakki",
+      "hook": "Families who buy wheat in bulk often prefer flour ground nearby in small fresh batches they can collect on the same day.",
+      "summary": "You grind customer owned wheat at a fixed village counter, weighing and labelling every bag. People choose a texture and pay a clear processing charge. Repeat household visits support the mill when cleanliness, waiting time and machine maintenance remain reliable.",
+      "what_it_is": "You set fixed receiving and collection hours so several families do not arrive when the mill is unattended. Weigh each wheat bag in front of the customer, write a receipt with the requested texture and attach a matching label. You clean the equipment and grinding area, then process one household's batch at a time. You pack the flour into the customer's clean container or a clearly priced food grade bag. You explain processing loss before accepting an order and keep any bran arrangement explicit. You record machine hours and maintenance rather than waiting for a breakdown in the middle of a busy day.",
+      "who_pays_you": "Village households that buy wheat after harvest or through a grain shop are your regular customers. Some older residents may ask a family member to bring their bag, so a clear receipt prevents confusion at collection. You choose a location within easy reach of homes, with enough separation that machine noise does not become a dispute with neighbours.",
+      "how_money_comes": "You charge a visible grinding fee based on the agreed weight method. Repeat customers bring steady work, but electricity, bags, machine wear and cleaning time must be covered by the fee. You offer paid pickup only after the counter runs smoothly and you can track every bag. You avoid taking more work in a day than the machine can finish without rushing sanitation. Tap Validate for local power and service costs.",
+      "what_you_need": "A suitable atta machine, compliant food processing space, dependable electricity, dust control, calibrated scale, clean containers and maintenance support. You learn safe operation and keep hands away from moving parts. You check registration, noise and premises requirements. A simple numbered receipt book can prevent a costly mix up.",
+      "first_30_days": [
+        "Ask households where they currently grind wheat and what waiting or cleanliness issues they face.",
+        "Confirm power capacity, food handling requirements and a safe location before buying the machine.",
+        "Run small paid batches with labels and measure actual processing and cleaning time.",
+        "Adjust daily capacity and collection promises from real machine performance."
+      ],
+      "what_hurts": "A belt or motor failure can leave several families' grain waiting. Dust spreads quickly without proper control, while a mixed bag can ruin the trust built over months. Customers may expect immediate service during the same evening rush. You keep a maintenance schedule and honest queue, and never accept a bag without a matching record.",
+      "verdict": "Build this if households nearby regularly seek fresh grinding and you can run a clean quiet enough machine. Walk away if power, dust control or bag identification cannot be handled well.",
+      "faq": [
+        {
+          "q": "Can customers collect flour immediately?",
+          "a": "Only when the queue and machine capacity allow it. Give a realistic collection time on the receipt instead of promising every family a same hour turnaround."
+        },
+        {
+          "q": "What do you do with bran?",
+          "a": "Agree before grinding whether it is returned with the flour, packed separately or handled another way. Do not keep it silently as part of your fee."
+        },
+        {
+          "q": "Should you sell wheat too?",
+          "a": "That is an additional retail line with its own stock and records. Start by grinding customer grain well, then check demand and rules before buying grain for resale."
+        }
+      ],
+      "validate_prompt": "I want to open a fresh wheat atta chakki in an Indian village. What current food registration, power needs, machine costs and local grinding fees should I check?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S06-I02",
+      "slug": "whole-spice-custom-grinding-counter",
+      "title": "Whole Spice Custom Grinding Counter",
+      "hook": "A family with its own dried chillies and coriander wants a fresh powder, not a mystery blend from someone else's batch.",
+      "summary": "You grind customer supplied whole spices in small labelled batches at a dedicated counter. Customers choose a texture and collect their own powder. Good ventilation, cleaning between strong flavours and accurate order records set this apart from routine flour milling.",
+      "what_it_is": "Accept only clean dry whole spices suitable for your equipment and agree on the grind and any roasting service before starting. Weigh and label each customer's bag, then process the batch with controls for dust and airborne spice irritation. You clean between chillies, coriander, turmeric and other materials under a practical cleaning schedule, and be honest when complete separation is not possible. You return the powder in a clean identified container with its original order receipt. You do not mix in an unknown ingredient or call an untested blend medicinal. Your service is custom grinding of the customer's material, with careful handling of pungent and staining products.",
+      "who_pays_you": "Households preparing their own masala, home cooks buying whole spices in the weekly market and small food sellers who want a predictable grind may pay. Some will bring only a small bag, so minimum batch rules must be explained gently. A busy food market nearby can create repeat work, while a purely residential lane may not support a dedicated spice machine.",
+      "how_money_comes": "You charge for grinding by the agreed weight or batch, with a stated extra fee for an optional separate roasting step if you safely offer it. Small orders take cleaning time, which the minimum charge must cover. Regular food sellers may book a time slot for larger work. You keep their ingredients and your fee on separate records. You check local power, product handling and current rates with Validate before investing.",
+      "what_you_need": "A spice suitable grinder, good ventilation and dust protection, washable work surfaces, accurate scale, labelled containers and operator training. You check food processing registration and premises rules. Strong spice dust can irritate workers, so plan extraction and protective handling. You keep allergens and flavour carryover in mind before claiming a pure output.",
+      "first_30_days": [
+        "Ask home cooks and small food sellers which whole spices they currently send to a mill.",
+        "Test the machine on separate dry materials and document cleaning between strong flavours.",
+        "Set a clear minimum batch and return container policy before opening.",
+        "Run paid trial orders and review dust, output texture and customer identification errors."
+      ],
+      "what_hurts": "Chilli dust can make the room uncomfortable, turmeric stains surfaces and a tiny leftover flavour can spoil the next customer's powder. Damp spices can clog equipment or produce poor output. A customer may assume you used all their material when a processing loss occurred. You show weights, explain limits and refuse wet or unsuitable inputs rather than forcing them through the machine.",
+      "verdict": "Build this if local households value custom fresh spice grinding and you can control dust and carryover. Walk away if the room lacks ventilation or you cannot clean between batches.",
+      "faq": [
+        {
+          "q": "Can you grind wet ginger or fresh chillies?",
+          "a": "Do not put wet material into a machine designed for dry spices. Explain the accepted inputs clearly and avoid a batch that risks contamination or equipment damage."
+        },
+        {
+          "q": "Should you guarantee no flavour carryover?",
+          "a": "Only if your equipment and cleaning process genuinely support that claim. Tell customers when a strongly flavoured previous batch may be an issue."
+        },
+        {
+          "q": "Can a small food seller book regular time?",
+          "a": "Yes, agree on batch sizes, ingredients, cleaning and collection in writing. Do not let one large order delay household bags without notice."
+        }
+      ],
+      "validate_prompt": "I want to offer custom whole spice grinding in an Indian small town. What current food rules, dust controls, suitable machine and local fees should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "small_town",
+        "village"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S06-I03",
+      "slug": "local-millet-flour-milling-desk",
+      "title": "Local Millet Flour Milling Desk",
+      "hook": "Farmers growing ragi or jowar need a nearby mill that can handle their grain without mixing it into ordinary wheat flour.",
+      "summary": "You run a milling desk for locally grown millets with suitable settings and labelled customer batches. Households and small food makers collect fresh flour for their own recipes. Grain cleaning, machine suitability and realistic separation are the core work.",
+      "what_it_is": "You identify the millets grown or regularly bought nearby and check that the machine can handle each grain correctly. Receive clean dry grain by customer, weigh and label it, and explain whether any precleaning is included. Grind to a texture agreed for rotis, porridge or another common use, then pack and return the customer's own flour. You keep the work area dry and maintain a cleaning schedule between grains. If you also grind wheat, never promise a wheat free product on the strength of a quick sweep. A dedicated line may be needed for customers with strict dietary needs.",
+      "who_pays_you": "Millet growing farmers, households that cook regional millet dishes and small food sellers who need fresh flour may bring grain. You ask what they currently do after harvest rather than assuming every household wants flour. A rural area with actual millet cultivation is a stronger base than one where the crop is a passing trend in town.",
+      "how_money_comes": "You collect a processing fee per accepted batch, with a sensible minimum when cleaning and setup take longer than grinding. A regular food maker may book larger slots, while household demand follows harvest and market days. Flour from your own purchased grain would be a separate retail product with inventory and labelling duties. You keep those accounts apart and validate current machine and electricity costs.",
+      "what_you_need": "A grain appropriate mill, cleaning and sorting setup, dry storage, dust management, accurate scale and labelled food grade bags. You learn the different settings and normal yield before quoting turnaround. You check registration and any packaged food requirements. You train anyone helping you to keep customer grain separate and to stop a machine when it sounds wrong.",
+      "first_30_days": [
+        "Speak to millet growers and home cooks about the grains and flour textures they actually use.",
+        "Test each grain on suitable equipment and record output, dust and cleaning time.",
+        "Begin with small paid labelled batches and explain cross contact limits honestly.",
+        "Schedule larger food maker orders only after household handovers are working reliably."
+      ],
+      "what_hurts": "Some small millets need more cleaning and handling than wheat, and the wrong setting produces a flour customers cannot use. Harvest season can create a queue followed by quiet weeks. Cross contact claims carry serious trust implications. You keep your grain list narrow, maintain the machine and decline a strict allergen free request if you cannot truly separate the process.",
+      "verdict": "Build this if nearby growers and cooks already need millet grinding and your machine handles it well. Walk away if you cannot identify batches or would make unsupported allergen free promises.",
+      "faq": [
+        {
+          "q": "Can one machine grind every millet?",
+          "a": "Check the equipment specification and test each grain before advertising it. Different sizes and textures can require different settings or a different machine."
+        },
+        {
+          "q": "Is the flour suitable for someone avoiding wheat?",
+          "a": "Do not guarantee that from a shared mill without verified separation. Explain the actual cleaning process and refer strict needs to a dedicated facility."
+        },
+        {
+          "q": "Should you buy millet from farmers to sell flour?",
+          "a": "That changes the model to food manufacturing and retail. Start with customer owned grain, then assess stock, labelling and rules before adding your own packs."
+        }
+      ],
+      "validate_prompt": "I want to open a millet flour grinding desk in an Indian village. Which local grains, machine specifications, food registration and current fees should I check?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S06-I04",
+      "slug": "village-grain-pickup-and-flour-return-route",
+      "title": "Village Grain Pickup and Flour Return Route",
+      "hook": "A household far from the chakki may postpone milling because carrying a heavy grain bag and returning later takes too long.",
+      "summary": "You collect labelled household grain on a fixed village route, arrange grinding at a reliable mill and return the correct flour bags. Your fee covers carrying and coordination. Detailed receipts and a trusted mill make this a service business without buying the machine first.",
+      "what_it_is": "You choose a compact route and one mill willing to process separately identified customer batches. At each home, weigh or record the incoming bag, attach a durable identifier and issue a receipt showing the requested grind and return day. Transport bags securely, remain present or reconcile with the mill's process, and check every finished flour pack against your ledger before returning. You tell customers whether the mill handles multiple grains and what cleaning can realistically ensure. You collect payment under a clear fee schedule. You do not combine households' grain to save a milling charge unless each person knowingly agreed to a pooled product.",
+      "who_pays_you": "Older households, families without a vehicle and residents of hamlets beyond the main road may pay for pickup. A household beside a good mill is unlikely to need you. The mill may benefit from grouped work, but your primary customer is the person trusting you with their grain. You keep the route small enough that a missed return can be corrected promptly.",
+      "how_money_comes": "You charge a visible pickup and delivery fee in addition to the mill's disclosed grinding fee, or quote one itemised combined amount. Grouping several bags on one trip reduces transport effort, but sorting and checking take time. You take payment at return or on a clear monthly account for known customers. If you pay the mill first, budget that float. Validate local travel and milling costs before setting a route price.",
+      "what_you_need": "Strong labelled sacks, a scale or agreed weight record, numbered receipts, a suitable vehicle and a mill with a trustworthy separation process. You need a dry safe place for bags waiting for return. You check local food handling and transport obligations for your role. You never leave customer grain unlabelled in a shared pile.",
+      "first_30_days": [
+        "Ask distant households how they currently carry grain to the mill and what return delay frustrates them.",
+        "Agree with one mill on separate batches, receipts, fees and handover responsibility.",
+        "Trial a small paid route with sturdy labels and a same day bag reconciliation.",
+        "Check travel, waiting and correction time before adding another hamlet."
+      ],
+      "what_hurts": "A label can fall off, a mill can run late and a wrong bag can become a serious household dispute. Rain makes transport and storage difficult. The mill's hygiene problem may be blamed on you because you chose it. You inspect the partner process, keep duplicate records and set a realistic return window rather than promising immediate service you cannot control.",
+      "verdict": "Build this if a reliable mill and distant households make a compact route useful. Walk away if the partner mixes bags or your transport cannot keep grain dry and identified.",
+      "faq": [
+        {
+          "q": "Can you combine grain from several customers?",
+          "a": "Only if everyone expressly wants a pooled batch and the resulting flour can be allocated fairly. Individual return is the safer promise for ordinary household grain."
+        },
+        {
+          "q": "Who handles a grinding quality complaint?",
+          "a": "You should help the customer reach the mill and keep the handover records. Agree responsibility with the partner before the first order so neither side disappears."
+        },
+        {
+          "q": "Should you promise same day return?",
+          "a": "Only after timing the full route and the mill's queue. A dependable next day promise is better than repeatedly missing an attractive same day claim."
+        }
+      ],
+      "validate_prompt": "I want to collect household grain and return milled flour in Indian villages. What partner mill terms, food handling, route costs and service fee should I validate?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "student"
+      ],
+      "place": [
+        "village"
+      ],
+      "work_mode": "field",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S06-I05",
+      "slug": "mess-kitchen-bulk-atta-milling",
+      "title": "Mess Kitchen Bulk Atta Milling",
+      "hook": "A local mess needs flour with a dependable texture on its cooking days, not a surprise batch from an unknown grain.",
+      "summary": "You grind planned wheat batches for mess kitchens and small eateries under written volume and delivery terms. The kitchen supplies grain or approves your purchased grain model. Consistency, cleaning and scheduled capacity matter more than a walk in household counter.",
+      "what_it_is": "You agree with a mess or small eatery on wheat quality, flour texture, batch size, timing and who provides the grain. You run a test batch that the cook uses before promising routine supply. On production days, identify incoming grain, clean and grind in a compliant space, then pack labelled food grade bags for pickup or delivery. You keep records that trace each batch and handle the kitchen's quality feedback promptly. Reserve machine time so large work does not displace already accepted household orders. If you buy the grain, price and compliance change; document that model clearly rather than mixing customer owned and your own stock.",
+      "who_pays_you": "Student messes, worker canteens and small roti serving eateries in the town may pay. Their cooks need predictable flour and may value a nearby mill when a current supplier varies in texture. A very small kitchen may prefer to buy ready flour, so secure a real trial and repeat order before investing in bulk capacity.",
+      "how_money_comes": "You charge a contract grinding fee for kitchen supplied grain, or a fully costed sale price when you purchase the wheat yourself. You include bagging, transport, scheduled machine time and payment delay. Regular invoices can smooth work but one kitchen should not occupy all capacity on long credit. You set quality complaint and rejected batch terms in writing. Validate current grain, electricity and food packaging costs before quoting.",
+      "what_you_need": "A suitable higher capacity mill, clean grain handling, dry storage, labelled bags, maintenance plan and food business compliance. You need a working scale and backup for a machine failure before a kitchen's meal preparation. Understand the distinction between processing a customer's grain and selling packaged flour from your own stock.",
+      "first_30_days": [
+        "Ask mess cooks what flour texture, volume and delivery schedule they need.",
+        "Confirm who owns the wheat and run a paid test batch under those terms.",
+        "Time production, bagging and transport before offering a routine slot.",
+        "Write payment and quality resolution terms, then review the first repeated orders."
+      ],
+      "what_hurts": "A machine failure just before lunch preparation can cost a kitchen its service. Bulk flour takes space and exposes you to grain quality disputes. Commercial customers may pay later than households, creating cash pressure while power bills arrive now. You keep an alternate processing plan and do not promise a kitchen more capacity than the mill can safely provide.",
+      "verdict": "Build this if a kitchen approves your test batch and your mill can meet its schedule reliably. Walk away if the contract leaves grain ownership, quality rejection and payment timing unclear.",
+      "faq": [
+        {
+          "q": "Should the mess supply its own wheat?",
+          "a": "Either model can work, but the contract must say which it is. Buying grain yourself adds inventory, price risk and packaged food obligations."
+        },
+        {
+          "q": "Can you serve households on the same machine?",
+          "a": "Yes, if capacity, scheduling and cleaning permit. Keep every customer's grain and commercial batch labelled and separated during handover. This protects every order."
+        },
+        {
+          "q": "What if the flour texture is rejected?",
+          "a": "Compare the test specification with the production batch and use the agreed remedy. Do not mix a rejected batch into someone else's flour to avoid a loss."
+        }
+      ],
+      "validate_prompt": "I want to mill bulk atta for mess kitchens in an Indian town. What current food compliance, machine capacity, contract terms and processing fees should I check?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S06-I06",
+      "slug": "dedicated-wheat-free-grain-milling-room",
+      "title": "Dedicated Wheat Free Grain Milling Room",
+      "hook": "Some households need grain milled without wheat sharing the machine, and a dedicated room can offer clearer separation.",
+      "summary": "You mill selected nonwheat grains on dedicated equipment with documented handling and careful customer communication. People bring their own grain or place a planned order. The service requires real separation, cleaning and honest limits rather than a casual purity claim.",
+      "what_it_is": "You choose which grains your machine will accept and keep wheat out of the dedicated processing space, including shared sacks, scoops and packing surfaces. Receive each customer batch with a label and record its grain type, weight and requested texture. You inspect and grind within the equipment's limits, then pack in clean identified bags. You write down cleaning, storage and visitor handling procedures before using a dietary separation claim. If you cannot verify a customer's strict medical requirement, explain your process without guaranteeing suitability. A dedicated room may serve ordinary millet cooks too, but the reason to invest is a consistently controlled line.",
+      "who_pays_you": "Households avoiding wheat for dietary reasons, specialty home cooks and small food businesses using nonwheat flour may pay. Some customers have serious sensitivities and need more assurance than an ordinary mill can offer, so do not assume your setup meets their needs. A town with enough regular demand can support the separate equipment; one occasional request cannot.",
+      "how_money_comes": "You charge a processing fee that reflects dedicated equipment, cleaning and smaller batch sizes. Regular orders from a suitable food maker can fill machine hours, but keep their raw material separate from other customer lots. A minimum fee may be necessary for tiny batches. You avoid spending on equipment until you have paid trial demand and a credible process for the claim you intend to make. Validate local machinery and compliance costs.",
+      "what_you_need": "A dedicated grain suitable machine, separate food grade storage and tools, written cleaning controls, dust management and accurate batch records. Seek qualified guidance on allergen claims and applicable food rules before promising a medically safe product. You train every helper on the separation boundary. A single borrowed scoop from a wheat mill can undermine the entire setup.",
+      "first_30_days": [
+        "Ask prospective customers which nonwheat grains and separation assurance they actually need.",
+        "Design and verify a physically separate equipment and storage process before advertising it.",
+        "Trial small labelled batches and inspect every handover for accidental mixing.",
+        "Review paid repeat demand and the wording of your claims with qualified guidance."
+      ],
+      "what_hurts": "A shared storage shelf, vehicle or packing scoop can introduce wheat despite a dedicated grinder. Some grains behave differently in the machine, and strict customers may require verification beyond your means. Equipment costs stay fixed during quiet weeks. You do not use a medical guarantee as marketing. You explain the exact process and decline an order when you cannot meet the buyer's stated requirement.",
+      "verdict": "Build this if you can truly maintain a separate process and enough local demand pays for it. Walk away if separation is only a claim on a signboard while tools and bags are shared.",
+      "faq": [
+        {
+          "q": "Does a dedicated machine guarantee allergen safety?",
+          "a": "No. Intake, storage, dust and packing also matter. Get qualified advice before making a strict allergen claim and tell customers exactly what your process controls."
+        },
+        {
+          "q": "Can you grind wheat when the nonwheat queue is empty?",
+          "a": "That would defeat the dedicated line and create a difficult cleaning and verification burden. Keep the boundary clear if separation is your main promise."
+        },
+        {
+          "q": "Which grains should you accept first?",
+          "a": "Start with the ones your equipment handles well and local customers already bring. Test texture and cleanup before advertising another grain."
+        }
+      ],
+      "validate_prompt": "I want to set up a dedicated nonwheat grain milling room in India. What food compliance, separation controls, equipment and local demand should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S06-I07",
+      "slug": "festival-rice-flour-order-mill",
+      "title": "Festival Rice Flour Order Mill",
+      "hook": "Before a festival, families need rice flour of a particular fineness for familiar dishes and often cannot wait in a long mill queue.",
+      "summary": "You take advance rice flour grinding orders for festival cooking, scheduling customer owned grain into clear pickup slots. Texture and batch identity are checked before handover. Outside peak weeks, the same equipment serves ordinary rice flour demand where it exists.",
+      "what_it_is": "You ask families what dishes they plan and what grain preparation they will do before bringing it to you. Accept only rice in a condition your machine can process safely, label each bag and write the requested texture and collection time. You test the setting on a small portion when a customer needs unusually fine flour. You keep separate bins and clean the mill between different materials. Stagger bookings before a festival rather than accepting every bag for the final evening. You return any unprocessed grain with the finished flour under a clear weight record, and tell people immediately if power or machine trouble changes the schedule.",
+      "who_pays_you": "Households preparing sweets and savoury dishes, home cooks taking festive orders and small snack makers may pay. Many care more about the correct grind and collection promise than about a grand storefront. A village where families grind rice at home may offer little demand, so ask them before buying a dedicated machine. Peak orders can come from nearby hamlets if collection is practical.",
+      "how_money_comes": "You take a clear grinding fee and, for a booked rush slot, state any higher service charge in advance. A small booking deposit may discourage uncollected flour, with fair cancellation terms. Seasonal earnings cannot justify an idle machine by themselves; plan regular rice flour orders or another compatible line. You count extra labour and power during the rush, and validate local processing rates before announcing a festival menu.",
+      "what_you_need": "A rice suitable mill, dry grain receiving space, calibrated scale, labels, clean packing bags and a booking ledger. You need to understand which rice preparation your machine accepts; wet grain in dry equipment can cause trouble. You check food registration and premises rules. You set a safe capacity rather than running an overheating motor through the night.",
+      "first_30_days": [
+        "Ask families and home cooks which rice flour textures they need for upcoming dishes.",
+        "Test acceptable grain preparation and machine settings well before the festival rush.",
+        "Publish a limited order cutoff and label every accepted bag with a collection slot.",
+        "Review actual machine hours and late pickups after the first paid peak."
+      ],
+      "what_hurts": "Families may bring damp grain that your dry mill cannot handle, while a broken machine during a holiday can leave an important dish unfinished. Many customers ask for the same last day slot. Different textures are easy to mix up when bags look alike. You explain intake conditions early, reserve capacity honestly and keep names and weights attached at every stage.",
+      "verdict": "Build this if festival demand is real and you can deliver the exact rice texture on schedule. Walk away if the machine has no use outside the peak or you cannot protect each family's batch.",
+      "faq": [
+        {
+          "q": "Can you mill soaked rice?",
+          "a": "Only with equipment designed for that input and a safe handling plan. Tell customers the accepted grain condition before they prepare and bring a bag."
+        },
+        {
+          "q": "Should you promise every order by festival morning?",
+          "a": "Cap bookings at a tested machine capacity and leave room for cleaning and interruptions. A limited honest schedule protects families better than a crowded ledger."
+        },
+        {
+          "q": "How do customers choose the texture?",
+          "a": "Ask what dish they intend to make, show a sample when possible and write the agreed setting on the receipt. A small test grind can clarify unusual requests."
+        }
+      ],
+      "validate_prompt": "I want to take festival rice flour grinding orders in an Indian village. What machine type, food rules, seasonal capacity and current fees should I check?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S06-I08",
+      "slug": "women-group-shared-flour-mill",
+      "title": "Women Group Shared Flour Mill",
+      "hook": "A women's group can run a village mill when members share the work and every family's grain remains traceable.",
+      "summary": "You organise a flour mill operated by a women's group, with agreed shifts, fees and shared equipment responsibility. Customers bring grain for labelled processing. The business creates local service income, but group governance and maintenance must be settled before opening.",
+      "what_it_is": "You bring interested group members together to decide ownership, operator training, shift allocation, cash handling and how profits and repair costs are shared. You put the rules in writing before buying equipment. At the mill, receive each customer's grain with a weight and numbered receipt, grind under a documented cleaning process and return the identified flour. You keep a daily service and machine log that more than one member can inspect. You train backup operators so illness does not close the counter. If one member wants to sell packaged flour from purchased grain, treat that as a separately costed and compliant activity.",
+      "who_pays_you": "Village households pay the mill for grinding, while group members receive their agreed share or wages under the group arrangement. Families may prefer a local counter run at hours that fit their routines. The group needs enough nearby grain processing demand; a social purpose does not by itself keep a machine paid for. You ask customers what they currently dislike about the existing mill.",
+      "how_money_comes": "Processing fees cover electricity, bags, cleaning, operator time and a reserve for repairs before any surplus is divided. You record cash or UPI sales daily and let another member reconcile them. A small loan for equipment is only sensible if real paid demand can meet repayments during quiet months. The group can set an agreed fee for pickup later, but should first make counter work predictable. Validate equipment and power costs locally.",
+      "what_you_need": "A registered or properly organised group arrangement as applicable, safe mill space, adequate power, dust control, scale, labelled bags and maintenance support. Members need training in machinery and food handling. You check local food and premises requirements. A transparent ledger and repair reserve are as necessary as the motor itself.",
+      "first_30_days": [
+        "Discuss group ownership, shifts, payments and repair decisions before considering a machine purchase.",
+        "Ask village households whether they will pay for a closer, cleaner milling service.",
+        "Check power, food handling and machine safety requirements for the chosen room.",
+        "Trial limited paid batches and reconcile fees and grain records openly after each shift."
+      ],
+      "what_hurts": "If one operator does all the work while surplus is shared equally, resentment can grow. A motor breakdown tests whether the group really saved for repairs. Grain mix ups can put personal relationships under strain. You hold regular short reconciliations, use written shift and pay rules, and do not expect goodwill to replace maintenance money.",
+      "verdict": "Build this if members agree on governance and local households will pay for reliable grinding. Walk away if equipment debt is being accepted before work, wages and repair rules are settled.",
+      "faq": [
+        {
+          "q": "Who should own the machine?",
+          "a": "Decide whether the group or an individual owns it and document the arrangement. Ownership affects maintenance, income shares and what happens if a member leaves."
+        },
+        {
+          "q": "Can members grind their own grain without paying?",
+          "a": "Set a clear member use policy and record it. Untracked free use still consumes electricity and machine life, which can undermine the business."
+        },
+        {
+          "q": "How are shifts covered when someone is absent?",
+          "a": "Train more than one operator and agree on substitute pay. A mill that closes every time one person is busy will lose household trust."
+        }
+      ],
+      "validate_prompt": "I want to help a women's group run a shared flour mill in an Indian village. What governance, food registration, power cost and local grinding demand should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S06-I09",
+      "slug": "maize-flour-custom-grinding-counter",
+      "title": "Maize Flour Custom Grinding Counter",
+      "hook": "Families who cook makki dishes need freshly ground maize at a useful texture, especially after local harvests.",
+      "summary": "You run a maize focused grinding counter for household food use, accepting clean dry customer grain and returning labelled flour. The service differs from wheat milling in settings, storage and local seasonal demand. You do not mix food orders with feed processing.",
+      "what_it_is": "You check that maize flour is a real household food in your area before choosing equipment. Accept food grade dry grain, inspect for visible spoilage, weigh and label each bag, and agree on the texture required for the family's dish. Grind in a clean food processing space and return identified flour promptly, with a clear record of any rejected grain. You keep the machine and storage free of feed material and do not process mouldy grain to save a sale. If you serve a small food maker, reserve a planned time without combining their batch with household grain.",
+      "who_pays_you": "Households cooking regional maize breads or porridge, farm families processing part of their harvest and small eateries may pay. Demand depends heavily on local food habits, not simply on the amount of maize grown as animal feed. Talk to cooks before assuming a crop becomes household flour. A clean nearby mill can replace a long trip for people who already grind regularly.",
+      "how_money_comes": "You charge a disclosed processing fee by batch or incoming weight, with a minimum that covers setup and cleaning for a small bag. Harvest brings larger volumes, while other months may be quiet. A food maker contract can help use machine time, but avoid promising capacity you have not tested. You keep costs of rejected or damaged grain separate from your fee. Validate current local power and milling rates.",
+      "what_you_need": "Suitable maize milling equipment, dry food grade storage, a scale, dust control and labelled containers. You need basic knowledge of grain quality and when to refuse a visibly unsafe batch. You check food processing requirements and maintain a separate line from animal feed if both are present on the property. You keep equipment serviced before harvest.",
+      "first_30_days": [
+        "Ask local cooks how often they use maize flour and which texture works for their recipes.",
+        "Test suitable dry grain on the machine and establish a refusal rule for damaged material.",
+        "Begin with paid labelled household batches and note actual cleaning and grinding time.",
+        "Plan harvest capacity only after seeing repeat demand beyond the first week."
+      ],
+      "what_hurts": "Maize harvested wet or stored badly may be unsuitable for food processing. A farm may expect you to grind animal feed in the same machine, creating serious separation concerns. Seasonal work can overwhelm capacity and then vanish. You explain accepted grain clearly, refuse unsafe material and never mix food and feed workflows to fill empty hours casually.",
+      "verdict": "Build this if local families already cook with maize flour and you can maintain a food only process. Walk away if most demand is feed grinding and you cannot keep it separate.",
+      "faq": [
+        {
+          "q": "Can you grind maize meant for animal feed?",
+          "a": "Do not mix feed and human food processing casually. If feed is another business, use appropriately separate equipment and controls with the relevant rules."
+        },
+        {
+          "q": "What if grain looks mouldy?",
+          "a": "Refuse the batch for food grinding and explain why. Milling cannot turn spoiled grain into a safe ingredient for a family's meal."
+        },
+        {
+          "q": "Is there enough work after harvest?",
+          "a": "Ask cooks about their year round habits and consider planned food maker orders. A harvest rush alone may not pay for an idle machine all year."
+        }
+      ],
+      "validate_prompt": "I want a maize flour custom grinding counter for food use in India. What local cooking demand, machine suitability, food safety and current fees should I check?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S06-I10",
+      "slug": "small-batch-spice-blend-grinding-service",
+      "title": "Small Batch Spice Blend Grinding Service",
+      "hook": "A home food seller may have a recipe but lack clean equipment to grind each measured spice batch consistently.",
+      "summary": "You grind customer prepared dry spice blends for small food businesses under a booked batch service. The recipe stays the customer's, while you provide equipment, traceable handling and agreed texture. Confidentiality and cleaning between recipes are central.",
+      "what_it_is": "You ask a food seller to bring a preweighed dry blend with a written ingredient list for safety and allergen handling, without demanding the secret proportions beyond what processing requires. You label the batch, agree on texture and output container, and reserve a machine slot with cleaning time on both sides. Grind only material suitable for your equipment and return all finished powder with a batch record. You keep recipes and customer information private. A production run for sale may bring additional food business obligations, so verify your role and the client's compliance before promising to package under their label.",
+      "who_pays_you": "Home snack brands, caterers and small masala sellers who need occasional consistent grinding are the buyers. They pay for a reliable process without purchasing their own mill. A household seeking one tiny packet may be better served by an ordinary spice counter. Your clients care about recipe confidentiality, on time pickup and avoiding flavour carryover from another customer's chilli or garlic batch.",
+      "how_money_comes": "You charge per booked batch with a minimum fee covering setup, machine time and cleaning. Longer or difficult ingredients should be quoted before acceptance. Repeat production bookings can fill quieter weekdays, but one customer should not block all household work without a fair rate. You keep written payment and rejection terms, and never use leftover material as your own stock. Validate local compliance and processing costs before setting fees.",
+      "what_you_need": "Spice suitable equipment, ventilation, dust controls, washable surfaces, labelled food grade containers and a secure booking record. You need a process for allergen and flavour carryover, plus confidentiality discipline. You check food processing registration and any contract processing rules. You do not accept a recipe containing unknown substances you cannot safely handle.",
+      "first_30_days": [
+        "Ask local food sellers about batch sizes, texture needs and where their current grinding fails.",
+        "Test your machine and cleaning procedure with noncustomer trial blends.",
+        "Write a short confidential processing agreement and a labelled batch handover record.",
+        "Run one paid booking and compare output, time and cleaning against the agreed specification."
+      ],
+      "what_hurts": "A trace of a previous blend can change a customer's signature flavour, while a leaked recipe can end the relationship. Some mixes clump or contain ingredients your grinder cannot handle. Production deadlines may be tight before a market. State accepted inputs, clean thoroughly and decline a batch if you cannot process it without contaminating another order.",
+      "verdict": "Build this if you can protect recipes and deliver a consistent grind with thorough cleaning. Walk away if you plan to use customer leftovers or cannot prevent flavour carryover. Customer trust is the real asset.",
+      "faq": [
+        {
+          "q": "Do you need the customer's exact secret recipe?",
+          "a": "You need enough ingredient information for safety and proper processing, but not a right to share their proportions. Agree on confidentiality and handle the batch discreetly."
+        },
+        {
+          "q": "Can you pack the powder in the client's branded pouches?",
+          "a": "Only after checking the applicable food, labelling and contract processing responsibilities. Grinding and branded packaging are not automatically the same service."
+        },
+        {
+          "q": "What if the finished texture is wrong?",
+          "a": "Keep a small test portion or agreed sample and use a written remedy. Regrinding may help some blends, but do not promise it for every ingredient."
+        }
+      ],
+      "validate_prompt": "I want to offer booked spice blend grinding for local food sellers in India. What contract processing rules, equipment, cleaning and current batch fees should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    }
+  ]
+}

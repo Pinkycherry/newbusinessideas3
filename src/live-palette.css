@@ -1,0 +1,29 @@
+/*
+ * AdSense swap (founder, 6 Nov 2026): the new layouts keep their structure but use the live
+ * bbusiness.online colours. Tailwind's blue and violet scales, which the new layouts use for
+ * accents, are pointed at the live primary indigo (--primary #4643ba in styles.css).
+ * Unlayered on purpose so it wins over Tailwind's @layer theme values.
+ */
+:root {
+  --color-blue-50: #f7f6fb;
+  --color-blue-100: #ecebf8;
+  --color-blue-200: #dad9f2;
+  --color-blue-300: #b6b5e3;
+  --color-blue-400: #8886db;
+  --color-blue-500: #5d5ac8;
+  --color-blue-600: #4643ba;
+  --color-blue-700: #4643ba;
+  --color-blue-800: #3a37a0;
+  --color-blue-900: #2f2d86;
+  --color-blue-950: #25236b;
+  --color-violet-50: #f7f6fb;
+  --color-violet-100: #ecebf8;
+  --color-violet-200: #dad9f2;
+  --color-violet-300: #b6b5e3;
+  --color-violet-400: #8886db;
+  --color-violet-500: #5d5ac8;
+  --color-violet-600: #4643ba;
+  --color-violet-700: #4643ba;
+  --color-violet-800: #3a37a0;
+  --color-violet-900: #2f2d86;
+}

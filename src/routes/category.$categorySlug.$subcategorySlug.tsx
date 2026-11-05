@@ -1,201 +1,38 @@
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { Fragment, useCallback, type CSSProperties } from "react";
-
-import { IdeaCard } from "@/components/idea-card";
-import { SiteShell, Breadcrumbs } from "@/components/site-shell";
-import { ExploreBanner, ExploreRail, EXPLORE_BANNER_ROTATION } from "@/components/explore-rail";
-import { categoryImage } from "@/config/category-imagery";
-import { EXPANSION_SUBCATEGORIES } from "@/config/expansion-taxonomy";
 import { OLD_CATEGORY_REDIRECTS } from "@/config/old-category-redirects";
-import { getSubcategoryPage } from "@/lib/ideas.functions";
-import { JsonLd, absoluteUrl, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
-import {
-  useElementPointerGroup,
-  useDepthScene,
-  useScrollProgress,
-  useStaggerReveal,
-  useTextReveal,
-} from "@/motion";
-
-/** New category and subcategory names already end in "Business Ideas"; never print it twice. */
-const asIdeas = (name: string) => (/business ideas$/i.test(name.trim()) ? name.trim() : `${name} Business Ideas`);
-const subQuery = (categorySlug: string, subcategorySlug: string) =>
-  queryOptions({
-    queryKey: ["subcategory", categorySlug, subcategorySlug],
-    queryFn: () => getSubcategoryPage({ data: { categorySlug, subcategorySlug } }),
-  });
+import { TAXONOMY } from "@/data/taxonomy";
+import { V2Frame } from "@/components/v2/frame";
+import { getListPage } from "@/lib/lists.functions";
+import { ListPageBody } from "@/routes/lists.$slug";
 
 export const Route = createFileRoute("/category/$categorySlug/$subcategorySlug")({
+  // AdSense approval: old categories and their subcategories 301 to the closest new category.
   beforeLoad: ({ params }) => {
-    // C089 used the legacy Work From Home slug for its first three idea pages.
-    // Keep those subcategory links working after giving C089 its own category.
-    // AdSense approval: old categories and their subcategories moved to the closest new category.
     const moved = OLD_CATEGORY_REDIRECTS[params.categorySlug];
-    const approved = EXPANSION_SUBCATEGORIES[params.categorySlug];
-    const target = moved ?? (approved && !approved.some((s) => s.slug === params.subcategorySlug) ? params.categorySlug : null);
-    if (target) {
-      throw redirect({ href: `/category/${target}`, replace: true, statusCode: 301 });
-    }
+    if (moved) throw redirect({ href: `/category/${moved}`, replace: true, statusCode: 301 });
   },
-  loader: async ({ context, params }) => {
-    const approved = EXPANSION_SUBCATEGORIES[params.categorySlug];
-    if (approved && !approved.some((subcategory) => subcategory.slug === params.subcategorySlug)) {
+  loader: async ({ params }) => {
+    const page = await getListPage({ data: { slug: params.subcategorySlug } });
+    if (!page || page.categorySlug !== params.categorySlug) {
+      // An old subcategory under a category that still exists goes to that category.
+      if (TAXONOMY.some((c) => c.slug === params.categorySlug)) {
+        throw redirect({ href: `/category/${params.categorySlug}`, replace: true, statusCode: 301 });
+      }
       throw notFound();
     }
-    const data = await context.queryClient.ensureQueryData(
-      subQuery(params.categorySlug, params.subcategorySlug),
-    );
-    if (!data.subcategoryName) throw notFound();
-    return data;
+    return page;
   },
-  head: ({ loaderData, params }) => {
-    const name = loaderData?.subcategoryName ?? "Subcategory";
-    // No image at the subcategory level -- it belongs to the parent category
-    // and stays that category's, the same object every one of its
-    // subcategories shares.
-    const image = categoryImage(params.categorySlug);
-    return {
-      meta: [
-        { title: `${asIdeas(name)} | BBI – Bro Business Ideas` },
-        {
-          name: "description",
-          content: `Business idea blueprints in ${name}: what the business is, who it serves, pros, cons and a founder-fit verdict.`,
-        },
-        { property: "og:title", content: `${asIdeas(name)} | BBI – Bro Business Ideas` },
-        {
-          property: "og:description",
-          content: `Business idea blueprints in ${name} with pros, cons and a founder-fit verdict.`,
-        },
-        { property: "og:type", content: "website" },
-        { name: "twitter:card", content: "summary_large_image" },
-        { property: "og:image", content: absoluteUrl(image.src) },
-        { property: "og:image:alt", content: image.alt },
-        { name: "twitter:image", content: absoluteUrl(image.src) },
-      ],
-    };
-  },
+  head: ({ loaderData }) => ({
+    meta: [
+      { title: `${loaderData?.name ?? "Business ideas"} in India | BusinessIdea.io` },
+      { name: "description", content: loaderData?.intro ?? "Browse published ideas in this category." },
+    ],
+  }),
   component: SubcategoryPage,
-  errorComponent: () => (
-    <SiteShell tone="instrument">
-      <p className="mx-auto max-w-6xl px-4 py-24">
-        Couldn't load this subcategory — try refreshing.
-      </p>
-    </SiteShell>
-  ),
-  notFoundComponent: () => (
-    <SiteShell tone="instrument">
-      <p className="mx-auto max-w-6xl px-4 py-24">We don't have that subcategory.</p>
-    </SiteShell>
-  ),
+  notFoundComponent: () => <V2Frame active="/lists"><div className="mx-auto max-w-6xl px-4 pt-28 pb-16"><h1 className="text-3xl font-bold">No published list for this path yet.</h1><a className="mt-5 inline-flex rounded-lg bg-primary px-5 py-3 text-primary-foreground" href="/browse">Browse published lists</a></div></V2Frame>,
 });
 
 function SubcategoryPage() {
-  const { categorySlug, subcategorySlug } = Route.useParams();
-  const { data } = useSuspenseQuery(subQuery(categorySlug, subcategorySlug));
-  const categoryName = data.categoryName ?? categorySlug;
-  const subcategoryName = data.subcategoryName ?? subcategorySlug;
-  const subcategoryPath = `/category/${categorySlug}/${subcategorySlug}`;
-
-  const headingRef = useTextReveal<HTMLHeadingElement>();
-  // MOTION_SPEC section 3 — same gallery grammar as the category grid: one
-  // delegated pointer listener for the whole grid, one short-stagger reveal,
-  // both on the same container element via a single callback ref.
-  const pointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
-  const revealRef = useStaggerReveal<HTMLDivElement>({ selector: ".mo-card", stagger: 0.03 });
-  const depthRef = useScrollProgress<HTMLDivElement>();
-  // Masthead depth scene. Listing pages are scanning surfaces, so the cursor
-  // work is confined to the header — the grid below stays still under the eye
-  // (MOTION_SPEC section 3: no tilt, no magnet on listings).
-  const mastheadRef = useDepthScene<HTMLDivElement>({ strength: 0.45, scroll: false });
-  const gridRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      pointerRef.current = node;
-      revealRef.current = node;
-    },
-    [pointerRef, revealRef],
-  );
-
-  // Brief section 12.7 — one earned emphasis per grid. The loader orders by
-  // trend_score DESC, so `ideas[0]` is the highest-trending idea here.
-  const lead = data.ideas.length >= 4 ? data.ideas[0] : undefined;
-  const leadIdeaId = lead && lead.trendScore !== null ? lead.ideaId : null;
-
-  return (
-    <>
-      <JsonLd
-        schema={[
-          collectionPageSchema({
-            path: subcategoryPath,
-            name: asIdeas(subcategoryName),
-            description: `Business idea blueprints in ${subcategoryName}: what the business is, who it serves, pros, cons and a founder-fit verdict.`,
-            itemCount: data.ideas.length,
-            image: categoryImage(categorySlug).src,
-          }),
-          breadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Browse", path: "/browse" },
-            { name: categoryName, path: `/category/${categorySlug}` },
-            { name: subcategoryName, path: subcategoryPath },
-          ]),
-        ]}
-      />
-      <SiteShell tone="instrument">
-        <div ref={depthRef} className="bbi-depth mx-auto max-w-6xl px-4 py-12">
-          <Breadcrumbs
-            items={[
-              { label: "Home", to: "/" },
-              { label: "Browse", to: "/browse" },
-              {
-                label: data.categoryName ?? categorySlug,
-                to: "/category/$categorySlug",
-                params: { categorySlug },
-              },
-              { label: data.subcategoryName ?? subcategorySlug },
-            ]}
-          />
-          <div ref={mastheadRef} className="bbi-depth-back cx-scene">
-            <h1
-              ref={headingRef}
-              style={{ "--z": 0.5 } as CSSProperties}
-              className="cx-layer mt-4 text-3xl font-bold tracking-tight"
-            >
-              {data.subcategoryName}
-            </h1>
-            <p className="mt-2 text-sm text-muted-foreground">{data.ideas.length} ideas</p>
-          </div>
-          <div
-            ref={gridRef}
-            className="bbi-depth-front mt-8 grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] gap-3"
-          >
-            {/* This page had no interstitial mechanism at all -- unlike the
-                parent category grid (see category.$categorySlug.index.tsx),
-                a long subcategory list never once pointed anywhere else on
-                the site. Every 6th card is a cross-link instead, rotating
-                through EXPLORE_BANNER_ROTATION so a subcategory with several
-                interstitials doesn't repeat the same destination. */}
-            {data.ideas.map((idea, i) => {
-              const n = i + 1;
-              const showBanner = n % 6 === 0 && n < data.ideas.length;
-              const bannerPick = showBanner
-                ? EXPLORE_BANNER_ROTATION[(n / 6 - 1) % EXPLORE_BANNER_ROTATION.length]
-                : null;
-              return (
-                <Fragment key={idea.ideaId}>
-                  <IdeaCard idea={idea} featured={idea.ideaId === leadIdeaId} />
-                  {showBanner && bannerPick && (
-                    <div className="[grid-column:1/-1]">
-                      <ExploreBanner pick={bannerPick} exclude="ideas" />
-                    </div>
-                  )}
-                </Fragment>
-              );
-            })}
-          </div>
-
-          <ExploreRail exclude="ideas" heading="Keep exploring" />
-        </div>
-      </SiteShell>
-    </>
-  );
+  const page = Route.useLoaderData();
+  return <ListPageBody p={page} categorySlug={page.categorySlug} canonicalPath={`/category/${page.categorySlug}/${page.slug}`} />;
 }

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { ContentPage, Section, metaFor } from "@/components/page-layout";
+import { ContentPage, Section, metaFor } from "@/components/glass-editorial";
 import { SocialLinks } from "@/components/social-links";
 import { contactEmail, TEAM } from "@/lib/site-config";
 
@@ -15,7 +15,7 @@ import { contactEmail, TEAM } from "@/lib/site-config";
 export const Route = createFileRoute("/contact")({
   head: () =>
     metaFor(
-      "Contact | BBI – Bro Business Ideas",
+      "Contact | BusinessIdea.io",
       "One address, answered by people. No chatbot, no automated replies. Free personalised help for students, people with disabilities, widows, single mothers and zero-investment founders.",
     ),
   component: ContactPage,

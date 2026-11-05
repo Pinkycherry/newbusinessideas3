@@ -1,0 +1,515 @@
+{
+  "subcategory": {
+    "code": "C009-S01",
+    "intro": "A village daily needs shop works when it saves someone a journey, a wait, or the embarrassment of asking for a small item elsewhere. The first decision is not how many shelves to buy. It is which neighbours you will serve and when they actually need you. A hamlet away from the main road needs a different shop from a bus stand or a street full of schoolchildren. Look at where people already walk for milk, soap, notebooks, batteries, sanitary products and small food packets. Ask what they could not find last week. That answer is better than filling a room with things that look good but do not move. You can begin with a counter at home, a rented corner, or a planned delivery round, depending on the place. Keep stock small enough that you know what has gone missing or expired. Record every purchase, including goods taken on credit by neighbours. Familiarity helps you win trust, but it can also make collections awkward. Agree on a clear payment day before you allow any credit, and accept UPI or cash without making either customer feel difficult. Wholesale trips, weather and school holidays change demand, so the best shop owner notices patterns and adjusts orders rather than buying blindly. Food and packaged goods need clean storage and honest dates; regulated goods may need separate permissions, so check before stocking them. The ideas below serve different moments: before school, after farm work, on market day, during the rains, and at a family's doorstep. Choose the model that fits the foot traffic you can see with your own eyes. A small shop that reliably has the right basics can earn repeat visits without pretending to be a supermarket.",
+    "how_to_choose": "Stand where you plan to sell at the hours you would be open. Count the kind of visits, not just the number of passersby. Parents rushing to school want quick notebooks and snacks; farmers returning after dark need a dependable evening counter. If homes are scattered, a fixed order and delivery day may beat a shop that waits for customers. If you are close to a weekly market, packs prepared for the journey can work better than everyday groceries. Choose stock you can replenish without an expensive trip. Start with a short list, track what people ask for but cannot buy, and expand only when those requests repeat.",
+    "faq": [
+      {
+        "q": "Can you open a village essentials counter from your home?",
+        "a": "Yes, if your location is easy for neighbours to reach and your household can keep regular hours. Check local shop permissions and any registration required for the goods you sell. Keep household supplies separate from stock so you can see what the business actually earns."
+      },
+      {
+        "q": "How should you decide which goods to stock first?",
+        "a": "Write down the items households repeatedly travel to buy, then ask a few families which sizes they prefer. Begin with fast moving, easy to store goods. Do not buy a full carton of an item only because a wholesaler offers a discount."
+      },
+      {
+        "q": "Should you give credit to regular village customers?",
+        "a": "You can, but set a small limit and a payment date before the first credit sale. Enter each item in a ledger in front of the buyer and send a polite reminder when due. A shop can look busy and still run out of cash if collections slip."
+      },
+      {
+        "q": "What if another kirana shop already operates nearby?",
+        "a": "Watch where that shop is inconvenient rather than copying its shelves. A different opening time, doorstep order round, school supplies, or a remote hamlet can serve a real gap. If you cannot name a clear gap, do not rent a shop yet."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C009-S01-I01",
+      "slug": "early-morning-milk-and-breakfast-counter",
+      "title": "Early Morning Milk and Breakfast Counter",
+      "hook": "When the first bus leaves before the kirana opens, you can become the reliable stop for a family's morning basics.",
+      "summary": "You open a small counter before work and school hours for milk, bread, eggs, tea supplies and a few breakfast essentials. Regular households know exactly when to find you. The narrow morning window suits someone who can receive fresh stock early and close before other work begins.",
+      "what_it_is": "You arrange a dependable early delivery of milk and other short life items, then open your front counter before the village starts moving. You keep bread, eggs, tea, sugar and a few small breakfast packets within reach so a buyer can finish in minutes. You write down what each household asks for and reserve items only when the customer confirms. At closing, separate unsold fresh goods from shelf stock and record the loss. This is a short daily service, not an all day grocery store. Your promise is that the basics are ready when the bus, school van and farm shift begin.",
+      "who_pays_you": "Parents packing school tiffins, dairy customers whose regular supplier missed a day, and workers leaving before the main market opens will buy from you. Tea stalls nearby may collect a few emergency items too. You start with homes on the route to the bus stop rather than assuming the whole village will change its habits. People return when your opening time stays reliable during rain and festivals.",
+      "how_money_comes": "Customers pay for individual purchases by cash or UPI, and a few households may place a standing morning order. A reserved bag makes sales more predictable, but collect payment regularly and record every item. Fresh goods have thin room for error, so your income depends on ordering close to actual demand and selling useful add ons during the same visit. You check local buying prices with Validate before setting your margin.",
+      "what_you_need": "A clean sheltered counter, a safe way to keep milk cool, a reliable supplier and a notebook for morning orders. You need a clockwork routine because late opening defeats the purpose. You check local permissions and packaged food storage requirements before buying stock. You keep fresh goods away from heat and never sell an item past its date.",
+      "first_30_days": [
+        "Stand near the bus stop on several mornings and note which essentials people seek before other shops open.",
+        "Speak with a milk supplier about delivery timing and returns for damaged or unsold packs.",
+        "Start with a small basket of essentials and write down every request you could not fulfil.",
+        "Offer a reservation list to nearby households and keep their bags separate from walk in stock."
+      ],
+      "what_hurts": "A missed supplier delivery can leave your counter empty at the one hour that matters. Milk and bread spoil, and a bargain on excess stock becomes a loss the next morning. Some customers ask you to hold goods and never collect them. Waking before everyone else every day can wear you down, particularly when your home has other care work. You keep an alternative supplier and a clear cut off for reserved orders.",
+      "verdict": "Build this if your home sits on a genuine early route and you enjoy a strict morning routine. Walk away if you cannot keep fresh goods safe or open at the promised hour, because morning buyers will not wait.",
+      "faq": [
+        {
+          "q": "Could this work without a rented shop?",
+          "a": "A front room or window counter can work if people can stop safely and your local rules allow sales there. Make opening hours visible and keep private household areas closed to customers."
+        },
+        {
+          "q": "How do you prevent milk losses?",
+          "a": "Order from a written demand list, keep it cool and review leftovers every day. Ask the supplier about return terms before assuming unsold packs can go back."
+        },
+        {
+          "q": "Should you give a monthly milk account?",
+          "a": "Only if you can track deliveries and collect on a fixed date. Show customers the running record often. Small unrecorded extras can quietly erase the value of an account."
+        }
+      ],
+      "validate_prompt": "I want to open an early morning milk and breakfast essentials counter in my Indian village. What permissions, storage setup and local margins should I check before placing my first order?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S01-I02",
+      "slug": "remote-hamlet-essentials-delivery-round",
+      "title": "Remote Hamlet Essentials Delivery Round",
+      "hook": "A distant hamlet may have buyers for basic goods even when there are too few homes to support a permanent shop.",
+      "summary": "You collect household lists before a fixed day, buy everyday essentials in town and bring labelled orders to scattered hamlets. Families save a separate trip for soap, oil, salt and other basics. A scheduled route gives you more predictable demand than waiting behind a counter.",
+      "what_it_is": "Pick a cluster of hamlets with poor access to a dependable kirana. Visit or call each household before your buying day and write the exact brand, pack size and quantity they want. Buy against confirmed lists, sort orders by household and deliver on a route you can complete before dark. You carry a small basket of commonly forgotten items, but keep most purchases tied to orders. You check every packet with the buyer at handover and collect cash or UPI immediately. You are running a village order route, not promising that any item can arrive at any hour.",
+      "who_pays_you": "Families living beyond the main village, older people who cannot easily travel and farm households with little time for a town visit are the core buyers. A local anganwadi worker or trusted resident may help you understand the route, but households should place their own orders. You serve one compact area first so the fuel and travel time do not consume the value of each basket.",
+      "how_money_comes": "You earn a transparent margin on each purchased item and may charge a modest delivery fee for a very small order. You collect advance payment for special requests that you cannot return. A fixed weekly run lets several families share the travel effort, while repeat orders show you which goods to keep ready. You avoid offering unlimited credit simply because buyers know you personally. You ask Validate to check current supplier terms and route costs.",
+      "what_you_need": "A bicycle or two wheeler suited to the road, strong waterproof bags, a phone for order lists and a supplier who gives proper bills. You need careful handwriting or a simple digital record so similar orders never get mixed. You ask about local trading requirements, and avoid goods needing cold storage until you can handle them safely.",
+      "first_30_days": [
+        "Walk one proposed route and speak to households about the items that force a trip into town.",
+        "Set one order deadline and one delivery day that you can repeat through changing weather.",
+        "Take a small paid trial from a compact cluster and label each household bag before departure.",
+        "Compare travel time, mistakes and repeat requests before adding a second hamlet to the route."
+      ],
+      "what_hurts": "Mud roads, broken bridges and heavy rain can delay a promised delivery day. Buyers sometimes change a brand after you have already bought it, leaving slow stock in your bag. A remote route also makes a forgotten item expensive to fix. Be clear about substitutions and take approval before buying a different pack. If the route is too spread out, even steady sales may not pay for your time.",
+      "verdict": "Build this if households are genuinely far from shops and you can keep a dependable route. Walk away if every stop is far apart and orders stay tiny, because travel can swallow your margin.",
+      "faq": [
+        {
+          "q": "How should you take orders from people without smartphones?",
+          "a": "Visit on a fixed day or take a phone call, then read the list back before buying. Leave a written order copy when possible so both sides agree on sizes."
+        },
+        {
+          "q": "What happens if the requested brand is unavailable?",
+          "a": "Ask the buyer before substituting, especially for food or personal care products. If you cannot reach them, leave it off the bill and bring it on the next round."
+        },
+        {
+          "q": "Can you expand to daily delivery?",
+          "a": "Only after a single route supports the time and travel. A predictable weekly service is easier to run well than daily trips with uncertain orders and rising fuel costs."
+        }
+      ],
+      "validate_prompt": "I want to deliver confirmed kirana essentials to remote hamlets near my town in India. How should I calculate a viable route, delivery fee and stock list for current local conditions?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "student"
+      ],
+      "place": [
+        "village"
+      ],
+      "work_mode": "field",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S01-I03",
+      "slug": "school-gate-stationery-and-snack-kiosk",
+      "title": "School Gate Stationery and Snack Kiosk",
+      "hook": "Children remember missing pencils just before class, while parents value a quick stop that solves the problem on the way.",
+      "summary": "You run a small permitted kiosk near a school route with notebooks, pencils, erasers, water and simple sealed snacks. You serve the short rush before and after school. The product mix follows the school calendar, so it is much tighter than a general village shop.",
+      "what_it_is": "You find a lawful spot on a common school walking route without blocking the gate or traffic. You keep the most requested notebook sizes, basic writing supplies and a limited selection of sealed food and drinks. You ask parents which class lists create last minute trouble, but never claim that the school endorses your counter. Display prices clearly and keep change ready so the queue moves quickly. After the rush, count stock and note which items sold because of an exam, project or weather change. You can close outside school hours or use the remaining time to prepare the next day's supplies.",
+      "who_pays_you": "Parents walking younger children to class, older pupils buying a forgotten pen, and grandparents doing school pickups are your likely buyers. Teachers may need emergency classroom supplies, but deal with them directly rather than assuming school orders. A site near several schools can help, provided you are allowed to trade there and children can approach without crossing unsafe traffic.",
+      "how_money_comes": "Most sales are small and paid at once. Bundle common exam items only when each piece is useful and the bundle price is clear. Replenish fast moving stationery more often than fashion items that sit for months. School holidays cause a sharp break in turnover, so plan a second use for the counter or accept the seasonal gap. Tap Validate for local wholesale costs and permit details.",
+      "what_you_need": "A safe permitted place, weatherproof display boxes, labelled prices and a supplier for authentic stationery and sealed snacks. You keep food clean and within date. You must be able to handle a sudden crowd without losing track of payments or letting children stand in the road. You confirm any local rules around selling near school premises.",
+      "first_30_days": [
+        "Observe the school route from a safe public place and note the actual buying rush and competing counters.",
+        "Ask parents which notebook types and small supplies their children most often forget.",
+        "Check where a kiosk may legally stand before paying for a cart or display case.",
+        "Open with a short list, record each sale and adjust before the next school week."
+      ],
+      "what_hurts": "Your business day is concentrated into a short noisy rush. A wrong notebook format can sit untouched all term, while popular pens sell out before the bell. Holidays, exam schedules and rain change foot traffic suddenly. Food brings expiry risk. Most seriously, a convenient location is worthless if it obstructs children or violates school or local rules. You put safety and permission ahead of visibility.",
+      "verdict": "Build this if you have a lawful, safe school route location and can handle quick small sales. Walk away if the only available spot forces children into traffic or relies on an unapproved gate stall.",
+      "faq": [
+        {
+          "q": "May you set up right outside the school gate?",
+          "a": "Do not assume so. Ask the local authority and the school about restrictions, and make sure your setup leaves walking space clear. A nearby lawful route may be better."
+        },
+        {
+          "q": "What should you do during school holidays?",
+          "a": "Reduce stock before the break and sell general writing supplies to nearby households if demand exists. Do not buy term specific goods that will expire in usefulness before classes return."
+        },
+        {
+          "q": "Should you sell loose cooked food there?",
+          "a": "Start with properly stored sealed goods if food is part of your offer. Cooking introduces more hygiene and permission work, which you should understand before expanding the kiosk."
+        }
+      ],
+      "validate_prompt": "I want a stationery and sealed snack kiosk on a school route in an Indian small town. What local permissions, safe location rules and current stock margins should I verify?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "student",
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S01-I04",
+      "slug": "farm-shift-evening-kirana-counter",
+      "title": "Farm Shift Evening Kirana Counter",
+      "hook": "Workers returning from the fields after sunset need household basics when the main market is already shutting its doors.",
+      "summary": "You keep a compact essentials counter open in the evening on the path from farms to homes. Soap, cooking basics, batteries and school items solve small urgent needs without a town trip. Your unusual hours are the reason people choose you.",
+      "what_it_is": "You choose a visible place on the return route used by farm workers and open at a consistent evening time. Stock a short list of nonperishable household basics, small cooking packs, torch batteries and emergency school supplies. You ask each buyer what was missing at home that evening and tally repeated requests before adding stock. Provide good light and a clear area for people to stop safely, especially when tractors and motorcycles pass. Close at the time you can actually sustain. This counter serves a particular daily gap; it does not need to mimic the larger daytime shops.",
+      "who_pays_you": "Farm workers, landowning families finishing field work and people who reach the village after a town commute will buy last minute items. Nearby households may also use the counter for small purchases after dinner preparation begins. Your strongest customers are those who pass your location naturally. If the field route shifts with the season, visit at different times before choosing a fixed shop space.",
+      "how_money_comes": "Each buyer pays for the few goods needed that night, usually in cash or by UPI. You keep common small pack sizes because an urgent purchase may be limited to what is in a pocket. Over time, a steady evening habit can support a broader household basket. You track sales separately from family consumption and be cautious about nightly credit. Validate can help you compare current wholesale prices with the village selling range.",
+      "what_you_need": "A secure well lit counter, covered storage, accurate change and a practical plan for closing safely. You need reliable access to town wholesalers and a stock ledger. You avoid medicines, fuel or agricultural chemicals unless you understand the separate permissions and safe handling obligations. You ask local authorities what your chosen trading location requires.",
+      "first_30_days": [
+        "Observe the farm return route on working evenings and check whether another shop already covers the same hours.",
+        "Ask returning households which small items caused an extra trip during the past week.",
+        "Open with dry, simple essentials and post a closing time you can keep consistently.",
+        "Record requests and actual sales separately so one loud request does not become a carton of unsold stock."
+      ],
+      "what_hurts": "Seasonal farm hours shift, so the evening crowd may arrive earlier or later than you expect. Lighting, security and weather matter more after dark. Neighbours may expect credit because they know you, which can quickly trap your cash in a ledger. Some products are requested only during sowing or harvest. You review the stock list often and avoid promising that a late customer can find anything at all.",
+      "verdict": "Build this if your location has real evening foot traffic and you can open safely at a steady time. Walk away if the route is deserted after dark or credit requests would dominate sales.",
+      "faq": [
+        {
+          "q": "Which products suit an evening counter?",
+          "a": "Start with dry household basics, small cooking packs and items people forget until they get home. Let actual evening requests guide additions instead of copying a full kirana shelf."
+        },
+        {
+          "q": "Is it safe to work alone after dark?",
+          "a": "Assess lighting, road movement and your own comfort before opening. A family member nearby and a clear closing routine may help, but no sales target is worth unsafe hours."
+        },
+        {
+          "q": "Can you change hours during harvest?",
+          "a": "Yes, if you tell regular buyers in advance and post the new hours clearly. Watch the return route first so the change follows real movement rather than a guess."
+        }
+      ],
+      "validate_prompt": "I want to run a small evening essentials counter for farm workers in my Indian village. Which products, opening hours and local trading rules should I test first?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village"
+      ],
+      "work_mode": "shop",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S01-I05",
+      "slug": "women-personal-care-privacy-counter",
+      "title": "Women Personal Care Privacy Counter",
+      "hook": "A nearby discreet counter can save women a long trip when routine personal care items are difficult to ask for openly.",
+      "summary": "You stock sanitary products, basic hygiene goods and everyday personal care items in a small private village counter. Women can ask questions, choose a suitable pack and pay without a crowd listening. Repeat demand depends on trust, availability and respectful service.",
+      "what_it_is": "You set aside a clean counter or home entrance where customers can speak without an audience. You carry a sensible range of sealed sanitary products, soap, undergarment basics if there is demand, and other ordinary hygiene items. You show packs and prices without making claims about health benefits. A customer can message ahead, collect a wrapped order or ask for discreet home drop off within a defined area. You keep records without writing sensitive purchase details where neighbours can see them. Your value is a reliable local choice handled with dignity, not a promise of medical advice.",
+      "who_pays_you": "Women and girls in households far from a well stocked market, working women with little shopping time, and caregivers buying supplies for family members may use your counter. Some prefer to pay privately by UPI and others by cash. Listen to the actual brands and pack sizes people ask for; do not assume every customer wants the same product or wants a conversation.",
+      "how_money_comes": "Customers pay for sealed products as needed, and some may request a monthly reserve of their preferred pack. You keep a modest range because too many slow moving variants lock up cash. A small delivery charge can apply when a trip is genuinely required, but explain it before confirming an order. Repeat sales come from having preferred items consistently available and protecting privacy. You check current wholesaler terms with Validate.",
+      "what_you_need": "Private clean space, shelves away from moisture, intact sealed stock and a respectful way to handle messages and delivery. You should understand product labels and expiry dates without presenting yourself as a clinician. You keep an invoice trail and check applicable local shop requirements. You do not store personal customer details beyond what you need to complete an order.",
+      "first_30_days": [
+        "Speak discreetly with women you know about what they travel to buy and which pack sizes are hard to find.",
+        "Find an authorised supplier and choose a narrow range of sealed items rather than a display full of guesses.",
+        "Arrange a collection point that offers privacy without making anyone enter your family living space.",
+        "Invite feedback on availability and handling, then replenish only the products customers actually request."
+      ],
+      "what_hurts": "Privacy is easy to promise and easy to break if an order is discussed in front of neighbours. Customers have strong product preferences, so the wrong brand may sit unsold. Some people may expect medical guidance on symptoms that a retailer is not qualified to give. Packaging damage and damp storage can ruin trust. You keep conversations confidential, stock sealed products properly and refer health questions to a qualified professional.",
+      "verdict": "Build this if you can offer a genuinely discreet local buying experience and restock preferred products. Walk away if your sales space exposes customers to gossip or you cannot protect their purchase information.",
+      "faq": [
+        {
+          "q": "Do customers need to tell you why they are buying?",
+          "a": "No. Let people choose a sealed product and pay without explanation. If someone asks about a health issue, direct them to a qualified clinician rather than guessing."
+        },
+        {
+          "q": "Can you take recurring orders by message?",
+          "a": "Yes, ask the customer which item and size to reserve and confirm a discreet pickup or drop off time. Keep messages private and delete details you no longer need."
+        },
+        {
+          "q": "Should you stock every popular brand?",
+          "a": "Begin with a small range based on actual requests. A wider shelf helps only when it turns over; otherwise your money stays tied up in unwanted packs."
+        }
+      ],
+      "validate_prompt": "I want to open a discreet personal care essentials counter for women in my Indian village. Which sealed products, storage practices and local retail requirements should I check?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S01-I06",
+      "slug": "elder-household-monthly-refill-service",
+      "title": "Elder Household Monthly Refill Service",
+      "hook": "An older neighbour may manage daily life well but find repeated trips for heavy household essentials exhausting.",
+      "summary": "You assemble a regular refill basket of soap, cleaning supplies, staples and other agreed household goods for older residents. You check the list before buying and carry it to their door on a fixed day. The service combines a modest retail margin with dependable, respectful delivery.",
+      "what_it_is": "Visit older households who would welcome help replenishing ordinary supplies, and ask what they use each month. You keep a written list for each family, confirm quantities before every purchase, and deliver in a manageable basket. Unpack only if invited, check the bill together and note any change for next time. Where a son or daughter pays remotely, send a simple itemised message without sharing private household details with anyone else. You avoid taking responsibility for medicines or personal care decisions. This is a planned essentials service with a relationship at its centre, not an emergency errand at every hour.",
+      "who_pays_you": "Older people living alone or as couples may pay directly. Adult children living in another Indian city may arrange the order and send UPI payment, while parents confirm what arrived. Some people with limited mobility also value a predictable refill day. You speak to households individually and get permission before discussing their needs with relatives or a resident welfare group.",
+      "how_money_comes": "You earn a disclosed margin on the goods and can set a clear delivery fee for a planned refill visit. A standing list saves shopping time, but confirm it each month so you do not force unwanted stock on anyone. You collect payment at handover or from the agreed family contact. If a customer asks for extras outside the route, explain any separate trip charge beforehand. Repeat trust matters more than pushing larger baskets.",
+      "what_you_need": "A dependable supplier, strong carrying bags, clear bills and a simple private record of customer preferences. You need patience to read labels aloud or explain a substitution without rushing someone. A bicycle or two wheeler may help with heavier baskets. Know your limits: do not lift unsafe loads or promise medical errands you are not equipped to handle.",
+      "first_30_days": [
+        "Ask a few older neighbours whether a planned refill day would save them a difficult market trip.",
+        "Create a short sample list and let each household remove or change anything before ordering.",
+        "Run a paid delivery for one compact lane and check items against the bill at the door.",
+        "Ask whether the customer wants a reminder next month, and record consent and preferred contact details."
+      ],
+      "what_hurts": "Lists change when relatives visit or a household buys elsewhere, so automatic purchasing can leave you with unwanted goods. Carrying heavy staples can strain you, while long conversations make the route slower than planned. Families may have different opinions about what should be bought. You take instructions from the buyer you agreed to serve, keep itemised records and never treat an elder's trust as permission to sell extras.",
+      "verdict": "Build this if you are patient, keep accurate bills and can serve nearby homes on a steady route. Walk away if you would rush older customers or cannot safely carry the goods they need.",
+      "faq": [
+        {
+          "q": "Who should approve an elder's monthly list?",
+          "a": "Agree directly with the person receiving the goods whenever possible. If a relative pays, clarify who approves changes before shopping. Written confirmation prevents arguments about unwanted items."
+        },
+        {
+          "q": "What if the customer asks for medicine too?",
+          "a": "Keep the retail refill focused on ordinary household goods. Medicine purchases have different risks and may require a pharmacy or authorised caregiver, so avoid promising them casually."
+        },
+        {
+          "q": "How do you charge for carrying heavy goods?",
+          "a": "Set a clear delivery fee based on distance and load before taking an order. Tell the buyer when a very heavy item needs a separate arrangement rather than silently raising the bill."
+        }
+      ],
+      "validate_prompt": "I want to provide monthly household essentials refills to older residents in an Indian village. How should I price delivery, document orders and plan a safe local route?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "student"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "field",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S01-I07",
+      "slug": "weekly-haat-family-essentials-packs",
+      "title": "Weekly Haat Family Essentials Packs",
+      "hook": "Market day draws families from several villages, and a ready essentials pack can make their crowded shopping trip simpler.",
+      "summary": "You sell clearly listed household basics in practical packs at a permitted weekly haat stall. Buyers who travel far can collect soap, salt, oil and other standard items in one stop. You adjust packs from actual requests, while keeping single items available for households with different budgets.",
+      "what_it_is": "Before the weekly haat, build a few useful combinations of dry household essentials, each with an itemised price. You bring enough single pieces so a buyer can change a pack instead of taking goods they do not want. You choose a stall position with the market organiser's permission, display contents openly and carry bags strong enough for the trip home. You ask repeat visitors what they need next week and reserve only confirmed requests. You count remaining packs at closing, dismantle slow combinations and store intact goods safely for the next market. The work peaks on one day, but buying and packing happen earlier.",
+      "who_pays_you": "Families visiting the haat from nearby villages, people collecting wages and shopping on the same day, and small households that prefer a planned basket will buy. Some buyers need only one inexpensive item, so do not pressure them into a larger bundle. A clear price and easy substitutions help people compare your offer with scattered market stalls without feeling trapped.",
+      "how_money_comes": "You earn a margin on each item inside a pack, not a mysterious fee hidden in the bundle. A preordered pack can be set aside for a buyer who has a long return trip, with payment at collection or a small advance for unusual goods. Weekly sales fluctuate with weather and agricultural cash flow. You review each pack against current wholesale bills and use Validate for local costs before promising a standing price.",
+      "what_you_need": "Permission for a haat stall, a portable table, strong bags, accurate weights for any goods sold by weight and clean dry storage. You keep an itemised display and separate cash record. You arrange transport that protects stock from rain and dust. You check the rules for packaged foods and avoid selling loose goods you cannot store or label properly.",
+      "first_30_days": [
+        "Visit the haat as a buyer and note which everyday items families carry from multiple stalls.",
+        "Ask the organiser about stall allocation and choose a modest dry goods list.",
+        "Prepare a few itemised packs plus single pieces, then record what people change or refuse.",
+        "Review leftover stock after each market and replace weak bundles with combinations buyers actually requested."
+      ],
+      "what_hurts": "Rain can empty a market and soak cartons on the same day. A bundle that looks sensible to you may contain one unwanted product that stops the sale. Competitors can copy a pack easily, so service and honest prices must carry the business. Stall fees, transport and unsold stock all come out of a short selling window. You never buy a whole week's worth of fragile goods without evidence that they will move.",
+      "verdict": "Build this if your weekly haat draws distant shoppers and you can pack useful baskets transparently. Walk away if stall fees and transport eat the value of small sales or buyers prefer choosing everything separately.",
+      "faq": [
+        {
+          "q": "Should every pack have a fixed set of products?",
+          "a": "Show a standard option for speed but allow sensible swaps when stock permits. A family knows its own needs better than your printed basket. Record common swaps for the next market."
+        },
+        {
+          "q": "Can you take orders for the next haat?",
+          "a": "Yes, write the exact items, sizes, pickup time and contact method. Take an advance only for unusual requests, and give a clear record of what was paid."
+        },
+        {
+          "q": "How do you deal with a rainy market day?",
+          "a": "Keep stock covered and avoid bringing goods that moisture ruins. A small reserve you can store safely is better than risking cartons simply to fill a large stall."
+        }
+      ],
+      "validate_prompt": "I want to sell itemised family essentials packs at a weekly haat in India. What stall permissions, transport costs and current wholesale margins should I test?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "weekends",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S01-I08",
+      "slug": "monsoon-household-essentials-corner",
+      "title": "Monsoon Household Essentials Corner",
+      "hook": "The first heavy rain reminds everyone about torches, dry storage and cleaning supplies that were forgotten through summer.",
+      "summary": "You run a seasonal village corner for practical rain related household goods alongside a few everyday basics. Torches, batteries, waterproof covers and cleaning items answer urgent local needs. You buy cautiously before the season and shift the range again when the rains end.",
+      "what_it_is": "You list the small household problems rain creates in your own village: power cuts, damp schoolbags, muddy floors and wet goods carried home. Stock ordinary products that address those problems, such as torch batteries, rechargeable lights from reputable suppliers, covers, buckets and cleaning supplies. Demonstrate a light safely before sale and explain its return terms. You keep cartons off the floor and protect paper goods from damp. During dry months, continue only the items people buy anyway or close the seasonal corner. Your judgment is about timing and storage, not a claim that every monsoon will create the same demand.",
+      "who_pays_you": "Households preparing for rain, commuters who need to protect bags and farmers returning along dark paths may buy. Parents also want a way to keep schoolbooks dry. A village with frequent power interruptions may have repeat battery demand, while another has little need. You ask neighbours about last season's actual purchases before assuming your chosen products will fit this one.",
+      "how_money_comes": "You sell individual goods at visible prices and may assemble a requested rain kit without charging for unwanted extras. Buy lights and batteries in manageable quantities with clear warranty and return terms. Seasonal demand comes in bursts, and the money can be stuck in unsold covers when the weather clears. A small base of year round essentials helps keep the counter useful. Validate current supplier prices locally before committing to larger stock.",
+      "what_you_need": "A dry secure storage place, covered counter, supplier bills and an honest way to handle faulty electrical goods. You avoid cheap untested items whose failure may leave a household in the dark. You check local trade rules and product labels. You need cash discipline because weather forecasts are no substitute for paid demand.",
+      "first_30_days": [
+        "Ask households which rain related items they could not find nearby during the last wet season.",
+        "Find suppliers who explain returns for faulty lights and provide clearly labelled goods.",
+        "Test a small display before peak rain and keep cartons raised above any damp floor.",
+        "Track each product by sale date so you can stop reordering slow stock quickly."
+      ],
+      "what_hurts": "A late or weak rainy season can leave you holding covers and other seasonal goods. A faulty torch creates an angry customer when they need light most. Flooded roads may also delay your next wholesale trip just as a popular item runs out. Protect stock from moisture, keep supplier return details and do not build the business on dramatic weather guesses. Your regular household items need to carry quiet weeks.",
+      "verdict": "Build this if your village has recurring rain related supply gaps and you have dry storage. Walk away if you must borrow heavily for seasonal stock or cannot handle faulty product returns fairly.",
+      "faq": [
+        {
+          "q": "Can you sell only rain products?",
+          "a": "You can run a temporary stall, but demand may vanish between storms. A few steady household essentials provide a reason for customers to visit when the weather is calm."
+        },
+        {
+          "q": "What if a rechargeable light fails?",
+          "a": "Explain the warranty and your return process before selling it. Keep the purchase bill and supplier contact ready, and do not promise a replacement the wholesaler will not honour."
+        },
+        {
+          "q": "When should you stop buying seasonal goods?",
+          "a": "Look at actual weekly sales and your remaining stock, not only the calendar. Slow sales are a sign to stop reordering and protect cash for everyday products."
+        }
+      ],
+      "validate_prompt": "I want a monsoon essentials counter in my Indian village. Which locally useful products, electrical warranty terms and current stock costs should I check before buying?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S01-I09",
+      "slug": "worksite-daily-essentials-mobile-cart",
+      "title": "Worksite Daily Essentials Mobile Cart",
+      "hook": "A small construction crew outside town loses time when workers must travel for water, soap or a forgotten household packet.",
+      "summary": "You bring a compact cart of sealed daily necessities to active local worksites at agreed break times. Workers buy water, hygiene items and small everyday packs near where they work. Your route changes as projects finish, so you track each site's genuine demand before stocking for it.",
+      "what_it_is": "You ask a site supervisor whether a safe selling spot is available outside the work area and agree on a break time. You bring sealed drinking water from a reliable supplier, basic hygiene goods and a short list of requested household packs. You keep the cart out of vehicle routes and never enter an active construction zone to chase buyers. Sell at posted prices and note which items are used up first. When a project ends, move only after checking another worksite's access and demand. You are an independent small retailer serving a workday gap, not part of the contractor's payroll.",
+      "who_pays_you": "Masons, helpers, painters and other workers who cannot leave a site during a short break are the buyers. Nearby roadside workers may also stop if it is safe. Supervisors might arrange a group order for water, but make clear whether they or the individual workers pay. You choose sites with enough predictable days of work to justify a regular trip.",
+      "how_money_comes": "Buy sealed goods wholesale and sell individually at clear prices, collecting cash or UPI at handover. A confirmed group order reduces the risk of carrying water back home, while small personal purchases add variety. You set the route by expected paid demand after transport effort, rather than by the size of a construction project on paper. Credit to a whole crew becomes difficult when people move on; collect promptly.",
+      "what_you_need": "A sturdy covered cart or two wheeler, clean handling of drinking water, supplier bills and permission to stand at a safe location. You need a flexible route and a basic stock record. Respect worksite safety instructions and check local vending rules. You do not sell loose food or unverified water simply because it is cheaper to carry.",
+      "first_30_days": [
+        "Map active worksites and ask supervisors about break times, access and safe standing areas.",
+        "Ask workers what they currently walk away from the site to buy during a shift.",
+        "Trial one site with a narrow sealed goods list and record actual sales after transport.",
+        "Confirm next week's work schedule before returning or buying more site specific stock."
+      ],
+      "what_hurts": "Worksites close, crews move and break times change with deadlines or weather. A large project may look promising but have a canteen that workers already prefer. Carrying heavy water for weak sales makes a route expensive, while poor parking creates safety problems. Contractors may ask you to extend credit that workers never approved. You keep permission and payment terms clear, and leave a site immediately if the location becomes unsafe.",
+      "verdict": "Build this if nearby worksites allow safe access and workers have a clear unmet need. Walk away if the route relies on one temporary crew or requires you to enter hazardous work areas.",
+      "faq": [
+        {
+          "q": "Do you need the contractor's permission?",
+          "a": "Ask whoever manages access and comply with local vending rules before setting up. Permission to stand outside a gate is different from permission to enter a worksite."
+        },
+        {
+          "q": "Which goods should you bring first?",
+          "a": "Carry sealed water and a few necessities workers themselves requested, then measure sales. Avoid buying bulky cartons because a site seems busy from the road."
+        },
+        {
+          "q": "What happens when the project finishes?",
+          "a": "Keep a list of other sites and check access before moving the cart. Do not assume the same products will sell at a new site with a different crew."
+        }
+      ],
+      "validate_prompt": "I want a mobile daily essentials cart serving construction crews near my Indian town. What vending permissions, route costs and current product margins should I validate?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "student"
+      ],
+      "place": [
+        "small_town",
+        "village"
+      ],
+      "work_mode": "field",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S01-I10",
+      "slug": "village-bus-stop-travel-essentials",
+      "title": "Village Bus Stop Travel Essentials",
+      "hook": "A traveller who reaches the village bus stop early cannot go home for forgotten water, tissues or a phone cable.",
+      "summary": "You keep a small bus stop counter for practical travel necessities and a few sealed refreshments. Commuters buy before departure or after returning, so your hours follow the real bus schedule. You serve a narrow convenience need with stock that travellers can carry easily.",
+      "what_it_is": "You watch the actual boarding times and choose a permitted space that does not block the queue. You put sealed water, simple packaged snacks, tissues, small hygiene items and dependable charging cables within easy reach. You show prices clearly and test cables only with the buyer's consent. You keep bags and packaging from littering the stop. You might open for the first departures and again for the evening return, depending on local traffic. You record what travellers ask for but do not stock costly accessories just because one person forgot one. Convenience must be matched by predictable hours.",
+      "who_pays_you": "Students commuting to college, workers going to the nearby town, people making hospital visits and relatives leaving after a family function are possible buyers. Regular commuters provide repeat traffic, while occasional travellers add uneven sales. A stop used only on market day may need a market day stall rather than a daily counter, so measure its schedule carefully.",
+      "how_money_comes": "Most buyers make a small immediate purchase, using cash or UPI. You earn a margin for keeping useful goods at the point of departure, not for inventing a high price because the bus is arriving. You keep cables and accessories few until sales prove demand; sealed refreshments have dates to watch. You review actual daily turnover against the time you spend waiting at the stop. Validate current supplier costs before setting prices.",
+      "what_you_need": "A lawful sheltered selling spot, lockable dry storage and a reliable way to learn bus timing changes. You keep sealed food clean, check dates and dispose of your own waste. You need enough change and quick service. You check local stall or street vending permissions before placing a permanent counter on public land.",
+      "first_30_days": [
+        "Observe the first and last bus departures on ordinary weekdays and note how long travellers actually wait.",
+        "Ask commuters what they have needed unexpectedly while standing at this stop.",
+        "Confirm vending permission and start with a portable display of compact sealed goods.",
+        "Record sales by departure time and close the hours that do not attract buyers."
+      ],
+      "what_hurts": "Bus services can be delayed, rerouted or cancelled, leaving you waiting beside unsold snacks. A good spot may be on public land where a permanent stall is not allowed. Dust and rain damage display stock, while phone accessories bring quality complaints. A few busy departures can hide long empty hours. You check net sales by shift and keep the counter portable until the pattern is clear.",
+      "verdict": "Build this if the stop has dependable commuter traffic and a permitted place to trade. Walk away if bus services are rare or the only available counter blocks passengers and road safety.",
+      "faq": [
+        {
+          "q": "Is a bus stop counter useful all day?",
+          "a": "Usually the busy moments follow departures and returns. Observe several ordinary days before setting hours, and close quiet periods rather than paying for an empty shift."
+        },
+        {
+          "q": "Can you stock phone chargers and cables?",
+          "a": "Yes, if you can get reliable goods and explain return terms. Start with a tiny range because models and connectors vary, and poor quality products damage trust."
+        },
+        {
+          "q": "What should you do with unsold snacks?",
+          "a": "Check dates at every restock and buy in small amounts. Do not make customers accept old goods merely to clear your shelf before the next wholesaler visit."
+        }
+      ],
+      "validate_prompt": "I want to run a travel essentials counter at a permitted village bus stop in India. What local vending rules, useful opening hours and current product margins should I check?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    }
+  ]
+}

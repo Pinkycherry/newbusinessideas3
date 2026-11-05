@@ -7,9 +7,7 @@ import {
   BookMarked,
   GraduationCap,
   Newspaper,
-  HelpCircle,
   Wrench,
-  ListOrdered,
   type LucideIcon,
 } from "lucide-react";
 
@@ -21,9 +19,7 @@ export type ExploreDestination =
   | "glossary"
   | "learningResources"
   | "blog"
-  | "faq"
-  | "usefulTools"
-  | "lists";
+  | "usefulTools";
 
 type Entry = { to: string; label: string; blurb: string; Icon: LucideIcon; tint: string };
 
@@ -41,8 +37,8 @@ type Entry = { to: string; label: string; blurb: string; Icon: LucideIcon; tint:
 const REGISTRY: Record<ExploreDestination, Entry> = {
   ideas: {
     to: "/browse",
-    label: "Browse business ideas",
-    blurb: "Researched blueprints with pros, cons and a verdict.",
+    label: "Browse business categories",
+    blurb: "Categories and focused paths for exploring business ideas in India.",
     Icon: Compass,
     tint: "--hl-teal",
   },
@@ -88,26 +84,12 @@ const REGISTRY: Record<ExploreDestination, Entry> = {
     Icon: Newspaper,
     tint: "--primary",
   },
-  faq: {
-    to: "/faq",
-    label: "Startup FAQ",
-    blurb: "Answers to the questions every first-time founder asks.",
-    Icon: HelpCircle,
-    tint: "--hl-green",
-  },
   usefulTools: {
     to: "/useful-tools",
     label: "Useful tools",
     blurb: "The software and services worth paying for on day one.",
     Icon: Wrench,
     tint: "--hl-teal",
-  },
-  lists: {
-    to: "/list",
-    label: "Ranked idea lists",
-    blurb: "Best-of roundups, one ranked list per category.",
-    Icon: ListOrdered,
-    tint: "--hl-coral",
   },
 };
 
@@ -122,9 +104,7 @@ const ALL: ExploreDestination[] = [
   "glossary",
   "blog",
   "learningResources",
-  "faq",
   "usefulTools",
-  "lists",
 ];
 
 function toExcludeSet(exclude: ExploreDestination | ExploreDestination[]) {
@@ -236,7 +216,5 @@ export const EXPLORE_BANNER_ROTATION: ExploreDestination[] = [
   "blog",
   "glossary",
   "learningResources",
-  "faq",
-  "lists",
   "usefulTools",
 ];

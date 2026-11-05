@@ -1,0 +1,513 @@
+{
+  "subcategory": {
+    "code": "C009-S02",
+    "intro": "A small town tuition centre succeeds when children understand something in your room that they could not understand at school. That sounds simple, but it takes a clear choice of learner, subject and time. A child struggling to read needs a different teacher and pace from a teenager preparing for a board exam. Parents often ask for marks first. You have to show them the work behind those marks: attendance, practice, mistakes corrected and honest feedback. Do not promise a rank or a pass result. Your first room may be a quiet part of your home, a shared classroom after school, or a modest rented space where families can reach you safely. Check the local rules for running a centre, make the space comfortable and keep a way for parents to contact you. Charge a fee you can explain, with a written schedule for missed classes and holidays. A small batch can earn trust more quickly than a crowded room where you cannot see who is lost. In Indian towns, exam dates, school shifts, transport and household responsibilities shape when students can attend. Ask pupils to show you their actual notebooks before designing lessons. The ten models below are different teaching businesses: early reading, subject recovery, board preparation, practical science, language support and other specific needs. Each has its own customer, preparation work and pressure. If you are trained in one subject, build from that strength rather than selling every subject to every class. The best advertisement will be a student who can solve a problem independently and explain how they did it. Keep records of what you taught and what a learner can now do. That evidence matters more than a colourful banner.",
+    "how_to_choose": "Look at the schools around you and the subjects you can teach without reading the answer key during class. If you are patient with younger children, an early reading or homework support batch may suit you. A strong mathematics or accounts teacher can take older students, but board preparation brings sharper deadlines and parent expectations. If you have laboratory experience, practical science can serve schools that cannot give pupils enough hands on time. Choose one age group and one clear outcome for the first term. Test a paid small batch, measure learning with simple work samples, and expand only when you can still give individual correction.",
+    "faq": [
+      {
+        "q": "Do you need a large building to begin a tuition centre?",
+        "a": "No. A quiet safe room with seating, light and a clear timetable can support a small batch. Ask about local permissions and any building rules before taking students. A bigger room only helps when your teaching and supervision can keep up."
+      },
+      {
+        "q": "How do you decide the first subject to teach?",
+        "a": "Choose the subject and age group you can explain patiently in more than one way. Review real schoolwork to see whether enough learners need that help. Do not advertise a subject merely because parents ask for it if you cannot teach it well."
+      },
+      {
+        "q": "Should parents pay monthly or per class?",
+        "a": "Either can work, but tell families exactly which classes and materials the payment covers. Put your absence, student absence and holiday policy in writing. A clear monthly timetable is easier to administer when children attend on the same days."
+      },
+      {
+        "q": "How can you show progress without promising marks?",
+        "a": "Keep a dated sample of each learner's early work and compare it with later attempts at a similar task. Share specific improvements and remaining gaps with parents. Tests should guide teaching, not become a claim that exam results are guaranteed."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C009-S02-I01",
+      "slug": "early-reading-bridge-small-batch",
+      "title": "Early Reading Bridge Small Batch",
+      "hook": "A child who cannot read the textbook confidently needs patient practice before another year of hurried homework begins.",
+      "summary": "You teach a small after school group of younger children to recognise sounds, read simple passages and explain what they read. Parents pay for steady foundational work rather than extra school worksheets. Each child moves at a visible pace, with short practice to do at home.",
+      "what_it_is": "Assess each child privately with a short reading task and group pupils by current ability rather than school class. In a small room, you use letter cards, familiar words, aloud reading and simple stories to build confidence. Let each child attempt a passage while you listen, then correct a specific difficulty without shaming them. You send parents one manageable practice activity, not a pile of copied pages. You keep dated samples of reading and comprehension so you can see whether the approach works. Children who need specialist support should be referred for appropriate assessment instead of kept in a batch that cannot meet their needs.",
+      "who_pays_you": "Parents of primary school children who avoid reading aloud or cannot follow classroom texts will usually pay. Some families notice the problem only when a teacher sends a note home. You speak to parents directly and respect the child rather than advertising a learner's difficulty. A quiet location near the child's school or home makes regular attendance possible, particularly when adults cannot make a long daily trip.",
+      "how_money_comes": "Families pay for a defined monthly set of lessons, with fees agreed before joining. Small batches give you enough time to hear every child read, so do not fill seats beyond that limit just to increase collections. Simple reusable cards keep materials affordable. Renewal depends on children becoming more independent, not on parents feeling trapped. You explain what happens if a child misses lessons and review progress at a planned interval.",
+      "what_you_need": "A quiet room, age appropriate books, reusable letter cards, basic teaching skill and patience with slow progress. You need a safe pickup process and a way to tell parents exactly when class ends. You learn when reading difficulties call for professional assessment. You keep student work and family messages private, and check local centre requirements before opening.",
+      "first_30_days": [
+        "Ask nearby parents and teachers what reading tasks younger pupils are finding hardest this term.",
+        "Prepare a gentle entry assessment and a set of short stories at several ability levels.",
+        "Run a small paid trial batch and listen to every child read during each meeting.",
+        "Show parents an early work sample and a realistic practice plan before taking longer enrolments."
+      ],
+      "what_hurts": "Reading improvement can be slow, and parents may expect a visible jump after a handful of classes. Children at different levels can distract one another if you group only by age. A child who is anxious or needs specialist assessment cannot be helped by endless repetition of the same worksheet. You keep the batch small, change the method when evidence calls for it and be honest when your centre is not the right support.",
+      "verdict": "Build this if you enjoy working patiently with younger learners and can track each child's reading. Walk away if you need instant exam results to justify your fee, because foundational learning takes time.",
+      "faq": [
+        {
+          "q": "How do you group children from different classes?",
+          "a": "Use a short reading task to see what each child can actually do. A common ability level matters more than a matching school class, but keep ages comfortable together too."
+        },
+        {
+          "q": "Should you teach writing at the same time?",
+          "a": "Add short writing practice connected to the words children read. Do not let copying pages replace reading aloud and understanding a passage, which are the centre of this batch."
+        },
+        {
+          "q": "What if a child still struggles after regular practice?",
+          "a": "Share the observed difficulties privately with the parents and suggest a qualified assessment when appropriate. Do not diagnose a condition yourself or promise that more tuition alone will fix it."
+        }
+      ],
+      "validate_prompt": "I want to start a small early reading tuition batch for primary pupils in an Indian town. What local fees, teaching materials and centre requirements should I check?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "small_town",
+        "village"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S02-I02",
+      "slug": "class-ten-maths-problem-clinic",
+      "title": "Class Ten Maths Problem Clinic",
+      "hook": "A board exam learner who memorises examples may still freeze when the numbers in a problem are changed.",
+      "summary": "You run a focused mathematics batch for Class Ten pupils who need to solve problems independently before board exams. Sessions combine a short concept explanation, guided practice and correction of individual mistakes. Parents see specific gaps closing instead of hearing a vague promise of high marks.",
+      "what_it_is": "Begin with a diagnostic set of problems from the board syllabus your local schools follow. Group learners who need the same topic and teach the reasoning before speed. In each class, solve one example together, ask pupils to attempt new problems alone, then review the different mistakes you see. You give a short practice sheet and discuss the difficult questions at the next meeting. You keep an error record for each student so revision targets weak chapters rather than repeating easy ones. You set a timetable that leaves enough space for schoolwork and a calm review period near the examination.",
+      "who_pays_you": "Parents of Class Ten students who are anxious about mathematics, and teenagers who want a teacher to explain a topic more slowly than school allows, are likely buyers. Students from different boards may need separate batches because chapters and exam patterns differ. Reach families through local introductions and a clear sample lesson, without using another student's marks as a marketing promise.",
+      "how_money_comes": "You collect a monthly fee for a fixed number of classes and may offer a separate short revision course before examinations. State which board and topics are included, since extra individual help takes more of your time. Reusable problem sets reduce preparation cost, but you must refresh them when the syllabus changes. You track attendance and payment separately, and make up your own cancelled class under the written policy.",
+      "what_you_need": "Strong command of the relevant board syllabus, a clear board or screen, practice problems you can explain in several ways and a quiet place for timed work. You need to identify a learner's reasoning error rather than simply repeat the answer. You keep current textbooks available and verify the applicable local rules for a tuition space.",
+      "first_30_days": [
+        "Review the current local board chapters and create a short diagnostic problem set.",
+        "Invite a small group to a paid trial where each pupil attempts work without copying.",
+        "Group students by their actual gaps and publish a realistic weekly topic plan.",
+        "Share a specific correction note with each family instead of predicting examination marks."
+      ],
+      "what_hurts": "Exam pressure can turn a useful class into a race through chapters. Pupils may arrive with different school boards and wildly different foundations. Parents sometimes expect a guaranteed result because they have paid, while attendance drops during school tests or family events. If you accept too many students, you cannot see whose solution is copied. You keep group size honest and refuse a timetable that leaves no room for individual correction.",
+      "verdict": "Build this if you can diagnose mathematical mistakes and stay calm under board exam pressure. Walk away if you plan to teach by dictating solved answers, because that leaves the core problem untouched.",
+      "faq": [
+        {
+          "q": "Can you mix pupils from different boards?",
+          "a": "Only when their current chapters and question styles align closely. Separate the groups when syllabi diverge; otherwise one child pays to sit through material that will not help them."
+        },
+        {
+          "q": "Should you offer a crash course only?",
+          "a": "A short revision course suits learners who already know the basics. Students with deep gaps need a longer route, and promising to repair everything just before exams is unfair."
+        },
+        {
+          "q": "How do parents know tuition is helping?",
+          "a": "Show changes in a student's own attempts at comparable questions and explain which errors remain. That is more useful than a claim about the final board score."
+        }
+      ],
+      "validate_prompt": "I want to teach Class Ten mathematics in a small town tuition batch in India. What current board syllabus, local fee range and classroom permissions should I validate?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S02-I03",
+      "slug": "commerce-accounts-ledger-practice-centre",
+      "title": "Commerce Accounts Ledger Practice Centre",
+      "hook": "Commerce students often understand an accounting term in class but get lost when they must complete a full ledger themselves.",
+      "summary": "You teach higher secondary commerce pupils to work through journal entries, ledgers and final accounts with regular checked practice. This subject specific centre attracts students whose schools move quickly through examples. The service is built around written work and correction, not copying finished solutions.",
+      "what_it_is": "Teach one accounting topic at a time, starting with the way a transaction becomes an entry and then moves through books. You give learners a complete exercise to attempt alone after the explanation. You check their working line by line, point out where a balance first went wrong and ask them to redo that part. You keep separate groups for the school board and level you know well. Closer to exams, practise timing without letting speed replace accuracy. An occasional practical session on simple business records can make the subject feel less abstract, but the paid promise remains sound syllabus teaching.",
+      "who_pays_you": "Class Eleven and Twelve commerce students, especially those considering further business or accounting study, are the direct learners. Their parents usually pay the monthly fee. A small town may have few subject specialists outside school, but first confirm actual demand and the local board before renting a room. Pupils who commute from surrounding villages need a schedule matching their return transport.",
+      "how_money_comes": "You charge per monthly batch and state the number of classes and checked exercises included. A separate examination revision batch can serve former pupils without turning regular tuition into an endless add on. You mainly invest your own preparation and checking time, so cap enrolment at the point where you can still mark the work properly. You collect payment on a clear date and keep family financial details separate from student records.",
+      "what_you_need": "A solid grasp of current higher secondary accounting, exercise books, a board for worked examples and time to check individual ledgers after class. You need to explain why an entry belongs on one side rather than offering a memorised answer. You check the relevant syllabus each term and confirm local space and safety requirements.",
+      "first_30_days": [
+        "Check which commerce board nearby schools follow and list topics pupils commonly misunderstand.",
+        "Create a diagnostic exercise that shows where each learner's accounting process breaks down.",
+        "Begin a small paid batch with time reserved for checking complete written solutions.",
+        "Show students and parents corrected work with the next topic plan after the trial."
+      ],
+      "what_hurts": "Marking full accounts takes more time than delivering a lecture. A small wrong entry can spoil an entire answer, and frustrated learners may want you to dictate the final balance. Examination patterns vary between boards. If your group mixes beginners with advanced pupils, one side will feel ignored. Protect enough correction time and decline unfamiliar syllabi instead of learning them on a paying student's clock.",
+      "verdict": "Build this if accounting is your strength and you enjoy checking a learner's working carefully. Walk away if you would only hand out solved sheets, because students pay to understand their own errors.",
+      "faq": [
+        {
+          "q": "Do you need to be a chartered accountant?",
+          "a": "No, but you must know the school accounting syllabus well and explain it accurately. Do not claim a professional qualification you do not hold or drift into regulated financial advice."
+        },
+        {
+          "q": "Can pupils bring their school homework?",
+          "a": "Yes, use it to spot a difficulty, then give a fresh similar problem to solve. Completing the homework for them hides the gap you were hired to address."
+        },
+        {
+          "q": "How large should an accounts batch be?",
+          "a": "Choose a size that lets you review every student's working regularly. If checking becomes rushed, add another batch rather than filling more chairs in the same session."
+        }
+      ],
+      "validate_prompt": "I want to start a higher secondary accounts tuition centre in an Indian small town. Which board syllabus, local fees and teaching setup should I check?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S02-I04",
+      "slug": "government-school-homework-support-room",
+      "title": "Government School Homework Support Room",
+      "hook": "A child can be willing to study yet have no quiet table or adult help after the school day ends.",
+      "summary": "You offer a supervised after school room where government school pupils finish work, ask questions and practise weak basics. Families pay a modest, clearly explained fee for a dependable study routine. Teaching follows the local language and actual school material rather than a flashy coaching promise.",
+      "what_it_is": "You arrange a clean room after school hours with desks, drinking water and a safe pickup routine. You ask children to show their homework, help them understand instructions and let them complete answers themselves. You use spare time for reading, arithmetic or a concept many pupils missed. You speak in the language they understand, while introducing school terminology carefully. You record attendance and tell parents about persistent gaps without embarrassing the child. If fees are difficult for some households, define any concession in advance so your centre remains financially viable and families are treated fairly.",
+      "who_pays_you": "Parents who work during the afternoon and want their children in a supervised study space may pay. Families in villages around a town may prefer a room near the school or bus pickup point. The children are the learners, so talk to them kindly rather than treating them as a crowd to be controlled. You confirm whether the school permits any communication on campus before approaching families.",
+      "how_money_comes": "You collect a monthly fee for fixed days and hours, with the supervision and learning support clearly described. You keep material costs low through shared books and reusable practice sheets. You may offer a longer session during examination weeks if families request it, but price and staff it separately. Income depends on consistent attendance and renewals, while the work depends on enough adult attention for every child.",
+      "what_you_need": "A safe accessible room, patient adults who can teach basic subjects, seating, light and a reliable child handover register. You need to understand the local school's language and current lessons. You check centre permissions, safeguarding expectations and any building rules. You do not advertise childcare hours you cannot supervise properly.",
+      "first_30_days": [
+        "Speak with parents about their children's after school routine and the hours they actually need support.",
+        "Choose a safe room and write a pickup, absence and emergency contact procedure.",
+        "Start a small paid group and watch whether each child understands the homework instructions.",
+        "Share specific learning gaps with families and adjust the practice portion of the session."
+      ],
+      "what_hurts": "A support room can become a holding area if you take too many children. Parents may expect every assignment finished even when a learner needs more time to understand. School holidays interrupt the routine, while child pickup demands strict attention. A student may have needs beyond your teaching skill. You keep attendance and handover records, and refuse to treat homework completion as the only sign of learning.",
+      "verdict": "Build this if you can supervise children safely and help them learn in their school language. Walk away if you cannot give each pupil attention or guarantee a clear pickup process.",
+      "faq": [
+        {
+          "q": "Is this the same as a daycare?",
+          "a": "No. Describe the exact supervised study hours and services you provide. If parents need childcare outside those hours, that requires a different setup and responsibility."
+        },
+        {
+          "q": "Should you finish a child's homework for them?",
+          "a": "Guide the first example and let the learner attempt the rest. A perfect notebook made by an adult will not help the child understand the next school lesson."
+        },
+        {
+          "q": "Can you work with several school classes together?",
+          "a": "Only if you have enough teaching help and separate tasks for different levels. A mixed room is manageable when each child has a plan and someone checks their work."
+        }
+      ],
+      "validate_prompt": "I want to open an after school homework support room for government school pupils in an Indian town. What local demand, child safety rules and fair fee structure should I validate?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S02-I05",
+      "slug": "school-science-practical-learning-lab",
+      "title": "School Science Practical Learning Lab",
+      "hook": "Many pupils can recite a science definition but have never handled the simple materials that would make it clear.",
+      "summary": "You run supervised small group science practical sessions linked to the school syllabus. Pupils observe, measure and explain safe experiments rather than only memorising notes. Parents pay for structured hands on understanding, while you maintain strict safety and age appropriate materials.",
+      "what_it_is": "You select safe experiments tied to the chapters taught by nearby schools and prepare all materials before pupils arrive. Begin with the question the experiment answers, demonstrate proper handling and let small groups observe or measure under supervision. End by asking each learner to write what happened and why, including when the result surprised them. You do not use hazardous chemicals or electrical setups beyond your training and facilities. A session on plant growth or simple circuits can be valuable without a costly laboratory. You keep equipment clean and report any incident to parents promptly.",
+      "who_pays_you": "Middle and secondary school pupils who rarely get enough practical time in a crowded classroom are the learners. Parents interested in conceptual understanding pay the fee. Some schools may arrange a group visit if they permit outside sessions and agree on supervision, but do not rely on institutional orders to start. You separate younger and older pupils so tasks and safety instructions fit their ability.",
+      "how_money_comes": "Sell a short course of scheduled practical sessions rather than vague unlimited access to equipment. Fees cover reusable materials, consumables, preparation and close supervision. A school group booking may improve utilisation, but price the materials and adult help it actually requires. Replace damaged items from a planned reserve rather than cutting safety supplies. Validate current equipment and venue costs in your town before investing heavily.",
+      "what_you_need": "Science teaching skill, a ventilated safe room, protective equipment suited to your activities, water and a clear emergency procedure. You need permission for the venue and a parent consent process for minors. Begin with low risk experiments. You check relevant local requirements and never advertise chemical work that your space cannot safely support.",
+      "first_30_days": [
+        "Compare nearby school chapters and choose a handful of safe activities that clarify specific concepts.",
+        "Test every activity yourself, including cleanup time and the questions learners are likely to ask.",
+        "Show parents the session plan and safety rules before inviting a small paid group.",
+        "Collect pupils' written explanations after the trial and improve any experiment that confused them."
+      ],
+      "what_hurts": "Hands on teaching requires more setup and cleanup than a lecture. Equipment breaks, consumables run out and a careless experiment can harm a child. Parents may expect a dramatic display instead of careful learning. Schools may decline outside activities. You keep groups small, simplify risky tasks and stop a session when you cannot supervise it properly, even if that disappoints a paying family.",
+      "verdict": "Build this if you can teach science safely through real observations and prepare each session thoroughly. Walk away if you need exciting but unsafe demonstrations to attract enrolments. Careful supervision is part of the lesson.",
+      "faq": [
+        {
+          "q": "Do you need a full laboratory?",
+          "a": "No, many school concepts can be demonstrated with simple safe materials. Your training, room and supervision set the limits; equipment should follow the lessons rather than lead them."
+        },
+        {
+          "q": "Can schools send entire classes?",
+          "a": "Only if the school agrees on timing, transport, supervision and responsibility. A large class may need extra trained adults, so do not quote it as though it were a small batch."
+        },
+        {
+          "q": "What if a child is frightened by an activity?",
+          "a": "Explain what will happen and offer an observation role without pressure. Learning is better when pupils feel safe enough to ask questions and describe what they see."
+        }
+      ],
+      "validate_prompt": "I want to run safe science practical tuition sessions for schoolchildren in an Indian small town. What local facility rules, equipment costs and school syllabus should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S02-I06",
+      "slug": "spoken-english-job-interview-batch",
+      "title": "Spoken English Job Interview Batch",
+      "hook": "A capable graduate may know the answer but struggle to speak calmly when a town employer asks an unexpected question.",
+      "summary": "You coach job seekers in spoken English for ordinary workplace conversations and interviews. Learners practise aloud in a supportive group, receive specific corrections and prepare truthful examples from their own experience. It is a communication class, not a guarantee of employment.",
+      "what_it_is": "Begin by listening to each learner introduce themselves and describe a familiar task. Teach useful sentence patterns, then practise short conversations about asking for help, explaining work and answering interview questions. You record a practice answer only with permission and let the learner hear their own progress. Correct one or two important errors at a time so embarrassment does not stop participation. You include listening and follow up questions, not just memorised introductions. Encourage learners to describe real skills honestly; a polished false story can cause trouble when an employer asks for details.",
+      "who_pays_you": "College graduates, vocational trainees and young workers seeking customer facing jobs may pay for a short course. Parents sometimes fund the class, but the adult learner must want to practise. A small town with nearby retail, hospitality or office employers can provide realistic conversation settings. Group learners by comfort level so a confident speaker does not dominate someone who is just beginning.",
+      "how_money_comes": "You charge for a fixed course with scheduled practice sessions and a clear number of individual feedback opportunities. Smaller groups allow everyone to speak, so a packed classroom is poor value even if it collects more fees. Former learners might return for an interview rehearsal, booked separately. You do not sell promised job referrals unless you have a genuine authorised arrangement, and keep employment outcomes separate from teaching fees.",
+      "what_you_need": "Clear spoken English, the skill to correct kindly and a quiet room where every learner can hear. You prepare realistic interview questions relevant to local jobs and simple practice cards. A phone can help record with consent, but recordings should be deleted when no longer needed. You check local tuition centre requirements and avoid sharing a student's nervous performance publicly.",
+      "first_30_days": [
+        "Ask local job seekers which spoken situations make them nervous and listen to sample answers.",
+        "Design a short course around introductions, follow up questions and truthful examples of actual work.",
+        "Run a small paid group where every learner speaks during every session.",
+        "Compare an early and later practice answer privately and ask which feedback helped most."
+      ],
+      "what_hurts": "Some learners expect fluency or a job offer after a few meetings. Shy students can hide in a large group, while stronger speakers may want more advanced practice. Employers differ in what language they use. You will need to encourage mistakes without making fun of accents or promising a particular outcome. If speaking time is too short, attractive notes will not solve the real problem.",
+      "verdict": "Build this if you can make nervous learners speak without shame and give precise feedback. Walk away if you intend to sell a job guarantee, because interview coaching cannot control hiring decisions.",
+      "faq": [
+        {
+          "q": "Must learners speak only English in class?",
+          "a": "Use the local language when it helps explain a point, then return to practical English conversation. The aim is useful communication, not punishing a beginner for needing help."
+        },
+        {
+          "q": "Can you guarantee interview success?",
+          "a": "No. You can improve practice, clarity and confidence, but employers decide whom to hire. Explain the course outcome in terms of skills learners can demonstrate."
+        },
+        {
+          "q": "How do you handle different accents?",
+          "a": "Focus on being understood and listening accurately rather than imitating one accent. Correct words that cause confusion and respect the way each learner speaks."
+        }
+      ],
+      "validate_prompt": "I want to run spoken English interview tuition for job seekers in an Indian small town. What local demand, course fees and realistic learning outcomes should I check?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "student"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S02-I07",
+      "slug": "regional-language-transition-learning-batch",
+      "title": "Regional Language Transition Learning Batch",
+      "hook": "A child who moves between school languages may understand the subject yet miss the words used in the new classroom.",
+      "summary": "You support pupils changing from one teaching language to another by linking familiar concepts with new textbook terms. A small group practises reading questions and explaining answers in both languages. Families pay for a smoother academic transition without replacing school teaching.",
+      "what_it_is": "You find out what a learner understood in their previous language before treating every missed answer as a subject weakness. You use the current school's textbook and build a small glossary of recurring terms in science, mathematics and social studies. Let pupils explain an idea in the language they know, then practise expressing the same idea in the new classroom language. Read actual questions together and ask the student to show what is being requested. You keep groups aligned by school level and language pair. You are building a bridge, not translating every homework page forever.",
+      "who_pays_you": "Families who moved for work, children switching from a regional medium to English medium, and pupils who enter a different state board may need help. Parents often worry that a bright child has suddenly fallen behind. You work with the learner's actual school books and speak respectfully about both languages. A family that sees independence returning may continue for a limited transition period and then leave successfully.",
+      "how_money_comes": "You offer a defined course or monthly batch with regular reading and answer practice. The language pair and school level determine how much preparation you need, so do not advertise every combination. Reusable glossaries reduce work after a few learners, but each child's subjects still need attention. A later subject specific batch may be appropriate only if a genuine academic gap remains, not to keep a family paying unnecessarily.",
+      "what_you_need": "Strong working ability in both teaching languages, familiarity with current school books, simple bilingual cards and patience with children who feel embarrassed. You need to distinguish a vocabulary gap from a subject concept gap. You keep communication with parents clear and check local tuition space requirements. You never mock a regional accent or claim one language makes a child cleverer.",
+      "first_30_days": [
+        "Identify one language pair used by families around your town and inspect their current textbooks.",
+        "Give a short diagnostic task that lets pupils first explain a concept in their familiar language.",
+        "Run a paid small group using a topic glossary and new questions rather than copied answers.",
+        "Ask each learner to explain a recent school lesson independently before deciding the next unit."
+      ],
+      "what_hurts": "Every school uses slightly different wording, and a language transition may also hide missed foundational learning. Parents sometimes demand instant fluency while the child is still adjusting socially. Translating all assignments can make a learner dependent on you. You keep the work focused on transferable vocabulary and confidence, and suggest specialist help if another learning difficulty becomes apparent.",
+      "verdict": "Build this if you know the relevant languages and enjoy helping children regain independence. Walk away if you would simply translate homework for them, because that delays the transition they came to make.",
+      "faq": [
+        {
+          "q": "Should you teach the whole subject syllabus too?",
+          "a": "Use subject material to practise language, but state whether you offer full subject tuition separately. Parents need to know what the course actually covers and when it ends."
+        },
+        {
+          "q": "Can learners from different classes share a batch?",
+          "a": "Only when their vocabulary needs and reading level are close. Different textbooks can work if each child has a task and enough individual speaking time."
+        },
+        {
+          "q": "How long should transition support continue?",
+          "a": "Review whether the learner can read questions and explain classwork independently. A successful short course may end when they no longer need a bridge, which is a good outcome."
+        }
+      ],
+      "validate_prompt": "I want to tutor children moving between regional and English teaching languages in an Indian town. Which local school levels, language pairs and fee model should I validate?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S02-I08",
+      "slug": "girls-evening-study-safe-commute-batch",
+      "title": "Girls Evening Study Safe Commute Batch",
+      "hook": "Some girls miss useful tuition because the class ends after the last comfortable trip home, not because they dislike studying.",
+      "summary": "You hold an early evening academic batch near residential lanes or a dependable transport point, with a strict finish and pickup routine. Girls study the subject you teach well while families know exactly when they return. The service is proper tuition with practical attention to access and safety.",
+      "what_it_is": "You choose a subject and school level you can teach confidently, then schedule the class so students can travel home before the route becomes difficult. You set a fixed start and end time, record attendance, and release minors only through the family arrangement agreed in advance. Teach a real lesson with individual work and correction; location and timing are helpful only if learning is good. You keep the entrance well lit and communicate a cancellation promptly. You do not claim that your centre can guarantee safety everywhere beyond its premises. You ask families what transport pattern actually works before locking the timetable.",
+      "who_pays_you": "Parents of schoolgirls who cannot reach a distant coaching hub, and older students choosing a convenient local batch, may pay. A centre near several residential lanes or a bus connection can reduce travel burden. Some boys may also join a suitable academic batch if the families want a mixed class; the core customer need here is a safe, workable schedule rather than excluding people without reason.",
+      "how_money_comes": "You collect the usual monthly fee for a defined subject, timetable and group size. A convenient slot may improve attendance and renewals, but never charge for an unsupported safety promise. If families request an arranged escort or transport, treat it as a separately planned service with proper consent and responsibility. Your main business is teaching, so protect preparation and feedback time while keeping the agreed closing hour.",
+      "what_you_need": "Teaching ability in one clear subject, an accessible well lit room, emergency contact details and a reliable attendance and handover procedure. You discuss travel routes with families without storing unnecessary personal information. You check local premises rules and ensure another responsible adult can assist when an unexpected pickup issue arises. Publish your schedule and boundaries in plain language.",
+      "first_30_days": [
+        "Ask families which current tuition timings and travel routes prevent students from attending regularly.",
+        "Choose a subject and location that solve the access issue without stretching your teaching skill.",
+        "Write an attendance and pickup arrangement for minors before starting a small paid batch.",
+        "End each class exactly on time and ask learners whether the work and journey are manageable."
+      ],
+      "what_hurts": "A late lesson, power cut or delayed pickup creates stress for students and families. You may face pressure to extend class hours before exams even when travel becomes harder. A safe location cannot replace proper teaching, and a good lesson cannot excuse poor handover. You keep a backup contact process and close on schedule. If the only affordable room has a risky access route, choose another location.",
+      "verdict": "Build this if you can teach well at a time and place families can actually use. Walk away if you cannot maintain the agreed finish and pickup routine for younger students.",
+      "faq": [
+        {
+          "q": "Does this have to be a girls only batch?",
+          "a": "No. Let local families' preferences and your teaching setup guide the group. The important feature is a realistic timetable and respectful supervision, not a marketing label alone."
+        },
+        {
+          "q": "What if a parent is late for pickup?",
+          "a": "Agree on an emergency contact and waiting procedure before enrolment. Never leave a minor alone outside simply because the scheduled class has ended."
+        },
+        {
+          "q": "Can you extend classes during exams?",
+          "a": "Ask families first and assess the journey home. Offer an earlier extra session if that serves learning without making the return route uncomfortable."
+        }
+      ],
+      "validate_prompt": "I want to open an early evening tuition batch near residential lanes in an Indian town. What local subject demand, premises requirements and safe pickup practices should I verify?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "small_town",
+        "village"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S02-I09",
+      "slug": "competitive-exam-arithmetic-foundation-room",
+      "title": "Competitive Exam Arithmetic Foundation Room",
+      "hook": "An adult who left school years ago may need to rebuild everyday arithmetic before timed recruitment questions make sense.",
+      "summary": "You teach arithmetic foundations to adults preparing for local recruitment examinations. The class works through fractions, ratios and calculation habits before adding timed practice. Learners pay for patient explanation and honest progress, with no claim that a tuition fee secures a government job.",
+      "what_it_is": "Assess each learner's working on simple calculations without turning the first session into an intimidating mock exam. Teach a small concept, practise it slowly, then introduce timed questions only when the method is understood. You use examples such as comparing quantities or reading a simple table, while checking the current syllabus of the examination learners actually target. You keep a notebook of repeated errors and give short homework that can fit around a job. You explain that your teaching supports preparation; applications, eligibility and recruitment decisions belong to the relevant authority.",
+      "who_pays_you": "Young adults seeking entry level public or private employment, working people returning to study, and village learners who cannot commute to a large coaching centre may join. They often pay from limited savings, so be specific about the level and exam content you can cover. A learner with strong arithmetic who only needs advanced timed practice may need another batch, not a seat in a foundation class.",
+      "how_money_comes": "You charge a transparent monthly fee for fixed lessons and checked practice, or a defined short foundation course. You avoid making income depend on selling an endless series of new mock tests. When a syllabus changes, update materials before promising preparation for that examination. Small groups allow learners to ask basic questions without embarrassment. Validate current local course fees and examination requirements before choosing a timetable and printed materials.",
+      "what_you_need": "Strong arithmetic teaching, current understanding of the targeted examination topics, a board, reusable worksheets and patience with adult beginners. You need to check worked steps rather than mark answers only. You arrange evening or weekend hours for working learners and confirm local centre permissions. You never imply an official relationship with a recruiting body.",
+      "first_30_days": [
+        "Ask local applicants which examination and arithmetic topics they struggle with most.",
+        "Check the current official syllabus without putting claims or outside links in your teaching advertisement.",
+        "Run a diagnostic paid trial and group people by method gaps rather than age.",
+        "Teach a foundation unit, then compare each learner's independent working with the first attempt."
+      ],
+      "what_hurts": "Exam dates can move, eligibility rules can change and learners may leave when an application window closes. Some ask for shortcuts before they understand the underlying arithmetic. Others feel ashamed of gaps from school and stop attending if a class moves too fast. You cannot control vacancies or results. You keep the fee honest, revise your materials and make steady learning the outcome you actually sell.",
+      "verdict": "Build this if you can explain basic arithmetic without making adults feel small. Walk away if you plan to sell a recruitment promise or only drill answer tricks that collapse on unfamiliar questions.",
+      "faq": [
+        {
+          "q": "Can you cover several recruitment exams together?",
+          "a": "Cover shared arithmetic foundations first, then separate exam specific practice when patterns differ. State clearly which examination your timetable addresses so learners can choose wisely."
+        },
+        {
+          "q": "Should you start every class with a timed test?",
+          "a": "No. Timed tests help after the method is sound. A beginner needs space to understand why an answer works before speed becomes useful."
+        },
+        {
+          "q": "What if an exam is postponed?",
+          "a": "Continue only if learners still value the foundation course, and tell them your revised schedule. Do not invent urgency or claim inside information to keep fees coming."
+        }
+      ],
+      "validate_prompt": "I want to teach arithmetic foundations for recruitment exam learners in an Indian small town. What current syllabus, local fees and teaching timetable should I validate?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "student"
+      ],
+      "place": [
+        "small_town",
+        "village"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S02-I10",
+      "slug": "summer-bridge-school-return-course",
+      "title": "Summer Bridge School Return Course",
+      "hook": "A long school break can expose forgotten basics, and a short summer course gives children a calmer return to class.",
+      "summary": "You run a limited holiday programme that refreshes reading, writing and arithmetic for children moving into the next class. The work uses small groups and clear before and after samples. Parents buy a defined bridge course rather than an indefinite extra tuition commitment.",
+      "what_it_is": "You plan a short course around the skills children need in the next school year. You start with a gentle assessment, group learners at similar levels and spend each session on a few manageable tasks. You use stories, practical number problems and independent writing instead of copying the next textbook in advance. You give parents a short summary of strengths and gaps at the end, along with ways to keep practising at home. You keep daily hours suitable for the weather and children's rest. This is seasonal teaching with a clear finish, not a claim that children must study all holiday.",
+      "who_pays_you": "Parents of primary and middle school children who noticed gaps in the previous year may pay. Families whose children changed schools can also value a structured transition. You should reach them before the holiday starts and explain exactly which ages and skills the course covers. Some children need a break more than another class, so accept only learners for whom the sessions are likely to help.",
+      "how_money_comes": "Families pay for the whole defined course or in agreed instalments, with materials included or priced separately in writing. Your revenue is concentrated in the holiday, so avoid committing to rent you cannot cover when school resumes. You may invite suitable learners into a different regular batch later, but the bridge course must stand on its own value. You check local fees through Validate before setting the course price.",
+      "what_you_need": "A cool safe room, teaching plans for several ability levels, basic reading and number materials, and a clear attendance and pickup routine. You need time to review work at the start and finish. You check local requirements for a temporary teaching space. You do not cram too many children into a seasonal batch simply because the window is short.",
+      "first_30_days": [
+        "Ask parents which foundational skills worried them at the end of the school year.",
+        "Choose one transition age group and design a short course with a clear start and end.",
+        "Offer a small paid trial session and group learners by what they can already do.",
+        "Prepare an end of course work sample and a practical home practice note for each family."
+      ],
+      "what_hurts": "Holiday travel makes attendance uneven and families may sign up late. Children become tired in hot afternoons, while parents may expect next year's entire syllabus to be taught in a short programme. Rent and printed material costs arrive before all fees are collected. State the course's limited purpose, set a sensible schedule and avoid claiming that a few weeks replace regular school learning.",
+      "verdict": "Build this if you can offer a focused seasonal course with honest before and after work. Walk away if you need year round income from this one batch or would promise to cover an entire school year in a holiday.",
+      "faq": [
+        {
+          "q": "Should you teach next year's textbook?",
+          "a": "Preview a few ideas only when the basics are secure. The main job is helping children read, write and calculate well enough to enter the next class with confidence."
+        },
+        {
+          "q": "What if a family leaves for a holiday?",
+          "a": "Explain missed session terms before enrolment and provide a small catch up task if practical. Do not promise unlimited individual makeups for a fixed group course."
+        },
+        {
+          "q": "Can this course lead to regular tuition?",
+          "a": "It can if a child still needs help and the family chooses it. Show the remaining gap honestly; a successful learner may not need further paid classes."
+        }
+      ],
+      "validate_prompt": "I want to run a summer bridge tuition course for primary pupils in an Indian town. What local school calendar, fee range and course length should I check?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "small_town",
+        "village"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    }
+  ]
+}

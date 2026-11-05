@@ -6,6 +6,13 @@ export type Milestone = {
   key_action: string;
 };
 
+export type CaseStudySource = {
+  label: string;
+  url: string;
+  source_type?: string;
+  published_at?: string;
+};
+
 export type CaseStudy = {
   id: string;
   slug: string;
@@ -21,30 +28,39 @@ export type CaseStudy = {
   primary_bottleneck_and_fix: string;
   key_takeaways_for_founders: string[];
   is_composite: string;
+  founder_name?: string | null;
+  location?: string | null;
+  evidence_notes?: string | null;
+  published_at?: string | null;
+  sources?: CaseStudySource[];
 };
 
 /**
- * Only verified stories are published. Nothing else reaches a reader.
- *
- * Every entry in the JSON is currently marked `PLACEHOLDER` — illustrative
- * composites written to settle the page's shape, not real operators. They were
- * rendering publicly under a "Placeholder" badge next to a shield icon, on a
- * page whose own promise is "no vanity metrics". A made-up breakdown presented
- * beside that sentence does more damage than an empty page does.
- *
- * The filter is here rather than in the route so that the sitemap, the
- * learning-resources count, the /sitemap page and the story route itself all
- * agree: an unverified story is not listed, not counted, and has no URL.
- *
- * To publish one: replace its `data_level` with a value other than
- * PLACEHOLDER, once the numbers in it are real and checkable.
+ * A case is public only when it is not a placeholder/composite and carries
+ * an evidence note plus at least one labelled HTTPS source. Changing the
+ * data_level field alone can never publish a draft story.
  */
 const ALL_CASE_STUDIES: CaseStudy[] = caseStudiesRaw.case_studies as CaseStudy[];
 
-export const CASE_STUDIES: CaseStudy[] = ALL_CASE_STUDIES.filter(
-  (c) => c.data_level?.toUpperCase() !== "PLACEHOLDER",
-);
+function hasPublishableEvidence(study: CaseStudy): boolean {
+  const sources = Array.isArray(study.sources) ? study.sources : [];
+  const hasValidSources = sources.length > 0 && sources.every((source) => {
+    if (!source || typeof source.label !== "string" || !source.label.trim() || typeof source.url !== "string") return false;
+    try {
+      return new URL(source.url).protocol === "https:";
+    } catch {
+      return false;
+    }
+  });
+  const isComposite = /composite|illustrative/i.test(study.is_composite || "");
+  return study.data_level?.trim().toUpperCase() !== "PLACEHOLDER"
+    && !isComposite
+    && Boolean(study.evidence_notes?.trim())
+    && hasValidSources;
+}
+
+export const CASE_STUDIES: CaseStudy[] = ALL_CASE_STUDIES.filter(hasPublishableEvidence);
 
 export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
-  return CASE_STUDIES.find((c) => c.slug === slug);
+  return CASE_STUDIES.find((study) => study.slug === slug);
 }

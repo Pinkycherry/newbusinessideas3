@@ -1,263 +1,214 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-import { db } from "./ideas.functions";
-import {
-  toIdeaCard,
-  toIdeaDetail,
-  type IdeaCard,
-  type IdeaDetail,
-  type IdeaRow,
-} from "./ideas-shared";
+import { dbOrNull } from "./db";
 
-/**
- * LISTICLE TEMPLATE DATA — PROJECT_BRIEF.md Section 6.3.
- *
- * One listicle per category, keyed on the real `category_slug`, so the set of
- * listicles grows with the database and never with a hand-maintained list.
- * Ordering is `trend_score DESC` throughout, matching every other listing
- * loader in `ideas.functions.ts`, and every query is filtered to
- * `status = 'completed'`.
- *
- * Nothing on the rendered page is written here. Each of the top-ten entries is
- * assembled ONLY from columns that already exist on the row — summary,
- * business_description, the enrichment prose columns, pros/cons, verdict,
- * trend_score. Where a column is empty the slot is simply not produced, so a
- * thin row renders shorter rather than padded.
- */
-
-/** Brief 6.3 — "top 10 get 200-300 words each ... remaining ideas display as clickable cards". */
-export const DETAILED_ENTRY_COUNT = 10;
-
-/**
- * The depth target for one entry, in words of REAL text. It is a floor used to
- * decide how many additional real columns to surface for a given idea — never
- * a target to write toward. 74 of the 290 completed rows carry a
- * `business_description` under 200 characters; for those the floor is not met
- * by summary + description alone, so the composer keeps pulling in whichever
- * researched columns the row actually has (opportunity, buyer, money
- * mechanics, edge) until either the floor is reached or the row runs out of
- * real content. A row that runs out simply renders a shorter entry.
- */
-const ENTRY_WORD_FLOOR = 200;
-
-/** Long-form columns, in the order they are pulled in when an entry is thin. */
-const SUPPLEMENTS: { label: string; read: (idea: IdeaDetail) => string }[] = [
-  { label: "The opportunity", read: (idea) => idea.marketOpportunity },
-  { label: "Who actually pays you", read: (idea) => idea.targetCustomer },
-  { label: "How the money works", read: (idea) => idea.howYouMakeMoney },
-  { label: "Your edge", read: (idea) => idea.competitionEdge },
-];
-
-/** Short-form columns, rendered as a fact strip rather than prose. */
-const FACTS: { label: string; read: (idea: IdeaDetail) => string }[] = [
-  { label: "Cost to start", read: (idea) => idea.startupCost },
-  { label: "What you can earn", read: (idea) => idea.incomePotential },
-  { label: "Time to first customer", read: (idea) => idea.timeToFirstCustomer },
-];
-
-export type ListicleSection = { label: string; body: string };
-export type ListicleFact = { label: string; value: string };
-
-/**
- * One fully-written entry in the top ten. Deliberately NOT an `IdeaDetail`:
- * only the fields this template renders travel to the client, so a ten-entry
- * page does not ship ten FAQ arrays and ten link lists it never shows.
- */
-export type ListicleEntry = {
-  rank: number;
-  ideaId: string;
-  title: string;
+/** One idea as shown on a list page. */
+export type ListIdea = {
   slug: string;
-  subcategoryName: string;
-  subcategorySlug: string;
-  trendScore: number | null;
-  tags: string[];
-  /** Unlabelled opening prose: `summary`, then `business_description`. */
-  lead: string[];
-  /** Labelled researched prose, present only where the row has it. */
-  sections: ListicleSection[];
-  facts: ListicleFact[];
-  pros: string[];
-  cons: string[];
-  verdict: string;
+  title: string;
+  hook: string | null;
+  summary: string | null;
+  who_pays_you: string | null;
+  how_money_comes: string | null;
+  what_you_need: string | null;
+  what_hurts: string | null;
+  verdict: string | null;
+  investment_band: string | null;
+  time_needed: string | null;
+  skill_level: string | null;
+  updated_at: string | null;
+  faq?: { q: string; a: string }[] | null;
 };
 
-export type ListicleSummary = {
+export type ListPage = {
+  code: string;
+  name: string;
+  slug: string;
+  intro: string | null;
+  howToChoose: string | null;
+  faq: { q: string; a: string; href?: string }[];
   categoryName: string;
-  categorySlug: string;
-  ideaCount: number;
-  /** "50 Side Hustle Ideas" — the count is the live row count, always. */
-  title: string;
-  topIdeaTitle: string | null;
-  topIdeaSlug: string | null;
-  topTrendScore: number | null;
-};
-
-export type ListiclePage = {
-  categoryName: string;
-  categorySlug: string;
-  title: string;
+  categorySlug?: string;
+  resources?: { guides: { label: string; href: string; note: string }[]; calculators: { label: string; href: string; note: string }[] };
+  ideas: ListIdea[];
+  siblings: { name: string; slug: string; count: number }[];
   totalIdeas: number;
-  entries: ListicleEntry[];
-  rest: IdeaCard[];
-  subcategories: { name: string; slug: string; ideaCount: number }[];
-  /** Every other category's listicle, for cross-linking. */
-  otherLists: ListicleSummary[];
 };
 
-function words(text: string): number {
-  const trimmed = text.trim();
-  return trimmed ? trimmed.split(/\s+/).length : 0;
+export type ListsHub = {
+  total: number;
+  categories: { code: string; name: string; slug: string; subs: { code: string; name: string; slug: string; count: number }[] }[];
+};
+
+const IDEA_COLUMNS =
+  "slug,title,hook,summary,who_pays_you,how_money_comes,what_you_need,what_hurts,verdict,investment_band,time_needed,skill_level,updated_at,faq";
+
+export function firstFaq(value: unknown): { q: string; a: string } | null {
+  if (!Array.isArray(value)) return null;
+  const item = value.find((f) => f && typeof f.q === "string" && typeof f.a === "string");
+  return item ? { q: item.q, a: item.a } : null;
 }
 
-/**
- * The headline. The number is the real completed-row count for the category
- * and the name is the real `category_name`, so nothing here can drift from the
- * database. Names that already carry the word "idea(s)" anywhere are left
- * alone — "Side Hustle Ideas" becomes "50 Side Hustle Ideas", and "Business
- * Ideas That Never Go Out of Style" does not gain a second "Ideas" on the end.
- */
-export function listicleTitle(categoryName: string, ideaCount: number): string {
-  const name = categoryName.trim();
-  const noun = /\bideas?\b/i.test(name) ? name : `${name} Ideas`;
-  return `${ideaCount} ${noun}`;
+export function faqEntries(value: unknown): { q: string; a: string }[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((item) => item && typeof item.q === "string" && typeof item.a === "string" && item.q.trim() && item.a.trim())
+    .map((item) => ({ q: item.q as string, a: item.a as string }));
 }
 
-function toEntry(row: IdeaRow, rank: number): ListicleEntry {
-  const idea = toIdeaDetail(row);
+export function normalizeFaqQuestion(question: string): string {
+  return question.normalize("NFKC").toLocaleLowerCase("en").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+}
 
-  const lead: string[] = [];
-  const summary = idea.summary.trim();
-  const description = idea.businessDescription.trim();
-  if (summary) lead.push(summary);
-  // Some rows repeat the summary as the opening of the description; printing
-  // it twice would read as padding, so the duplicate is dropped.
-  if (description && description !== summary && !summary.includes(description)) {
-    lead.push(description);
+/** Keep source order while taking the next unused question from each idea. */
+export function uniqueFaqBySource(primary: { q: string; a: string; href?: string }[], sources: { q: string; a: string; href?: string }[][], max = 8) {
+  const used = new Set<string>();
+  const result: { q: string; a: string; href?: string }[] = [];
+  const add = (item: { q: string; a: string; href?: string }) => {
+    const key = normalizeFaqQuestion(item.q);
+    if (!key || used.has(key) || result.length >= max) return false;
+    used.add(key); result.push(item); return true;
+  };
+  primary.forEach(add);
+  for (const source of sources) {
+    if (result.length >= max) break;
+    for (const item of source) if (add(item)) break;
   }
+  return result;
+}
 
-  let depth = lead.reduce((total, paragraph) => total + words(paragraph), 0);
-  const sections: ListicleSection[] = [];
-  for (const supplement of SUPPLEMENTS) {
-    if (depth >= ENTRY_WORD_FLOOR) break;
-    const body = supplement.read(idea).trim();
-    if (!body) continue;
-    if (lead.some((paragraph) => paragraph.includes(body))) continue;
-    sections.push({ label: supplement.label, body });
-    depth += words(body);
+/** Published idea counts per subcategory code, read in pages of 1,000. */
+async function subcategoryCounts(client: NonNullable<ReturnType<typeof dbOrNull>>) {
+  const counts: Record<string, number> = {};
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await client
+      .from("ideas")
+      .select("subcategory_code")
+      .eq("status", "published")
+      .order("code", { ascending: true })
+      .range(from, from + 999);
+    if (error) throw error;
+    if (!data) break;
+    for (const r of data as { subcategory_code: string }[]) counts[r.subcategory_code] = (counts[r.subcategory_code] ?? 0) + 1;
+    if (data.length < 1000) break;
   }
+  return counts;
+}
 
-  const facts: ListicleFact[] = [];
-  for (const fact of FACTS) {
-    const value = fact.read(idea).trim();
-    if (value) facts.push({ label: fact.label, value });
+async function catalogPages<T>(client: NonNullable<ReturnType<typeof dbOrNull>>, table: string, columns: string): Promise<T[]> {
+  const rows: T[] = [];
+  for (let from=0;;from+=1000) {
+    const {data,error}=await client.from(table).select(columns).order('code').range(from,from+999);
+    if(error)throw error;
+    rows.push(...((data??[]) as unknown as T[]));
+    if(!data || data.length<1000)return rows;
   }
+}
 
+/** Every category that has published ideas, with its subcategories and counts. */
+export const getListsHub = createServerFn({ method: "GET" }).handler(async (): Promise<ListsHub> => {
+  const client = dbOrNull();
+  if (!client) return { total: 0, categories: [] };
+  const counts = await subcategoryCounts(client);
+  const [cats, subs] = await Promise.all([
+    catalogPages<{code:string;name:string;slug:string}>(client,'categories','code,name,slug'),
+    catalogPages<{code:string;category_code:string;name:string;slug:string}>(client,'subcategories','code,category_code,name,slug'),
+  ]);
+  const byCat = new Map<string, ListsHub["categories"][number]>();
+  for (const c of cats) byCat.set(c.code, { code: c.code, name: c.name, slug: c.slug, subs: [] });
+  for (const s of (subs ?? []) as { code: string; category_code: string; name: string; slug: string }[]) {
+    const n = counts[s.code] ?? 0;
+    if (n > 0) byCat.get(s.category_code)?.subs.push({ code: s.code, name: s.name, slug: s.slug, count: n });
+  }
   return {
-    rank,
-    ideaId: idea.ideaId,
-    title: idea.title,
-    slug: idea.slug,
-    subcategoryName: idea.subcategoryName,
-    subcategorySlug: idea.subcategorySlug,
-    trendScore: idea.trendScore,
-    tags: idea.tags.slice(0, 3),
-    lead,
-    sections,
-    facts,
-    pros: idea.pros.slice(0, 3),
-    cons: idea.cons.slice(0, 3),
-    verdict: idea.verdict.trim(),
+    total: Object.values(counts).reduce((a, b) => a + b, 0),
+    categories: [...byCat.values()].filter((c) => c.subs.length > 0),
+  };
+});
+
+export async function getListResources(name: string, categoryName: string) {
+  const [{ STARTUP_GUIDES }, { READY_CALCULATORS }] = await Promise.all([import('./guides-data'), import('./calculators')]);
+  const terms = `${name} ${categoryName}`.toLocaleLowerCase().split(/\W+/).filter(term=>term.length>3 && !['ideas','business'].includes(term));
+  const relevance = (guide: typeof STARTUP_GUIDES[number]) => {
+    const text = `${guide.title} ${guide.description}`.toLocaleLowerCase();
+    const general = guide.category === 'Validation' ? 4 : guide.category === 'Launch & Ops' ? 3 : guide.category === 'Bootstrapping' ? 2 : 0;
+    const softwareSpecific = /b2b|saas/i.test(guide.title) && !/software|saas|digital|online/.test(`${name} ${terms.join(' ')}`.toLowerCase());
+    return terms.reduce((score,term)=>score+(text.includes(term)?3:0),general) - (softwareSpecific ? 50 : 0);
+  };
+  return {
+    guides:[...STARTUP_GUIDES].sort((a,b)=>relevance(b)-relevance(a)).slice(0,4).map(guide=>({label:guide.title,href:`/startup-guides/${guide.slug}`,note:guide.description})),
+    calculators:READY_CALCULATORS.slice(0,4).map(tool=>({label:tool.title,href:`/calculator/${tool.slug}`,note:tool.answers})),
   };
 }
 
-type IndexRow = Pick<IdeaRow, "category_name" | "category_slug" | "title" | "slug" | "trend_score">;
-
-/**
- * Every category that has completed ideas, with its live count and its
- * highest-trending idea. Shared by the index route and the cross-link rail at
- * the foot of a single listicle, so both read one query shape.
- */
-async function loadListicleIndex(): Promise<ListicleSummary[]> {
-  const { data, error } = await db()
-    .from("ideas")
-    .select("category_name,category_slug,title,slug,trend_score")
-    .eq("status", "completed")
-    .order("trend_score", { ascending: false, nullsFirst: false });
-  if (error) throw new Error(error.message);
-
-  const map = new Map<string, ListicleSummary>();
-  for (const row of (data ?? []) as IndexRow[]) {
-    const existing = map.get(row.category_slug);
-    if (existing) {
-      existing.ideaCount += 1;
-      continue;
-    }
-    // Rows arrive trend_score DESC, so the first row seen for a category is
-    // that category's top idea. No second query needed.
-    map.set(row.category_slug, {
-      categoryName: row.category_name,
-      categorySlug: row.category_slug,
-      ideaCount: 1,
-      title: "",
-      topIdeaTitle: row.title,
-      topIdeaSlug: row.slug,
-      topTrendScore: row.trend_score,
-    });
+async function publishedListIdeas(client:NonNullable<ReturnType<typeof dbOrNull>>,code:string) {
+  const rows:ListIdea[]=[];
+  for(let from=0;;from+=1000){
+    const {data,error}=await client.from('ideas').select(IDEA_COLUMNS).eq('subcategory_code',code).eq('status','published').order('position').order('code').range(from,from+999);
+    if(error)throw error;
+    rows.push(...((data??[]) as ListIdea[]));
+    if(!data||data.length<1000)return {data:rows};
   }
-
-  const lists = [...map.values()];
-  for (const list of lists) list.title = listicleTitle(list.categoryName, list.ideaCount);
-  return lists.sort((a, b) => b.ideaCount - a.ideaCount);
 }
 
-export const getListicleIndex = createServerFn({ method: "GET" }).handler(
-  async (): Promise<ListicleSummary[]> => loadListicleIndex(),
-);
-
-export const getListicle = createServerFn({ method: "GET" })
-  .inputValidator((input: unknown) => z.object({ categorySlug: z.string() }).parse(input))
-  .handler(async ({ data: input }): Promise<ListiclePage | null> => {
-    const [ideasRes, lists] = await Promise.all([
-      db()
-        .from("ideas")
-        .select("*")
-        .eq("status", "completed")
-        .eq("category_slug", input.categorySlug)
-        .order("trend_score", { ascending: false, nullsFirst: false }),
-      loadListicleIndex(),
+/** One subcategory list page by its slug, or null. */
+export const getListPage = createServerFn({ method: "GET" })
+  .inputValidator((input: unknown) => z.object({ slug: z.string().min(1).max(200) }).parse(input))
+  .handler(async ({ data }): Promise<ListPage | null> => {
+    const client = dbOrNull();
+    if (!client) return null;
+    const { data: sub } = await client
+      .from("subcategories")
+      .select("code,category_code,name,slug,intro,how_to_choose,faq")
+      .eq("slug", data.slug)
+      .maybeSingle();
+    if (!sub) return null;
+    const s = sub as { code: string; category_code: string; name: string; slug: string; intro: string | null; how_to_choose: string | null; faq: unknown };
+    const [{ data: ideas }, { data: cat }, { data: sibs }, { count: total }] = await Promise.all([
+      publishedListIdeas(client,s.code),
+      client.from("categories").select("name,slug").eq("code", s.category_code).maybeSingle(),
+      client.from("subcategories").select("code,name,slug").eq("category_code", s.category_code).order("code"),
+      client.from("ideas").select("code", { count: "exact", head: true }).eq("status", "published"),
     ]);
-    if (ideasRes.error) throw new Error(ideasRes.error.message);
-
-    const rows = (ideasRes.data ?? []) as unknown as IdeaRow[];
-    if (rows.length === 0) return null;
-
-    const categoryName = rows[0]?.category_name ?? input.categorySlug;
-    const entries = rows.slice(0, DETAILED_ENTRY_COUNT).map((row, i) => toEntry(row, i + 1));
-    const rest = rows.slice(DETAILED_ENTRY_COUNT).map(toIdeaCard);
-
-    const subcategories: { name: string; slug: string; ideaCount: number }[] = [];
-    for (const row of rows) {
-      const found = subcategories.find((s) => s.slug === row.subcategory_slug);
-      if (found) found.ideaCount += 1;
-      else
-        subcategories.push({
-          name: row.subcategory_name,
-          slug: row.subcategory_slug,
-          ideaCount: 1,
-        });
+    const list = (ideas ?? []) as ListIdea[];
+    if (list.length === 0) return null;
+    const sibCodes = ((sibs ?? []) as { code: string }[]).map((x) => x.code).filter((c) => c !== s.code);
+    const sibCounts: Record<string, number> = {};
+    if (sibCodes.length) {
+      for(let from=0;;from+=1000){
+        const { data: rows,error } = await client.from("ideas").select("subcategory_code").in("subcategory_code", sibCodes).eq("status", "published").order('code').range(from,from+999);
+        if(error)throw error;
+        for (const r of (rows ?? []) as { subcategory_code: string }[]) sibCounts[r.subcategory_code] = (sibCounts[r.subcategory_code] ?? 0) + 1;
+        if(!rows||rows.length<1000)break;
+      }
     }
-    subcategories.sort((a, b) => b.ideaCount - a.ideaCount);
-
+    const faq = faqEntries(s.faq);
+    const resources = await getListResources(s.name,(cat as {name:string}|null)?.name ?? '');
     return {
-      categoryName,
-      categorySlug: input.categorySlug,
-      title: listicleTitle(categoryName, rows.length),
-      totalIdeas: rows.length,
-      entries,
-      rest,
-      subcategories,
-      otherLists: lists.filter((list) => list.categorySlug !== input.categorySlug).slice(0, 6),
+      code: s.code,
+      name: s.name,
+      slug: s.slug,
+      intro: s.intro,
+      howToChoose: s.how_to_choose,
+      faq: uniqueFaqBySource(faq, list.map((idea) => faqEntries(idea.faq).map((entry) => ({ ...entry, href: `/idea/${idea.slug}` })))),
+      categoryName: (cat as { name: string } | null)?.name ?? "",
+      categorySlug: (cat as { slug: string } | null)?.slug,
+      resources,
+      ideas: list,
+      siblings: ((sibs ?? []) as { code: string; name: string; slug: string }[])
+        .filter((x) => x.code !== s.code && (sibCounts[x.code] ?? 0) > 0)
+        .map((x) => ({ name: x.name, slug: x.slug, count: sibCounts[x.code] ?? 0 })),
+      totalIdeas: total ?? 0,
     };
   });
+
+// Live bbusiness.online listicle functions kept for /list and /list/$slug (6 Nov 2026).
+export {
+  getListicle,
+  getListicleIndex,
+  type ListicleEntry,
+  type ListicleFact,
+  type ListiclePage,
+  type ListicleSection,
+  type ListicleSummary,
+} from "./live-lists.functions";

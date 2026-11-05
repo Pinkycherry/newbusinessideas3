@@ -1,0 +1,233 @@
+import type { TopicPage } from "@/bought/topic-page";
+import { PARENT, UPDATED, UPDATED_ON, IMG, SRC, TOOLS, CTA } from "./topic-pages-shared";
+
+const FSSAI = { label: "FSSAI FoSCoS: food business registration", href: "https://foscos.fssai.gov.in/", note: "Registration or licence for any food business." };
+
+/**
+ * Rewrite 11 (owner review: previous version failed as thin and generic).
+ * Seller layout: validator landing (/is-my-business-idea-good). 14 sections in the seller's order:
+ * what a check looks at, 3 questions, 7 survival factors, worth-it test, cost of a bad idea, why check first,
+ * everything you can check, sources, 6 red flags, how to use the risk check, tools, CTA, rules, related guides.
+ * No researched figures: every number is a [Validate: ...] marker or a blank the reader fills in.
+ */
+export const isIdeaGood: TopicPage = {
+  slug: "how-to-check-if-your-business-idea-is-good-in-india",
+  updated: UPDATED_ON,
+  sellerRef: "https://ideaproof.io/is-my-business-idea-good",
+  parent: PARENT,
+  explore: { guideCategory: "Validation", categories: ["home-based-business-ideas", "home-kitchen-food-business-ideas", "retail-shop-business-ideas", "online-business-ideas", "skill-based-business-ideas", "side-hustle-business-ideas", "village-and-small-town-business-ideas", "women-friendly-business-ideas"] },
+  seo: {
+    title: "Is My Business Idea Good? How to Check Your Business Idea in India Before You Spend",
+    description: "Check whether your business idea is good the Indian way: who pays, why now, a price that covers GST and every cost, how you reach buyers, what your family risks and which licences apply. Three deciding questions, a worth-it test, red flags, a cost-of-failure table and a one-week plan.",
+  },
+  hero: {
+    eyebrow: "Is my business idea good?",
+    h1: "How to Check If Your Business Idea Is Good in India",
+    highlight: "Business Idea Is Good",
+    intro: "You have an idea that keeps you awake at night. Your family asks, \"Will it really work?\", and you are not sure what to say. A good idea is not one that sounds clever; it is one that real buyers near you will pay for, at a price that leaves you money, without putting your family's savings at risk. This page helps you answer that question with evidence, before a single rupee goes in.",
+    sub: "Works for every kind of idea: a **home kitchen**, a **shop in your town**, an **online store**, a **farm or village enterprise** or a **service you sell with your skill**.",
+    updated: UPDATED,
+    primary: { label: "Run the free risk check", href: "/business-idea-risk-check" },
+    secondary: { label: "Take the worth-it test", href: "#check" },
+    image: IMG.validation,
+    imageAlt: "A first-time founder checking a business idea on a phone",
+  },
+  sections: [
+    {
+      type: "rich",
+      heading: "What a good idea check looks at",
+      intro: "Six questions every Indian buyer, bank manager and family elder will ask you, sooner or later. Answer them on paper first.",
+      blocks: [
+        { kind: "h3", text: "1. Who pays you?" },
+        { kind: "p", text: "A named buyer you can find, not \"everyone\" or \"all women\" or \"small businesses\". \"Working parents in the three societies behind the bus depot\" is a buyer. \"Saree shops on the main road of Erode\" is a buyer. Browse [ideas by category](/browse) to see who pays for businesses like yours." },
+        { kind: "h3", text: "2. Why do they pay now?" },
+        { kind: "p", text: "A problem they already spend money or time on today, not something they might want someday. If buyers manage fine with the press-wala, the mother-in-law's cooking or the uncle who does accounts, your idea must be clearly better or cheaper." },
+        { kind: "h3", text: "3. What do they pay?" },
+        { kind: "p", text: "A price that covers material, packing, delivery, platform fees, GST where it applies and a fair value for your time, and that buyers accept without a discount every time. Build it in the [first-price workbench](/business-pricing-india) and compare with local prices. [Validate: today's typical price for this product or service in my city]" },
+        { kind: "h3", text: "4. How do you reach them?" },
+        { kind: "p", text: "Your society group, the market lane, school parent groups, the mandi, marketplaces, shop tie-ups or Instagram. Know what each new buyer costs you: read [customer acquisition cost](/what-is-customer-acquisition-cost-for-a-small-business-in-india)." },
+        { kind: "h3", text: "5. What do you risk?" },
+        { kind: "p", text: "Savings, an FD, gold, a loan with a family guarantor, your job, your study time, your family's trust. List each item in the [startup cost ledger](/startup-costs-india) so nobody is surprised later." },
+        { kind: "h3", text: "6. Which rules apply?" },
+        { kind: "p", text: "Free [Udyam registration](https://udyamregistration.gov.in/), GST if your turnover or way of selling needs it, FSSAI for any food, a shop and establishment registration and a trade licence from your municipality or panchayat. Some sectors need more (drug licence, pollution consent, fire NOC). See [startup terms in plain words](/startup-terms-india)." },
+      ],
+    },
+    {
+      type: "rich",
+      heading: "3 questions that tell you if your idea is good",
+      intro: "If you can answer yes to all three with evidence, your idea is worth building. If not, you know exactly what to test next.",
+      blocks: [
+        { kind: "steps", items: [
+          { title: "Have ten strangers told you about this problem without being led?", body: "Not friends, not relatives. People who fit your buyer line, describing the problem in their own words and what it costs them. If you have not spoken to them yet, start with [how to talk to customers before starting](/how-to-talk-to-customers-before-starting-a-business-in-india)." },
+          { title: "Has anyone outside your family paid you, even a small amount?", body: "A UPI advance, a pre-order, a paid trial class, a shop that bought a first lot. Money is the only honest yes. See [how to validate a business idea](/how-to-validate-a-business-idea-in-india)." },
+          { title: "Does one order leave you money after every cost?", body: "Add materials, packing, delivery, platform fees and GST if it applies. If one order loses money, a thousand orders lose more. Check [unit economics](/unit-economics-india)." },
+        ] },
+        { kind: "callout", title: "Write your answers here", text: "Strangers who described the problem: ______ · People outside family who paid: ______ · Profit on one order after every cost: ₹ ______ · My next test: ______" },
+      ],
+    },
+    {
+      type: "rich",
+      heading: "7 things that decide whether a small business survives in India",
+      intro: "Drawn from the patterns in our [Indian startup failure research](/failed-startups/india) and the stories founders share with us.",
+      blocks: [
+        { kind: "h3", text: "Real demand near you" },
+        { kind: "p", text: "People in your area, or reachable online, already buy something like it. Count them honestly with the [market size method](/how-to-calculate-tam-sam-som-for-a-business-in-india)." },
+        { kind: "h3", text: "A price that holds" },
+        { kind: "p", text: "Buyers accept your price without bargaining it down every time. In many Indian markets some bargaining is normal; a price that collapses under every negotiation is a warning." },
+        { kind: "h3", text: "Repeat buyers" },
+        { kind: "p", text: "Some come back on their own. That is the start of [product-market fit](/how-to-know-if-your-business-has-product-market-fit-in-india)." },
+        { kind: "h3", text: "Cash that lasts through slow months" },
+        { kind: "p", text: "Monsoon, exam season, Shravan or Ramzan, the lull after Diwali: every business has slow weeks. Plan them in the [cash-flow calendar](/startup-cash-flow-india)." },
+        { kind: "h3", text: "A low cost to win each buyer" },
+        { kind: "p", text: "Word of mouth, a shopkeeper's recommendation and society groups beat paid ads for most local businesses." },
+        { kind: "h3", text: "Your time and energy" },
+        { kind: "p", text: "Will it fit next to your job, family duties, children's exams and festival responsibilities? Try the [time-fit check](/business-idea-time-fit)." },
+        { kind: "h3", text: "Licences done right" },
+        { kind: "p", text: "A missing FSSAI registration or trade licence can close a food business or a shop overnight. Get the basics done early and only on official portals." },
+      ],
+    },
+    {
+      type: "quiz",
+      heading: "The worth-it test",
+      intro: "Tick each statement that is true for you today. Be honest; nobody else sees this.",
+      items: [
+        "I can name the exact person who pays me and where to find them.",
+        "At least ten possible buyers have described this problem to me.",
+        "Someone outside my family has paid or paid an advance.",
+        "My price covers every cost and still leaves a profit.",
+        "I know where my next ten buyers will come from.",
+        "I know how many months my savings or loan can cover.",
+        "My family knows the plan and the money at risk, and agreed.",
+        "I know which licences my business needs.",
+      ],
+      result: "Fewer than six ticks? Your idea may still be good, but it is not tested yet. Fix the missing points first.",
+    },
+    {
+      type: "rich",
+      heading: "What a bad idea really costs you",
+      intro: "The money is only part of it. Count every line before you start.",
+      blocks: [
+        { kind: "table", columns: ["What you put in", "What you can lose", "How to protect it"], rows: [
+          ["Savings or FD", "Money your family planned for school fees, a wedding or emergencies", "Start with a small test, not the full setup"],
+          ["Gold pledged for a loan", "Family jewellery, and the feelings attached to it", "Borrow only after paying customers; compare bank options in [business funding](/how-to-get-funding-for-a-small-business-in-india)"],
+          ["A loan or EMI", "Repayments continue even when sales stop; a guarantor's relationship", "Borrow only what sales can repay"],
+          ["Rent deposit and interiors", "Locked money that is hard to recover", "Test from home, a stall or shared space first"],
+          ["Stock", "Unsold goods losing value on the shelf", "Buy small batches and reorder"],
+          ["Your job or study time", "Income, promotions and months of your life", "Test on evenings and weekends first"],
+          ["Family trust", "Hard conversations if it goes wrong", "Agree the amount at risk in writing before you begin"],
+        ] },
+        { kind: "h3", text: "Worked rupee example: your money at risk" },
+        { kind: "table", columns: ["Line", "How to work it out", "Your figure"], rows: [
+          ["Full setup cost", "From the [startup cost calculator](/calculator/startup-cost)", "₹ ______"],
+          ["Small test cost", "Only what you need for a two-week test", "₹ ______"],
+          ["Monthly running cost", "Rent, wages, power, EMI, stock top-ups", "₹ ______"],
+          ["Months you can survive with no profit", "Savings set aside ÷ monthly running cost", "______"],
+          ["Money you would lose if you stop after the test", "Small test cost − anything you can resell", "₹ ______"],
+          ["Money you would lose if you stop after full setup", "Setup + months of running cost − resale value", "₹ ______"],
+        ] },
+        { kind: "p", text: "The gap between the last two lines is what testing first saves you." },
+      ],
+    },
+    {
+      type: "rich",
+      heading: "Why checking first saves you time and money",
+      blocks: [
+        { kind: "list", items: [
+          "**Two weekends of testing cost far less than a shop that closes after a year.**",
+          "**A tested idea gets a better hearing** from your bank manager, your family and any investor. Sales in a separate account speak louder than a project report.",
+          "**Testing often shows a better version of your idea**: a different buyer, price, product or area. Many successful Indian businesses look nothing like the founder's first plan.",
+          "**It protects relationships.** Saying \"I tested it and it didn't work, so I stopped\" is far easier at home than explaining a lost deposit.",
+          "**Stopping a weak idea early is a good decision, not a failure.** Our [pivot or stop guide](/business-idea-pivot-or-stop) helps you decide calmly.",
+        ] },
+        { kind: "h3", text: "How the check differs by place and sector" },
+        { kind: "list", items: [
+          "**Metros:** competition is heavy; test whether you can win buyers away from existing options, not just whether there is demand.",
+          "**Tier 2 and tier 3 towns:** check that enough buyers can pay your price, and that you can collect payment without long credit.",
+          "**Villages:** check seasonality (harvest, festivals, migration months) and whether the SHG, dealer or panchayat network will support you.",
+          "**Food:** taste, hygiene, FSSAI and repeat orders. **Services:** your time and referrals. **Products:** stock, returns and shop reorders. **Online:** platform fees, returns and delivery cost.",
+        ] },
+      ],
+    },
+    {
+      type: "cards",
+      heading: "Everything you can check here, free",
+      items: [
+        { title: "Business idea risk check", body: "Finds the guess most likely to sink your idea.", href: "/business-idea-risk-check", cta: "Check risks" },
+        { title: "Demand test for India", body: "Plan a small paid test with real buyers.", href: "/business-demand-test-india", cta: "Plan a test" },
+        { title: "Money needed to start", body: "Your real start-up number, line by line.", href: "/how-much-money-is-needed-to-start-a-business-in-india", cta: "Work it out" },
+        { title: "Market size for your area", body: "Count the buyers you can actually reach.", href: "/how-to-calculate-tam-sam-som-for-a-business-in-india", cta: "Size it" },
+        { title: "Common mistakes", body: "The traps first-time founders fall into most.", href: "/common-mistakes-to-avoid-when-starting-a-business-in-india", cta: "Avoid them" },
+        { title: "Build a small first version", body: "Sell before you build big.", href: "/how-to-build-an-mvp-with-low-investment-in-india", cta: "Start small" },
+        { title: "Competitor analysis", body: "See who your buyers use today and why.", href: "/how-to-do-competitor-analysis-for-a-small-business-in-india", cta: "Study them" },
+        { title: "Food idea check", body: "Extra steps for home kitchens, stalls and cloud kitchens.", href: "/how-to-validate-a-food-business-idea-in-india", cta: "Check food idea" },
+      ],
+    },
+    { type: "sources", heading: "Check the evidence yourself", items: [SRC.udyam, SRC.msmeLimits, SRC.gst, FSSAI, SRC.dpiit, { label: "Ministry of MSME", href: "https://msme.gov.in/", note: "Schemes and support for micro and small businesses." }] },
+    {
+      type: "rich",
+      heading: "6 red flags that your business idea needs work",
+      blocks: [
+        { kind: "h3", text: "Only family says it is great" },
+        { kind: "p", text: "Their love is real; their buying is not proof. Count strangers only." },
+        { kind: "h3", text: "Nobody will pay an advance" },
+        { kind: "p", text: "Interest without commitment usually fades. If people keep saying \"let me know when it starts\", ask for a small UPI booking and see who follows through." },
+        { kind: "h3", text: "You need a big discount to sell" },
+        { kind: "p", text: "The price, the buyer or the product needs to change. Try a different buyer group before cutting the price further." },
+        { kind: "h3", text: "Every buyer comes from paid ads" },
+        { kind: "p", text: "Ask why nobody recommends you yet. Word of mouth is the strongest sign of a good idea in India." },
+        { kind: "h3", text: "You cannot say who it is for in one line" },
+        { kind: "p", text: "Narrow it down. Browse our [idea lists](/lists) to see how focused businesses describe their buyer." },
+        { kind: "h3", text: "You must sign rent or buy machines before the first sale" },
+        { kind: "p", text: "Find a way to test first: a stall, job-work, a shared kitchen, a rented machine, pre-orders." },
+      ],
+    },
+    {
+      type: "rich",
+      heading: "How to use our free risk check, and your plan for this week",
+      blocks: [
+        { kind: "steps", items: [
+          { title: "Write your idea in one line", body: "Who pays, for what, where." },
+          { title: "Answer the questions honestly", body: "About buyers, money, time and rules. It takes a few minutes." },
+          { title: "Read your biggest risk", body: "The check shows the one guess to test first." },
+          { title: "Test that one guess this week", body: "Use the [demand test](/business-demand-test-india), then come back and run the check again." },
+        ] },
+        { kind: "table", columns: ["Day", "Task"], rows: [
+          ["Day 1", "Answer the six questions at the top of this page on paper"],
+          ["Day 2", "Run the [free risk check](/business-idea-risk-check) and note your biggest risk"],
+          ["Day 3", "Talk to five buyers who fit your buyer line"],
+          ["Day 4", "Talk to five more and ask each for a small advance or trial order"],
+          ["Day 5", "Work out profit on one order with every cost"],
+          ["Day 6", "Fill the money-at-risk table and share it with your family"],
+          ["Day 7", "Take the worth-it test again and decide: test further, change one thing, or stop"],
+        ] },
+      ],
+    },
+    TOOLS,
+    { ...CTA, heading: "Stop wondering. Find out this week.", body: "Run the free risk check, test your biggest guess with ten real buyers, and decide with your family on evidence." },
+    {
+      type: "takeaways",
+      heading: "Rules worth knowing",
+      intro: "Limits change from time to time. Confirm the current rule on the official page in the sources above.",
+      items: [
+        "**Udyam registration** is free and online with Aadhaar. Avoid any site that charges for it.",
+        "**MSME limits** were raised, so more growing businesses still count as micro or small. [Validate: current MSME investment and turnover limits]",
+        "**GST registration** depends on your turnover, what you sell and how you sell it; online and inter-state sellers may need it earlier. [Validate: current GST registration thresholds]",
+        "**FSSAI** registration or licence is needed for every food business, including home kitchens.",
+      ],
+    },
+    {
+      type: "chips",
+      heading: "Part of our idea validation guides",
+      items: [
+        { label: "How to validate a business idea in India", href: "/how-to-validate-a-business-idea-in-india" },
+        { label: "How to talk to customers before starting", href: "/how-to-talk-to-customers-before-starting-a-business-in-india" },
+        { label: "How to build an MVP with low investment", href: "/how-to-build-an-mvp-with-low-investment-in-india" },
+        { label: "Product-market fit for your business", href: "/how-to-know-if-your-business-has-product-market-fit-in-india" },
+        { label: "Funding for a small business", href: "/how-to-get-funding-for-a-small-business-in-india" },
+        { label: "How to validate an online selling idea", href: "/how-to-validate-an-online-selling-business-idea-in-india" },
+        { label: "Side hustle business ideas", href: "/category/side-hustle-business-ideas" },
+        { label: "Founder glossary", href: "/founder-glossary" },
+      ],
+    },
+  ],
+};

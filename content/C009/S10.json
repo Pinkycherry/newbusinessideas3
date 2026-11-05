@@ -1,0 +1,507 @@
+{
+  "subcategory": {
+    "code": "C009-S10",
+    "intro": "A passenger transport business in a small town begins with a route people genuinely need and a vehicle legally allowed to serve it. A private car cannot simply become a paid shared van because several neighbours ask. Vehicle class, permit, driver licence, fitness, insurance, seating and local route conditions must be checked with the transport authority for the exact service. Schoolchildren, patients, commuters and wedding guests bring very different duties. Decide whom you serve, how they book, where they board and what happens when a vehicle breaks down. Write the pickup time and passenger list where appropriate. Keep seats and luggage within the approved capacity, and never promise an unsafe shortcut to stay on schedule. A daily commuter contract can bring regular receipts but ties you to a strict morning. A market day run has a wider gap between busy days. A hospital appointment trip needs patient communication but must never be sold as an ambulance or emergency medical service without the proper approval and equipment. Check road condition and travel time in rain as well as on a clear day. Estimate fuel, maintenance, permits, parking, vehicle finance and a relief driver before setting a fare. Choose a legal fare method for your permit, and make the terms visible to passengers. The ten ideas below serve different groups and times, from school pickups to function shuttles and station connections. Some are contracts with one organiser; others depend on individual riders and route approvals. Start with a route that can fill enough lawful seats and still leave time for cleaning and maintenance. Good transport is quiet reliability: a driver who arrives where promised, respects passengers and knows when conditions make a journey unsafe.",
+    "how_to_choose": "Find a repeated travel problem before choosing a vehicle. A school run needs child handover and strict safeguards; a weekly market trip needs the right day and pickup points. If you prefer bookings rather than daily rounds, function shuttles or planned clinic visits may suit you. Ask the transport authority which permit and vehicle class cover the exact model, then price fuel, insurance, driver time and empty return distance. Speak to potential passengers about real departure times and willingness to pay. Trial only after approvals and safety arrangements are in place. A route that depends on overloading to pay its costs is not a viable route.",
+    "faq": [
+      {
+        "q": "Can you carry paying passengers in a private vehicle?",
+        "a": "Do not assume so. Paid passenger use depends on vehicle registration, the relevant permit, driver authorisation, insurance and local conditions. Verify the exact model with the transport authority before taking a fare."
+      },
+      {
+        "q": "How do you calculate a viable route?",
+        "a": "Count paid seats or confirmed bookings against fuel, driver time, maintenance, permit, insurance and empty travel. Test the schedule in real traffic and rain. Never use overloading or skipped maintenance to make the numbers look viable."
+      },
+      {
+        "q": "What if the vehicle breaks down on a booked trip?",
+        "a": "Keep a safe stop and passenger communication plan, and arrange an authorised backup transport option where possible. Tell riders promptly and follow your refund or rescheduling terms. A backup should be planned before the first daily contract."
+      },
+      {
+        "q": "Should you offer medical emergency rides?",
+        "a": "A normal passenger vehicle is not an ambulance. You may offer planned appointment travel under appropriate passenger transport permissions, but emergency care and medical transport need different capabilities and approvals. Direct urgent cases to the proper emergency service."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C009-S10-I01",
+      "slug": "village-school-van-fixed-pickup-route",
+      "title": "Village School Van Fixed Pickup Route",
+      "hook": "Parents in outlying villages need a school ride that stops at known places and accounts for every child at handover.",
+      "summary": "You run an approved school transport route with fixed morning and afternoon stops, a passenger list and a clear child handover process. Parents or the school pay under written terms. Safety, supervision and a reliable backup matter more than filling every seat.",
+      "what_it_is": "You confirm the specific school transport rules, vehicle approval, driver qualifications, attendant needs and insurance before enrolling children. You map safe stops with parents and school, then record each child's authorised pickup and drop off person. You use a seating plan within legal capacity and a checklist at every departure and arrival. Communicate holidays, absences and delays through one agreed channel. You never leave a child at an empty stop or accept a last minute different handover without verification. You keep the vehicle maintained and arrange an approved backup when it is unavailable. This is a child transport duty, not an ordinary shared commute with smaller passengers.",
+      "who_pays_you": "Parents of pupils living beyond a practical walk or public bus route may pay, or a school may contract the service under its procurement process. The school and families must agree on stops and responsibility rather than receiving conflicting promises. A compact route with children attending the same schedule is easier to manage than several schools with different closing times.",
+      "how_money_comes": "You collect a monthly contracted fare or invoice under the approved arrangement, with vacation, absence and cancellation terms written down. Fees must cover an attendant where required, maintenance, permits, insurance, fuel and safe backup transport. Empty seats cannot be filled beyond approved capacity to rescue a weak route. Validate current local permit and operating costs before committing to a price for a school term.",
+      "what_you_need": "A properly authorised suitable vehicle, qualified driver, required attendant, child safety procedures, insurance, maintenance record and emergency contacts. You check state and school specific rules before operating. You need a secure parent communication process and a reliable relief arrangement. You do not accept a route that requires unsafe speeding to meet the bell.",
+      "first_30_days": [
+        "Ask the relevant authority and school about exact vehicle, driver, attendant and handover requirements.",
+        "Map safe stops and realistic timings with interested families without enrolling passengers yet.",
+        "Price the route including backup and school holidays before offering written terms.",
+        "Start only after approvals and practise the attendance and handover checklist on every trip."
+      ],
+      "what_hurts": "A child may be absent without notice, a parent may arrive late at a stop and traffic can delay school arrival. One handover mistake has consequences beyond a missed fare. Vehicle breakdowns require a safe supervised response, not an improvised lift in any available car. You keep capacity and procedures strict, and do not launch until the approved backup plan is real.",
+      "verdict": "Build this only if you can meet every school transport and child handover requirement. Walk away if the route needs overloading, unapproved vehicles or a schedule too tight for safe driving.",
+      "faq": [
+        {
+          "q": "Can you use any passenger van for a school route?",
+          "a": "No. Confirm the specific school transport conditions in your state and with the school, including vehicle, driver and attendant requirements before taking children."
+        },
+        {
+          "q": "What if a parent is absent at drop off?",
+          "a": "Follow the agreed supervised handover and emergency contact procedure. Never leave a child alone because the next stop is waiting."
+        },
+        {
+          "q": "How do you handle school holidays?",
+          "a": "Write the payment and pause terms into the contract before the term begins. Maintenance and vehicle costs continue even when pupils are not riding."
+        }
+      ],
+      "validate_prompt": "I want to run a school van route from Indian villages to a town school. What current permits, child safety rules, vehicle costs and parent contracts should I verify?",
+      "investment_band": "above_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "field",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S10-I02",
+      "slug": "weekly-haat-passenger-transport-trip",
+      "title": "Weekly Haat Passenger Transport Trip",
+      "hook": "Families in villages without a convenient bus may need a lawful ride to the weekly market and back with their purchases.",
+      "summary": "You operate an approved passenger trip on market day, with published pickup and return times and room only for permitted luggage. Regular riders plan their shopping around the service. A route approval and realistic seat demand must come before buying a vehicle.",
+      "what_it_is": "You check the route and permit model with the local transport authority, including whether fares may be collected individually. You map village stops where people can board safely, and choose a market drop off point that does not block vendors. Publish departure and return times, seating capacity and luggage limits. You count passengers before departure, keep aisles clear and never load goods that compromise safety. In bad weather, tell riders promptly if the trip must change. You are selling a predictable journey, not permission to carry any number of people or sacks in one vehicle.",
+      "who_pays_you": "Market shoppers from hamlets with poor existing transport are the riders. Some return with groceries, while small traders may want larger loads that belong on a separate goods arrangement. You ask people whether the current bus already meets their schedule before proposing another service. A cluster of villages on one sensible route matters more than a distant stop with one interested family.",
+      "how_money_comes": "You collect fares under the approved permit and applicable fare rules, or contract a group trip where the permit permits that model. Market day revenue must cover fuel, driver time, insurance, maintenance and the vehicle's quiet days. A return trip with empty seats can erase an attractive morning collection. You test confirmed demand and use Validate for current local operating costs before taking on vehicle finance.",
+      "what_you_need": "Correct passenger vehicle registration and permit, qualified driver, insurance, fitness, safe stops and a vehicle suited to the road. You check luggage and route conditions with the authority. You need a ticket or fare record and a breakdown contact plan. Passengers come back with vegetables and grain, so a seat they can sit on without worry matters.",
+      "first_30_days": [
+        "Ask villagers which market trip they cannot complete with existing legal transport.",
+        "Confirm route, fare model, vehicle and stop permissions with the transport authority.",
+        "Test the full road and market parking conditions at the proposed times.",
+        "Begin only with approved service and track paid seats in both directions."
+      ],
+      "what_hurts": "Rain can empty the market or close a road, and a crowded morning may be followed by a nearly empty return. Riders may bring oversized purchases that cannot be carried safely. Competition from an existing service can leave too few seats sold. You set limits before boarding and do not finance a vehicle on the hope that one busy market day pays for the week.",
+      "verdict": "Build this if the route is permitted and real riders need both outward and return trips. Walk away if overloading or unapproved luggage is needed for the numbers to work.",
+      "faq": [
+        {
+          "q": "Can traders load sacks with passengers?",
+          "a": "Only within vehicle and permit rules without compromising seating or safety. Large goods may need a separate goods vehicle arrangement."
+        },
+        {
+          "q": "What if market day changes for a festival?",
+          "a": "Publish the altered schedule and confirm demand before running. Regular riders need notice, not a surprise absence at the stop."
+        },
+        {
+          "q": "Should you charge a fixed individual fare?",
+          "a": "Use the fare method allowed by your permit and local rules. Explain it before the ride and keep a clear payment record."
+        }
+      ],
+      "validate_prompt": "I want a weekly market day passenger trip for Indian villages. What current permit, fare rules, seat demand and route costs should I check?",
+      "investment_band": "above_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "field",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S10-I03",
+      "slug": "factory-shift-worker-van-contract",
+      "title": "Factory Shift Worker Van Contract",
+      "hook": "Workers finishing a late shift need a reliable ride to town when ordinary buses have stopped running.",
+      "summary": "You provide a contracted passenger van for one employer's shift workers on an approved route. The company or worker group pays under clear terms. Strict timing, authorised capacity and a relief vehicle plan make the arrangement more than an occasional taxi booking.",
+      "what_it_is": "You meet the employer or worker group to confirm shift times, pickup stops, passenger count, payment authority and safety expectations. You check the suitable contract carriage or other permit arrangement with the transport authority. You keep a named trip roster, drive only within capacity and set a departure rule for late workers that everyone understands. After each shift, record completed trips and report delays. Maintain the vehicle outside service hours and arrange authorised backup when it is unavailable. You do not take an extra unrelated fare on a contract trip unless your permit and contract clearly allow it.",
+      "who_pays_you": "A factory, warehouse or other employer running an early or late shift may pay one invoice. In another arrangement, a defined worker group may pay collectively. The riders need dependable stops near homes, especially after dark. Begin with one workplace whose schedule and payer are confirmed; a verbal promise from a supervisor without contract authority is not enough.",
+      "how_money_comes": "You charge an agreed monthly or per completed trip amount that covers driver hours, fuel, maintenance, permits, insurance and backup. Account for holidays, overtime and a shift cancelled on short notice in the contract. A route with seats unused still incurs nearly the same driving cost. You keep invoices and trip records, and validate current local vehicle operating costs before accepting a long fixed rate.",
+      "what_you_need": "Approved passenger vehicle and permit, qualified driver, proper insurance, safe boarding points and a tested night route. You need a communication contact for the employer and a relief driver or vehicle plan. You check vehicle fitness and local contract transport rules. Good lighting and respectful passenger conduct are part of a safe late shift service.",
+      "first_30_days": [
+        "Ask employers about shift travel gaps and confirm who can approve a transport contract.",
+        "Check the passenger permit and route conditions for the proposed van model.",
+        "Drive the route at actual shift hours and price empty distance and backup.",
+        "Sign clear terms before carrying the first contracted group."
+      ],
+      "what_hurts": "Shift end times can move, making a driver wait unpaid unless the contract covers it. One company can become your entire revenue and delay payment. A breakdown at midnight leaves workers vulnerable. You keep trip logs, define waiting and cancellation terms, and refuse a seat count above lawful capacity even when a manager asks.",
+      "verdict": "Build this if the employer signs a workable contract and you can keep a safe late shift schedule. Walk away if payment authority is vague or backup transport is only an idea.",
+      "faq": [
+        {
+          "q": "Who pays if a shift ends late?",
+          "a": "Put waiting time and overtime in the written contract. The driver should not discover unpaid extra hours after the first delayed shift."
+        },
+        {
+          "q": "Can you add a few public riders?",
+          "a": "Only if your permit and employer contract permit it. A booked shift trip is not automatically an open public route."
+        },
+        {
+          "q": "What happens on a vehicle breakdown?",
+          "a": "Use the agreed safe waiting and authorised backup plan, notify the workplace immediately and document the interrupted trip for billing."
+        }
+      ],
+      "validate_prompt": "I want a factory shift worker van contract in an Indian small town. What current permits, insurance, route timing, backup and monthly price should I validate?",
+      "investment_band": "above_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "field",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S10-I04",
+      "slug": "planned-hospital-appointment-car-service",
+      "title": "Planned Hospital Appointment Car Service",
+      "hook": "An older patient travelling to a district hospital needs a punctual calm ride, even when no medical care is needed in transit.",
+      "summary": "You provide prebooked nonemergency passenger trips to clinics and hospitals under the appropriate vehicle permit. Families know the pickup, waiting and return terms beforehand. This is transport for appointments, with a clear boundary from ambulance or medical services.",
+      "what_it_is": "You take a booking from the patient or family with appointment time, pickup address, mobility needs and expected waiting arrangement. You confirm the vehicle can accommodate the person safely without offering lifting or clinical help beyond your training. You follow the applicable commercial passenger transport permit, insurance and driver rules. Arrive early, drive smoothly and agree how the family will contact you for the return. You keep emergency numbers available but do not market the car as an ambulance. If the patient needs medical monitoring or stretcher transport, decline and direct the family to an appropriate service.",
+      "who_pays_you": "Older residents, families accompanying someone for a planned checkup and people travelling from villages to a district clinic may pay. One family member may book and pay by UPI while another travels, so confirm who will communicate changes. Customers value patience and a transparent waiting fee. A route near hospitals can also bring ordinary booked trips, but keep the medical transport boundary clear.",
+      "how_money_comes": "You quote the outward journey, waiting time and return separately or as a clear package under the applicable fare rules. A hospital visit may last longer than expected, so state when waiting charges begin and whether the driver can take another booking. Empty return distance matters when a patient stays overnight. You collect payment under an agreed method and track vehicle upkeep. Validate local legal fares and fuel before publishing a package.",
+      "what_you_need": "Authorised passenger vehicle, qualified driver, insurance, clean accessible seating, reliable phone and knowledge of hospital pickup points. You check permits and any accessibility requirements for your advertised service. You need patience and a clear emergency boundary. You do not claim a normal car carries oxygen, clinical staff or ambulance approval when it does not.",
+      "first_30_days": [
+        "Ask families which planned hospital trips are difficult with existing transport.",
+        "Verify the correct passenger permit, insurance and fare method before taking bookings.",
+        "Test travel and hospital pickup time on an ordinary appointment day.",
+        "Run a small number of booked nonemergency trips with written waiting and return terms."
+      ],
+      "what_hurts": "Appointments are delayed, a patient may feel unwell and a return trip may be cancelled after you have waited. A normal car cannot safely handle every mobility need. Families may expect you to make medical decisions because the destination is a hospital. You keep the transport boundary, explain waiting fees gently and refer urgent situations to the proper emergency service.",
+      "verdict": "Build this if you can offer permitted patient friendly rides with clear nonemergency limits. Walk away if the business depends on calling an ordinary car an ambulance or accepting passengers you cannot seat safely.",
+      "faq": [
+        {
+          "q": "Can you take an emergency patient?",
+          "a": "A planned passenger car is not an ambulance. For urgent medical needs, direct the family to a properly equipped emergency service rather than making a clinical promise."
+        },
+        {
+          "q": "How do you charge when the doctor is late?",
+          "a": "State a waiting rate or package limit before the journey and update the family as time passes. Surprise fees at the hospital gate harm trust."
+        },
+        {
+          "q": "Can a wheelchair user book?",
+          "a": "Only if your vehicle and assistance are suitable for that person's needs. Ask respectfully in advance and do not improvise unsafe lifting."
+        }
+      ],
+      "validate_prompt": "I want to offer nonemergency hospital appointment rides in an Indian town. What current passenger permits, accessibility, waiting fare and insurance should I validate?",
+      "investment_band": "above_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "field",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S10-I05",
+      "slug": "railway-station-town-feeder-car",
+      "title": "Railway Station Town Feeder Car",
+      "hook": "A family arriving on a late train needs a known ride to the nearby town when the bus connection has ended.",
+      "summary": "You offer prebooked station pickups and drop offs with an authorised passenger vehicle. Customers share train details and receive a clear meeting point and fare. The model works when delays, parking and empty return travel are priced honestly.",
+      "what_it_is": "You choose a station and town route you can serve under the correct permit. You confirm each passenger's train, expected arrival, luggage and contact number, then send a safe meeting point that does not block the station entrance. You check train changes through the booking contact rather than assuming an advertised time is certain. You use a vehicle with lawful seating and luggage capacity, help passengers locate it and confirm the fare before departure. You record waiting and cancellation rules in the booking. You do not claim a railway partnership or enter a restricted pickup area without permission.",
+      "who_pays_you": "Families visiting the town, students returning home and local residents taking an early departure may book. Some need a single car for their luggage rather than a shared seat. Reach customers through local referrals and a reliable booking number, without pretending to be an official station counter. If frequent buses already meet every train, a paid feeder may have weak demand.",
+      "how_money_comes": "You charge a fare under the applicable permit and pricing rules, with disclosed waiting and night charges when allowed. An empty return journey and parking fees must be included in your calculation. Advance bookings reduce wandering at the station, but train delays can block a later job. You set a realistic booking gap and take payment under clear terms. Validate current local permit, fare and parking costs.",
+      "what_you_need": "Authorised commercial passenger vehicle, driver licence, insurance, station pickup knowledge, reliable phone and a safe waiting plan. You check local parking and transport stand rules. A tidy boot for luggage and a simple written booking log save you many arguments. You have a backup response for a cancelled train or vehicle fault.",
+      "first_30_days": [
+        "Observe train arrival times and existing buses or taxis before choosing the service window.",
+        "Confirm permits, station pickup rules and lawful fare method with local authorities.",
+        "Trial a limited booked route with clear waiting and cancellation terms.",
+        "Track empty return distance and delays before expanding to more train times."
+      ],
+      "what_hurts": "Trains run late and passengers may change plans without telling you. Parking can be costly, while a late pickup may leave a family waiting in an unfamiliar place. One long delay can cause a second booking to fail. Communicate early, price waiting transparently and do not accept overlapping trips with no backup driver.",
+      "verdict": "Build this if train arrivals create a real transport gap and your permit covers the route. Walk away if empty returns and unpredictable waits make each booking loss making. Keep the event schedule honest.",
+      "faq": [
+        {
+          "q": "How do you handle a delayed train?",
+          "a": "State a waiting allowance and update the pickup time through the passenger. Keep later bookings far enough apart or use an authorised backup arrangement."
+        },
+        {
+          "q": "Can you wait at the platform?",
+          "a": "Follow station access and parking rules. Give a clear lawful meeting point and identify the vehicle without obstructing other passengers."
+        },
+        {
+          "q": "Should you combine unrelated passengers?",
+          "a": "Only if your permit, booking terms and vehicle capacity allow a shared service. Do not change a private booking into a shared ride without consent."
+        }
+      ],
+      "validate_prompt": "I want to run prebooked station to town passenger trips in India. What current permit, station pickup, fare and delay costs should I check?",
+      "investment_band": "above_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "field",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S10-I06",
+      "slug": "wedding-venue-guest-shuttle-contract",
+      "title": "Wedding Venue Guest Shuttle Contract",
+      "hook": "A family with a distant wedding venue needs guests moved between lodging and the hall without dozens of uncertain car trips.",
+      "summary": "You provide a booked shuttle vehicle and driver for a wedding's defined pickup points and service hours. The host pays under a contract; guests travel within approved capacity. Planning, waiting time and safe night return are priced before the event.",
+      "what_it_is": "You meet the host to map lodging, venue, road access, ceremony times and likely guest waves. You check the vehicle and permit model suitable for the contracted journey, then agree on stops, operating hours, driver breaks and passenger capacity. Provide one contact for the host and record trips so extra journeys are visible. You never load standing guests into a vehicle without approval merely because a ceremony is about to start. If the venue has poor lighting or parking, arrange a safe boarding point. You keep an authorised backup if the vehicle fails during the function.",
+      "who_pays_you": "Wedding hosts, event organisers and families accommodating guests in a nearby town may pay. The passengers are relatives of different ages, so the route should be easy for elders to board and understand. The organiser may request changes on the day, but name one person who can approve extra time or another stop. Small events with venues next door may not need a shuttle at all.",
+      "how_money_comes": "You quote a package of hours and defined route under the applicable passenger permit, with extra hours, distance, parking and night duty shown separately. You take a date reservation deposit under clear cancellation terms. Event work clusters around wedding seasons, so a vehicle must have another lawful use during quiet months. Driver breaks and empty return travel count as costs. Validate current local vehicle and permit terms before quoting.",
+      "what_you_need": "Appropriate commercial passenger vehicle, qualified driver, insurance, route knowledge, safe boarding plan and an event contact. You check permit and local venue access rules. A well maintained van with room for the agreed guests, not a pile of extra luggage, is what the family is paying for. A backup arrangement must be real, not a name on paper.",
+      "first_30_days": [
+        "Ask wedding organisers where guests currently face transport delays between lodging and venues.",
+        "Confirm the contract carriage or other suitable permit for the planned shuttle model.",
+        "Map one venue route at event hours and calculate waiting, parking and empty miles.",
+        "Book a manageable paid function with one authorised change contact and written terms."
+      ],
+      "what_hurts": "Ceremonies run late and guests arrive in waves, making a neat timetable difficult. A host may ask for a new distant stop after the package starts. Night driving and crowded venues increase risk. You keep capacity and driver rest limits, record changes and refuse unsafe boarding even when guests insist they can squeeze in.",
+      "verdict": "Build this if event routes and contract terms fit your permitted vehicle and driver capacity. Walk away if profit requires overcrowding or endless unpaid waiting at the venue. Rider trust depends on the actual route.",
+      "faq": [
+        {
+          "q": "Can guests pay individual fares?",
+          "a": "The contract and permit model must allow the chosen arrangement. Agree whether the host or passengers pay before the event, not at a crowded boarding point."
+        },
+        {
+          "q": "What if the ceremony finishes very late?",
+          "a": "Use the written extra time and driver rest terms, and notify the host when the included hours end. Do not drive fatigued to satisfy an open ended request."
+        },
+        {
+          "q": "Should you promise one vehicle for all guests?",
+          "a": "Only if the guest waves and capacity support it. A second approved vehicle may be needed for larger events, with its cost agreed in advance."
+        }
+      ],
+      "validate_prompt": "I want to operate wedding guest shuttles around an Indian small town. What current passenger permit, event contract, night duty and vehicle costs should I check?",
+      "investment_band": "above_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "village"
+      ],
+      "work_mode": "field",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S10-I07",
+      "slug": "women-commuter-booked-van-group",
+      "title": "Women Commuter Booked Van Group",
+      "hook": "Women with the same early work shift may prefer a known driver and fixed stops when ordinary transport is irregular.",
+      "summary": "You operate a permitted booked passenger van for a defined commuter group, with verified riders, fixed stops and clear monthly terms. A dependable route and respectful conduct are the selling points. The service does not promise absolute safety beyond its actual procedures.",
+      "what_it_is": "You speak with a group travelling to the same employment area and map safe pickups, departure times and a return schedule. You check the correct passenger permit and any rules on group contracts or individual fares before taking payment. You confirm riders and a contact method, keep seating within approved capacity and use well lit stops where practical. State how late arrivals, shift changes and a replacement driver are handled. You keep the vehicle clean and share route changes promptly. A women focused service should be built on real verification and conduct, not a slogan that safety is guaranteed.",
+      "who_pays_you": "Women working at schools, hospitals, offices or shops on a similar shift may pay individually under an allowed fare model, or an employer may contract the whole route. The group needs compatible timings; adding a distant rider can make everyone late. You ask potential riders what existing transport fails to provide and whether they will commit to a regular lawful service.",
+      "how_money_comes": "Monthly fares or a group contract must cover vehicle, driver, fuel, insurance, maintenance and a backup plan. Empty seats after a rider changes jobs can quickly affect margins, so set notice and cancellation terms. You never fill a vacancy beyond legal capacity or change a booked route secretly. You check current local permit and fare rules through Validate before asking for deposits.",
+      "what_you_need": "Authorised vehicle and driver, insurance, route and rider list, safe boarding points and a clear replacement driver verification procedure. You check local commercial transport rules and any employer conditions. You need a communication channel that protects riders' phone numbers from unnecessary sharing. You keep a breakdown and late night response plan.",
+      "first_30_days": [
+        "Ask a real commuter group about shared work hours and the stops they could use safely.",
+        "Verify the permit and fare model for a booked group before collecting money.",
+        "Drive the route in both directions during actual shift traffic and price empty time.",
+        "Launch only after rider terms, driver verification and backup transport are arranged."
+      ],
+      "what_hurts": "Shift changes and staff turnover create empty seats. A late rider can hold up everyone, while a driver substitution may worry passengers if no verification process exists. Poorly lit stops and breakdowns need advance planning. Be clear about the limits of your service and do not imply that a gender focused route alone removes travel risks.",
+      "verdict": "Build this if enough riders share a practical route and your operating safeguards are real. Walk away if the fare depends on full seats every day with no reserve or backup.",
+      "faq": [
+        {
+          "q": "Can the driver change without telling riders?",
+          "a": "Give advance notice and a way to verify an authorised replacement. Riders should not have to guess whether an unfamiliar driver is part of the service."
+        },
+        {
+          "q": "What if a rider changes shifts?",
+          "a": "Use the agreed notice and payment terms, then assess whether the remaining route stays viable. Do not make everyone else late to serve an incompatible shift."
+        },
+        {
+          "q": "Can you promise complete safety?",
+          "a": "No transport operator can promise that. Describe concrete practices such as driver verification, approved capacity and safe stops without an absolute claim."
+        }
+      ],
+      "validate_prompt": "I want to run a booked commuter van group for women in an Indian town. What current permits, fare model, route demand and rider safeguards should I validate?",
+      "investment_band": "above_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "field",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S10-I08",
+      "slug": "college-weekend-home-trip-van",
+      "title": "College Weekend Home Trip Van",
+      "hook": "Students in a town hostel may travel to the same nearby villages on Friday evening and return before Monday class.",
+      "summary": "You provide an approved booked weekend passenger trip for a defined college student route. Seats are reserved under clear departure, luggage and return terms. The business relies on term time demand, lawful permits and safe late travel.",
+      "what_it_is": "You ask students and hostel managers about actual home destinations and departure times, without claiming college endorsement. Verify whether your permit allows the planned booking or individual fare model. Publish fixed safe stops, seating capacity, luggage limits and return timing. You confirm bookings before each trip because many students stay on campus during exams or travel elsewhere. You keep an emergency contact and a breakdown plan for evening journeys. You do not overfill a vehicle when a group of friends turns up without a booking. Respect any institution rules about pickup on its property.",
+      "who_pays_you": "College and coaching students who return to nearby villages on predictable weekends may pay, often with money from parents. Some parents may book directly. A route can work only if destinations cluster and return demand exists. One college holiday or examination period can change the passenger count dramatically, so speak to students across the term before taking vehicle finance.",
+      "how_money_comes": "You collect booked fares under the permitted model, with cancellation and no show terms clear before payment. Revenue comes on limited days, while insurance, maintenance and vehicle costs continue all week. An approved weekday transport contract could use the vehicle, but do not assume one. You track outward and return occupancy separately. Validate current local fare limits, fuel and campus access before advertising.",
+      "what_you_need": "Correct commercial vehicle and permit, qualified driver, insurance, safe night route, booking list and authorised pickup point. You check seat belts, luggage capacity and vehicle fitness. You need a way to contact parents when appropriate without sharing one student's personal details with another. You keep rest time for the driver between outward and return trips.",
+      "first_30_days": [
+        "Ask students which villages they travel to and when they actually leave and return.",
+        "Confirm campus pickup permission and transport permit conditions before taking reservations.",
+        "Test the road at Friday and Sunday travel hours and estimate both direction demand.",
+        "Run a limited approved booked trip and compare actual seats with the cost model."
+      ],
+      "what_hurts": "Term breaks and exams empty the van without reducing fixed costs. Students can cancel late or carry more luggage than approved. Parents may assume the college supervises the trip when it does not. You make operator identity and terms clear, enforce capacity and avoid driving late after a long full shift.",
+      "verdict": "Build this if student travel clusters on a lawful route with demand in both directions. Walk away if the vehicle would sit idle most of the week with no other viable use.",
+      "faq": [
+        {
+          "q": "Is college permission needed for campus pickup?",
+          "a": "Ask the institution before using its gate or grounds as a boarding point. A public lawful stop nearby may be necessary if permission is not granted."
+        },
+        {
+          "q": "Can students book at departure time?",
+          "a": "Only if an approved seat remains and your permit model allows it. Advance booking gives a safer passenger count and return plan."
+        },
+        {
+          "q": "What about long college holidays?",
+          "a": "Include them in the annual cost calculation. Weekend term fares should not be priced as though the college runs every week of the year."
+        }
+      ],
+      "validate_prompt": "I want to offer weekend student trips from a college town to nearby villages in India. What current permits, campus access, seasonal demand and fares should I validate?",
+      "investment_band": "above_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "village"
+      ],
+      "work_mode": "field",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S10-I09",
+      "slug": "local-heritage-day-trip-vehicle",
+      "title": "Local Heritage Day Trip Vehicle",
+      "hook": "Visitors to a small town may want one planned day visiting nearby places without negotiating a new ride at every stop.",
+      "summary": "You provide a permitted booked passenger vehicle for a local day itinerary with defined hours and stops. Guests choose their own attractions and pay for transport, not invented guide credentials. Road access, waiting time and return safety shape the quote.",
+      "what_it_is": "You offer a few realistic local circuits based on roads and travel time, then let customers agree on exact stops. You check the vehicle's passenger permit and any site access or parking rules before booking. You quote the hours, distance, waiting and driver break arrangements in writing. You confirm passenger count and luggage so lawful capacity is respected. Provide clear pickup and return points and avoid claiming entry tickets or a trained guide are included unless you have arranged them. In heat or rain, adjust the route with the passengers rather than speeding to preserve an unrealistic timetable.",
+      "who_pays_you": "Families visiting relatives, domestic travellers and small groups staying in the town may book. A local guesthouse may refer customers with permission, but you should not claim an official partnership without one. Many visitors can use public transport, so the paying customer values a convenient shared vehicle and predictable day plan, not just a list of attractions.",
+      "how_money_comes": "You charge a trip package under the applicable permit and fare rules, itemising included distance or hours and extra waiting. Fuel, tolls, parking and empty return time need to be clear. Bookings may follow weekends and holidays, leaving quiet weekdays. You keep a deposit and fair cancellation terms for a reserved vehicle. Validate current local permit and trip costs before publishing a package.",
+      "what_you_need": "Commercial passenger vehicle with suitable permit, qualified driver, insurance, well maintained seats, local road knowledge and a booking record. You check site parking and route restrictions. You need a realistic weather alternative and driver rest schedule. You do not act as a specialist history guide unless you can provide that service honestly and lawfully.",
+      "first_30_days": [
+        "Map nearby visitor routes and time them under ordinary weekend traffic.",
+        "Confirm permit coverage, site parking and fare rules for a booked day trip.",
+        "Ask local visitors and lodging operators which transport gap they face.",
+        "Run a limited paid trip with written stops and review waiting and fuel afterward."
+      ],
+      "what_hurts": "A closed attraction or traffic delay can make a promised circuit impossible. Passengers may add distant stops after departure and dispute extra charges. Holiday bookings arrive in clusters, while fixed vehicle costs run all year. You keep the package boundary clear and choose a comfortable pace instead of squeezing too many places into one day.",
+      "verdict": "Build this if visitors genuinely need a lawful booked vehicle and your route is enjoyable at a safe pace. Walk away if demand exists only on rare holidays or the trip quote hides parking and waiting.",
+      "faq": [
+        {
+          "q": "Are entrance fees included?",
+          "a": "Only if the written package explicitly says so and you have checked them. A transport quote should otherwise leave tickets to the passengers."
+        },
+        {
+          "q": "Can guests change the itinerary?",
+          "a": "Yes, within safe route and timing limits, with any additional cost agreed before the diversion. Keep the return plan realistic."
+        },
+        {
+          "q": "Do you need to be a guide?",
+          "a": "No. Sell transport honestly. If customers want a guided tour, partner with a qualified person under separate clear terms. State that boundary clearly."
+        }
+      ],
+      "validate_prompt": "I want to run booked local heritage day trips from an Indian small town. What current passenger permits, parking, route demand and package pricing should I validate?",
+      "investment_band": "above_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "field",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S10-I10",
+      "slug": "town-bus-stand-last-mile-auto",
+      "title": "Town Bus Stand Last Mile Auto",
+      "hook": "A passenger reaching the bus stand with bags may need a short reliable ride to a village lane where the bus cannot go.",
+      "summary": "You operate a properly permitted auto or suitable passenger vehicle from a lawful stand to nearby final destinations. Riders pay the applicable fare and know where to queue. The model depends on stand access, trip turnover and fair dealing, not a long contract.",
+      "what_it_is": "You confirm the vehicle permit, authorised stand or pickup rules and applicable fare method before operating. You learn the nearby lanes and typical destinations, display the required details and keep the vehicle maintained and clean. You take passengers only within seating and luggage limits, agree on the destination or meter process as local rules require, and choose a safe drop off point. Help with bags only when it is practical and does not create a dangerous load. You keep records of paid trips and fuel. A short last mile service works when riders can find you easily and trust the fare without an argument.",
+      "who_pays_you": "Bus passengers arriving from nearby towns, older residents carrying shopping and families with luggage are the riders. Some may prefer walking or an existing auto queue, so check whether the stand is already well served. A driver joining a regulated stand must respect its rules. You should not assume public road space is available simply because it looks convenient for parking.",
+      "how_money_comes": "Earn legal trip fares under the relevant permit and local fare rules. Short rides can turn over often, but waiting in a long stand queue and returning empty reduce actual hourly income. Fuel, maintenance, insurance, permit and vehicle finance continue during slow days. You keep cash and UPI records and validate current stand terms before buying an auto.",
+      "what_you_need": "Authorised auto or passenger vehicle, appropriate driver licence and permit, insurance, fitness, stand access and knowledge of local fare rules. You need a safe place to queue without blocking buses. Maintain brakes, tyres and lights. You check any state specific rules for the vehicle type and never exceed approved passenger capacity.",
+      "first_30_days": [
+        "Observe arrival waves and existing auto availability at the bus stand on ordinary days.",
+        "Confirm permit, stand access and fare rules with the local transport authority.",
+        "Calculate realistic paid trips after queue and empty return time.",
+        "Begin only when vehicle approval and a safe pickup place are secured."
+      ],
+      "what_hurts": "An existing stand may have more autos than riders, leaving long unpaid waits. Fare disputes, heavy luggage and traffic around buses create stress. Vehicle repairs remove your earning day. You do not block the stand or overload to compensate for weak demand. You keep a maintenance reserve and a calm way to explain the lawful fare.",
+      "verdict": "Build this if stand access is approved and passenger demand supports the waiting time. Walk away if the queue is already full or income depends on overcharging newcomers. The stand must work in ordinary weeks.",
+      "faq": [
+        {
+          "q": "Can you park anywhere near the bus stand?",
+          "a": "No. Check authorised pickup and parking rules. Blocking buses or pedestrian routes can create danger and fines even if riders can see your vehicle."
+        },
+        {
+          "q": "How do you set a short trip fare?",
+          "a": "Follow the permit and local fare method, including any meter rules. Explain the fare calmly before or during the trip as required."
+        },
+        {
+          "q": "Can passengers bring large goods?",
+          "a": "Only what fits safely within vehicle rules. A load that blocks the driver or exceeds capacity needs a different transport arrangement."
+        }
+      ],
+      "validate_prompt": "I want to run a last mile auto from a small town bus stand in India. What current permit, stand access, legal fare and trip demand should I verify?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "village"
+      ],
+      "work_mode": "field",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    }
+  ]
+}

@@ -1,214 +1,101 @@
-import { createFileRoute, notFound, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import { OLD_IDEA_REDIRECTS } from "@/config/old-idea-redirects";
 import { queryOptions } from "@tanstack/react-query";
-import { IdeaCinemaPage } from "@/components/idea-cinema/idea-cinema";
+import { ArrowRight } from "lucide-react";
 
-import { SiteShell } from "@/components/site-shell";
+import { V2Frame } from "@/components/v2/frame";
+import { SellerHero } from "@/components/v2/content-page";
+import { IdeaArticle, type IdeaArticleField } from "@/components/v2/idea-article";
+import { IDEA_PAGE as copy } from "@/config/idea-page";
+import { LegacyIdeaPage } from "@/components/legacy-idea";
 import { categoryImage } from "@/config/category-imagery";
-import {
-  getIdeaBySlug,
-  type IdeaVariant,
-  type IdeaGradient,
-  type RelatedCategory,
-} from "@/lib/ideas.functions";
-import { type IdeaCard as IdeaCardType, type IdeaDetail } from "@/lib/ideas-shared";
-import { JsonLd, absoluteUrl, articleSchema, breadcrumbSchema } from "@/lib/schema";
+import { getLegacyIdea, getLegacyIdeaCards } from "@/lib/legacy-ideas.functions";
+import { getBrowseIdeas } from "@/lib/browse.functions";
+import type { IdeaCard } from "@/lib/ideas.functions";
+import { absoluteUrl } from "@/lib/schema";
+import { BAND_LABEL, MODE_LABEL, SKILL_LABEL, TIME_LABEL, getIdea, getIdeaPlace, getSubcategoryIdeas } from "@/lib/ideas.functions";
 
-type IdeaDetailData = {
-  idea: IdeaDetail;
-  related: IdeaCardType[];
-  relatedCategories: RelatedCategory[];
-  trending: IdeaCardType[];
-  variant: IdeaVariant;
-  gradient: IdeaGradient;
-} | null;
-
-type ContextualLink = { key: string; label: string; to: string; params: Record<string, string> };
-
-/**
- * PROJECT_BRIEF.md Section 8.2 / Build Order step 11 — up to 3 automatic,
- * keyword-matched internal links per page, prioritizing hub-style pages
- * (subcategory, then category) over distant matches. Reuses data already
- * loaded for this page (no extra Supabase round-trip): the idea's own
- * keywords/tags are scanned against the `related` list already fetched for
- * the sidebar/bottom cards to find one genuinely on-topic idea link.
- */
-function pickContextualLinks(idea: IdeaDetail, related: IdeaCardType[]): ContextualLink[] {
-  const links: ContextualLink[] = [
-    {
-      key: "subcategory",
-      label: idea.subcategoryName,
-      to: "/category/$categorySlug/$subcategorySlug",
-      params: { categorySlug: idea.categorySlug, subcategorySlug: idea.subcategorySlug },
-    },
-    {
-      key: "category",
-      label: idea.categoryName,
-      to: "/category/$categorySlug",
-      params: { categorySlug: idea.categorySlug },
-    },
-  ];
-
-  const keywordPool = [...idea.keywords, ...idea.tags]
-    .map((k) => k.trim().toLowerCase())
-    .filter(Boolean);
-  const match = keywordPool.length
-    ? related.find((r) => {
-        const haystack = `${r.title} ${r.summary} ${r.tags.join(" ")}`.toLowerCase();
-        return keywordPool.some((k) => haystack.includes(k));
-      })
-    : undefined;
-
-  if (match) {
-    links.push({
-      key: match.ideaId,
-      label: match.title,
-      to: "/idea/$slug",
-      params: { slug: match.slug },
-    });
-  }
-
-  return links.slice(0, 3);
-}
-
-const ideaDetailQuery = (slug: string) =>
-  queryOptions<IdeaDetailData>({
-    queryKey: ["idea-detail", slug],
-    // Used only inside the route loader's ensureQueryData call below, purely
-    // as a typed fetch-and-return helper — the component reads the result via
-    // Route.useLoaderData(), not via useSuspenseQuery, so these cache settings
-    // no longer affect what's rendered (see the note on IdeaPage's data line
-    // for why: router.tsx doesn't dehydrate the QueryClient to the client, so
-    // a client-side useSuspenseQuery on this query would re-run it — a real
-    // problem for Section 9's per-request-random variant/gradient/related
-    // picks, since two independent calls return different results).
-    staleTime: 0,
-    gcTime: 60_000,
-    queryFn: async () => {
-      const result = await getIdeaBySlug({ data: { slug } });
-      // AdSense approval: an old idea comes back as { moved }, which the loader turns into a 301.
-      if (result && "moved" in result) return result as never;
-      if (!result?.idea) return null;
-      return result;
-    },
-  });
-
-export const Route = createFileRoute("/idea/$slug")({
-  loader: async ({ context, params }) => {
-    const data = await context.queryClient.ensureQueryData(ideaDetailQuery(params.slug));
-    if (!data) throw notFound();
-    const moved = (data as unknown as { moved?: string }).moved;
-    if (moved) throw redirect({ href: moved, replace: true, statusCode: 301 });
-    return data;
-  },
-  head: ({ loaderData }) => {
-    const idea = loaderData?.idea;
-    // Prefer the researched SEO fields when the pipeline has filled them;
-    // fall back to the previous behaviour for un-enriched ideas.
-    const title = idea
-      ? idea.seoTitle || `${idea.title} | BBI – Bro Business Ideas`
-      : "Business Idea | BBI – Bro Business Ideas";
-    const description =
-      idea?.metaDescription ||
-      idea?.businessDescription?.slice(0, 155) ||
-      "A researched business idea blueprint with pros, cons and a founder-fit verdict.";
-    // No idea has a photo of its own — this page had no share image at all
-    // before. The category's featured image fills that gap: every idea in
-    // "AI & Automation" sharing one thematic image for its link preview is
-    // the same pattern a blog's tag pages use, not duplicate content, and it
-    // beats the blank preview this page rendered until now.
-    const image = idea ? categoryImage(idea.categorySlug) : null;
-    return {
-      meta: [
-        { title },
-        // AdSense approval: individual idea pages are templated, so they stay out of the index.
-        { name: "robots", content: "noindex, follow" },
-        { name: "description", content: description },
-        { property: "og:title", content: title },
-        { property: "og:description", content: description },
-        { property: "og:type", content: "article" },
-        { name: "twitter:card", content: "summary_large_image" },
-        ...(image
-          ? [
-              { property: "og:image", content: absoluteUrl(image.src) },
-              { property: "og:image:alt", content: image.alt },
-              { name: "twitter:image", content: absoluteUrl(image.src) },
-            ]
-          : []),
-      ],
-    };
-  },
-  component: IdeaPage,
-  errorComponent: () => (
-    <SiteShell tone="instrument">
-      <p className="mx-auto max-w-6xl px-4 py-24">This idea could not be loaded.</p>
-    </SiteShell>
-  ),
-  notFoundComponent: () => (
-    <SiteShell tone="instrument">
-      <div className="mx-auto max-w-6xl px-4 py-24">
-        <p>That idea does not exist in the library.</p>
-        <Link to="/browse" className="mt-4 inline-block text-primary underline">
-          Browse all ideas
-        </Link>
-      </div>
-    </SiteShell>
-  ),
+const ideaQuery = (slug: string) => queryOptions({
+  queryKey: ["idea", slug],
+  queryFn: () => getIdea({ data: { slug } }),
+  staleTime: 60_000,
 });
 
-/**
- * Every idea renders through IdeaCinemaPage (components/idea-cinema), the
- * template approved on the two trial pages on 2026-09-24 and rolled out to
- * the whole library the same day. The previous standard template is in git
- * history before that rollout (rollback/pre-site-rollout-2026-09-24).
- */
+const legacyQuery = (slug: string) => queryOptions({
+  queryKey: ["legacy-idea", slug],
+  queryFn: () => getLegacyIdea({ data: { slug } }),
+  staleTime: 60_000,
+});
+
+export const Route = createFileRoute("/idea/$slug")({
+  // AdSense approval: the 879 old ideas 301 to the closest new category.
+  beforeLoad: ({ params }) => {
+    const moved = OLD_IDEA_REDIRECTS[params.slug];
+    if (moved) throw redirect({ href: `/category/${moved}`, replace: true, statusCode: 301 });
+  },
+  loader: async ({ context, params }) => {
+    const idea = await context.queryClient.ensureQueryData(ideaQuery(params.slug));
+    if (idea) {
+      const [related, place] = await Promise.all([getSubcategoryIdeas({ data: { code: idea.subcategory_code } }), getIdeaPlace({data:{category:idea.category_code,subcategory:idea.subcategory_code}})]);
+      return { kind: "new" as const, idea, place, related: related.filter(item => item.slug !== idea.slug).slice(0,4), title: idea.title, summary: idea.summary, image: categoryImage(place.category?.slug ?? "") };
+    }
+    const legacy = await context.queryClient.ensureQueryData(legacyQuery(params.slug));
+    if (!legacy) {
+      // AdSense approval: an unknown idea is a real 404, not a 200 page.
+      throw notFound();
+      const result = await getBrowseIdeas({ data: { q: "", category: "", investment: "", time: "", skill: "", page: 1 } });
+      return { kind: "missing" as const, ideas: result.ideas.slice(0, 6), title: "Idea not published", summary: "Explore recently published ideas from the library.", image: undefined };
+    }
+    const related = await getLegacyIdeaCards({data:{q:'',page:1}});
+    return { kind: "legacy" as const, idea: legacy, related: related.items.filter(item=>item.slug!==legacy.slug).slice(0,4), title: legacy.seoTitle || legacy.title, summary: legacy.metaDescription || legacy.summary, image: categoryImage(legacy.categorySlug) };
+  },
+  head: ({ loaderData }) => ({
+    meta: [
+      { title: `${loaderData?.title ?? "Business idea"} | BusinessIdea.io` },
+      // AdSense approval: individual idea pages are templated, so they stay out of the index.
+      { name: "robots", content: "noindex, follow" },
+      { name: "description", content: loaderData?.summary ?? "" },
+      { property: "og:type", content: "article" },
+      { property: "og:image", content: loaderData?.image ? absoluteUrl(loaderData.image.src) : undefined },
+      { property: "og:image:alt", content: loaderData?.image?.alt },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: loaderData?.image ? absoluteUrl(loaderData.image.src) : undefined },
+    ],
+  }),
+  component: IdeaPage,
+  notFoundComponent: () => <V2Frame><SellerHero breadcrumbs={[{label:"Home",href:"/"}]} badge="IDEA LIBRARY" title="This idea could not load." intro="Browse the published library." primary={{label:"Browse ideas",href:"/browse"}} /></V2Frame>,
+  errorComponent: () => <V2Frame><SellerHero breadcrumbs={[{label:"Home",href:"/"}]} badge="IDEA LIBRARY" title="This idea could not load." intro="Please try again shortly." primary={{label:"Browse ideas",href:"/browse"}} /></V2Frame>,
+});
+
+function UnavailableIdea({ ideas }: { ideas: IdeaCard[] }) {
+  return <V2Frame active="/browse">
+    <div className="pt-24 lg:pt-28"><SellerHero breadcrumbs={[{label:"Home",href:"/"},{label:"Browse",href:"/browse"}]} badge="IDEA LIBRARY" title="This idea is not published." intro="Explore published ideas from the library." primary={{label:"Browse ideas",href:"/browse"}} /></div>
+    <section className="bg-slate-50 py-12 lg:py-16"><div className="mx-auto max-w-6xl px-4 md:px-6"><h2 className="text-3xl font-bold">Recently published ideas</h2><div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{ideas.map(idea => <a key={idea.slug} href={`/idea/${idea.slug}`} className="rounded-2xl border bg-white p-6 shadow-sm transition hover:border-blue-500"><h3 className="text-xl font-bold">{idea.title}</h3><p className="mt-3 line-clamp-3 text-slate-600">{idea.hook || idea.summary}</p><span className="mt-4 inline-flex items-center gap-2 font-semibold text-blue-700">Read idea <ArrowRight size={17}/></span></a>)}</div></div></section>
+  </V2Frame>;
+}
+
 function IdeaPage() {
-  // Reads the router's own loaderData rather than re-running the query via
-  // useSuspenseQuery: router.tsx does not dehydrate the QueryClient, and this
-  // query's random related/trending picks would differ between server and
-  // client, which is a real hydration mismatch. Non-null by construction:
-  // the loader throws notFound() when the query returns null.
-  const data = Route.useLoaderData() as NonNullable<IdeaDetailData>;
-  if (!data) return null;
-  const { idea, related, relatedCategories, trending } = data;
-  const contextualLinks = pickContextualLinks(idea, related);
-
-  const ideaPath = `/idea/${idea.slug}`;
-  const categoryFeatured = categoryImage(idea.categorySlug);
-  const breadcrumbItems = [
-    { name: "Home", path: "/" },
-    { name: "Browse", path: "/browse" },
-    { name: idea.categoryName, path: `/category/${idea.categorySlug}` },
-    {
-      name: idea.subcategoryName,
-      path: `/category/${idea.categorySlug}/${idea.subcategorySlug}`,
-    },
-    { name: idea.title, path: ideaPath },
+  const data = Route.useLoaderData();
+  if (data.kind === "missing") return <UnavailableIdea ideas={data.ideas} />;
+  if (data.kind === "legacy") return <LegacyIdeaPage idea={data.idea} related={data.related} />;
+  const { idea, related } = data;
+  const where = data.place;
+  const breadcrumbs = [{label:"Home",href:"/"},{label:"Browse",href:"/browse"},...(where.category ? [{label:where.category.name,href:`/category/${where.category.slug}`}] : []),...(where.subcategory ? [{label:where.subcategory.name,href:`/lists/${where.subcategory.slug}`}] : [])];
+  const fields = [
+    {id:'idea-description',title:copy.description,text:idea.what_it_is},
+    {id:'idea-customer',title:copy.customer,text:idea.who_pays_you},
+    {id:'idea-revenue',title:copy.revenue,text:idea.how_money_comes},
+    {id:'idea-needs',title:copy.needs,text:idea.what_you_need},
+  ].filter(field=>field.text);
+  const fit: IdeaArticleField[] = [
+    {id:'idea-investment',title:copy.investment,text:BAND_LABEL[idea.investment_band] || idea.investment_band},
+    {id:'idea-time',title:copy.time,text:TIME_LABEL[idea.time_needed] || idea.time_needed},
+    {id:'idea-skills',title:copy.skill,text:SKILL_LABEL[idea.skill_level] || idea.skill_level},
+    {id:'idea-work-mode',title:copy.mode,text:MODE_LABEL[idea.work_mode] || idea.work_mode},
+    {id:'idea-gender-fit',title:copy.gender,text:idea.gender_fit?.replaceAll('_',' ')},
+    {id:'idea-life-stage',title:copy.lifeStage,items:idea.life_stage},
+    {id:'idea-places',title:copy.place,items:idea.place},
   ];
-
-  return (
-    <>
-      <JsonLd
-        schema={[
-          articleSchema({
-            path: ideaPath,
-            headline: idea.title,
-            description: idea.businessDescription || idea.summary,
-            datePublished: idea.createdAt,
-            categoryName: idea.categoryName,
-            image: categoryFeatured.src,
-          }),
-          breadcrumbSchema(breadcrumbItems),
-        ]}
-      />
-      <SiteShell tone="instrument">
-        <IdeaCinemaPage
-          idea={idea}
-          related={related}
-          trending={trending}
-          relatedCategories={relatedCategories}
-          contextualLinks={contextualLinks}
-        />
-      </SiteShell>
-    </>
-  );
+  const lists = where.subcategory ? [{label:where.subcategory.name,href:`/lists/${where.subcategory.slug}`}] : [];
+  return <IdeaArticle data={{slug:idea.slug,title:idea.title,hook:idea.hook,summary:idea.summary,verdict:idea.verdict,breadcrumbs,fields,fit,opportunities:[],risks:[idea.what_hurts].filter(Boolean),steps:idea.first_30_days ?? [],tools:[],faq:idea.faq ?? [],related:related.map(item=>({label:item.title,href:`/idea/${item.slug}`,note:item.hook})),lists,prompt:idea.validate_prompt,categoryName:where.category?.name,published:idea.created_at}}/>;
 }

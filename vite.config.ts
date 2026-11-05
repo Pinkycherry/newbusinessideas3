@@ -38,7 +38,17 @@ export default defineConfig(({ command, mode }) => {
     }),
   ];
   // Cloudflare Workers output, build only.
-  if (command === "build") plugins.push(nitro({ defaultPreset: "cloudflare-module" }));
+  if (command === "build")
+    plugins.push(
+      nitro({
+        defaultPreset: "cloudflare-module",
+        // New layouts (6 Nov 2026): keep TanStack's CSRF middleware in its own server chunk. Without
+        // this the server chunk imports itself in a cycle and every page returns 500.
+        rolldownConfig: {
+          output: { codeSplitting: { groups: [{ test: /createCsrfMiddleware|rolldown-runtime/, name: "csrf-middleware", priority: 100 }] } },
+        },
+      }),
+    );
   plugins.push(viteReact());
 
   // VITE_* variables, visible to both the browser and the server bundles.

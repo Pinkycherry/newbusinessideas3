@@ -1,134 +1,59 @@
-import { useCallback } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowUpRight, BookOpen, Calculator, Compass, MessagesSquare } from "lucide-react";
 
-import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout";
-import { useElementPointerGroup, useStaggerReveal } from "@/motion";
+import { Bullets, ContentPage, Section, metaFor } from "@/components/glass-editorial";
 
 export const Route = createFileRoute("/services")({
-  head: () =>
-    metaFor(
-      "Services | BBI – Bro Business Ideas",
-      "Idea library access, free idea validation, custom blueprint research and validation sprints. Everything in the library is free after one sign-in — honest research for people who cannot afford to lose money on an idea that was never going to work.",
-    ),
+  head: () => metaFor(
+    "What You Can Do Here | BusinessIdea.io",
+    "Explore completed business blueprints, check your numbers, learn with practical guides and take a prepared validation prompt to your choice of AI research tool.",
+  ),
   component: ServicesPage,
 });
 
-const services = [
-  {
-    name: "Idea library access",
-    body: [
-      "The full researched catalogue, organised category → subcategory → idea, with trend scoring, pros, cons and founder-fit verdicts. Every entry is free to browse, in full, after one sign-in.",
-      "This is the same library the founder wished existed when he was paying other platforms and receiving templated answers. No credits that run out. No blurred pages. Sign in once and the whole thing opens.",
-    ],
-    points: [
-      "Live database-backed catalogue",
-      "Keyword search across every field",
-      "Trend-ranked ordering",
-    ],
-  },
-  {
-    name: "Free idea validation",
-    body: [
-      "On every idea page, one tap turns a blueprint into a full validation report — what the market looks like, who buys, and what could kill it. Free, every time, on any idea. No add-on. No extra charge.",
-      "Most tools make validation the paid part. We made it the free part because that is the exact moment people lose money they cannot afford to lose. The Validate button stays free forever.",
-    ],
-    points: [
-      "Market analysis and target buyer",
-      "Revenue model and key risks",
-      "A concrete launch roadmap",
-      "Free every time, on any idea",
-    ],
-  },
-  {
-    name: "Custom blueprint research",
-    body: [
-      "You bring a market, sector or thesis. We produce a BBI-grade blueprint on it, in the same structure as the library. Scoped to your market. Delivered as a full blueprint. Includes an honest kill-verdict.",
-      "This is handled by the same people named on the About page. Write to us the same way you would write to a person — because a person will read it. No chatbot. No ticket number.",
-    ],
-    points: [
-      "Scoped to your market",
-      "Delivered as a full blueprint",
-      "Includes an honest kill-verdict",
-    ],
-  },
-  {
-    name: "Validation sprint",
-    body: [
-      "A short engagement that takes one idea from blueprint to evidence: customer conversations, pricing pressure-tests and a go / no-go recommendation.",
-      "Again, real humans. The same standard of honesty you see on every free blueprint. Contact us if this is what you need.",
-    ],
-    points: [
-      "Demand-signal testing",
-      "Pricing and willingness-to-pay checks",
-      "Written go / no-go call",
-    ],
-  },
-];
+const paths = [
+  { name: "Find a business direction", description: "Start in the category map, then search the separate index of completed source blueprints for a published idea you can read in full.", to: "/blueprints", action: "Explore published ideas", icon: Compass },
+  { name: "Run the numbers", description: "Bring your own costs and assumptions to the live calculators. The formula and input fields stay visible so you can question the output.", to: "/calculator", action: "Open calculators", icon: Calculator },
+  { name: "Learn before you spend", description: "Read the existing startup guides, journal articles and glossary alongside a blueprint. Move from the broad idea to the first practical test.", to: "/startup-guides", action: "Read startup guides", icon: BookOpen },
+  { name: "Ask a human", description: "If your question needs a person, contact the team. Explain your market and what you have already checked so the reply can be useful.", to: "/contact", action: "Contact the team", icon: MessagesSquare },
+] as const;
 
 function ServicesPage() {
-  // One grid element, two behaviours: the cards reveal in sequence on entry,
-  // and a single delegated pointer listener feeds the cursor sheen on
-  // whichever card is under the cursor — four cards, one listener.
-  const revealRef = useStaggerReveal<HTMLDivElement>({ direction: "up" });
-  const pointerRef = useElementPointerGroup<HTMLDivElement>(".mo-card");
-  const gridRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      revealRef.current = node;
-      pointerRef.current = node;
-    },
-    [revealRef, pointerRef],
-  );
-
-  return (
-    <ContentPage
-      eyebrow="Services"
-      title="Research you can"
-      highlight="actually act on"
-      intro={
-        "Four ways to work with BBI — from the free library to bespoke research on a market you already care about.\n" +
-        "Everything in the library is free after one sign-in. The same four people named on the About page stand behind every piece of work."
-      }
-      wide
-    >
-      {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
-      <div ref={gridRef} className="grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-5">
-        {services.map((service) => (
-          <div
-            key={service.name}
-            className="glass mo-card flex h-full flex-col rounded-2xl px-6 py-7 transition-[transform,box-shadow,border-color] duration-[250ms] ease-out hover:-translate-y-1 hover:border-foreground/25 hover:shadow-[0_18px_50px_rgb(0_0_0/0.28)] motion-reduce:transform-none"
-          >
-            <h2 className="font-display text-xl font-bold tracking-tight">{service.name}</h2>
-            <div className="mt-3 space-y-3 text-sm leading-relaxed text-muted-foreground">
-              {service.body.map((para) => (
-                <p key={para}>{para}</p>
-              ))}
-            </div>
-            <div className="mt-4 text-sm text-muted-foreground">
-              <Bullets items={service.points} />
-            </div>
-          </div>
-        ))}
-      </div>
-      <Section heading="Where to start">
-        <p>
-          If you are still exploring, start with{" "}
-          <Link to="/browse" className="mo-link text-accent underline underline-offset-4">
-            the library
-          </Link>
-          . Sign in once. That is the only requirement. The research is already done. The verdicts
-          are already written. The only thing left is for you to read them without paying for the
-          privilege of finding out an idea will not work.
-        </p>
-        <p className="mt-5">
-          If you already know your market and need something built specifically for it,{" "}
-          <Link to="/contact" className="mo-link text-accent underline underline-offset-4">
-            write to us
-          </Link>
-          . The inbox is read by the same four people named on the About and Contact pages. One of
-          them built the site you are reading. There is no chatbot between you and them.
-        </p>
-      </Section>
-      {/* EDITABLE SECTION END */}
-    </ContentPage>
-  );
+  return <ContentPage
+    eyebrow="What you can do"
+    title="From first thought to"
+    highlight="a useful test"
+    intro="Choose a direction, examine a completed blueprint, calculate with your own assumptions, then validate what matters. Each step below links to something available on this demo today."
+    wide
+  >
+    <div className="gl-service-grid">
+      {paths.map(({ name, description, to, action, icon: Icon }) => <article key={name} className="gl-service-card">
+        <span className="gl-service-icon"><Icon size={25} strokeWidth={1.8} aria-hidden="true" /></span>
+        <h2>{name}</h2><p>{description}</p>
+        <Link to={to}>{action}<ArrowUpRight size={17} aria-hidden="true" /></Link>
+      </article>)}
+    </div>
+    <Section heading="Start with your situation">
+      <p>Time, location, starting money and skills all change which idea is sensible. Browse the category map if you are still deciding what kind of work fits. Its focused paths are a way to narrow the question, not a promise that each path already has published ideas.</p>
+      <p><Link to="/browse">Browse categories</Link> or <Link to="/blueprints">search completed blueprints</Link>. The latter is a separate index because the source catalog and the new category map do not yet have a verified one-to-one assignment.</p>
+    </Section>
+    <Section heading="Read the full blueprint">
+      <p>A completed idea page brings together the business description, customers, revenue route, costs, obstacles and launch steps from the original published record. Look for the parts that could rule the idea out in your market before you invest.</p>
+      <p>Original source images and their descriptive text appear with the idea wherever a mapped asset exists. Use the page links to move to another idea if the first one is a poor fit.</p>
+    </Section>
+    <Section heading="Validate with the model you choose">
+      <p>Every completed blueprint has a Validate button. It prepares a structured research prompt and lets you choose Claude, Perplexity, ChatGPT or Grok. The chosen provider opens with the prompt; its own sign-in or usage rules may apply.</p>
+      <p>BBI does not generate or sell an automatic validation report on this demo. Treat an AI answer as a starting hypothesis: check local demand, speak to potential buyers and test the numbers yourself.</p>
+      <p><Link to="/startup-idea-validation">Work through the startup idea validation field guide</Link> to turn those questions into buyer conversations, a reversible offer and an evidence-based next decision.</p>
+      <Bullets items={["Name the exact buyer and the problem they already pay to solve.", "Ask for opposing evidence and the conditions that would make the idea fail.", "Cross-check any market figure against a source you can open.", "Try one small customer test before committing to a full launch."]} />
+    </Section>
+    <Section heading="Make the numbers yours">
+      <p>Use the calculators for startup cost, break-even, runway, customer acquisition or other focused questions. Replace example inputs with your situation and compare more than one scenario. The output is arithmetic based on what you enter, not a forecast.</p>
+      <p><Link to="/calculator">Open the calculator library</Link>, then <Link to="/startup-guides">read the matching guide</Link> when a formula needs context.</p>
+    </Section>
+    <Section heading="Keep learning as you decide">
+      <p>The startup guides cover validation, market sizing, cash flow, hiring, pricing and more. Published journal articles offer practical examples, while the glossary explains the language behind the numbers.</p>
+      <p><Link to="/learning-resources">Open the learning hub</Link> to choose the next resource. You can also <Link to="/contact">write to the team</Link> about a specific question.</p>
+    </Section>
+  </ContentPage>;
 }

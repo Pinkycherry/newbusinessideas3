@@ -1,0 +1,508 @@
+{
+  "subcategory": {
+    "code": "C009-S09",
+    "intro": "In a small town, a two wheeler may be the only practical way to reach work, school or a farm. When it fails, the owner needs a mechanic who diagnoses the fault honestly and gives a realistic return time. A workshop is more than a toolbox. It needs a safe work area, accurate job cards, parts you can stand behind and a way to dispose of used oil, tyres and batteries responsibly. Start with vehicles and repairs you have been trained to handle. A puncture service, a scheduled fleet maintenance bench and a roadside breakdown visit are different businesses with different tools and promises. Do not present a quick check as a complete safety inspection. Explain what you observed, the proposed work, part options and estimate before replacing anything. Photograph damage with the owner's consent, note fuel and accessories at intake, and test the vehicle before handing it back. A farmer's motorcycle may carry dust and rough road wear, while a town delivery rider values short predictable downtime. Both will tell others when a mechanic fixes the actual fault rather than swapping random parts. Check local workshop, environmental and waste handling rules, especially for oils and batteries. Keep a covered parts shelf and a service history that helps you recognise a repeat complaint. The ten ideas below choose particular customers and working patterns rather than promising every kind of repair. Some can begin with a small trained bench, while others need more space and working capital. Build the version that matches your skill, location and safe capacity. In this trade, a cheap repair that fails on the road can cost much more than the money saved at the counter.",
+    "how_to_choose": "Observe which riders pass your possible location and when their vehicles are unavailable to them. A bus stand lane may suit quick punctures; a town full of delivery riders may support booked maintenance outside their peak hours. If you live near scattered villages, a mobile rescue service needs safe transport and a defined radius. Choose the makes and jobs you can diagnose confidently. Do a paid trial of a narrow menu, record time and returns, then add another service only after you can obtain reliable parts and dispose of waste properly. An electric two wheeler requires its own training and safety boundary.",
+    "faq": [
+      {
+        "q": "Can you start a workshop with only basic tools?",
+        "a": "A narrow trained service such as punctures or routine checks may start small, but every advertised job needs the right tools and a safe place. Do not accept brake, electrical or high voltage work outside your training."
+      },
+      {
+        "q": "How should customers approve extra repairs?",
+        "a": "Write down the original complaint and estimate, then contact the owner before adding a part or labour charge. Show the reason and options. A surprise bill at pickup can erase trust even when the extra work was useful."
+      },
+      {
+        "q": "What should happen to used oil and batteries?",
+        "a": "Store them safely and use the collection or recycling arrangements required locally. Do not pour oil into soil or drains or leave damaged batteries in a customer area. Include responsible handling in your workshop costs."
+      },
+      {
+        "q": "Should a mechanic guarantee every repair?",
+        "a": "State the workmanship and part warranty you can actually honour, and explain any unresolved fault. A vehicle may have multiple problems. Test the repaired function and avoid promising road safety from one isolated fix."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C009-S09-I01",
+      "slug": "commuter-morning-quick-service-bay",
+      "title": "Commuter Morning Quick Service Bay",
+      "hook": "A rider leaving for work may have only a short window to fix a light, cable or obvious starting fault.",
+      "summary": "You offer booked short repairs and checks near a commuter route before the main workshop rush. Customers see what fits the slot and what requires a longer job. Clear triage, reliable common parts and safe testing make the service useful.",
+      "what_it_is": "Open a limited early window for trained tasks such as checking a starting problem, replacing an approved bulb or adjusting a simple control. You use a job card for the reported fault and visible condition, then give a time and price estimate before work. If diagnosis reveals a brake or engine issue that cannot be fixed safely in the short slot, stop and offer a longer booking. You keep a few common quality parts for the models local commuters actually ride. You test the repair and return the vehicle with a note of any unresolved issue rather than letting the owner assume a full service occurred.",
+      "who_pays_you": "Teachers, shop employees, office workers and other daily commuters who pass the workshop may pay for fast help. Some can leave a vehicle for the day, but your niche is the person who needs a truthful short decision before leaving. A route with safe stopping space is essential. Riders will come back when you refuse to rush a safety critical job.",
+      "how_money_comes": "You charge a posted labour fee for the defined quick tasks plus approved parts, with a disclosed diagnosis fee when no repair follows. Early hours cost your time and power, so count actual paid jobs before expanding the shift. A later full service booking can follow a genuine finding, but do not turn every check into an unnecessary upsell. Validate local part and labour prices before setting the menu.",
+      "what_you_need": "Motorcycle repair training, safe lift or stand, common test tools, lighting, quality parts and a short job card system. You need enough space that a queue does not spill into traffic. You arrange used part and waste handling. You check local workshop rules and do not work on a running machine in an unsafe crowded doorway.",
+      "first_30_days": [
+        "Watch commuter flow and ask riders which minor faults make them late for work.",
+        "List quick jobs you can complete and test safely within a firm slot.",
+        "Trial booked morning repairs with written estimates and a clear referral for longer work.",
+        "Compare arrival, completion and return times before advertising a faster promise."
+      ],
+      "what_hurts": "A simple complaint can hide a deeper fault, and a commuter may press you to release an unsafe bike. Several arrivals at once can make the quick lane slower than a normal shop. Early staffing and spare parts add cost even on quiet days. You keep a strict triage boundary and explain when a vehicle must stay for proper repair.",
+      "verdict": "Build this if you can diagnose common faults quickly and refuse unsafe shortcuts. Walk away if speed would force you to skip testing or let a queue block the road.",
+      "faq": [
+        {
+          "q": "Which repairs belong in the quick slot?",
+          "a": "Choose tasks you can diagnose, perform and test with your current skill and parts. Serious brakes or engine issues need a separate safe booking."
+        },
+        {
+          "q": "What if the rider cannot leave the bike?",
+          "a": "Explain the risk and the realistic options without pretending a temporary adjustment is a full fix. The customer decides, but you should not sign off unsafe work."
+        },
+        {
+          "q": "Can you charge if no part is replaced?",
+          "a": "Yes, for an explained diagnostic service with a posted fee. Tell the rider before beginning and show what you checked at handover."
+        }
+      ],
+      "validate_prompt": "I want an early quick service bay for two wheeler commuters in India. What local workshop rules, parts, current labour fees and safe job limits should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S09-I02",
+      "slug": "farm-road-motorcycle-maintenance-workshop",
+      "title": "Farm Road Motorcycle Maintenance Workshop",
+      "hook": "A bike that travels dusty uneven farm roads needs inspection based on its actual use, not a generic wash and polish.",
+      "summary": "You maintain motorcycles used for field visits and village travel, focusing on wear, tyres, chain, brakes and documented repairs. Farmers can book around work hours. The shop serves a specific riding pattern with careful safety checks and suitable replacement parts.",
+      "what_it_is": "You ask the rider about road conditions, load and the symptom that brought the motorcycle in. You use a consistent inspection checklist for the parts you are qualified to assess, then show the owner worn components before quoting replacement. You clean and service the vehicle under the maker's specifications and test the repaired function safely. You record the work and recommend a return only when a real issue requires it. You do not promise that a single service makes a bike safe for every overloaded farm journey. A small workshop near farm routes can schedule visits before or after field work.",
+      "who_pays_you": "Farmers, field supervisors, agricultural sales workers and village families who ride rough roads are the customers. Their motorcycles may have different wear from town commuting, but each job still needs its own diagnosis. A location near a farm route or mandi access road helps. Build referrals through clear work records, not through fear based claims that every bike needs major repairs.",
+      "how_money_comes": "You charge for a defined inspection and approved maintenance tasks, with parts and labour itemised. Repeat seasonal visits can steady work, but do not replace components merely to create a schedule. Bulk purchases of common tyres or chains should follow actual model demand. You keep a reserve for warranty or comeback jobs and a cost for used oil disposal. Validate current local parts and service prices.",
+      "what_you_need": "Mechanical training, safe stands, diagnostic and hand tools, quality parts, cleaning area and proper waste collection. Know the specifications for vehicles you accept. A job card and road test procedure matter. You check local workshop and environmental requirements, and avoid test rides without the owner's permission or suitable licence and insurance.",
+      "first_30_days": [
+        "Ask farm riders which breakdowns and maintenance delays they encounter on rough routes.",
+        "Choose supported bike models and build an inspection checklist for their common wear points.",
+        "Run paid services with itemised estimates and safe post repair testing.",
+        "Review repeat faults and actual parts use before ordering a wider shelf."
+      ],
+      "what_hurts": "Dust can hide wear and mud can make inspection slow. Customers may ride overloaded vehicles and expect you to guarantee that one part will solve every problem. Genuine parts may be unavailable during a harvest rush. You record limitations, avoid unsupported safety promises and refuse a rushed repair that cannot be properly tested.",
+      "verdict": "Build this if you understand motorcycles used on rough village roads and can inspect them thoroughly. Walk away if you would treat every worn bike as a routine oil change without diagnosis.",
+      "faq": [
+        {
+          "q": "Should you replace a chain at every visit?",
+          "a": "No. Inspect its condition and follow relevant vehicle guidance. Show the owner the finding and quote replacement only when it is justified."
+        },
+        {
+          "q": "Can you collect bikes from farms?",
+          "a": "Only with permission, safe transport and clear responsibility for the vehicle. Start with workshop drop offs before adding a collection route."
+        },
+        {
+          "q": "How do you handle an overloaded bike?",
+          "a": "Explain the repair's limits and the risk of continued overloading. Do not claim the bike is safe for loads beyond its intended use."
+        }
+      ],
+      "validate_prompt": "I want a workshop serving motorcycles used on farm roads in India. What supported models, current parts costs, waste rules and service prices should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S09-I03",
+      "slug": "two-wheeler-puncture-and-tyre-stop",
+      "title": "Two Wheeler Puncture and Tyre Stop",
+      "hook": "A flat tyre between villages can strand a rider when the nearest full workshop is too far away.",
+      "summary": "You run a safe roadside puncture and tyre repair stop for supported two wheelers, with clear limits on what can be patched. Riders pay for quick assessment and repair or a properly quoted replacement. Good location and tyre safety matter more than a broad workshop menu.",
+      "what_it_is": "You set up in a permitted safe pull off area, away from moving traffic. You inspect the tyre and wheel before promising a patch, identify damage that makes repair unsuitable and explain the options to the rider. You use proper tools for the tyre type and test for leaks after work. You record the repair and do not reuse a damaged tube or plug beyond the method's safe limits. Stock common tubes and a modest set of tyres only for models used on that road. You keep a pump in working condition and a backup plan for power loss.",
+      "who_pays_you": "Motorcycle and scooter riders commuting between villages, farmers carrying light goods and delivery riders are the customers. Their need is immediate but uneven. A road with traffic and safe stopping space is essential; a busy dangerous bend is not a viable location. Some riders will return for replacement after a temporary situation, so give a clear explanation rather than a false guarantee.",
+      "how_money_comes": "You charge a posted puncture or inspection fee and separately quote tube or tyre replacement. Stock turns depend on local vehicle models, and a rarely used tyre size can hold cash for months. You keep quality standards even when a rider is in a hurry. A small air service may bring customers but should not be the only income assumption. Validate local parts and roadside rent before investing.",
+      "what_you_need": "Tyre repair training, safe lifting tools, pump, leak testing setup, appropriate patches and tubes, lighting and a protected work area. You check local vending or workshop permissions and used tyre disposal. You need reflective safety practices near traffic. You do not let customers stand beside a raised vehicle or in the road.",
+      "first_30_days": [
+        "Observe a possible road site for safe stopping and the actual two wheeler traffic pattern.",
+        "Identify common tube and tubeless tyre types and practise approved repairs.",
+        "Post clear inspection, puncture and replacement prices at a small trial stop.",
+        "Track tyre sizes, rejected repairs and quiet hours before stocking more inventory."
+      ],
+      "what_hurts": "A tyre with sidewall damage may be unsafe to patch even when the rider asks you to do it. Roadside dust and rain make work harder, while traffic creates a constant hazard. Slow periods can make rent difficult. You keep safety boundaries firm, test each repair and refuse a location where riders must stop on an active lane.",
+      "verdict": "Build this if you have a safe roadside site and can judge when a tyre must be replaced. Walk away if the only visible spot puts riders or your team in traffic.",
+      "faq": [
+        {
+          "q": "Can every puncture be patched?",
+          "a": "No. Damage location, size and tyre condition matter. Inspect before quoting and recommend replacement when an approved repair is not safe."
+        },
+        {
+          "q": "Should you stock many tyre brands?",
+          "a": "Begin with dependable sizes used on that road and supplier access for others. Unused tyres age while your cash stays locked in the shelf."
+        },
+        {
+          "q": "What if a customer wants only air?",
+          "a": "Offer it under a clear small fee or as a courtesy you can sustain. Check pressure safely and do not ignore visible tyre damage."
+        }
+      ],
+      "validate_prompt": "I want to open a two wheeler puncture and tyre stop on a small town road in India. What safe location, tools, disposal rules and current fees should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional",
+        "student"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S09-I04",
+      "slug": "delivery-rider-fleet-maintenance-slots",
+      "title": "Delivery Rider Fleet Maintenance Slots",
+      "hook": "A group of delivery riders loses income when routine servicing is left until every scooter fails at once.",
+      "summary": "You reserve maintenance slots for a local delivery fleet or rider group, recording each vehicle's work and next agreed check. Riders book outside peak delivery hours. The model needs reliable turnaround, itemised invoices and a backup when a fault takes longer than expected.",
+      "what_it_is": "You meet the fleet owner or rider group to understand vehicles, daily peak times, approval authority and payment terms. You inspect each scooter or bike individually and give a job card with proposed maintenance and parts. You schedule routine tasks in a quiet window, then test and hand back before the promised shift when safe. A serious fault should be escalated rather than patched to meet a deadline. You keep service history by vehicle, not just by rider name, because bikes may be reassigned. State who approves extra parts and who receives warranty complaints.",
+      "who_pays_you": "Local parcel services, food delivery operators and independent rider groups may pay. A company may pay a monthly invoice, while independent riders pay per job. You do not assume the person bringing the vehicle can authorise every repair. A compact fleet close to your workshop makes scheduled slots easier than chasing individual bikes across town.",
+      "how_money_comes": "You charge per approved service or under a written fleet arrangement with clear labour, parts and invoice terms. Predictable volume helps plan parts, but a low contract rate can become unprofitable if every fault is treated as included. You avoid long credit without a reliable payer. You keep warranty reserves and track actual bay hours. Validate current parts costs and fleet terms before signing.",
+      "what_you_need": "Mechanical skill on the fleet's models, safe bays, diagnostic tools, parts supplier, service log and a way to book slots. You need an authorised contact for approvals and a process for used oil and batteries. You check workshop rules and insurance needs for any test ride. You never release an unsafe vehicle solely to meet a delivery shift.",
+      "first_30_days": [
+        "Ask rider groups which routine faults cause the most lost delivery time.",
+        "Inspect the actual fleet models and price a trial service menu.",
+        "Take a small paid batch with job cards and agreed approval contacts.",
+        "Compare promised turnaround, actual bay hours and invoice delays before a longer contract."
+      ],
+      "what_hurts": "Several vehicles can need service on the same day, while the fleet expects every rider back by peak hours. Parts may be hard to obtain for mixed models, and an operator may delay a large invoice. Rushing a brake or tyre repair creates risk for the rider. Cap bookings, document exceptions and refuse a contract that prices unlimited work as routine maintenance.",
+      "verdict": "Build this if you can schedule a known fleet without sacrificing safe checks and payment clarity. Walk away if the operator expects open ended repairs at a fixed low fee.",
+      "faq": [
+        {
+          "q": "Should a fleet contract include parts?",
+          "a": "List included labour and parts precisely or quote parts separately. An unlimited promise can make one major repair consume the entire month's fee."
+        },
+        {
+          "q": "Who approves extra work?",
+          "a": "Name an authorised fleet contact or individual owner on the job card. Do not rely on a rider's guess when the invoice goes to someone else."
+        },
+        {
+          "q": "What if a vehicle cannot be ready by shift time?",
+          "a": "Explain the fault and realistic completion time immediately. Do not release an unsafe vehicle because the schedule is inconvenient. The owner's approval remains necessary."
+        }
+      ],
+      "validate_prompt": "I want to service a small delivery rider fleet in an Indian town. What contract scope, current parts, safe turnaround and invoice terms should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S09-I05",
+      "slug": "village-roadside-bike-breakdown-van",
+      "title": "Village Roadside Bike Breakdown Van",
+      "hook": "A rider stranded between villages needs a mechanic who can reach the location and decide whether a safe repair is possible.",
+      "summary": "You offer booked roadside assistance for two wheelers within a defined radius, carrying basic diagnostic tools and common parts. Simple faults are repaired safely off the road; others are transported or referred under agreed terms. Travel and safety are the core costs.",
+      "what_it_is": "You take the rider's location, vehicle model, symptoms and safe stopping position before leaving. You quote the callout fee and approximate arrival window, then reach the site with visible safety equipment. Move the vehicle away from traffic before examining it. Diagnose, explain the repair and obtain approval for parts. If it cannot be fixed safely there, arrange an agreed tow or transport to a workshop rather than making a roadside guess. You record the work and test the vehicle before it continues. You set a service radius and hours you can actually cover, including bad weather limits.",
+      "who_pays_you": "Riders travelling between villages, farm workers returning late and families whose scooter stops on a rural road may pay. A local tow operator or workshop may refer calls, but agree on responsibility and fees beforehand. Customers under stress value an accurate arrival estimate more than a claim that you can repair every breakdown at the roadside.",
+      "how_money_comes": "You charge a transparent callout and distance fee plus approved repair labour and parts. The callout fee covers a trip even when the vehicle needs towing instead. Spare parts carried in a van tie up cash, so start with the common models on your route. You keep fuel, helper time and failed location searches in the calculation. Validate current local travel and towing rates before publishing coverage.",
+      "what_you_need": "Mechanical training, safe roadside equipment, dependable vehicle, basic tools, common quality parts and communication coverage for your area. You need a licensed transport arrangement when towing is required and a workshop partner for major jobs. You check local business, vehicle and insurance requirements. You never work beside moving traffic without a safe place to stop.",
+      "first_30_days": [
+        "Map common breakdown stretches and check whether a vehicle can stop safely there.",
+        "Agree on towing referrals and a callout fee before advertising help.",
+        "Trial a small radius with daytime calls and written estimates at the scene.",
+        "Review travel time, parts used and unsafe locations before extending hours."
+      ],
+      "what_hurts": "A caller may describe the wrong location, roads may flood and a simple sounding fault can need a full workshop. Night calls carry personal and traffic risks. A stranded rider may expect a guaranteed fix after paying for travel. You explain the callout terms clearly, carry safety gear and decline a roadside repair when the site is hazardous.",
+      "verdict": "Build this if you can reach a compact rural radius safely and have a towing fallback. Walk away if most calls would put you or the rider beside active traffic without protection.",
+      "faq": [
+        {
+          "q": "Does the callout fee include the repair?",
+          "a": "State the travel fee and separate repair estimate before leaving. A customer should know what they owe if the vehicle cannot be fixed roadside."
+        },
+        {
+          "q": "Can you work on a narrow highway shoulder?",
+          "a": "Only if the vehicle and people can be moved to a safe area under applicable road rules. Otherwise arrange recovery rather than opening tools beside traffic."
+        },
+        {
+          "q": "Should you offer night service from day one?",
+          "a": "Start with hours you can cover safely and reliably. Night calls require more lighting, backup and personal safety planning than a daytime route."
+        }
+      ],
+      "validate_prompt": "I want to offer roadside two wheeler breakdown help around Indian villages. What current callout fees, safe work rules, transport and insurance should I verify?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "field",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S09-I06",
+      "slug": "scooter-battery-starting-diagnosis-bench",
+      "title": "Scooter Battery Starting Diagnosis Bench",
+      "hook": "A scooter that will not start may have a battery problem, but replacing the battery without testing can waste money.",
+      "summary": "You specialise in starting and charging diagnosis for common petrol scooters, fitting suitable batteries only when tests support it. Customers receive a clear result and safe disposal of old units. Electrical training and warranty records matter more than a shelf full of batteries.",
+      "what_it_is": "You take the customer's description of when the scooter fails to start, then check the battery and related charging system with suitable tools. You explain whether charging, a connection repair or replacement is indicated, and quote the part before fitting it. You use a compatible product with documented warranty, secure terminals safely and test starting afterward. You record the old battery's condition and arrange proper collection under applicable rules. A battery may fail because another component is faulty, so do not promise a new unit alone will fix every intermittent starting issue.",
+      "who_pays_you": "Daily scooter commuters, shop workers and families with an older petrol scooter are the buyers. A nearby general workshop may refer electrical faults it cannot test confidently. You choose models common in your area and learn their specifications. A customer who only needs a loose connection fixed should hear that honestly, even when a battery sale would earn more.",
+      "how_money_comes": "You charge for a disclosed diagnostic check and approved labour or battery replacement. Part margins can be offset by warranty claims and the cost of storing unsold batteries, so keep inventory narrow. You agree on return terms with a supplier before stocking. A repeat relationship with other mechanics may bring referrals, but preserve the customer's estimate and warranty record. Validate local battery and disposal costs.",
+      "what_you_need": "Electrical diagnosis training for conventional two wheelers, safe tools, meter, suitable battery storage and an authorised waste collection arrangement. You keep warranty cards and job records. You check local workshop and battery handling requirements. This service does not include high voltage electric vehicle battery packs without separate specialist training.",
+      "first_30_days": [
+        "Ask scooter owners and mechanics which starting faults are frequently misdiagnosed locally.",
+        "Practise battery and charging tests on supported petrol models before offering paid checks.",
+        "Agree on genuine part, warranty and old battery collection terms with a supplier.",
+        "Track cases where replacement did not solve the complaint and improve the diagnostic checklist."
+      ],
+      "what_hurts": "An intermittent charging fault may make a new battery appear defective. Batteries cost money to hold and need safe storage, while a customer may expect an immediate warranty replacement even after misuse. Poor terminal work can create a road failure. You test the whole relevant circuit, keep evidence and do not use a part swap as a substitute for diagnosis.",
+      "verdict": "Build this if you can test starting systems accurately and handle old batteries responsibly. Walk away if you would sell a battery on guesswork or attempt high voltage work without training.",
+      "faq": [
+        {
+          "q": "Can you test before selling a battery?",
+          "a": "Yes, and you should. A proper check can reveal a connection or charging issue, saving the rider an unnecessary purchase."
+        },
+        {
+          "q": "Who handles a warranty claim?",
+          "a": "Tell the customer your role and the supplier's terms at sale. Keep the invoice and test record so a later claim can be assessed fairly."
+        },
+        {
+          "q": "Does this include electric scooter battery packs?",
+          "a": "No. High voltage systems need different training and safety equipment. Keep the service boundary explicit rather than treating every battery as the same job."
+        }
+      ],
+      "validate_prompt": "I want a petrol scooter starting and battery diagnosis bench in India. What test tools, current parts, warranty and waste handling rules should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S09-I07",
+      "slug": "women-riders-booked-scooter-service",
+      "title": "Women Riders Booked Scooter Service",
+      "hook": "A rider who dislikes waiting alone at a crowded workshop may value a clear appointment, explanation and pickup time.",
+      "summary": "You run a scooter workshop with booked service slots and respectful communication, designed around riders who want predictable visits. Women riders are a core audience, while any customer can use the same transparent process. The mechanical work remains the reason to pay.",
+      "what_it_is": "Provide an appointment where the rider can describe the issue without being interrupted or pressured into extras. You record the scooter's condition and complaint, inspect under a checklist and explain the proposed repair and price in ordinary language. You offer a clean waiting area or a firm collection time, with updates when a part is delayed. You test the completed work with the rider and return removed parts when requested. The workshop should treat every customer respectfully; a women focused service is not a substitute for trained mechanics, safe premises or fair warranty terms.",
+      "who_pays_you": "Women who commute to colleges, shops and offices may value a comfortable appointment, as may older riders or anyone tired of vague workshop bills. You ask prospective customers what actually makes local servicing difficult before designing the space. A residential route with good lighting and safe access can help, but honest repair skill is still the strongest reason for referrals.",
+      "how_money_comes": "You charge normal itemised labour and parts prices, with booked slots helping you plan bay capacity. A service reminder can bring repeat work when genuinely due, but never sell a maintenance package by creating anxiety. You clean waiting space and longer explanation time cost money, so include them in a sensible rate rather than hidden fees. Validate local workshop and parts costs before choosing a location.",
+      "what_you_need": "Trained scooter mechanics, safe bay, reliable parts, appointment calendar, clear written estimates and a clean accessible customer space. Staff should be able to explain work without condescension. You keep safety, waste disposal and local workshop requirements in place. A privacy policy for customer contact details prevents reminders becoming unwanted messages.",
+      "first_30_days": [
+        "Ask women scooter riders what workshop experiences make them delay necessary maintenance.",
+        "Design a job card, estimate and appointment process around the most repeated concerns.",
+        "Run a limited paid booking schedule with trained mechanics and clear completion updates.",
+        "Measure repeat trust and repair returns, not merely the number of people visiting the waiting room."
+      ],
+      "what_hurts": "A delayed part can break a pickup promise, and a courteous reception cannot rescue poor repair work. Some customers may assume the service is women only when it is not. Staff can slip into patronising explanations unless trained. You keep the promise concrete: listened to, quoted, tested and ready when stated or updated early. Refuse more bookings than bays can handle.",
+      "verdict": "Build this if you can combine skilled scooter repair with predictable respectful appointments. Walk away if the women focused message is only a sign while estimates and mechanical quality stay weak.",
+      "faq": [
+        {
+          "q": "Must the mechanics be women?",
+          "a": "Not necessarily. Competence and respectful communication are essential. If you advertise women mechanics specifically, make sure the claim is true for the offered appointment."
+        },
+        {
+          "q": "Can men book too?",
+          "a": "Yes, unless you explicitly operate a lawful restricted service. The core value is a transparent comfortable process that benefits many riders."
+        },
+        {
+          "q": "What if a repair runs late?",
+          "a": "Tell the customer promptly, explain why and offer a realistic new time. Silence until pickup is often more frustrating than the delay itself."
+        }
+      ],
+      "validate_prompt": "I want to build a booked scooter service workshop that women riders trust in an Indian town. What local demand, staffing, workshop rules and current pricing should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S09-I08",
+      "slug": "older-motorcycle-restoration-workshop",
+      "title": "Older Motorcycle Restoration Workshop",
+      "hook": "An owner may want a beloved old motorcycle made dependable again, but restoration needs a budget and patience from both sides.",
+      "summary": "You take selected older motorcycles for staged mechanical restoration rather than quick commuter repairs. The owner approves each stage after inspection and parts availability. Documentation, storage and honest scope control protect a project that may take weeks.",
+      "what_it_is": "You inspect the vehicle and verify ownership before accepting a long project. You separate safety critical mechanical work from cosmetic wishes, then prepare a staged estimate with known uncertainties. You photograph parts with consent, label everything removed and store the motorcycle securely. Order suitable parts only after the owner approves availability and cost. You test the finished systems under safe conditions and document what could not be restored. You avoid taking a machine whose parts or condition you cannot support simply because it looks interesting. A written storage and cancellation policy matters when a project pauses halfway.",
+      "who_pays_you": "Owners of older motorcycles with sentimental value, collectors in nearby towns and families wanting to keep a working vehicle may pay. Some will spend only enough for safe basic use, while others seek a cosmetic finish. You do not assume every old bike has a buyer willing to fund extensive work. A paid initial inspection helps each person decide whether the project is sensible.",
+      "how_money_comes": "You charge for the inspection and approved stages of labour, with parts advances and progress invoices rather than one vague final bill. Projects can tie up a bay for weeks, so include storage and opportunity cost in the quote. A rare part may be unavailable or more expensive than expected; get approval before ordering. You keep a reserve for workmanship corrections and validate current specialist parts availability.",
+      "what_you_need": "Broad mechanical experience on the selected models, secure long term space, labelled parts storage, suitable tools and trusted specialist suppliers. You need a detailed job record and proper oil, battery and scrap disposal. You check local workshop and vehicle modification rules. A specialist paint or machining job should be separately quoted through a qualified partner.",
+      "first_30_days": [
+        "Choose older models you know and identify reliable parts and specialist partners.",
+        "Create a staged inspection and owner approval form before accepting a project.",
+        "Take one paid small restoration with secure labelled parts storage.",
+        "Compare actual bay time and supply delays with each approved estimate."
+      ],
+      "what_hurts": "Hidden corrosion and scarce parts can turn a modest job into an expensive unfinished bike occupying your workshop. An owner may stop paying after disassembly, and sentimental expectations can exceed what the machine can safely deliver. You keep deposits and stages clear, protect removed parts and decline a restoration whose safety cannot be brought to an acceptable standard.",
+      "verdict": "Build this if you enjoy careful staged work and have space to protect a long project. Walk away if you need quick daily cash from every bay or cannot locate reliable parts.",
+      "faq": [
+        {
+          "q": "Can you give a fixed total price immediately?",
+          "a": "Only for well defined work after inspection. Explain unknowns and price stages so the owner can approve a decision when hidden damage appears."
+        },
+        {
+          "q": "Who owns removed parts?",
+          "a": "Agree at intake whether the owner wants them returned or responsibly disposed of. Keep every part labelled while the project is active."
+        },
+        {
+          "q": "What if the owner stops the project?",
+          "a": "Use the written stage, payment and storage policy. Return the motorcycle safely in its documented condition, with loose parts accounted for."
+        }
+      ],
+      "validate_prompt": "I want an older motorcycle restoration workshop in an Indian small town. What parts access, storage terms, current labour pricing and local rules should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S09-I09",
+      "slug": "school-staff-two-wheeler-service-day",
+      "title": "School Staff Two Wheeler Service Day",
+      "hook": "Teachers may all need routine servicing but cannot leave their bikes at a workshop during the school day.",
+      "summary": "You arrange a booked service day with a school or office, collecting authorised staff vehicles and returning them after documented workshop work. The institution provides access; individual owners approve and pay for repairs. Scheduling and custody are as important as the mechanical job.",
+      "what_it_is": "Seek the institution's permission for a pickup point and agree on a date that will not obstruct its premises. Each rider books a slot and signs a job card with vehicle condition, keys and reported complaint. Transport or ride the bike only with explicit consent and suitable coverage. At your workshop, inspect and quote any extra work to the individual owner before proceeding. You return vehicles with a service record and let owners test them. You do not ask the school to authorise repairs for staff personally owned bikes. You keep keys and vehicles labelled throughout the day.",
+      "who_pays_you": "Teachers, office staff and other employees whose vehicles are parked together are the direct customers. The institution may simply allow the pickup arrangement and should not be presented as endorsing your repair quality unless it has agreed. A single service day can bring a cluster of jobs with lower marketing effort, but every rider still needs a personal estimate.",
+      "how_money_comes": "You charge each owner for approved service and parts, plus a disclosed collection fee if transport is involved. Group bookings can reduce travel time, but capacity is limited by bays and return deadlines. A deposit for special parts should be individual, not charged to the institution by assumption. You keep a cost for driver time and insurance. Validate local service prices before offering a group discount.",
+      "what_you_need": "A trained workshop, enough bay slots, secure key tags, vehicle condition forms, safe collection transport and clear owner contact details. You check local insurance and any rules for moving customer vehicles. Waste handling remains your workshop responsibility. You do not promise all bikes back at one hour without measuring capacity.",
+      "first_30_days": [
+        "Ask one institution if staff would value an authorised group pickup day.",
+        "Write individual consent, key, vehicle condition and estimate forms.",
+        "Trial a small number of paid bikes and time workshop and return logistics.",
+        "Review late returns and custody errors before offering another service day."
+      ],
+      "what_hurts": "A missing key or scratched scooter can turn a convenient pickup into a dispute. A hidden repair may take longer than the promised return, while school gates are busy at dismissal. Some employees may expect the institution to pay. You keep individual agreements clear, cap the group and use secure transport rather than assuming permission to ride every vehicle.",
+      "verdict": "Build this if your workshop can handle a booked cluster and document custody from gate to return. Walk away if you cannot insure or securely manage customers' vehicles and keys.",
+      "faq": [
+        {
+          "q": "Does the school pay for repairs?",
+          "a": "Usually the individual vehicle owner unless the institution expressly orders and funds work. Clarify payer and approval on each job card."
+        },
+        {
+          "q": "Can you ride the customer's bike to your shop?",
+          "a": "Only with explicit consent, a suitable licensed rider and appropriate coverage. A transport method that is safe for the vehicle may be preferable."
+        },
+        {
+          "q": "What if an extra repair is found?",
+          "a": "Contact that owner for approval and a revised return time. The original pickup arrangement does not authorise every additional part."
+        }
+      ],
+      "validate_prompt": "I want to organise two wheeler service days for school staff in India. What consent, transport insurance, workshop capacity and current prices should I check?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "mixed",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S09-I10",
+      "slug": "electric-scooter-low-voltage-accessory-bench",
+      "title": "Electric Scooter Low Voltage Accessory Bench",
+      "hook": "An electric scooter owner may need a mirror, light or tyre fixed without sending every small job to a distant centre.",
+      "summary": "You handle only clearly defined low risk accessory and mechanical jobs on supported electric scooters, referring high voltage faults to qualified service. Customers see the boundary before booking. Model specifications and electrical isolation training are essential even for a narrow bench.",
+      "what_it_is": "You choose supported electric scooter models and create a written list of tasks such as mirror fitting, tyre work or a documented low voltage accessory replacement within your training. At intake, ask about fault warnings and battery damage; refuse the job or refer it when high voltage or control systems may be involved. You follow manufacturer safe isolation procedures before touching a relevant component. You quote the part and labour, perform only approved work and test the repaired function without bypassing safety interlocks. You tell the customer exactly what was and was not inspected. You never open a traction battery as an extension of a simple accessory job.",
+      "who_pays_you": "Electric scooter riders in towns where authorised service is distant may pay for basic mechanical or accessory tasks. Some models may have warranty rules that make outside work unsuitable, so customers must understand that risk before authorising a job. A strong relationship with an authorised service point for referrals may matter more than stocking expensive electrical modules.",
+      "how_money_comes": "You charge labour and approved accessory parts for tasks inside the defined scope. A narrow service menu limits part inventory and reduces the temptation to guess at costly electrical faults. Warranty and supplier returns must be clear, especially where a customer expects a manufacturer's warranty to remain unaffected. You do not charge for a high voltage diagnosis you are not trained to perform. Validate local model demand and current part availability.",
+      "what_you_need": "Mechanical and electric scooter safety training, model guidance, suitable isolation tools, safe work area and genuine or clearly described compatible accessories. You check local workshop, electrical and battery waste obligations. You need a referral path for traction battery, charger or controller problems. You keep damaged battery vehicles outside ordinary customer space until specialists advise safe handling.",
+      "first_30_days": [
+        "List local electric scooter models and which accessory faults their owners actually face.",
+        "Complete relevant safety training and define the exact jobs your bench will accept.",
+        "Check part and warranty terms before a limited paid trial of mechanical tasks.",
+        "Record every referral and near boundary case to keep the advertised menu honest."
+      ],
+      "what_hurts": "A seemingly simple warning light can point to a high voltage system, while a model may need an isolation step you have not learned. A mistaken repair could affect warranty or rider safety. Parts change quickly between versions. You do not let a customer's need for speed pull you across the written scope, and refer damaged battery packs to qualified specialists.",
+      "verdict": "Build this only if you have model specific safety training and a strict low risk task boundary. Walk away if you would open a traction battery or bypass a safety system without specialist qualification.",
+      "faq": [
+        {
+          "q": "Can you repair the main battery pack?",
+          "a": "Not under this service. Traction batteries require specialist training, equipment and procedures. Refer that work to a qualified authorised provider."
+        },
+        {
+          "q": "Could an outside repair affect warranty?",
+          "a": "It depends on the maker and work performed. Explain the risk and ask the owner to check applicable terms before authorising a job."
+        },
+        {
+          "q": "Which jobs are appropriate first?",
+          "a": "Choose documented simple mechanical and accessory tasks you can perform under model guidance. Do not infer safety from a part looking similar to a petrol scooter component."
+        }
+      ],
+      "validate_prompt": "I want a limited electric scooter accessory and mechanical repair bench in India. What model safety training, current warranty rules, parts and workshop permissions should I verify?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    }
+  ]
+}

@@ -1,33 +1,22 @@
+import { V2PageAsideCta, V2PageCard, V2PageHero, V2PageSection } from "@/components/v2/page-sections";
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
-
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight, Clock } from "lucide-react";
 
-import { SiteShell, Breadcrumbs } from "@/components/site-shell";
-import { AdSlot } from "@/components/AdSlot";
-import { BlogCtaEnd, BlogCtaHero, BlogCtaStickyBar } from "@/components/blog-cta";
-import { headingIdeaSlugs, injectIdeaCtas, isSignedIn } from "@/lib/blog-cta-shared";
-import { useAuth } from "@/hooks/use-auth";
-import { formatDate } from "@/lib/blog-shared";
+import { GlassShell } from "@/components/glass-shell";
+import { ReadingPaths, readingPathsFor } from "@/components/reading-paths";
+import { ReaderCompanion } from "@/components/reader-companion";
+import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/schema";
 import { getBlogPost } from "@/lib/blog.functions";
+import { formatDate } from "@/lib/blog-shared";
 import { canonicalUrl, CO_FOUNDER, FOUNDER, founderProfile } from "@/lib/site-config";
 import { hideImgIfBroken } from "@/lib/utils";
-import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
+import "@/components/glass-library.css";
 
-/**
- * The sanitizer strips every class attribute off the stored article, so the
- * inline links arrive bare. Tagging them here is how they join the motion
- * system without the markup being restructured or the sanitizer relaxed.
- */
-function withLinkMotion(html: string): string {
-  return html.replace(/<a(?=[\s>])/gi, '<a class="mo-link"');
-}
-
-const postQuery = (slug: string) =>
-  queryOptions({
-    queryKey: ["blog", "post", slug],
-    queryFn: () => getBlogPost({ data: { slug } }),
-  });
+const postQuery = (slug: string) => queryOptions({
+  queryKey: ["blog", "post", slug],
+  queryFn: () => getBlogPost({ data: { slug } }),
+});
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ context, params }) => {
@@ -36,282 +25,91 @@ export const Route = createFileRoute("/blog/$slug")({
     return data;
   },
   head: ({ loaderData }) => {
-    if (!loaderData) {
-      return {
-        meta: [
-          { title: "Article not found | BBI – Bro Business Ideas" },
-          { name: "robots", content: "noindex" },
-        ],
-      };
-    }
+    if (!loaderData) return { meta: [
+      { title: "Article not found | BusinessIdea.io" },
+      { name: "robots", content: "noindex" },
+    ] };
     const { post } = loaderData;
-    const title = `${post.title} | BBI – Bro Business Ideas`;
-    return {
-      meta: [
-        { title },
-        { name: "description", content: post.excerpt },
-        { property: "og:title", content: title },
-        { property: "og:description", content: post.excerpt },
-        { property: "og:type", content: "article" },
-        { name: "twitter:card", content: "summary_large_image" },
-        ...(post.image
-          ? [
-              // Share previews need an absolute URL; our own files are stored as paths.
-              {
-                property: "og:image",
-                content: post.image.startsWith("/") ? canonicalUrl(post.image) : post.image,
-              },
-              {
-                name: "twitter:image",
-                content: post.image.startsWith("/") ? canonicalUrl(post.image) : post.image,
-              },
-              ...(post.imageAlt
-                ? [
-                    { property: "og:image:alt", content: post.imageAlt },
-                    { name: "twitter:image:alt", content: post.imageAlt },
-                  ]
-                : []),
-            ]
-          : []),
-      ],
-    };
+    const title = `${post.title} | BusinessIdea.io`;
+    return { meta: [
+      { title }, { name: "description", content: post.excerpt },
+      { property: "og:title", content: title },
+      { property: "og:description", content: post.excerpt },
+      { property: "og:type", content: "article" },
+      { name: "twitter:card", content: "summary_large_image" },
+      ...(post.image ? [
+        { property: "og:image", content: post.image.startsWith("/") ? canonicalUrl(post.image) : post.image },
+        { name: "twitter:image", content: post.image.startsWith("/") ? canonicalUrl(post.image) : post.image },
+        ...(post.imageAlt ? [
+          { property: "og:image:alt", content: post.imageAlt },
+          { name: "twitter:image:alt", content: post.imageAlt },
+        ] : []),
+      ] : []),
+    ] };
   },
-  component: BlogPostPage,
-  notFoundComponent: () => (
-    <SiteShell tone="instrument">
-      <div className="mx-auto max-w-6xl px-4 py-24">
-        <p>That article doesn&apos;t exist — it may have been moved or taken down.</p>
-        <Link to="/blog" className="mt-4 inline-block text-primary underline">
-          Back to the blog
-        </Link>
-      </div>
-    </SiteShell>
-  ),
-  errorComponent: () => (
-    <SiteShell tone="instrument">
-      <p className="mx-auto max-w-6xl px-4 py-24">This article could not be loaded.</p>
-    </SiteShell>
-  ),
+  component: BlogArticle,
+  notFoundComponent: () => <GlassShell><div className="gl-page gl-message"><h1>We could not find that article.</h1><Link to="/blog">All articles</Link></div></GlassShell>,
+  errorComponent: () => <GlassShell><div className="gl-page gl-message"><h1>This article could not load.</h1><Link to="/blog">All articles</Link></div></GlassShell>,
 });
 
-function BlogPostPage() {
+function BlogArticle() {
   const { slug } = Route.useParams();
   const { data } = useSuspenseQuery(postQuery(slug));
-  const titleRef = useTextReveal<HTMLHeadingElement>();
-  // Masthead depth scene: one shared observer + one shared frame callback
-  // for the whole header. Cursor depth on fine pointers, scroll depth on touch
-  // (see motion.css, coarse-pointer block).
-  const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
-
-  const relatedRef = useStaggerReveal<HTMLDivElement>({ direction: "up", stagger: 0.05 });
-  const auth = useAuth();
   if (!data) return null;
   const { post, related } = data;
-  const ideaSlugs = headingIdeaSlugs(post.html);
-  // Split the sanitized article so ad slots can sit after the first
-  // paragraph and at the mid-article point. The per-idea Validate buttons
-  // are added after withLinkMotion so they are not given its link class.
-  const blocks = injectIdeaCtas(withLinkMotion(post.html), isSignedIn(auth), post.slug).split(
-    /(?<=<\/p>)/,
-  );
-  const firstBlock = blocks.slice(0, 1).join("");
-  const midIndex = Math.max(1, Math.ceil(blocks.length / 2));
-  const secondBlock = blocks.slice(1, midIndex).join("");
-  const thirdBlock = blocks.slice(midIndex).join("");
-
-  return (
-    <SiteShell tone="instrument">
-      <article
-        ref={sceneRef}
-        className={`cx-scene mx-auto max-w-3xl px-3 py-12 sm:px-4${isSignedIn(auth) ? "" : " blog-cta-has-sticky"}`}
-      >
-        {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
-        {/* Reading progress lives in SiteShell (site-shell.tsx — the rail
-            under the header, driven by the same --page-p). A second rail
-            here would render two bars a few pixels apart at the top of the
-            article, so this page reads the shell's rather than shipping its
-            own. If the rail is ever made exclusive to long-form, it moves
-            out of the shell and back in here. */}
-        <Breadcrumbs
-          items={[
-            { label: "Home", to: "/" },
-            { label: "Blog", to: "/blog" },
-            { label: post.title },
-          ]}
-        />
-
-        <div className="mt-5 flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-accent">
-          <span>{formatDate(post.date)}</span>
-          <span className="text-muted-foreground">{post.readingMinutes} min read</span>
-          {post.categories.map((c) => (
-            <span key={c} className="glass rounded-full px-3 py-1 text-muted-foreground">
-              {c}
-            </span>
-          ))}
+  const sections = Array.from(post.html.matchAll(/<h2[^>]*>([\s\S]*?)<\/h2>/gi), (match, index) => ({
+    id: `article-section-${index + 1}`,
+    label: match[1].replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/&nbsp;/g, " ").trim(),
+  }));
+  let headingNumber = 0;
+  const anchoredHtml = post.html.replace(/<h2[^>]*>/gi, (tag) => `<span id="article-section-${++headingNumber}" class="gl-section-anchor"></span>${tag}`);
+  const middleId = sections.length > 1 ? sections[Math.floor(sections.length / 2)].id : "";
+  const breakAt = middleId ? anchoredHtml.indexOf(`<span id="${middleId}"`) : anchoredHtml.length;
+  return <>
+    <JsonLd schema={[
+      articleSchema({
+        path: `/blog/${post.slug}`, headline: post.title, description: post.excerpt,
+        datePublished: post.date, categoryName: post.categories[0] ?? "Founder notes",
+        ...(post.image ? { image: post.image } : {}),
+      }),
+      breadcrumbSchema([
+        { name: "Home", path: "/" }, { name: "Blog", path: "/blog" },
+        { name: post.title, path: `/blog/${post.slug}` },
+      ]),
+    ]} />
+    <GlassShell><div className="gl-page gl-article-page gl-blog-article">
+      <nav className="gl-breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link><span>/</span><Link to="/blog">Blog</Link><span>/</span><span>{post.title}</span></nav>
+      <article>
+        <V2PageHero className="gl-article-hero">
+          <p className="gh-eyebrow">{formatDate(post.date)} · <Clock size={15} aria-hidden="true" /> {post.readingMinutes} min read{post.categories[0] ? ` · ${post.categories[0]}` : ""}</p>
+          <h1>{post.title}</h1><p>{post.excerpt}</p>
+          <div className="gl-article-byline">Written by <Link to="/founders" hash={founderProfile(FOUNDER.name).slug}>{FOUNDER.name}</Link> · Reviewed by <Link to="/founders" hash={founderProfile(CO_FOUNDER.name).slug}>{CO_FOUNDER.name}</Link></div>
+        </V2PageHero>
+        {post.image && <figure className="gl-featured-figure">
+          <img src={post.image} alt={post.imageAlt ?? post.title} width={post.imageWidth ?? 1672} height={post.imageHeight ?? 941} loading="eager" fetchPriority="high" decoding="async" ref={hideImgIfBroken} />
+          {post.imageCaption && <figcaption>{post.imageCaption}</figcaption>}
+        </figure>}
+        <div className="gl-reading-layout">
+          <div className="gl-reading-main">
+            <div className="gl-prose" dangerouslySetInnerHTML={{ __html: anchoredHtml.slice(0, breakAt) }} />
+            <ReadingPaths topic={post.slug} />
+            {breakAt < anchoredHtml.length && <div className="gl-prose" dangerouslySetInnerHTML={{ __html: anchoredHtml.slice(breakAt) }} />}
+          </div>
+          <ReaderCompanion sections={sections} label="Article sections" topic={post.slug} />
         </div>
-
-        <h1
-          ref={titleRef}
-          className="cx-layer cx-z3 mt-4 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl"
-        >
-          {post.title}
-        </h1>
-
-        {/* Who wrote it and who checked it, on the page that makes the claims.
-            The names come from site-config, which is what /about prints, so
-            they cannot drift apart. Posts were running anonymously while the
-            About page said real people write everything here.
-
-            Both names now resolve to their own profile on /founders rather
-            than to the top of /about. That is the same destination
-            `personUrl()` in schema.tsx gives the machine-readable author, and
-            a byline whose visible link and `author.url` disagree is a worse
-            signal than either on its own. The anchors come from
-            FOUNDER_PROFILES, so a renamed slug moves both at once. */}
-        <p className="mt-3 text-sm text-muted-foreground">
-          Written by{" "}
-          <Link
-            to="/founders"
-            hash={founderProfile(FOUNDER.name).slug}
-            className="mo-link text-accent underline underline-offset-4"
-          >
-            {FOUNDER.name}
-          </Link>{" "}
-          · Reviewed by{" "}
-          <Link
-            to="/founders"
-            hash={founderProfile(CO_FOUNDER.name).slug}
-            className="mo-link text-accent underline underline-offset-4"
-          >
-            {CO_FOUNDER.name}
-          </Link>
-        </p>
-
-        {/* The lede. Nothing on this template said "read me first" before --
-            the excerpt existed only in the meta description, invisible on
-            the page itself, so the article opened cold straight into the
-            same body copy as everything after it. */}
-        {post.excerpt && (
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-            {post.excerpt}
-          </p>
-        )}
-
-        {post.image && (
-          <figure className="mt-8">
-            {/* Keeps the page's own corner radius — the media slot supplies the
-                clip and the scale, not a new shape. */}
-            <div
-              style={{ borderRadius: "var(--radius-3xl)" }}
-              className="mo-media relative aspect-video w-full border border-border"
-            >
-              <img
-                src={post.image}
-                alt={post.imageAlt ?? post.title}
-                width={post.imageWidth ?? 1672}
-                height={post.imageHeight ?? 941}
-                loading="eager"
-                fetchPriority="high"
-                decoding="async"
-                ref={hideImgIfBroken}
-                className="h-full w-full object-cover"
-              />
-              {/* Subtle corner wash so the photo reads as art-directed, not a
-                  raw drop-in (brief 12.8). */}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/45 via-transparent to-transparent" />
-            </div>
-            {post.imageCaption && (
-              <figcaption className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-                {post.imageCaption}
-              </figcaption>
-            )}
-          </figure>
-        )}
-
-        <BlogCtaHero
-          auth={auth}
-          postSlug={post.slug}
-          firstIdeaSlug={ideaSlugs[0] ?? null}
-          ideaCount={ideaSlugs.length}
-        />
-
-        {/* Content comes from our own CMS and is sanitized server-side
-            (scripts, iframes, inline handlers and theme classes stripped).
-
-            Three cards, not one. The single continuous card this replaced
-            had the two ad slots sitting inside its own padding, so an ad
-            rendered on the article's own card background instead of reading
-            as a break between sections -- and a post with no ad configured
-            (AdSlot renders nothing until adCode is set) was one undivided
-            wall of text from the image straight through to "More reading."
-            Splitting on the same first-paragraph / mid-article boundaries
-            the ad slots already used gives the piece actual section breaks
-            whether or not an ad is there to mark them. */}
-        <div className="mt-8 space-y-6">
-          <div className="wp-prose glass rounded-3xl px-5 py-8 sm:px-8">
-            <div dangerouslySetInnerHTML={{ __html: firstBlock }} />
-          </div>
-          <AdSlot position="blog-post-after-first-paragraph" size="banner" />
-          <div className="wp-prose glass rounded-3xl px-5 py-8 sm:px-8">
-            <div dangerouslySetInnerHTML={{ __html: secondBlock }} />
-          </div>
-          <AdSlot position="blog-post-mid-article" size="rectangle" />
-          <div className="wp-prose glass rounded-3xl px-5 py-8 sm:px-8">
-            <div dangerouslySetInnerHTML={{ __html: thirdBlock }} />
-          </div>
-        </div>
-
-        <BlogCtaEnd auth={auth} postSlug={post.slug} />
-
-        <AdSlot position="blog-post-after-last-paragraph" size="banner" className="mt-6" />
-        <BlogCtaStickyBar auth={auth} postSlug={post.slug} />
-
-        {related.length > 0 && (
-          <section className="mt-14 border-t border-border/70 pt-10">
-            <div className="flex items-center gap-3">
-              <h2 className="shrink-0 text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-                More reading
-              </h2>
-              <span aria-hidden className="h-px flex-1 bg-border" />
-            </div>
-            <div
-              ref={relatedRef}
-              className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-4"
-            >
-              {related.map((r) => (
-                <Link
-                  key={r.id}
-                  to="/blog/$slug"
-                  params={{ slug: r.slug }}
-                  className="mo-card group glass flex flex-col justify-between rounded-2xl p-5"
-                >
-                  <div>
-                    {r.categories[0] && (
-                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent">
-                        {r.categories[0]}
-                      </p>
-                    )}
-                    <p className="mt-2 text-sm font-semibold leading-snug text-foreground">
-                      {r.title}
-                    </p>
-                  </div>
-                  <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
-                    <span>{formatDate(r.date)}</span>
-                    <ArrowRight className="h-3.5 w-3.5 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
-        {/* EDITABLE SECTION END */}
-
-        {/* This used to end on `ExploreRail` — a fixed registry of three
-            destinations, the same three under every post. The site's resource
-            block replaced it and is rendered by SiteShell above the footer
-            now, on every page but the homepage and the policy pages, so
-            nothing is mounted here. */}
       </article>
-    </SiteShell>
-  );
+      <p className="gl-reading-room-link"><Link to="/business-idea-reading-room">Pair this story with a source startup guide <ArrowUpRight size={17}/></Link></p>
+      {related.length > 0 && <V2PageSection className="gl-related-articles" aria-labelledby="more-articles">
+        <p className="gh-eyebrow">KEEP READING</p><h2 id="more-articles">More from the journal.</h2>
+        <div className="gl-guide-grid">{related.map((item) => <V2PageCard key={item.id} className="gl-guide-card">
+          {item.image && <Link to="/blog/$slug" params={{ slug: item.slug }} className="gl-guide-media" tabIndex={-1}><img src={item.image} alt={item.imageAlt ?? item.title} width={item.imageWidth ?? 1672} height={item.imageHeight ?? 941} loading="lazy" decoding="async" ref={hideImgIfBroken} /></Link>}
+          <span className="gh-eyebrow">{formatDate(item.date)}</span>
+          <h3><Link to="/blog/$slug" params={{ slug: item.slug }}>{item.title}</Link></h3>
+          <p>{item.excerpt}</p>
+          <Link to="/blog/$slug" params={{ slug: item.slug }} className="gl-idea-action">Read article <ArrowUpRight size={17} /></Link>
+        </V2PageCard>)}</div>
+      </V2PageSection>}
+      <V2PageAsideCta className="gl-bottom-note"><div><p className="gh-eyebrow">TAKE THIS OFF THE PAGE</p><h2>{readingPathsFor(post.slug).question}</h2><p>{readingPathsFor(post.slug).intro}</p></div><Link to={readingPathsFor(post.slug).links[0].to as "/"} className="gh-button gh-button-primary">{readingPathsFor(post.slug).links[0].title} <ArrowUpRight size={17} /></Link></V2PageAsideCta>
+    </div></GlassShell>
+  </>;
 }

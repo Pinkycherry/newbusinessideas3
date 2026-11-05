@@ -1,49 +1,30 @@
+import { V2PageAsideCta, V2PageCard, V2PageHero, V2PageSection } from "@/components/v2/page-sections";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  Compass,
-  BookOpen,
-  Calculator,
-  TrendingUp,
-  FileText,
-  Award,
-  ArrowRight,
-  Sparkles,
-  Layers,
-  CheckCircle2,
-} from "lucide-react";
-
-import { SiteShell, Breadcrumbs } from "@/components/site-shell";
-import { ExploreRail } from "@/components/explore-rail";
-import { absoluteUrl, JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { ArrowUpRight, BookOpen, Calculator, Compass, TrendingUp } from "lucide-react";
+import { getBlogPosts } from "@/lib/blog.functions";
+import { formatDate } from "@/lib/blog-shared";
+import { hideImgIfBroken } from "@/lib/utils";
+import { GlassShell } from "@/components/glass-shell";
 import { PAGE_IMAGES, pageImageMeta } from "@/config/page-imagery";
-import { PageHeroImage } from "@/components/page-hero-image";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
 import { CALCULATORS } from "@/lib/calculators";
 import { CASE_STUDIES } from "@/lib/case-studies-data";
 import { GLOSSARY_DATA } from "@/lib/glossary-data";
+import { absoluteUrl, JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
+import "@/components/glass-library.css";
+
+const postsQuery = queryOptions({ queryKey: ["blog", "posts", 1], queryFn: () => getBlogPosts({ data: { page: 1 } }) });
 
 export const Route = createFileRoute("/learning-resources/")({
-  head: () => ({
-    meta: [
-      { title: "Founder Learning Resources & Operator Toolkit | BBI – Bro Business Ideas" },
-      {
-        name: "description",
-        content:
-          "Curated learning materials, tactical playbooks, financial calculators, founder case studies, and business building frameworks.",
-      },
-      {
-        property: "og:title",
-        content: "Founder Learning Resources & Operator Toolkit | BBI – Bro Business Ideas",
-      },
-      {
-        property: "og:description",
-        content:
-          "Master hub for startup validation: TAM sizing, unit economics calculators, illustrative founder case studies, and playbooks.",
-      },
-      { name: "twitter:card", content: "summary_large_image" },
-      ...pageImageMeta(PAGE_IMAGES.resources, absoluteUrl),
-    ],
-  }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(postsQuery),
+  head: () => ({ meta: [
+    { title: "Founder Learning Resources & Toolkit | BusinessIdea.io" },
+    { name: "description", content: "Practical startup guides, calculators, founder stories, glossary terms and useful operating frameworks." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary_large_image" },
+    ...pageImageMeta(PAGE_IMAGES.resources, absoluteUrl),
+  ] }),
   component: LearningResourcesIndexPage,
 });
 
@@ -104,230 +85,39 @@ const RECOMMENDED_BOOKS = [
   },
 ];
 
+const sections = [
+  { title: "Interactive calculators", body: "Test market size, costs, break-even and runway using your own numbers.", action: "Open calculators", to: "/calculator", icon: Calculator },
+  { title: "Startup guides", body: "Read practical steps on validation, customer discovery, pricing and launch.", action: "Browse guides", to: "/startup-guides", icon: BookOpen },
+  { title: "Founder stories", body: "Verified case studies will appear here when their numbers can be checked.", action: "Read stories", to: "/founder-stories", icon: TrendingUp },
+  { title: "Founder glossary", body: "Plain-language terms and formulas for the decisions in front of you.", action: "Open glossary", to: "/founder-glossary", icon: Compass },
+] as const;
+
 function LearningResourcesIndexPage() {
-  return (
-    <>
-      <JsonLd
-        schema={[
-          collectionPageSchema({
-            path: "/learning-resources",
-            name: "Founder Learning Resources & Operator Toolkit",
-            description: "Master hub for startup validation, calculators, and frameworks.",
-            itemCount: 4,
-            image: PAGE_IMAGES.resources.src,
-          }),
-          breadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Learning Resources", path: "/learning-resources" },
-          ]),
-        ]}
-      />
-      <SiteShell tone="instrument">
-        <div className="mx-auto max-w-6xl px-3 py-10 sm:px-4 sm:py-14">
-          <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Learning Resources" }]} />
-
-          <div className="mt-6">
-            <p className="t-eyebrow">Curated Knowledge Base</p>
-            <h1 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-              Operator Learning Resources &{" "}
-              <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
-                Founder Toolkit
-              </span>
-            </h1>
-            <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
-              A comprehensive library of empirical frameworks, mathematical calculators, in-depth
-              playbooks, and illustrative case studies designed to help you build defensible,
-              cash-flow-positive ventures.
-            </p>
-          </div>
-          <PageHeroImage image={PAGE_IMAGES.resources} />
-
-          {/* 4 Core Pillars Bento Grid */}
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {/* Pillar 1: Useful Tools */}
-            <Link
-              to="/calculator"
-              className="glass group flex flex-col justify-between rounded-2xl p-6 transition-all hover:border-primary/50 hover:shadow-lg"
-            >
-              <div>
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <Calculator className="h-5 w-5" />
-                </div>
-                <h2 className="mt-4 font-display text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
-                  Interactive Calculators
-                </h2>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  TAM/SAM/SOM, Burn Rate, Runway, Break-Even, CAC, and LTV models running live
-                  client-side.
-                </p>
-              </div>
-              <div className="mt-6 flex items-center justify-between border-t border-border/60 pt-3 text-xs font-bold uppercase tracking-wider text-primary">
-                <span>{CALCULATORS.length} Tools Available</span>
-                <ArrowRight className="h-4 w-4" />
-              </div>
-            </Link>
-
-            {/* Pillar 2: Startup Guides */}
-            <Link
-              to="/startup-guides"
-              className="glass group flex flex-col justify-between rounded-2xl p-6 transition-all hover:border-primary/50 hover:shadow-lg"
-            >
-              <div>
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10 text-accent">
-                  <BookOpen className="h-5 w-5" />
-                </div>
-                <h2 className="mt-4 font-display text-xl font-bold tracking-tight text-foreground group-hover:text-accent transition-colors">
-                  Startup Guides
-                </h2>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  In-depth playbooks on customer discovery, market sizing, lean validation, and
-                  launch checklists.
-                </p>
-              </div>
-              <div className="mt-6 flex items-center justify-between border-t border-border/60 pt-3 text-xs font-bold uppercase tracking-wider text-accent">
-                <span>{STARTUP_GUIDES.length} Tactical Guides</span>
-                <ArrowRight className="h-4 w-4" />
-              </div>
-            </Link>
-
-            {/* Pillar 3: Founder Stories */}
-            <Link
-              to="/founder-stories"
-              className="glass group flex flex-col justify-between rounded-2xl p-6 transition-all hover:border-primary/50 hover:shadow-lg"
-            >
-              <div>
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600">
-                  <TrendingUp className="h-5 w-5" />
-                </div>
-                <h2 className="mt-4 font-display text-xl font-bold tracking-tight text-foreground group-hover:text-emerald-600 transition-colors">
-                  Founder Case Studies
-                </h2>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  Illustrative case studies of bootstrapped business models, execution timelines,
-                  and practical takeaways.
-                </p>
-              </div>
-              <div className="mt-6 flex items-center justify-between border-t border-border/60 pt-3 text-xs font-bold uppercase tracking-wider text-emerald-600">
-                <span>{CASE_STUDIES.length} Case Studies</span>
-                <ArrowRight className="h-4 w-4" />
-              </div>
-            </Link>
-
-            {/* Pillar 4: Founder Glossary */}
-            <Link
-              to="/founder-glossary"
-              className="glass group flex flex-col justify-between rounded-2xl p-6 transition-all hover:border-primary/50 hover:shadow-lg"
-            >
-              <div>
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-600">
-                  <Layers className="h-5 w-5" />
-                </div>
-                <h2 className="mt-4 font-display text-xl font-bold tracking-tight text-foreground group-hover:text-indigo-600 transition-colors">
-                  Startup Glossary
-                </h2>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  {GLOSSARY_DATA.length} essential venture terms, financial ratios, and unit
-                  economics formulas with operator rules of thumb.
-                </p>
-              </div>
-              <div className="mt-6 flex items-center justify-between border-t border-border/60 pt-3 text-xs font-bold uppercase tracking-wider text-indigo-600">
-                <span>{GLOSSARY_DATA.length} Terms Defined</span>
-                <ArrowRight className="h-4 w-4" />
-              </div>
-            </Link>
-          </div>
-
-          {/* Section: Core Frameworks */}
-          <div className="mt-16">
-            <h2 className="font-display text-2xl font-bold tracking-tight">
-              Essential Operating Frameworks
-            </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Mental models and mathematical benchmarks every founder should internalize before
-              scaling:
-            </p>
-
-            <div className="mt-6 grid gap-5 sm:grid-cols-2">
-              {OPERATOR_FRAMEWORKS.map((fw) => (
-                <div key={fw.name} className="glass rounded-2xl p-6">
-                  <h3 className="font-display text-lg font-bold text-foreground">{fw.name}</h3>
-                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{fw.summary}</p>
-                  <div className="mt-4 rounded-xl border border-border/70 bg-background/50 p-3.5">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-accent">
-                      The Operator Rule:
-                    </p>
-                    <p className="mt-1 text-xs font-medium text-foreground leading-snug">
-                      {fw.actionable_rule}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Section: Recommended Reading */}
-          <div className="mt-16">
-            <h2 className="font-display text-2xl font-bold tracking-tight">
-              Curated Founder Reading List
-            </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Books that contain high signal-to-noise ratios for modern operators:
-            </p>
-
-            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {RECOMMENDED_BOOKS.map((book) => (
-                <div
-                  key={book.title}
-                  className="glass flex flex-col justify-between rounded-2xl p-5"
-                >
-                  <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                      {book.author}
-                    </span>
-                    <h3 className="mt-1 font-display text-base font-bold text-foreground">
-                      {book.title}
-                    </h3>
-                    <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                      {book.takeaway}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Fast CTA to Idea Library */}
-          <div className="glass mt-16 rounded-3xl p-8 sm:p-10 text-center">
-            <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
-              Ready to explore researched business blueprints?
-            </h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-              Browse hundreds of vetted business ideas complete with market demand drivers,
-              competitive density, trend scores, and founder-fit verdicts.
-            </p>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
-              <Link
-                to="/browse"
-                className="glass-btn-light rounded-xl px-6 py-3 text-xs font-bold uppercase tracking-[0.18em]"
-              >
-                Browse Idea Library
-              </Link>
-              <Link
-                to="/calculator"
-                className="rounded-xl border border-border px-6 py-3 text-xs font-bold uppercase tracking-[0.18em] text-foreground transition-colors hover:border-primary"
-              >
-                Open Calculators
-              </Link>
-            </div>
-          </div>
-
-          {/* Browse and Calculators are already linked directly above. */}
-          <ExploreRail
-            exclude={["learningResources", "ideas", "calculators"]}
-            heading="Keep exploring"
-          />
+  const image = PAGE_IMAGES.resources;
+  const { data } = useSuspenseQuery(postsQuery);
+  const featuredGuides = STARTUP_GUIDES.filter(guide => ["Validation", "Bootstrapping", "Launch & Ops"].includes(guide.category)).slice(0, 8);
+  return <>
+    <JsonLd schema={[
+      collectionPageSchema({ path: "/learning-resources", name: "Founder learning resources", description: "Startup guides, calculators, glossary and checked case studies.", itemCount: sections.length, image: image.src }),
+      breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Learning resources", path: "/learning-resources" }]),
+    ]} />
+    <GlassShell><div className="gl-page">
+      <nav className="gl-breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link><span>/</span><span>Learning resources</span></nav>
+      <V2PageHero className="gl-hero"><div className="gl-hero-copy"><p className="gh-eyebrow">YOUR FOUNDER TOOLKIT</p><h1>One useful step <em>at a time.</em></h1><p>Use a guide to understand the work, a calculator to test your numbers, and the glossary when a term gets in the way.</p></div><figure className="gl-image-hero"><img src={image.src} alt={image.alt} width={1280} height={549} loading="eager" fetchPriority="high" /><figcaption>{image.description}</figcaption></figure></V2PageHero>
+      <V2PageSection className="gl-index" aria-labelledby="resources-title"><div className="gl-section-heading"><div><p className="gh-eyebrow">CHOOSE A RESOURCE</p><h2 id="resources-title">Explore the toolkit.</h2></div></div><div className="gl-resource-grid">{sections.map(({ title, body, action, to, icon: Icon }) => <Link key={to} to={to} className="gl-resource-card"><span className="gl-resource-icon"><Icon size={24} aria-hidden="true" /></span><h3>{title}</h3><p>{body}</p><span className="gl-resource-foot">{action}<ArrowUpRight size={18} aria-hidden="true" /></span></Link>)}</div></V2PageSection>
+      <V2PageSection className="gl-index gl-resource-motion" aria-labelledby="moving-resources-title">
+        <style>{`@keyframes bbi-resource-guides{from{transform:translateX(0)}to{transform:translateX(-50%)}}@keyframes bbi-resource-articles{from{transform:translateX(-50%)}to{transform:translateX(0)}}.bbi-resource-track{display:flex;width:max-content;animation:bbi-resource-guides 62s linear infinite}.bbi-resource-track-reverse{display:flex;width:max-content;animation:bbi-resource-articles 68s linear infinite}.bbi-resource-window:hover .bbi-resource-track,.bbi-resource-window:focus-within .bbi-resource-track,.bbi-resource-window:hover .bbi-resource-track-reverse,.bbi-resource-window:focus-within .bbi-resource-track-reverse{animation-play-state:paused}@media(prefers-reduced-motion:reduce){.bbi-resource-track,.bbi-resource-track-reverse{animation:none!important;transform:none!important}}`}</style>
+        <div className="gl-section-heading"><div><p className="gh-eyebrow">READ · APPLY · RETURN</p><h2 id="moving-resources-title">Choose a useful next read.</h2><p>Browse a guide or a published article, then take its question into your own business.</p></div></div>
+        <div className="mt-6"><div className="flex items-end justify-between gap-4"><h3 className="text-xl font-bold">Business guides</h3><Link to="/startup-guides" className="gl-text-link">All guides <ArrowUpRight size={16}/></Link></div>
+          <div className="bbi-resource-window mt-4 overflow-hidden"><div className="bbi-resource-track gap-4">{[...featuredGuides,...featuredGuides].map((guide,index)=><Link key={guide.slug+index} to="/startup-guides/$slug" params={{slug:guide.slug}} className="gl-resource-card w-[min(78vw,19rem)] shrink-0 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"><span className="gh-eyebrow">{guide.category} · {guide.readTime}</span><h4 className="mt-3 text-lg font-bold">{guide.title}</h4><p className="mt-2 line-clamp-3 text-sm leading-6">{guide.description}</p><span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold">Open guide <ArrowUpRight size={16}/></span></Link>)}</div></div>
         </div>
-      </SiteShell>
-    </>
-  );
+        <div className="mt-9"><div className="flex items-end justify-between gap-4"><h3 className="text-xl font-bold">From the founder journal</h3><Link to="/blog" className="gl-text-link">All articles <ArrowUpRight size={16}/></Link></div>
+          {data.posts.length ? <div className="bbi-resource-window mt-4 overflow-hidden"><div className="bbi-resource-track-reverse gap-4">{[...data.posts,...data.posts].map((post,index)=><Link key={post.id+index} to="/blog/$slug" params={{slug:post.slug}} className="gl-resource-card flex w-[min(82vw,21rem)] shrink-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">{post.image&&<img src={post.image} alt={post.imageAlt??post.title} width={post.imageWidth??1672} height={post.imageHeight??941} loading="lazy" decoding="async" ref={hideImgIfBroken} className="aspect-video w-full object-cover"/>}<div className="p-5"><span className="gh-eyebrow">{formatDate(post.date)} · {post.readingMinutes} min read</span><h4 className="mt-3 text-lg font-bold">{post.title}</h4><p className="mt-2 line-clamp-3 text-sm leading-6">{post.excerpt}</p><span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold">Read article <ArrowUpRight size={16}/></span></div></Link>)}</div></div> : <p className="mt-4 text-sm text-slate-600">Published articles will appear here.</p>}
+        </div>
+      </V2PageSection>
+      <V2PageSection className="gl-index" aria-labelledby="frameworks-title"><div className="gl-section-heading"><div><p className="gh-eyebrow">IDEAS TO APPLY</p><h2 id="frameworks-title">Operating frameworks.</h2><p>Use these as prompts, then check the details for your own business.</p></div></div><div className="gl-resource-grid">{OPERATOR_FRAMEWORKS.map((item) => <V2PageCard className="gl-resource-card" key={item.name}><h3>{item.name}</h3><p>{item.summary}</p><p><strong>Try this:</strong> {item.actionable_rule}</p></V2PageCard>)}</div></V2PageSection>
+      <V2PageSection className="gl-index" aria-labelledby="reading-title"><div className="gl-section-heading"><div><p className="gh-eyebrow">FURTHER READING</p><h2 id="reading-title">Books to explore.</h2></div></div><div className="gl-resource-grid">{RECOMMENDED_BOOKS.map((book) => <V2PageCard className="gl-resource-card" key={book.title}><p className="gh-eyebrow">{book.author}</p><h3>{book.title}</h3><p>{book.takeaway}</p></V2PageCard>)}</div></V2PageSection>
+      <V2PageAsideCta className="gl-bottom-note"><div><p className="gh-eyebrow">PUT IT INTO PRACTICE</p><h2>Find one idea to test.</h2><p>Explore the library and start with a small check of local demand.</p></div><Link to="/browse" className="gh-button gh-button-primary">Browse ideas <ArrowUpRight size={18} /></Link></V2PageAsideCta>
+    </div></GlassShell>
+  </>;
 }
