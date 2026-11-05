@@ -122,7 +122,8 @@ export const getSubcategoriesForCategory = createServerFn({ method: "GET" })
  * per visit — that per-page-visit fetch was the "slow dropdown" complaint.
  */
 export const catalogQuery = queryOptions({
-  queryKey: ["catalog"],
+  // Own key: the new layouts cache a different static catalogue under ["catalog"].
+  queryKey: ["live-catalog"],
   queryFn: () => getCatalog(),
   // Reuse the server result during hydration and quick page/focus changes.
   // A later refetch can refresh the public counts after this short window.

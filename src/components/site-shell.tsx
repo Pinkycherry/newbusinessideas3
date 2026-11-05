@@ -1,5 +1,4 @@
 import { Link, useLoaderData, useRouterState } from "@tanstack/react-router";
-import { Header as PurchasedHeader, Footer } from "./v2/frame";
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User } from "lucide-react";
@@ -26,6 +25,7 @@ import {
 import { LiveSearch } from "@/components/live-search";
 import { FloatingDock } from "@/components/floating-dock";
 import { CategoryBadge } from "@/components/category-badge";
+import { catalogQuery } from "@/lib/ideas.functions";
 import { ResourceHub } from "@/components/resource-hub";
 import { useSiteStage } from "@/components/site-stage";
 import { useMarqueeMotion } from "@/motion/use-marquee-motion";
@@ -157,7 +157,7 @@ function BuiltWithSection({ still = false }: { still?: boolean }) {
 const navLinks: { to: string; label: string }[] = [];
 
 const EXPLORE_ITEMS = [
-  { to: "/browse", label: "Browse all categories" },
+  { to: "/browse", label: "Browse all ideas" },
   { to: "/calculator", label: "Calculators & Tools" },
   { to: "/startup-guides", label: "Startup Guides" },
   { to: "/founder-stories", label: "Founder Stories" },
@@ -258,9 +258,6 @@ function useSiteResources() {
   const { resources } = useLoaderData({ from: "__root__" });
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const normalised = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
-  // Category and subcategory pages carry only their own content: the old
-  // site's guides and glossary there read as if they were this page's ideas.
-  if (normalised.startsWith("/category/")) return null;
   return NO_RESOURCE_HUB.has(normalised) ? null : resources;
 }
 
@@ -412,23 +409,10 @@ function NavDropdown({
       closeTimer.current = null;
     }
   };
-  // Only one header menu may be open: opening this one tells the others to close.
-  const id = useRef(Math.random().toString(36)).current;
   const openNow = () => {
     cancelClose();
     setOpen(true);
-    window.dispatchEvent(new CustomEvent("bbi-nav-open", { detail: id }));
   };
-  useEffect(() => {
-    const onOther = (e: Event) => {
-      if ((e as CustomEvent<string>).detail !== id) {
-        cancelClose();
-        setOpen(false);
-      }
-    };
-    window.addEventListener("bbi-nav-open", onOther);
-    return () => window.removeEventListener("bbi-nav-open", onOther);
-  }, [id]);
   const closeSoon = () => {
     cancelClose();
     closeTimer.current = setTimeout(() => setOpen(false), 150);
@@ -468,7 +452,7 @@ function NavDropdown({
         aria-haspopup="menu"
         // Plain pages: keyboard focus no longer opens the menu, because
         // Enter then toggled it straight back shut. Enter or Space opens it.
-        onClick={() => (open && !isDesktop() ? setOpen(false) : openNow())}
+        onClick={() => setOpen((v) => !v)}
         className="relative flex items-center gap-1 rounded-[calc(var(--radius)-2px)] px-1.5 py-1 uppercase tracking-[0.18em] transition-colors duration-300 hover:text-foreground"
       >
         {/* One marker element shared across every dropdown trigger, so moving
@@ -506,8 +490,8 @@ function NavDropdown({
 }
 
 /**
- * Desktop mega-menu. Categories come from the approved architecture
- * (src/data/taxonomy.ts), each with its subcategory count.
+ * Desktop mega-menu. Categories are never hardcoded — live from the `ideas`
+ * table, every one of them, with its real blueprint count.
  *
  * This used to render the categories as a cloud of capsules with no counts and
  * a hard cap of 20. Rows carry more information in less space, and the count
@@ -543,6 +527,9 @@ function CategoryMega() {
                   className="mo-row flex items-baseline justify-between gap-3 rounded-lg px-2 py-2 text-sm normal-case tracking-normal text-muted-foreground"
                 >
                   <span className="min-w-0 leading-snug">{c.categoryName}</span>
+                  <span className="shrink-0 text-[11px] tabular-nums opacity-70">
+                    {c.ideaCount}
+                  </span>
                 </Link>
               </li>
             ))}
@@ -550,10 +537,10 @@ function CategoryMega() {
 
           <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 border-t border-border pt-3">
             <Link to="/browse" onClick={close} className="mo-link t-eyebrow">
-              {hasMore ? "All categories" : "The full library"}
+              {hasMore ? `All ${all.length} categories` : "The full library"}
             </Link>
             <Link to="/search" search={{ q: "" }} onClick={close} className="mo-link t-eyebrow">
-              Search categories
+              Search every field
             </Link>
           </div>
         </div>
@@ -735,7 +722,7 @@ const footerColumns: { title: string; links: { to: string; label: string }[] }[]
   {
     title: "Platform",
     links: [
-      { to: "/browse", label: "Browse categories" },
+      { to: "/browse", label: "Browse ideas" },
       { to: "/search", label: "Search" },
       { to: "/services", label: "Services" },
       { to: "/blog", label: "Blog" },
@@ -909,12 +896,62 @@ export function SiteShell({
         tone === "instrument" ? " bbi-instrument" : ""
       }${plain ? " cm-page" : " home-page"}`}
     >
-      {/* The purchased header (src/components/v2/frame.tsx) on every page.
-          It is fixed, so a spacer keeps page content below it. */}
-      <div className="v2">
-        <PurchasedHeader active={pathname} />
-      </div>
-      <div aria-hidden className="h-24 shrink-0" />
+      <header className="sticky top-0 z-40 px-3 pt-2 sm:px-4 sm:pt-5">
+        {/* Reading position for the whole document. One composited transform
+            per frame, driven from --page-p — no layout, no repaint. */}
+        <div aria-hidden className="mx-auto h-px max-w-6xl overflow-hidden rounded-full bg-border">
+          <div className="mo-page-rail h-full w-full bg-accent" />
+        </div>
+        <div className="glass-nav bbi-nav-bar relative mx-auto mt-2 flex max-w-6xl items-center justify-between gap-3 rounded-md border border-border px-4 py-2.5 sm:gap-5 sm:px-6 sm:py-3">
+          <Link to="/" onClick={() => setMobileOpen(false)} className="flex shrink-0 items-center">
+            {/* The founder's wordmark image, by request (2026-09-28). */}
+            <img
+              src="/images/brand/b-business-beyond-the-bright-idea-wordmark.webp"
+              alt="B Business, Beyond the Bright Idea"
+              width={160}
+              height={40}
+              className="h-8 w-auto rounded-sm sm:h-9"
+            />
+          </Link>
+
+          <nav className="hidden shrink-0 items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground lg:flex xl:gap-4">
+            <CinemaChrome.Provider value={true}>
+              <CategoryMega />
+              <LinkListDropdown label="Explore" items={EXPLORE_ITEMS} />
+              <LinkListDropdown label="Company" items={COMPANY_ITEMS} />
+              <LinkListDropdown label="Policies" items={POLICY_ITEMS} />
+            </CinemaChrome.Provider>
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="relative transition-colors duration-300 hover:text-foreground after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-primary after:transition-all after:duration-500 hover:after:w-full"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* The header search field was removed at the founder's request.
+              Search is still reachable: the sheet menu carries a full
+              LiveSearch, and the category menu links to /search directly. */}
+          <div className="hidden min-w-0 items-center gap-2 lg:flex">
+            <AuthButtons still={plain} />
+          </div>
+
+          <button
+            type="button"
+            aria-expanded={mobileOpen}
+            aria-label="Open navigation menu"
+            onClick={() => setMobileOpen(true)}
+            className="flex shrink-0 flex-col gap-1.5 rounded-full border border-border px-3 py-2.5 lg:hidden"
+          >
+            <span aria-hidden className="block h-0.5 w-5 bg-foreground" />
+            <span aria-hidden className="block h-0.5 w-5 bg-foreground" />
+            <span aria-hidden className="block h-0.5 w-5 bg-foreground" />
+          </button>
+        </div>
+      </header>
       <AnimatePresence>
         {mobileOpen && <MobileMenu onClose={() => setMobileOpen(false)} />}
       </AnimatePresence>
@@ -937,8 +974,156 @@ export function SiteShell({
       )}
       <FloatingDock />
       <BuiltWithSection still={plain} />
-      {/* The one shared site footer (same as /contact and every other route). */}
-      <Footer />
+      {/* Footer, built to the reference the founder supplied: a light card,
+          four columns of plain link lists with a newsletter block, then a
+          hairline and a thin bottom bar.
+
+          What this replaced was a dark full-bleed band with display type and
+          a statistics row. That was my idea, not the brief's, and it was
+          wrong. This is the reference. */}
+      {/* pb-24 on mobile: the floating back-to-top / compass dock is fixed to
+          the bottom-right and was sitting on top of the legal links. */}
+      <footer className="px-3 pb-24 pt-20 sm:px-4 sm:pb-10 sm:pt-24">
+        <div className="bbi-footer mx-auto max-w-7xl rounded-3xl px-5 py-9 sm:px-12 sm:py-14">
+          {/* Two columns on a phone, not one. Below sm: this was a single
+              column with a 2.5rem gap, which stacked the four blocks into a
+              1,249px ribbon on an 844px screen. These are short lists of
+              short labels; two columns halve the height and give it a shape.
+              Everything from sm: up is the approved desktop layout, untouched. */}
+          <div className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-2 sm:gap-10 lg:grid-cols-[1.1fr_1fr_1fr_1.4fr]">
+            {/* Categories, capped. The cap is what keeps this footer one
+                height whether the catalogue holds 14 categories or 1,400. */}
+            <div className="col-span-2 sm:col-span-1">
+              <h3 className="bbi-footer-heading">Browse</h3>
+              <ul className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 sm:mt-4 sm:grid-cols-1 sm:gap-2.5">
+                {footerCategories.shown.map((c) => (
+                  <li key={c.categorySlug}>
+                    <Link
+                      to="/category/$categorySlug"
+                      params={{ categorySlug: c.categorySlug }}
+                      className="bbi-footer-link"
+                    >
+                      {c.categoryName}
+                    </Link>
+                  </li>
+                ))}
+                {/* Was "and N more", which reads as a list someone forgot to
+                    finish. The footer shows five categories on purpose — the
+                    rest have a page of their own, so the link says where it
+                    goes rather than counting what is missing. */}
+                {footerCategories.hasMore && (
+                  <li>
+                    <Link to="/browse" className="bbi-footer-link bbi-footer-more">
+                      All categories
+                    </Link>
+                  </li>
+                )}
+              </ul>
+            </div>
+
+            {footerColumns
+              .filter((col) => col.title !== "Legal")
+              .map((col) => (
+                <div key={col.title}>
+                  <h3 className="bbi-footer-heading">{col.title}</h3>
+                  <ul className="mt-3 grid gap-2 sm:mt-4 sm:gap-2.5">
+                    {col.links.map((link) => (
+                      <li key={`${col.title}-${link.to}-${link.label}`}>
+                        <Link to={link.to} className="bbi-footer-link">
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+
+            {/* Full width on a phone — the input and Subscribe need it. */}
+            <div className="col-span-2 sm:col-span-1">
+              <NewsletterSignup />
+            </div>
+          </div>
+
+          <div className="mt-9 flex flex-col gap-4 border-t border-border pt-6 text-xs sm:mt-12 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+            {/* Legal lives here rather than as a fifth column — that is where
+                the reference puts it, and four columns plus a fifth is what
+                pushed the newsletter onto its own row. */}
+            {/* A two-column list on a phone. As an inline dotted row these
+                five wrapped into a ragged paragraph at 390px. */}
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-2 sm:flex sm:flex-wrap sm:items-center sm:gap-x-2 sm:gap-y-1">
+              {(footerColumns.find((c) => c.title === "Legal")?.links ?? []).map((link, i) => (
+                <li key={link.to} className="flex items-center gap-2">
+                  {i > 0 && (
+                    <span aria-hidden className="hidden text-border sm:inline">
+                      ·
+                    </span>
+                  )}
+                  <Link to={link.to} className="bbi-footer-link">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            {/* pr-24 on mobile keeps this clear of the fixed back-to-top /
+                compass dock, which was printing over the end of the line.
+
+                This used to read "N blueprints across N categories". A sign-off
+                is the last line anyone reads on the page; it should say who we
+                are and who this is for, not how many rows are in the table. The
+                count is on /browse, where someone is actually looking for it. */}
+            <div className="pr-24 sm:pr-0 sm:text-right">
+              <div className="mb-2 flex flex-wrap items-center gap-x-5 gap-y-2 sm:justify-end">
+                <a
+                  href={X_PROFILE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer me"
+                  aria-label="BBI on X"
+                  className="bbi-footer-link inline-flex items-center gap-2"
+                >
+                  <SiX aria-hidden className="h-3.5 w-3.5" />
+                  <span>X</span>
+                </a>
+                <a
+                  href={PINTEREST_PROFILE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer me"
+                  aria-label="BBI on Pinterest"
+                  className="bbi-footer-link inline-flex items-center gap-2"
+                >
+                  <SiPinterest aria-hidden className="h-3.5 w-3.5" />
+                  <span>Pinterest</span>
+                </a>
+                <a
+                  href={FACEBOOK_PROFILE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer me"
+                  aria-label="BBI on Facebook"
+                  className="bbi-footer-link inline-flex items-center gap-2"
+                >
+                  <SiFacebook aria-hidden className="h-3.5 w-3.5" />
+                  <span>Facebook</span>
+                </a>
+                <a
+                  href={DISCORD_PROFILE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer me"
+                  aria-label="BBI on Discord"
+                  className="bbi-footer-link inline-flex items-center gap-2"
+                >
+                  <SiDiscord aria-hidden className="h-3.5 w-3.5" />
+                  <span>Discord</span>
+                </a>
+              </div>
+              <p className="text-muted-foreground">
+                © {new Date().getFullYear()} BBI – Bro Business Ideas
+              </p>
+              <p className="mt-1 text-muted-foreground/80">
+                Made in India, for everyone starting from zero. We were there too.
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
