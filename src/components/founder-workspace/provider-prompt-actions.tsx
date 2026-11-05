@@ -25,7 +25,7 @@ export function ProviderPromptActions({ prompt, prefillPrompt, title = "Continue
       setCopyState("failed");
     }
   };
-  return <section className={`rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:p-6 ${className}`} aria-label="Choose an AI provider">
+  return <section className={`py-2 ${className}`} aria-label="Choose an AI provider">
     <h3 className="text-xl font-bold text-slate-950">{title}</h3>
     <p className="mt-2 text-sm leading-6 text-slate-600">Opens in a new tab with your details filled in. bbusiness.online never sees or stores the answer.</p>
     <div className="mt-4 grid gap-3 sm:grid-cols-2">
