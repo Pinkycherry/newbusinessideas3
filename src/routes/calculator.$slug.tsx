@@ -6,7 +6,7 @@ import { READY_CALCULATORS, isReadyCalculator, isVerifiedCalculator, defaultInpu
 
 export const Route = createFileRoute("/calculator/$slug")({
   loader: ({ params }) => { const calculator=findCalculator(params.slug); if(!calculator || !isReadyCalculator(calculator)) throw notFound(); return {slug:calculator.slug}; },
-  head: ({loaderData}) => { const tool=loaderData?findCalculator(loaderData.slug):undefined; return {meta:[{title:`${tool?.title??"Calculator"} | BusinessIdea.io`},{name:"description",content:tool?.description??""}]}; },
+  head: ({loaderData}) => { const tool=loaderData?findCalculator(loaderData.slug):undefined; return {meta:[{title:`${tool?.title??"Calculator"} | BusinessIdea.io`},{name:"robots",content:"noindex, follow"},{name:"description",content:tool?.description??""}]}; },
   component: CalculatorRoute,
   notFoundComponent: () => <V2Frame><div className="mx-auto max-w-6xl px-4 pt-32 pb-16"><h1 className="text-3xl font-bold">Calculator unavailable</h1><a className="mt-5 inline-flex rounded-lg bg-slate-900 px-5 py-3 font-semibold text-white" href="/calculator">Working calculators</a></div></V2Frame>,
 });

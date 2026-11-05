@@ -32,6 +32,7 @@ import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as FailedStartupsRouteImport } from './routes/failed-startups'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as FeedDotxmlRouteImport } from './routes/feed[.]xml'
 import { Route as FirstCustomerIndiaRouteImport } from './routes/first-customer-india'
 import { Route as FounderDecisionJournalRouteImport } from './routes/founder-decision-journal'
 import { Route as FoundersRouteImport } from './routes/founders'
@@ -40,10 +41,14 @@ import { Route as FreeGovernmentResourcesForStartingABusinessInIndiaRouteImport 
 import { Route as GdprRouteImport } from './routes/gdpr'
 import { Route as HowMuchMoneyIsNeededToStartABusinessInIndiaRouteImport } from './routes/how-much-money-is-needed-to-start-a-business-in-india'
 import { Route as HowToBuildAnMvpWithLowInvestmentInIndiaRouteImport } from './routes/how-to-build-an-mvp-with-low-investment-in-india'
+import { Route as HowToCalculateCashRunwayForASmallBusinessInIndiaRouteImport } from './routes/how-to-calculate-cash-runway-for-a-small-business-in-india'
+import { Route as HowToCalculateCustomerLifetimeValueForASmallBusinessInIndiaRouteImport } from './routes/how-to-calculate-customer-lifetime-value-for-a-small-business-in-india'
 import { Route as HowToCalculateTamSamSomForABusinessInIndiaRouteImport } from './routes/how-to-calculate-tam-sam-som-for-a-business-in-india'
 import { Route as HowToCheckIfYourBusinessIdeaIsGoodInIndiaRouteImport } from './routes/how-to-check-if-your-business-idea-is-good-in-india'
 import { Route as HowToDoCompetitorAnalysisForASmallBusinessInIndiaRouteImport } from './routes/how-to-do-competitor-analysis-for-a-small-business-in-india'
+import { Route as HowToFindACoFounderForAStartupInIndiaRouteImport } from './routes/how-to-find-a-co-founder-for-a-startup-in-india'
 import { Route as HowToGetFundingForASmallBusinessInIndiaRouteImport } from './routes/how-to-get-funding-for-a-small-business-in-india'
+import { Route as HowToKeepCustomersComingBackToYourSmallBusinessInIndiaRouteImport } from './routes/how-to-keep-customers-coming-back-to-your-small-business-in-india'
 import { Route as HowToKnowIfYourBusinessHasProductMarketFitInIndiaRouteImport } from './routes/how-to-know-if-your-business-has-product-market-fit-in-india'
 import { Route as HowToRaiseFundsForAStartupInIndiaRouteImport } from './routes/how-to-raise-funds-for-a-startup-in-india'
 import { Route as HowToStartABusinessWithoutInvestorsInIndiaRouteImport } from './routes/how-to-start-a-business-without-investors-in-india'
@@ -72,6 +77,7 @@ import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as SitemapBlogDotxmlRouteImport } from './routes/sitemap-blog[.]xml'
 import { Route as SitemapCategoriesDotxmlRouteImport } from './routes/sitemap-categories[.]xml'
 import { Route as SitemapIndexDotxmlRouteImport } from './routes/sitemap-index[.]xml'
+import { Route as SitemapIndiaDotxmlRouteImport } from './routes/sitemap-india[.]xml'
 import { Route as SitemapPagesDotxmlRouteImport } from './routes/sitemap-pages[.]xml'
 import { Route as StartupCashFlowIndiaRouteImport } from './routes/startup-cash-flow-india'
 import { Route as StartupCostsIndiaRouteImport } from './routes/startup-costs-india'
@@ -88,29 +94,39 @@ import { Route as UnitEconomicsIndiaRouteImport } from './routes/unit-economics-
 import { Route as VersionDotjsonRouteImport } from './routes/version[.]json'
 import { Route as WeekendMarketStallProfitCheckRouteImport } from './routes/weekend-market-stall-profit-check'
 import { Route as WhatIsCustomerAcquisitionCostForASmallBusinessInIndiaRouteImport } from './routes/what-is-customer-acquisition-cost-for-a-small-business-in-india'
+import { Route as WhenToRaiseFundsForAStartupInIndiaRouteImport } from './routes/when-to-raise-funds-for-a-startup-in-india'
 import { Route as WhyStartupsFail20262027RouteImport } from './routes/why-startups-fail-2026-2027'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as BlueprintsIndexRouteImport } from './routes/blueprints.index'
 import { Route as CalculatorIndexRouteImport } from './routes/calculator.index'
 import { Route as CalculatorSlugRouteImport } from './routes/calculator.$slug'
+import { Route as CategoryCategorySlugRouteImport } from './routes/category.$categorySlug'
 import { Route as FailedStartupsIndiaRouteImport } from './routes/failed-startups.india'
+import { Route as FaqIndexRouteImport } from './routes/faq.index'
+import { Route as FaqCategorySlugRouteImport } from './routes/faq.$categorySlug'
 import { Route as FounderGlossaryIndexRouteImport } from './routes/founder-glossary.index'
 import { Route as FounderStoriesIndexRouteImport } from './routes/founder-stories.index'
 import { Route as FounderStoriesSlugRouteImport } from './routes/founder-stories.$slug'
 import { Route as IdeaSlugRouteImport } from './routes/idea.$slug'
 import { Route as LearningResourcesIndexRouteImport } from './routes/learning-resources.index'
+import { Route as ListIndexRouteImport } from './routes/list.index'
+import { Route as ListSlugRouteImport } from './routes/list.$slug'
 import { Route as ListsIndexRouteImport } from './routes/lists.index'
 import { Route as ListsSlugRouteImport } from './routes/lists.$slug'
 import { Route as ListsCoachingBusinessIdeasRouteImport } from './routes/lists.coaching-business-ideas'
+import { Route as SitemapIdeasPageRouteImport } from './routes/sitemap-ideas.$page'
 import { Route as StartupGuidesIndexRouteImport } from './routes/startup-guides.index'
 import { Route as StartupGuidesSlugRouteImport } from './routes/startup-guides.$slug'
 import { Route as TemplatesIndexRouteImport } from './routes/templates.index'
 import { Route as TemplatesSlugRouteImport } from './routes/templates.$slug'
 import { Route as ToolsAlternateRouteImport } from './routes/tools.alternate'
 import { Route as UsefulToolsIndexRouteImport } from './routes/useful-tools.index'
+import { Route as ValidateIndustrySlugRouteImport } from './routes/validate.$industrySlug'
 import { Route as CategoryCategorySlugIndexRouteImport } from './routes/category.$categorySlug.index'
 import { Route as CategoryCategorySlugSubcategorySlugRouteImport } from './routes/category.$categorySlug.$subcategorySlug'
+import { Route as IndiaIdeasIndexRouteImport } from './routes/india.ideas.index'
+import { Route as IndiaIdeasSetSlugRouteImport } from './routes/india.ideas.$setSlug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -231,6 +247,11 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FeedDotxmlRoute = FeedDotxmlRouteImport.update({
+  id: '/feed.xml',
+  path: '/feed.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FirstCustomerIndiaRoute = FirstCustomerIndiaRouteImport.update({
   id: '/first-customer-india',
   path: '/first-customer-india',
@@ -274,6 +295,20 @@ const HowToBuildAnMvpWithLowInvestmentInIndiaRoute =
     path: '/how-to-build-an-mvp-with-low-investment-in-india',
     getParentRoute: () => rootRouteImport,
   } as any)
+const HowToCalculateCashRunwayForASmallBusinessInIndiaRoute =
+  HowToCalculateCashRunwayForASmallBusinessInIndiaRouteImport.update({
+    id: '/how-to-calculate-cash-runway-for-a-small-business-in-india',
+    path: '/how-to-calculate-cash-runway-for-a-small-business-in-india',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const HowToCalculateCustomerLifetimeValueForASmallBusinessInIndiaRoute =
+  HowToCalculateCustomerLifetimeValueForASmallBusinessInIndiaRouteImport.update(
+    {
+      id: '/how-to-calculate-customer-lifetime-value-for-a-small-business-in-india',
+      path: '/how-to-calculate-customer-lifetime-value-for-a-small-business-in-india',
+      getParentRoute: () => rootRouteImport,
+    } as any,
+  )
 const HowToCalculateTamSamSomForABusinessInIndiaRoute =
   HowToCalculateTamSamSomForABusinessInIndiaRouteImport.update({
     id: '/how-to-calculate-tam-sam-som-for-a-business-in-india',
@@ -292,10 +327,22 @@ const HowToDoCompetitorAnalysisForASmallBusinessInIndiaRoute =
     path: '/how-to-do-competitor-analysis-for-a-small-business-in-india',
     getParentRoute: () => rootRouteImport,
   } as any)
+const HowToFindACoFounderForAStartupInIndiaRoute =
+  HowToFindACoFounderForAStartupInIndiaRouteImport.update({
+    id: '/how-to-find-a-co-founder-for-a-startup-in-india',
+    path: '/how-to-find-a-co-founder-for-a-startup-in-india',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const HowToGetFundingForASmallBusinessInIndiaRoute =
   HowToGetFundingForASmallBusinessInIndiaRouteImport.update({
     id: '/how-to-get-funding-for-a-small-business-in-india',
     path: '/how-to-get-funding-for-a-small-business-in-india',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const HowToKeepCustomersComingBackToYourSmallBusinessInIndiaRoute =
+  HowToKeepCustomersComingBackToYourSmallBusinessInIndiaRouteImport.update({
+    id: '/how-to-keep-customers-coming-back-to-your-small-business-in-india',
+    path: '/how-to-keep-customers-coming-back-to-your-small-business-in-india',
     getParentRoute: () => rootRouteImport,
   } as any)
 const HowToKnowIfYourBusinessHasProductMarketFitInIndiaRoute =
@@ -450,6 +497,11 @@ const SitemapIndexDotxmlRoute = SitemapIndexDotxmlRouteImport.update({
   path: '/sitemap-index.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapIndiaDotxmlRoute = SitemapIndiaDotxmlRouteImport.update({
+  id: '/sitemap-india.xml',
+  path: '/sitemap-india.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapPagesDotxmlRoute = SitemapPagesDotxmlRouteImport.update({
   id: '/sitemap-pages.xml',
   path: '/sitemap-pages.xml',
@@ -533,6 +585,12 @@ const WhatIsCustomerAcquisitionCostForASmallBusinessInIndiaRoute =
     path: '/what-is-customer-acquisition-cost-for-a-small-business-in-india',
     getParentRoute: () => rootRouteImport,
   } as any)
+const WhenToRaiseFundsForAStartupInIndiaRoute =
+  WhenToRaiseFundsForAStartupInIndiaRouteImport.update({
+    id: '/when-to-raise-funds-for-a-startup-in-india',
+    path: '/when-to-raise-funds-for-a-startup-in-india',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const WhyStartupsFail20262027Route = WhyStartupsFail20262027RouteImport.update({
   id: '/why-startups-fail-2026-2027',
   path: '/why-startups-fail-2026-2027',
@@ -563,10 +621,25 @@ const CalculatorSlugRoute = CalculatorSlugRouteImport.update({
   path: '/calculator/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CategoryCategorySlugRoute = CategoryCategorySlugRouteImport.update({
+  id: '/category/$categorySlug',
+  path: '/category/$categorySlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FailedStartupsIndiaRoute = FailedStartupsIndiaRouteImport.update({
   id: '/india',
   path: '/india',
   getParentRoute: () => FailedStartupsRoute,
+} as any)
+const FaqIndexRoute = FaqIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FaqRoute,
+} as any)
+const FaqCategorySlugRoute = FaqCategorySlugRouteImport.update({
+  id: '/$categorySlug',
+  path: '/$categorySlug',
+  getParentRoute: () => FaqRoute,
 } as any)
 const FounderGlossaryIndexRoute = FounderGlossaryIndexRouteImport.update({
   id: '/founder-glossary/',
@@ -593,6 +666,16 @@ const LearningResourcesIndexRoute = LearningResourcesIndexRouteImport.update({
   path: '/learning-resources/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ListIndexRoute = ListIndexRouteImport.update({
+  id: '/list/',
+  path: '/list/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ListSlugRoute = ListSlugRouteImport.update({
+  id: '/list/$slug',
+  path: '/list/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ListsIndexRoute = ListsIndexRouteImport.update({
   id: '/lists/',
   path: '/lists/',
@@ -609,6 +692,11 @@ const ListsCoachingBusinessIdeasRoute =
     path: '/lists/coaching-business-ideas',
     getParentRoute: () => rootRouteImport,
   } as any)
+const SitemapIdeasPageRoute = SitemapIdeasPageRouteImport.update({
+  id: '/sitemap-ideas/$page',
+  path: '/sitemap-ideas/$page',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StartupGuidesIndexRoute = StartupGuidesIndexRouteImport.update({
   id: '/startup-guides/',
   path: '/startup-guides/',
@@ -639,18 +727,33 @@ const UsefulToolsIndexRoute = UsefulToolsIndexRouteImport.update({
   path: '/useful-tools/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ValidateIndustrySlugRoute = ValidateIndustrySlugRouteImport.update({
+  id: '/validate/$industrySlug',
+  path: '/validate/$industrySlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategoryCategorySlugIndexRoute =
   CategoryCategorySlugIndexRouteImport.update({
-    id: '/category/$categorySlug/',
-    path: '/category/$categorySlug/',
-    getParentRoute: () => rootRouteImport,
+    id: '/',
+    path: '/',
+    getParentRoute: () => CategoryCategorySlugRoute,
   } as any)
 const CategoryCategorySlugSubcategorySlugRoute =
   CategoryCategorySlugSubcategorySlugRouteImport.update({
-    id: '/category/$categorySlug/$subcategorySlug',
-    path: '/category/$categorySlug/$subcategorySlug',
-    getParentRoute: () => rootRouteImport,
+    id: '/$subcategorySlug',
+    path: '/$subcategorySlug',
+    getParentRoute: () => CategoryCategorySlugRoute,
   } as any)
+const IndiaIdeasIndexRoute = IndiaIdeasIndexRouteImport.update({
+  id: '/india/ideas/',
+  path: '/india/ideas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndiaIdeasSetSlugRoute = IndiaIdeasSetSlugRouteImport.update({
+  id: '/india/ideas/$setSlug',
+  path: '/india/ideas/$setSlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -675,7 +778,8 @@ export interface FileRoutesByFullPath {
   '/cookie-policy': typeof CookiePolicyRoute
   '/disclaimer': typeof DisclaimerRoute
   '/failed-startups': typeof FailedStartupsRouteWithChildren
-  '/faq': typeof FaqRoute
+  '/faq': typeof FaqRouteWithChildren
+  '/feed.xml': typeof FeedDotxmlRoute
   '/first-customer-india': typeof FirstCustomerIndiaRoute
   '/founder-decision-journal': typeof FounderDecisionJournalRoute
   '/founders': typeof FoundersRoute
@@ -684,10 +788,14 @@ export interface FileRoutesByFullPath {
   '/gdpr': typeof GdprRoute
   '/how-much-money-is-needed-to-start-a-business-in-india': typeof HowMuchMoneyIsNeededToStartABusinessInIndiaRoute
   '/how-to-build-an-mvp-with-low-investment-in-india': typeof HowToBuildAnMvpWithLowInvestmentInIndiaRoute
+  '/how-to-calculate-cash-runway-for-a-small-business-in-india': typeof HowToCalculateCashRunwayForASmallBusinessInIndiaRoute
+  '/how-to-calculate-customer-lifetime-value-for-a-small-business-in-india': typeof HowToCalculateCustomerLifetimeValueForASmallBusinessInIndiaRoute
   '/how-to-calculate-tam-sam-som-for-a-business-in-india': typeof HowToCalculateTamSamSomForABusinessInIndiaRoute
   '/how-to-check-if-your-business-idea-is-good-in-india': typeof HowToCheckIfYourBusinessIdeaIsGoodInIndiaRoute
   '/how-to-do-competitor-analysis-for-a-small-business-in-india': typeof HowToDoCompetitorAnalysisForASmallBusinessInIndiaRoute
+  '/how-to-find-a-co-founder-for-a-startup-in-india': typeof HowToFindACoFounderForAStartupInIndiaRoute
   '/how-to-get-funding-for-a-small-business-in-india': typeof HowToGetFundingForASmallBusinessInIndiaRoute
+  '/how-to-keep-customers-coming-back-to-your-small-business-in-india': typeof HowToKeepCustomersComingBackToYourSmallBusinessInIndiaRoute
   '/how-to-know-if-your-business-has-product-market-fit-in-india': typeof HowToKnowIfYourBusinessHasProductMarketFitInIndiaRoute
   '/how-to-raise-funds-for-a-startup-in-india': typeof HowToRaiseFundsForAStartupInIndiaRoute
   '/how-to-start-a-business-without-investors-in-india': typeof HowToStartABusinessWithoutInvestorsInIndiaRoute
@@ -716,6 +824,7 @@ export interface FileRoutesByFullPath {
   '/sitemap-blog.xml': typeof SitemapBlogDotxmlRoute
   '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
+  '/sitemap-india.xml': typeof SitemapIndiaDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/startup-cash-flow-india': typeof StartupCashFlowIndiaRoute
   '/startup-costs-india': typeof StartupCostsIndiaRoute
@@ -732,29 +841,39 @@ export interface FileRoutesByFullPath {
   '/version.json': typeof VersionDotjsonRoute
   '/weekend-market-stall-profit-check': typeof WeekendMarketStallProfitCheckRoute
   '/what-is-customer-acquisition-cost-for-a-small-business-in-india': typeof WhatIsCustomerAcquisitionCostForASmallBusinessInIndiaRoute
+  '/when-to-raise-funds-for-a-startup-in-india': typeof WhenToRaiseFundsForAStartupInIndiaRoute
   '/why-startups-fail-2026-2027': typeof WhyStartupsFail20262027Route
   '/blog/$slug': typeof BlogSlugRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
+  '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
   '/failed-startups/india': typeof FailedStartupsIndiaRoute
+  '/faq/$categorySlug': typeof FaqCategorySlugRoute
   '/founder-stories/$slug': typeof FounderStoriesSlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
+  '/list/$slug': typeof ListSlugRoute
   '/lists/$slug': typeof ListsSlugRoute
   '/lists/coaching-business-ideas': typeof ListsCoachingBusinessIdeasRoute
+  '/sitemap-ideas/$page': typeof SitemapIdeasPageRoute
   '/startup-guides/$slug': typeof StartupGuidesSlugRoute
   '/templates/$slug': typeof TemplatesSlugRoute
   '/tools/alternate': typeof ToolsAlternateRoute
+  '/validate/$industrySlug': typeof ValidateIndustrySlugRoute
   '/blog/': typeof BlogIndexRoute
   '/blueprints/': typeof BlueprintsIndexRoute
   '/calculator/': typeof CalculatorIndexRoute
+  '/faq/': typeof FaqIndexRoute
   '/founder-glossary/': typeof FounderGlossaryIndexRoute
   '/founder-stories/': typeof FounderStoriesIndexRoute
   '/learning-resources/': typeof LearningResourcesIndexRoute
+  '/list/': typeof ListIndexRoute
   '/lists/': typeof ListsIndexRoute
   '/startup-guides/': typeof StartupGuidesIndexRoute
   '/templates/': typeof TemplatesIndexRoute
   '/useful-tools/': typeof UsefulToolsIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
+  '/india/ideas/$setSlug': typeof IndiaIdeasSetSlugRoute
   '/category/$categorySlug/': typeof CategoryCategorySlugIndexRoute
+  '/india/ideas/': typeof IndiaIdeasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -779,7 +898,7 @@ export interface FileRoutesByTo {
   '/cookie-policy': typeof CookiePolicyRoute
   '/disclaimer': typeof DisclaimerRoute
   '/failed-startups': typeof FailedStartupsRouteWithChildren
-  '/faq': typeof FaqRoute
+  '/feed.xml': typeof FeedDotxmlRoute
   '/first-customer-india': typeof FirstCustomerIndiaRoute
   '/founder-decision-journal': typeof FounderDecisionJournalRoute
   '/founders': typeof FoundersRoute
@@ -788,10 +907,14 @@ export interface FileRoutesByTo {
   '/gdpr': typeof GdprRoute
   '/how-much-money-is-needed-to-start-a-business-in-india': typeof HowMuchMoneyIsNeededToStartABusinessInIndiaRoute
   '/how-to-build-an-mvp-with-low-investment-in-india': typeof HowToBuildAnMvpWithLowInvestmentInIndiaRoute
+  '/how-to-calculate-cash-runway-for-a-small-business-in-india': typeof HowToCalculateCashRunwayForASmallBusinessInIndiaRoute
+  '/how-to-calculate-customer-lifetime-value-for-a-small-business-in-india': typeof HowToCalculateCustomerLifetimeValueForASmallBusinessInIndiaRoute
   '/how-to-calculate-tam-sam-som-for-a-business-in-india': typeof HowToCalculateTamSamSomForABusinessInIndiaRoute
   '/how-to-check-if-your-business-idea-is-good-in-india': typeof HowToCheckIfYourBusinessIdeaIsGoodInIndiaRoute
   '/how-to-do-competitor-analysis-for-a-small-business-in-india': typeof HowToDoCompetitorAnalysisForASmallBusinessInIndiaRoute
+  '/how-to-find-a-co-founder-for-a-startup-in-india': typeof HowToFindACoFounderForAStartupInIndiaRoute
   '/how-to-get-funding-for-a-small-business-in-india': typeof HowToGetFundingForASmallBusinessInIndiaRoute
+  '/how-to-keep-customers-coming-back-to-your-small-business-in-india': typeof HowToKeepCustomersComingBackToYourSmallBusinessInIndiaRoute
   '/how-to-know-if-your-business-has-product-market-fit-in-india': typeof HowToKnowIfYourBusinessHasProductMarketFitInIndiaRoute
   '/how-to-raise-funds-for-a-startup-in-india': typeof HowToRaiseFundsForAStartupInIndiaRoute
   '/how-to-start-a-business-without-investors-in-india': typeof HowToStartABusinessWithoutInvestorsInIndiaRoute
@@ -820,6 +943,7 @@ export interface FileRoutesByTo {
   '/sitemap-blog.xml': typeof SitemapBlogDotxmlRoute
   '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
+  '/sitemap-india.xml': typeof SitemapIndiaDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/startup-cash-flow-india': typeof StartupCashFlowIndiaRoute
   '/startup-costs-india': typeof StartupCostsIndiaRoute
@@ -835,29 +959,38 @@ export interface FileRoutesByTo {
   '/version.json': typeof VersionDotjsonRoute
   '/weekend-market-stall-profit-check': typeof WeekendMarketStallProfitCheckRoute
   '/what-is-customer-acquisition-cost-for-a-small-business-in-india': typeof WhatIsCustomerAcquisitionCostForASmallBusinessInIndiaRoute
+  '/when-to-raise-funds-for-a-startup-in-india': typeof WhenToRaiseFundsForAStartupInIndiaRoute
   '/why-startups-fail-2026-2027': typeof WhyStartupsFail20262027Route
   '/blog/$slug': typeof BlogSlugRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
   '/failed-startups/india': typeof FailedStartupsIndiaRoute
+  '/faq/$categorySlug': typeof FaqCategorySlugRoute
   '/founder-stories/$slug': typeof FounderStoriesSlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
+  '/list/$slug': typeof ListSlugRoute
   '/lists/$slug': typeof ListsSlugRoute
   '/lists/coaching-business-ideas': typeof ListsCoachingBusinessIdeasRoute
+  '/sitemap-ideas/$page': typeof SitemapIdeasPageRoute
   '/startup-guides/$slug': typeof StartupGuidesSlugRoute
   '/templates/$slug': typeof TemplatesSlugRoute
   '/tools/alternate': typeof ToolsAlternateRoute
+  '/validate/$industrySlug': typeof ValidateIndustrySlugRoute
   '/blog': typeof BlogIndexRoute
   '/blueprints': typeof BlueprintsIndexRoute
   '/calculator': typeof CalculatorIndexRoute
+  '/faq': typeof FaqIndexRoute
   '/founder-glossary': typeof FounderGlossaryIndexRoute
   '/founder-stories': typeof FounderStoriesIndexRoute
   '/learning-resources': typeof LearningResourcesIndexRoute
+  '/list': typeof ListIndexRoute
   '/lists': typeof ListsIndexRoute
   '/startup-guides': typeof StartupGuidesIndexRoute
   '/templates': typeof TemplatesIndexRoute
   '/useful-tools': typeof UsefulToolsIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
+  '/india/ideas/$setSlug': typeof IndiaIdeasSetSlugRoute
   '/category/$categorySlug': typeof CategoryCategorySlugIndexRoute
+  '/india/ideas': typeof IndiaIdeasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -883,7 +1016,8 @@ export interface FileRoutesById {
   '/cookie-policy': typeof CookiePolicyRoute
   '/disclaimer': typeof DisclaimerRoute
   '/failed-startups': typeof FailedStartupsRouteWithChildren
-  '/faq': typeof FaqRoute
+  '/faq': typeof FaqRouteWithChildren
+  '/feed.xml': typeof FeedDotxmlRoute
   '/first-customer-india': typeof FirstCustomerIndiaRoute
   '/founder-decision-journal': typeof FounderDecisionJournalRoute
   '/founders': typeof FoundersRoute
@@ -892,10 +1026,14 @@ export interface FileRoutesById {
   '/gdpr': typeof GdprRoute
   '/how-much-money-is-needed-to-start-a-business-in-india': typeof HowMuchMoneyIsNeededToStartABusinessInIndiaRoute
   '/how-to-build-an-mvp-with-low-investment-in-india': typeof HowToBuildAnMvpWithLowInvestmentInIndiaRoute
+  '/how-to-calculate-cash-runway-for-a-small-business-in-india': typeof HowToCalculateCashRunwayForASmallBusinessInIndiaRoute
+  '/how-to-calculate-customer-lifetime-value-for-a-small-business-in-india': typeof HowToCalculateCustomerLifetimeValueForASmallBusinessInIndiaRoute
   '/how-to-calculate-tam-sam-som-for-a-business-in-india': typeof HowToCalculateTamSamSomForABusinessInIndiaRoute
   '/how-to-check-if-your-business-idea-is-good-in-india': typeof HowToCheckIfYourBusinessIdeaIsGoodInIndiaRoute
   '/how-to-do-competitor-analysis-for-a-small-business-in-india': typeof HowToDoCompetitorAnalysisForASmallBusinessInIndiaRoute
+  '/how-to-find-a-co-founder-for-a-startup-in-india': typeof HowToFindACoFounderForAStartupInIndiaRoute
   '/how-to-get-funding-for-a-small-business-in-india': typeof HowToGetFundingForASmallBusinessInIndiaRoute
+  '/how-to-keep-customers-coming-back-to-your-small-business-in-india': typeof HowToKeepCustomersComingBackToYourSmallBusinessInIndiaRoute
   '/how-to-know-if-your-business-has-product-market-fit-in-india': typeof HowToKnowIfYourBusinessHasProductMarketFitInIndiaRoute
   '/how-to-raise-funds-for-a-startup-in-india': typeof HowToRaiseFundsForAStartupInIndiaRoute
   '/how-to-start-a-business-without-investors-in-india': typeof HowToStartABusinessWithoutInvestorsInIndiaRoute
@@ -924,6 +1062,7 @@ export interface FileRoutesById {
   '/sitemap-blog.xml': typeof SitemapBlogDotxmlRoute
   '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
   '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
+  '/sitemap-india.xml': typeof SitemapIndiaDotxmlRoute
   '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
   '/startup-cash-flow-india': typeof StartupCashFlowIndiaRoute
   '/startup-costs-india': typeof StartupCostsIndiaRoute
@@ -940,29 +1079,39 @@ export interface FileRoutesById {
   '/version.json': typeof VersionDotjsonRoute
   '/weekend-market-stall-profit-check': typeof WeekendMarketStallProfitCheckRoute
   '/what-is-customer-acquisition-cost-for-a-small-business-in-india': typeof WhatIsCustomerAcquisitionCostForASmallBusinessInIndiaRoute
+  '/when-to-raise-funds-for-a-startup-in-india': typeof WhenToRaiseFundsForAStartupInIndiaRoute
   '/why-startups-fail-2026-2027': typeof WhyStartupsFail20262027Route
   '/blog/$slug': typeof BlogSlugRoute
   '/calculator/$slug': typeof CalculatorSlugRoute
+  '/category/$categorySlug': typeof CategoryCategorySlugRouteWithChildren
   '/failed-startups/india': typeof FailedStartupsIndiaRoute
+  '/faq/$categorySlug': typeof FaqCategorySlugRoute
   '/founder-stories/$slug': typeof FounderStoriesSlugRoute
   '/idea/$slug': typeof IdeaSlugRoute
+  '/list/$slug': typeof ListSlugRoute
   '/lists/$slug': typeof ListsSlugRoute
   '/lists/coaching-business-ideas': typeof ListsCoachingBusinessIdeasRoute
+  '/sitemap-ideas/$page': typeof SitemapIdeasPageRoute
   '/startup-guides/$slug': typeof StartupGuidesSlugRoute
   '/templates/$slug': typeof TemplatesSlugRoute
   '/tools/alternate': typeof ToolsAlternateRoute
+  '/validate/$industrySlug': typeof ValidateIndustrySlugRoute
   '/blog/': typeof BlogIndexRoute
   '/blueprints/': typeof BlueprintsIndexRoute
   '/calculator/': typeof CalculatorIndexRoute
+  '/faq/': typeof FaqIndexRoute
   '/founder-glossary/': typeof FounderGlossaryIndexRoute
   '/founder-stories/': typeof FounderStoriesIndexRoute
   '/learning-resources/': typeof LearningResourcesIndexRoute
+  '/list/': typeof ListIndexRoute
   '/lists/': typeof ListsIndexRoute
   '/startup-guides/': typeof StartupGuidesIndexRoute
   '/templates/': typeof TemplatesIndexRoute
   '/useful-tools/': typeof UsefulToolsIndexRoute
   '/category/$categorySlug/$subcategorySlug': typeof CategoryCategorySlugSubcategorySlugRoute
+  '/india/ideas/$setSlug': typeof IndiaIdeasSetSlugRoute
   '/category/$categorySlug/': typeof CategoryCategorySlugIndexRoute
+  '/india/ideas/': typeof IndiaIdeasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -990,6 +1139,7 @@ export interface FileRouteTypes {
     | '/disclaimer'
     | '/failed-startups'
     | '/faq'
+    | '/feed.xml'
     | '/first-customer-india'
     | '/founder-decision-journal'
     | '/founders'
@@ -998,10 +1148,14 @@ export interface FileRouteTypes {
     | '/gdpr'
     | '/how-much-money-is-needed-to-start-a-business-in-india'
     | '/how-to-build-an-mvp-with-low-investment-in-india'
+    | '/how-to-calculate-cash-runway-for-a-small-business-in-india'
+    | '/how-to-calculate-customer-lifetime-value-for-a-small-business-in-india'
     | '/how-to-calculate-tam-sam-som-for-a-business-in-india'
     | '/how-to-check-if-your-business-idea-is-good-in-india'
     | '/how-to-do-competitor-analysis-for-a-small-business-in-india'
+    | '/how-to-find-a-co-founder-for-a-startup-in-india'
     | '/how-to-get-funding-for-a-small-business-in-india'
+    | '/how-to-keep-customers-coming-back-to-your-small-business-in-india'
     | '/how-to-know-if-your-business-has-product-market-fit-in-india'
     | '/how-to-raise-funds-for-a-startup-in-india'
     | '/how-to-start-a-business-without-investors-in-india'
@@ -1030,6 +1184,7 @@ export interface FileRouteTypes {
     | '/sitemap-blog.xml'
     | '/sitemap-categories.xml'
     | '/sitemap-index.xml'
+    | '/sitemap-india.xml'
     | '/sitemap-pages.xml'
     | '/startup-cash-flow-india'
     | '/startup-costs-india'
@@ -1046,29 +1201,39 @@ export interface FileRouteTypes {
     | '/version.json'
     | '/weekend-market-stall-profit-check'
     | '/what-is-customer-acquisition-cost-for-a-small-business-in-india'
+    | '/when-to-raise-funds-for-a-startup-in-india'
     | '/why-startups-fail-2026-2027'
     | '/blog/$slug'
     | '/calculator/$slug'
+    | '/category/$categorySlug'
     | '/failed-startups/india'
+    | '/faq/$categorySlug'
     | '/founder-stories/$slug'
     | '/idea/$slug'
+    | '/list/$slug'
     | '/lists/$slug'
     | '/lists/coaching-business-ideas'
+    | '/sitemap-ideas/$page'
     | '/startup-guides/$slug'
     | '/templates/$slug'
     | '/tools/alternate'
+    | '/validate/$industrySlug'
     | '/blog/'
     | '/blueprints/'
     | '/calculator/'
+    | '/faq/'
     | '/founder-glossary/'
     | '/founder-stories/'
     | '/learning-resources/'
+    | '/list/'
     | '/lists/'
     | '/startup-guides/'
     | '/templates/'
     | '/useful-tools/'
     | '/category/$categorySlug/$subcategorySlug'
+    | '/india/ideas/$setSlug'
     | '/category/$categorySlug/'
+    | '/india/ideas/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -1093,7 +1258,7 @@ export interface FileRouteTypes {
     | '/cookie-policy'
     | '/disclaimer'
     | '/failed-startups'
-    | '/faq'
+    | '/feed.xml'
     | '/first-customer-india'
     | '/founder-decision-journal'
     | '/founders'
@@ -1102,10 +1267,14 @@ export interface FileRouteTypes {
     | '/gdpr'
     | '/how-much-money-is-needed-to-start-a-business-in-india'
     | '/how-to-build-an-mvp-with-low-investment-in-india'
+    | '/how-to-calculate-cash-runway-for-a-small-business-in-india'
+    | '/how-to-calculate-customer-lifetime-value-for-a-small-business-in-india'
     | '/how-to-calculate-tam-sam-som-for-a-business-in-india'
     | '/how-to-check-if-your-business-idea-is-good-in-india'
     | '/how-to-do-competitor-analysis-for-a-small-business-in-india'
+    | '/how-to-find-a-co-founder-for-a-startup-in-india'
     | '/how-to-get-funding-for-a-small-business-in-india'
+    | '/how-to-keep-customers-coming-back-to-your-small-business-in-india'
     | '/how-to-know-if-your-business-has-product-market-fit-in-india'
     | '/how-to-raise-funds-for-a-startup-in-india'
     | '/how-to-start-a-business-without-investors-in-india'
@@ -1134,6 +1303,7 @@ export interface FileRouteTypes {
     | '/sitemap-blog.xml'
     | '/sitemap-categories.xml'
     | '/sitemap-index.xml'
+    | '/sitemap-india.xml'
     | '/sitemap-pages.xml'
     | '/startup-cash-flow-india'
     | '/startup-costs-india'
@@ -1149,29 +1319,38 @@ export interface FileRouteTypes {
     | '/version.json'
     | '/weekend-market-stall-profit-check'
     | '/what-is-customer-acquisition-cost-for-a-small-business-in-india'
+    | '/when-to-raise-funds-for-a-startup-in-india'
     | '/why-startups-fail-2026-2027'
     | '/blog/$slug'
     | '/calculator/$slug'
     | '/failed-startups/india'
+    | '/faq/$categorySlug'
     | '/founder-stories/$slug'
     | '/idea/$slug'
+    | '/list/$slug'
     | '/lists/$slug'
     | '/lists/coaching-business-ideas'
+    | '/sitemap-ideas/$page'
     | '/startup-guides/$slug'
     | '/templates/$slug'
     | '/tools/alternate'
+    | '/validate/$industrySlug'
     | '/blog'
     | '/blueprints'
     | '/calculator'
+    | '/faq'
     | '/founder-glossary'
     | '/founder-stories'
     | '/learning-resources'
+    | '/list'
     | '/lists'
     | '/startup-guides'
     | '/templates'
     | '/useful-tools'
     | '/category/$categorySlug/$subcategorySlug'
+    | '/india/ideas/$setSlug'
     | '/category/$categorySlug'
+    | '/india/ideas'
   id:
     | '__root__'
     | '/'
@@ -1197,6 +1376,7 @@ export interface FileRouteTypes {
     | '/disclaimer'
     | '/failed-startups'
     | '/faq'
+    | '/feed.xml'
     | '/first-customer-india'
     | '/founder-decision-journal'
     | '/founders'
@@ -1205,10 +1385,14 @@ export interface FileRouteTypes {
     | '/gdpr'
     | '/how-much-money-is-needed-to-start-a-business-in-india'
     | '/how-to-build-an-mvp-with-low-investment-in-india'
+    | '/how-to-calculate-cash-runway-for-a-small-business-in-india'
+    | '/how-to-calculate-customer-lifetime-value-for-a-small-business-in-india'
     | '/how-to-calculate-tam-sam-som-for-a-business-in-india'
     | '/how-to-check-if-your-business-idea-is-good-in-india'
     | '/how-to-do-competitor-analysis-for-a-small-business-in-india'
+    | '/how-to-find-a-co-founder-for-a-startup-in-india'
     | '/how-to-get-funding-for-a-small-business-in-india'
+    | '/how-to-keep-customers-coming-back-to-your-small-business-in-india'
     | '/how-to-know-if-your-business-has-product-market-fit-in-india'
     | '/how-to-raise-funds-for-a-startup-in-india'
     | '/how-to-start-a-business-without-investors-in-india'
@@ -1237,6 +1421,7 @@ export interface FileRouteTypes {
     | '/sitemap-blog.xml'
     | '/sitemap-categories.xml'
     | '/sitemap-index.xml'
+    | '/sitemap-india.xml'
     | '/sitemap-pages.xml'
     | '/startup-cash-flow-india'
     | '/startup-costs-india'
@@ -1253,29 +1438,39 @@ export interface FileRouteTypes {
     | '/version.json'
     | '/weekend-market-stall-profit-check'
     | '/what-is-customer-acquisition-cost-for-a-small-business-in-india'
+    | '/when-to-raise-funds-for-a-startup-in-india'
     | '/why-startups-fail-2026-2027'
     | '/blog/$slug'
     | '/calculator/$slug'
+    | '/category/$categorySlug'
     | '/failed-startups/india'
+    | '/faq/$categorySlug'
     | '/founder-stories/$slug'
     | '/idea/$slug'
+    | '/list/$slug'
     | '/lists/$slug'
     | '/lists/coaching-business-ideas'
+    | '/sitemap-ideas/$page'
     | '/startup-guides/$slug'
     | '/templates/$slug'
     | '/tools/alternate'
+    | '/validate/$industrySlug'
     | '/blog/'
     | '/blueprints/'
     | '/calculator/'
+    | '/faq/'
     | '/founder-glossary/'
     | '/founder-stories/'
     | '/learning-resources/'
+    | '/list/'
     | '/lists/'
     | '/startup-guides/'
     | '/templates/'
     | '/useful-tools/'
     | '/category/$categorySlug/$subcategorySlug'
+    | '/india/ideas/$setSlug'
     | '/category/$categorySlug/'
+    | '/india/ideas/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1301,7 +1496,8 @@ export interface RootRouteChildren {
   CookiePolicyRoute: typeof CookiePolicyRoute
   DisclaimerRoute: typeof DisclaimerRoute
   FailedStartupsRoute: typeof FailedStartupsRouteWithChildren
-  FaqRoute: typeof FaqRoute
+  FaqRoute: typeof FaqRouteWithChildren
+  FeedDotxmlRoute: typeof FeedDotxmlRoute
   FirstCustomerIndiaRoute: typeof FirstCustomerIndiaRoute
   FounderDecisionJournalRoute: typeof FounderDecisionJournalRoute
   FoundersRoute: typeof FoundersRoute
@@ -1310,10 +1506,14 @@ export interface RootRouteChildren {
   GdprRoute: typeof GdprRoute
   HowMuchMoneyIsNeededToStartABusinessInIndiaRoute: typeof HowMuchMoneyIsNeededToStartABusinessInIndiaRoute
   HowToBuildAnMvpWithLowInvestmentInIndiaRoute: typeof HowToBuildAnMvpWithLowInvestmentInIndiaRoute
+  HowToCalculateCashRunwayForASmallBusinessInIndiaRoute: typeof HowToCalculateCashRunwayForASmallBusinessInIndiaRoute
+  HowToCalculateCustomerLifetimeValueForASmallBusinessInIndiaRoute: typeof HowToCalculateCustomerLifetimeValueForASmallBusinessInIndiaRoute
   HowToCalculateTamSamSomForABusinessInIndiaRoute: typeof HowToCalculateTamSamSomForABusinessInIndiaRoute
   HowToCheckIfYourBusinessIdeaIsGoodInIndiaRoute: typeof HowToCheckIfYourBusinessIdeaIsGoodInIndiaRoute
   HowToDoCompetitorAnalysisForASmallBusinessInIndiaRoute: typeof HowToDoCompetitorAnalysisForASmallBusinessInIndiaRoute
+  HowToFindACoFounderForAStartupInIndiaRoute: typeof HowToFindACoFounderForAStartupInIndiaRoute
   HowToGetFundingForASmallBusinessInIndiaRoute: typeof HowToGetFundingForASmallBusinessInIndiaRoute
+  HowToKeepCustomersComingBackToYourSmallBusinessInIndiaRoute: typeof HowToKeepCustomersComingBackToYourSmallBusinessInIndiaRoute
   HowToKnowIfYourBusinessHasProductMarketFitInIndiaRoute: typeof HowToKnowIfYourBusinessHasProductMarketFitInIndiaRoute
   HowToRaiseFundsForAStartupInIndiaRoute: typeof HowToRaiseFundsForAStartupInIndiaRoute
   HowToStartABusinessWithoutInvestorsInIndiaRoute: typeof HowToStartABusinessWithoutInvestorsInIndiaRoute
@@ -1342,6 +1542,7 @@ export interface RootRouteChildren {
   SitemapBlogDotxmlRoute: typeof SitemapBlogDotxmlRoute
   SitemapCategoriesDotxmlRoute: typeof SitemapCategoriesDotxmlRoute
   SitemapIndexDotxmlRoute: typeof SitemapIndexDotxmlRoute
+  SitemapIndiaDotxmlRoute: typeof SitemapIndiaDotxmlRoute
   SitemapPagesDotxmlRoute: typeof SitemapPagesDotxmlRoute
   StartupCashFlowIndiaRoute: typeof StartupCashFlowIndiaRoute
   StartupCostsIndiaRoute: typeof StartupCostsIndiaRoute
@@ -1358,25 +1559,31 @@ export interface RootRouteChildren {
   VersionDotjsonRoute: typeof VersionDotjsonRoute
   WeekendMarketStallProfitCheckRoute: typeof WeekendMarketStallProfitCheckRoute
   WhatIsCustomerAcquisitionCostForASmallBusinessInIndiaRoute: typeof WhatIsCustomerAcquisitionCostForASmallBusinessInIndiaRoute
+  WhenToRaiseFundsForAStartupInIndiaRoute: typeof WhenToRaiseFundsForAStartupInIndiaRoute
   WhyStartupsFail20262027Route: typeof WhyStartupsFail20262027Route
   BlogSlugRoute: typeof BlogSlugRoute
   CalculatorSlugRoute: typeof CalculatorSlugRoute
+  CategoryCategorySlugRoute: typeof CategoryCategorySlugRouteWithChildren
   FounderStoriesSlugRoute: typeof FounderStoriesSlugRoute
   IdeaSlugRoute: typeof IdeaSlugRoute
+  ListSlugRoute: typeof ListSlugRoute
   ListsSlugRoute: typeof ListsSlugRoute
   ListsCoachingBusinessIdeasRoute: typeof ListsCoachingBusinessIdeasRoute
+  SitemapIdeasPageRoute: typeof SitemapIdeasPageRoute
   StartupGuidesSlugRoute: typeof StartupGuidesSlugRoute
+  ValidateIndustrySlugRoute: typeof ValidateIndustrySlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   BlueprintsIndexRoute: typeof BlueprintsIndexRoute
   CalculatorIndexRoute: typeof CalculatorIndexRoute
   FounderGlossaryIndexRoute: typeof FounderGlossaryIndexRoute
   FounderStoriesIndexRoute: typeof FounderStoriesIndexRoute
   LearningResourcesIndexRoute: typeof LearningResourcesIndexRoute
+  ListIndexRoute: typeof ListIndexRoute
   ListsIndexRoute: typeof ListsIndexRoute
   StartupGuidesIndexRoute: typeof StartupGuidesIndexRoute
   UsefulToolsIndexRoute: typeof UsefulToolsIndexRoute
-  CategoryCategorySlugSubcategorySlugRoute: typeof CategoryCategorySlugSubcategorySlugRoute
-  CategoryCategorySlugIndexRoute: typeof CategoryCategorySlugIndexRoute
+  IndiaIdeasSetSlugRoute: typeof IndiaIdeasSetSlugRoute
+  IndiaIdeasIndexRoute: typeof IndiaIdeasIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1542,6 +1749,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/feed.xml': {
+      id: '/feed.xml'
+      path: '/feed.xml'
+      fullPath: '/feed.xml'
+      preLoaderRoute: typeof FeedDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/first-customer-india': {
       id: '/first-customer-india'
       path: '/first-customer-india'
@@ -1598,6 +1812,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowToBuildAnMvpWithLowInvestmentInIndiaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/how-to-calculate-cash-runway-for-a-small-business-in-india': {
+      id: '/how-to-calculate-cash-runway-for-a-small-business-in-india'
+      path: '/how-to-calculate-cash-runway-for-a-small-business-in-india'
+      fullPath: '/how-to-calculate-cash-runway-for-a-small-business-in-india'
+      preLoaderRoute: typeof HowToCalculateCashRunwayForASmallBusinessInIndiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-to-calculate-customer-lifetime-value-for-a-small-business-in-india': {
+      id: '/how-to-calculate-customer-lifetime-value-for-a-small-business-in-india'
+      path: '/how-to-calculate-customer-lifetime-value-for-a-small-business-in-india'
+      fullPath: '/how-to-calculate-customer-lifetime-value-for-a-small-business-in-india'
+      preLoaderRoute: typeof HowToCalculateCustomerLifetimeValueForASmallBusinessInIndiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/how-to-calculate-tam-sam-som-for-a-business-in-india': {
       id: '/how-to-calculate-tam-sam-som-for-a-business-in-india'
       path: '/how-to-calculate-tam-sam-som-for-a-business-in-india'
@@ -1619,11 +1847,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowToDoCompetitorAnalysisForASmallBusinessInIndiaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/how-to-find-a-co-founder-for-a-startup-in-india': {
+      id: '/how-to-find-a-co-founder-for-a-startup-in-india'
+      path: '/how-to-find-a-co-founder-for-a-startup-in-india'
+      fullPath: '/how-to-find-a-co-founder-for-a-startup-in-india'
+      preLoaderRoute: typeof HowToFindACoFounderForAStartupInIndiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/how-to-get-funding-for-a-small-business-in-india': {
       id: '/how-to-get-funding-for-a-small-business-in-india'
       path: '/how-to-get-funding-for-a-small-business-in-india'
       fullPath: '/how-to-get-funding-for-a-small-business-in-india'
       preLoaderRoute: typeof HowToGetFundingForASmallBusinessInIndiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-to-keep-customers-coming-back-to-your-small-business-in-india': {
+      id: '/how-to-keep-customers-coming-back-to-your-small-business-in-india'
+      path: '/how-to-keep-customers-coming-back-to-your-small-business-in-india'
+      fullPath: '/how-to-keep-customers-coming-back-to-your-small-business-in-india'
+      preLoaderRoute: typeof HowToKeepCustomersComingBackToYourSmallBusinessInIndiaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/how-to-know-if-your-business-has-product-market-fit-in-india': {
@@ -1822,6 +2064,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapIndexDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap-india.xml': {
+      id: '/sitemap-india.xml'
+      path: '/sitemap-india.xml'
+      fullPath: '/sitemap-india.xml'
+      preLoaderRoute: typeof SitemapIndiaDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap-pages.xml': {
       id: '/sitemap-pages.xml'
       path: '/sitemap-pages.xml'
@@ -1934,6 +2183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhatIsCustomerAcquisitionCostForASmallBusinessInIndiaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/when-to-raise-funds-for-a-startup-in-india': {
+      id: '/when-to-raise-funds-for-a-startup-in-india'
+      path: '/when-to-raise-funds-for-a-startup-in-india'
+      fullPath: '/when-to-raise-funds-for-a-startup-in-india'
+      preLoaderRoute: typeof WhenToRaiseFundsForAStartupInIndiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/why-startups-fail-2026-2027': {
       id: '/why-startups-fail-2026-2027'
       path: '/why-startups-fail-2026-2027'
@@ -1976,12 +2232,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalculatorSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/category/$categorySlug': {
+      id: '/category/$categorySlug'
+      path: '/category/$categorySlug'
+      fullPath: '/category/$categorySlug'
+      preLoaderRoute: typeof CategoryCategorySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/failed-startups/india': {
       id: '/failed-startups/india'
       path: '/india'
       fullPath: '/failed-startups/india'
       preLoaderRoute: typeof FailedStartupsIndiaRouteImport
       parentRoute: typeof FailedStartupsRoute
+    }
+    '/faq/': {
+      id: '/faq/'
+      path: '/'
+      fullPath: '/faq/'
+      preLoaderRoute: typeof FaqIndexRouteImport
+      parentRoute: typeof FaqRoute
+    }
+    '/faq/$categorySlug': {
+      id: '/faq/$categorySlug'
+      path: '/$categorySlug'
+      fullPath: '/faq/$categorySlug'
+      preLoaderRoute: typeof FaqCategorySlugRouteImport
+      parentRoute: typeof FaqRoute
     }
     '/founder-glossary/': {
       id: '/founder-glossary/'
@@ -2018,6 +2295,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearningResourcesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/list/': {
+      id: '/list/'
+      path: '/list'
+      fullPath: '/list/'
+      preLoaderRoute: typeof ListIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/list/$slug': {
+      id: '/list/$slug'
+      path: '/list/$slug'
+      fullPath: '/list/$slug'
+      preLoaderRoute: typeof ListSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lists/': {
       id: '/lists/'
       path: '/lists'
@@ -2037,6 +2328,13 @@ declare module '@tanstack/react-router' {
       path: '/lists/coaching-business-ideas'
       fullPath: '/lists/coaching-business-ideas'
       preLoaderRoute: typeof ListsCoachingBusinessIdeasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap-ideas/$page': {
+      id: '/sitemap-ideas/$page'
+      path: '/sitemap-ideas/$page'
+      fullPath: '/sitemap-ideas/$page'
+      preLoaderRoute: typeof SitemapIdeasPageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/startup-guides/': {
@@ -2081,18 +2379,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UsefulToolsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/validate/$industrySlug': {
+      id: '/validate/$industrySlug'
+      path: '/validate/$industrySlug'
+      fullPath: '/validate/$industrySlug'
+      preLoaderRoute: typeof ValidateIndustrySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/category/$categorySlug/': {
       id: '/category/$categorySlug/'
-      path: '/category/$categorySlug'
+      path: '/'
       fullPath: '/category/$categorySlug/'
       preLoaderRoute: typeof CategoryCategorySlugIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof CategoryCategorySlugRoute
     }
     '/category/$categorySlug/$subcategorySlug': {
       id: '/category/$categorySlug/$subcategorySlug'
-      path: '/category/$categorySlug/$subcategorySlug'
+      path: '/$subcategorySlug'
       fullPath: '/category/$categorySlug/$subcategorySlug'
       preLoaderRoute: typeof CategoryCategorySlugSubcategorySlugRouteImport
+      parentRoute: typeof CategoryCategorySlugRoute
+    }
+    '/india/ideas/': {
+      id: '/india/ideas/'
+      path: '/india/ideas'
+      fullPath: '/india/ideas/'
+      preLoaderRoute: typeof IndiaIdeasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/india/ideas/$setSlug': {
+      id: '/india/ideas/$setSlug'
+      path: '/india/ideas/$setSlug'
+      fullPath: '/india/ideas/$setSlug'
+      preLoaderRoute: typeof IndiaIdeasSetSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -2109,6 +2428,18 @@ const FailedStartupsRouteChildren: FailedStartupsRouteChildren = {
 const FailedStartupsRouteWithChildren = FailedStartupsRoute._addFileChildren(
   FailedStartupsRouteChildren,
 )
+
+interface FaqRouteChildren {
+  FaqCategorySlugRoute: typeof FaqCategorySlugRoute
+  FaqIndexRoute: typeof FaqIndexRoute
+}
+
+const FaqRouteChildren: FaqRouteChildren = {
+  FaqCategorySlugRoute: FaqCategorySlugRoute,
+  FaqIndexRoute: FaqIndexRoute,
+}
+
+const FaqRouteWithChildren = FaqRoute._addFileChildren(FaqRouteChildren)
 
 interface TemplatesRouteChildren {
   TemplatesSlugRoute: typeof TemplatesSlugRoute
@@ -2133,6 +2464,20 @@ const ToolsRouteChildren: ToolsRouteChildren = {
 }
 
 const ToolsRouteWithChildren = ToolsRoute._addFileChildren(ToolsRouteChildren)
+
+interface CategoryCategorySlugRouteChildren {
+  CategoryCategorySlugSubcategorySlugRoute: typeof CategoryCategorySlugSubcategorySlugRoute
+  CategoryCategorySlugIndexRoute: typeof CategoryCategorySlugIndexRoute
+}
+
+const CategoryCategorySlugRouteChildren: CategoryCategorySlugRouteChildren = {
+  CategoryCategorySlugSubcategorySlugRoute:
+    CategoryCategorySlugSubcategorySlugRoute,
+  CategoryCategorySlugIndexRoute: CategoryCategorySlugIndexRoute,
+}
+
+const CategoryCategorySlugRouteWithChildren =
+  CategoryCategorySlugRoute._addFileChildren(CategoryCategorySlugRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -2159,7 +2504,8 @@ const rootRouteChildren: RootRouteChildren = {
   CookiePolicyRoute: CookiePolicyRoute,
   DisclaimerRoute: DisclaimerRoute,
   FailedStartupsRoute: FailedStartupsRouteWithChildren,
-  FaqRoute: FaqRoute,
+  FaqRoute: FaqRouteWithChildren,
+  FeedDotxmlRoute: FeedDotxmlRoute,
   FirstCustomerIndiaRoute: FirstCustomerIndiaRoute,
   FounderDecisionJournalRoute: FounderDecisionJournalRoute,
   FoundersRoute: FoundersRoute,
@@ -2171,14 +2517,22 @@ const rootRouteChildren: RootRouteChildren = {
     HowMuchMoneyIsNeededToStartABusinessInIndiaRoute,
   HowToBuildAnMvpWithLowInvestmentInIndiaRoute:
     HowToBuildAnMvpWithLowInvestmentInIndiaRoute,
+  HowToCalculateCashRunwayForASmallBusinessInIndiaRoute:
+    HowToCalculateCashRunwayForASmallBusinessInIndiaRoute,
+  HowToCalculateCustomerLifetimeValueForASmallBusinessInIndiaRoute:
+    HowToCalculateCustomerLifetimeValueForASmallBusinessInIndiaRoute,
   HowToCalculateTamSamSomForABusinessInIndiaRoute:
     HowToCalculateTamSamSomForABusinessInIndiaRoute,
   HowToCheckIfYourBusinessIdeaIsGoodInIndiaRoute:
     HowToCheckIfYourBusinessIdeaIsGoodInIndiaRoute,
   HowToDoCompetitorAnalysisForASmallBusinessInIndiaRoute:
     HowToDoCompetitorAnalysisForASmallBusinessInIndiaRoute,
+  HowToFindACoFounderForAStartupInIndiaRoute:
+    HowToFindACoFounderForAStartupInIndiaRoute,
   HowToGetFundingForASmallBusinessInIndiaRoute:
     HowToGetFundingForASmallBusinessInIndiaRoute,
+  HowToKeepCustomersComingBackToYourSmallBusinessInIndiaRoute:
+    HowToKeepCustomersComingBackToYourSmallBusinessInIndiaRoute,
   HowToKnowIfYourBusinessHasProductMarketFitInIndiaRoute:
     HowToKnowIfYourBusinessHasProductMarketFitInIndiaRoute,
   HowToRaiseFundsForAStartupInIndiaRoute:
@@ -2216,6 +2570,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapBlogDotxmlRoute: SitemapBlogDotxmlRoute,
   SitemapCategoriesDotxmlRoute: SitemapCategoriesDotxmlRoute,
   SitemapIndexDotxmlRoute: SitemapIndexDotxmlRoute,
+  SitemapIndiaDotxmlRoute: SitemapIndiaDotxmlRoute,
   SitemapPagesDotxmlRoute: SitemapPagesDotxmlRoute,
   StartupCashFlowIndiaRoute: StartupCashFlowIndiaRoute,
   StartupCostsIndiaRoute: StartupCostsIndiaRoute,
@@ -2234,26 +2589,32 @@ const rootRouteChildren: RootRouteChildren = {
   WeekendMarketStallProfitCheckRoute: WeekendMarketStallProfitCheckRoute,
   WhatIsCustomerAcquisitionCostForASmallBusinessInIndiaRoute:
     WhatIsCustomerAcquisitionCostForASmallBusinessInIndiaRoute,
+  WhenToRaiseFundsForAStartupInIndiaRoute:
+    WhenToRaiseFundsForAStartupInIndiaRoute,
   WhyStartupsFail20262027Route: WhyStartupsFail20262027Route,
   BlogSlugRoute: BlogSlugRoute,
   CalculatorSlugRoute: CalculatorSlugRoute,
+  CategoryCategorySlugRoute: CategoryCategorySlugRouteWithChildren,
   FounderStoriesSlugRoute: FounderStoriesSlugRoute,
   IdeaSlugRoute: IdeaSlugRoute,
+  ListSlugRoute: ListSlugRoute,
   ListsSlugRoute: ListsSlugRoute,
   ListsCoachingBusinessIdeasRoute: ListsCoachingBusinessIdeasRoute,
+  SitemapIdeasPageRoute: SitemapIdeasPageRoute,
   StartupGuidesSlugRoute: StartupGuidesSlugRoute,
+  ValidateIndustrySlugRoute: ValidateIndustrySlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   BlueprintsIndexRoute: BlueprintsIndexRoute,
   CalculatorIndexRoute: CalculatorIndexRoute,
   FounderGlossaryIndexRoute: FounderGlossaryIndexRoute,
   FounderStoriesIndexRoute: FounderStoriesIndexRoute,
   LearningResourcesIndexRoute: LearningResourcesIndexRoute,
+  ListIndexRoute: ListIndexRoute,
   ListsIndexRoute: ListsIndexRoute,
   StartupGuidesIndexRoute: StartupGuidesIndexRoute,
   UsefulToolsIndexRoute: UsefulToolsIndexRoute,
-  CategoryCategorySlugSubcategorySlugRoute:
-    CategoryCategorySlugSubcategorySlugRoute,
-  CategoryCategorySlugIndexRoute: CategoryCategorySlugIndexRoute,
+  IndiaIdeasSetSlugRoute: IndiaIdeasSetSlugRoute,
+  IndiaIdeasIndexRoute: IndiaIdeasIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

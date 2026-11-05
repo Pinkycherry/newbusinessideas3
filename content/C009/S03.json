@@ -1,0 +1,507 @@
+{
+  "subcategory": {
+    "code": "C009-S03",
+    "intro": "Milk collection in a village is a business of timing, cleanliness and trust. A farmer with one or two animals needs a dependable buyer just as much as a larger dairy farmer does. The collector brings many small quantities together, checks quality, records whose milk belongs to whom and moves it quickly to a buyer or a cooling point. That daily routine looks simple until a vehicle arrives late, a reading is disputed or the weather turns hot. Decide who will buy the milk before you promise farmers a collection price. Put the quality test, rejection rule, payment date and deductions in writing so nobody has to guess. Use clean food grade containers and learn the safe handling procedures appropriate to your route. Milk spoils fast, so a long journey without proper cooling is not an acceptable shortcut. The ideas below use different buyers and operating arrangements. Some work with a licensed dairy or cooperative as the main purchaser. Others serve nearby households or tea stalls with suitable handling and permissions. A route for scattered smallholders is different from a fixed point beside a road. In every model, keep an individual record at the moment of handover and make the calculation visible to the farmer. Village relationships will bring your first suppliers, but transparent testing and timely payments keep them. You also need a plan for rejected or unsold milk; do not quietly mix it into another batch. Consider electricity, roads, water for cleaning and the hours when farmers actually milk their animals. A collection route can create reliable work in a small town, yet it leaves little room for missed mornings. Start with the buyer contract and a short route you can complete safely, then expand only after quality and payments have stayed orderly.",
+    "how_to_choose": "Begin with the buyer you can actually serve. A dairy procurement point with clear terms suits someone who can aggregate farmers nearby; a household delivery round needs stronger customer service and safe last mile handling. If farms are spread out, work out whether pickup time and cooling are realistic before offering collection. If you already have a suitable space and power, a test and chilling point may be possible, but equipment and compliance make it a bigger step. Choose one milk type and one collection window to begin. Ask both farmers and the purchaser about volumes and rejection rules, then use a small trial to find bottlenecks.",
+    "faq": [
+      {
+        "q": "Can you collect milk without first finding a purchaser?",
+        "a": "That is risky. Fresh milk has very little time for you to search for a buyer. Agree on quality requirements, collection timing, payment and what happens to rejected milk before signing up farmers."
+      },
+      {
+        "q": "How should farmers know what they will be paid?",
+        "a": "Explain the agreed rate method and any quality test at handover. Give each supplier a dated record and reconcile it with the purchaser's statement. A dispute is easier to solve when both sides can see the same entries."
+      },
+      {
+        "q": "Do you need cooling equipment for a small route?",
+        "a": "It depends on distance, timing and the purchaser's handling requirements. Do not assume a short route is automatically safe in hot weather. Check applicable food safety requirements and the buyer's quality process before moving milk."
+      },
+      {
+        "q": "What if a batch fails a quality test?",
+        "a": "Keep it separate and follow the agreed rejection process. Never dilute or mix a rejected batch with accepted milk. Record whose supply is affected, explain the reason and use the result to correct handling on the next collection."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C009-S03-I01",
+      "slug": "dairy-procurement-village-collection-point",
+      "title": "Dairy Procurement Village Collection Point",
+      "hook": "A dairy buyer may want reliable milk from many small farms, but each farmer needs a fair recorded handover close to home.",
+      "summary": "You operate a fixed village collection point under clear terms with a dairy purchaser. Farmers bring milk during scheduled windows, you test and record it, and the buyer collects the accepted batch. Your work is measurement, handling and accurate settlement rather than owning a herd.",
+      "what_it_is": "Secure a purchasing arrangement that explains quality standards, equipment, collection time and payment responsibility. At a clean accessible point, receive each farmer's milk separately, measure it, perform the required test and issue a dated record before adding accepted milk to the appropriate container. Keep rejected supply separate and explain the reason without humiliating the farmer. Clean equipment after every session and make sure the buyer collects within the agreed safe handling window. Reconcile the buyer's total against individual records daily. A fixed point succeeds because farmers can trust the process even when you are handling many small cans.",
+      "who_pays_you": "The dairy purchaser may pay you a collection commission or service fee under a written arrangement. Individual farmers bring the milk because the point saves them a trip and gives a predictable sale. Check who is responsible for farmer payments before opening; do not casually promise to pay from your own pocket while waiting for the purchaser. Farms close to the collection point make the timing workable.",
+      "how_money_comes": "Your income is the agreed commission, handling fee or documented margin for accepted milk, depending on the buyer contract. Record rejected quantities and any deductions separately so the commission is understandable. You may handle two daily collection windows if equipment and pickup allow, but each window adds labour and cleaning. Cash needed for float depends on whether the buyer or you pays farmers. Ask Validate for current local terms and do not build a budget on assumed volumes.",
+      "what_you_need": "A clean sheltered space with water, food grade cans, accurate measuring and testing tools, and reliable buyer pickup. Learn equipment calibration and food handling, with any registration the activity requires. Keep a backup for power or transport interruptions under the purchaser's rules. You need the discipline to issue farmer records even during a crowded morning.",
+      "first_30_days": [
+        "Speak to a prospective dairy purchaser about its actual procurement terms and required testing process.",
+        "Map farmers who can reach one safe collection point within the proposed time window.",
+        "Prepare a clean site and trial individual measurement, records and batch reconciliation with the buyer.",
+        "Review rejected supply and payment discrepancies before inviting more farmers to join."
+      ],
+      "what_hurts": "A faulty test or inconsistent measurement can damage trust across the village. If the buyer's vehicle is late, accepted milk may be at risk and farmers still expect payment. Electricity and water failures complicate cleaning. You may be blamed for deductions set by the buyer unless the method was explained in advance. Keep a written escalation contact and never conceal a bad batch to make the day's total look better.",
+      "verdict": "Build this if you have a committed purchaser, clean space and the patience for precise records twice a day. Walk away if the buyer's payment or rejection terms remain vague, because farmers will hold you responsible.",
+      "faq": [
+        {
+          "q": "Who sets the milk price?",
+          "a": "The purchasing arrangement should explain the rate and quality basis. Show farmers how their entries are calculated instead of announcing a number without the test result."
+        },
+        {
+          "q": "Can you accept milk outside the collection hours?",
+          "a": "Only if the handling and buyer pickup plan can keep it safe. A separate can left in the heat is not a favour to anyone, even a regular supplier."
+        },
+        {
+          "q": "What if the buyer disputes your total?",
+          "a": "Reconcile individual measurements, batch records and the buyer receipt immediately. Pause expansion until the difference is understood, and keep farmers informed about any affected payment."
+        }
+      ],
+      "validate_prompt": "I want to run a village milk collection point for a dairy purchaser in India. What current buyer terms, food safety requirements, equipment and payment process should I verify?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S03-I02",
+      "slug": "smallholder-farmgate-milk-pickup-route",
+      "title": "Smallholder Farmgate Milk Pickup Route",
+      "hook": "A farmer with a single milking animal may lose time carrying a small can to a distant collection road every morning.",
+      "summary": "You collect measured milk from scattered smallholder farms on a fixed early route and deliver it promptly to an agreed purchaser. Each supplier receives a clear record at the farm gate. The route earns its keep only when travel, testing and safe transport fit together.",
+      "what_it_is": "Your early route is compact around the actual milking times of farmers who cannot easily reach the main collection point. You carry clean labelled food grade containers and measure each supply separately beside the farmer. You record the quantity and any required quality reading in front of the farmer before loading. You take the collected milk to a contracted buyer or suitable cooling point without unnecessary stops. You confirm the buyer's procedure for mixed batches and rejected supply beforehand. You return cleaned containers or use an agreed exchange system. You are solving an access problem for small farms, not promising pickups anywhere at any hour.",
+      "who_pays_you": "Small farmers in outlying lanes or hamlets benefit from the pickup, while a dairy or licensed local purchaser buys the accepted milk. Your fee may come from the buyer, the farmer or a disclosed combination, depending on the agreement. Farmers who already have a convenient reliable outlet may not need your route. Choose households whose geography creates a real gap and whose collection times you can meet.",
+      "how_money_comes": "A service fee per accepted collection or a documented buyer commission pays for your route. Calculate transport, cleaning and time before accepting tiny pickups far apart. Farmer payment arrangements must be written down; an unpaid buyer bill should not become a surprise debt you owe every supplier. Keep receipts for each stop and reconcile against the buyer at the end of the run. Validate local rates and safe transport costs before expanding.",
+      "what_you_need": "A dependable vehicle suited to village roads, clean insulated or otherwise compliant containers, calibrated measuring tools and a buyer who accepts the route's milk. You need a backup plan for breakdowns and a way to communicate a delay immediately. Check applicable transport and food safety requirements; do not assume ordinary household buckets are suitable.",
+      "first_30_days": [
+        "Map farms that genuinely struggle to reach an existing collection point and note their milking times.",
+        "Secure buyer acceptance rules and agree on who bears transport and rejected milk costs.",
+        "Trial a short route with individual records and a timed delivery to the purchaser.",
+        "Calculate travel per accepted litre and remove stops that cannot be served reliably."
+      ],
+      "what_hurts": "One slow pickup can delay every later farm and push milk past the safe transport window. Bad roads and vehicle breakdowns are more serious than they look on paper. A farmer may dispute a reading after you leave, while a buyer can reject a batch after the route is complete. You test and document each pickup with the farmer, which gives both of you a record if the buyer raises a question later. A route kept within safe limits is worth more than a bigger one that spoils a batch.",
+      "verdict": "Build this if isolated farms have confirmed demand and you can reach a buyer quickly with safe handling. Walk away if the farms are too scattered or transport failures would routinely spoil a batch.",
+      "faq": [
+        {
+          "q": "Can you collect from every nearby village?",
+          "a": "Start with a compact route and time it under ordinary conditions. Add a village only if the milk can still meet the buyer's quality and collection window."
+        },
+        {
+          "q": "Who supplies the cans?",
+          "a": "Agree with each farmer and purchaser on clean container responsibility and returns. A labelled exchange system avoids arguments about damaged or missing cans."
+        },
+        {
+          "q": "What if your vehicle fails mid route?",
+          "a": "Have a realistic backup contact and a procedure agreed with the buyer. Tell affected farmers at once rather than carrying milk around while you improvise repairs."
+        }
+      ],
+      "validate_prompt": "I want to collect milk at farm gates from smallholders near an Indian village. What safe route time, buyer contract, equipment and current service fee should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village"
+      ],
+      "work_mode": "field",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S03-I03",
+      "slug": "buffalo-milk-separate-collection-line",
+      "title": "Buffalo Milk Separate Collection Line",
+      "hook": "Farmers who keep buffaloes may need a buyer who records their milk separately instead of folding it into a mixed village can.",
+      "summary": "You collect buffalo milk through a clearly separate line for a purchaser that specifically wants it. Quality tests, labelled containers and individual records preserve the distinction. You earn only when the buyer's terms support the additional handling and farmers can deliver consistently.",
+      "what_it_is": "Find a purchaser whose written requirements and price method specifically cover buffalo milk. Choose a collection time and use dedicated clean containers so supplies do not get mixed with other milk by mistake. At handover, measure and test each farmer's contribution as agreed, then make the individual record visible. Keep accepted milk under the buyer's required conditions until pickup. Do not advertise a premium to farmers before the purchaser has confirmed how it is calculated. A separate line is useful only where there are enough nearby buffalo keepers and a reliable outlet.",
+      "who_pays_you": "A dairy or food business seeking buffalo milk is the purchaser, while buffalo keeping households supply it. Your revenue arrangement may be a collection commission or clear margin. Farmers need to understand why the test and price method may differ from another milk route. If the purchaser regularly changes specifications, that uncertainty will fall on your relationships with the suppliers, so clarify it first.",
+      "how_money_comes": "The buyer pays under the agreed quality and quantity terms, and your commission or margin is recorded separately. Dedicated cans and extra cleaning add costs that a generic collection fee may not cover. Do not buy all farmer milk outright unless you have the working cash and a secure buyer obligation. A small reliable group can be better than collecting more than the purchaser will accept. Check current terms with Validate.",
+      "what_you_need": "Dedicated food grade cans, accurate testing and measuring equipment, clean water and a buyer who can explain rejection and pickup. Training in safe handling matters because the separate label alone does not protect quality. Keep precise farmer accounts and confirm local permissions. Avoid any claim about health benefits or purity you cannot support by your actual testing process.",
+      "first_30_days": [
+        "Confirm a purchaser's written buffalo milk specifications and how payments are calculated.",
+        "Meet nearby buffalo keepers and compare their supply times with the proposed pickup.",
+        "Trial dedicated containers and clear individual records without combining different supply lines.",
+        "Check whether the additional equipment and cleaning are covered by real accepted sales."
+      ],
+      "what_hurts": "A single mix up between milk types can cause rejection or a payment dispute. Buffalo milk availability changes with animal health and lactation, while buyers may demand a consistent flow. Extra cans and cleaning take space and time. If you promise a higher price before understanding the test, you may owe money you cannot recover. Keep the line small until the buyer's acceptance and payment prove dependable.",
+      "verdict": "Build this if a committed purchaser values a separately handled buffalo supply and farmers understand the test. Walk away if the premium exists only as a rumour or you cannot keep batches distinct.",
+      "faq": [
+        {
+          "q": "Can you use the same cans as another milk line?",
+          "a": "Use dedicated or thoroughly controlled equipment under the buyer's rules. A separate collection promise is meaningless when containers allow mixing or unclear traceability."
+        },
+        {
+          "q": "Does buffalo milk always pay more?",
+          "a": "Do not assume it does. The actual buyer contract, test result and local demand determine payment, so check those terms before quoting farmers."
+        },
+        {
+          "q": "How do you handle a low supply day?",
+          "a": "Tell the buyer what is available and follow the agreed minimum and pickup rules. Never combine unrecorded milk to make a target quantity appear fulfilled."
+        }
+      ],
+      "validate_prompt": "I want a separate buffalo milk collection line in my Indian village. What buyer specifications, equipment costs, quality testing and current payments should I check?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S03-I04",
+      "slug": "tea-stall-fresh-milk-supply-round",
+      "title": "Tea Stall Fresh Milk Supply Round",
+      "hook": "A tea stall cannot pause its morning service because its usual milk delivery is late or uncertain.",
+      "summary": "You aggregate milk from approved local suppliers and supply a small cluster of tea stalls at a fixed early time. Buyers pay for consistent handling and punctual delivery. You keep farm records and safe transport under control, with a backup plan for short supply.",
+      "what_it_is": "Agree with a few tea stall owners on quantity, delivery time, quality and payment terms before collecting any milk. Work only with farms you can reach early, receive and handle the milk under applicable food safety requirements, and move it promptly to the stalls in suitable clean containers. Record the supplying farm for every batch and issue a clear delivery note to each buyer. Do not promise a supply beyond what the farms and safe transport can support. A stall may need a quick refill, but your main service should be a planned morning route, not an unsafe extra trip.",
+      "who_pays_you": "Independent tea stalls, breakfast counters and small eateries that use fresh milk are the buyers. They value punctuality because a missed morning affects their own customers immediately. Farmers supply the milk under a separate agreement. Start with a tight group of outlets on one road. A buyer who only calls when a regular supplier fails may not support a daily collection business on their own.",
+      "how_money_comes": "You buy from farmers and sell accepted milk to stalls at a disclosed trade margin, or earn a delivery fee where the buyer purchases directly. Agree how returns and quality disputes work before extending credit. Daily sales create cash flow only if stalls pay on schedule and farmers are settled fairly. Keep enough working capital for a short payment delay without borrowing from one farmer's settlement to cover another. Validate local costs and compliance.",
+      "what_you_need": "Clean food grade cans, testing and measurement, safe time and temperature handling, a dependable vehicle and written terms with both sides. You may need applicable food business registration and a cleaning space. Learn what each stall's purchasing standard actually is, and keep a second authorised supply option for an agreed shortfall.",
+      "first_30_days": [
+        "Ask several tea stalls about delivery timing, required quantity and how they handle a rejected batch.",
+        "Agree with local farmers on tests, purchase method and payment dates before making a stall promise.",
+        "Run a limited route and record every farm handover and stall delivery on the same day.",
+        "Review late payments and supply gaps before taking an additional outlet."
+      ],
+      "what_hurts": "Tea stalls open early and need milk when your own route is under the most pressure. A hot day or road delay can cause quality problems, and a single stalled buyer can tie up cash needed for farmer payments. Outlets may ask for more on busy days with little notice. Refuse to stretch safe handling to rescue a sale, and do not let casual credit become the normal payment method.",
+      "verdict": "Build this if you can supply a compact cluster of tea stalls punctually with traceable milk. Walk away if the buyers demand open ended credit or the collection route cannot meet food safety needs.",
+      "faq": [
+        {
+          "q": "Can you promise emergency top ups?",
+          "a": "Only if you have an approved safe supply and time to deliver it properly. State a cutoff; a rushed trip with poorly handled milk is worse than an honest refusal."
+        },
+        {
+          "q": "Should stalls pay every day?",
+          "a": "Agree a payment schedule that protects farmer settlements and put it in writing. Daily or frequent reconciliation keeps small invoices from becoming a large dispute."
+        },
+        {
+          "q": "What if one farm misses a morning?",
+          "a": "Use a backup supplier who meets the same tests, or notify the stall of the shortfall promptly. Never fill the gap with untested milk."
+        }
+      ],
+      "validate_prompt": "I want to supply fresh milk from village farmers to nearby tea stalls in India. What handling rules, current wholesale margin and payment terms should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "field",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S03-I05",
+      "slug": "village-household-milk-subscription-route",
+      "title": "Village Household Milk Subscription Route",
+      "hook": "Some families want a measured fresh milk delivery each morning and would rather deal with one dependable local collector.",
+      "summary": "You arrange tested milk from village suppliers and deliver measured quantities to subscribed homes on a short daily round. Households value regular timing and clear bills. You manage quality, farmer payments and delivery carefully so neither side must guess what was supplied.",
+      "what_it_is": "Agree with farmers on the milk you can safely collect, then offer households a delivery window and quantity they can change with reasonable notice. Test and record each farm supply, keep accepted batches traceable and follow appropriate safe handling before filling or delivering consumer containers. At each home, record the delivered amount and any pause, and give a regular itemised bill. Tell customers exactly how you handle containers and cleaning. Do not make unsupported claims that fresh farm milk needs no treatment; follow the food safety requirements applicable to your model.",
+      "who_pays_you": "Families within a compact village or small town route, including households with children or older residents, may subscribe. The person at home receives the milk, while another family member may pay digitally. Farmers are your suppliers, with their own settlement terms. Start where existing delivery is unreliable or poorly recorded; a route next to a trusted established service needs a genuine reason for households to change.",
+      "how_money_comes": "Subscribers pay weekly or monthly against a delivery ledger, while you pay farmers under the agreed schedule. Your margin must cover collection, testing, safe handling, containers and the doorstep round. Pauses and holidays change the daily quantity, so set a notification cutoff rather than charging silently for milk not delivered. Avoid excessive credit and keep a reserve for spillages or a rejected batch. Validate current local rates before offering a subscription price.",
+      "what_you_need": "A short dependable route, food grade containers, calibrated measures, suitable testing and handling, and a clear cleaning routine. Check applicable food business registration and consumer delivery requirements. You need a phone or ledger for pauses and a backup for a missed farm supply. Household trust depends on honest records and consistent hygiene.",
+      "first_30_days": [
+        "Ask nearby households about existing milk delivery gaps and their preferred daily quantities.",
+        "Secure farmers who accept clear quality tests, safe handling and a written settlement schedule.",
+        "Trial a small route with dated delivery entries and a realistic pause cutoff.",
+        "Reconcile farmer purchases, delivered milk and losses before opening subscriptions more widely."
+      ],
+      "what_hurts": "A family's travel plans can leave you with milk they paused too late, while a farm's short supply can leave subscribers disappointed. A quality complaint reaches directly into someone's kitchen, so traceability is essential. Early daily delivery also leaves little room for personal emergencies. Set a fair pause policy and never hide a rejected batch or substitute a different farm without meeting the same standards.",
+      "verdict": "Build this if you can handle food safely and serve a tightly clustered household route every morning. Walk away if supply quality is uncertain or you cannot manage pauses and farmer payments accurately.",
+      "faq": [
+        {
+          "q": "Can households leave their own vessel outside?",
+          "a": "Agree a clean handover procedure that meets safe handling needs. An uncovered unwashed vessel at a doorstep can undermine the quality you protected on the route."
+        },
+        {
+          "q": "How should you handle a paused subscription?",
+          "a": "Set a clear notice cutoff and record the paused days on the bill. Speak with the family if notice arrives after you have already collected their milk."
+        },
+        {
+          "q": "Can you call the milk pure?",
+          "a": "Describe the real sourcing, tests and handling you perform. Avoid broad health or purity claims you cannot prove, and follow the rules for consumer milk sales."
+        }
+      ],
+      "validate_prompt": "I want to collect and deliver village milk to subscribed households in India. What current food safety rules, testing, route costs and billing method should I verify?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "field",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S03-I06",
+      "slug": "women-dairy-group-shared-collection-desk",
+      "title": "Women Dairy Group Shared Collection Desk",
+      "hook": "Women who care for dairy animals can negotiate and keep records together when a trusted local desk handles each supply openly.",
+      "summary": "You coordinate a collection desk for a women's dairy group, with individual testing, shared buyer transport and transparent payment records. Members retain visibility over their own milk while the group aggregates enough for a regular purchaser. Governance and trust matter as much as equipment.",
+      "what_it_is": "Work with an existing or newly organised group whose members agree on collection hours, quality tests, buyer selection and who authorises payments. Receive each member's milk separately, record the result in a ledger they can inspect, and transport accepted supply under the buyer's safe handling rules. Reconcile the purchaser's receipt with member entries in an open meeting or agreed message. Separate your paid coordination role from decisions that belong to the group. Never treat a member's milk as group property without her consent. Keep rejected batches traceable and explain any deduction before settlement.",
+      "who_pays_you": "The women's group may pay a documented service fee for your coordination, or a dairy purchaser may pay a commission for the aggregated supply. Members are suppliers and must know the rate and your fee. If you are also a member, disclose that role. Groups with several nearby small producers may value the desk; a group that already has reliable procurement may not need another intermediary.",
+      "how_money_comes": "A written fee per accepted collection or an agreed share of the purchaser's payment covers testing, records and coordination. Display the gross receipt, deductions and your fee separately so no one suspects hidden margins. Settle members on a predictable date and require another group representative to check the reconciliation. Extra meeting time is a real cost, but transparent administration makes repeat supply possible. Validate buyer terms and equipment costs locally.",
+      "what_you_need": "A group agreement, clean collection site, measuring and testing tools, food grade containers, safe transport plan and a simple ledger every member can understand. You need patience for meetings and a process for resolving a disputed test. Check food business requirements and the buyer's handling standards. Do not control the group's bank access alone.",
+      "first_30_days": [
+        "Meet interested dairy women and agree on what they want from a shared collection desk.",
+        "Write the quality, payment and dispute rules with member input before buying equipment.",
+        "Test a small collection day with individual receipts and a group checked reconciliation.",
+        "Review whether the buyer's settlement and your disclosed fee make the arrangement worthwhile."
+      ],
+      "what_hurts": "A disagreement about a test can become a disagreement within the group. One late buyer payment affects many households at once, and a collector with sole control over records will attract justified suspicion. Meetings take time that a private trader might overlook. Give members access to their own entries, require a second check on payments and stop if the governance is not trusted.",
+      "verdict": "Build this if the group wants a shared desk and can agree on transparent rules. Walk away if members cannot inspect payments or a buyer expects you to conceal deductions.",
+      "faq": [
+        {
+          "q": "Who owns the collection equipment?",
+          "a": "Write down whether the group or you buys and maintains it. The answer affects the service fee, repairs and what happens if the arrangement ends."
+        },
+        {
+          "q": "Can a group member operate the desk?",
+          "a": "Yes, with training, agreed records and a second person checking settlements. Being a member can build trust when responsibilities and fees remain visible."
+        },
+        {
+          "q": "What if members disagree with a quality reading?",
+          "a": "Use the written retest or dispute process immediately and keep that batch separate. A clear method matters more than asking people to trust one person's memory."
+        }
+      ],
+      "validate_prompt": "I want to coordinate a women's dairy group milk collection desk in an Indian village. What governance, testing, buyer payment and food handling requirements should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village"
+      ],
+      "work_mode": "mixed",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S03-I07",
+      "slug": "evening-milking-chilled-transfer-point",
+      "title": "Evening Milking Chilled Transfer Point",
+      "hook": "A village far from the dairy's night pickup may need proper cooling so evening milk does not wait unsafely until morning.",
+      "summary": "You run an evening collection and approved chilling handover point for a dairy buyer. Farmers bring milk after milking, you test and record it, and the accepted batch goes into suitable cooling under a clear buyer arrangement. This model needs reliable power and trained handling.",
+      "what_it_is": "First obtain a purchaser that accepts milk from an evening chilling point and specifies equipment, target handling and pickup. Set a short receiving window, test each farmer's supply and issue a receipt before transferring accepted milk to the approved system. Monitor the equipment and log any interruption. Arrange backup power or the purchaser's emergency collection procedure rather than guessing that the batch will stay safe. Clean tanks, lines and cans under a documented cleaning routine. Morning handover must reconcile with the previous evening's individual records so farmers can see what the buyer accepted.",
+      "who_pays_you": "Dairy farmers who milk in the evening benefit from a nearby reliable outlet, while the dairy purchaser pays for the accepted aggregate under its contract. Your fee may come from the buyer or be explicitly agreed with suppliers. A cluster with meaningful evening supply and limited existing pickup is required. Farmers will not move from a working arrangement merely because you own a chilling machine.",
+      "how_money_comes": "An agreed collection or chilling service payment must cover electricity, cleaning, equipment upkeep, staffing and possible rejected milk. Buying a machine before securing volume and the buyer's acceptance standards can lock up a large sum. Keep individual farmer settlements separate from your fee. Use Validate for today's electricity, equipment and purchaser terms, then test whether the actual accepted supply pays for the fixed cost.",
+      "what_you_need": "A hygienic space, compliant chilling equipment, stable electricity with a real outage plan, calibrated testing and temperature monitoring, trained cleaning and a buyer contract. Check all applicable food and electrical permissions. You need maintenance support nearby. A machine with no spare parts or backup can turn an evening interruption into a full batch loss.",
+      "first_30_days": [
+        "Confirm actual evening volumes and the dairy purchaser's equipment and pickup specifications.",
+        "Estimate power reliability and arrange an outage response with the buyer before installation.",
+        "Train the operator on testing, recording, cleaning and safe temperature monitoring.",
+        "Trial a small evening intake and reconcile every farmer receipt with the next buyer handover."
+      ],
+      "what_hurts": "A power failure or cooling fault may affect milk from many farmers at once. Equipment debt continues even when animals yield less milk or the buyer cuts pickup. Poor cleaning can spoil a whole batch that looked fine at intake. You must be available at awkward hours and have authority to reject unsafe milk. Do not treat the chiller as an automatic cure for every handling mistake.",
+      "verdict": "Build this if a buyer commits to the point and reliable cooling, power and maintenance are in place. Walk away if equipment would be purchased on hoped for volume alone.",
+      "faq": [
+        {
+          "q": "Can an ordinary refrigerator handle the batch?",
+          "a": "Use only equipment appropriate to the buyer's specification and the amount collected. Home appliances are not a substitute for a properly planned collection and cooling process."
+        },
+        {
+          "q": "Who pays when power fails?",
+          "a": "The contract should explain responsibility, emergency steps and how affected milk is handled. Decide this before farmers depend on the evening point."
+        },
+        {
+          "q": "Is evening collection a part time job?",
+          "a": "Receiving, monitoring, cleaning and morning transfer make it a serious daily responsibility. Budget for a trained backup person if you cannot attend every window."
+        }
+      ],
+      "validate_prompt": "I want to set up an evening milk collection and chilling point in an Indian village. What buyer contract, power backup, food safety and current operating cost should I verify?",
+      "investment_band": "above_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S03-I08",
+      "slug": "local-curd-maker-milk-sourcing-network",
+      "title": "Local Curd Maker Milk Sourcing Network",
+      "hook": "A small curd maker needs dependable daily milk with records, even when individual farms each have only a little to sell.",
+      "summary": "You collect tested milk from nearby farms for one or more local curd producers under agreed quality and delivery terms. The buyer handles processing; you handle aggregation and traceability. The route works when suppliers, purchase volume and safe delivery fit a predictable daily window.",
+      "what_it_is": "Speak with a registered local curd maker about the milk type, quantity, testing and delivery time they will accept. Recruit a compact group of farmers whose milking schedules match that demand. Receive milk separately, record supplying farm and test result, then transport the accepted batch under appropriate conditions directly to the processing site. Obtain the buyer's receipt and reconcile it with farmer accounts. Keep processing and packaging entirely with the buyer unless you establish a separate compliant operation. If the curd maker changes its order, inform farmers early rather than collecting milk with no outlet.",
+      "who_pays_you": "Small curd producers or other local dairy processors are the buyers, and village livestock households supply the milk. Your service saves the processor the work of visiting many farms and may help farmers sell smaller quantities. A producer with its own strong procurement team will have little reason to pay you. Find a buyer whose demand is real and regular before building the supplier list.",
+      "how_money_comes": "You earn a transparent procurement fee from the processor or a margin under a written buy and sell arrangement. A processor may pay after receiving the milk, so clarify how farmer settlement is funded and when. Keep a buffer for occasional rejection without using unpaid farmer money as working cash. More buyers can reduce reliance on one processor, but each may set different tests. Validate current payment cycles and transport cost in your locality.",
+      "what_you_need": "Food grade containers, measurement and quality testing, a short safe transport route, supplier records and a processor who gives clear receipts. You need a cleaning setup and knowledge of applicable food business requirements. Learn the buyer's exact specifications rather than assuming milk suitable for one use automatically fits another. Keep farm batches traceable through delivery.",
+      "first_30_days": [
+        "Meet local curd makers and ask for written daily quantity and quality requirements.",
+        "Identify nearby farmers whose supply times align with the buyer's processing schedule.",
+        "Trial a small traceable collection with a receipt for every supplier and buyer delivery.",
+        "Review rejections and payment timing before increasing the number of farms."
+      ],
+      "what_hurts": "The processor may reduce production on a slow day just after you have collected a full route. Milk that misses its processing window cannot be held casually. A quality dispute between farmer and buyer lands on your desk, and a single customer can dictate terms. Negotiate a minimum order and a change cutoff where possible, and keep rejected batches separate rather than forcing them into the next delivery.",
+      "verdict": "Build this if a local processor commits to consistent procurement and you can keep farm supplies traceable. Walk away if orders arrive too late to plan collection safely. Buyer changes should be communicated before you collect.",
+      "faq": [
+        {
+          "q": "Can you also make and sell curd?",
+          "a": "That is a separate food processing business with its own equipment and compliance. Start by doing collection well before adding a product line you would have to manage yourself."
+        },
+        {
+          "q": "What if the processor changes the order?",
+          "a": "Use an agreed cutoff and notify farmers immediately. Do not collect an extra batch in hope that another buyer will appear before it spoils."
+        },
+        {
+          "q": "How do you prove whose milk was delivered?",
+          "a": "Record each farm handover, label batches where required and reconcile the processor's receipt on the same day. Keep the records available for a quality dispute."
+        }
+      ],
+      "validate_prompt": "I want to collect village milk for local curd producers in India. What processor terms, safe delivery time, testing and current procurement margin should I check?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "field",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S03-I09",
+      "slug": "weekly-farmer-milk-payment-reconciliation-desk",
+      "title": "Weekly Farmer Milk Payment Reconciliation Desk",
+      "hook": "Farmers can supply every day and still struggle to understand deductions when their weekly milk payment arrives.",
+      "summary": "You operate the measurement and payment records desk for an established village milk collection route. The actual purchaser handles collection and transport; you check farmer entries, test records and settlement statements. A written service arrangement pays you for accuracy and timely dispute resolution.",
+      "what_it_is": "Arrange a formal role with a dairy buyer or collection operator before accessing farmer data. Attend intake to verify that each quantity and test result is recorded correctly, issue or check the farmer's copy, and maintain a daily ledger. When a weekly statement arrives, match every line to the handover entries and identify differences promptly. Explain calculations in plain language to the affected farmer without disclosing another household's account. You do not change a quality reading after the fact to make someone happy. This is the administration layer of collection, useful where the flow already exists but records cause friction.",
+      "who_pays_you": "An established dairy collection operator, cooperative or producer group pays a service fee for record management. Farmers benefit from more understandable statements but should not be charged an unexpected deduction for your work. A route with many small suppliers and repeated accounting disputes is the right customer. If the operator will not give you access to genuine records or an escalation contact, you cannot do the job properly.",
+      "how_money_comes": "Set a fixed monthly service fee or a clearly documented amount per reconciled supplier, paid by the operator. Define what the fee includes: daily entries, weekly statements and handling an agreed number of discrepancies. Keep your own payment separate from farmer settlements. An accurate process may help the operator retain suppliers, but do not promise to recover disputed money you cannot authorise. Validate local bookkeeping and equipment costs before quoting.",
+      "what_you_need": "Strong arithmetic, careful data entry, access to test and buyer receipts, secure record storage and the ability to explain a calculation patiently. A simple ledger or offline spreadsheet may suffice. You need written authority from the operator and a privacy process for farmer details. Verify any local requirements for handling records and never keep cash you are not appointed to manage.",
+      "first_30_days": [
+        "Ask an existing collector which payment discrepancies recur and who has authority to resolve them.",
+        "Agree on record access, service fee and how farmer privacy will be protected.",
+        "Shadow an intake window and compare its entries with the buyer's settlement statement.",
+        "Run one paid reconciliation cycle and resolve each mismatch through the agreed contact."
+      ],
+      "what_hurts": "You may discover mistakes you cannot personally correct because the buyer controls the final statement. Farmers may assume you are responsible for every delayed payment. One data entry error can affect several households, and private records must not circulate in a village chat. Keep an audit trail, escalate quickly and avoid promising a settlement before the operator confirms it.",
+      "verdict": "Build this if an established collector wants transparent records and gives you authority to reconcile them. Walk away if you are expected to hide deductions or handle farmer data without consent and safeguards.",
+      "faq": [
+        {
+          "q": "Is this still a milk collection business?",
+          "a": "It is a specialist service inside an existing collection operation. You attend intake and reconcile the milk records, while the contracted operator remains responsible for purchasing and transport."
+        },
+        {
+          "q": "Can you alter a wrong test result later?",
+          "a": "Preserve the original entry and use the agreed correction process with evidence. Quietly editing a reading destroys trust in every other farmer's statement."
+        },
+        {
+          "q": "Who tells farmers about a payment delay?",
+          "a": "Agree that responsibility with the operator. You can explain verified records, but only the party controlling the payment should promise a transfer date."
+        }
+      ],
+      "validate_prompt": "I want to manage milk intake and farmer payment reconciliation for a village dairy collection route in India. What contract, records, privacy and local service fee should I validate?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "mixed",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S03-I10",
+      "slug": "school-hostel-kitchen-milk-procurement",
+      "title": "School Hostel Kitchen Milk Procurement",
+      "hook": "A hostel kitchen needs milk arriving at a fixed hour and cannot check every small farm separately before breakfast.",
+      "summary": "You aggregate traceable milk from local farms for a hostel or institutional kitchen under its purchasing rules. Delivery, quality and documentation must work every school day. This is a buyer led procurement route with stricter continuity than a casual household round.",
+      "what_it_is": "First ask an authorised hostel kitchen manager for its procurement specifications, approved supplier process and actual delivery window. If you can meet them, agree with nearby farms on collection, testing and payment. Receive each supply separately, maintain traceability and transport accepted milk safely to the kitchen for its own inspection. Provide the required delivery note and bill. Set a backup supply or an early warning procedure for a short day, because the kitchen plans meals in advance. Do not suggest that supplying children permits lower quality or informal handling; it calls for particular care.",
+      "who_pays_you": "A school hostel, student residence or other institutional kitchen may buy the accepted milk under a formal purchase arrangement. Local farmers supply it to you or directly under a documented aggregation service. Some institutions buy only through approved tenders or vendors, so confirm eligibility before spending on equipment. A cluster of farms near the kitchen makes the morning route possible.",
+      "how_money_comes": "The institution pays for accepted delivery under the agreed billing cycle; your margin or procurement fee must cover farmer payments while you wait. Written minimums, rejection rules and invoice dates matter more than an attractive quoted rate. School vacations can reduce or stop orders, so plan how suppliers will sell during closures before making standing promises. Check the current purchase process and cash flow through Validate.",
+      "what_you_need": "Appropriate food business registration, clean containers, tested and measured milk, safe transport, invoices and a buyer agreement. You may need to meet procurement eligibility or documentation set by the institution. Keep a backup route for a supplier shortage. Know the vacation calendar and never use the kitchen's name in advertising without permission.",
+      "first_30_days": [
+        "Confirm the kitchen's approved purchase process, quality rules and vacation schedule with an authorised manager.",
+        "Find farms whose supply and payment needs can match the institution's delivery timetable.",
+        "Trial a small documented delivery only after the buyer approves your setup.",
+        "Compare the actual invoice cycle with farmer settlement needs before signing a larger commitment."
+      ],
+      "what_hurts": "An institutional buyer can reject a batch or pay after a long billing cycle, while farmers need predictable settlement. School holidays interrupt volume, and a late delivery affects breakfast for many people. Formal purchasing rules may rule out a new supplier entirely. Do not collect on the strength of a friendly verbal conversation; wait for proper approval and maintain a backup plan.",
+      "verdict": "Build this if the institution approves you and your cash, quality and delivery systems can meet its terms. Walk away if procurement eligibility or payment timing cannot support fair farmer settlement.",
+      "faq": [
+        {
+          "q": "Can a hostel manager give a verbal order?",
+          "a": "Ask for the institution's authorised purchase procedure and written terms. A friendly request may not be enough to secure payment after you have bought the milk."
+        },
+        {
+          "q": "What do you do during school vacations?",
+          "a": "Know the calendar in advance and tell farmers how collection will change. A second confirmed buyer may help, but do not assume one will appear at the last moment."
+        },
+        {
+          "q": "Who checks milk quality at delivery?",
+          "a": "Agree on tests at collection and the institution's acceptance check. Record both, and have a clear method for handling a rejected delivery without mixing it elsewhere."
+        }
+      ],
+      "validate_prompt": "I want to aggregate local farm milk for a school hostel kitchen in India. What procurement eligibility, food safety, current billing terms and vacation demand should I verify?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "field",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    }
+  ]
+}

@@ -1,0 +1,527 @@
+{
+  "subcategory": {
+    "code": "C001-S03",
+    "intro": "A catalog reselling business starts with a buyer you understand, not a folder of random product photos. From home you can show a carefully chosen range, take an order, collect payment and arrange delivery without renting a shop. That sounds simple, but the real work is knowing which supplier will send the right item, which photos match the actual product and who handles a return. A neighbour who trusts you may buy again after one good order. The same neighbour may stop listening if a size is wrong and you disappear when they ask for help. Choose a narrow catalog so you can answer questions properly. A workwear buyer cares about size and fabric. A hostel student cares about a move-in date and a complete bundle. An apartment committee cares about one collection point and a clean order list. These are different businesses even when the order arrives through WhatsApp. Before posting anything, order a sample yourself, check the packaging and write down the supplier’s exchange process. Show the final amount and delivery terms before taking money. Keep customer records private and do not promise that an item is ready to ship unless you have confirmed it. You can start with pre-orders to limit unsold stock, then hold only the items people regularly request. The ten ideas below use different buyers, product decisions and fulfilment routines. Pick a group you already know, learn their recurring needs, and build a catalog small enough that you can stand behind every item.",
+    "how_to_choose": "Start with a buyer you can reach without buying ads. If you know office workers, workwear needs careful size help. If you live near a college, the hostel bundle has a clear seasonal deadline. Apartment group orders need order tracking and a reliable pickup point. Check samples, supplier returns and delivery time before showing any photo. Write down the margin after shipping, exchanges and damaged items, not just the difference between two catalog prices. Choose one small product range and take paid orders first. Expand only after you know which items people ask for a second time.",
+    "faq": [
+      {
+        "q": "Can I start without keeping stock at home?",
+        "a": "Yes, you can take confirmed pre-orders or arrange supplier fulfilment. Tell customers the delivery time and who handles a wrong item before they pay. Keep one or two samples where touch, size or colour matters."
+      },
+      {
+        "q": "How do I know a supplier’s photos are honest?",
+        "a": "Order the item yourself and compare the material, colour, finish and packing with the photo. If you cannot afford a sample, do not claim to have inspected it. A small verified catalog is better than hundreds of unreliable listings."
+      },
+      {
+        "q": "Should I add every product my supplier sends?",
+        "a": "No. Your value is selecting things for a specific buyer and taking responsibility when an order goes wrong. A huge mixed feed is hard to explain and makes returns difficult to track."
+      },
+      {
+        "q": "What do I tell a customer when delivery is late?",
+        "a": "Tell them as soon as you have a reliable update. Share the revised date and the cancellation or refund option under your stated terms. Do not keep saying tomorrow when you have not heard from the supplier."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C001-S03-I01",
+      "slug": "office-workwear-size-help",
+      "title": "Office Workwear Size Help Catalog",
+      "hook": "An office worker may like a kurta online but will buy from you because you help her choose the right fit.",
+      "summary": "You curate washable office kurtas and separates for working women, using real samples and a simple size check before each order. Buyers pay for clothes that arrive ready for the workweek. Your catalog stays narrow, so you can advise on fit and manage exchanges instead of forwarding every supplier photo.",
+      "what_it_is": "You buy or borrow sample pieces from a verified wholesaler, measure them yourself and photograph how the fabric falls. A buyer tells you her preferred fit and work dress code. You recommend a small set, confirm colour and delivery, then place a pre-order or dispatch from limited stock. Keep a record of which supplier size actually suited her, because size labels vary. Offer a clear exchange window and check each returned piece before requesting supplier credit. This is practical wardrobe help with a catalog, not fashion advice without fulfilment.",
+      "who_pays_you": "Women entering an office job, returning to work or replacing daily wear pay you. Start with people you know in local offices and apartment groups, with permission to share a small catalog. A customer may order more than once when you remember her fit and show only suitable new pieces. Do not use someone’s measurements or photos publicly without consent.",
+      "how_money_comes": "You earn the difference between your supplier cost and the price you quote after delivery and exchange costs. Take payment before placing a special pre-order; for small stock, collect payment at dispatch. Repeat sales come from reliable basics rather than a constant stream of new designs. Keep an exchange reserve, because a sale is not profit until a wrong size is resolved.",
+      "what_you_need": "You need a tape measure, a few inspected samples, a supplier who states exchange terms and a clean way to record sizes privately. Learn fabric behaviour after washing and make delivery promises only after checking stock. You can work from home with a phone, good light for honest photos and secure storage for returned items.",
+      "first_30_days": [
+        "Choose one officewear range and order samples in the sizes buyers around you request.",
+        "Measure every sample and write a plain fit note beside the supplier size label.",
+        "Show a small paid catalog to known working women and ask what they would wear weekly.",
+        "Fulfil a few pre-orders and record delivery, size questions and exchanges.",
+        "Keep only the designs that fit reliably and remove the ones causing complaints."
+      ],
+      "what_hurts": "Colours on supplier photos may be misleading and two batches can fit differently. A customer may need an outfit before Monday, while the courier does not share that urgency. Exchanges eat delivery margin and your time. If you take too much stock in fashionable prints, it can sit at home after the trend changes. State fit limits honestly rather than promising that one size will suit everyone.",
+      "verdict": "Build this if you enjoy careful product selection and can handle size problems after payment. Walk away if you only want to forward catalog photos, because the fit help is why anyone buys from you.",
+      "faq": [
+        {
+          "q": "Should I sell every size in each design?",
+          "a": "Begin with sizes you can obtain and check reliably. If a supplier does not handle a size well, say so and suggest another product rather than taking an order you cannot fulfil."
+        },
+        {
+          "q": "Can I use the supplier’s model pictures?",
+          "a": "Use only pictures you have permission to share and make sure they represent the item being sent. Your own clear sample photos and measurements are more useful than a heavily edited image."
+        },
+        {
+          "q": "What if a customer wears the item and asks to exchange it?",
+          "a": "Explain the exchange condition before payment and inspect any return fairly. Follow the written terms you gave, while keeping the supplier’s policy in mind when setting your own price."
+        }
+      ],
+      "validate_prompt": "I want to resell a small officewear catalog from home in India with size help and pre-orders. How should I set margins, supplier exchange terms and delivery promises?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S03-I02",
+      "slug": "hostel-move-in-essentials-bundles",
+      "title": "Hostel Move In Essentials Bundles",
+      "hook": "Families arriving with a suitcase need a bedsheet, bucket and lock today, not ten separate shops after admission.",
+      "summary": "You assemble a catalog of practical hostel move-in bundles for students and parents near colleges. Buyers choose a room type and a delivery slot, then receive the everyday items together. The business is seasonal but can work from home with pre-orders and a reliable local pickup or delivery partner.",
+      "what_it_is": "List the actual items a new student needs in nearby PGs: bedding size, bucket, mug, lock, hangers, laundry bag and extension board if permitted. Make two or three clear bundles and allow only a few sensible swaps. Buy from wholesalers, inspect a sample of each product and pack by student name. Parents order before travelling and collect at the PG gate or receive a scheduled delivery. Confirm hostel rules for electrical items first. Keep a checklist so a missing lock does not spoil the entire bundle.",
+      "who_pays_you": "Parents of students moving to college, coaching hostels or PG rooms pay because arriving in a new town is stressful. PG owners may introduce your catalog to incoming residents but may want a fee, which must be included in pricing. Reach buyers through permitted admission groups and local PG contacts, without pretending the college has endorsed you.",
+      "how_money_comes": "Charge one price per defined bundle, with add-ons priced separately. Collect payment before buying for a named student, and set a cancellation point because suppliers may refuse returns. The admission season creates a burst of orders; smaller replenishment packs for toiletries and bedding can bring later sales. Count packing labour and last-mile delivery before calling the difference profit.",
+      "what_you_need": "You need a compact product list, samples, wholesale contacts, clean packing space and a reliable way to confirm room numbers and arrival dates. Keep a pickup register, payment record and replacement stock for damaged items. A home-based start works if you do not promise same-day service beyond your capacity.",
+      "first_30_days": [
+        "Visit PG owners and students to learn the room rules and bedding sizes.",
+        "Build one sample bundle and check every item for quality and actual usefulness.",
+        "Publish the complete item list, substitution policy and pickup or delivery window.",
+        "Take a small round of pre-orders tied to one admission date.",
+        "Check every packed bundle against a named order and ask buyers what was missing."
+      ],
+      "what_hurts": "Admission dates change, rooms are allocated late and a bulk buyer may cancel after you buy stock. Heavy items raise delivery costs, especially in rain. Poor quality basics damage trust immediately. You can be left with unsold seasonal inventory after colleges settle. Keep pre-order cutoffs and avoid adding fragile gadgets that you cannot replace easily.",
+      "verdict": "Build this if you live near a college cluster and can pack accurately under a deadline. Walk away if you need even monthly demand, because the main buying season comes in waves.",
+      "faq": [
+        {
+          "q": "Should I include an electric kettle in every bundle?",
+          "a": "No. Hostel rules differ and some ban cooking appliances. Offer such items only when the buyer confirms they are allowed and you can handle warranty and replacement questions."
+        },
+        {
+          "q": "Can a PG owner collect payments for me?",
+          "a": "It is simpler to collect from the family and give the PG owner a clear delivery list. If you agree another arrangement, put responsibilities, fees and refunds in writing before taking orders."
+        },
+        {
+          "q": "How do I avoid leftover stock after admissions?",
+          "a": "Take paid pre-orders, buy common items in stages and keep bundles standard enough to sell remaining basics separately. Do not stock every colour or design for a seasonal rush."
+        }
+      ],
+      "validate_prompt": "I want to sell pre-ordered hostel move-in kits near Indian colleges from home. Which items belong in the bundles, and how should I handle admission dates and cancellations?",
+      "investment_band": "25k_1l",
+      "gender_fit": "any",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S03-I03",
+      "slug": "apartment-pantry-group-orders",
+      "title": "Apartment Pantry Group Order Catalog",
+      "hook": "One apartment building can buy its regular pantry items together if you make ordering and handover painless.",
+      "summary": "You curate a monthly catalog of shelf-stable staples and household refills for one housing society. Residents place orders before a cutoff, and you coordinate one wholesale purchase with a pickup window. The model depends on order accuracy and repeat routines rather than posting new products daily.",
+      "what_it_is": "Choose a short list of commonly reordered sealed products, such as rice, pulses, tea, soap and cleaning refills. Confirm supplier packaging, expiry dates and bill terms. Share a dated order form with the society group only after permission from its administrators. Collect payments, consolidate quantities, place the wholesale order and check every pack before sorting by flat. Set a staffed pickup window in an allowed common area or arrange door delivery for a stated fee. Keep the monthly catalog consistent, removing products that repeatedly arrive damaged or late.",
+      "who_pays_you": "Apartment residents pay when they value convenience and a dependable combined order. The society committee may allow the pickup arrangement but is not necessarily the buyer. Begin in a building where people know you and ask permission before using resident lists or group messages. The same households can reorder if the quantities and handover are correct.",
+      "how_money_comes": "You earn a margin on each product after bulk purchase, sorting, packaging and delivery costs. Publish final prices before the order closes and avoid changing them after payment without consent. Some suppliers offer better terms for repeat monthly quantities. Do not confuse a large total order with a healthy margin; one missing bag can wipe out gains from several households.",
+      "what_you_need": "You need a trustworthy wholesaler, an order sheet, digital payments, a space to sort sealed packs and help for the pickup window. Check product labels, condition and dates. Know whether your food handling or local selling arrangement needs registration as the business grows. Protect residents’ contact details.",
+      "first_30_days": [
+        "Ask one building what pantry products households genuinely reorder together.",
+        "Test a short catalog and obtain committee permission for messages and a pickup point.",
+        "Set a payment cutoff and reconcile quantities before ordering from the supplier.",
+        "Sort each flat’s purchase with a second check of item and quantity.",
+        "Record complaints and reorder interest before setting the next monthly date."
+      ],
+      "what_hurts": "A single wholesale shortfall can affect many neighbours at once. Sorting errors are embarrassing because customers meet you in the lift the next day. Residents may expect shop-level returns after a product has been opened. Price changes and supplier substitutions can trigger disputes. This work becomes physical on delivery day, even though orders are taken from home.",
+      "verdict": "Build this if you are organised and can count, reconcile and hand over orders reliably. Walk away if you dislike handling complaints face to face, because a group order magnifies every mistake.",
+      "faq": [
+        {
+          "q": "Should I include fresh vegetables at the start?",
+          "a": "Begin with sealed, shelf-stable products that are easier to count and hold briefly. Fresh produce adds grading, spoilage and same-day delivery pressure. Add it only after the basic group order works."
+        },
+        {
+          "q": "Can I take an order through a society group message?",
+          "a": "A message can start the conversation, but record each flat’s exact items, quantity and payment in one order sheet. Get permission from group administrators and avoid posting customer details publicly."
+        },
+        {
+          "q": "What if the wholesaler substitutes a brand?",
+          "a": "Ask buyers before accepting a different item or give a refund under the stated terms. A supplier substitution should not become a surprise at the pickup table."
+        }
+      ],
+      "validate_prompt": "I want to organise a monthly pantry group-order catalog for an Indian apartment society. How should I set cutoffs, margins, product checks and pickup rules?",
+      "investment_band": "25k_1l",
+      "gender_fit": "any",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "mixed",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S03-I04",
+      "slug": "senior-friendly-daily-wear-catalog",
+      "title": "Senior Friendly Daily Wear Catalog",
+      "hook": "An older buyer may want a front-opening garment and a patient explanation, not another fast-changing fashion feed.",
+      "summary": "You curate easy-to-wear clothes for older adults and help families choose closures, fabrics and sizes from home. Orders can be placed by the wearer or a relative in another city. The service combines a carefully checked product catalog with fit questions and considerate delivery.",
+      "what_it_is": "Choose garments that solve practical problems: front openings, soft waistbands, light fabrics and pockets that are easy to reach. Inspect samples for seams and wash care. Speak to the older person when possible rather than taking only a relative’s guess about size. Send clear photos and measurements, confirm an agreed payment and delivery plan, and arrange a simple exchange if fit is wrong. Keep the catalog modest and avoid claiming a garment is medically suitable. Your job is to make everyday dressing easier through good selection and honest service.",
+      "who_pays_you": "Senior citizens, adult children buying for parents and care coordinators pay for dependable clothes they can understand before ordering. A family may live far away but wants delivery to the parent’s home. Reach buyers through local senior groups and word of mouth, with respect for privacy and the older person’s own preferences.",
+      "how_money_comes": "You earn a margin on each garment after supplier, shipping and exchange costs. Repeat purchases come from remembering a successful fit and replacing familiar basics, not pushing constant new arrivals. Take special orders with clear prepayment terms. If a child pays remotely, send one receipt and confirm the wearer received the item before considering the order closed.",
+      "what_you_need": "You need carefully measured samples, a supplier with consistent repeat stock, patient phone communication and a delivery partner who handles the address reliably. Keep size information private and use a simple order log. Choose washable products you have seen after laundering, not only a polished picture.",
+      "first_30_days": [
+        "Ask older people and carers which daily clothing features are frustrating.",
+        "Order samples with different closures and check fabric after washing.",
+        "Make a small catalog showing measurements, fabric and exchange conditions clearly.",
+        "Fulfil a few orders and speak to the wearer about comfort after delivery.",
+        "Retain the designs that actually work and remove awkward ones."
+      ],
+      "what_hurts": "A relative may choose a garment the wearer does not like. Size and mobility needs vary widely, and a seller must not assume all older adults want the same style. Returns can be difficult when another person paid. Suppliers may stop a comfortable design just when customers want another. Listen carefully and avoid turning a clothing sale into unqualified health advice.",
+      "verdict": "Build this if you can listen to the wearer and solve a specific clothing problem with honest samples. Walk away if you want to move trendy stock quickly, because repeat trust matters more here.",
+      "faq": [
+        {
+          "q": "Should I sell only adaptive clothing?",
+          "a": "No. Many older customers simply want comfortable, attractive daily wear. Ask what movement or closure is difficult and choose accordingly. Do not label everyone’s needs the same way."
+        },
+        {
+          "q": "Can a child order from another city for a parent?",
+          "a": "Yes, but confirm size, taste, delivery contact and exchange steps with the wearer when possible. Send the payer a receipt without treating the older person as absent from the decision."
+        },
+        {
+          "q": "What if a customer asks whether a garment helps a medical condition?",
+          "a": "Describe measurable features such as openings, fabric and fit. Do not promise a medical benefit. Suggest the family consult a qualified professional if the clothing must accommodate a specific clinical need."
+        }
+      ],
+      "validate_prompt": "I want to sell a small easy-wear clothing catalog for older adults from home in India. How do I choose products, handle remote family orders and price exchanges?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S03-I05",
+      "slug": "festival-return-gift-preorders",
+      "title": "Festival Return Gift Preorder Catalog",
+      "hook": "Families planning a puja or celebration need matching gifts delivered together, with names and quantities checked before the guests arrive.",
+      "summary": "You offer a seasonal catalog of return gifts that households can order in batches before a festival or family function. Buyers choose an item, wrapping and delivery date. You coordinate samples, personalisation and packing from home, with a firm cutoff that protects the event deadline.",
+      "what_it_is": "Show a small set of inspected gifts suited to the occasion, such as usable household items or locally made treats where you can handle food rules. Agree on the guest count, spare units, colour and whether a name tag is needed. Order samples before taking a large booking. Take the buyer’s approval in writing, place the supplier order and count every item while packing. Deliver in labelled cartons before the event, leaving time to correct a shortfall. Never substitute a design without asking. The catalog helps a family avoid visiting several markets while you handle the tedious matching work.",
+      "who_pays_you": "Families arranging housewarming functions, festive gatherings or milestone ceremonies pay you. Event planners may refer buyers, but you remain responsible for the exact ordered quantity. Reach people through local community groups and past satisfied customers, while respecting different customs, budgets and event traditions in the neighbourhood.",
+      "how_money_comes": "Charge for each gift with packing and personalisation included or separately listed. Take an advance before ordering items that cannot be returned. The remaining balance is due before dispatch under your terms. Seasonal peaks can be profitable, but a single damaged batch or rush courier can erase margin. Keep a cost sheet for samples, labels, spare items and delivery.",
+      "what_you_need": "You need dependable suppliers, actual samples, a clean packing space, counting discipline and a calendar with supplier cutoffs. For edible items, use properly prepared and labelled products from compliant suppliers. Keep proofs of approved names and spellings. A home-based start needs space for cartons during busy weeks.",
+      "first_30_days": [
+        "Choose a small gift range and order samples rather than using only supplier pictures.",
+        "Ask potential buyers what quantity, occasion and deadline caused trouble in past events.",
+        "Publish personalisation cutoffs, advance terms and the replacement policy.",
+        "Take one paid batch and count every item twice before sealing cartons.",
+        "Deliver early enough to resolve a shortfall and document the buyer’s receipt."
+      ],
+      "what_hurts": "Events do not move when your supplier misses a date. Personalised items are hard to resell after a cancellation. Names can be misspelled and packaging damaged in transit. Buyers may increase the guest list after your cutoff. You need to say no to impossible rush orders, even when the order value looks attractive.",
+      "verdict": "Build this if you can manage quantities and deadlines calmly during a festival rush. Walk away if you cannot protect a delivery buffer, because a late return gift has almost no value.",
+      "faq": [
+        {
+          "q": "How many extra gifts should I order?",
+          "a": "Agree a small spare quantity with the buyer before placing the order. Do not quietly add cost or promise unlimited last-minute extras. The event size and supplier lead time determine the sensible buffer."
+        },
+        {
+          "q": "Should I offer personalised names on every item?",
+          "a": "Only if you can proof the spelling with the buyer and the supplier has a reliable process. A plain label or card may be safer for a first batch."
+        },
+        {
+          "q": "What if a supplier delivers a different colour?",
+          "a": "Show the buyer immediately and seek approval or arrange the agreed remedy. Do not pack a substitute hoping nobody will notice on the event day."
+        }
+      ],
+      "validate_prompt": "I want to take festival return-gift batch preorders from home in India. How should I set a booking cutoff, sample approval, margin and packing checks?",
+      "investment_band": "25k_1l",
+      "gender_fit": "any",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S03-I06",
+      "slug": "school-term-supply-list-catalog",
+      "title": "School Term Supply List Catalog",
+      "hook": "Parents receive a school supply list at the same time, and you can turn that scramble into one checked order.",
+      "summary": "You build class-specific catalogs of notebooks, covers, pencils and approved art materials around the new school term. Parents send the school list, choose the pack and collect it before classes start. You earn by sourcing and packing accurately, not by pretending every school uses the same list.",
+      "what_it_is": "Get current supply lists from families with permission, then build a pack for each class or school only after checking the exact notebook size and count. Buy samples, verify quality and mark optional items separately. A parent orders with the child’s class and chooses a pickup slot. You pack by name against a printed checklist and allow the family to inspect the pack at handover. For missing items, tell buyers what is unavailable before payment or refund that line. Do not use a school logo or claim official partnership without its approval.",
+      "who_pays_you": "Parents who want to avoid several stationery shops before the term begins pay you. Busy families and grandparents buying for children can value a single verified pack. Reach them through known parents, not unsolicited messages in school groups. A school may later choose a formal arrangement, but the first buyer is the family.",
+      "how_money_comes": "Charge a transparent pack price including sourcing and packing labour. Take pre-orders before buying school-specific items that may not sell elsewhere. A smaller mid-term refill list can bring repeat purchases, but the main rush is seasonal. Keep supplier invoices and count leftover stock after the first week of classes. That leftover inventory is still your money tied up in shelves.",
+      "what_you_need": "You need accurate lists, reliable local stationery suppliers, a table for sorting, clear labels and room for packed orders. Check editions and school-specific notebook rules. Maintain a simple record of items due and handed over, because one missing workbook sends a parent back to the market.",
+      "first_30_days": [
+        "Collect recent school lists and confirm the new term has not changed them.",
+        "Build and inspect one sample pack with exact notebook sizes and quantities.",
+        "Take paid pre-orders with a final class and school confirmation.",
+        "Pack each child’s order from a checklist and keep unavailable items visible.",
+        "Offer one pickup day with time slots and record shortages for quick resolution."
+      ],
+      "what_hurts": "Schools change lists at the last minute and parents may send an old photo. Textbook editions are particularly risky, so avoid them until you can verify supply. The buying rush is short and suppliers may run out together. A wrong notebook size forces exchanges and loses time. Never present your pack as compulsory or school-approved unless it is.",
+      "verdict": "Build this if you enjoy precise lists and can handle a seasonal deadline. Walk away if you dislike checking small details, because parents pay you to prevent exactly those mistakes.",
+      "faq": [
+        {
+          "q": "Can I add textbooks to the pack?",
+          "a": "Only when you have confirmed the current edition and an authorised way to obtain it. Start with general supplies if textbook availability is uncertain. Tell parents exactly which items are included."
+        },
+        {
+          "q": "Should I ask the school for permission?",
+          "a": "Ask before using its name, logo or an official-looking message. Families may share their own supply lists, but you should make clear that your catalog is an independent service."
+        },
+        {
+          "q": "What happens if the list changes after a parent pays?",
+          "a": "Contact the family with the change and your refund or substitution option. Keep pre-order terms simple and give a clear itemised record so nobody has to guess what changed."
+        }
+      ],
+      "validate_prompt": "I want to sell class-specific school supply packs from home in India before the new term. How should I verify lists, collect pre-orders and handle late changes?",
+      "investment_band": "25k_1l",
+      "gender_fit": "any",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S03-I07",
+      "slug": "home-repair-consumables-catalog",
+      "title": "Home Repair Consumables Catalog",
+      "hook": "People replace the same small household parts again and again, but often do not know the size to order.",
+      "summary": "You sell a photographed catalog of simple home repair consumables, such as tap washers, cabinet handles and door stops, with compatibility help. Buyers send a measurement or photo and collect a matched pack. You stay with non-hazardous parts and do not pretend to perform licensed repair work.",
+      "what_it_is": "Choose a narrow set of household parts you can identify reliably from dimensions. Photograph each item next to a ruler and list what it fits and what it does not. A resident sends a photo and measurements; you ask follow-up questions before confirming an order. Pack small replacement sets with labels and simple fitting information supplied by the maker. Arrange local pickup or affordable courier delivery. If the part is tied to mains electricity, gas or a safety-critical repair, direct the customer to a qualified technician instead of guessing.",
+      "who_pays_you": "Apartment residents, landlords and small maintenance workers pay for a correctly matched consumable without visiting multiple hardware shops. Start in buildings where you can collect common broken-part examples with permission. Maintenance workers may buy repeat packs if you keep dimensions and stock consistent. Their feedback can reveal sizes residents struggle to find.",
+      "how_money_comes": "You earn a margin per part pack, with a minimum order or pickup option so delivery does not consume it. Repeat income comes from a reliable list of common sizes and building-specific stock, not from thousands of unrelated products. Keep low-cost sample pieces for comparison and count returns from mismatches in your margin.",
+      "what_you_need": "You need a basic measuring tool, sample parts, clear close-up photos, labelled storage and a supplier who can replenish the same dimensions. Understand the limits of your advice. Keep an order log showing the measurement the customer confirmed. Small items are easy to mispack, so separate bins matter.",
+      "first_30_days": [
+        "Visit a few local repair shops to learn which simple parts buyers repeatedly request.",
+        "Choose a safe, limited range and measure every sample yourself.",
+        "Test the catalog with residents using photos of an actual broken part.",
+        "Fulfil paid orders with a second size check before handover.",
+        "Remove products that cannot be identified reliably from remote measurements."
+      ],
+      "what_hurts": "A few millimetres can make a part useless. Customers may blame you for a failed fitting when the underlying fixture is damaged. Shipping one tiny item can cost more than its margin. Stock bins can be mixed up. Dangerous repair categories tempt sellers to give advice beyond their competence, so keep a firm boundary around parts you can describe safely.",
+      "verdict": "Build this if you like precise matching and can admit when a photograph is insufficient. Skip it if you plan to list every hardware item without knowing compatibility, because wrong parts will come back.",
+      "faq": [
+        {
+          "q": "Can I sell electrical replacement parts in this catalog?",
+          "a": "Keep the first range to non-hazardous consumables. If a customer needs work on mains wiring or another safety-critical system, refer them to a qualified professional rather than guessing from a photo."
+        },
+        {
+          "q": "How do I prevent wrong-size returns?",
+          "a": "Show measurements clearly, ask for a photo beside a ruler and confirm the specification before dispatch. Even then, publish fair return terms and keep a record of frequent mismatch patterns."
+        },
+        {
+          "q": "Will customers pay for such small items?",
+          "a": "They pay for a correctly identified part and convenient access. Test the total cost including packing and delivery before you assume a tiny item can be sold profitably on its own."
+        }
+      ],
+      "validate_prompt": "I want to resell simple home-repair consumables through a measured catalog in India. Which safe parts should I start with, and how do I price small local orders?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S03-I08",
+      "slug": "new-employee-welcome-kits",
+      "title": "New Employee Welcome Kit Catalog",
+      "hook": "A small company hiring its first staff often wants a useful welcome pack but has no purchasing team to assemble one.",
+      "summary": "You build a catalog of practical new-employee kits for small Indian employers, then pack each order with approved company details. The buyer is the office, not a casual shopper. The work is quotation, procurement, quality control and a timely batch delivery.",
+      "what_it_is": "Offer a few kit formats, such as a notebook, bottle, desk item and welcome card, with samples the employer can inspect. Ask about the number of joiners, location, budget and whether branding is actually needed. Get written approval of artwork and spelling before production. Buy the components, check each item, pack to a named list and deliver before the induction date. Keep unbranded alternatives ready for small orders where custom printing would delay everything. Protect employee names and addresses, especially when shipping to remote workers.",
+      "who_pays_you": "Founders, HR administrators and office managers at growing small businesses pay you. Their first priority is that every new joiner receives the same complete kit on time. Reach them through business contacts and show a sample with real product quality. A company may reorder each month as hiring continues, but the count can change suddenly.",
+      "how_money_comes": "Quote per completed kit, with branding, packaging and individual shipping listed clearly. Take an advance for custom-printed items and define the approval cutoff. A repeat monthly arrangement reduces selling effort, but do not hold expensive branded stock unless the employer commits to it. Include damage replacement and artwork setup time in the quote.",
+      "what_you_need": "You need sample kits, corporate suppliers, artwork proofing, clean packing space and a reliable courier. Keep checklists for names, sizes if relevant, and delivery addresses. Do not use a company logo until it authorises the work. A simple spreadsheet can track each kit from approval to receipt.",
+      "first_30_days": [
+        "Make two useful sample kits at different budgets with actual products.",
+        "Ask small employers what they currently give new joiners and where it goes wrong.",
+        "Prepare an itemised quote with proof approval and payment milestones.",
+        "Fulfil one small paid batch and double-check every named pack.",
+        "Request feedback from the employer on usefulness, damage and delivery timing."
+      ],
+      "what_hurts": "Custom printing mistakes can ruin a whole batch. Hiring plans change after you have bought stock, and remote deliveries create many tracking queries. Some companies pay slowly despite a fixed joining date. A cheap bottle or notebook makes the entire kit feel careless. Do not spend your own money on a large branded run without an agreed advance.",
+      "verdict": "Build this if you can manage a business buyer’s approvals and deliver identical packs without errors. Walk away if you dislike written quotations and batch checks, because they matter more than a pretty catalog.",
+      "faq": [
+        {
+          "q": "Do I need to offer branded products?",
+          "a": "No. Useful unbranded kits can be faster and more affordable for a small team. Offer branding only when the order size, approval time and supplier process make it sensible."
+        },
+        {
+          "q": "What if an employee joins after the batch is packed?",
+          "a": "Agree a cutoff and price for late additions. Keep a few unbranded spare items if the employer pays for them. Do not promise identical custom kits at a deadline your supplier cannot meet."
+        },
+        {
+          "q": "Who handles wrong delivery addresses?",
+          "a": "Confirm the list with the employer before shipping and state who supplies updates. Track parcels and help resolve failures, while keeping employee contact data secure and using it only for fulfilment."
+        }
+      ],
+      "validate_prompt": "I want to supply new-employee welcome kits to small companies in India from home. How should I quote samples, custom branding, advances and remote delivery?",
+      "investment_band": "25k_1l",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S03-I09",
+      "slug": "local-artisan-consignment-catalog",
+      "title": "Local Artisan Consignment Catalog",
+      "hook": "A craftsperson may make beautiful work but lack the time to photograph, answer buyers and manage small deliveries.",
+      "summary": "You curate a catalog of products made by local artisans and sell them from home on agreed consignment terms. Each maker keeps ownership until a sale, while you handle presentation, orders and customer questions. The model depends on trust and accurate inventory, not bulk stock buying.",
+      "what_it_is": "Visit makers, inspect each item and agree on a written selling price, your commission, return conditions and when the maker gets paid. Photograph the actual object and describe size, material and natural variations plainly. Keep a numbered inventory, whether pieces stay with the artisan or in your home. When a buyer pays, confirm availability, package securely and arrange delivery. Send a sale statement to the maker on the agreed date. Avoid copying another seller’s photos or promising that a handmade piece is identical to a sample.",
+      "who_pays_you": "Buyers seeking locally made home goods or gifts pay the retail price. Artisans are your supply partners, not an excuse to claim you made the goods. Reach customers through neighbourhood events and a small catalog shared with permission. Distinctive makers can bring repeat buyers, but you must represent each one fairly.",
+      "how_money_comes": "You earn an agreed commission from completed sales, after packaging and shipping terms are accounted for. The maker receives the balance on the agreed schedule. Some artisans may prefer wholesale instead, so do not blur the two arrangements. Keep a record of unsold pieces and returns; cash collected for a maker is not all your income.",
+      "what_you_need": "You need strong product photography, careful descriptions, labelled inventory, packing materials and simple written agreements. Learn how fragile items travel before accepting orders outside your area. Keep each maker’s work credited with their permission. Store consigned pieces safely and insure or limit your responsibility in a fair written agreement.",
+      "first_30_days": [
+        "Meet a few artisans and choose products you can describe and pack honestly.",
+        "Agree price, commission, payment date and damage responsibility in writing.",
+        "Photograph actual pieces with measurements and assign an inventory number.",
+        "Sell a small trial catalog and reconcile every order with the maker.",
+        "Review which products travel safely and which remain unsold before adding more."
+      ],
+      "what_hurts": "One-of-a-kind pieces can sell elsewhere before your customer pays. Breakage in transit creates arguments unless responsibilities are clear. Makers may price differently through their own channels, confusing buyers. You carry the work of answering messages even when no sale happens. An unsold catalog can become a lot of labour for little commission.",
+      "verdict": "Build this if you respect makers and can account for every piece and payment. Walk away if you want to take products without written terms, because relationships break quickly when a return or damage occurs.",
+      "faq": [
+        {
+          "q": "Do I pay the artisan before an item sells?",
+          "a": "Under consignment, the maker is usually paid after an agreed sale, but both sides must accept that arrangement. If the maker wants payment upfront, treat it as a separate wholesale purchase with different risk."
+        },
+        {
+          "q": "Can I say the products are handmade by me?",
+          "a": "No. Tell buyers who made the work when the artisan agrees to be named. Your value is curation, buyer service and fulfilment, not a false claim of authorship."
+        },
+        {
+          "q": "What if the artisan sells the same piece privately?",
+          "a": "Keep an availability check before taking payment, or hold selected pieces under your agreement. Record which items are in your care and update the catalog as soon as one is gone."
+        }
+      ],
+      "validate_prompt": "I want to run a local artisan consignment catalog from home in India. How should I agree on commissions, inventory, damage and customer returns?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "mixed",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S03-I10",
+      "slug": "baby-stage-essentials-reorder",
+      "title": "Baby Stage Essentials Reorder Catalog",
+      "hook": "New parents buy different everyday basics every few months, and remembering the next size is one more task.",
+      "summary": "You curate a small catalog of non-medical baby essentials by age and size, then remind families when a previously chosen item may need replacing. Parents order only what they approve. The business relies on safe product selection, accurate sizes and useful repeat service rather than unsolicited subscriptions.",
+      "what_it_is": "Start with simple products you can inspect, such as cotton bibs, washable cloths, soft blankets and age-labelled play mats from reliable makers. Ask parents what they already use and what the baby has outgrown. Show exact measurements, care instructions and any safety information supplied by the manufacturer. Take an order, check packaging and deliver to the family. Keep a private note of the size bought so you can ask later whether they want the next one. Avoid medicines, feeding claims and unsafe sleep accessories; you are a retailer, not a paediatric adviser.",
+      "who_pays_you": "Parents, grandparents and relatives buying for a new baby pay for practical, well-described items. Start with families in your neighbourhood and ask whether follow-up messages are welcome. A family may return as the baby grows if your first order was clean and useful. Do not use a baby’s photo or details for marketing without permission.",
+      "how_money_comes": "Earn a margin on each approved order after supplier and delivery costs. A reminder is not a charge: the parent must actively choose and pay for the next item. Bundles can reduce packing cost when the contents make sense together. Avoid holding large quantities in one size because babies grow at different speeds and preferences change.",
+      "what_you_need": "You need trustworthy suppliers, inspected samples, clear size charts and a simple customer consent record for reminders. Read product labels and safety instructions before listing an item. Store textiles cleanly and handle returns under clear terms. Keep only the child details necessary for a voluntary reorder reminder.",
+      "first_30_days": [
+        "Choose a very small range of non-medical basics and inspect samples for stitching and labels.",
+        "Ask parents which sizes and materials they find hard to select online.",
+        "Create a catalog with measurements, care instructions and a plain return policy.",
+        "Fulfil a few paid orders and ask whether optional future reminders are welcome.",
+        "Send one useful check-in at an agreed interval, without assuming the family needs more stock."
+      ],
+      "what_hurts": "Baby products deserve extra care because a poor seam, loose part or misleading age label can be serious. Parents may disagree about fabrics and routines. Sizes change quickly, leaving stock unsold. Repeated marketing messages can feel intrusive when a family is exhausted. If you are unsure about an item’s safety or suitability, do not list it merely for a margin.",
+      "verdict": "Build this if you can inspect products carefully and respect how parents decide for their own baby. Leave it alone if your plan depends on pushing automatic reorders, because trust matters more than a clever reminder.",
+      "faq": [
+        {
+          "q": "Can I sell supplements or medicines with the baby catalog?",
+          "a": "Keep the first catalog to ordinary non-medical goods. Medicines and health products have different responsibilities. Do not make feeding or medical claims in a product description."
+        },
+        {
+          "q": "How often should I send a reorder reminder?",
+          "a": "Ask the parent whether they want one and agree on a useful interval. The baby may not need the next size yet. One considerate check-in is better than a stream of promotional messages."
+        },
+        {
+          "q": "Should I rely only on supplier age labels?",
+          "a": "Check actual dimensions, construction and maker instructions as well. Age ranges are a guide, and parents know their child’s needs. Never claim an item is safe in every situation."
+        }
+      ],
+      "validate_prompt": "I want to sell a small baby essentials catalog from home in India with optional size reminders. Which products, safety checks and reorder rules should I start with?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    }
+  ]
+}

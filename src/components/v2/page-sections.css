@@ -7,7 +7,7 @@
   color: #0f172a;
 }
 .v2 .v2p-hero h1 { color: #0f172a; letter-spacing: -.045em; }
-.v2 .v2p-hero h1 em { color: #7c3aed; font-style: normal; -webkit-text-fill-color: currentColor; }
+.v2 .v2p-hero h1 em { color: #4643ba; font-style: normal; -webkit-text-fill-color: currentColor; }
 .v2 .v2p-section { color: #0f172a; }
 .v2 .v2p-section > :is(h2,h3), .v2 .v2p-section > div > h2 { letter-spacing: -.025em; }
 .v2 .v2p-card {
@@ -20,7 +20,7 @@
 .v2 .v2p-faq summary { cursor: pointer; }
 .v2 .v2p-comparison :is(table, [class*="comparison-row"]) { border-color: #e2e8f0; }
 .v2 .v2p-cta {
-  border: 1px solid #ddd6fe;
+  border: 1px solid #dad9f2;
   border-radius: 1rem;
   background: #f5f0ff;
   color: #0f172a;
@@ -48,12 +48,12 @@
   font-weight: 600;
   white-space: normal;
   text-decoration: none;
-  background-color: #7c3aed;
+  background-color: #4643ba;
   color: #fff;
 }
 .v2 main a.gl-idea-action:hover,
 .v2 main a.gh-button:hover,
 .v2 main button.gh-button:hover,
 .v2 main a.btn-primary:hover,
-.v2 main a[class~="bg-violet-700"]:hover { background-color: #6d28d9; color: #fff; }
+.v2 main a[class~="bg-violet-700"]:hover { background-color: #3a37a0; color: #fff; }
 .v2 main :is(.gl-blueprint-card,.v2p-card) a.gl-idea-action { margin-top: auto; }

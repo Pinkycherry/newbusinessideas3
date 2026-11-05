@@ -28,13 +28,13 @@
 .td-summary p{margin:5px 0 0;color:#5d6880;line-height:1.6}
 .td-stage-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .td-stage-nav a{position:relative;display:flex;min-height:115px;flex-direction:column;gap:9px;padding:20px 50px 20px 22px;border:1px solid #e1e4ec;border-radius:15px;background:#fff;box-shadow:0 5px 20px rgba(22,32,61,.04);transition:transform .22s,border-color .22s,box-shadow .22s}
-.td-stage-nav a:hover,.td-tool:hover,.td-native a:hover{transform:translateY(-5px);border-color:#a78bfa;box-shadow:0 16px 32px rgba(70,42,128,.12)}
+.td-stage-nav a:hover,.td-tool:hover,.td-native a:hover{transform:translateY(-5px);border-color:#8886db;box-shadow:0 16px 32px rgba(70,42,128,.12)}
 .td-stage-nav strong{font-size:20px}
 .td-stage-nav small{color:#69748b;font-size:13px;line-height:1.45}
 .td-stage-nav svg{position:absolute;top:20px;right:20px;color:#7141dd}
 .td-chips{display:flex;flex-wrap:wrap;gap:10px}
 .td-chips a{padding:9px 15px;border:1px solid #dce1eb;border-radius:999px;background:#fff;color:#30405c;font-size:14px;transition:transform .2s,background .2s,border-color .2s}
-.td-chips a:hover{transform:translateY(-2px);background:#f1ebff;border-color:#a78bfa;color:#6333c7}
+.td-chips a:hover{transform:translateY(-2px);background:#f1ebff;border-color:#8886db;color:#6333c7}
 .td-feature{background:#f1edff}
 .td-feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
 .td-feature p{margin-bottom:22px}
@@ -70,7 +70,7 @@
 .td-tier{align-self:flex-start;margin-top:auto;padding:4px 9px;border-radius:99px;background:#f0eaff;color:#7040cf;font-size:11px;font-weight:700}
 .td-more{display:inline-flex;align-items:center;gap:9px;margin-top:17px;padding:11px 16px;border:1px solid #d8c8f3;border-radius:10px;background:#fff;color:#6b38cb;font:inherit;font-size:14px;font-weight:750;cursor:pointer;transition:transform .2s,background .2s}
 .td-more:hover{transform:translateY(-2px);background:#f3edff}
-.td-interlude{background:#f5f3ff}
+.td-interlude{background:#f7f6fb}
 .td-rail-wrap{overflow:hidden;mask-image:linear-gradient(to right,transparent,#000 3%,#000 97%,transparent)}
 .td-rail{display:flex;width:max-content;gap:16px;animation:td-marquee 90s linear infinite}
 .td-rail:hover{animation-play-state:paused}

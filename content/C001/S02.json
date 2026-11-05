@@ -1,0 +1,520 @@
+{
+  "subcategory": {
+    "code": "C001-S02",
+    "intro": "After school online tuition sounds easy until a child disappears behind a switched off camera and says everything is fine. A good teacher has to notice what the child did not understand, make them try again, and tell the family what changed. If you are a teacher, college student with a strong subject, or a parent who has taught children patiently, you can start from home without renting a classroom. You still need a proper timetable, working internet, a quiet corner and a way to check learning after each session. Parents in India often buy tuition because they cannot sit beside a child after work. Some want marks to improve. Others want the child to read confidently, finish homework without a fight, or return to class after an absence. Those are different jobs. A small live group for class nine science needs a different teacher and pace from a one-to-one reading session for a young child. Do not take every class and subject just because a parent asks. Choose a narrow promise you can deliver, show a sample lesson, and charge for a clear block of sessions. Ask for school textbooks and the child's recent work before you plan a lesson. Keep attendance and a short progress note so the parent sees more than screen time. If a child needs assessment or specialist support, be honest about what your tuition can and cannot do. The ideas below vary by subject, buyer and teaching method. Pick the one where you can explain a difficult point simply and still enjoy meeting the same child next week.",
+    "how_to_choose": "Start with the problem you can solve repeatedly. If you are strong in maths, the one-to-one repair plan works when you can trace exactly where a child got lost. If you teach younger children, reading sessions need patient listening more than long worksheets. A working parent may pay for a reliable homework hour, while a school may need a small group for children falling behind. Check the school board, language, class level and internet access before saying yes. Run a paid trial with a specific learning goal, then choose the format you can teach at the same time every week. Avoid taking children whose needs exceed your training.",
+    "faq": [
+      {
+        "q": "Do I need a teaching degree to start online tuition?",
+        "a": "A degree is useful for many subjects and may matter to schools, but private tuition depends first on whether you truly know the material and can teach it. Be clear about your qualifications. Never present yourself as a trained specialist if you are not one."
+      },
+      {
+        "q": "How do I find the first few students without advertising heavily?",
+        "a": "Show parents a short sample lesson and a simple plan based on the child’s actual notebook. Ask families you already know to share your details only if the session helped. One specific result is easier to explain than a claim that you teach every subject."
+      },
+      {
+        "q": "Should I teach a group or one child at a time?",
+        "a": "Use one-to-one sessions when you must diagnose a gap or hear every answer. Groups fit children at a similar level who can learn from each other. Do not combine different grades merely to fill a slot. A mixed group becomes homework supervision, not teaching."
+      },
+      {
+        "q": "What if the child has poor internet at home?",
+        "a": "Keep slides light, send a small practice sheet before class and arrange an audio fallback. Confirm the family can join reliably before selling a live plan. If even audio calls fail, a different local service may be more honest than promising online tuition."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C001-S02-I01",
+      "slug": "middle-school-maths-gap-coaching",
+      "title": "Maths Gaps One Child at a Time",
+      "hook": "A child who fears fractions rarely needs another chapter lecture. You can find the missing step and rebuild confidence after school.",
+      "summary": "You teach middle school maths in private video sessions, beginning with the exact concept a child cannot use yet. Parents pay for a short block of lessons and see worked examples before and after. The offer is careful diagnosis, not a promise of instant marks.",
+      "what_it_is": "You ask for a recent test and watch the child solve a few questions while talking through each move. A learner who struggles with algebra may actually have a fraction problem, so you teach that first. Sessions happen after school on video, with a shared writing surface and a small practice sheet. At the end of each week you send the parent one example the child can now solve independently and one point still needing work. Keep the plan tied to the school textbook, but do not simply repeat its next page.",
+      "who_pays_you": "Parents of children in classes six to eight who are falling behind even after attending regular school classes pay you. A child may have changed schools or spent months pretending to understand. You reach these families through teacher referrals where appropriate, neighbourhood parent groups and a sample session that shows the gap clearly. The parent pays, but the child must feel safe enough to admit confusion.",
+      "how_money_comes": "Charge for a defined set of private sessions, paid at the start of the block. A short diagnostic session can be paid separately and credited if the family continues. Renewal comes when the parent sees a specific skill improve, not from keeping the child dependent on you. Keep preparation time inside your fee; tailoring every lesson takes longer than teaching a standard group.",
+      "what_you_need": "You need strong command of middle school maths, patience with repeated wrong answers, reliable video and a way for the child to show written working. Keep school books, a small bank of practice problems and brief progress records. A pen tablet helps but is not essential if you can share clear handwritten pages. Ask permission before storing any child’s work.",
+      "first_30_days": [
+        "Collect the school textbook and two recent pieces of work before offering a paid diagnostic session.",
+        "Identify one foundation gap and plan a small teaching sequence around it.",
+        "Teach two trial lessons and ask the child to explain the method back to you.",
+        "Send the parent a plain progress note with one solved example and a realistic next goal.",
+        "Offer a fixed lesson block only if the child can attend at a regular time."
+      ],
+      "what_hurts": "Children may copy an answer while hiding a misunderstanding. Some parents expect a full term of marks to change in a week. School homework can consume the session unless you protect time for learning. If you take too many grades, your lesson preparation grows faster than your income. A shy child may need several meetings before speaking freely on camera.",
+      "verdict": "Build this if you enjoy finding the exact place a child got stuck and can explain one idea three different ways. Walk away if you only want to race through chapters, because this service depends on patient diagnosis.",
+      "faq": [
+        {
+          "q": "How do I know which maths gap to teach first?",
+          "a": "Watch the child solve a short set of familiar questions and ask why they chose each step. The first point they cannot explain is often more useful than the chapter title. Use that as your starting lesson."
+        },
+        {
+          "q": "Can I promise a better exam grade?",
+          "a": "No. You can promise a clear teaching plan, practice and honest progress reports. A grade also depends on attendance, independent work and the exam itself. Tell parents what you can control."
+        },
+        {
+          "q": "Should parents sit beside the child during lessons?",
+          "a": "They can join the opening and closing conversation, but let the child attempt questions without prompts. You need to see independent thinking. Ask parents to support the routine rather than whisper answers."
+        }
+      ],
+      "validate_prompt": "I want to teach class six to eight maths online from home in India, focusing on children with foundation gaps. How should I set lesson blocks, find local parents and price preparation time?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S02-I02",
+      "slug": "primary-reading-fluency-online",
+      "title": "Primary Reading Aloud on Video",
+      "hook": "When a child guesses every second word, a patient listener can do more than another crowded online class.",
+      "summary": "You hold short live reading sessions for primary school children who need practice sounding out words and understanding a story. The child reads to you, not to a recording. Parents buy a regular listening routine with visible progress, while you avoid promising a diagnosis.",
+      "what_it_is": "In each session a child reads a short passage on screen or from a book at home. You listen, pause at difficult words, model a sound and ask what the sentence means. You choose texts at the child’s actual level, not just the class printed on the cover. A session ends with one tiny reading task for the next day. Keep a record of words the child can now read without guessing. If a child struggles far beyond ordinary practice, suggest a qualified assessment rather than claiming your class can treat a learning condition.",
+      "who_pays_you": "Working parents of children in early primary classes pay because they cannot consistently sit through reading practice after a long day. Some children study in a language that is not spoken much at home. Approach families through known parent circles and let them observe a sample session. The buyer wants a calm adult who listens rather than a loud class with many children.",
+      "how_money_comes": "Sell a weekly schedule of short individual sessions, with payment for an agreed block. The preparation is light if you maintain a graded set of texts, but missed sessions can make the timetable messy. Families renew when the child willingly picks up a book and can read a slightly harder passage. Offer separate language tracks only if you are fluent enough to teach them.",
+      "what_you_need": "You need a quiet call, a warm voice, age-suitable books and a simple way to share text. Learn basic phonics or reading instruction in the language you teach. Keep sessions short enough for a young child to stay engaged. Obtain parent consent for calls and never record a child without permission. Be ready to refer concerns beyond your skill.",
+      "first_30_days": [
+        "Choose one teaching language and build a small ladder of passages from easy to harder.",
+        "Ask parents to let the child read a short passage during a paid baseline session.",
+        "Run short sessions on fixed days and track the words the child reads independently.",
+        "Show the parent an earlier and a newer passage rather than making a broad claim.",
+        "Keep one home practice task small enough that the family will actually do it."
+      ],
+      "what_hurts": "A screen makes it hard to see where a child points, and some will repeat words without understanding them. Parents may push you toward long sessions because they equate minutes with value. You cannot fix limited reading practice at home through calls alone. A child who needs specialist evaluation can lose valuable time if you pretend ordinary tuition is enough.",
+      "verdict": "Build this if you can listen without rushing and know how to teach reading step by step. Walk away if you prefer lecturing to a group, because the product is careful attention to one child’s words.",
+      "faq": [
+        {
+          "q": "Can I teach children from different school boards?",
+          "a": "Yes, if the offer is foundational reading rather than board-specific exam work. Ask what language and books the school uses. The texts you choose should support the child’s level and home language, not conflict with the family’s school routine."
+        },
+        {
+          "q": "How long should a young child stay on the call?",
+          "a": "Keep it short enough that the child still wants to return. Watch attention and comprehension rather than filling a fixed hour. Explain to parents why frequent, focused practice can suit a young reader better than one exhausting session."
+        },
+        {
+          "q": "What if I suspect dyslexia or another learning difference?",
+          "a": "Do not diagnose the child. Share the specific reading behaviours you observed without labels and encourage the family to speak with a qualified professional. Continue only within your training and coordinate with their advice if the family wishes."
+        }
+      ],
+      "validate_prompt": "I want to run live online reading practice for primary school children in India. What session length, teaching materials and parent updates make this a workable home business?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S02-I03",
+      "slug": "guided-online-homework-hour",
+      "title": "School Homework Hour for Working Parents",
+      "hook": "Parents who return late often need a dependable homework routine more than one more teacher explaining the whole syllabus.",
+      "summary": "You run a supervised online homework hour for a small group after school. Children bring their own assignments, attempt them on camera and ask when stuck. Parents pay for consistency and accountability. You make clear that you help them understand work instead of completing it for them.",
+      "what_it_is": "You open a small video room at the same time on school days. Each child shows the assignments due, chooses an order and works independently while you check in. When someone is stuck, you ask a leading question or give a quick example on a separate problem. You close with a list of completed work and anything the family or school must still address. Keep similar ages together and cap the group so nobody waits too long for help. This is an organised homework routine, not tuition in every subject under the sun.",
+      "who_pays_you": "Parents who work through the afternoon pay because homework becomes a nightly argument at home. Children in classes three to six are a likely first group, especially when their schools use similar schedules. Reach parents through your own neighbourhood and offer a short paid trial. The school is not your customer unless it contracts the programme separately.",
+      "how_money_comes": "Charge a monthly fee for a fixed set of school-day slots. Families pay for your reserved time and the smaller group, not for a guarantee that every assignment will be perfect. An occasional exam revision class can be a separate offer, but do not quietly turn the homework hour into unpaid private tutoring. Set rules for absences, holidays and last-minute tasks.",
+      "what_you_need": "You need reliable internet, a headset, a simple attendance sheet and patience with children who avoid starting. Learn the common curriculum at the ages you accept, but keep your subject limits visible. Use a shared checklist rather than accessing children’s private school accounts. A parent should be nearby enough to handle an emergency at home.",
+      "first_30_days": [
+        "Choose a narrow class range and set a maximum group size you can truly supervise.",
+        "Ask parents which assignments and school timings cause the most difficulty.",
+        "Run a trial week with a start checklist and an end message to each parent.",
+        "Record where children need teaching beyond homework supervision and refer that separately.",
+        "Publish a fixed monthly timetable and clear make-up rules before taking renewals."
+      ],
+      "what_hurts": "A group call can become chaotic when several children need help at once. Some will claim their work is finished when it is not. Parents may send a whole project at the last minute and expect you to build it. You must keep boundaries without embarrassing the child. School holidays also interrupt the monthly routine, so state your calendar clearly.",
+      "verdict": "Build this if you can keep a small group calm and let children do their own work. Walk away if you want to answer every question for them, because parents are paying for a habit, not copied homework.",
+      "faq": [
+        {
+          "q": "Is this the same as tuition?",
+          "a": "No. You help children plan and complete assigned work while they remain responsible for their answers. If the same concept confuses a child repeatedly, suggest a separate teaching plan rather than hiding a full tuition need inside the group hour."
+        },
+        {
+          "q": "How many children should join one call?",
+          "a": "Take only as many as you can check individually while still keeping the room orderly. Test the limit in a trial week. A cheaper, larger room may leave quiet children ignored and damage trust with parents."
+        },
+        {
+          "q": "What if a child refuses to do the work?",
+          "a": "Ask a small starting question and give a brief choice of tasks. Tell the parent factually what happened after the session. Do not shame the child on the group call or tell the parent work was finished when it was not."
+        }
+      ],
+      "validate_prompt": "I want to run a small online homework hour for class three to six children after school in India. How should I price the monthly slot, limit the group and explain it to working parents?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S02-I04",
+      "slug": "board-answer-writing-review",
+      "title": "Answer Writing Review for Board Students",
+      "hook": "A student can know a chapter and still lose marks by writing an answer that never reaches the question.",
+      "summary": "You review written answers from secondary school students after class and meet online to explain how to improve them. The product is marked practice with specific feedback, not another lecture of the textbook. Families pay for regular review before school examinations.",
+      "what_it_is": "You give a student a question and time limit, then ask for a clear photo or scan of the answer they wrote alone. Mark the response against the relevant board’s expected method, noting missing points, structure and where a diagram would help. In a short video meeting, the student rewrites one answer while you watch. Keep the marked attempt and the new attempt together to show the change. Work only in subjects and board patterns you understand. This is practice in expressing knowledge, not a promise that you know the next paper.",
+      "who_pays_you": "Parents of students in classes nine and ten pay when their child studies hard but cannot turn that work into strong written answers. Students preparing for school tests are also buyers through their families. Reach them with a small sample showing how you improved a real practice answer, after removing the child’s identity. Teachers may refer students if you do not misrepresent their endorsement.",
+      "how_money_comes": "Sell a package of reviewed answers and brief live feedback sessions with a clear turnaround. The number of written pages matters because detailed marking consumes time outside the call. A seasonal batch near examinations can bring demand, but price the checking work properly. Renewals depend on whether a student applies feedback to the next unseen question.",
+      "what_you_need": "You need deep familiarity with one board and subject, model answers used as teaching aids, a marking rubric and a tidy way to return annotated pages. Protect student work and avoid posting it publicly. Have enough time to read every answer carefully. A phone camera and a simple annotation tool can be enough, provided the photos are legible.",
+      "first_30_days": [
+        "Pick one board, subject and class level, then prepare a simple answer review rubric.",
+        "Ask two students for paid practice answers and time how long honest marking takes.",
+        "Return written feedback with one priority change per answer, not a page of vague praise.",
+        "Meet each student online and watch them revise an answer without your wording.",
+        "Set a page limit and turnaround promise based on the time you actually used."
+      ],
+      "what_hurts": "Marking is slow and families may compare your comments with a school teacher’s approach. Some students submit work copied from a guide and learn little. Exam season brings a rush followed by quiet weeks. You also need to resist claims about guaranteed marks or predicted questions. When a school rubric changes, update your approach instead of repeating old advice.",
+      "verdict": "Build this if you enjoy reading student work closely and can explain why one answer is stronger. Walk away if you want income only during live calls, because the real labour happens while you mark.",
+      "faq": [
+        {
+          "q": "Can I mark answers for every board?",
+          "a": "Start with the board and subject you know well. Wording, paper patterns and marking expectations differ. Expand only after you have studied another board’s current material and can explain the differences to a student."
+        },
+        {
+          "q": "Should I give students model answers to memorise?",
+          "a": "Use examples to show structure and missing concepts, then ask the student to write an original answer. Memorised paragraphs can fail when the question changes. Your value is helping them think and express the answer themselves."
+        },
+        {
+          "q": "How do I handle unreadable photos of written work?",
+          "a": "Give the family clear photo instructions and ask for a new image before starting the review. Do not guess at a sentence and mark the student unfairly. Include this rule in the package terms."
+        }
+      ],
+      "validate_prompt": "I want to review class nine and ten written answers online for students in India. How should I set a page limit, turnaround and fee for marked work and live feedback?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S02-I05",
+      "slug": "low-bandwidth-voice-note-tuition",
+      "title": "Low Bandwidth Voice Note Tuition",
+      "hook": "When video freezes every evening, a child still deserves a teacher who can hear the question and respond clearly.",
+      "summary": "You combine short audio lessons, photographed practice and scheduled phone calls for school children with unreliable internet. Parents pay for a teaching routine that works on an ordinary phone. This is a different delivery model from a live video class and needs disciplined follow-up.",
+      "what_it_is": "At a fixed after-school time you send a short voice explanation and one small task to each child or a tightly matched group. The student replies with a photo of their working and a voice note explaining the answer. You return specific feedback, then use a short audio call for questions that need conversation. A weekly recap tells the parent which work arrived and what changed. Design lessons that download easily and do not require a fast connection. Keep contact within agreed hours and never ask children to share passwords or private accounts.",
+      "who_pays_you": "Families in smaller towns and villages with patchy data may pay because live video tuition fails them repeatedly. A parent who has a basic smartphone can help a younger child send work. A local teacher or community group can introduce you, but test the phone connection and the family’s comfort with audio before selling the plan.",
+      "how_money_comes": "Charge for a weekly or monthly teaching block with a stated number of assignments and feedback rounds. Voice notes feel quick, but personalised responses for many children can consume the entire evening. Track the time per student and set a limit on late-night messages. A shared concept lesson reduces preparation, while individual feedback remains the reason families renew.",
+      "what_you_need": "You need subject knowledge, a phone with reliable audio, a clear process for naming and finding each student’s work, and consent from parents for messaging minors. Prepare tasks that can be understood without video. Check whether audio messages are accessible in the family’s preferred language. Have an agreed fallback for days when mobile data stops.",
+      "first_30_days": [
+        "Choose one school level and subject with exercises that can be checked from a photo.",
+        "Trial an audio lesson with families in the target area and ask whether it downloads reliably.",
+        "Set one daily sending time, one submission deadline and one feedback window.",
+        "Track how long you spend on each child’s replies during a paid trial week.",
+        "Adjust the group size before you promise a full month of personal feedback."
+      ],
+      "what_hurts": "Children may send unclear photos or get help from an adult before recording an answer. Delayed replies break the rhythm of a lesson, and families may expect you to answer messages all day. You cannot always tell whether a quiet child understands. Some concepts need visual demonstration, so admit when this format is the wrong tool and arrange a different lesson.",
+      "verdict": "Build this if you can teach in short, clear audio and follow up reliably. Walk away if you need constant video or instant replies, because the model succeeds by working around weak connectivity.",
+      "faq": [
+        {
+          "q": "Is this just sending recorded lectures?",
+          "a": "No. The child sends work back, explains their thinking and receives a specific response from you. Without that loop it is content delivery, not tuition. Keep the assignments small enough that you can check them properly."
+        },
+        {
+          "q": "Can one voice lesson serve several children?",
+          "a": "Yes, if they share the same level and concept. Their submitted work still needs individual review. Do not pretend one generic recording has solved every child’s particular gap."
+        },
+        {
+          "q": "What if a parent does not use messaging apps?",
+          "a": "Arrange scheduled ordinary calls and simple paper practice only if the family can send or report the work reliably. If that process becomes too difficult, suggest local in-person teaching rather than charging for a service they cannot use."
+        }
+      ],
+      "validate_prompt": "I want to teach school children after class through low bandwidth audio and photographed homework in India. How should I structure feedback, parent consent and monthly pricing?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S02-I06",
+      "slug": "regional-medium-english-bridge",
+      "title": "Regional Medium English Bridge Lessons",
+      "hook": "A child may know the science answer in Telugu or Hindi and still freeze when the textbook asks in English.",
+      "summary": "You teach school vocabulary and comprehension to children moving from a regional medium or language-rich home into English-heavy classes. Lessons use their familiar language to explain a subject passage. Parents pay for a bridge into classroom learning, not a generic spoken English course.",
+      "what_it_is": "You take one paragraph from the child’s school science or social studies chapter and find the words blocking understanding. Explain those words in the language the child knows, then ask them to say the idea back in simple English. The next exercise might be reading a question, underlining what it asks and writing a short answer. Meet online after school in small, level-matched sessions. Keep a personal vocabulary notebook that grows from actual schoolwork. The aim is to help the child participate in class without treating the home language as a weakness.",
+      "who_pays_you": "Parents whose children have switched school language or struggle with English textbook questions pay you. These families may live in towns where subject teachers cannot slow down for one learner. Reach them through known school communities and demonstrate a lesson using a textbook passage. You must speak the relevant home language well enough to explain without mistranslating the subject.",
+      "how_money_comes": "Offer a fixed term of small-group sessions tied to one school level and language pair. Charge for preparation and individual feedback, not merely call time. Families renew if a child starts understanding new passages without waiting for translation. A second language pair needs a genuinely capable teacher; do not sell a broad network of languages before you can staff it.",
+      "what_you_need": "You need fluency in the child’s home language and clear English, knowledge of the school subjects at that level, a shared reading screen and a collection of short textbook passages. Keep lessons respectful. Avoid telling a child that their home accent is wrong. Ask parents for the school book and permission to use examples from the child’s work privately.",
+      "first_30_days": [
+        "Choose one language pair and one narrow class range you can teach confidently.",
+        "Collect a sample chapter and ask the learner to explain what they understood.",
+        "Run a paid trial that builds a short list of words from that chapter.",
+        "Ask the learner to answer a new question in their own English at the end.",
+        "Share one concrete progress example with the parent and set the next chapter goal."
+      ],
+      "what_hurts": "Parents may expect fluent spoken English quickly, while your real work is school comprehension. Translating every line can make a child dependent on you. Textbooks change and you must prepare again. Children may feel embarrassed about their home language, so careless corrections can silence them. Do not take on a language pair or subject you only partly understand.",
+      "verdict": "Build this if you respect both languages and can make school passages less frightening. Walk away if you want to sell accent coaching, because these children need understanding before polished speech.",
+      "faq": [
+        {
+          "q": "Is this the same as a spoken English class?",
+          "a": "No. You work from the child’s school passages and questions, then help them express the subject in English. Conversation practice may appear in a lesson, but the buyer is paying for classroom comprehension."
+        },
+        {
+          "q": "Should I translate the whole chapter?",
+          "a": "Translate only enough to unlock the idea. Ask the child to explain it again without your wording and use new examples. Full line-by-line translation can keep them from reading independently."
+        },
+        {
+          "q": "Can I combine children from different home languages?",
+          "a": "Only if you can teach the common passage without losing the bridge each child needs. A group using one language pair is easier to serve honestly. Keep separate groups when the explanation language differs."
+        }
+      ],
+      "validate_prompt": "I want to teach online English textbook comprehension to regional-medium school children in India. Which language pair and class range should I start with, and how do I show progress?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S02-I07",
+      "slug": "class-nine-science-concept-group",
+      "title": "Small Group Science Concept Studio",
+      "hook": "If a student memorises the circuit diagram but cannot explain why the bulb lights, another worksheet will not help.",
+      "summary": "You teach class nine science in a small live online group built around one difficult concept at a time. Students predict, draw and explain before you reveal the answer. Parents pay for understanding that carries into school tests, with a fixed batch rather than private homework help.",
+      "what_it_is": "You select a short science topic from the same board syllabus for the whole group, such as current flow or pressure. Before class, children make a prediction or bring a safe household observation. During the call you demonstrate with drawings, ask each student to explain what they think will happen and correct the misconception. End with a fresh problem none has seen. Keep any activity safe and do not ask a child to handle electricity, flame or chemicals at home. A brief recap tells the family the concept learned and what the student could explain alone.",
+      "who_pays_you": "Families with class nine students pay when a child can recite definitions but cannot solve application questions. Students in the same board and chapter make a workable group. Reach parents by showing a short sample lesson and a clear list of topics, not a broad claim that you teach all science. The child’s willingness to speak matters as much as the parent’s payment.",
+      "how_money_comes": "Charge for a term of scheduled small-group lessons. A batch gives you better use of preparation time than repeating the same demonstration privately, but keep enough room for every learner to respond. Add a separate revision clinic only when the main batch is working. Do not promise top ranks; explain the skill the child should gain from each lesson.",
+      "what_you_need": "You need a good grasp of the specific board syllabus, safe examples, a clear drawing surface, reliable audio and the confidence to ask open questions. Prepare a way to hear every student without letting one dominate. A simple quiz or exit question helps you see who understood. Keep parent contact details and an attendance record.",
+      "first_30_days": [
+        "Pick one board and list the class nine concepts students commonly memorise without understanding.",
+        "Design a safe prediction and explanation task for the first concept.",
+        "Invite a small paid trial group with children studying the same chapter.",
+        "Give every child an individual exit question and record where explanations fail.",
+        "Set the term schedule only after checking that group pace and participation work."
+      ],
+      "what_hurts": "Children may sit silently while a confident classmate answers everything. Mixed boards cover topics in different order and break the lesson plan. A demonstration can entertain without improving understanding unless you ask for explanations. Parents may request exam tricks near a test. Preparation takes longer than a textbook read-through, and unsafe at-home experiments create avoidable risk.",
+      "verdict": "Build this if you love asking why and can manage a small discussion online. Walk away if you prefer dictating notes, because this batch works only when every student has to think aloud.",
+      "faq": [
+        {
+          "q": "Can I include students from classes eight and nine together?",
+          "a": "Usually keep them separate because the depth and textbook order differ. If you combine them for a standalone foundation topic, explain the scope to both families and check that neither group is bored or lost."
+        },
+        {
+          "q": "Do I need physical experiment kits?",
+          "a": "No. Clear drawings and safe everyday observations can support many concepts. If you demonstrate an experiment, plan it carefully and do not require children to copy risky steps at home."
+        },
+        {
+          "q": "How do I stop one student answering for everyone?",
+          "a": "Ask children to write or draw a prediction first, then call on each in turn. Use a new final question for individual responses. A small group is only useful if you notice the quiet learner too."
+        }
+      ],
+      "validate_prompt": "I want to run a live class nine science concept group online in India. How should I group students, choose safe demonstrations and price a term of sessions?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S02-I08",
+      "slug": "school-absence-catch-up-online",
+      "title": "Return to School Catch Up Plan",
+      "hook": "After weeks away from class, a child needs a map back into lessons, not a pile of missed pages.",
+      "summary": "You offer a short online catch-up programme for children who missed school because of illness, travel or a family move. You sort the missed work by importance and teach the foundation needed for current classes. Families pay for a temporary bridge, not an endless subscription.",
+      "what_it_is": "You collect the class timetable, recent notebooks and a list of topics taught while the child was away. First check what the learner already knows. Then rank the missed concepts: which ones block today’s lessons and which assignments can wait. Meet after school for a short run of individual lessons, making the child attempt one current-class task each week. Send parents a simple catch-up map, updated as work is completed. Coordinate with the school only with family permission and never tell a recovering child to ignore medical or rest advice.",
+      "who_pays_you": "Parents of schoolchildren returning after an absence pay because they cannot reconstruct several weeks of lessons alone. Families newly moved between cities may also need help with a different syllabus. A local school or parent circle can introduce you, but the family hires you. Be clear that you cover selected subjects and are not replacing every teacher.",
+      "how_money_comes": "Sell a defined catch-up block with a starting assessment, scheduled lessons and a closing handover. Price for the sorting and preparation that happens before a call. Some families may later join another class, but this offer should have an end point. Referrals from relieved parents can replace renewals if you handle each case carefully.",
+      "what_you_need": "You need flexibility across the class level you accept, a way to read school notes and the judgement to prioritise. Prepare a written topic map rather than dozens of unrelated worksheets. Use video and shared pages for teaching. Treat health information as private and store only what you need to organise lessons.",
+      "first_30_days": [
+        "Define the classes and two subjects you can cover without improvising.",
+        "Ask for recent school notes and build a paid map of missed concepts.",
+        "Agree with the parent on an attainable teaching schedule that respects the child’s energy.",
+        "Teach the foundations first and check one current classroom task each week.",
+        "Finish with a handover noting what is caught up and what still needs school support."
+      ],
+      "what_hurts": "Every child misses a different mix of topics, so you cannot reuse one lesson pack. Parents may expect you to finish a whole term in a few evenings. A recovering child can tire quickly, and school materials may arrive late. Moving between boards creates larger gaps than a short plan can solve. You must say what remains unfinished instead of declaring success too early.",
+      "verdict": "Build this if you can organise messy schoolwork and teach the few concepts that unlock the rest. Walk away if you need a standard batch every month, because each catch-up case is temporary and personal.",
+      "faq": [
+        {
+          "q": "How long should a catch-up plan run?",
+          "a": "Decide after seeing the missed work and the child’s current class tasks. Set a small first block and review it. A clear ending is better than charging indefinitely while the child remains lost."
+        },
+        {
+          "q": "Should I ask the school teacher for material?",
+          "a": "Ask the family to contact the school or give permission for a specific request. Work from official class notes where available. Do not claim the school has approved your plan unless it has."
+        },
+        {
+          "q": "What if the child is still recovering?",
+          "a": "Follow the family’s health guidance and keep the workload gentle. You are a tutor, not a medical professional. Pause the plan if lessons are adding pressure rather than helping a safe return to school."
+        }
+      ],
+      "validate_prompt": "I want to offer a short online catch-up tuition plan for Indian school children returning after an absence. How should I assess missed chapters, set a realistic scope and charge for preparation?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S02-I09",
+      "slug": "evening-school-doubt-desk",
+      "title": "Drop In Evening Doubt Desk",
+      "hook": "Some children need ten minutes to unblock one question, while a full tuition package would waste everyone’s time.",
+      "summary": "You run scheduled online doubt slots after school for students who mostly manage on their own. They submit a question before the call and pay for access to a defined session or small pack. The offer solves a specific obstacle without pretending to teach an entire term.",
+      "what_it_is": "At a fixed evening hour you take pre-submitted questions from students in one subject and class range. Sort similar doubts, then call each learner to show where their thinking stopped. Use a shared page to work a parallel example and ask the student to finish the original question. If the doubt reveals a larger gap, explain that a short desk cannot repair it in one visit. Keep the queue visible and cap attendance, so a child is not waiting through an hour of unrelated questions. Return a brief recap of the concept after the call.",
+      "who_pays_you": "Parents of independent students pay for occasional support before homework deadlines or tests. Older children may request the slot, but the parent approves payment and contact. Start with families in a school community where the board and textbook are familiar. Your strongest buyer is the family that does not want another weekly tuition class.",
+      "how_money_comes": "Charge per scheduled seat or a small bundle of visits with an expiry date, paid before the session. State the question limit and time window clearly. Demand can spike near tests and disappear during holidays. A tightly matched group lets one explanation help several students, but you still owe each child a chance to apply it.",
+      "what_you_need": "You need quick command of one school subject, a queue for submitted questions, a writing surface and clear booking rules. Ask students to send the exact textbook context and their attempted work. Have a parent-approved communication channel for minors. Keep a list of questions you could not solve and refund or reschedule rather than bluffing.",
+      "first_30_days": [
+        "Select a subject and class range narrow enough for you to answer accurately on the spot.",
+        "Set a booking deadline and ask for the student’s own attempt with each question.",
+        "Run a paid trial with a small queue and time every explanation.",
+        "Ask students to solve a changed version before marking the doubt closed.",
+        "Publish a seat cap, question limit and refund rule based on the trial."
+      ],
+      "what_hurts": "Questions arrive at the last minute and some are from chapters you have not prepared. A loud student can consume the whole slot. Families may send a large project as one doubt, then object when you set boundaries. Seasonal income is uneven. It is tempting to rush to an answer instead of teaching the reasoning, which makes the student return with the same problem.",
+      "verdict": "Build this if you think clearly under time pressure and can say when a question needs a full lesson. Walk away if you dislike unpredictable questions, because the queue changes every evening.",
+      "faq": [
+        {
+          "q": "How is a doubt desk different from a tuition batch?",
+          "a": "A batch teaches a planned sequence. Your desk responds to a submitted sticking point and asks the child to solve a related question. A student with a persistent foundation gap needs a different service."
+        },
+        {
+          "q": "Can students join without sending their questions first?",
+          "a": "You can reserve a few seats, but pre-submission protects the session from impossible queues. Ask for the child’s attempt so you know whether the issue is the question wording or an earlier concept."
+        },
+        {
+          "q": "What if I cannot answer a question correctly?",
+          "a": "Say so during the session, then offer a researched follow-up within the agreed time or a refund. A confident wrong explanation harms the child more than an honest pause."
+        }
+      ],
+      "validate_prompt": "I want to open a paid evening online doubt desk for one school subject in India. What queue size, booking rules and fee model would keep it useful for students?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S02-I10",
+      "slug": "school-sponsored-online-reading-support",
+      "title": "School Sponsored Reading Recovery Group",
+      "hook": "A school can spot several children falling behind in reading, but its teachers may have no spare after-school hours.",
+      "summary": "You contract with a school to teach a small online reading group after classes, using the school’s learning goals and family consent. The school pays for the programme, not each parent. Your work includes attendance and progress reporting, which makes this a different buyer and operating model from private tuition.",
+      "what_it_is": "You agree with a school on the class range, language, referral process and what a useful reading improvement would look like. A teacher identifies children who need practice; families consent to the after-school call. You run a small group with turn-taking, short passages and individual checks so each child actually reads. Give the school a factual attendance and progress summary, without publishing children’s names elsewhere. If a learner needs assessment or more support than the group can provide, tell the school and family through the agreed channel. Keep teaching separate from school marks or disciplinary decisions.",
+      "who_pays_you": "Private schools, small learning centres or education groups may pay when they need extra reading support but cannot staff another permanent teacher. The principal or academic coordinator decides, and classroom teachers help identify a suitable group. Approach one institution with a sample plan and clear reporting method. Parents are beneficiaries but not the customer in this contract.",
+      "how_money_comes": "Charge the institution for a defined programme with a group size, session count, preparation, reports and cancellation terms. Invoice through the institution’s payment process rather than collecting from children. A school may renew after seeing a documented change in reading behaviour, but budget decisions take time. Do not depend on one school for all your income until payments are reliable.",
+      "what_you_need": "You need credible teaching experience, a child safeguarding routine, a reliable video setup and an agreed way to handle family consent and attendance. Build a simple reading check that can be repeated without turning the sessions into exams. Keep children’s information private. Be prepared for school timetables, holidays and approval delays.",
+      "first_30_days": [
+        "Choose one reading level and prepare a brief programme outline for a small group.",
+        "Ask one school coordinator what gaps teachers see and how families are contacted.",
+        "Agree in writing on referrals, consent, attendance, payment and reporting boundaries.",
+        "Run a short paid pilot and hear each learner read during every session.",
+        "Share a factual closing report and discuss continuation only after reviewing the pilot."
+      ],
+      "what_hurts": "A school contract takes longer to close than a parent booking. Payment may follow an institutional cycle, while you prepare and teach on fixed dates. Teachers may expect you to solve wider classroom issues. Some children will not join reliably from home, making progress hard to judge. Safeguarding and consent are serious; one careless group link or shared report can break trust.",
+      "verdict": "Build this if you can work with a school’s timetable and document individual reading progress without labelling children. Walk away if you need same-day payment and total control of lessons, because this buyer has its own process.",
+      "faq": [
+        {
+          "q": "Who chooses the students for this group?",
+          "a": "Agree the referral criteria with the school and seek family consent before teaching. You can assess reading level for grouping, but avoid presenting a tuition observation as a formal diagnosis."
+        },
+        {
+          "q": "Can I tell parents about each child’s progress?",
+          "a": "Yes, through the reporting route agreed with the school and family. Share the individual child’s progress only with authorised adults. A group report should never expose another child’s difficulties."
+        },
+        {
+          "q": "What if the school asks for a much larger group?",
+          "a": "Explain how many children you can hear read in one session. Offer separate groups or a different programme if it exceeds that number. Calling a crowded webinar a reading recovery group would mislead the school."
+        }
+      ],
+      "validate_prompt": "I want to offer an after-school online reading group to an Indian school as a paid programme. How should I define group size, consent, reporting and a pilot contract?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    }
+  ]
+}

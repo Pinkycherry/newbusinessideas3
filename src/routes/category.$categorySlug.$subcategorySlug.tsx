@@ -1,12 +1,25 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import { OLD_CATEGORY_REDIRECTS } from "@/config/old-category-redirects";
+import { TAXONOMY } from "@/data/taxonomy";
 import { V2Frame } from "@/components/v2/frame";
 import { getListPage } from "@/lib/lists.functions";
 import { ListPageBody } from "@/routes/lists.$slug";
 
 export const Route = createFileRoute("/category/$categorySlug/$subcategorySlug")({
+  // AdSense approval: old categories and their subcategories 301 to the closest new category.
+  beforeLoad: ({ params }) => {
+    const moved = OLD_CATEGORY_REDIRECTS[params.categorySlug];
+    if (moved) throw redirect({ href: `/category/${moved}`, replace: true, statusCode: 301 });
+  },
   loader: async ({ params }) => {
     const page = await getListPage({ data: { slug: params.subcategorySlug } });
-    if (!page || page.categorySlug !== params.categorySlug) throw notFound();
+    if (!page || page.categorySlug !== params.categorySlug) {
+      // An old subcategory under a category that still exists goes to that category.
+      if (TAXONOMY.some((c) => c.slug === params.categorySlug)) {
+        throw redirect({ href: `/category/${params.categorySlug}`, replace: true, statusCode: 301 });
+      }
+      throw notFound();
+    }
     return page;
   },
   head: ({ loaderData }) => ({

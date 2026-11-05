@@ -13,8 +13,10 @@ const PUBLIC_URL = "https://ubuavzcuwvvedojsrmux.supabase.co";
 const PUBLIC_KEY = "sb_publishable_jjA0oFdaqraLaCTY_AqUIw_hKOVV8mD";
 
 function client() {
-  const url = process.env["IDEAVAULT_DB_URL"] || PUBLIC_URL;
-  const key = process.env["IDEAVAULT_DB_ANON_KEY"] || PUBLIC_KEY;
+  // BBI_DB_* = the new database (ubuavzcuwvvedojsrmux). IDEAVAULT_DB_* stays the live database
+  // (jqzadwobnfypmytcbpkw) for the live FAQ, list and validate pages.
+  const url = process.env["BBI_DB_URL"] || PUBLIC_URL;
+  const key = process.env["BBI_DB_ANON_KEY"] || PUBLIC_KEY;
   return createClient(url, key, {
     auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
   });
@@ -121,3 +123,16 @@ export const MODE_LABEL: Record<string, string> = {
   field: "On the move",
   mixed: "Mixed",
 };
+
+// Live bbusiness.online functions kept for the FAQ, list and validate pages (6 Nov 2026).
+export {
+  db,
+  getCatalog,
+  catalogQuery,
+  getCategoryPage,
+  getSubcategoriesForCategory,
+  type Catalog,
+  type CategoryNode,
+  type RelatedCategory,
+  type SubcategoryNode,
+} from "./live-ideas.functions";

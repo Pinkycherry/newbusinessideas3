@@ -1,0 +1,467 @@
+{
+  "subcategory": {
+    "code": "C001-S01",
+    "intro": "A home cooked meal subscription is one of the oldest businesses in India, and it still works because people miss ghar ka khana. Office workers eat outside every day and feel it in their stomach by Thursday. Students in PGs get bored of mess food in the first month. Elders living alone want simple food made the way their mother made it. If you cook well and you can keep a routine, this is a business you can start from your own kitchen. The idea is simple. You cook a fixed menu, a fixed number of people pay you in advance for a week or a month, and you deliver at the same time every day. Your money comes from regular customers, not from one big order. That is why the subscription part matters more than the cooking part. In India this business runs on trust. People will try you because a neighbour said your rajma is good, and they will stay because your food arrives on time, tastes the same every day and never makes them sick. Keep your kitchen clean, take a basic FSSAI registration before you grow, and start with people you can reach on foot or by scooter. The ten ideas below are different ways to run the same kitchen: for office workers, students, elders, new mothers, gym goers, night shift workers and families who want a particular kind of food. Pick the one that matches the people already living around you.",
+    "how_to_choose": "Start with who lives within three kilometres of your kitchen. If there are offices nearby, look at the office lunch and night shift ideas. If there are hostels and PGs, look at the student plan. If your area has many retired couples, the elder and diabetic friendly plans fit better. Then look at your own cooking. If you already cook Jain or sattvic food at home, that is your strongest door. If you enjoy planning nutrition, the gym and new mother plans pay better but need more care. Choose one idea, run it for two months, and only then add a second.",
+    "faq": [
+      {
+        "q": "Do I need a licence to sell home cooked food in India?",
+        "a": "Yes, you should take FSSAI registration before you start selling regularly. For a small home kitchen it is the basic registration, which you apply for online. It also gives your customers confidence, so mention it on your WhatsApp menu once you have it."
+      },
+      {
+        "q": "How many customers do I need before this becomes worth it?",
+        "a": "It depends on your area and your prices, so tap Validate for today's numbers where you live. As a rule, a subscription kitchen starts feeling steady when the same group of people renew month after month, not when you get many one-time orders."
+      },
+      {
+        "q": "Can I run this while doing a job?",
+        "a": "The lunch plans are hard to run with a day job because the cooking happens in the morning rush. Dinner plans and weekend meal prep plans fit better around a job. Many people start with dinner and move to lunch once the business pays."
+      },
+      {
+        "q": "How do I find my first subscribers?",
+        "a": "Start with people who already know your cooking: relatives, neighbours, colleagues. Give a one week trial at your normal price, deliver perfectly, and ask each happy customer to share your WhatsApp number with two people. Society WhatsApp groups and office notice boards work better than paid ads here."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C001-S01-I01",
+      "slug": "office-lunch-dabba-route",
+      "title": "Office Lunch Dabba Route",
+      "hook": "If there is an office area near your home, a few people eating your food every working day is a real business.",
+      "summary": "You cook one simple home style lunch every working day and deliver it to people in one office area at a fixed time. They pay monthly in advance. The business grows only as fast as your kitchen can keep the taste and timing the same.",
+      "what_it_is": "Every morning you cook a fixed menu, usually dal, sabzi, rice and rotis, and pack it in sealed boxes or steel dabbas. You or a delivery person reach one office area at the same time every day and hand over the boxes at the gate or reception. The menu changes daily but follows a weekly pattern your customers know. You take orders on WhatsApp, collect payment by UPI at the start of the month, and keep a simple notebook of who is paused, who is on leave and who wants extra rotis.",
+      "who_pays_you": "Young professionals who stay away from home and are tired of canteen food. Office workers with health worries who want less oil. Small offices that want to feed their staff without running a canteen. In most Indian cities your first customers will be people from your own community who work in the nearby office area, so start by asking around in your society and your relatives' circle.",
+      "how_money_comes": "Customers pay for a month of lunches in advance, which gives you the money to buy groceries before you cook. You can offer a full plan and a smaller plan with fewer rotis. Extras like curd, salad or a sweet on Friday add a little more. Your profit comes from buying vegetables and grains in bulk and from keeping the same customers for many months, because finding new customers every week costs more than it earns.",
+      "what_you_need": "A clean home kitchen, a few large vessels and a pressure cooker big enough for your batch. Sealed, leak proof boxes. FSSAI basic registration. A scooter or a reliable delivery person. A WhatsApp Business account for menus and reminders. Most of all, the habit of waking up early and cooking the same quality every single day.",
+      "first_30_days": [
+        "Cook your planned weekly menu for your own family for one week and fix anything that does not travel well in a box.",
+        "Ask ten people you know who work in the office area to try a paid one week trial.",
+        "Do the delivery route yourself every day of the trial and time it, so you know your real cut off time.",
+        "Ask every trial customer what they liked and what they would change, then fix the menu.",
+        "Offer the monthly plan only to those who were happy, and ask each of them to refer one colleague."
+      ],
+      "what_hurts": "Rain, traffic and a sick day at home all hit the same morning. If lunch reaches late twice, people quietly cancel. Customers go on leave or work from home without telling you, so you cook for people who are not there. Vegetable prices jump in some months and you cannot change your monthly price every week. The work never stops, because a lunch business has no holidays except the ones your customers take.",
+      "verdict": "Build this if you love cooking for others, live close to an office area and can keep a strict morning routine. Walk away if you cannot handle the same schedule every working day, because in this business the routine is the product.",
+      "faq": [
+        {
+          "q": "How many office customers can one home kitchen handle?",
+          "a": "That depends on your vessels, your help at home and how far you deliver. Start small and grow only when your current customers are getting their food on time every day. Tap Validate to check what is realistic in your area today."
+        },
+        {
+          "q": "What if a customer wants a different menu every day?",
+          "a": "Keep one menu for everyone. A fixed menu is what makes a home kitchen possible. You can allow small changes like no onion or extra rotis, but separate dishes for each person will break your morning."
+        },
+        {
+          "q": "Should I deliver myself or hire someone?",
+          "a": "Deliver yourself in the beginning so you learn the route and meet your customers. Once you have a steady group and the route is fixed, a trusted delivery person saves your time for cooking."
+        }
+      ],
+      "validate_prompt": "I want to start a home cooked lunch dabba service for office workers in my area in India. What should I charge per month, how many customers do I need to cover my costs, and which licences do I need?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": ["homemaker", "working_professional"],
+      "place": ["city", "metro"],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "BusinessIdea.io"
+    },
+    {
+      "code": "C001-S01-I02",
+      "slug": "pg-student-tiffin-plan",
+      "title": "PG and Hostel Student Tiffin Plan",
+      "hook": "Students miss their mother's food more than anything, and their parents will happily pay someone who cooks like her.",
+      "summary": "You run a daily dinner or lunch tiffin plan for students living in PGs and hostels near your home. The food is simple, filling and affordable. Parents often pay, students stay for the whole term, and word spreads fast inside every PG.",
+      "what_it_is": "You cook one meal a day, usually dinner, for students who live in paying guest homes and private hostels around you. The food is simple ghar ka khana with enough rice or rotis for a hungry young person. You deliver in one round to each PG building, or students pick up from your gate at a fixed time. You keep a list per building, collect monthly fees, and pause plans during exam holidays when students go home.",
+      "who_pays_you": "College students and coaching students living away from home, especially in towns with big colleges or coaching centres. Very often the parents pay, because they worry about what their child eats. Young working people in shared flats also join. PG owners sometimes tie up with you so their rooms become more attractive, which can bring a whole building at once.",
+      "how_money_comes": "Students pay for a month or a full term in advance. Your price has to be close to the mess price but your food must feel clearly better. You make your margin through volume, simple menus and bulk buying. A Sunday special, a festival meal or an exam week snack box gives extra income without changing your daily routine.",
+      "what_you_need": "A home kitchen that can cook in larger quantities, big vessels and insulated boxes or a large carrier. FSSAI basic registration. A simple way to track who has paid, like a notebook or a sheet on your phone. Patience with students who forget to pay or forget to tell you they are going home.",
+      "first_30_days": [
+        "Walk around the PGs and hostels within two kilometres and count how many students live there.",
+        "Talk to two or three PG owners and offer a free tasting for their residents.",
+        "Start with one building and one meal a day so you can learn the quantities.",
+        "Ask parents to pay directly by UPI, and send them a weekly menu photo so they feel involved.",
+        "Collect feedback after two weeks and adjust spice and portion sizes before taking a second building."
+      ],
+      "what_hurts": "Students leave suddenly after exams, results or a change of college, so your numbers go up and down with the academic calendar. Holidays empty the PGs for weeks. Some students delay payment until the end of the month or disappear without paying. Young people complain loudly in group chats if one meal goes wrong, so a single bad day can cost you a building.",
+      "verdict": "Build this if you live near colleges or coaching centres and like cooking simple food in large batches. Walk away if your income must stay the same every month, because student numbers follow exams and holidays, not your plans.",
+      "faq": [
+        {
+          "q": "Should I give students the choice of veg and non-veg?",
+          "a": "Start with one type of food so your kitchen stays simple. If many students ask for non-veg, add it on fixed days of the week instead of every day. This keeps your shopping and cooking under control."
+        },
+        {
+          "q": "How do I handle students who do not pay on time?",
+          "a": "Take payment in advance for the month and pause the plan if it is not renewed. When parents pay directly, delays become rare. Be polite but firm, because one free month quickly becomes a habit."
+        },
+        {
+          "q": "Is a tie up with the PG owner a good idea?",
+          "a": "Yes, if the owner lets you reach all residents and does not take too much from your price. A good tie up gives you a full building in one go. Put the terms in writing on WhatsApp so nobody forgets later."
+        }
+      ],
+      "validate_prompt": "I want to start a monthly tiffin service for students living in PGs and hostels near me in India. What should I charge, how much should each meal cost me to make, and how do I reach students and parents?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": ["homemaker"],
+      "place": ["small_town", "city", "metro"],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "BusinessIdea.io"
+    },
+    {
+      "code": "C001-S01-I03",
+      "slug": "diabetic-friendly-lunch-plan",
+      "title": "Diabetic Friendly Home Lunch Plan",
+      "hook": "Families struggle to cook separate food for a diabetic member every day, and that daily struggle is your business.",
+      "summary": "You cook a daily lunch plan made for people managing diabetes: less refined flour, more fibre, controlled rice, no sugar and gentle oil. Families subscribe because it removes the daily stress of cooking a separate meal at home.",
+      "what_it_is": "You prepare one balanced lunch every day for people who have to watch their sugar. The menu uses millets, multigrain rotis, dal, plenty of vegetables, curd and very little rice or sweets. You keep portions steady so customers know what they are eating. You deliver to homes in your area at lunch time. You do not give medical advice. You simply cook the kind of food their doctor already told them to eat, and you cook it well.",
+      "who_pays_you": "Families where one member has diabetes, very often an elderly parent. Working sons and daughters who cannot cook a separate meal every day. Retired couples who find daily cooking tiring. Office workers recently told by a doctor to change their food. Your best customers will come through word of mouth from clinics, diabetes support groups and neighbours.",
+      "how_money_comes": "Customers pay monthly for a fixed lunch plan. Because the food needs more planning and better ingredients, you can charge more than a regular tiffin, as long as the food tastes good. Some customers will add a light dinner or a weekly millet snack pack, which raises your earning from the same customer without new marketing.",
+      "what_you_need": "Good knowledge of diabetic friendly cooking, which you can learn from a dietitian's general guidelines and your own family experience. Millets, multigrain flours and fresh vegetables. Clear portion sizes. FSSAI basic registration. Gentle, honest communication, because your customers are worried about their health.",
+      "first_30_days": [
+        "Learn the basics of diabetic friendly meals and write a two week rotating menu.",
+        "Cook the menu for a diabetic relative or neighbour and ask how they felt after each meal.",
+        "Share your menu in two or three society groups and with a local clinic's reception desk.",
+        "Start with a small group and keep each customer's dislikes and allergies written down.",
+        "After a month, ask customers if they feel the food suits them and adjust portions."
+      ],
+      "what_hurts": "People expect results and may blame your food if their sugar readings move, even when the cause is something else. You have to be very clear that you are a cook, not a doctor. Millets and quality ingredients cost more, and you cannot cut corners. Each customer has small personal restrictions, and keeping track of them every day needs discipline.",
+      "verdict": "Build this if you already cook healthy food at home, enjoy learning about nutrition and are patient with worried families. Walk away if you want to cook whatever you like, because this plan only works when you follow the same careful rules every day.",
+      "faq": [
+        {
+          "q": "Do I need to be a dietitian to run this?",
+          "a": "No, but you should cook within general diabetic friendly guidelines and never promise medical results. Some kitchens work with a dietitian on the menu and mention it. Always tell customers to follow their own doctor's advice."
+        },
+        {
+          "q": "Can I add sweets made with sugar substitutes?",
+          "a": "Be careful. Keep sweets rare and simple, and tell customers exactly what is in them. Many families prefer no sweet at all, and that is easier for you too."
+        },
+        {
+          "q": "Will people pay more for this than a normal tiffin?",
+          "a": "Often yes, because it saves the family a separate cooking effort and the ingredients cost more. Check what similar services charge in your city by tapping Validate before you set your price."
+        }
+      ],
+      "validate_prompt": "I want to start a diabetic friendly home lunch subscription in my area in India. What should the menu include, what should I charge per month, and how do I find families who need this?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": ["homemaker", "senior_citizen"],
+      "place": ["city", "metro"],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "BusinessIdea.io"
+    },
+    {
+      "code": "C001-S01-I04",
+      "slug": "weekly-millet-meal-box",
+      "title": "Weekly Millet Meal Box",
+      "hook": "Everyone now knows millets are good for them, but very few people know how to cook them so they taste good.",
+      "summary": "You deliver millet based meals on fixed days of the week to health conscious families and working people. Ragi, jowar, bajra and foxtail millet dishes cooked the way they taste best. It is a smaller, premium version of a home meal subscription.",
+      "what_it_is": "Instead of a daily meal, you offer a millet meal box on three or four fixed days a week. Each box has a millet main like ragi mudde, jowar roti, foxtail millet pulao or bajra khichdi, with a dal or curry and a vegetable. You publish the week's menu every Sunday on WhatsApp, take orders until Monday evening and deliver in one planned round. Because it is not daily, you can run it alongside other work.",
+      "who_pays_you": "Health conscious young professionals who want to eat better but do not cook. Families trying to bring millets into their diet. People watching their weight or sugar. Fitness groups and yoga classes in your area. In bigger cities, people from other states who never learned regional millet dishes will also try you out of curiosity.",
+      "how_money_comes": "Customers subscribe for a set number of boxes per week, paid weekly or monthly. Millet dishes feel premium, so a fair price is accepted if the food is tasty. You can add ready to cook millet mixes, dosa batter or laddus as extras. Selling to a yoga studio or a small office as a group order gives you several boxes in one delivery.",
+      "what_you_need": "Real skill in cooking millets well, because badly cooked millets turn people away for good. Good suppliers for clean millets. Containers that keep food fresh. FSSAI basic registration. A clear weekly menu and an order cut off time that you never break.",
+      "first_30_days": [
+        "Master six millet dishes that taste good even after travelling in a box.",
+        "Give tasting portions to friends and ask honestly which ones they would pay for.",
+        "Tie up with one yoga class or gym and offer their members a trial week.",
+        "Publish a fixed weekly menu and cut off time on WhatsApp and stick to it.",
+        "Track which dishes get reordered and drop the ones nobody asks for again."
+      ],
+      "what_hurts": "Millets are new for many people, so you spend time explaining and convincing. Some customers try once out of curiosity and never return. Good quality millets cost more and some are seasonal. If the food is dry or bland even once, customers decide millets are not for them, and you lose them along with the idea.",
+      "verdict": "Build this if you already cook millets well and enjoy telling people why they matter. Walk away if you want quick volume, because a millet box grows slowly through taste and trust, not through a cheap offer.",
+      "faq": [
+        {
+          "q": "Is a weekly plan better than a daily one for millets?",
+          "a": "For most beginners, yes. Most people want millets a few days a week, not every day. A weekly plan also gives you time to shop and prepare properly, which keeps the quality high."
+        },
+        {
+          "q": "Which millet dishes travel best?",
+          "a": "Rotis, pulao style dishes, khichdi and upma style dishes usually travel well. Soft porridges and mudde need careful packing. Test each dish after a one hour wait before you put it on the menu."
+        },
+        {
+          "q": "Can I sell millet mixes along with meals?",
+          "a": "Yes, ready to cook mixes and batters are a good add on once customers trust your food. Check the labelling and licence needs for packed food by tapping Validate before you sell them separately."
+        }
+      ],
+      "validate_prompt": "I want to start a weekly millet meal box subscription in my city in India. Which millet dishes sell best, what should I charge per box, and who are the best first customers to approach?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": ["homemaker", "working_professional"],
+      "place": ["city", "metro"],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "BusinessIdea.io"
+    },
+    {
+      "code": "C001-S01-I05",
+      "slug": "jain-sattvic-meal-subscription",
+      "title": "Jain and Sattvic Meal Subscription",
+      "hook": "Families who follow Jain or sattvic food rules find it very hard to eat outside, and they stay loyal to a kitchen they trust.",
+      "summary": "You cook daily meals that follow Jain or sattvic rules strictly, with no onion, no garlic and no root vegetables where required. For families who follow these rules, trust matters more than price, and a reliable kitchen keeps them for years.",
+      "what_it_is": "You run a meal subscription where every dish follows the food rules your customers live by. For Jain customers that means no onion, garlic, potatoes or other root vegetables, and cooking before sunset when needed. For sattvic customers it means fresh, simple food without onion and garlic. You keep a separate set of vessels for this cooking and you never mix it with other food. You deliver lunch or dinner daily, and you can offer special menus during Paryushan and fasting days.",
+      "who_pays_you": "Jain families and individuals working away from home. Elderly Jain couples who find daily cooking tiring. Families following sattvic food for religious or health reasons. People who fast often and need help during fasting periods. Your best channel is the community itself: temple notice boards, community WhatsApp groups and word of mouth among families who already know each other.",
+      "how_money_comes": "Customers pay monthly for daily meals. Because you solve a real problem, families stay for a long time, which keeps your income steady. Festival and fasting period menus can be sold as separate packages. Community events and small family functions that need strict Jain food can become extra orders once people trust your kitchen.",
+      "what_you_need": "Deep knowledge of Jain or sattvic cooking rules, ideally because you follow them yourself. Separate vessels and storage that never touch other food. Reliable suppliers. FSSAI basic registration. Strong personal discipline, because one mistake with an ingredient can lose the whole community's trust.",
+      "first_30_days": [
+        "Write down every rule you will follow and share it openly with customers so they know your standard.",
+        "Set up separate vessels and storage for this kitchen only.",
+        "Serve a trial week to five families from your community and ask for strict feedback.",
+        "Ask the trial families if you may mention them when new families ask about you.",
+        "Prepare a special menu for the next fasting period so customers see you understand their calendar."
+      ],
+      "what_hurts": "There is zero room for mistakes. One wrong ingredient, even by a helper, can end your reputation in the community overnight. Your menu has fewer ingredients to work with, so keeping it interesting takes effort. Fasting periods change the menu and timing completely. The customer base is loyal but limited to the community around you.",
+      "verdict": "Build this if you follow these food rules yourself and are trusted in your community. Walk away if you cannot control every ingredient that enters your kitchen, because trust here is all or nothing.",
+      "faq": [
+        {
+          "q": "Can I run Jain meals and regular meals from the same kitchen?",
+          "a": "It is safer not to. If you must, keep completely separate vessels, storage and cooking times, and be honest with customers about it. Many Jain families will only trust a kitchen that cooks Jain food alone."
+        },
+        {
+          "q": "How do I handle cooking before sunset for dinner?",
+          "a": "Plan your dinner cooking and delivery in the late afternoon for customers who need it. Tell them the delivery time clearly so they can eat on time. It changes your day, so decide before you promise it."
+        },
+        {
+          "q": "Is this only for Jain customers?",
+          "a": "No. Sattvic and no onion no garlic food also suits many Hindu families, people on spiritual practices and some people with digestion problems. Keep your rules clear so each customer knows exactly what they get."
+        }
+      ],
+      "validate_prompt": "I want to start a Jain and sattvic meal subscription from my home kitchen in India. How many families in my city might want this, what should I charge, and how do I reach the community?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": ["homemaker"],
+      "place": ["small_town", "city", "metro"],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "BusinessIdea.io"
+    },
+    {
+      "code": "C001-S01-I06",
+      "slug": "new-mother-recovery-meals",
+      "title": "New Mother Recovery Meal Plan",
+      "hook": "After a baby arrives, the whole family is exhausted, and someone who cooks traditional recovery food becomes a blessing.",
+      "summary": "You cook traditional post delivery meals for new mothers for the first weeks after childbirth: nourishing, easy to digest food made the way grandmothers made it. Families in nuclear setups pay well for this because they have nobody at home to do it.",
+      "what_it_is": "You prepare daily meals for a new mother during her recovery period, following the traditional foods of her region: methi, ajwain, dry fruit laddus, light dals, ghee rotis, soups and warm drinks. You plan the menu with the family, often in weeks, because recovery food changes as the mother heals. You deliver twice a day if needed, and you also sell laddus and panjiri as separate packs. You cook food, you do not give medical advice.",
+      "who_pays_you": "Young couples in cities living away from their parents. Families where the grandmother cannot travel or is unwell. Working couples who want traditional care for the mother but cannot cook it themselves. Your customers will mostly find you through gynaecologist waiting rooms, pregnancy WhatsApp groups and other mothers you have fed before.",
+      "how_money_comes": "Families book a full recovery package of a few weeks, paid in advance or in two parts. This is a premium service because the food is special and the timing matters. Laddus, panjiri and herbal drinks sold as packs add more income. Happy mothers recommend you to friends who are expecting, which keeps bookings coming months ahead.",
+      "what_you_need": "Real knowledge of traditional post delivery cooking from at least one or two regions. Good quality dry fruits, ghee and herbs. Clean, careful cooking. FSSAI basic registration. A warm, patient way of talking to tired families who need help, not a sales pitch.",
+      "first_30_days": [
+        "Write the recovery menu you know best, week by week, and test the laddus and panjiri.",
+        "Offer your service to two expecting families in your circle at an introductory price.",
+        "Leave a simple printed menu card at one or two maternity clinics, with their permission.",
+        "Join local pregnancy and new parent WhatsApp groups and answer questions kindly, without pushing sales.",
+        "After each package, ask the family for a short message you can share with future customers."
+      ],
+      "what_hurts": "Bookings depend on due dates, which change. Some months are full and others are empty. Every family has its own customs, and grandmothers on the phone will correct your recipes. The work is intense for a few weeks and then stops. Ingredients like dry fruits and ghee cost a lot, so price your packages carefully.",
+      "verdict": "Build this if you know traditional recovery cooking and love caring for families at an emotional time. Walk away if you want a steady daily routine, because this business comes in waves around due dates.",
+      "faq": [
+        {
+          "q": "How early do families usually book?",
+          "a": "Many families start looking in the last two months of pregnancy. Being visible in pregnancy groups and clinics early means you get booked before the baby arrives, not after."
+        },
+        {
+          "q": "Should I follow one region's traditions or many?",
+          "a": "Start with the region you know best and do it really well. Once you are confident, you can add a second region's menu. Families can tell when food is cooked by someone who truly knows it."
+        },
+        {
+          "q": "Can I sell only the laddus and panjiri?",
+          "a": "Yes. Many families who cannot take a full meal plan will happily buy recovery laddus and panjiri. It is also a good way to let people taste your cooking before they book a package."
+        }
+      ],
+      "validate_prompt": "I want to start a post delivery meal service for new mothers in my city in India. What should a recovery package include, what should I charge, and how do I reach expecting families?",
+      "investment_band": "under_25k",
+      "gender_fit": "women",
+      "life_stage": ["homemaker"],
+      "place": ["city", "metro"],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "BusinessIdea.io"
+    },
+    {
+      "code": "C001-S01-I07",
+      "slug": "high-protein-gym-meals",
+      "title": "High Protein Home Meals for Gym Goers",
+      "hook": "Gym goers spend money on supplements because nobody cooks them protein rich Indian food they can eat every day.",
+      "summary": "You cook portion controlled, high protein Indian meals for people who train at the gym: paneer, dal, eggs, chicken, soya and sprouts in measured servings. Customers subscribe for lunch or dinner because home food beats expensive protein bars.",
+      "what_it_is": "You prepare one or two daily meals designed around protein, with steady portions so customers can track what they eat. The menu rotates between paneer, chana, rajma, eggs, chicken, fish, soya and sprouts, with brown rice, rotis or millets and vegetables. You write the approximate portion of each item on the box so customers can follow their plan. You deliver to homes or pick up points near gyms at a fixed time.",
+      "who_pays_you": "Young men and women who train regularly and are serious about their diet. Working professionals trying to lose weight or build muscle. Gym trainers who want a reliable food option to suggest to their clients. Your fastest route is through gym owners and trainers, because their clients ask them what to eat every day.",
+      "how_money_comes": "Customers pay monthly for a fixed number of meals per week. Protein rich ingredients cost more, so this plan is priced above a normal tiffin. You can offer plans for weight loss and muscle gain with different portions. Selling breakfast boxes, boiled egg packs or roasted chana snacks as add ons brings more income from the same customers.",
+      "what_you_need": "Good understanding of balanced, protein rich Indian cooking, ideally with help from a qualified trainer or dietitian for general guidelines. A kitchen scale for consistent portions. Quality paneer, eggs and meat from reliable suppliers. FSSAI basic registration. Containers with compartments so meals look neat.",
+      "first_30_days": [
+        "Plan two weeks of high protein menus and weigh portions so every box is the same.",
+        "Talk to three gym owners nearby and offer a tasting day for their members.",
+        "Give one trainer a free week so they can taste and recommend you honestly.",
+        "Start with a small group of serious gym members and collect feedback on taste and portions.",
+        "Post photos of real boxes, not stock pictures, in gym WhatsApp groups with permission."
+      ],
+      "what_hurts": "Fitness customers are demanding and compare you with branded meal services and supplements. Some want exact macro counts you cannot measure perfectly at home, so never promise numbers you cannot stand behind. Meat and paneer prices rise often. Many people join gyms with energy and quit after a few months, and your subscriptions go with them.",
+      "verdict": "Build this if you enjoy fitness yourself, can cook protein rich food that still tastes Indian, and love consistency. Walk away if you dislike measuring and repeating, because gym customers notice every change in portion.",
+      "faq": [
+        {
+          "q": "Do I need to give exact calorie and protein numbers?",
+          "a": "Only give numbers if you can measure them reliably, for example with the help of a qualified dietitian. Otherwise describe portions clearly in grams of the main ingredient. Honest descriptions build more trust than numbers you cannot prove."
+        },
+        {
+          "q": "Should I offer only vegetarian meals?",
+          "a": "Decide based on your area and your own kitchen. Vegetarian high protein meals with paneer, dal, soya and sprouts sell well in many cities. If you add non-veg, keep separate vessels and tell customers clearly."
+        },
+        {
+          "q": "Is partnering with a gym worth it?",
+          "a": "Usually yes. A gym brings many interested people to you at once. Agree simple terms with the owner, and make sure the gym does not promise results on your behalf."
+        }
+      ],
+      "validate_prompt": "I want to start a high protein home meal subscription for gym goers in my city in India. What should I charge, which dishes work best, and how do I partner with local gyms?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": ["homemaker", "working_professional"],
+      "place": ["city", "metro"],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "BusinessIdea.io"
+    },
+    {
+      "code": "C001-S01-I08",
+      "slug": "elderly-living-alone-meals",
+      "title": "Daily Meals for Elders Living Alone",
+      "hook": "Many parents live alone while their children work in other cities, and their children worry every single day about what they eat.",
+      "summary": "You cook soft, simple, low spice meals for elderly people living alone or as couples, delivered daily. The children, often living far away, pay you. Your daily delivery also becomes a small check that their parents are fine.",
+      "what_it_is": "You cook home style food suited to older people: soft rotis, khichdi, dal, well cooked vegetables, curd, and food that is easy to chew and digest. You follow each person's restrictions, like low salt or no sugar, from what their family tells you. You or your delivery person hand over the meal personally, say hello, and notice if something seems wrong. With the family's permission, you send a short daily message to the children that the meal was delivered.",
+      "who_pays_you": "Sons and daughters living in other cities or abroad who worry about their parents. Elderly couples who find cooking tiring but do not want a full time cook. Senior citizens recovering from illness. Your customers are often the children, so you reach them through the parents' neighbours, resident welfare associations, temples and senior citizen clubs in your area.",
+      "how_money_comes": "Families pay monthly for one or two meals a day, usually by UPI from wherever they live. Because the service gives them peace of mind, families stay for a long time once they trust you. Extra services like a weekly grocery pickup or festival sweets can be added later. A reliable kitchen that families trust gets referred among other worried children quickly.",
+      "what_you_need": "Gentle, careful cooking with low spice and soft textures. Patience and kindness, because older customers may be lonely and want to talk. A trustworthy delivery person, ideally yourself in the beginning. FSSAI basic registration. A simple record of each customer's restrictions and emergency contact numbers.",
+      "first_30_days": [
+        "List the elderly people in your colony and nearby buildings who live alone, through neighbours and the RWA.",
+        "Speak to two or three families and offer a trial week with a daily delivery message to the children.",
+        "Write down every customer's food restrictions and emergency contacts before you start.",
+        "Deliver personally during the first month so customers know your face and trust you.",
+        "Ask happy families to tell their friends who also have parents living alone."
+      ],
+      "what_hurts": "Your customers' health can change suddenly, and you may be the first person to notice something is wrong. That is a responsibility you must be ready for. Some elders are particular about taste and complain often. Customers may be hospitalised or move to their children's homes, and the plan ends without notice. The work is emotional as much as practical.",
+      "verdict": "Build this if you are patient, kind with older people and can be relied upon every single day. Walk away if you see it as only a food business, because families are trusting you with their parents.",
+      "faq": [
+        {
+          "q": "What if a customer looks unwell when I deliver?",
+          "a": "Agree with each family beforehand what you should do, and keep their emergency contact numbers ready. Call the family immediately if something seems wrong. Never give medicines or medical advice yourself."
+        },
+        {
+          "q": "Should I offer both lunch and dinner?",
+          "a": "Start with lunch, which is easier to deliver in daylight, and add dinner for customers who need it once your routine is steady. Some families prefer one fresh meal and simple leftovers for the night."
+        },
+        {
+          "q": "How do children who live abroad pay me?",
+          "a": "Most families will arrange payment through a relative in India or by UPI from an Indian bank account. Keep your payment details simple and send a monthly receipt on WhatsApp."
+        }
+      ],
+      "validate_prompt": "I want to start a daily meal service for elderly people living alone in my area in India. What should I charge, what food suits them best, and how do I reach their children who live in other cities?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": ["homemaker", "senior_citizen"],
+      "place": ["small_town", "city", "metro"],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "BusinessIdea.io"
+    },
+    {
+      "code": "C001-S01-I09",
+      "slug": "night-shift-dinner-tiffin",
+      "title": "Night Shift Dinner Tiffin",
+      "hook": "People working night shifts eat whatever is open at midnight, and most of them would gladly pay for proper home food.",
+      "summary": "You cook fresh evening meals for people who work night shifts in call centres, hospitals, logistics hubs and IT support teams. You deliver before their shift starts so they carry real food instead of eating junk at midnight.",
+      "what_it_is": "You prepare a filling dinner every evening and deliver it before night shifts begin, usually in the early evening. The food is packed so it stays good for a few hours, because your customers will eat it around midnight. Simple rotis, rice, dal, sabzi and a little something extra work best. You can deliver to homes before they leave or to a pick up point near their workplace. Because you cook in the evening, your mornings stay free.",
+      "who_pays_you": "Call centre and BPO employees, hospital staff on night duty, warehouse and logistics workers, security staff and IT support teams. Young people living in shared flats near these workplaces are your easiest first customers. Companies with night shift teams sometimes order for a whole team, which can fill your list quickly.",
+      "how_money_comes": "Customers subscribe monthly for weekday dinners and pay in advance. Night shift workers value the convenience, so they renew if the food is reliable. A small breakfast pack for the end of the shift, like poha or upma, can be added for those who want it. Team orders from one company give you volume with a single delivery.",
+      "what_you_need": "An evening cooking routine that fits your household. Insulated containers that keep food safe for several hours. FSSAI basic registration. A clear understanding of which workplaces near you run night shifts. Reliable evening delivery, because shift timing is strict and late food is useless to them.",
+      "first_30_days": [
+        "Find the workplaces near you that run night shifts and where their staff live.",
+        "Test which of your dishes still taste good four or five hours after cooking.",
+        "Offer a trial week to a group of night shift workers through a friend or colleague.",
+        "Fix your delivery time so food always arrives well before the shift begins.",
+        "Ask satisfied customers to share your number in their team groups."
+      ],
+      "what_hurts": "Shift timings change and customers move between day and night shifts without warning. Food safety matters more because meals are eaten hours after cooking, so you cannot be careless with storage. Evening cooking can clash with your own family's dinner. Companies sometimes change shift patterns or locations, and a whole group of customers disappears at once.",
+      "verdict": "Build this if you have free evenings, live near workplaces with night shifts and can cook food that travels and keeps well. Walk away if your evenings belong to your family, because this business takes exactly those hours.",
+      "faq": [
+        {
+          "q": "How do I keep the food safe until midnight?",
+          "a": "Cook fresh in the evening, cool and pack correctly, and use insulated containers. Avoid dishes that spoil quickly, like certain gravies with curd or cream. Test your menu by keeping a box aside and tasting it at midnight yourself."
+        },
+        {
+          "q": "Can I serve both day and night shift workers?",
+          "a": "You can, but it doubles your cooking. Start with the night shift dinner, which has less competition, and add a lunch service only if your kitchen and family time allow."
+        },
+        {
+          "q": "Will companies order directly from a home kitchen?",
+          "a": "Some will, especially small teams with a manager who likes your food. Larger companies may need invoices and registration details. Start with individual customers and approach teams once you have a steady record."
+        }
+      ],
+      "validate_prompt": "I want to start a dinner tiffin service for night shift workers near my home in India. Which workplaces should I approach, what should I charge per month, and how do I keep food safe for late eating?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": ["homemaker", "working_professional"],
+      "place": ["city", "metro"],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "BusinessIdea.io"
+    },
+    {
+      "code": "C001-S01-I10",
+      "slug": "school-lunchbox-subscription",
+      "title": "School Lunchbox Subscription",
+      "hook": "Every working parent fights the same morning battle over the school tiffin, and you can end that battle for them.",
+      "summary": "You prepare fresh, healthy, child friendly lunchboxes for school children of working parents, delivered to their homes before school or packed for pick up. The menu is planned for children, so parents trust it and children actually eat it.",
+      "what_it_is": "Every school morning you pack small, colourful, healthy tiffins that children like: mini parathas, idli, vegetable upma, sandwiches with home made fillings, fruit and a small treat on Fridays. You share the weekly menu with parents on Sunday so they know what their child is eating. You deliver early to homes in your society or neighbourhood, or parents pick up from your door on the way to school. You follow allergies and dislikes carefully for each child.",
+      "who_pays_you": "Working parents, especially couples where both work and mornings are rushed. Single parents. Families without grandparents at home. Your first customers will be in your own society or the next few buildings, so school parent WhatsApp groups and your residents' association are the best places to start.",
+      "how_money_comes": "Parents pay monthly for school day lunchboxes. Once a child likes your food, parents rarely switch, so families stay for the whole school year. A second child in the same family doubles the order with one delivery. Snack boxes for after school, birthday party snack packs and exam week specials can be added for extra income.",
+      "what_you_need": "Small, child friendly, leak proof tiffin boxes or a system using the child's own box. A very early morning routine. Knowledge of what children like to eat and what is healthy for them. FSSAI basic registration. Careful records of each child's allergies, because a mistake here is serious.",
+      "first_30_days": [
+        "Plan two weeks of child friendly menus and test them on children you know.",
+        "Offer a trial week to five working parents in your own society.",
+        "Write down every child's allergies and dislikes, and check the list every morning.",
+        "Share a photo of each day's lunchbox in a parents' group so families see the food is real.",
+        "Ask parents after two weeks whether their child finished the tiffin, and adjust."
+      ],
+      "what_hurts": "Children are the fussiest customers and parents judge you by an empty or full tiffin. School holidays, exams and sick days stop orders for weeks. Allergies demand complete attention every single morning. Your mornings start very early, every school day, without exception, and late delivery means a child goes to school without lunch.",
+      "verdict": "Build this if you love cooking for children, wake up early naturally and live in a family area with many working parents. Walk away if you cannot handle strict morning deadlines, because a school bus never waits for a late tiffin.",
+      "faq": [
+        {
+          "q": "How do I handle children with allergies?",
+          "a": "Collect allergy details in writing from parents before the first day and keep a printed list in your kitchen. If you cannot guarantee a safe meal for a severe allergy, say so honestly and do not take that order."
+        },
+        {
+          "q": "Should I use my own boxes or the child's box?",
+          "a": "Using the child's own box is simpler and cheaper, as parents leave it with you the evening before. Your own boxes look neater but get lost often. Start with the child's box and decide later."
+        },
+        {
+          "q": "What do children actually eat?",
+          "a": "Small portions, familiar food, bright colours and things that are easy to eat quickly. Mini versions of home food work better than fancy dishes. Ask parents what comes back uneaten and change it."
+        }
+      ],
+      "validate_prompt": "I want to start a school lunchbox subscription for working parents in my area in India. What should I charge per month, what food do children eat most, and how do I find my first families?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": ["homemaker"],
+      "place": ["city", "metro"],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "BusinessIdea.io"
+    }
+  ]
+}

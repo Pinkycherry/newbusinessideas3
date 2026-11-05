@@ -1,4 +1,5 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import { OLD_IDEA_REDIRECTS } from "@/config/old-idea-redirects";
 import { queryOptions } from "@tanstack/react-query";
 import { ArrowRight } from "lucide-react";
 
@@ -27,6 +28,11 @@ const legacyQuery = (slug: string) => queryOptions({
 });
 
 export const Route = createFileRoute("/idea/$slug")({
+  // AdSense approval: the 879 old ideas 301 to the closest new category.
+  beforeLoad: ({ params }) => {
+    const moved = OLD_IDEA_REDIRECTS[params.slug];
+    if (moved) throw redirect({ href: `/category/${moved}`, replace: true, statusCode: 301 });
+  },
   loader: async ({ context, params }) => {
     const idea = await context.queryClient.ensureQueryData(ideaQuery(params.slug));
     if (idea) {
@@ -35,6 +41,8 @@ export const Route = createFileRoute("/idea/$slug")({
     }
     const legacy = await context.queryClient.ensureQueryData(legacyQuery(params.slug));
     if (!legacy) {
+      // AdSense approval: an unknown idea is a real 404, not a 200 page.
+      throw notFound();
       const result = await getBrowseIdeas({ data: { q: "", category: "", investment: "", time: "", skill: "", page: 1 } });
       return { kind: "missing" as const, ideas: result.ideas.slice(0, 6), title: "Idea not published", summary: "Explore recently published ideas from the library.", image: undefined };
     }
@@ -44,6 +52,8 @@ export const Route = createFileRoute("/idea/$slug")({
   head: ({ loaderData }) => ({
     meta: [
       { title: `${loaderData?.title ?? "Business idea"} | BusinessIdea.io` },
+      // AdSense approval: individual idea pages are templated, so they stay out of the index.
+      { name: "robots", content: "noindex, follow" },
       { name: "description", content: loaderData?.summary ?? "" },
       { property: "og:type", content: "article" },
       { property: "og:image", content: loaderData?.image ? absoluteUrl(loaderData.image.src) : undefined },

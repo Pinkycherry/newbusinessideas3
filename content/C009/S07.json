@@ -1,0 +1,510 @@
+{
+  "subcategory": {
+    "code": "C009-S07",
+    "intro": "A phone repair shop in a small town stays busy because a working phone is now part of daily life. People use it for payments, family calls, school messages and work. They want a diagnosis they can understand, a price before the repair and the same device returned with their data respected. That trust is harder to build than a bench full of tools. Start with the faults you can actually diagnose and repair. A screen replacement, a battery problem and a charging fault require different parts, methods and risks. Use genuine or clearly described compatible components, explain warranty limits and ask permission before opening a device or accessing its files. Never ask for a customer's password when a repair can be tested another way. Make a written intake record showing the phone's condition, reported fault, accessories left with you and agreed estimate. Keep customers' devices secure and separate from parts stock. If a repair fails, say what happened and follow the agreed remedy rather than hiding damage. Town demand varies between feature phones used on farms and smartphones used by students or shop owners. A specialist bench can work with retail shops as a back room service; a pickup route can serve outlying villages. Both still need trained diagnosis and spare part quality control. The ten ideas below differ in customer, place, delivery model and technical focus. Do not promise to recover data or fix a water damaged phone unless you can explain the uncertainty honestly. Check local trade rules, safe battery handling and responsible disposal of old electronic parts. A small town technician who returns devices on time and keeps customer information private can earn repeat referrals without making miracle claims.",
+    "how_to_choose": "List the faults people bring to nearby shops and compare them with your actual repair skill. If you are strong at a narrow task such as charging ports, a specialist service may beat pretending to fix every motherboard. A market day desk can diagnose and book jobs but needs a secure handover. A retailer partnership gives you repeat work without street rent, while a village pickup route adds transport and tracking. Choose equipment only after testing demand and reliable spare part supply. Start with a written intake and estimate process for a small paid set of repairs, then expand into harder faults after training and a clear failure policy.",
+    "faq": [
+      {
+        "q": "Should you repair every brand and every fault?",
+        "a": "No. Advertise the brands and faults you can diagnose safely and for which you can obtain reliable parts. A clear referral or refusal protects the customer better than an uncertain repair on their only phone."
+      },
+      {
+        "q": "How do you protect customer data?",
+        "a": "Record the permission needed for any test, avoid reading personal files and never share passwords. Keep devices locked away when unattended and delete any test data you created. Explain when a repair might risk data loss before opening the phone."
+      },
+      {
+        "q": "When should a customer pay?",
+        "a": "Give a diagnosis and written estimate first. You may take an advance for a special ordered part under clear terms, then collect the balance after agreed testing. Document what happens if a repair is not possible."
+      },
+      {
+        "q": "What do you do with old batteries and parts?",
+        "a": "Store damaged batteries safely and use an appropriate authorised collection or recycling route under local rules. Do not throw them into household waste or leave them where heat or puncture can cause harm."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C009-S07-I01",
+      "slug": "feature-phone-farm-worker-repair-bench",
+      "title": "Feature Phone Farm Worker Repair Bench",
+      "hook": "A farm worker's basic phone may be old, but losing calls during a field day is still a serious problem.",
+      "summary": "You repair common feature phone faults for rural workers at a modest town bench. Clear diagnosis, practical parts and quick return matter more than flashy smartphone services. You accept only models you can support and explain when replacement is safer or cheaper.",
+      "what_it_is": "You keep a small bench equipped for the feature phones actually used around the village. At intake, record the model, visible damage and customer's reported fault, then check charging, keypad, speaker or battery with permission. You quote the repair and part quality before opening the device. You keep removed pieces with the job until the customer collects it, and test calls and charging in front of them when finished. Some very old models have no reliable replacement part; say so early. You do not promise that repairing a cheap device will always cost less than a suitable replacement.",
+      "who_pays_you": "Farm workers, older residents and households keeping a basic phone for calls are the main customers. Their phones may be used in dusty conditions and charged from irregular power, so listen to how the fault appeared. A market lane or bus route makes drop off convenient. Shops selling basic handsets may refer repairs they cannot perform themselves.",
+      "how_money_comes": "You charge a diagnosis fee only if disclosed before work, then a quoted repair fee including the part. Low value devices limit what customers will spend, so control bench time and avoid ordering rare parts without an advance. A reliable quick turnaround can bring repeat referrals from nearby villages. You keep a record of returns under warranty and check current part availability through Validate before promising a repair date.",
+      "what_you_need": "Basic electronics training, safe small tools, test charger, model compatible parts and a secure shelf for customer devices. You need to handle batteries without puncturing or overheating them. You keep a written intake and disposal process. You check local shop rules and never access stored contacts unnecessarily to test a call fault.",
+      "first_30_days": [
+        "Ask local handset sellers which feature phone faults they turn away most often.",
+        "Practise diagnosis on supported models and establish a reliable small parts supplier.",
+        "Use written intake and estimates for a limited set of paid repairs.",
+        "Track repair time, unavailable parts and return visits before adding more models."
+      ],
+      "what_hurts": "Old replacement parts may be poor quality or impossible to obtain. Dust damage can hide a second fault, and a customer may not want to pay more than the handset is worth. One lost device can destroy village trust. You store phones securely, explain uncertain repairs and give an honest replacement option when the economics do not make sense.",
+      "verdict": "Build this if you understand common feature phones and can return simple repairs promptly. Walk away if you must fit untested parts or promise every old handset can be saved.",
+      "faq": [
+        {
+          "q": "Can you repair a phone without the customer leaving it?",
+          "a": "Some simple faults can be checked while they wait, but proper testing may need bench time. Give a realistic return time instead of rushing a risky repair."
+        },
+        {
+          "q": "What if a part costs more than the phone?",
+          "a": "Explain the full cost before ordering and let the customer decide. A suitable replacement may be more sensible than a repair with no dependable part."
+        },
+        {
+          "q": "Should you store customer contacts for testing?",
+          "a": "No. Test with permission using the least access needed. Customer data is not your stock and should never become a copy on your device."
+        }
+      ],
+      "validate_prompt": "I want to repair feature phones for rural workers in an Indian small town. What training, parts supply, battery handling and current service fees should I validate?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "student"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S07-I02",
+      "slug": "smartphone-screen-replacement-appointment-desk",
+      "title": "Smartphone Screen Replacement Appointment Desk",
+      "hook": "A cracked screen can make a phone hard to use, and owners want to know the part and price before leaving it.",
+      "summary": "You specialise in booked screen replacement for supported smartphone models. The customer sees the part grade, estimate and risk before work begins. A narrow model range lets you control stock and testing while referring unfamiliar devices elsewhere.",
+      "what_it_is": "You check the exact model and damage at intake, including whether touch, display and frame still function. You explain original, compatible or refurbished part options only when you can verify what you are selling. You photograph existing damage with the owner's consent and give a written quote. Order or reserve the correct screen, then fit it using proper tools and test touch, brightness, cameras and charging before handover. Protect data and do not ask for private credentials unless a particular test genuinely requires consent. A cracked glass may hide internal damage, so describe the possibility before quoting a guaranteed outcome.",
+      "who_pays_you": "Students, shop owners, office workers and families whose main smartphone has a broken screen may book. They value a clear turnaround more than a shop that claims every part is in stock. You start with models common in your town and build a relationship with a reliable supplier. Retailers may send a replacement job when their own counter has no repair bench.",
+      "how_money_comes": "The fee combines part cost, labour and the stated warranty. For a special order, take a documented part advance and explain cancellation terms. Holding too many screens for rare models ties up cash and risks breakage. Repeat work comes from referrals, not the same customer's screen failing again. You track defective parts and supplier returns when checking local margins with Validate.",
+      "what_you_need": "Screen replacement training, precise tools, clean dust controlled bench, model verification, secure device storage and dependable part supplier. You need a testing checklist and written warranty language. You check trade and electronic waste rules. You do not claim water resistance remains intact after opening a device unless you can verify it.",
+      "first_30_days": [
+        "Record the smartphone models most often brought to local repair counters.",
+        "Test supplier samples and practise safe screen fitting on supported devices.",
+        "Write an intake, part grade and warranty form before the first paid replacement.",
+        "Track repair results and defective returns before adding another model family."
+      ],
+      "what_hurts": "A wrong screen variant may not fit, and fragile parts can crack while fitting. A customer may blame the new screen for a preexisting camera or frame fault. Supplier warranties can differ from what customers expect. Document condition, test before and after, and decline a bent or severely damaged phone when a screen swap alone will not solve it.",
+      "verdict": "Build this if your fitting skill and part sourcing are dependable for a narrow model range. Walk away if you would describe an unknown compatible screen as an original part to make the sale.",
+      "faq": [
+        {
+          "q": "Can you quote from a phone model name alone?",
+          "a": "Check the exact variant and existing damage before a final quote. Similar names can use different parts, and hidden frame damage may change the job."
+        },
+        {
+          "q": "Will the repair preserve water resistance?",
+          "a": "Do not guarantee it just because the phone closes again. Explain the limits of your tools and sealing process before opening the device."
+        },
+        {
+          "q": "What should the warranty cover?",
+          "a": "State the part and workmanship terms clearly, including exclusions for new impact or liquid damage. Keep the supplier's own terms on record."
+        }
+      ],
+      "validate_prompt": "I want to specialise in smartphone screen replacement in an Indian town. What current part grades, supplier returns, tool costs and warranty terms should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S07-I03",
+      "slug": "charging-port-battery-repair-specialist",
+      "title": "Charging Port and Battery Repair Specialist",
+      "hook": "A phone that charges only at one angle or dies suddenly may need careful diagnosis before anyone orders a new screen.",
+      "summary": "You focus on charging faults and battery replacement for supported models. Customers receive a diagnostic result, part options and a safety conscious repair estimate. Narrow specialisation can serve local shops that prefer to refer delicate work.",
+      "what_it_is": "You test with known good cables and power supplies before opening a phone, then inspect the port and battery condition under appropriate safety procedures. You explain whether cleaning, connector repair or replacement is actually needed. You record existing damage and obtain permission before opening. You use verified compatible batteries, never bend or puncture a swollen cell, and test charging and heat behaviour after repair. You give the owner the removed part when safe and requested, or use proper disposal for hazardous batteries. Refer board level faults beyond your skill instead of charging for repeated random part swaps.",
+      "who_pays_you": "Working people who rely on their phone for UPI and calls, students with older devices and nearby mobile retailers needing a specialist may pay. Some faults are just a cable, which should be explained honestly even if the repair fee becomes small. A shop that sees many charging complaints can send you regular bench jobs under a clear handover agreement.",
+      "how_money_comes": "You charge a disclosed diagnosis fee when appropriate and a quoted labour and part amount for the repair. Parts quality affects return visits, so cheap batteries may cost more in refunds than they save. Retailer jobs can be priced at a trade rate with written responsibility for customer communication. You keep a reserve for warranty replacements and check current part costs through Validate before quoting.",
+      "what_you_need": "Electronics training, safe battery handling tools, testing power equipment, ventilation and a secure workbench. You need compatible quality parts and a route for spent battery disposal. You record every device and its reported fault. You check local electronic waste and business requirements; do not open a swollen battery in an ordinary crowded shop.",
+      "first_30_days": [
+        "Collect examples of common charging complaints and practise noninvasive tests before part replacement.",
+        "Find reliable batteries and connectors with documented supplier return terms.",
+        "Offer paid diagnosis on supported models with an intake and safety checklist.",
+        "Review repeat faults and warranty claims before agreeing to retailer volume work."
+      ],
+      "what_hurts": "Battery damage can be dangerous, and an intermittent board fault may resemble a simple port problem. Customers expect their phone back quickly, while part variants can delay work. A cheap cell may fail and damage trust. Stop when a battery is unsafe, quote uncertainty honestly and refer board repairs you cannot diagnose rather than guessing through several paid replacements.",
+      "verdict": "Build this if you have safe battery skills and can explain a diagnosis before fitting parts. Walk away if you would handle damaged cells without proper tools or disposal. Safe diagnosis comes first.",
+      "faq": [
+        {
+          "q": "Could the cable be the real problem?",
+          "a": "Yes. Test a known good cable and adapter first, with the owner's permission. A simple finding should be reported even if it reduces the repair bill."
+        },
+        {
+          "q": "What do you do with a swollen battery?",
+          "a": "Treat it as a safety issue, avoid puncture or heat and follow proper handling and recycling rules. Do not leave it in an open shop drawer."
+        },
+        {
+          "q": "Can you guarantee battery life after replacement?",
+          "a": "State the part warranty and what you tested, but usage and other phone faults also affect life. Avoid a promise you cannot measure or control."
+        }
+      ],
+      "validate_prompt": "I want to specialise in phone charging and battery repairs in an Indian small town. What safe handling, current parts, disposal and labour fees should I check?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S07-I04",
+      "slug": "market-day-phone-diagnosis-booking-stall",
+      "title": "Market Day Phone Diagnosis Booking Stall",
+      "hook": "A visitor from a distant village can describe a phone fault on market day and arrange repair without a separate town journey.",
+      "summary": "You operate a permitted market day phone diagnosis desk, taking documented repair bookings and returning devices through a secure process. Simple tests may happen at the stall; detailed work takes place at a proper bench. The model is about access and trustworthy handover.",
+      "what_it_is": "You set up a clean permitted desk on the weekly market route and perform only safe basic checks there: charging with known good equipment, visible damage and model identification. You give a written intake note with the phone's condition, accessories, fault, contact method and estimated diagnosis date. If the owner leaves the device, store it securely and move it to a proper repair bench. You quote the repair later and obtain consent before opening it. You return the phone by a scheduled market pickup or agreed collection point, testing the result with the owner. You never leave customer devices unattended amid the market crowd.",
+      "who_pays_you": "People who travel to the haat from surrounding villages are the customers. They may not have time to wait for a full repair while shopping, but can arrange a predictable return. A town repair shop may partner with you for bench work if responsibilities and customer payment are documented. Begin with one market where you can securely transport devices afterward.",
+      "how_money_comes": "You charge a transparent diagnosis or handling fee, credited toward a repair if that is your stated policy. Bench work and parts receive a separate estimate before approval. Market stall rent, transport and uncollected phones all affect the economics. You take an advance for special ordered parts, not an unexplained payment at intake. Reconcile every device after the market and use Validate to check local fees.",
+      "what_you_need": "Permission for the market stall, basic safe test equipment, numbered intake forms, lockable storage and a trained repair bench or formal partner. You need a clear consent and data privacy practice. You keep a secure handover log for pickup. A tarpaulin alone is not a suitable place for delicate board repair in dust and rain.",
+      "first_30_days": [
+        "Observe whether market visitors ask existing shops about phone repairs and where they travel from.",
+        "Agree on bench responsibility, estimate approval and return terms with a repair partner if needed.",
+        "Test numbered intake forms and secure storage before accepting a customer's device.",
+        "Run a small paid market day and reconcile every phone and accessory at closing."
+      ],
+      "what_hurts": "A lost phone or disputed scratch at a temporary stall can destroy trust immediately. Rain and crowds make delicate diagnosis difficult. Customers may not return on the promised market day, leaving devices and unpaid work. You record condition carefully, keep a secure cabinet and avoid accepting more jobs than the bench can finish by the stated date.",
+      "verdict": "Build this if market visitors need easier repair access and you can secure every handover. Walk away if devices must sit unattended or the partner bench cannot keep its return promises.",
+      "faq": [
+        {
+          "q": "Can you repair a screen at the stall?",
+          "a": "Only if the environment and tools truly support clean safe work. Most detailed repairs belong at a proper bench away from market dust and jostling."
+        },
+        {
+          "q": "What if the owner cannot return next week?",
+          "a": "Agree on an alternate verified handover and any delivery fee before work begins. Never give a device to a neighbour merely because they know the customer."
+        },
+        {
+          "q": "Do you need a written receipt for a basic check?",
+          "a": "For a device left with you, definitely. Record model, visible condition and accessories even when the diagnosis itself is brief."
+        }
+      ],
+      "validate_prompt": "I want to run a market day phone diagnosis and repair booking stall in India. What vending permission, device security, partner terms and fees should I validate?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "student"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "mixed",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S07-I05",
+      "slug": "retailer-backroom-phone-repair-partner",
+      "title": "Retailer Backroom Phone Repair Partner",
+      "hook": "A handset seller may receive repair requests every day but have no trained bench or time to open devices safely.",
+      "summary": "You provide documented repair work for local mobile retailers while they manage the customer counter. Your role is diagnosis and agreed repairs for supported faults, with secure device transfer and warranty responsibilities written down. Repeat trade work can fill a bench without street rent.",
+      "what_it_is": "You meet a retailer and agree which repairs you accept, how devices move between shops, who approves estimates and who handles customer updates. Every phone should arrive with an intake record and visible condition, not a verbal note. Diagnose at your secure bench, send a quote before fitting parts and document tests at completion. You return the device with the used part description and warranty terms. The retailer may speak to the end customer, but you still need consent for data access or any work that risks loss. You do not let a rushed sales counter push you into an unapproved repair.",
+      "who_pays_you": "Mobile phone retailers and accessory shops with regular customer repair requests are the trade buyers. Their customers benefit from trained work while keeping one familiar contact point. You start with one retailer whose intake habits you trust. A shop that promises free repairs without asking you first can create endless disputes, so check its customer communication before partnering.",
+      "how_money_comes": "You charge the retailer an agreed trade labour rate plus approved parts, with payment timing and warranty returns in writing. Volume can stabilise income, but a low trade fee may not cover diagnosis and repeated courier trips. You do not extend unlimited credit to a retailer because it sends many devices. You keep records by phone and invoice, and check current parts and transport cost through Validate before fixing rates.",
+      "what_you_need": "A trained repair bench, secure shelves, test equipment, quality parts, written transfer forms and clear warranty terms. You need discipline to keep customer data private even when the retailer is your payer. You check business and electronic waste obligations. A reliable pickup and return method matters as much as soldering skill.",
+      "first_30_days": [
+        "Ask local retailers which faults they currently send away and how returns are handled.",
+        "Write a trial agreement covering intake, estimates, payment and warranty responsibility.",
+        "Take a limited paid batch and document each device from transfer to return.",
+        "Review unpaid invoices and repeat faults before accepting a larger weekly volume."
+      ],
+      "what_hurts": "The retailer may quote a customer before you diagnose, leaving you pressured to fit an unsuitable part. Devices can be scratched or lost during transfer, and the customer may complain to either shop. Delayed retailer payment creates cash pressure despite busy bench hours. You keep an intake trail and refuse work without clear approval, even from a friendly long time partner.",
+      "verdict": "Build this if you repair supported faults well and a retailer will follow documented handovers. Walk away if the shop promises prices and warranties you never agreed to honour. The handover process is the service.",
+      "faq": [
+        {
+          "q": "Who gives the end customer a warranty?",
+          "a": "Agree this in the trade contract and put consistent terms on the return note. Conflicting promises from two shops will turn one repair into a dispute."
+        },
+        {
+          "q": "Can a retailer approve a repair verbally?",
+          "a": "Use a written message tied to the device and estimate. A quick call may be forgotten when the final invoice arrives."
+        },
+        {
+          "q": "Should you keep customer data from partner phones?",
+          "a": "No. Access only what the authorised test needs, avoid personal files and keep devices secured. The retailer relationship does not erase the owner's privacy."
+        }
+      ],
+      "validate_prompt": "I want to repair phones as a backroom partner for local mobile retailers in India. What trade pricing, device handover, warranty and data practices should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S07-I06",
+      "slug": "outlying-village-phone-pickup-and-return",
+      "title": "Outlying Village Phone Pickup and Return",
+      "hook": "A resident can lose a whole workday travelling to town just to learn whether a broken phone is repairable.",
+      "summary": "You collect phones from nearby villages on fixed days, repair supported faults at a town bench and return them with a clear test and bill. Secure transport and written consent make the model work. Travel is charged honestly rather than hidden in parts prices.",
+      "what_it_is": "You choose a compact route and publish collection and return days. At each handover, record model, visible damage, lock status, accessories and reported fault, then issue a matching receipt. You carry devices in protected labelled cases to a secure bench and diagnose before quoting. You ask the owner to approve the repair and any data risk by phone or message. You return only to the owner or an authorised person whose identity was agreed at intake, and demonstrate the repaired function. A missed route day should trigger an early message, not silence while the customer waits without their phone.",
+      "who_pays_you": "Farmers, shopkeepers, older residents and other people in outlying villages may pay to avoid a town trip. Some will have a second phone; others cannot be without the main device for long, so your return promise must be realistic. A trusted local shop can serve as a collection point if responsibility for storage and handover is documented.",
+      "how_money_comes": "You charge a clear collection and return fee plus the approved diagnosis and repair price. Several phones on one route spread travel cost, but each still needs separate records and protection. Special parts require an agreed advance and lead time. You avoid promising free travel for a distant single job whose repair value is uncertain. You track route time and failed collections when checking local rates with Validate.",
+      "what_you_need": "A vehicle, protective device cases, numbered intake forms, secure storage and a trained repair bench. You need reliable communication and a process for owner consent and verified return. You check local trading and electronic waste requirements. You never carry loose phones together in a bag where scratches or swaps become inevitable.",
+      "first_30_days": [
+        "Ask residents in two nearby villages how they currently arrange phone repairs and returns.",
+        "Map a route and write a device intake and owner verification procedure.",
+        "Trial a few paid pickups and obtain repair approval before opening any device.",
+        "Reconcile every phone at each handover and measure the true route cost."
+      ],
+      "what_hurts": "A road closure can delay every promised return, and a missing phone during transport is a serious loss. A customer may approve a repair verbally then dispute the price. Hidden faults appear only at the bench, adding another approval step. You keep devices secure, document estimates and resist taking more villages than your schedule can serve well.",
+      "verdict": "Build this if distant villages want the service and you can keep every phone traceable throughout travel. Walk away if your transport or partner bench cannot safeguard customer devices. Privacy still belongs to the owner.",
+      "faq": [
+        {
+          "q": "Can a neighbour collect a repaired phone?",
+          "a": "Only if the owner named that person at intake or later gives verifiable permission. Familiarity is not a substitute for a secure handover."
+        },
+        {
+          "q": "What if the repair is not possible?",
+          "a": "Explain the diagnosis, return the device and charge only the disclosed diagnosis and travel terms. Do not fit speculative parts to justify the trip."
+        },
+        {
+          "q": "Should you take the customer's password?",
+          "a": "Avoid it whenever possible and get specific consent if a test requires access. Do not write passwords on exposed receipt books or copy personal files."
+        }
+      ],
+      "validate_prompt": "I want to collect phones for repair from villages around an Indian town. What route pricing, secure handover, customer consent and local rules should I validate?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "student"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "mixed",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S07-I07",
+      "slug": "town-trader-urgent-phone-repair-slot",
+      "title": "Town Trader Urgent Phone Repair Slot",
+      "hook": "A market trader whose payment phone stops working needs a realistic repair decision before the busiest selling hours are lost.",
+      "summary": "You reserve limited same day diagnosis slots for traders and small shop owners with critical phone faults. Simple supported repairs are completed quickly; harder jobs receive an honest timeline. Priority pricing and eligibility are visible rather than improvised when someone is desperate.",
+      "what_it_is": "You offer a defined early slot for local traders who rely on a phone for payments and order calls. At intake, check charging, display and network symptoms with consent, record condition and explain which faults can be repaired that day. You keep common quality parts for models actually used by nearby shops, but do not open a complex device simply to satisfy a deadline. If the repair needs longer, help the owner understand what function remains available without accessing their private accounts. You test the completed repair in front of them. You limit priority bookings so normal customers still receive their promised work.",
+      "who_pays_you": "Kirana owners, market vendors, delivery coordinators and small service providers are the buyers. A trader may pay for a faster slot when the phone is central to a business day, but only if you can genuinely offer it. You speak to nearby shops about common models and faults before buying a cupboard of speculative spare parts.",
+      "how_money_comes": "You charge a disclosed priority diagnosis fee and separately quote any approved repair and part. The fee pays for reserved bench time, not a guaranteed fix. Keeping a small range of common parts costs money, so track how often they actually move. Repeat clients may pay a regular support retainer only after your response times prove reliable. Validate local part costs and demand before fixing a premium.",
+      "what_you_need": "Strong fast diagnosis, quality common parts, secure bench, clear priority schedule and a testing checklist. You need a safe battery process and a way to tell the customer when no same day repair is possible. You check trade and electronic waste requirements. Customer payment accounts and messages should remain private throughout tests.",
+      "first_30_days": [
+        "Ask traders which phone failures have interrupted sales and what response time would be useful.",
+        "Identify the models and faults you can genuinely diagnose in a short reserved slot.",
+        "Publish priority fee and limits before trialling paid bookings.",
+        "Compare promised and actual turnaround, including jobs you responsibly declined."
+      ],
+      "what_hurts": "Urgency creates pressure to make a risky repair look simple. Parts may not fit a phone variant, and a busy market day can bring more urgent customers than your bench can serve. A failed repair may interrupt a trader's business despite your effort. You keep the priority promise narrow, never guarantee a fix and refer specialised board faults quickly.",
+      "verdict": "Build this if you can deliver genuinely faster diagnosis on supported faults without risking customer data. Walk away if the premium would buy only a queue label, not actual reserved capacity.",
+      "faq": [
+        {
+          "q": "Does the priority fee guarantee a same day repair?",
+          "a": "No. State that it reserves diagnosis time, with repair dependent on the fault and approved parts. Refund or credit terms should be clear before payment."
+        },
+        {
+          "q": "Can you handle UPI account problems?",
+          "a": "Hardware repair and account recovery are different matters. Avoid accessing a customer's financial credentials; direct account issues to the proper provider process."
+        },
+        {
+          "q": "What if two traders need the same slot?",
+          "a": "Keep a published capacity and book the next available time honestly. Taking both and missing both deadlines will damage trust quickly."
+        }
+      ],
+      "validate_prompt": "I want to offer urgent phone repair diagnosis slots for market traders in India. What fair priority fee, parts stock, privacy and turnaround should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S07-I08",
+      "slug": "phone-data-transfer-repair-assist-desk",
+      "title": "Phone Data Transfer Repair Assist Desk",
+      "hook": "When a phone is replaced or repaired, the owner may care more about family photos and contacts than the damaged casing.",
+      "summary": "You help customers transfer accessible data during a phone repair or replacement, using explicit consent and a private desk. The service covers supported backups and device to device moves, not a guarantee of recovery from destroyed storage. Privacy procedures are the product.",
+      "what_it_is": "You ask the owner which contacts, photos or files they want moved and confirm they control both devices or accounts. You explain the transfer method, any temporary storage and the risk of missing or corrupted files before starting. Let the customer enter their own credentials when possible, and perform the process where they can observe. Verify a sample of transferred items together, then delete temporary copies under a documented routine. If a damaged device cannot be accessed, state the limits and refer specialist recovery without promising success. You keep repair charges separate from data transfer charges so consent is specific.",
+      "who_pays_you": "Older customers changing phones, families with photos on an unreliable device and shop owners moving work contacts may pay. Mobile retailers can refer owners who want patient help at a private desk. You do not accept a device brought by someone who cannot show authority to access the data. The person whose information is on the phone must understand what will be copied.",
+      "how_money_comes": "You charge a clear fee for a defined transfer attempt and time, with any extra complex recovery quoted separately if within your skill. You explain that the fee is for careful work, not a guaranteed number of files. Repeat business may come from repair shops and customers helping family members, but trust depends on not retaining copies. Validate current local demand and secure equipment costs before offering the service broadly.",
+      "what_you_need": "Technical knowledge of supported phone transfer methods, a private workspace, secure temporary storage when necessary and a written consent and deletion process. You use reliable cables and tools. You check privacy and trade obligations, and avoid bypassing locks or account protections. If a device is water damaged or storage has failed, know when to stop and refer it.",
+      "first_30_days": [
+        "Ask repair customers which data moves they find difficult and which devices are common locally.",
+        "Create an explicit owner consent, transfer scope and temporary deletion checklist.",
+        "Practise supported transfers with your own test devices before charging anyone.",
+        "Run a few paid observed transfers and verify results with owners at handover."
+      ],
+      "what_hurts": "A forgotten account password, failing storage or incompatible app can turn a short job into hours with no full result. Customer photos and financial information are highly private. One retained file or mistaken deletion can cause serious harm. You work only with authority and consent, explain uncertainty, and refuse requests to unlock a device that does not belong to the requester.",
+      "verdict": "Build this if you can protect private data and explain the limits of each transfer. Walk away if you would copy accounts to your own phone or promise recovery from physically failed storage.",
+      "faq": [
+        {
+          "q": "Do you need the owner's password?",
+          "a": "Let the owner enter credentials directly where possible. If access is needed for a specific step, obtain explicit consent and never keep the password afterward."
+        },
+        {
+          "q": "Can you recover files from every broken phone?",
+          "a": "No. Recovery depends on what still works and may need specialist equipment. Describe a transfer attempt accurately and do not guarantee lost files will return."
+        },
+        {
+          "q": "Should you keep a backup for the customer?",
+          "a": "Only if explicitly agreed and handled securely with a deletion date. A default secret copy of personal files is unacceptable."
+        }
+      ],
+      "validate_prompt": "I want to offer consent based phone data transfer alongside repairs in an Indian town. What privacy process, current service fee and technical limits should I validate?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S07-I09",
+      "slug": "used-phone-repair-and-resale-workshop",
+      "title": "Used Phone Repair and Resale Workshop",
+      "hook": "A buyer of a used phone wants to know which parts were replaced and whether the device really works before paying.",
+      "summary": "You buy documented used phones, repair faults within your skill and resell tested devices with honest condition notes. It combines repair income with inventory risk. Ownership checks, data wiping, part quality and clear warranty terms are essential.",
+      "what_it_is": "Purchase only from someone who can establish ownership and provide a traceable transaction. You record model, identifiers, condition and price, then test functions before deciding whether a repair is economical. Fit disclosed quality parts, run a consistent test checklist and erase prior user data through a proper process before display. You show buyers the condition, replaced parts, battery status and warranty in writing. You keep faulty devices and spent batteries for appropriate recycling rather than quietly transferring defects to a new owner. You start with a few supported models, not a pile of mysterious handsets bought on impulse.",
+      "who_pays_you": "Students, workers and families seeking a lower cost phone may buy a tested used model. Sellers with old devices provide inventory, but you need to assess them carefully. A nearby retailer may refer buyers who cannot afford a new handset. You do not imply a refurbished phone is new, and check whether the model will still meet the buyer's practical needs.",
+      "how_money_comes": "Profit is the resale price minus purchase, parts, labour, testing, returns and unsold inventory. A low purchase price can hide an expensive board fault, so set a maximum based on a full inspection. You collect payment with a clear receipt and reserve funds for the stated warranty. Buy in small batches until you know the true return rate. Validate current resale prices and local legal requirements before scaling.",
+      "what_you_need": "Repair skills, diagnostic tools, secure stock, ownership documentation, data wiping procedure and a fair written condition grade. You check secondhand trading and electronic waste requirements in your area. You need working cash without tying it all in obsolete models. You never buy a phone that appears locked to someone else's account without a legitimate resolution.",
+      "first_30_days": [
+        "Define a short list of models you can test and repair economically.",
+        "Create ownership intake, diagnostic and data wiping checklists before buying stock.",
+        "Refurbish a tiny paid batch and show buyers every repair and limitation in writing.",
+        "Review return costs and time on shelf before purchasing another lot."
+      ],
+      "what_hurts": "A hidden fault may appear days after sale, and a questionable ownership history can create a serious dispute. Battery condition and software support affect a used phone's value. Unsold models lose value while your cash is trapped. Verify ownership, price conservatively and honour the warranty you offered, even when a return is inconvenient.",
+      "verdict": "Build this if you can inspect ownership and faults and sell used phones with honest condition records. Walk away if cheap stock comes without proof or you cannot fund returns.",
+      "faq": [
+        {
+          "q": "How do you check a seller's right to sell?",
+          "a": "Use a documented purchase process and verify ownership indicators under local rules. Decline devices with unresolved locks or suspicious history rather than hoping the issue disappears."
+        },
+        {
+          "q": "Should you call every repaired phone refurbished?",
+          "a": "Describe exactly what was tested and replaced. A broad label without condition detail leaves buyers unable to judge the device fairly."
+        },
+        {
+          "q": "What happens if a defect appears within warranty?",
+          "a": "Follow the written repair, replacement or refund terms you offered. Keep enough cash to honour them rather than spending every sale immediately."
+        }
+      ],
+      "validate_prompt": "I want to repair and resell documented used phones in an Indian small town. What secondhand trade rules, data wiping, current prices and warranty reserve should I validate?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S07-I10",
+      "slug": "water-damaged-phone-assessment-service",
+      "title": "Water Damaged Phone Assessment Service",
+      "hook": "After a phone falls into water, a customer needs a careful assessment and honest odds, not a guaranteed miracle repair.",
+      "summary": "You offer trained intake and diagnosis for liquid damaged phones, stabilising only devices your equipment can handle and referring harder cases. Customers understand that data and function may not return. Clear consent, safe battery handling and a bounded fee protect trust.",
+      "what_it_is": "You tell the owner not to charge or repeatedly turn on a wet phone before trained assessment. At intake, record when exposure happened, what liquid was involved, visible damage and whether data preservation is the priority. You explain the diagnostic steps, risks and fee before opening. You use appropriate equipment and safety procedures, including careful battery isolation, and document what can and cannot be tested. You quote any further repair only after diagnosis and consent. A device that works briefly after cleaning may fail later, so never call it fully restored without a defensible test and clear limitations.",
+      "who_pays_you": "Families caught in rain, farm workers whose phone fell near water and commuters with an accidental spill may seek help urgently. Their main concern may be photos or payment access, not the value of the handset. Retail shops can refer such cases instead of trying a quick heat treatment at the counter. You take only devices you are trained and equipped to handle.",
+      "how_money_comes": "You charge a transparent assessment fee for trained work, with repair parts and additional labour quoted separately. The fee is due for the assessment even when recovery is impossible, if that was clearly agreed. You do not purchase expensive components before the owner understands the poor odds. Referrals to a specialist can be useful, but disclose any fee arrangement. You check local equipment and service costs with Validate.",
+      "what_you_need": "Specific liquid damage training, protective equipment, safe battery procedures, suitable diagnostic tools and a ventilated bench. You need consent forms that distinguish assessment from a guaranteed repair or data recovery. You keep devices secure and follow electronic waste requirements. You do not use unsafe heating or unverified chemicals to make a phone appear briefly functional.",
+      "first_30_days": [
+        "Train on liquid damage diagnosis and practise safe battery isolation before advertising the service.",
+        "Write an intake form explaining uncertainty, diagnostic fee and data priorities.",
+        "Trial assessment only on models and damage levels your bench can handle safely.",
+        "Review outcomes and specialist referrals before expanding your claims."
+      ],
+      "what_hurts": "Corrosion can continue after a device appears to work, and the owner's most valuable files may be inaccessible. Batteries and wet electronics pose safety risks. Customers under stress may hear a hopeful assessment as a guarantee. Repeat the limitations plainly, document testing and stop when a specialist is needed. You never charge for speculative part swaps without approval.",
+      "verdict": "Build this if you have specialist training and can communicate uncertain outcomes compassionately. Walk away if you would promise recovery or use unsafe shortcuts to make a wet phone switch on.",
+      "faq": [
+        {
+          "q": "Should the owner try charging the wet phone?",
+          "a": "Advise them to stop attempting power and seek trained assessment. Further attempts can worsen damage or create a safety risk, depending on the device."
+        },
+        {
+          "q": "Can you guarantee the data will return?",
+          "a": "No. Storage and circuit damage vary widely. State the assessment fee and limits before opening the phone, then seek separate consent for further work."
+        },
+        {
+          "q": "Why might a phone fail after it worked once?",
+          "a": "Liquid damage can affect components over time. Explain your test results and remaining uncertainty in the handover note rather than promising permanent recovery."
+        }
+      ],
+      "validate_prompt": "I want to assess water damaged phones in an Indian town. What training, safe equipment, honest service terms and current fees should I verify?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    }
+  ]
+}

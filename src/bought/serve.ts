@@ -26,10 +26,12 @@ function withSharedFooter(html: string): string {
   return page;
 }
 
-/** The whole site stays out of search until the founder releases it. */
+/**
+ * AdSense approval (founder, 6 Nov 2026): these are hub and topic pages on bbusiness.online and are
+ * indexed. The staging-only noindex was removed; any robots tag left in a snapshot is dropped.
+ */
 function withNoindex(html: string): string {
-  const page = html.replace(/<meta[^>]+name=["']robots["'][^>]*>/gi, "");
-  return page.replace(/<head([^>]*)>/i, `<head$1><meta name="robots" content="noindex, nofollow, noarchive, noimageindex">`);
+  return html.replace(/<meta[^>]+name=["']robots["'][^>]*>/gi, "");
 }
 
 /**

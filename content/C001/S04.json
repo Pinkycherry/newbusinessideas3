@@ -1,0 +1,526 @@
+{
+  "subcategory": {
+    "code": "C001-S04",
+    "intro": "A home visit beauty service saves a client the journey to a salon, but it moves the hygiene, timing and trust questions to you. You carry clean tools into another person’s home, check what they have booked, protect their privacy and leave the space tidy. That is a real business for someone with trained hands, not a shortcut for someone who has only watched a few videos. Start with services you can perform safely and consistently. A working woman may want a quiet early appointment before office. A bride’s family needs several people ready before one fixed time. Someone who cannot easily travel needs patient setup and accessible communication. These customers buy different outcomes and need different booking rules. From your own home you can keep supplies, take bookings and prepare kits, while the paid work happens in the client’s space. Price travel, setup and cleaning time along with the treatment. Carry single-use items where needed, disinfect reusable tools correctly and ask about allergies or sensitivities before applying a product. Never make a medical claim or perform a procedure beyond your training. Agree who will be present and how payment works before you travel, especially for a first booking. Keep a small service menu and an honest portfolio with the client’s permission. The ten ideas below separate daily convenience, group bookings, events and specialist skill. Choose a route and customer you can serve reliably, then build repeat bookings through care rather than constant discounting.",
+    "how_to_choose": "Begin with your strongest trained service and the travel radius you can manage. A quick eyebrow and hair appointment needs a different kit from bridal preparation. Group bookings save travel time but require strict scheduling and enough supplies. If a client has mobility or sensory needs, discuss the home setup and comfort before confirming. Test how long packing, travel, work and cleaning really take, then set a minimum booking value. Ask about allergies and product preferences in advance. Choose a model where the work fits your skill and you can still arrive on time at the next address.",
+    "faq": [
+      {
+        "q": "Can I start home beauty visits without training?",
+        "a": "Begin only with services you can perform safely and well. Formal training and supervised practice matter for techniques involving heat, skin or chemicals. Do not accept a booking just because it appears in someone else’s menu."
+      },
+      {
+        "q": "How should I charge for travel?",
+        "a": "State your service price and travel area before booking. A minimum appointment amount or a clear distance charge can cover setup and travel. Test a route yourself so your price reflects time, not only fuel."
+      },
+      {
+        "q": "What should I ask before entering a new client’s home?",
+        "a": "Confirm the address, service, people present, space available, timing and payment method. Share your booking and travel plan with a trusted contact. Keep professional boundaries and leave if the situation feels unsafe."
+      },
+      {
+        "q": "How do I prevent hygiene complaints?",
+        "a": "Use clean kits, separate used items and explain which tools are disinfected or single-use. Ask about sensitivities and follow product instructions. If a service cannot be done safely in that home, decline it or arrange another setting."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C001-S04-I01",
+      "slug": "office-morning-hair-visits",
+      "title": "Early Morning Office Hair Visits",
+      "hook": "A working woman may need neat hair before an early shift, when the nearby salon has not opened yet.",
+      "summary": "You visit clients at home before their workday for a reliable wash-free styling appointment. A fixed, simple menu and tight route make the early hours workable. Clients pay for saved time and a look that lasts through work, not for an elaborate party makeover.",
+      "what_it_is": "You offer a small set of styles suited to work, such as a smooth blow-dry on clean hair, a tidy bun or a braid. The client tells you her hair length and start time when booking. You bring clean tools, use safe heat settings and set up near a mirror and power point that the client approves. Keep the appointment short, note any product sensitivity and photograph the final result only with permission. Arrange your bookings within one neighbourhood so a delay at the first home does not ruin every morning.",
+      "who_pays_you": "Women with early office shifts, teachers and professionals attending a presentation pay you. Reach them through colleagues and local apartment groups where you have permission to post. A client who likes the same routine may book weekly. She needs confidence that you will arrive before her commute, so reliability is worth more than a broad styling menu.",
+      "how_money_comes": "Charge per booked style, with a minimum amount that covers the journey and setup. Offer a prepaid weekly slot only when your route is predictable. Do not discount so deeply that an early start pays less than an ordinary daytime booking. Product use, cleaning and travel belong in your calculation, along with the risk of an empty slot when someone cancels late.",
+      "what_you_need": "You need professional styling skill, safe heat tools, a clean cape, brushes for different hair types and a compact kit that can be packed quickly. Confirm the client has an appropriate space and power point. Keep a travel buffer and a clear cancellation rule. Bring only products you understand and can use hygienically.",
+      "first_30_days": [
+        "Practice a few workday styles and time them from setup to cleanup.",
+        "Ask local working women which morning slots would actually help them.",
+        "Take a handful of paid trial appointments within one small travel area.",
+        "Record travel time, style duration and product use after each visit.",
+        "Offer a regular slot only when you know you can arrive on time every week."
+      ],
+      "what_hurts": "A lift delay or traffic jam can make a client late for work. Wet or very long hair can take more time than booked, and rushed heat styling can damage hair. Some mornings will have no orders while others have too many requests for the same slot. You must protect travel buffers and decline an unrealistic booking instead of promising two homes at once.",
+      "verdict": "Build this if you enjoy repeatable styling and can work calmly before the day begins. Walk away if early travel is difficult for you, because punctuality is the service the client remembers.",
+      "faq": [
+        {
+          "q": "Can I wash hair at the client’s home?",
+          "a": "Start with wash-free styles on hair prepared as agreed. Washing adds equipment, water and drying time and changes the booking. Offer it only after testing the setup and pricing it separately."
+        },
+        {
+          "q": "How many morning visits can one person handle?",
+          "a": "Work backwards from client departure times and real travel, not just styling minutes. Begin with one or two close homes and add slots only when the route remains dependable."
+        },
+        {
+          "q": "What if the client cancels after I leave home?",
+          "a": "Explain a fair cancellation cutoff before confirming the booking. A regular client may deserve flexibility, but repeated late cancellations can make an early route unviable."
+        }
+      ],
+      "validate_prompt": "I want to offer early morning hair styling at clients’ homes near me in India. How should I define the service menu, travel radius and weekly booking price?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "online",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S04-I02",
+      "slug": "bridal-family-home-preparation",
+      "title": "Bridal Family Preparation Team",
+      "hook": "On a wedding morning, several relatives need to be ready together, and one rushed artist cannot promise all of them the same chair.",
+      "summary": "You coordinate a trained beauty team for the bride’s family at one home or venue. The booking covers a schedule, service list, artists and hygiene kit for each person. The buyer pays for a calm, timed preparation block, while bridal makeup itself can remain a separate specialist contract.",
+      "what_it_is": "Before accepting the event, ask how many people need hair, makeup or draping, when each must be ready and which services require a separate specialist. Visit or review the space, check lighting and power, then allocate trained artists and chairs. Write a running order with buffers. Each artist brings clean tools and confirms skin or product sensitivities. On the day you manage the schedule, record completed services and resolve small changes without pushing the bride’s own preparation late. If you are not qualified for a technique, hire someone who is or remove it from the menu.",
+      "who_pays_you": "Families hosting weddings or large ceremonies pay because managing several appointments across salons is exhausting. An event planner may introduce you, but the family approves the services and final schedule. Build relationships through a portfolio of work you have permission to show. Clarify whether children or older relatives need gentler timing.",
+      "how_money_comes": "Quote per service and artist, plus travel, early setup and any extra hours. Take an advance to reserve the team and buy event-specific products. State the final headcount date and charges for late additions. Your margin comes from coordination and skilled work after paying artists fairly, not from overbooking one chair.",
+      "what_you_need": "You need trained artists you trust, backup supplies, a written service schedule, clean kits and a way to communicate with one family decision-maker. Test team timing on smaller events first. Confirm venue access, parking and space to work. Carry agreements covering advance, cancellation and delays.",
+      "first_30_days": [
+        "Ask experienced artists which services they can finish reliably in an event setting.",
+        "Create a sample running order for a small family booking with realistic buffers.",
+        "Meet a buyer, inspect the location and agree on the final service list.",
+        "Run one paid event with a modest team and record actual timing.",
+        "Update your quote and staffing rules before accepting a larger wedding morning."
+      ],
+      "what_hurts": "One late guest can throw off an entire schedule. Artists may cancel, the room may be crowded and family members may request work outside the agreed list. A hurried application can create skin complaints or a poor photograph. You need the confidence to hold boundaries while remaining polite on an emotional day. A single wedding date also concentrates the financial risk.",
+      "verdict": "Build this if you can lead trained people and protect a timetable without losing your warmth. Walk away if you plan to promise a large family booking alone, because one pair of hands cannot cover simultaneous deadlines.",
+      "faq": [
+        {
+          "q": "Should bridal makeup be included in the family package?",
+          "a": "Only if a qualified artist is booked for it with enough dedicated time and a separate agreed scope. Do not treat the bride as one more quick slot in a crowded family queue."
+        },
+        {
+          "q": "What if more relatives ask for service on the day?",
+          "a": "Check the available time and artists, then quote the extra work before starting. Decline requests that would delay people already booked. The agreed schedule must still come first."
+        },
+        {
+          "q": "How do I handle an artist cancelling?",
+          "a": "Have a realistic backup arrangement and tell the family promptly if it affects the service. Do not substitute a less qualified person for a specialist task without the buyer’s agreement."
+        }
+      ],
+      "validate_prompt": "I want to coordinate a home-visit beauty team for wedding families in India. How should I schedule artists, quote services and protect the bridal timetable?",
+      "investment_band": "25k_1l",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "field",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S04-I03",
+      "slug": "apartment-weekend-grooming-day",
+      "title": "Apartment Weekend Grooming Day",
+      "hook": "Several neighbours want routine beauty appointments, but each separate trip across town wastes your weekend on travel.",
+      "summary": "You reserve a permitted room or book consecutive apartment homes for one weekend grooming day. Residents choose fixed slots for basic services you are trained to perform. The group schedule cuts travel, while every client still gets a clean setup and a clear individual bill.",
+      "what_it_is": "Ask the resident association whether a shared space or appointment circulation is allowed. Publish a narrow menu, service time and booking cutoff. Confirm each client’s needs and any product sensitivity in advance. On the day, reset the station and disinfect reusable tools between people, with fresh disposables where appropriate. Keep private conversations private even in a shared room. If the society allows only home visits, route bookings within the building instead. Never treat a communal area as a place for a procedure that lacks privacy or safe facilities.",
+      "who_pays_you": "Residents in a large apartment building pay for convenient routine appointments. Working adults may prefer weekends, while parents need a predictable slot. Reach them through an administrator-approved notice or referral from an existing client. The association provides access and rules, but each person pays for their own chosen service unless a separate group contract is agreed.",
+      "how_money_comes": "Charge per service with the building-day minimum spread across confirmed bookings. Take a small reservation payment if cancellations often leave gaps. A repeat monthly date can bring steadier income, but do not block a full day without enough paid slots. Include room fees, disposables and cleaning time before calculating your earnings.",
+      "what_you_need": "You need a portable, hygienic kit, appointment list, clean water or a suitable alternative for the selected services, and the association’s permission. Bring covered containers for used items and a way to accept UPI. Select only treatments that the room, lighting and privacy can support safely.",
+      "first_30_days": [
+        "Speak with one association and ask which space and rules apply to visiting providers.",
+        "Choose a short menu with honest time slots and hygiene needs.",
+        "Open paid reservations for a small trial day instead of taking walk-ins.",
+        "Track setup, turnover and cancellations while serving each resident.",
+        "Ask whether a fixed monthly date is useful before promising one."
+      ],
+      "what_hurts": "Late residents can leave the next client waiting. A shared room may not offer enough privacy, ventilation or water. The association can change rules, and one complaint affects access to the whole building. Rushed cleaning between clients is unacceptable. A weekend only works if confirmed bookings cover the travel, room and preparation.",
+      "verdict": "Build this if you can manage appointments and hygiene in a shared setting. Walk away if you want to take unlimited walk-ins, because the model relies on protected slots and trust between neighbours.",
+      "faq": [
+        {
+          "q": "Can I set up in the apartment lobby?",
+          "a": "Only if the association permits it and the chosen services have enough privacy, cleanliness and facilities. A lobby may suit a consultation or booking desk but not every treatment."
+        },
+        {
+          "q": "What if only two residents book?",
+          "a": "Set a minimum booking threshold and tell residents when the day will be confirmed. Reschedule or offer ordinary home visits under clear terms rather than losing money on an empty group day."
+        },
+        {
+          "q": "Should clients pay the association or me?",
+          "a": "State the arrangement before booking. For individual services, a direct receipt from you is simple. If the association collects payment or charges room rent, put that in writing."
+        }
+      ],
+      "validate_prompt": "I want to run a booked weekend beauty day inside an Indian apartment society. What permission, minimum bookings and hygiene setup should I plan?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "mixed",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S04-I04",
+      "slug": "older-adult-home-grooming",
+      "title": "Gentle Grooming for Older Adults",
+      "hook": "An older person may want a neat haircut at home without the noise, waiting and travel of a salon.",
+      "summary": "You offer simple hair and nail grooming at the client’s home, paced for comfort and mobility. Families often arrange the booking, but the older person chooses what they want. The service is ordinary grooming with trained hands and respectful communication, not medical foot care.",
+      "what_it_is": "Before the visit, ask the client or family about seating, lighting, sensitivities and the work requested. Arrive with clean tools, a cape, towels and a way to contain cut hair. Let the client sit in a stable chair and take breaks without rushing. Explain each step and seek their agreement, especially when a family member booked on their behalf. Keep nail work to basic grooming within your training; refer painful, infected or medically complicated concerns to a qualified professional. Clean the area and show the client the result before leaving.",
+      "who_pays_you": "Older adults who prefer not to travel pay, sometimes through adult children living elsewhere. Care homes may request grouped visits under a separate contract with clear consent from each resident. Start with families that know your work and local senior communities. Repeat appointments come from comfort, punctuality and being treated as a person rather than a task.",
+      "how_money_comes": "Charge for a visit and the agreed grooming services, allowing enough time for a gentle pace and cleanup. Grouped care-home visits can reduce travel but require individual billing or a clear institutional contract. Do not hide travel cost or add a service because a relative asks after the visit begins. Regular booking intervals can make your calendar steady.",
+      "what_you_need": "You need professional hair or nail grooming training, clean and disinfected tools, a portable mirror, stable working posture and patience. Ask how the client communicates best. Keep emergency contact details without taking on a care role. Avoid sharp or invasive work beyond your skill, and know when to stop.",
+      "first_30_days": [
+        "Practice a slow, seated haircut setup with a willing adult and time the full cleanup.",
+        "Ask older clients what makes an ordinary salon visit difficult for them.",
+        "Make a small menu with basic grooming and clear service boundaries.",
+        "Take a few paid visits and ask the client directly about comfort.",
+        "Offer repeat appointments only after confirming the person wants them."
+      ],
+      "what_hurts": "Mobility, hearing or fatigue can change how long a visit takes. A family may request a style the client dislikes. Some nail conditions need healthcare, not a salon tool. You work inside someone’s private space and must respect it. An overfull schedule can push you to rush the very client who chose a home visit to avoid pressure.",
+      "verdict": "Build this if you can slow down, listen and keep tools hygienic. Walk away if you want fast chair turnover, because the pace and dignity of the visit are the service.",
+      "faq": [
+        {
+          "q": "Can I treat a painful nail or skin condition?",
+          "a": "No. Do not turn grooming into medical treatment. Explain what you can safely do and suggest the family consult a qualified health professional for pain, infection or other concerns."
+        },
+        {
+          "q": "Who chooses the style when a relative pays?",
+          "a": "Speak with the older person and ask what they want, unless they cannot communicate a choice and the family has appropriate authority. Payment does not make someone else’s preference the client’s preference."
+        },
+        {
+          "q": "Can I book several residents in one care home?",
+          "a": "Yes, with the home’s permission, individual consent and enough time to reset tools between clients. Agree on a private, comfortable space and a clear billing arrangement before the visit."
+        }
+      ],
+      "validate_prompt": "I want to offer simple home hair and nail grooming for older adults in India. How should I set safe service limits, visit time and repeat booking terms?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "field",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S04-I05",
+      "slug": "new-mother-short-grooming-visits",
+      "title": "New Mother Short Grooming Visits",
+      "hook": "After a baby arrives, a parent may want a short haircut or eyebrow appointment without arranging childcare and travel.",
+      "summary": "You bring a limited grooming menu to a new mother’s home at a time she chooses. The visit is flexible around the baby and focuses on simple, safe beauty services. You do not give recovery advice or claim any treatment helps healing after birth.",
+      "what_it_is": "Offer a haircut, basic styling or another service you are trained to perform without complicated equipment. Ask which products the client prefers, whether she is sensitive to fragrance and how much time feels comfortable. Confirm that someone can attend to the baby if needed; never ask her to leave the baby unattended for your appointment. Bring a compact kit, set up in the chosen room and be ready to pause. Explain the service before starting and accept that a tired parent may prefer to stop early under your agreed terms.",
+      "who_pays_you": "New mothers and their families pay because leaving home for a salon can be difficult in the first months. A partner or friend may buy the appointment as a gift, but the mother chooses whether and when to use it. Reach families through trusted local recommendations, not intrusive messages after a birth.",
+      "how_money_comes": "Charge for a reserved visit rather than promising a strict chair-minute price, because a pause may be needed. State what is included, the travel area and how rescheduling works. A gift voucher can be offered with a generous booking window, but do not pressure the client into a repeat plan. Count the time your kit takes to pack and clean.",
+      "what_you_need": "You need sound training in the selected grooming services, gentle unscented options where appropriate, clean tools and a patient schedule. Keep a separate place for used items and take direction from the client about where to work. Understand that any health concern belongs to her clinician, not to your beauty menu.",
+      "first_30_days": [
+        "Choose two or three services you can complete with a small, clean kit.",
+        "Ask recent parents what appointment length and timing would truly help.",
+        "Write a flexible pause and reschedule policy in plain language.",
+        "Take one paid visit with enough time around it to learn the real pace.",
+        "Adjust the menu based on what clients found comfortable, without medical claims."
+      ],
+      "what_hurts": "A newborn’s needs can interrupt the work at any moment. Fragrances, heat tools or a crowded room may be unwelcome. The person who bought the gift may expect a full makeover the mother never requested. Cancellations can be frequent and emotionally sensitive. Respect a client who says today is not a good day and protect enough time to reschedule fairly.",
+      "verdict": "Build this if you can make a small grooming visit feel calm and optional. Walk away if you require every client to follow a rigid salon timetable, because the family’s day will not follow it.",
+      "faq": [
+        {
+          "q": "Can I offer postpartum recovery treatments?",
+          "a": "Only offer services within your beauty training. Do not claim to treat pain, swelling or recovery. A medical question belongs with the client’s qualified health professional."
+        },
+        {
+          "q": "What if the baby needs feeding during the appointment?",
+          "a": "Pause safely, switch off any heated tool and give the family space. Explain before booking how pauses and a longer interruption affect the appointment and any remaining work."
+        },
+        {
+          "q": "Can a friend book a surprise visit?",
+          "a": "A gift can be kind, but confirm the service and timing with the recipient before arriving. She should be able to choose or decline the appointment without pressure."
+        }
+      ],
+      "validate_prompt": "I want to offer short home grooming visits for new mothers in India. How should I choose safe services, price flexible time and handle gift bookings?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "field",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S04-I06",
+      "slug": "festival-mehendi-home-route",
+      "title": "Festival Mehendi Home Booking Route",
+      "hook": "Before a festival, neighbours want mehendi at home on the same evening, so one planned route can fill your calendar.",
+      "summary": "You offer fixed design tiers and booked home visits for mehendi during local festival evenings. Clients pay for clean application and reliable timing. A route through nearby homes differs from a salon chair or a large wedding booking, and the short season needs advance scheduling.",
+      "what_it_is": "Prepare a small lookbook of designs you can apply consistently and state roughly how much hand coverage each tier includes. Take bookings by address and time, confirm who will receive the service and prepare fresh, safely sourced cones. At the visit, ask about skin sensitivities, protect the client’s furniture and apply the chosen design without rushing. Keep aftercare instructions simple and do not guarantee a particular stain colour, which varies by skin and care. Schedule homes close together with travel buffers and a cutoff for late additions.",
+      "who_pays_you": "Families, friends and neighbours preparing for festivals pay, sometimes booking several people in one home. Reach them through an existing local client base and approved society group notices. A repeat festival route can develop if you remember preferences and arrive when promised. Never use client hands in your portfolio without asking.",
+      "how_money_comes": "Charge by design tier and number of people, with a travel minimum for a single appointment. Take a reservation payment during the busiest dates and set a clear cancellation rule. A group home booking can improve your hourly return, but calculate application time honestly. The seasonal income must cover cone waste, travel and hours spent on enquiries.",
+      "what_you_need": "You need practiced designs, fresh cones from reliable ingredients, a tidy portable setup, surface protection and hand hygiene supplies. Learn how to ask about allergies and stop if a reaction is suspected. Carry enough light for evening work and confirm the family has a suitable seating space.",
+      "first_30_days": [
+        "Practice timed versions of a few designs and photograph your own completed work.",
+        "Map a small festival route near home and set realistic travel buffers.",
+        "Publish design tiers, group booking rules and a firm final confirmation time.",
+        "Run one evening of paid bookings and note where the schedule slipped.",
+        "Adjust slots before the next festival rather than accepting every request."
+      ],
+      "what_hurts": "Everyone asks for the same auspicious evening slot. A design that looks quick in a photograph can take much longer on a moving child’s hand. Cones may dry or irritate sensitive skin, and the final stain depends on factors beyond you. Rain, traffic and a late family can break the route. Say no when the calendar is full.",
+      "verdict": "Build this if you can apply clean designs under a deadline and plan travel tightly. Walk away if you dislike seasonal spikes, because the busiest evenings carry most of the work.",
+      "faq": [
+        {
+          "q": "Can I promise a dark stain?",
+          "a": "No. Explain the product and ordinary aftercare, but do not guarantee the final colour. Never use a harsh additive just to meet an unrealistic promise."
+        },
+        {
+          "q": "Should I accept walk-ins during a booked route?",
+          "a": "Only when they fit without delaying confirmed clients. Your reliable arrival time is valuable. Offer the next open slot rather than rushing the person already paying."
+        },
+        {
+          "q": "Can I use a client’s design photo in my catalog?",
+          "a": "Ask permission before sharing a photo, especially if it shows jewellery or identifying details. Photograph your own work in good light and describe the design tier accurately."
+        }
+      ],
+      "validate_prompt": "I want to run a booked home-visit mehendi route during Indian festivals. How should I price design tiers, group visits and travel buffers?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "student",
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "field",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S04-I07",
+      "slug": "curly-hair-home-styling-visit",
+      "title": "Curly Hair Home Styling Consult",
+      "hook": "A client tired of being told to straighten her curls may welcome a stylist who knows how to work with them at home.",
+      "summary": "You visit clients with naturally curly hair for a wash-day styling lesson or a booked haircut within your training. The service includes product assessment, technique and a routine the client can repeat. Buyers pay for skill with their hair texture, not for a generic blow-dry moved into a living room.",
+      "what_it_is": "Ask the client about hair length, current routine, sensitivities and whether she wants a cut or only styling. Inspect the curls when appropriate and explain what your method can and cannot change. For styling, work with the client’s wash setup and demonstrate sectioning, product amount, drying and refresh techniques. For cuts, use only techniques you are trained to perform and keep a safe cleanup plan. Leave a short routine note in plain language so the client can try it herself. Avoid diagnosing scalp conditions or claiming a product will cure damage.",
+      "who_pays_you": "People with curls who have struggled to find a local stylist pay for a specialised appointment. Some are parents learning to care for a child’s curly hair, with the child’s comfort and consent considered. Reach buyers through a portfolio showing different textures with permission and honest explanations of what you actually did.",
+      "how_money_comes": "Charge for a longer appointment that includes discussion and demonstration, with a separate fee for a trained cut. Product sales can be optional, but do not make a purchase necessary to benefit from the lesson. A follow-up after the client tries the routine can be booked separately. Travel and product use belong in the quote.",
+      "what_you_need": "You need real practice with multiple curl patterns, clean combs and clips, suitable product samples, a portable mirror and a way to handle water and drying safely. Ask about allergies before application. Photograph results only with consent and never mislabel a style as a permanent change.",
+      "first_30_days": [
+        "Practise and document your method on consenting clients with different curl patterns.",
+        "Create a consultation form about routine, sensitivities and desired outcome.",
+        "Offer a paid styling-only trial before adding complex cutting services.",
+        "Observe whether the client can repeat the technique before ending the visit.",
+        "Revise the routine note based on follow-up questions and real results."
+      ],
+      "what_hurts": "Clients may expect one product to solve years of frustration. Different curls respond differently, and a method shown on one person may fail on another. Water access and drying time vary by home. Poor cutting training can cause lasting dissatisfaction. You must listen to the client’s styling goal rather than forcing your favourite routine.",
+      "verdict": "Build this if you have genuine texture-specific skill and enjoy teaching a repeatable routine. Walk away if you only know how to straighten hair, because the client is paying to keep her curls.",
+      "faq": [
+        {
+          "q": "Do I have to sell a particular product line?",
+          "a": "No. Work with what the client already owns where possible, and explain why you suggest an alternative. A transparent lesson builds more trust than a forced purchase."
+        },
+        {
+          "q": "Can I cut curly hair at home?",
+          "a": "Only if you have practiced a suitable method and can provide the lighting, space and cleanup it needs. Start with styling lessons if your cutting skill is not ready."
+        },
+        {
+          "q": "What if a client asks about scalp illness or hair loss?",
+          "a": "Do not diagnose or promise treatment. You can describe the beauty service and recommend a qualified health professional for a medical concern."
+        }
+      ],
+      "validate_prompt": "I want to offer curly hair styling lessons at clients’ homes in India. How should I define the consultation, service time, products and cut boundaries?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "field",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S04-I08",
+      "slug": "accessible-home-grooming-service",
+      "title": "Accessible Grooming for Homebound Clients",
+      "hook": "A client who cannot travel easily still deserves to choose a haircut and feel in control of the appointment.",
+      "summary": "You offer basic home grooming with an accessibility plan agreed with the client before arrival. You adapt the work area, communication and pace around the person’s preferences while staying within your beauty training. The client or a family member pays for a respectful service, never for a claim of therapy or care.",
+      "what_it_is": "Ask the client how they prefer to communicate, what space and seating works, whether a support person will be present and which service they want. Do not assume a disability explains their choices. Bring clean portable tools and plan your position around safe access without moving mobility equipment unless the person directs you and it is safe. Describe each step, ask before touching, and pause whenever requested. Offer only the grooming you can perform safely in that setup. If the environment is unsuitable, discuss an alternative rather than improvising a risky procedure.",
+      "who_pays_you": "People with mobility limitations or other access needs pay for an appointment that works in their own home. Family members and support organisations may introduce you, but the client’s own preference guides the service. Referrals grow through reliability and respect. Do not use a client’s circumstances or image in marketing without explicit consent.",
+      "how_money_comes": "Charge for the agreed service and realistic visit time, stating any travel or additional setup fee before booking. A repeat slot may suit a client who values a predictable routine. Do not add a surcharge simply because someone has a disability; price actual time and work transparently. A support organisation contract, if offered, needs its own terms.",
+      "what_you_need": "You need trained grooming skill, a clean adaptable kit, good communication and an intake conversation focused on practical setup. Learn basic accessibility etiquette from people who use services. Keep a clear safety boundary: you are there to groom, not to transfer a person, provide healthcare or move equipment beyond your competence.",
+      "first_30_days": [
+        "Talk with potential clients about barriers in ordinary salon appointments.",
+        "Choose a service menu you can adapt without compromising hygiene or safety.",
+        "Write booking questions about access, communication, seating and consent.",
+        "Run a paid visit with enough time to learn the setup without rushing.",
+        "Ask the client what should change next time and update your process."
+      ],
+      "what_hurts": "Every home layout is different, and assumptions can embarrass or endanger a client. You may arrive to find the planned workspace unavailable. A relative might speak over the person receiving the service. Some tasks require support that your beauty training does not cover. You must be willing to pause or decline a part of the booking while still treating the client with dignity.",
+      "verdict": "Build this if you listen to the client and can adapt your process without making unsafe promises. Walk away if you expect every home and body to fit one fixed salon setup.",
+      "faq": [
+        {
+          "q": "Do I need healthcare training for this work?",
+          "a": "You need training for the grooming you offer, but you are not providing medical or personal care. If a task involves a transfer, wound or treatment beyond your competence, stop and involve an appropriate qualified person."
+        },
+        {
+          "q": "Should a family member always be in the room?",
+          "a": "Ask the client what they want, while following any necessary safeguarding and practical arrangements. A family member may help with access, but their presence is not a substitute for the client’s consent."
+        },
+        {
+          "q": "How do I ask about accessibility without sounding rude?",
+          "a": "Ask practical questions such as where the client prefers to sit and how they would like you to communicate. Let them tell you what helps. Avoid guessing what someone cannot do."
+        }
+      ],
+      "validate_prompt": "I want to offer accessible basic grooming at home for clients who cannot easily visit a salon in India. What booking questions, equipment and service boundaries should I use?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "field",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S04-I09",
+      "slug": "men-grooming-house-call-route",
+      "title": "Men Grooming House Call Route",
+      "hook": "A busy client may prefer a booked haircut at home, but he will only repeat if your hygiene and finish match a good barbershop.",
+      "summary": "You make scheduled home visits for men’s haircuts and beard grooming within one neighbourhood. The service is a clean, professional house call with a clear menu and cleanup. Customers pay for time saved and a familiar stylist, while you avoid the travel waste of scattered one-off appointments.",
+      "what_it_is": "Confirm hair length, requested cut and whether beard work is included before setting the slot. Bring cleaned clippers, guards, scissors, cape, towels and a way to collect hair. Check the available chair, light and power point on arrival. Ask for the client’s preference, perform the cut within your training and let him check the result before cleanup. Do not share tools between homes without proper cleaning, and use safe single-use items where needed. Cluster appointments in nearby streets on the same day.",
+      "who_pays_you": "Office workers, shift workers and men caring for children at home pay for a convenient haircut. Some families book several adults together, improving your route. Reach customers through personal referrals and neighbourhood groups with permission. A regular client who trusts your cut is more valuable than many first visits far apart.",
+      "how_money_comes": "Charge per haircut and beard service with a minimum visit price that covers travel and cleaning. A family booking can have a fair combined rate because you make one journey. Offer repeat slots every few weeks if the customer wants them. Track actual route time so a cheap distant booking does not absorb an entire afternoon.",
+      "what_you_need": "You need barbering skill, disinfectable tools, clean capes, spare blades or guards, a portable mirror and a covered container for used items. Plan safe travel with a compact kit. Make cancellation terms clear, confirm the address before leaving and maintain professional boundaries in a new home.",
+      "first_30_days": [
+        "Practice your complete setup and cleanup in a home setting, not only at a chair.",
+        "Set a small route area and menu with realistic appointment lengths.",
+        "Take a few paid trial visits and record travel, tool cleaning and service time.",
+        "Ask clients what they would improve about the cut and the home setup.",
+        "Offer grouped family slots and regular bookings only after the route is predictable."
+      ],
+      "what_hurts": "A cramped bathroom or poor lighting can make a good cut difficult. Hair clippings left behind can lose a repeat customer. Rush-hour travel and no-shows eat margin, and beard work with sharp tools requires care. Some clients may request a style you cannot cut well; a house call is no excuse to learn on the customer without consent.",
+      "verdict": "Build this if you are already a competent barber and can keep a tidy route. Walk away if you depend on walk-in volume, because home visits trade volume for convenience and trust.",
+      "faq": [
+        {
+          "q": "Do I need to bring a chair?",
+          "a": "Ask about stable seating and light before confirming. A folding chair may help in some homes, but it adds travel weight. Do not proceed with an unsafe setup just to keep a booking."
+        },
+        {
+          "q": "Can I use the same cape and tools all day?",
+          "a": "Reusable tools and capes need proper cleaning between clients. Carry enough clean supplies or schedule time to reset them. Explain your hygiene routine openly."
+        },
+        {
+          "q": "Should I offer shaving with a blade?",
+          "a": "Only if you are trained, use appropriate single-use blades and can work safely in the home. A clipper beard trim may be a better starting service than a close shave."
+        }
+      ],
+      "validate_prompt": "I want to run men’s haircut and beard home visits on a small route in India. How should I price travel, group bookings, hygiene and cancellations?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "field",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S04-I10",
+      "slug": "birthday-party-braiding-station",
+      "title": "Birthday Party Hair Braiding Station",
+      "hook": "A children’s party can include a fun hair station when every child gets a safe, quick style and parents know what is used.",
+      "summary": "You bring a booked braiding and simple hair styling station to a family birthday party. The host pays for a fixed time and child count. The offer is child-friendly entertainment with tidy, non-invasive styling, not adult salon treatments performed on children.",
+      "what_it_is": "Agree with the parent on ages, guest count, space and the types of simple braids or clips you can offer. Use clean brushes and gentle accessories without heat, adhesives or products that may irritate. Ask a parent or guardian to approve each child’s participation and respect a child who declines. Keep a visible queue and choose styles that finish within the booked slot. Bring spare accessories, a mirror and a way to clean the station between children. The host should know whether take-home clips are included.",
+      "who_pays_you": "Parents hosting a birthday at home pay because a small activity keeps guests engaged and gives children a cheerful keepsake. Party planners may refer you, but the host approves the safety and schedule. Reach buyers through family referrals and photos shared only with permission. Do not use children’s faces for promotion without explicit guardian consent.",
+      "how_money_comes": "Charge the host for a defined time block and maximum number of children, with clear pricing for extra time or accessories. Take a reservation payment for the party date. The package must cover travel, supplies and setup, not just minutes spent braiding. A small event may be more profitable than many individual visits if the queue is managed well.",
+      "what_you_need": "You need quick, gentle braiding skill, clean brushes, simple clips, a stable chair and a written party plan. Carry allergy-aware product choices by avoiding unnecessary sprays. Have the host provide an adult to manage general child supervision. Your role is the styling station, not responsibility for the whole party.",
+      "first_30_days": [
+        "Practice a few gentle styles and time them on consenting children with a guardian present.",
+        "Write a menu of styles, maximum guests and accessory inclusion.",
+        "Confirm space, power-free setup and guardian consent arrangements with a host.",
+        "Run one paid party with a visible queue and note actual time per child.",
+        "Adjust your package and guest cap before taking another event."
+      ],
+      "what_hurts": "Children may change their mind in the chair, dislike tugging or have hair that needs more time than the slot allows. A host may invite extra guests without telling you. Sharing brushes carelessly creates hygiene concerns. Parents can disagree about photos or accessories. Keep the service optional, gentle and within the number you can finish without rushing.",
+      "verdict": "Build this if you can work kindly with children and keep a party queue moving. Walk away if you expect every guest to sit still for a complicated style, because this station works through simple choices and consent.",
+      "faq": [
+        {
+          "q": "Can I use temporary hair colour or glitter?",
+          "a": "Keep the first package to simple accessories and braids. Products can cause sensitivities and make cleanup harder. Add anything new only after checking safety, guardian permission and venue rules."
+        },
+        {
+          "q": "Who supervises the children while they wait?",
+          "a": "The host provides an adult responsible for the party. You supervise the child in your chair during the style, but you cannot run the entire room and braid at the same time."
+        },
+        {
+          "q": "What if a child says no after a parent paid?",
+          "a": "Respect the child’s choice. Offer the host a simple alternative within the package, such as an unused accessory, but do not pressure a child into being touched for a party activity."
+        }
+      ],
+      "validate_prompt": "I want to offer a simple hair braiding station at children’s home birthday parties in India. How should I set guest limits, guardian consent and a safe package price?",
+      "investment_band": "under_25k",
+      "gender_fit": "any",
+      "life_stage": [
+        "student",
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "city",
+        "metro"
+      ],
+      "work_mode": "field",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    }
+  ]
+}

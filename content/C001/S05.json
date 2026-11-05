@@ -1,0 +1,548 @@
+{
+  "subcategory": {
+    "code": "C001-S05",
+    "intro": "You may have written a thoughtful message for a friend and wondered whether writing could become paid work from your room. It can, but the work is more grounded than sitting down and waiting for inspiration. A shop owner needs a page that answers a customer's worried questions. A parent needs a clear school notice. A traveller needs to know whether a homestay is right for their family. You listen carefully, check the details and make their next decision easier. That is what a good website or blog writer sells.\n\nYou can begin with one kind of customer and a small sample that shows you understand their world. Visit a local business, read its current pages and notice where a visitor might get lost. Ask who answers customer questions, who can approve facts and whether the owner can provide photographs or product details. Write a short sample with their permission. A useful sample often opens more doors than announcing that you can write about everything.\n\nThis work fits around a home routine, yet deadlines are real. An owner may send three voice notes and expect a finished page that afternoon. You need to agree on the length, the person who approves it, the number of revisions and the date before you begin. You also have to be honest about subjects you cannot verify, especially health, legal or financial claims. A calm question is better than a confident invention.\n\nThe ten paths below have different buyers and kinds of writing. Some need interviews in person; others can be done over a call. Choose the one where you can understand the reader's everyday concern and where you would enjoy asking one more question before writing the answer.",
+    "how_to_choose": "Start with the customers whose questions you already understand. If you know local streets and shopkeepers, service pages are easier to research than technical software guides. If you enjoy long conversations, profiles and homestay stories may suit you. If you prefer orderly facts, help pages or product descriptions give you a clearer brief. Ask how often the buyer needs new work and who will approve it. A monthly blog plan is attractive only when the owner can actually share fresh information. Keep a small writing sample for the exact format you offer, and count the hours spent interviewing, checking facts and revising, not just typing.",
+    "faq": [
+      {
+        "q": "Do I need a degree in English to begin?",
+        "a": "You need clear language, careful listening and the habit of checking every claim. A degree can help, but a short, accurate sample for a real local business tells a buyer more about how you work."
+      },
+      {
+        "q": "Can I write in Hindi or another Indian language?",
+        "a": "Yes, if you can write naturally for the people the business serves. Do not simply translate an English page word for word. Ask how local customers describe the problem and have a fluent reader review your first drafts."
+      },
+      {
+        "q": "How do I find my first client without a big portfolio?",
+        "a": "Choose one type of business, write a brief sample after asking permission and explain which customer question it answers. Speak to a few owners personally. Make it easy for them to try one paid page before discussing a larger package."
+      },
+      {
+        "q": "What should I agree before starting a writing job?",
+        "a": "Put the format, approximate length, fact owner, deadline, fee, payment stage and included revisions in one written message. Ask whether interviews and uploading are included. A clear agreement protects your time and gives the buyer a calmer experience."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C001-S05-I01",
+      "slug": "neighbourhood-repair-website-pages",
+      "title": "Neighbourhood Repair Service Website Pages",
+      "hook": "Your tap leaks at night, and the repairer's page leaves you unsure whether they will even visit your lane.",
+      "summary": "You write clear service and locality pages for plumbers, electricians or appliance repair teams. You check their actual coverage, work process and booking rules, then turn those details into answers a worried household can use. The owner pays for a page that reduces confused calls.",
+      "what_it_is": "You sit with a repair owner and ask what happens from the first call to the completed visit. Which areas do they cover, what can be diagnosed on a call, what costs need approval and what work must go to an authorised specialist? You turn the answers into a service page with a plain heading, useful questions and a specific call or WhatsApp action. A page for an AC repair team should not pretend they also fix every appliance. Read the draft aloud to the owner and check that any promise about timing or warranty is one they can keep.",
+      "who_pays_you": "A small repair team with repeat enquiries pays you, usually through its owner or manager. Visit a few businesses whose current pages omit hours, service areas or the way bookings work. Show one example question their customers ask and the answer you could add. They may know their trade very well but have little patience for writing after a day of calls and site visits.",
+      "how_money_comes": "Charge for a defined page or a small group of related pages, with one round of factual corrections included. Ask for part payment before drafting when the scope is agreed. If the owner wants extra locality pages later, quote those separately after checking that each has genuinely different information. Count interview time, travel and revisions; a page that takes four conversations is more than a typing job.",
+      "what_you_need": "You need a phone, reliable internet, a writing sample and a checklist for service area, hours, booking, safety and approvals. Keep notes from the owner rather than guessing what a technician can do. A basic document editor is enough. You should be able to write a direct sentence that a tired customer understands on the first read.",
+      "first_30_days": [
+        "Choose one repair trade and list the questions a household asks before calling.",
+        "Speak to two owners about their real coverage and the work they decline.",
+        "Draft one sample page using only details an owner has confirmed.",
+        "Offer a paid page with clear approval and revision terms to a suitable team.",
+        "Ask whether the finished page changed the questions arriving by phone."
+      ],
+      "what_hurts": "An owner may ask you to promise same-day visits across a city when the team cannot manage them. Locality pages copied with only the area name changed will disappoint readers and could damage trust. Technicians may use shorthand that customers misunderstand. You will need to push back gently on vague guarantees, wait for factual sign-off and sometimes rewrite when hours or routes change.",
+      "verdict": "Build this if you can turn a stressful household problem into a clear, honest page. Walk away if you are expected to invent coverage or guarantees the repair team cannot honour.",
+      "faq": [
+        {
+          "q": "Must I know how to repair appliances?",
+          "a": "No, but you must know which questions to ask and who can verify the answers. Leave diagnosis and safety claims to the trained team. Your job is to make their genuine service easy to understand."
+        },
+        {
+          "q": "Can I reuse a page for another locality?",
+          "a": "Only the parts that remain true. Ask about coverage, travel conditions and service differences for each area. If there is nothing distinct to say, one strong coverage page may be better."
+        },
+        {
+          "q": "Who uploads the page to the website?",
+          "a": "Agree on this before quoting. You can deliver a document for the owner or include uploading if you know their system and have safe access. Check the published version for accidental changes."
+        }
+      ],
+      "validate_prompt": "I want to write a local repair team's website page in India. Which customer questions and owner-approved details should I gather before quoting for one page?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "student",
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city",
+        "metro"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S05-I02",
+      "slug": "homestay-stay-guide-writing",
+      "title": "Family Homestay Stay Guide Writing",
+      "hook": "You are booking a family trip and cannot tell whether the hillside room has stairs your parents can manage.",
+      "summary": "You help a small homestay explain the stay as it really is. Room pages and nearby guides cover access, food, travel and everyday comforts, so a family can decide with confidence. The host gets fewer mismatched bookings and more useful enquiries.",
+      "what_it_is": "You speak with the host, walk through the property if practical and write as though you were answering a guest before they send an advance. Describe beds, stairs, water, meals, check-in, transport and what the nearby area is like at different times. A separate short guide might explain how to reach the property from a bus stand or what a rainy afternoon is like with children. Ask the host to verify distances and policies. Warmth helps, but accuracy matters more than calling every room perfect.",
+      "who_pays_you": "Independent homestay hosts, small guesthouses and family-run stays pay you. A host who spends evenings repeating the same answers in messages has a clear reason to buy. Approach them with one missing guest question from their existing page. Some owners will prefer a call and shared photos; nearby hosts may welcome an on-site visit if you price the travel fairly.",
+      "how_money_comes": "Charge per room page or per defined guest guide, and quote a visit or interview separately when it takes substantial time. Offer a refresh when facilities, road access or policies change. The host should approve all claims before the balance is paid. Avoid a vague monthly writing plan unless there are new guest questions or experiences worth covering each month.",
+      "what_you_need": "You need patient interviewing, careful notes and the ability to picture what a guest cannot see online. Ask for current photographs and permission to use them in a draft. Know how to organise a page with useful headings. If you cannot visit, ask for a video walkthrough and confirm details that photos hide, especially stairs and access.",
+      "first_30_days": [
+        "Read several nearby stay pages and note questions left unanswered for families.",
+        "Ask one host to walk you through a guest arrival from road to room.",
+        "Draft a room page that includes useful limitations as well as comforts.",
+        "Agree on one paid guide, the fact check and any visit cost.",
+        "Send the finished page to a friend planning a trip and note their remaining questions."
+      ],
+      "what_hurts": "A lovely photograph can conceal a difficult climb or a long walk from the parking spot. The host may want to describe every season as ideal, while guests need honest guidance. Travel details can change quickly. You may spend far longer checking room facts than writing polished sentences, and a poorly framed limitation may upset the owner until you explain how it prevents an unhappy arrival.",
+      "verdict": "Build this if you enjoy helping a guest imagine a real stay before paying. Walk away if the host will only approve glowing claims that hide practical difficulties. You should be able to name the difficulty a guest may face before they arrive.",
+      "faq": [
+        {
+          "q": "Should I visit every property?",
+          "a": "A visit gives you better sensory detail, but it may not be affordable for distant hosts. Use a video walkthrough, current photos and a structured interview, then mark any point you cannot confirm."
+        },
+        {
+          "q": "Can I describe nearby attractions?",
+          "a": "Yes, after checking access and asking the host what guests actually manage in a day. Avoid confident travel times when roads and weather vary. A practical route matters more than a long list."
+        },
+        {
+          "q": "Will a better page guarantee more bookings?",
+          "a": "No. Availability, reviews, photographs and the stay itself matter too. Your page can help the right guest understand the property and ask fewer basic questions before booking."
+        }
+      ],
+      "validate_prompt": "I want to write a family homestay's room page and arrival guide in India. What should I verify with the host, and how should I scope a first paid assignment?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "student",
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city",
+        "metro"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S05-I03",
+      "slug": "clinic-appointment-explainer-pages",
+      "title": "Clinic Appointment Explainer Pages",
+      "hook": "Your mother has a clinic appointment tomorrow, and you are still searching for what she needs to carry.",
+      "summary": "You write practical appointment and service information for a local clinic, using only details the doctor or clinic manager approves. Patients learn how to prepare, where to go and how to ask for help. Your work makes the front desk's day less repetitive.",
+      "what_it_is": "You first map the questions callers ask: appointment process, documents, accessibility, preparation and what happens after a visit. Then you draft simple pages that separate confirmed logistics from medical advice. A doctor reviews any clinical language, and the clinic signs off on its timings, fees policy and emergency directions. Write for a person who may be anxious and reading on a small phone. If a detail changes often, tell readers how to confirm it rather than presenting it as permanent.",
+      "who_pays_you": "Small clinics, diagnostics centres and dental practices with many repeated enquiries may pay through their owner or administrator. Show how a clear preparation page could answer the same front-desk question heard all week. A clinic will expect discretion, precise wording and quick corrections. Never use a patient's story or photograph without explicit permission.",
+      "how_money_comes": "Quote a fixed fee for an agreed set of patient information pages, with a named reviewer and limited revision rounds. Separate research interviews, translation and uploading in the quote. Request payment at milestones because clinical approval can take time. A small maintenance arrangement can cover changed hours or procedures, but agree how quickly the clinic will send verified updates.",
+      "what_you_need": "You need plain-language writing, secure handling of drafts and a reliable clinician who will approve all health claims. Bring a question list for reception and doctors. Keep patient information out of your notes. A laptop helps with editing, but the more important skill is knowing when to stop and ask a qualified person to confirm a sentence.",
+      "first_30_days": [
+        "List common non-clinical questions a patient asks before arriving at a clinic.",
+        "Speak with a clinic manager about repeated calls and the approval process.",
+        "Draft one logistics page without making a medical promise.",
+        "Have the appropriate clinician check every clinical statement before delivery.",
+        "Agree on one paid page and a named contact for later corrections."
+      ],
+      "what_hurts": "You may be pressed to simplify a medical point until it becomes misleading. Review delays can leave a draft unfinished for weeks. Appointment timings and preparation rules may change, so old pages can confuse patients. You cannot substitute your judgement for a clinician's. If nobody at the clinic will own the facts, the writing job is not safe to take.",
+      "verdict": "Build this if you write gently and can wait for proper clinical review. Walk away if anyone asks you to invent medical advice or publish unapproved claims. A worried patient deserves a checked answer every time.",
+      "faq": [
+        {
+          "q": "Can I explain a treatment in my own words?",
+          "a": "Only after a qualified clinician gives you the approved facts and reviews your draft. Your skill is clarity, not diagnosis. When an answer depends on the patient, guide them to the clinic."
+        },
+        {
+          "q": "May I interview patients for stories?",
+          "a": "Do that only with a clear clinic process and the patient's informed permission. A first project can focus on logistics and general questions, which is simpler and protects private information."
+        },
+        {
+          "q": "Who is responsible for changing opening hours?",
+          "a": "Name a clinic contact who will notify you and approve updates. If the page is handed over, explain how their team can edit it. An outdated page can send someone on a wasted journey."
+        }
+      ],
+      "validate_prompt": "I want to offer a clinic a patient appointment information page in India. Which details need clinician approval, and how should I handle revisions and updates?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "student",
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city",
+        "metro"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S05-I04",
+      "slug": "craft-product-story-pages",
+      "title": "Handmade Product Story Pages",
+      "hook": "You see a handwoven basket online, but there is no clue about its size, care or the person who made it.",
+      "summary": "You help an artisan seller tell the useful story behind a product while answering buying questions. Each page combines verified materials, dimensions, care and making process with a human description. A shopper can decide whether the item fits their home or gift.",
+      "what_it_is": "You talk with the maker about materials, methods, variations and care, then handle the less romantic questions too: size, weight, what arrives in the parcel and when a handmade difference is normal. Write one product page at a time, with a clear opening and headings a phone shopper can scan. If you mention a craft community or origin, have the maker verify it. You can also prepare a brief maker profile, but let the artisan decide which personal details they want to share.",
+      "who_pays_you": "Artisans, small craft collectives and independent online sellers pay you when their listings are too vague to answer customer messages. Meet a maker at a market or ask a seller to show you a product they struggle to describe. Show one rewritten paragraph paired with practical specifications. The owner may be more comfortable speaking than typing, so a voice note can start the interview.",
+      "how_money_comes": "Charge per product page or for a defined group of products that share a range. Agree whether you will measure items, organise photographs or enter text into a shop system. Request accurate product facts before drafting, and add a separate fee for new versions after materials or packaging change. Your time includes listening, fact checking and editing, not merely counting descriptions.",
+      "what_you_need": "You need a way to record approved dimensions and materials, a clear writing sample and access to each product or dependable photos. A simple spreadsheet prevents colour and size mistakes. Learn to ask about care and delivery without making claims about durability that the maker has not tested. Write in the language the buyers actually use.",
+      "first_30_days": [
+        "Choose one craft category and inspect what current listings fail to explain.",
+        "Interview a maker about one item and ask for measurements and care details.",
+        "Write a sample page that lets a buyer picture the item in use.",
+        "Offer a small paid set of listings with one factual review round.",
+        "Track which questions buyers still ask and improve the next set."
+      ],
+      "what_hurts": "A maker may have hundreds of similar pieces, but each listing still needs correct dimensions and availability. Handmade variation is easy to describe badly as a defect or to hide altogether. Photos may disagree with the stated colour. You may need to pause until the seller confirms a detail, and you must resist inventing a heritage claim just because it sounds beautiful.",
+      "verdict": "Build this if you care about both the maker's work and the buyer's practical questions. Walk away if the seller cannot verify materials, size or origin claims. A pretty paragraph cannot make up for an inaccurate listing.",
+      "faq": [
+        {
+          "q": "Can one description cover several colours?",
+          "a": "The shared making story can help, but each option still needs accurate colour, dimensions and availability. Make the choices clear so a buyer knows exactly what will arrive."
+        },
+        {
+          "q": "Should I write a personal story for every maker?",
+          "a": "Only if they want to share one. Ask for permission and let them review it. A useful product page can stand on its own without turning someone's private life into marketing."
+        },
+        {
+          "q": "Do I need to photograph the items too?",
+          "a": "You can offer that separately if you have the skill and equipment. For a writing assignment, ask for clear photos and measurements, and agree who checks that the images match the description."
+        }
+      ],
+      "validate_prompt": "I want to write handmade product pages for an Indian artisan seller. How should I collect verified details and price a first small group of listings?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "student",
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city",
+        "metro"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S05-I05",
+      "slug": "school-parent-information-pages",
+      "title": "School Parent Information Pages",
+      "hook": "A new parent keeps asking the class group about pickup time because the school page never says it clearly.",
+      "summary": "You help a small school or activity centre put routine parent information into plain, organised pages. Admissions, pickup, materials and contact rules become easier to find. Parents feel less lost and the office answers fewer versions of the same question.",
+      "what_it_is": "You interview the administrator about what families ask before joining and during the first month. You write pages for admissions steps, daily routine or an activity programme, with separate contacts for urgent matters. A teacher or manager approves the policy language. Keep the tone welcoming without promising outcomes for a child. Check that dates, age groups, transport and fee enquiry rules match current practice. A mobile reader should be able to find the one answer they need while standing at the gate.",
+      "who_pays_you": "Neighbourhood preschools, tuition centres and small activity schools may pay you through a principal or owner. Approach a centre where the office fields the same admissions calls every day. Bring a short example of a better parent question page, and ask who has authority to approve policies. Parents themselves benefit, but the institution is the buyer.",
+      "how_money_comes": "Charge by a defined set of pages, such as admissions plus a parent FAQ, and make policy changes outside the agreed revision round a separate update. Include one interview and one named approval step. If the centre wants termly refreshes, quote a modest retainer with a clear number of updates. Do not promise fewer calls as a guaranteed result; offer clarity that staff can test.",
+      "what_you_need": "You need careful note taking, a secure way to exchange drafts and the patience to reconcile conflicting answers from staff. Do not collect children's personal information. Ask for current policies, calendar and authorised contact details. A clear structure matters more than decorative language. Have the school review every operational promise before a page goes live.",
+      "first_30_days": [
+        "Collect the questions parents ask when joining a nearby activity centre.",
+        "Ask an administrator which answers change during the school year.",
+        "Draft a sample admissions page using approved facts and a warm tone.",
+        "Offer one paid page set with a named policy reviewer.",
+        "Check the published copy on a phone and ask a parent what remains unclear."
+      ],
+      "what_hurts": "Different staff members may give different answers about pickup, materials or refunds. You cannot decide school policy for them. Term dates and contact numbers change, and an old page can create real inconvenience. Admissions writing also attracts pressure to make grand promises about a child's progress. Keep the claims modest and ask the school to resolve contradictions before you polish them.",
+      "verdict": "Build this if you can make a parent's small daily worries feel understood. Walk away if the school will not settle its own policies before you publish them. Parents will act on the practical details you put in writing.",
+      "faq": [
+        {
+          "q": "Can I write about student achievements?",
+          "a": "Ask the school for permission and verified details, especially before using a child's name or image. Begin with routine parent information, which helps families without depending on private stories."
+        },
+        {
+          "q": "What if the school changes its timings?",
+          "a": "Agree who will notify you and who edits the live page. A dated review reminder is useful, but the school must own the current policy. Do not leave a changed pickup rule buried in an old draft."
+        },
+        {
+          "q": "Should the page include all fee details?",
+          "a": "Follow the school's approved policy. If fees vary, explain how a parent can get the current schedule instead of guessing. The page should make the next step clear, even when the amount is not published."
+        }
+      ],
+      "validate_prompt": "I want to write parent information pages for a small school in India. What approval process and page scope should I propose for a first assignment?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "student",
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city",
+        "metro"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S05-I06",
+      "slug": "bilingual-local-service-copy",
+      "title": "Bilingual Local Service Website Copy",
+      "hook": "Your neighbour calls the shop because its English page never explains in Hindi how to book the service.",
+      "summary": "You write a local service page in two languages that customers actually speak. The second version is adapted to familiar phrases and questions, not copied line by line. A bilingual reviewer checks both, and the business can welcome callers who were unsure of the English page.",
+      "what_it_is": "You interview a shop owner about services, neighbourhood terms and the phrases customers use on calls. Write the main page, then adapt it in Hindi or another language you know well, keeping booking rules and limitations consistent. Ask a fluent second reader to check clarity, spelling and tone. A bilingual page may need different examples or headings, but a customer in either language must receive the same real promise. Arrange the page so visitors can find the language they prefer without hunting through mixed text.",
+      "who_pays_you": "Local clinics for administrative information, repair teams, tutors and neighbourhood stores may pay you if they serve people who switch languages in daily conversation. Show a small owner how one confusing booking instruction could be made clear in both versions. The business owner approves the facts; a fluent reviewer checks the second language. Avoid claiming fluency you do not have.",
+      "how_money_comes": "Price two adapted page versions as a defined assignment, not as one page with a free translation attached. Budget for the second review and any changes that must be mirrored across languages. Agree whether publishing is included. If opening hours or booking steps later change, charge for updating both versions together so one language does not quietly become wrong.",
+      "what_you_need": "You need strong writing in both chosen languages, a reviewer for the second version and a glossary of the business's preferred words. A phone call with staff who answer customers is invaluable. Keep one fact sheet for both drafts. You should be able to spot a phrase that sounds natural in a conversation but awkward on a website.",
+      "first_30_days": [
+        "Listen to the words customers use when asking for one local service.",
+        "Draft a short fact sheet and get the business owner to approve it.",
+        "Write both language versions and ask a fluent reader to test each.",
+        "Offer one paid bilingual page with paired revision and update terms.",
+        "Check that the two published versions describe the same booking steps."
+      ],
+      "what_hurts": "Two languages double the places a changed fact can hide. A literal translation may sound stiff or even alter a promise. Some owners will ask you to add a language you can speak but cannot write confidently. Decline that part or work with a qualified partner. A reviewer who checks only grammar may miss a confusing customer instruction, so test the actual booking path too.",
+      "verdict": "Build this if you can hear how neighbours ask for help in both languages. Walk away if you cannot write and review the second version accurately. A customer should receive the same clear answer in either language.",
+      "faq": [
+        {
+          "q": "Is speaking a language enough to write a page?",
+          "a": "Often it is not. Written tone, spelling and local terms matter. Work in languages you can write well and arrange a fluent review. Be honest with the buyer about your level."
+        },
+        {
+          "q": "Should both versions have identical sentences?",
+          "a": "They should have consistent facts and promises, but examples and phrasing can differ to sound natural. A customer using either version should understand the same price enquiry and booking process."
+        },
+        {
+          "q": "What happens when the owner changes an offer?",
+          "a": "Update both versions as one task and check the live pages. Keep a shared fact sheet so you know which sentences depend on the changed detail. Quote ongoing updates separately."
+        }
+      ],
+      "validate_prompt": "I can write in English and Hindi for a local Indian service business. How should I scope two website page versions and check that their promises match?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "student",
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city",
+        "metro"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S05-I07",
+      "slug": "software-onboarding-help-articles",
+      "title": "Small Software Onboarding Help Articles",
+      "hook": "You sign up for a shop billing tool and get stuck at the very first screen, with nobody to ask.",
+      "summary": "You write step-by-step help articles for a small Indian software product after using its real interface. Each article helps one customer finish a task, such as adding a product or finding an invoice. The team pays for fewer avoidable support questions.",
+      "what_it_is": "You ask the product team for a test account, follow the same path a new customer sees and record where the instructions feel unclear. An article opens with the task, lists prerequisites, walks through the current screens and explains what to do when a common error appears. Use screenshots only with permission and hide customer data. A staff member tests your draft on the latest version before publication. Keep each article narrow so a shopkeeper can find an answer during a busy sale.",
+      "who_pays_you": "A small billing, booking or inventory software team pays, often through its founder or support lead. Look for a product whose customers repeatedly ask how to complete basic setup. A sample article based on a permitted demo account can show your style. These buyers may work remotely and need you to communicate clearly through a shared document and a short review call.",
+      "how_money_comes": "Charge for a tested article or a defined onboarding set, including one product walkthrough and one review round. Agree who supplies access and screenshots, and when interface changes become a new paid update. Support documentation is ongoing only if the team commits to telling you what changed. Include testing and revision time in your quote; a short page may require a long product session.",
+      "what_you_need": "You need a laptop or capable phone, patient testing, basic screenshot handling and the ability to describe a screen precisely. Ask for safe demo data, never a real customer's login. Keep a version note and a contact who can verify the current steps. You need curiosity about how people use a tool, not coding skill.",
+      "first_30_days": [
+        "Choose a small tool and note one setup step that confuses a first user.",
+        "Ask its team for a demo account and permission to write a sample.",
+        "Test the full task, including an error and its recovery path.",
+        "Offer a paid article with a named product reviewer and update rule.",
+        "Ask a new user to follow the published steps without your help."
+      ],
+      "what_hurts": "A button can move the week after you write about it. Access may be delayed, and a founder may approve an article without actually testing it. Screenshots with personal information create a privacy problem. You cannot write trustworthy steps from a sales brochure alone. Keep the task narrow and insist on a working demo plus a reviewer who knows the current product.",
+      "verdict": "Build this if you like patiently finding the step where a new user gets stuck. Walk away if the team cannot give you safe access to test the actual product.",
+      "faq": [
+        {
+          "q": "Do I need to learn coding?",
+          "a": "No. You do need to use the product carefully and describe the path a customer sees. A developer can verify technical details, while you make the task understandable to a new user."
+        },
+        {
+          "q": "Who makes the screenshots?",
+          "a": "Agree this with the buyer. If you make them, use demo data and follow their privacy rules. The team should review every image before publishing because screens and labels can change."
+        },
+        {
+          "q": "How do I keep articles current?",
+          "a": "Ask the product team to flag changed screens and include a review date or version note. Quote updates separately or in a defined maintenance plan. Without a change contact, even a good article ages quickly."
+        }
+      ],
+      "validate_prompt": "I want to write onboarding help articles for a small Indian software tool. How can I test the product safely and price a first set with future updates?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "student",
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city",
+        "metro"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S05-I08",
+      "slug": "wedding-vendor-service-guides",
+      "title": "Wedding Vendor Service Guides",
+      "hook": "Your family is arranging a wedding and keeps calling the decorator because the package page leaves everything uncertain.",
+      "summary": "You write practical service guides for one wedding vendor, such as a decorator, photographer or caterer. The page explains the process, choices and questions to ask before booking. Families get a calmer starting point, and the vendor receives better prepared enquiries.",
+      "what_it_is": "You interview the vendor about their real booking sequence, venue requirements, advance, changes and what a family must decide first. Turn the answers into a page that walks through the service without declaring every wedding identical. A decorator's guide may cover venue visits and setup access; a photographer's may explain deliverables and family shot lists. Ask the vendor to check examples and make clear which items require a custom quote. Include a short question list that helps a family have a useful first call.",
+      "who_pays_you": "Small wedding vendors and studios pay you, especially when their inbox fills with the same basic questions during the season. Approach one whose work you can understand and show how a clear guide could save a lengthy first call. Their customers are families making emotional decisions, so your tone should be reassuring while the vendor approves every policy and service limit.",
+      "how_money_comes": "Charge for a defined guide plus one interview and approval round. If the vendor wants several service pages, quote each based on how much fact gathering it needs. Seasonal updates to packages or venue conditions can be priced separately. Agree whether the guide includes a printable enquiry checklist. Do not hide major exclusions in small print just to make the page sound more attractive.",
+      "what_you_need": "You need a patient interview style, organised notes and sensitivity to family budgets and expectations. Ask for the actual booking terms and sample deliverables. Keep client photographs private unless the vendor has permission to use them. You can work from home after a call, though a venue visit may require a separate travel arrangement.",
+      "first_30_days": [
+        "Choose one wedding trade and collect the questions families ask before paying an advance.",
+        "Interview a vendor about the booking sequence and common misunderstandings.",
+        "Draft a guide that names choices, limits and the next step clearly.",
+        "Offer one paid guide with factual sign-off and a revision boundary.",
+        "Ask a family member whether the page would help them prepare for a call."
+      ],
+      "what_hurts": "A family may read a general example as a guaranteed package. A vendor may be reluctant to state exclusions, then face disappointed customers later. Wedding seasons bring urgent edits and multiple relatives with different opinions. Name one approving contact and keep the page focused on the vendor's real process. If terms vary by venue, say so plainly and invite a tailored quote.",
+      "verdict": "Build this if you can steady a family's first conversation with a vendor. Walk away if the vendor wants a page that conceals meaningful booking conditions. Families need to understand the terms before paying an advance.",
+      "faq": [
+        {
+          "q": "Should a guide publish package prices?",
+          "a": "Follow the vendor's actual policy. If work is customised, explain the factors in a quote and how to ask for one. Never invent a starting amount to make the page feel complete."
+        },
+        {
+          "q": "May I use a couple's wedding photos?",
+          "a": "Only if the vendor has permission for this use. You can write a process guide without client images. Do not assume a photograph shared privately may be republished."
+        },
+        {
+          "q": "How do I handle different family opinions?",
+          "a": "Ask the vendor to appoint one person to approve the page. Gather other comments through that contact. Your draft needs to reflect the business's terms, not settle a disagreement among relatives."
+        }
+      ],
+      "validate_prompt": "I want to write a wedding decorator's service guide for Indian families. Which booking questions and exclusions should the vendor confirm before I draft it?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "student",
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city",
+        "metro"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S05-I09",
+      "slug": "founder-interview-profile-writing",
+      "title": "Founder Interview Profile Writing",
+      "hook": "You love a tiny neighbourhood bakery and wish its page sounded like the person who greets you there.",
+      "summary": "You interview a small business owner and write an honest founder profile for their website. The piece connects their choices and work to what a customer experiences today. It can be a useful introduction when the owner's own words get lost in a generic About page.",
+      "what_it_is": "You spend a focused hour asking why the owner began, what changed, how the product is made and what customers often misunderstand. Then you write a profile with a real scene and concrete details, without turning every setback into a heroic claim. Check names, dates and any mention of staff. Let the owner remove details they would rather keep private. The final page should help a visitor understand the business, not just admire the founder's life story.",
+      "who_pays_you": "Independent bakeries, studios, repair shops and other owner-led businesses pay when they want their site to sound like them. Meet a local owner whose story you genuinely want to hear, and show a short interview excerpt with their permission. A profile is usually a one-time assignment, so referrals and related page work matter more than expecting monthly repeat orders from one buyer.",
+      "how_money_comes": "Quote one interview, one profile of agreed length and a limited review round. Include travel or transcription time if needed. Request a deposit before the interview, then the balance on approved delivery. If the owner later asks for team biographies or a shorter version for another format, scope those separately. Keep the approval process personal and straightforward.",
+      "what_you_need": "You need listening skills, a recorder or notes with permission, a way to verify facts and confidence editing spoken language into readable prose. Bring thoughtful questions, but leave room for surprises. Ask before recording and keep the recording private. A strong sample should show both a distinct voice and clear information about what the business offers.",
+      "first_30_days": [
+        "Choose an owner-led business and prepare questions about its everyday work.",
+        "Ask permission for a short practice interview and note one concrete scene.",
+        "Draft a profile that also explains the business to a new customer.",
+        "Offer a paid interview and profile with privacy and revision terms.",
+        "Read the final page with the owner and correct facts before publication."
+      ],
+      "what_hurts": "An owner may reveal a sensitive family or money story in conversation and regret seeing it in print. Memory can blur dates, and a lively quote may sound different when written down. Some owners want a profile that lists every achievement, leaving no room for a reader to breathe. You need to protect trust, verify details and be willing to cut a beautiful sentence that is not fair or useful.",
+      "verdict": "Build this if you listen closely and can give an owner a truthful, welcoming voice. Walk away if you cannot respect boundaries around personal stories or approval. The owner should feel safe telling you what matters and what stays private.",
+      "faq": [
+        {
+          "q": "Can I quote the owner's exact words?",
+          "a": "Ask permission and check the edited quote with them. Spoken sentences often need light cleanup, but the meaning must stay theirs. Keep a recording only with consent and store it carefully."
+        },
+        {
+          "q": "What if the founder wants to include every achievement?",
+          "a": "Ask which detail helps a new customer understand the business today. You can offer a separate timeline for milestones. A short profile usually becomes stronger when it leaves room for specific work and people."
+        },
+        {
+          "q": "Can I post the profile in my portfolio?",
+          "a": "Agree on that before publication. The owner may allow a link or excerpt, or prefer to keep the assignment private. Your right to display a sample should be part of the written scope."
+        }
+      ],
+      "validate_prompt": "I want to interview a neighbourhood business owner in India and write an About page. What questions, approval terms and privacy boundaries should I set?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "student",
+        "working_professional",
+        "homemaker",
+        "senior_citizen"
+      ],
+      "place": [
+        "small_town",
+        "city",
+        "metro"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    },
+    {
+      "code": "C001-S05-I10",
+      "slug": "seasonal-local-guide-blog",
+      "title": "Seasonal Neighbourhood Guide Blog",
+      "hook": "Your new neighbour asks where to find school supplies before term starts, and the local site has no useful answer.",
+      "summary": "You produce timely neighbourhood guides for a local publisher, market association or community business. Each article solves one seasonal errand with checked hours, options and practical tips. Readers return because the guide respects their time, while the buyer gains a useful reason to keep its site current.",
+      "what_it_is": "You choose a concrete task, such as preparing for monsoon repairs or finding school essentials, and speak with relevant local shops before drafting. The article explains what to check, how to compare options and which details may change. The publisher approves any named business and the commercial relationship must be clear to readers. An article should remain useful even when one shop is closed. Put a review date on volatile information and invite readers to confirm hours directly.",
+      "who_pays_you": "A neighbourhood publication, market association or local business with a useful community section may pay you. Pitch a specific guide tied to a real seasonal question, not a promise to post every week. A business buyer may prefer an article that helps customers prepare for its service. Agree in advance whether named shops are editorial choices or paid placements.",
+      "how_money_comes": "Charge per researched guide, with a fee that covers calls or visits and one approval round. A small seasonal series can be quoted after the first guide proves manageable. Add a separate update fee when hours or availability need rechecking. If an article involves travel across several neighbourhoods, include that time. Do not take payment from a featured shop without the publisher's knowledge.",
+      "what_you_need": "You need local curiosity, a phone, careful fact notes and a simple way to track who confirmed each detail and when. Ask permission before photographing people or premises. A good guide has a clear reader task and several useful questions, even without a long list of shops. You must be willing to check a changed fact rather than quietly leaving it online.",
+      "first_30_days": [
+        "Choose one upcoming seasonal errand that neighbours ask about repeatedly.",
+        "Call or visit local shops to check the practical details a reader needs.",
+        "Draft a guide that still helps if one named shop is unavailable.",
+        "Pitch one paid article with research, approval and update terms.",
+        "Recheck volatile information after publication and note reader questions."
+      ],
+      "what_hurts": "Shop hours, stock and routes can change between your call and publication. A buyer may want the article to read like independent advice while quietly favouring one paying shop. Readers can lose trust quickly if a guide sends them on a wasted trip. Keep a dated fact log, separate advice from promotion and say when a detail needs direct confirmation.",
+      "verdict": "Build this if you enjoy answering the small questions neighbours actually ask. Walk away if the buyer expects hidden promotion dressed up as an independent guide. A neighbour may make a real journey because they believed your words.",
+      "faq": [
+        {
+          "q": "Do I need to name every local shop?",
+          "a": "No. Start with the reader's task and include only businesses whose details you can check and whose inclusion fits the brief. A useful checklist can matter more than a long directory."
+        },
+        {
+          "q": "What if a shop changes its hours?",
+          "a": "Ask the publication how updates are handled and put a review date on details that move. Encourage readers to confirm directly before a special trip. Quote rechecking as part of a defined update."
+        },
+        {
+          "q": "Can a business sponsor the guide?",
+          "a": "Yes, if the publisher agrees and the relationship is made clear to readers. Keep practical advice accurate and do not claim independent selection if a placement was paid for."
+        }
+      ],
+      "validate_prompt": "I want to pitch a seasonal neighbourhood guide to a local publisher in India. How should I research changing shop details and set an honest paid scope?",
+      "investment_band": "zero",
+      "gender_fit": "any",
+      "life_stage": [
+        "student",
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city",
+        "metro"
+      ],
+      "work_mode": "home",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "confidence": "confident",
+      "writer": "Agent 1"
+    }
+  ]
+}

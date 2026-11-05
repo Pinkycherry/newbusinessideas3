@@ -1,0 +1,516 @@
+{
+  "subcategory": {
+    "code": "C009-S04",
+    "intro": "A beauty parlour in a small town grows through the ordinary customer who feels comfortable returning, not only through a busy wedding season. People want clean tools, a clear price, skilled hands and a person who listens before starting. The word parlour covers many possible businesses. A quick eyebrow counter beside a market is not the same operation as a booked bridal room. A mobile visit to a distant village has travel and privacy costs that a fixed salon does not. Choose the service you have actually learned and practise it until you can deliver consistent work. Keep a price menu visible and ask about allergies or previous reactions before using a product. Patch testing and the manufacturer's instructions matter; never promise to treat a skin or hair condition as though you were a doctor. Your room needs clean water, light, privacy and a safe way to sterilise or replace tools between customers. Check local shop rules and any training or hygiene requirements. In an Indian town, school and office timings, festivals, weddings and market days create very different appointment patterns. A simple booking notebook prevents you from promising the same chair twice. Photograph work only with permission, and keep clients' personal details private. You can begin with one chair and a few dependable services before buying expensive machines or a large inventory of products. The ten ideas below choose different customer groups and service routines: quick visits, planned events, homebound clients, specialist grooming and time slots outside ordinary hours. Each needs its own supplies, pricing and limits. Look for a gap you can explain to a real customer, then test paid appointments before expanding. A friendly name may get someone in the door once; safe, reliable work brings them back.",
+    "how_to_choose": "Start with the service you can perform safely and confidently, then look at when your likely customers are free. A market counter needs speed and visible prices; bridal bookings need consultation, deposits and a reliable backup. A home visit suits customers who struggle to travel, but you must include journey time in the quote. If you enjoy precise detail work, nails or brows may suit you better than full hair services. Ask prospective clients what they already pay for and what frustrates them. Choose a small, clear menu and test it on paid bookings before buying new equipment. Expand only when your sanitation routine and timing remain dependable.",
+    "faq": [
+      {
+        "q": "Can you start a small town parlour from home?",
+        "a": "A dedicated clean room can work if customers can enter safely and your local rules allow it. Keep family space private, set appointment hours and check any shop or building requirements before spending on a permanent setup."
+      },
+      {
+        "q": "How should you set service prices?",
+        "a": "Count product use, time, tool replacement, cleaning and rent or travel. Display a clear menu and explain any extra charge before you start. Tap Validate for current prices in your own town rather than copying a city rate blindly."
+      },
+      {
+        "q": "What if a client has reacted to a product before?",
+        "a": "Ask about known sensitivities and follow the product's instructions, including appropriate testing. Do not use a product when you cannot assess the risk safely. Refer a medical problem to a qualified professional rather than offering a cure."
+      },
+      {
+        "q": "Do you need to offer every beauty service?",
+        "a": "No. A narrow menu done well is easier to price, stock and clean. Add a new service only after training and enough genuine customer requests. Do not buy a costly machine simply because a competitor displays one."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C009-S04-I01",
+      "slug": "market-day-brow-and-threading-counter",
+      "title": "Market Day Brow and Threading Counter",
+      "hook": "Women visiting town for the weekly market can finish a quick grooming task without making a second journey.",
+      "summary": "You run a clean, permitted brow and threading counter near a market on its busiest day. Customers receive a short service at a displayed price while shopping. The model depends on skilled speed, disposable materials and a private enough space to make clients comfortable.",
+      "what_it_is": "You set up in a lawful corner with good light, a clean chair and a mirror that is not exposed to every passerby. You offer a small menu such as eyebrow threading and upper lip threading, explaining the service before touching the client. You use fresh thread and clean hands for each person, and pause when skin is irritated or broken. You keep a visible queue so people can return after buying vegetables instead of waiting in a crowd. You record which hours are busy and pack the station away hygienically after the market. You serve a short convenience window, not an improvised full salon on a dusty footpath.",
+      "who_pays_you": "Market visitors from nearby villages, local shop workers and women who already travel into town for household shopping are likely customers. A clear price helps someone decide during a brief stop. A buyer who wants a quiet lengthy facial is not the right customer for this counter. You ask the market organiser about your space, and make sure clients can sit without blocking the trading lane.",
+      "how_money_comes": "Customers pay at the end of each short service by cash or UPI. Consumable costs are small, but your earnings depend on enough appointments during the market window and on keeping tools clean between them. A prebooked slot can help regular clients avoid the queue. You do not rely on selling extra products to make the service pay. You count stall fee, travel and setup time when checking local pricing with Validate.",
+      "what_you_need": "Strong threading skill, a comfortable chair, mirror, clean light, fresh thread, sanitising supplies and permission for the trading spot. You have a safe waste bag and water or approved hand hygiene. You need to work carefully even when several people wait. You check local vendor and beauty service rules before setting up.",
+      "first_30_days": [
+        "Observe the market crowd and ask organisers where a grooming service may legally operate.",
+        "Practise consistent threading on willing models and confirm your hygiene process is ready.",
+        "Open with a tiny service menu and display prices before each market begins.",
+        "Record paid services by hour and change your schedule only after several market days."
+      ],
+      "what_hurts": "Dust, heat and a noisy queue can make precise work harder. A rain day may erase the week's busiest selling window. Rushing a client can irritate skin and damage your reputation far beyond one market. Stall fees may be too high for a short service. You keep a strict hygiene routine and stop accepting bookings before your safe working time runs out.",
+      "verdict": "Build this if the market permits a clean station and your threading is quick without becoming careless. Walk away if privacy and hygiene cannot be protected at the available stall.",
+      "faq": [
+        {
+          "q": "Can you add facial services at the market?",
+          "a": "Only if you have suitable private space, clean water and enough time to perform them properly. A crowded temporary counter is usually better for a narrow menu."
+        },
+        {
+          "q": "How do you handle a long queue?",
+          "a": "Write names or give time slots so customers can keep shopping. Do not rush the person in the chair merely because several others are waiting."
+        },
+        {
+          "q": "What if skin is irritated already?",
+          "a": "Do not thread over broken or inflamed skin. Explain why you are declining the service and suggest the client seek qualified advice when needed."
+        }
+      ],
+      "validate_prompt": "I want to run a market day threading counter in an Indian small town. What vending permission, hygiene setup and current service pricing should I check?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "village"
+      ],
+      "work_mode": "shop",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S04-I02",
+      "slug": "working-women-after-hours-beauty-room",
+      "title": "Working Women After Hours Beauty Room",
+      "hook": "A teacher or shop employee may want a simple salon appointment after work when most parlours are closing.",
+      "summary": "You operate a booked early evening beauty room with a short menu for working customers. Appointments, clear finish times and safe access make routine grooming easier to schedule. You trade on dependable service after ordinary hours rather than a large shop full of chairs.",
+      "what_it_is": "You choose a clean, well lit location customers can reach after work and publish appointment slots you can keep. You offer trained services such as basic hair trimming, threading or simple skin care within a realistic time allowance. You ask about sensitivities, clean or replace tools between visits and explain any product before using it. You take one client at a time at the start so a late arrival does not ruin every later booking. You confirm by message earlier in the day and state a cancellation policy politely. Finish at the promised hour instead of letting an evening appointment stretch into unsafe travel for you or the customer.",
+      "who_pays_you": "Teachers, bank and office staff, shop workers and other women whose daytime hours are occupied are the natural customers. Some may come straight from work; others prefer a slot after family dinner preparations. A residential area with safe evening access matters. You speak to customers about which services they actually need after work rather than assuming a premium package is the main attraction.",
+      "how_money_comes": "Clients pay per booked service at the displayed menu price. A small deposit can protect long slots if you explain how cancellation works. Repeat brow, hair or care appointments can fill a steady calendar, but never prebook a treatment someone has not requested. Your evening rent, lighting, product use and cleaning time must fit the fee. You check local rates through Validate before adding more chairs.",
+      "what_you_need": "Skill in each advertised service, a private clean room, good lighting, safe evening access, booking record and sanitation supplies. You keep product labels and allergy questions ready. A phone and UPI account make scheduling and payment simple. You check local business and premises rules, and plan your own safe journey home if you rent outside your house.",
+      "first_30_days": [
+        "Ask working women nearby which salon services they struggle to book after their shifts.",
+        "Choose a short menu and set slots long enough for cleaning between customers.",
+        "Trial paid evening appointments with clear confirmation and cancellation terms.",
+        "Review actual finish times and remove any service that routinely delays later clients."
+      ],
+      "what_hurts": "Customers can leave work late and ask you to hold their slot, while others expect you to stay open indefinitely. A complex service can overrun and turn a calm calendar into a queue. Evening safety and family responsibilities also limit your hours. You do not take more bookings than you can perform well, and avoid making a client pay for a missed appointment when your own schedule caused the delay.",
+      "verdict": "Build this if a safe location and skilled short menu fit an evening routine you can sustain. Walk away if you would need to work past your safe closing time to make the bookings pay.",
+      "faq": [
+        {
+          "q": "Should you keep walk in hours too?",
+          "a": "Begin with bookings so you know when to prepare and clean. Add walk ins only if spare time is real and they will not displace confirmed customers."
+        },
+        {
+          "q": "Can you charge a booking deposit?",
+          "a": "For a lengthy slot, yes, if the amount and refund or rescheduling rule are explained first. Keep the policy fair when you cancel or run late."
+        },
+        {
+          "q": "What if a client arrives very late?",
+          "a": "Use a stated grace period and offer a new slot when the remaining time is not enough. Rushed beauty work can harm the client and every later appointment."
+        }
+      ],
+      "validate_prompt": "I want to run an after work beauty room for women in an Indian small town. What safe hours, local permissions, service menu and prices should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S04-I03",
+      "slug": "village-bridal-trial-and-makeup-studio",
+      "title": "Village Bridal Trial and Makeup Studio",
+      "hook": "A bride should see how her makeup looks before the wedding day instead of hoping a hurried booking will work.",
+      "summary": "You offer booked bridal consultations, a paid trial and wedding day makeup for families around a small town. The trial clarifies skin preferences, timing and the final look. Your earnings come from skilled event work, with deposits and a reliable travel plan protecting both sides.",
+      "what_it_is": "You meet the bride before accepting the event, ask what she likes and dislikes, and explain the products and look you can actually create. You conduct a paid trial in good light, photograph the result only with consent and write down agreed changes. You check skin sensitivities and follow product instructions. On the wedding day, arrive with cleaned tools, a prepared kit and time for unexpected delays. You make clear whether hair styling, draping or family makeup is included. A second booking at the same hour is impossible, so keep one calendar and a contingency plan for travel or illness.",
+      "who_pays_you": "Brides and their families in villages and small towns pay for dependable local event preparation. Some have limited time to visit a city salon, while others want a professional who can travel to a home or venue. The person wearing the makeup should approve the look even if a relative pays. Build trust through genuine trial work, not borrowed photographs or claims about celebrity clients.",
+      "how_money_comes": "You charge separately for the trial and the event package, or credit part of the trial fee if the booking is confirmed under written terms. You take a reasonable deposit against a reserved date and state travel, early arrival and extra person charges before payment. Event bookings are uneven across the year, so budget without assuming every weekend will fill. Replace used products and cleaning supplies from the fee rather than using unsafe old stock.",
+      "what_you_need": "Professional makeup skill, a hygienic kit suitable for different skin tones, clean brushes and sponges, good lighting for trials and reliable transport. You keep product labels, consent for images and a written booking sheet. You need a backup contact for an unavoidable emergency. You check applicable local service and venue rules and never promise treatment for a skin condition.",
+      "first_30_days": [
+        "Build a small portfolio from consenting clients whose makeup you actually performed.",
+        "Practise a timed bridal trial and write a clear list of what the package includes.",
+        "Speak with local wedding families about venue travel and ceremony start times.",
+        "Take an initial paid trial, then confirm the event date, deposit and backup plan in writing."
+      ],
+      "what_hurts": "Weddings run late or change venue, while another vendor may delay your access to the bride. Family opinions can conflict with the bride's choice. Product reactions and poor lighting can ruin an important day. A deposit dispute is painful if cancellation terms were never agreed. You plan ample time, protect the bride's consent and refuse simultaneous events you cannot personally serve.",
+      "verdict": "Build this if your makeup skill holds up in a real trial and you can manage event pressure calmly. Walk away if you rely on edited photos or cannot keep a confirmed wedding date.",
+      "faq": [
+        {
+          "q": "Is a bridal trial worth charging for?",
+          "a": "Yes, it takes products and working time. Explain the trial fee and whether any part counts toward the final booking before you begin."
+        },
+        {
+          "q": "Who chooses the final makeup style?",
+          "a": "Listen to the bride and confirm her preference directly. Relatives may pay or offer opinions, but the person wearing the makeup should agree to the look."
+        },
+        {
+          "q": "What if the wedding venue changes?",
+          "a": "Set a travel area and change policy in the booking terms. Recalculate timing and expense with the family promptly instead of discovering the distance on event morning."
+        }
+      ],
+      "validate_prompt": "I want to offer bridal trials and makeup around an Indian small town. What current package pricing, hygiene setup and booking terms should I check?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "small_town",
+        "village"
+      ],
+      "work_mode": "mixed",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S04-I04",
+      "slug": "senior-home-visit-haircare-service",
+      "title": "Senior Home Visit Haircare Service",
+      "hook": "An older customer may want a tidy haircut but find the trip, steps and waiting room harder than the service itself.",
+      "summary": "You make booked home visits for basic haircuts and grooming for older residents who struggle to travel. The service is slow, respectful and clearly priced for travel time. Family members may arrange the visit, while the client remains in control of the haircut.",
+      "what_it_is": "You confirm the requested service and any mobility needs with the client or family before travelling. You bring clean portable tools, a protective cape, mirror and a way to collect hair without leaving a mess. You set up a stable chair in good light and ask the older person what they want, even if a relative booked the appointment. You work at a comfortable pace, stop if the client feels unwell and avoid medical or scalp treatment claims. You clean tools between visits and record the next preferred date only with consent. You are providing a haircut at home, not offering medical care or unsupervised elder care.",
+      "who_pays_you": "Older people living alone or with family, residents recovering from limited mobility and relatives who coordinate their care may pay. Some customers can pay by cash; an adult child may send UPI after receiving a clear service note. You start with a compact route and referrals from existing clients, always asking permission before sharing a name or photograph with someone else.",
+      "how_money_comes": "You charge a service price plus a visible travel amount when distance requires it. A regular trim interval can create repeat bookings, but confirm every visit instead of turning it into an unwanted subscription. Short home visits still include packing, travel, cleaning and time spent helping the client get comfortable. You do not agree to a distant single appointment at a town centre price without counting that work. Validate local home visit rates first.",
+      "what_you_need": "Safe haircutting skill, portable clean tools, a cape, mirror, sealed waste bag and patient communication. You need dependable travel and an appointment record with emergency family contact where appropriate. You work only in a safe stable setting. You check local service rules and decline a task requiring medical or nursing expertise you do not have.",
+      "first_30_days": [
+        "Ask older neighbours what makes ordinary salon visits difficult and which hair services they would value.",
+        "Prepare a portable kit and practise setup and cleanup in a home without leaving loose hair.",
+        "Offer a few paid appointments within one short route and time the full visit.",
+        "Ask clients whether they want a later reminder, and keep booking details private."
+      ],
+      "what_hurts": "A home may have poor lighting or no stable chair, making a safe cut difficult. Travel can take longer than the haircut, and a family member may request a different look than the client wants. Illness or fatigue can interrupt the appointment. Politely stop when the setting is unsafe, charge only under the terms agreed and treat each older person as the decision maker for their own grooming.",
+      "verdict": "Build this if you are a careful hairdresser who enjoys patient home visits. Walk away if you need to rush appointments or cannot carry and clean your tools safely between homes.",
+      "faq": [
+        {
+          "q": "Can a relative decide the haircut without asking the client?",
+          "a": "Speak to the person receiving the service and respect their preference when they can decide. A family booking does not erase the client's own wishes."
+        },
+        {
+          "q": "What if the home has no suitable chair?",
+          "a": "Discuss the setup beforehand and bring a plan for good light and stability. If you cannot work safely, reschedule rather than improvise a risky position."
+        },
+        {
+          "q": "Should you include nail cutting for elders?",
+          "a": "Only if you are trained and it is safe within your service. Certain health conditions make foot care particularly risky, so refer those needs to a qualified professional."
+        }
+      ],
+      "validate_prompt": "I want to offer basic home visit haircuts for older residents in an Indian town. What travel pricing, hygiene practices and local service rules should I check?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "small_town",
+        "village"
+      ],
+      "work_mode": "field",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S04-I05",
+      "slug": "small-town-nail-care-appointment-desk",
+      "title": "Small Town Nail Care Appointment Desk",
+      "hook": "Customers who want neat nails for work or a celebration may prefer a careful appointment over a rushed add on at a crowded salon.",
+      "summary": "You operate a small booked nail care desk offering safe manicures and simple art within your training. Clients choose a design and see the full price before you start. You clean tools, realistic appointment lengths and repeat maintenance form the business.",
+      "what_it_is": "You start with basic manicure and simple nail art that you can perform consistently. You ask about allergies, damaged nails and any condition that should be assessed by a clinician rather than covered with product. You clean or replace tools between clients, keep product containers labelled and ventilate the working space. You show sample designs you made yourself and explain how long the appointment and any later removal will take. You keep a booking gap for sanitation. A customer who wants a complex extension beyond your training should receive an honest refusal rather than an unsafe experiment.",
+      "who_pays_you": "Working women, college students and customers preparing for family functions may book. Some want discreet everyday care rather than elaborate designs. The best first customers are people who can visit your desk easily and value an appointment that starts on time. You do not assume every village will support premium nail art; ask for paid trials before investing in a large range of colours.",
+      "how_money_comes": "You charge by the clearly displayed service and design complexity, with removal or repair terms stated separately. Repeat visits may follow normal nail growth or a new occasion, but never push a treatment that is unnecessary. Inventory can become expensive when many colours sit unused, so buy against actual design requests. You include disposable materials, tool cleaning and appointment time in the price. You use Validate for local product and fee ranges.",
+      "what_you_need": "Nail care training, a clean table with light and ventilation, suitable tools, single use supplies where needed and safe product storage. You learn the manufacturer's directions and when to refuse service. You need a booking calendar and honest portfolio. You check local salon rules before taking clients in a home room or rented space.",
+      "first_30_days": [
+        "Practise a small menu of basic care and designs until timing and finish are consistent.",
+        "Ask prospective customers which everyday or event looks they would actually purchase.",
+        "Set a clean appointment desk with adequate ventilation and transparent prices.",
+        "Book paid trial clients and record time, material use and any maintenance questions."
+      ],
+      "what_hurts": "Products can cause irritation, tools can spread infection when sanitation is poor, and a complicated design may take much longer than quoted. Colour trends tempt you into buying slow stock. Clients may ask you to cover a damaged nail that should be seen by a medical professional. You keep your menu within training, ventilate the room and decline work that is not safe to perform.",
+      "verdict": "Build this if you enjoy precise detail work and can maintain strict cleaning between appointments. Walk away if you would use unfamiliar products on a paying client to follow a trend.",
+      "faq": [
+        {
+          "q": "Do you need to offer nail extensions?",
+          "a": "No. Begin with services you can do safely and well. Extensions need more training, products, removal skill and time than a simple manicure."
+        },
+        {
+          "q": "How do you price detailed art?",
+          "a": "Show the design before starting and agree on the cost and time. A complex request should not be quietly charged at a different rate afterward."
+        },
+        {
+          "q": "What if a nail looks infected?",
+          "a": "Do not cover it with polish or offer a diagnosis. Decline the service and suggest a qualified medical opinion before any cosmetic work."
+        }
+      ],
+      "validate_prompt": "I want to start a booked nail care desk in an Indian small town. What training, hygiene rules, current product costs and service prices should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S04-I06",
+      "slug": "festival-henna-booking-corner",
+      "title": "Festival Henna Booking Corner",
+      "hook": "A festival creates a short rush for henna, and families appreciate a clean booked slot instead of a crowded roadside queue.",
+      "summary": "You offer henna application at a small town studio or permitted festival stall, with a simple design menu and timed bookings. The work suits someone with steady drawing skill and realistic expectations about skin sensitivity. Seasonal peaks require careful scheduling rather than permanent expensive rent.",
+      "what_it_is": "You prepare a portfolio of designs you can actually draw and estimate a realistic time for each. You take advance bookings for festival days, agree on the selected design and price, and keep an uncomplicated queue for walk ins if your space allows. You use properly labelled product from a trustworthy supplier and ask about previous reactions; avoid questionable fast darkening mixtures. You keep cones hygienic and give clear aftercare directions without promising a colour result on every person's skin. At a stall, obtain permission and protect clients from dust and crowding. Outside festival weeks, offer appointments for smaller celebrations instead of paying for an empty daily shop.",
+      "who_pays_you": "Women and girls preparing for local festivals, weddings and family functions are likely buyers. A mother may book slots for several family members, while a bride may need more detailed work and longer notice. You speak to the person receiving the design about comfort and preference. Customers compare the look and waiting time, so honest photos and timely appointments help more than an exaggerated colour promise.",
+      "how_money_comes": "You charge by design complexity and area covered, with a deposit only for lengthy reserved slots under clear cancellation terms. Festival work may bring several bookings in a short period, but material purchases and helper wages must be planned before the rush. A modest year round appointment list can smooth demand. You count preparation and cleanup in your service time, and check local price expectations with Validate before printing a menu.",
+      "what_you_need": "Good henna drawing skill, labelled cones, a clean comfortable seat, good lighting, disposable tissues and a booking list. You need to understand product ingredients and refuse use when a client reports a relevant reaction. You check stall or home service permissions. You keep a safe time limit on work so detailed designs do not cause overbooking.",
+      "first_30_days": [
+        "Practise and photograph your own simple and detailed designs with each model's consent.",
+        "Ask local families which festival dates and designs they would reserve in advance.",
+        "Check product labels and secure a clean permitted place for the busiest day.",
+        "Take a small number of paid appointments, then compare actual design time with your calendar."
+      ],
+      "what_hurts": "Many people want the same evening slot, and an intricate pattern can delay everyone behind it. A poor quality cone or skin reaction can damage trust. Festival demand disappears quickly, leaving unused supplies if you overbuy. You also cannot guarantee an identical final stain for every client. You price the work honestly, use safe products and stop taking bookings once the timetable is full.",
+      "verdict": "Build this if you draw henna well and can keep a festival calendar without rushing clients. Walk away if the only way to fill appointments is to use unverified fast darkening products.",
+      "faq": [
+        {
+          "q": "Can you promise a very dark henna stain?",
+          "a": "No. Results vary with product, skin and aftercare. Explain what you use and avoid unsafe additives or a guarantee that you cannot control."
+        },
+        {
+          "q": "Should you accept several brides on one day?",
+          "a": "Only if travel and detailed work fit with substantial room for delays. One rushed bridal booking can spoil an important event and your reputation."
+        },
+        {
+          "q": "Can a festival stall replace a permanent studio?",
+          "a": "It can for seasonal work if the venue is permitted and clean. Use booked home or studio appointments outside peak days instead of paying rent for an idle chair."
+        }
+      ],
+      "validate_prompt": "I want to run a festival henna booking service in an Indian town. What product safety, stall permission, current pricing and appointment capacity should I check?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "homemaker",
+        "student"
+      ],
+      "place": [
+        "small_town",
+        "village"
+      ],
+      "work_mode": "mixed",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S04-I07",
+      "slug": "college-lane-budget-haircut-studio",
+      "title": "College Lane Budget Haircut Studio",
+      "hook": "Students often delay a simple haircut because nearby salons only offer packages they cannot afford or appointments they cannot fit.",
+      "summary": "You run a compact hair cutting studio near a college lane with a transparent basic menu and short bookings. Students pay for tidy reliable cuts, not forced treatments. The model needs steady technique, cleanliness and enough turnover to cover the chair and rent.",
+      "what_it_is": "You set up a clean chair, mirror and washing or dry cutting process suited to your training and premises. You offer a limited set of everyday haircuts with displayed prices and explain what is included before starting. You ask each customer about the desired length and show the plan in the mirror rather than guessing from a photograph. You clean tools and change protective materials between clients. You use short appointment slots around class hours, with a realistic gap for a longer cut. You do not try a new chemical service on a student merely because the salon next door advertises it.",
+      "who_pays_you": "College students living in hostels or commuting through the lane are the main buyers. Nearby young workers may also use a basic haircut service. They tend to share a good experience quickly with classmates, but are price conscious and may disappear during vacations. You choose a location with real foot traffic outside term time or keep rent low enough for the seasonal dip.",
+      "how_money_comes": "Clients pay per haircut by cash or UPI. A plain trim should have a plain price, while a more time consuming service should be quoted in advance. Repeat cuts can steady the chair, but college holidays reduce traffic. Product sales are optional and should not be used to make up for an underpriced cut. Validate local rent and service prices before signing a lease.",
+      "what_you_need": "Haircutting skill across the styles you advertise, a hygienic chair and tools, safe electricity, good light and a way to dispose of hair. You need a short consultation habit and cleaning time. You check premises and trade requirements. You start with a small menu and add specialised equipment only after customers pay for the service often enough.",
+      "first_30_days": [
+        "Ask students which ordinary haircut services nearby shops make expensive or inconvenient.",
+        "Practise the advertised styles and measure the real time needed including cleaning.",
+        "Test a simple appointment and walk in mix from a lawful small space.",
+        "Compare paid cuts and vacation traffic with rent before making a long commitment."
+      ],
+      "what_hurts": "Low fees leave little room for long appointments, rent or a bad batch of tools. A student who dislikes a cut may tell an entire hostel. Term breaks leave the lane quiet, while exam weeks shift visit times. Pressure to finish fast can harm quality. You keep consultations clear, avoid promising a style outside your skill and build a reserve for the empty weeks.",
+      "verdict": "Build this if you cut hair consistently and can secure affordable space near real student traffic. Walk away if the rent forces rushed work or hidden charges on budget customers.",
+      "faq": [
+        {
+          "q": "Should you offer chemical hair treatments too?",
+          "a": "Only after proper training, suitable space and clear demand. A basic haircut studio can succeed by doing its narrow menu well without adding risky services."
+        },
+        {
+          "q": "How do you handle a requested style you cannot do?",
+          "a": "Say so before touching the hair and suggest a cut within your skill. An honest refusal is better than an irreversible experiment on a paying client."
+        },
+        {
+          "q": "Will college vacations stop all income?",
+          "a": "They can reduce student visits sharply. Check whether local residents or workers use the same lane, and budget for the quiet term break."
+        }
+      ],
+      "validate_prompt": "I want to open a budget haircut studio near a college in an Indian small town. What local rent, trade rules, hygiene costs and service prices should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S04-I08",
+      "slug": "village-mobile-makeup-visit-route",
+      "title": "Village Mobile Makeup Visit Route",
+      "hook": "A customer in an outlying village may need event makeup without spending half the day travelling to a town parlour.",
+      "summary": "You travel by appointment to nearby villages for simple event makeup and hair styling within your skill. A planned route groups bookings and keeps travel costs visible. Customers receive a consultation, clean tools and a clear package before the event starts.",
+      "what_it_is": "You set a practical service radius and ask for the event address, start time, lighting and requested look before quoting. You carry a clean portable kit, mirror and backup essentials, and make sure a usable workspace will be available. You confirm skin sensitivities and follow product directions. Group nearby bookings only when each can receive enough time and you can travel safely between them. You send a written summary of the package, deposit and arrival time. When a home lacks space or the schedule changes, discuss options early rather than applying makeup in a crowded dark corner.",
+      "who_pays_you": "Women attending family functions in villages outside the town, bridesmaids and hosts arranging several guests may book. A town salon may be too far or close before their event. The client wearing the makeup should approve the look even when someone else pays. A cluster of local bookings makes travel viable, but do not promise a distant solo visit at a nearby service price.",
+      "how_money_comes": "You charge for the chosen service plus a stated travel fee or minimum booking that reflects distance. Deposits reserve event time under fair cancellation terms, and extra family members are separately priced before the visit. You keep product and travel costs in the quote rather than surprising the family on arrival. A repeat network of event organisers can bring work, though bookings remain seasonal. Tap Validate for current local travel and service costs.",
+      "what_you_need": "Makeup training, clean portable tools, suitable products for varied skin tones, reliable transport, an appointment calendar and a safe way to work in another person's home. You check any local service requirements and keep emergency contact details for travel. You need the confidence to decline a venue or time that makes good work impossible.",
+      "first_30_days": [
+        "Map villages you can reach reliably at event hours and set a clear travel boundary.",
+        "Prepare a portable kit and practise setup in different lighting conditions.",
+        "Offer paid trial visits with written service and travel terms.",
+        "Review actual journey and makeup time before accepting two bookings on one date."
+      ],
+      "what_hurts": "A muddy road, changed event venue or late family preparation can destroy a tight schedule. Working in a stranger's home may leave little privacy or light, while your kit can be damaged in transit. Families may add guests after you arrive and expect the original price. You confirm details, carry a realistic time buffer and refuse extra work that would make a later client wait.",
+      "verdict": "Build this if your event skills travel well and you can plan a safe route with clear pricing. Walk away if every booking is far away and the family will not pay for travel time.",
+      "faq": [
+        {
+          "q": "Should travel be included in the makeup price?",
+          "a": "It can be within a short stated radius. For longer journeys, quote a separate amount or minimum booking before accepting, so no one faces a surprise charge."
+        },
+        {
+          "q": "What if several guests request makeup on arrival?",
+          "a": "Check available time and products, then agree a price for each added person. Decline extras when they would delay the original customer or another booking."
+        },
+        {
+          "q": "Can you rely on a phone flashlight for the service?",
+          "a": "No. Discuss proper lighting and workspace in advance and bring a suitable portable light when practical. Poor visibility can make a promised finish impossible."
+        }
+      ],
+      "validate_prompt": "I want to offer mobile event makeup in villages around an Indian small town. What service radius, current travel fees, product hygiene and booking terms should I check?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "field",
+      "time_needed": "weekends",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S04-I09",
+      "slug": "simple-haircare-wash-and-blowdry-room",
+      "title": "Simple Haircare Wash and Blowdry Room",
+      "hook": "Some customers want a clean wash and neat styling before an event without paying for colour or a full makeover.",
+      "summary": "You run a small appointment room focused on hair washing, drying and straightforward styling. Customers choose a service that fits their hair and time. You clean towels, water, product suitability and a consistent finish matter more than an extensive beauty menu.",
+      "what_it_is": "Provide a consultation about hair length, scalp comfort and the finish the customer wants. You use clean water, suitable products and a fresh towel for each visit, then wash and style within the time agreed. You follow safe heat practices and stop if the scalp is irritated or the customer feels discomfort. You keep brushes and stations cleaned between appointments. You offer simple event styling only when you have practised it, and give a clear difference between an ordinary blowdry and a more elaborate look. Your narrow service can fit beside another salon or in a small rented room with proper water and drainage.",
+      "who_pays_you": "Working customers before a function, people who find washing long hair difficult and students preparing for an event may pay. Some want regular help, while others book only for occasions. A location near homes or a market can make a short appointment worthwhile. You ask people whether they value convenience and clean service before paying for expensive styling tools.",
+      "how_money_comes": "You charge by hair length and the work involved, with a visible menu that explains what is included. Repeat wash appointments may smooth income, but product, water, electricity and towel laundering are real costs. A longer event style gets its own quote and slot. You do not bundle a treatment that the customer did not request. You use Validate to compare current local operating costs and fair service rates.",
+      "what_you_need": "Hair washing and styling skill, a safe wash station, clean water and drainage, fresh towels, brushes, dryer and product labels. The room needs good electrical safety and ventilation. You keep a laundry and tool sanitation routine. You check local premises requirements before installing plumbing, and avoid medical promises about dandruff or hair loss.",
+      "first_30_days": [
+        "Ask potential customers which wash and styling tasks they currently travel out of town to buy.",
+        "Test your wash station, towel turnover and appointment timing before opening.",
+        "Offer a small paid menu and note different hair lengths and real product use.",
+        "Adjust slots and prices after comparing full costs with repeat bookings."
+      ],
+      "what_hurts": "Water shortage or poor drainage can shut the service down immediately. Heat damage and unsuitable products can upset a client, and clean towel laundry may take longer than expected. Elaborate styles can overrun a basic slot. You keep the menu honest, maintain equipment and decline scalp conditions that need medical advice rather than trying to sell a cosmetic cure.",
+      "verdict": "Build this if you can deliver a clean comfortable hair service repeatedly with reliable water and power. Walk away if the premises cannot support safe washing or you would need to rush drying.",
+      "faq": [
+        {
+          "q": "Do you need to offer colouring too?",
+          "a": "No. Washing and styling can be a clear business by themselves. Colour services need further training, product control and longer appointments, so add them only with evidence of demand."
+        },
+        {
+          "q": "How should you handle sensitive scalps?",
+          "a": "Ask about products that caused trouble before, follow labels and stop when discomfort appears. A medical scalp problem should be assessed by a qualified professional."
+        },
+        {
+          "q": "Can customers bring their own shampoo?",
+          "a": "Yes, if you understand the product and it is appropriate to use. Agree any effect on price and do not use an unlabelled substance simply because it was brought in."
+        }
+      ],
+      "validate_prompt": "I want to start a hair wash and blowdry appointment room in an Indian small town. What plumbing, hygiene, product and current pricing needs should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S04-I10",
+      "slug": "parlour-prepaid-routine-grooming-slots",
+      "title": "Parlour Prepaid Routine Grooming Slots",
+      "hook": "Regular customers may prefer a predictable monthly grooming slot when a town parlour is busiest before weekends.",
+      "summary": "You offer a prepaid set of routine services with appointments booked in advance, such as threading and basic hair care. The plan saves clients repeated scheduling while giving you clearer capacity. The contract remains flexible about missed visits and never hides an unused service.",
+      "what_it_is": "You choose only services with predictable time and materials, then define exactly how many appointments a customer buys and when they expire. Book the preferred slot ahead, confirm it shortly before the visit and clean the station after each service. You give a written record of used and remaining visits that the client can inspect. Let someone buy a single service without joining the plan. This is a booking and payment model for a small parlour, not a promise of unlimited work. If a customer needs a different service, quote it separately before starting.",
+      "who_pays_you": "Working women and other regular grooming clients who already revisit a local salon may find the plan useful. A person who only needs event makeup once a year is unlikely to benefit. You offer it first to customers who know your work and understand their own routine. The payer and person receiving the service may differ, so confirm the latter's choice before a treatment.",
+      "how_money_comes": "You collect payment in advance for a defined set of appointments, keeping it separate in your records from completed work. You price the plan so the included service remains profitable after materials and cleaning. A missed appointment policy should be fair and visible, with a reasonable way to reschedule. Prepayment can help cash flow, but it creates an obligation you must honour later even if your costs rise. Validate local rates before offering a discount.",
+      "what_you_need": "Proven skill in the services included, a clean parlour station, an appointment calendar and a simple client balance record. You write clear terms for expiry, cancellation and your own closure days. You check consumer and local shop rules. You need capacity reserved for plan holders without making one time customers wait indefinitely.",
+      "first_30_days": [
+        "Identify routine services that existing customers actually repeat and calculate their full time and material cost.",
+        "Draft plain language plan terms with appointment counts and fair rescheduling rules.",
+        "Offer a small pilot to returning paid clients and track every visit visibly.",
+        "Review whether reserved slots are used and whether single service customers still receive timely bookings."
+      ],
+      "what_hurts": "A sudden illness or festival rush can leave you owing many prepaid visits at once. Customers may think a plan covers extra treatments that were never included. Unused balances can cause disputes when the terms were vague. You do not spend all advance payments immediately. You keep an accurate appointment ledger and make refunds or rescheduling clear when you cancel a session yourself.",
+      "verdict": "Build this if you already have repeat clients and can honour every reserved service. Walk away if you would use prepayments to cover a struggling shop without keeping capacity for the work owed.",
+      "faq": [
+        {
+          "q": "Should a client lose a missed appointment?",
+          "a": "Use a fair written rule with notice periods, and apply it consistently. If you cancel, provide another slot or the remedy promised in the plan terms."
+        },
+        {
+          "q": "Can you offer unlimited grooming visits?",
+          "a": "Avoid that promise when chair time and materials are limited. A defined number of services lets both you and the client know the value being purchased."
+        },
+        {
+          "q": "What if a client moves away?",
+          "a": "State an expiry and refund or transfer policy before taking money. A clear solution is better than holding unused payment and arguing after the move."
+        }
+      ],
+      "validate_prompt": "I want to offer prepaid routine grooming appointments in my Indian small town parlour. What fair terms, current prices and recordkeeping should I validate?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "small_town",
+        "city"
+      ],
+      "work_mode": "shop",
+      "time_needed": "part_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    }
+  ]
+}

@@ -12,12 +12,13 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import "../styles.css";
 import "../motion.css";
+import "../live-palette.css";
 import "../components/idea-cinema/cinema.css";
 import { PointerChannelProvider, PageTransition } from "../motion";
 import { catalogQuery } from "../lib/catalog";
 import { getPageResources } from "../lib/resources.functions";
 import { JsonLd, organisationSchema } from "@/lib/schema";
-import { canonicalUrl, siteIndexable } from "../lib/site-config";
+import { canonicalUrl } from "../lib/site-config";
 import { SiteInteractions } from "@/components/v2/site-interactions";
 
 /**
@@ -210,8 +211,9 @@ function CanonicalLink() {
  * change. Nothing else in the tree needs to know.
  */
 function RobotsMeta() {
-  if (siteIndexable()) return null;
-  return <meta name="robots" content="noindex,nofollow" />;
+  // AdSense approval (founder, 6 Nov 2026): no site-wide noindex,nofollow. Hub and topic pages are
+  // indexed; idea and calculator pages set their own "noindex, follow".
+  return null;
 }
 
 /** The blog's body-portalled sticky CTA still inherits Geist. Other route

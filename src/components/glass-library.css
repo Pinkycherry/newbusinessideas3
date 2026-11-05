@@ -43,7 +43,7 @@
 .glass-home .gl-category details[open] summary span { transform:rotate(180deg); }
 .glass-home .gl-category ul { list-style:none; margin:0 0 .8rem; padding:0; max-height:320px; overflow:auto; scrollbar-color:#cbc5ea transparent; }
 .glass-home .gl-category li a { display:flex; justify-content:space-between; gap:.8rem; padding:.55rem .25rem; color:#474960; font-size:.83rem; line-height:1.35; }
-.glass-home .gl-category li a:hover { color:#6450ce; background:#f5f3ff; }
+.glass-home .gl-category li a:hover { color:#6450ce; background:#f7f6fb; }
 .glass-home .gl-category li svg { flex:none; }
 .glass-home .gl-category-cta { display:inline-flex; align-items:center; gap:.35rem; min-height:44px; margin-top:.3rem; color:#5e4fba !important; font-size:.83rem; font-weight:750; }
 .glass-home .gl-category-cta:hover { text-decoration:underline; }

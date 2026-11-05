@@ -1,0 +1,512 @@
+{
+  "subcategory": {
+    "code": "C009-S05",
+    "intro": "A farm input shop is useful when a farmer can get the right item for a specific job without losing a day travelling to town. It also carries responsibility. A wrong fitting wastes irrigation time; an unsuitable or unregistered chemical can cause much worse harm. Decide exactly what you are qualified and permitted to sell before stocking shelves. Seeds, fertilisers and insecticides have distinct dealer requirements in India, and state procedures may differ. Get the applicable authorisations first, keep bills and labels, and never treat a retailer's guess as a replacement for a trained agronomist's advice. Many small shops can begin with nonchemical tools, irrigation fittings, plant supports and other practical supplies while building demand. Ask farmers which crop, season and equipment they use, then choose a narrow stock list that you can replenish. Pack size matters because a smallholder may need a repair piece today, not a carton. Cash can disappear into slow seasonal stock, especially when several customers ask for credit before harvest. Agree on credit limits and payment dates, write each sale down and protect cash needed for the next order. Store everything as the manufacturer requires and separate products that should never sit together. The ten ideas below take different approaches: field repair parts, protected cultivation supplies, verified seed retail, feedstock for nurseries and planned group orders. Some require more licences and training than others. Match the model to your area and the permission you can actually secure. A shop that has fewer correct items and gives honest answers is more valuable than a wall of packages whose use you cannot explain. When you are unsure, say so and direct the farmer to qualified guidance.",
+    "how_to_choose": "Walk through the farms around you and write down the machinery, crops and irrigation methods you see. A drip fitting counter fits an area using drip lines; it will sit idle where fields rely only on canals. If you have training and the relevant dealer licence, certified seeds may be a sensible seasonal line. If you want lower regulatory complexity, start with tools, hoses or plant supports and verify local rules for those goods. Compare supplier return terms and how much cash stock will hold between seasons. Choose the smallest range that solves repeated problems. Use paid preorders for unusual items rather than guessing from one request.",
+    "faq": [
+      {
+        "q": "Can any village shop sell seeds and farm chemicals?",
+        "a": "Do not assume so. Seeds, fertilisers and insecticides each have dealer rules, and authorisation may be tied to the premises and product. Check the current requirements with the relevant state authority before stocking or advertising a regulated line."
+      },
+      {
+        "q": "How do you decide which farm items to stock?",
+        "a": "Look at the crops and equipment used nearby, then ask farmers which small items repeatedly force a town trip. Begin with fast moving sizes and keep a request list. A wholesaler discount does not make an unsuitable item useful."
+      },
+      {
+        "q": "Should you give seasonal credit to farmers?",
+        "a": "A limited written arrangement may help known customers, but you need cash to replenish stock before harvest payments arrive. Agree on the amount and date in advance, record every item and stop extending credit when a limit is reached."
+      },
+      {
+        "q": "Can you advise farmers which chemical to use?",
+        "a": "Only within the training and legal scope of your role, using the approved label and qualified local guidance. Do not guess about pests or promise a crop result to close a sale. Refer uncertain cases to an authorised professional."
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "code": "C009-S05-I01",
+      "slug": "drip-irrigation-fittings-village-counter",
+      "title": "Drip Irrigation Fittings Village Counter",
+      "hook": "A broken drip connector can interrupt watering when the nearest matching part is an inconvenient trip away.",
+      "summary": "You stock the small fittings, joiners, filters and repair pieces used by drip systems in nearby fields. Farmers bring a sample or photograph and buy the correct part quickly. The shop is a practical repair counter, with careful size matching and limited stock rather than a full equipment dealership.",
+      "what_it_is": "Survey the drip systems used around the village and record common pipe sizes and brands. You keep labelled bins of compatible connectors, end caps, small filters and basic repair tools, with invoices and manufacturer details. You ask a farmer to bring the broken piece when possible; check size and compatibility before taking payment. Demonstrate a simple fit at the counter without promising to repair a whole irrigation system. For an unusual part, take a confirmed order instead of selling a near match that may leak. You track which pieces move during planting and dry spells, then adjust stock rather than buying every size offered by a wholesaler.",
+      "who_pays_you": "Small and medium farmers using drip lines, farm workers who make repairs and local irrigation installers who run short of a fitting are the buyers. A village without many drip systems is a poor location for a dedicated counter. You speak with installers and farmers to learn the actual equipment already in use, not just what a product catalogue promotes.",
+      "how_money_comes": "Customers pay for individual fittings, small repair sets and occasional special orders. Your margin must cover storage and the time spent matching parts, but an incorrect item returned repeatedly eats that margin. A standing relationship with installers can bring repeat purchases; settle their invoices on written terms. Rare components should be ordered against an advance if the supplier will not accept returns. Validate current local wholesale prices before setting shelf labels.",
+      "what_you_need": "A dry organised counter, sample fittings, measuring tool, dependable supplier and basic knowledge of pipe compatibility. You keep packaging and bills so a defective part can be traced. You check local trading requirements. You avoid claiming an installation is sound when you have only sold one connector; complex pressure problems need a trained installer.",
+      "first_30_days": [
+        "Visit local drip fields with permission and note the sizes and brands already installed.",
+        "Ask repair workers which small components they most often travel into town to buy.",
+        "Open with labelled fast moving parts and test fit samples at the counter.",
+        "Record wrong size requests and returns before adding another range."
+      ],
+      "what_hurts": "A part that looks similar may not seal properly, causing frustration and lost watering time. Too many sizes tie up cash in little plastic pieces that never move. Demand rises sharply during a repair rush and falls when systems are working. Organise bins carefully, keep supplier return terms and never guess at compatibility to avoid losing a sale.",
+      "verdict": "Build this if drip systems are common nearby and you can match fittings accurately. Walk away if local farms use different irrigation methods or suppliers cannot provide dependable replacement parts.",
+      "faq": [
+        {
+          "q": "Should you stock complete drip systems?",
+          "a": "Start with small proven repair items. Full systems require design, installation and larger working capital, which are different commitments from a counter of matching parts."
+        },
+        {
+          "q": "How do you avoid selling the wrong size?",
+          "a": "Keep samples and a measuring tool, and ask for the broken piece or clear specifications. If uncertain, order the confirmed part rather than promising a near fit."
+        },
+        {
+          "q": "Can you offer installation too?",
+          "a": "Only if you have the training and time to do it properly. Keep product sales and paid field visits priced separately, with responsibility for each clear."
+        }
+      ],
+      "validate_prompt": "I want to stock drip irrigation repair fittings in an Indian village. Which local pipe sizes, supplier terms, trade rules and current margins should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S05-I02",
+      "slug": "licensed-certified-seed-seasonal-shop",
+      "title": "Licensed Certified Seed Seasonal Shop",
+      "hook": "Farmers need the variety they planned to sow, with genuine sealed packs and clear lot details, before the planting window closes.",
+      "summary": "You operate an authorised seed dealer counter for crops grown around your town. Stock is chosen from confirmed seasonal demand and sold in original labelled packs with proper bills. The business depends on dealer compliance, storage, traceability and careful cash planning.",
+      "what_it_is": "Obtain the current dealer licence and comply with its premises and record conditions before offering seed for sale. You ask nearby farmers which crops and varieties they intend to grow, then order sealed labelled lots from authorised suppliers in quantities you can manage. You store packs under the required conditions, display the relevant details and issue a bill that allows a farmer to identify the lot. You never split or relabel a pack casually. You keep a record of remaining lots and expiry or validity information, and explain that crop performance also depends on field conditions beyond the seed sale.",
+      "who_pays_you": "Farmers preparing to sow locally grown crops are the buyers. Some plan purchases early; others arrive urgently when rain begins. A supplier may offer several varieties, but sell only what you understand and can document. Villages with an existing dependable seed dealer need a clear gap such as a closer location or a particular authorised range, not another shop carrying the same old stock.",
+      "how_money_comes": "You earn a regulated or supplier constrained retail margin on genuine seed packs, with sales concentrated around planting windows. Unsold stock can lose value rapidly, so preorder requests and modest initial orders protect cash. You keep credit limited and documented because you must pay suppliers even when a harvest fails. You return and claim procedures must follow the supplier and applicable rules, not an improvised promise. You check current local terms with Validate.",
+      "what_you_need": "The appropriate seed dealer licence, authorised supplier invoices, proper storage, lot records, a clean display and knowledge of labels and local cropping calendars. You need working capital for seasonal stock and a way to handle complaints without concealing lot information. Verify state procedures and required qualification or premises conditions before investing.",
+      "first_30_days": [
+        "Check the current state seed dealer process and secure approval before buying for resale.",
+        "Ask farmers which crop varieties they actually plan to sow this coming season.",
+        "Agree on sealed stock, invoices and returns with authorised suppliers.",
+        "Open with traceable lots and reconcile sales and remaining packs after each market day."
+      ],
+      "what_hurts": "Rain can arrive early or late, changing the buying rush and leaving a shelf full of the wrong variety. A supplier can fail to deliver in the narrow sowing window. A farmer may blame the seed for a poor crop even when several factors are involved. You keep bills and lot records, handle complaints through the proper process and never sell questionable or unlabelled packs to recover money.",
+      "verdict": "Build this if you can obtain dealer approval and manage seasonal stock and lot records carefully. Walk away if you must sell unverified packs or borrow beyond what unsold seed could safely repay.",
+      "faq": [
+        {
+          "q": "Can you begin selling while the licence application is pending?",
+          "a": "Do not assume that an application permits trading. Confirm the current state rules and wait for the required authorisation before stocking seed for sale."
+        },
+        {
+          "q": "Should you open every seed packet to sell smaller amounts?",
+          "a": "Follow the applicable packaging and labelling rules. Breaking sealed packs can destroy traceability, so do not do it merely to create a cheaper portion."
+        },
+        {
+          "q": "What if a farmer reports poor germination?",
+          "a": "Record the lot and bill, listen carefully and follow the authorised complaint process. Do not promise a refund or blame the farmer before the facts are checked."
+        }
+      ],
+      "validate_prompt": "I want to open a licensed certified seed shop for local crops in India. What current dealer approval, storage rules, supplier returns and seasonal margins should I verify?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S05-I03",
+      "slug": "farm-hand-tools-replacement-parts-shop",
+      "title": "Farm Hand Tools Replacement Parts Shop",
+      "hook": "A missing handle or blunt blade can stop a day's field work even when the main tool could be repaired cheaply.",
+      "summary": "You sell practical hand tools and replacement handles, blades and fasteners near a farming area. Farmers compare fit and strength before buying, while you keep a narrow dependable range. Repairs may be arranged with a trained local craftsperson under clear terms.",
+      "what_it_is": "Visit farms to see the sickles, hoes, sprayers and other hand tools already used, then stock common replacement components and a few complete tools from reliable suppliers. Let buyers compare the piece with their old one at a safe counter. You explain which items you can fit yourself and which should go to a skilled repairer. You keep sharp edges guarded and display prices clearly. If you arrange a repair, write down the item, expected work, fee and collection date so ownership is not confused. The retail promise is that a farmer can return to work with a suitable tool, not that every broken machine can be fixed on the spot.",
+      "who_pays_you": "Smallholder farmers, paid field workers and families tending kitchen plots buy replacements when tools wear or break. Local repair workers may buy handles and fasteners in small quantities. A shop by a farming route can catch urgent purchases, but check the actual tools used in that locality. You do not stock a fashionable implement whose shape does not match how people work there.",
+      "how_money_comes": "Profit comes from a margin on tools and parts, with an optional separately priced fitting or repair referral. Durable goods turn more slowly than food, so avoid filling shelves with many versions of one blade. A small stock of common handles can earn repeat visits because breakage is unpredictable. You take advance payment for unusual special orders that cannot be returned, and compare current supplier prices using Validate.",
+      "what_you_need": "Safe dry storage, sturdy shelving, clear size labels, supplier invoices and enough tool knowledge to check fit and quality. Protective handling for sharp items is essential. If you fit parts, have the proper tools and training; otherwise agree on the repairer's role. You check ordinary shop permissions and keep children away from exposed blades.",
+      "first_30_days": [
+        "Ask farmers and local repairers which tool parts repeatedly fail during field work.",
+        "Collect samples or measurements before ordering common handles, blades and fasteners.",
+        "Set a safe display with clear prices and a separate area for sharp stock.",
+        "Track returns and misfits so the next supplier order reflects real local tools."
+      ],
+      "what_hurts": "A weak handle or poorly tempered blade may fail quickly and create a dangerous complaint. Similar looking parts can fit badly, while durable stock may sit for months. Repair promises can become disputes if a third party does the work. You keep receipts and a clear responsibility line, inspect goods before stocking and decline a fitting you cannot make safely.",
+      "verdict": "Build this if farmers nearby use hand tools regularly and you can select reliable replacement parts. Walk away if you would sell low quality sharp goods without checking fit or safety.",
+      "faq": [
+        {
+          "q": "Should you offer repairs at the counter?",
+          "a": "Only do work within your skill with proper tools. A trusted craftsperson can handle more complex repairs if the customer agrees on price and responsibility beforehand."
+        },
+        {
+          "q": "How do you choose blade stock?",
+          "a": "Look at the shapes and sizes farmers already use, then buy from a supplier who will stand behind defects. A broad catalogue is less useful than correct local fit."
+        },
+        {
+          "q": "Can you sell used tools?",
+          "a": "Be honest about condition and check safety carefully. A cracked handle or damaged blade should not be sold merely because it looks inexpensive."
+        }
+      ],
+      "validate_prompt": "I want to retail farm hand tools and replacement parts in an Indian village. Which local implements, supplier quality checks and current margins should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S05-I04",
+      "slug": "nursery-pots-trays-growing-media-counter",
+      "title": "Nursery Pots Trays and Growing Media Counter",
+      "hook": "A small nursery can lose planting time when the right trays, pots or clean growing medium are unavailable nearby.",
+      "summary": "You supply pots, seedling trays, labelled growing media and simple propagation materials to local nurseries and home growers. Buyers choose practical sizes for their plants rather than a decorative range. Repeat business follows planting cycles and dependable stock quality.",
+      "what_it_is": "Talk with nursery owners about tray cell sizes, pot dimensions and the media they already trust. Stock clean, clearly labelled goods from suppliers with consistent batches and keep them protected from rain or contamination. Let a grower handle sample trays and compare strength before placing a larger order. You offer small quantities to home gardeners and planned bulk pickup for nurseries. You do not claim that one growing mix will suit every crop; explain its stated use and direct technical questions to qualified advice. You record returns for broken trays and avoid rebagging an unverified material under your own label.",
+      "who_pays_you": "Village nurseries, vegetable seedling growers, kitchen gardeners and landscapers working around the town may buy. Their needs differ: a nursery wants consistent bulk sizes, while a household wants a few pots. You serve both only if your storage and order process can keep the small sales from delaying the bulk customer. A locality without active nurseries may support only a tiny home garden counter.",
+      "how_money_comes": "Sell individual pots and trays at a clear price and quote bulk orders separately after checking supplier availability. Growing media is heavy, so include transport, spillage and storage losses in the margin. Preorders from nursery clients reduce the chance of holding oversized slow stock. Repeat orders arrive with planting cycles rather than on a smooth daily schedule. Validate current supplier terms and local transport cost before taking a large booking.",
+      "what_you_need": "Dry covered storage, sturdy shelving for fragile trays, samples, supplier invoices and a way to move bulky bags safely. You need to understand product labels and limitations without pretending to diagnose plant diseases. You check local trade and any material specific requirements. You keep bags sealed and describe contents honestly.",
+      "first_30_days": [
+        "Visit nearby nurseries and record the tray, pot and media sizes they buy repeatedly.",
+        "Ask suppliers for sample quality and realistic transport terms for bulky orders.",
+        "Open with a narrow range that serves both a nursery and a small home gardener.",
+        "Review breakage, returns and seasonal reorder timing before adding decorative inventory."
+      ],
+      "what_hurts": "Plastic trays crack in transport, heavy media costs more to deliver than expected and damp storage can ruin bags. Nursery owners may ask for a particular size urgently while your supplier is out. Home gardeners can ask for plant treatment advice beyond retail knowledge. Be clear about lead times, protect stock and avoid promising that a product will rescue an unhealthy crop.",
+      "verdict": "Build this if nurseries or seedling growers nearby repeatedly need these supplies and you can store them well. Walk away if transport and breakage erase the margin on every bulky order.",
+      "faq": [
+        {
+          "q": "Should you make your own growing mix?",
+          "a": "That is a separate product with quality control and labelling responsibilities. Begin with clearly labelled supplier goods unless you can properly develop and verify your own material."
+        },
+        {
+          "q": "Can you take bulk nursery orders without holding stock?",
+          "a": "Yes, confirm specifications, supplier availability and delivery timing first. A written order and reasonable advance protect both sides from a costly wrong size."
+        },
+        {
+          "q": "What if a tray breaks before pickup?",
+          "a": "Inspect goods on arrival, record damage and follow supplier return terms. Do not quietly pass a cracked tray to a customer who ordered intact stock."
+        }
+      ],
+      "validate_prompt": "I want to sell nursery trays, pots and growing media in an Indian small town. What local buyer demand, storage needs, material rules and margins should I check?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S05-I05",
+      "slug": "small-farm-irrigation-hose-and-valve-shop",
+      "title": "Small Farm Irrigation Hose and Valve Shop",
+      "hook": "A farmer with a leaking hose needs the correct length and valve today, not a catalogue of full irrigation projects.",
+      "summary": "You retail hoses, valves, clamps and related water movement parts for small farms. Customers bring measurements or old pieces, and you help match them without claiming to design an entire irrigation system. Practical stock and careful cutting make the counter useful.",
+      "what_it_is": "Survey common pump outlets, hose diameters and field layouts nearby. You keep labelled samples, reliable hoses, valves and clamps in sizes that farmers actually use. You measure a requested length in front of the buyer and explain that cut goods may have different return terms. Where a connection is uncertain, ask for the old fitting or a measurement instead of guessing. You store hose coils out of harsh sun and protect threaded parts from damage. A trained installer can take on complex pressure or electrical pump work; your counter focuses on suitable retail parts and clear product information.",
+      "who_pays_you": "Farmers irrigating small plots, repair workers and people running shared water lines may buy. A garden household may purchase a short hose, while a grower needs a longer durable piece. You check the local method of water delivery first; a village dominated by a different setup may not support a specialist shop. Repeat visits come when the parts fit and are available when needed.",
+      "how_money_comes": "Earn on measured hose lengths and packaged valves or clamps, with special orders for uncommon specifications. Cutting too many short unsold ends can reduce your real margin, so track offcuts and sizes. A repair worker may buy repeatedly on agreed payment terms, but keep credit visible. You do not quote an installation price unless you are taking responsibility for the field work. Validate current purchase costs and local demand before buying large coils.",
+      "what_you_need": "A dry covered storage area, accurate tape, safe cutting tool, sample fittings and reliable supplier with product specifications. You learn how to identify common sizes and material limits. You keep bills and a simple record of cut lengths. You check local shop rules, and do not give electrical pump advice outside your training.",
+      "first_30_days": [
+        "Measure the hose and valve types used by willing farmers and local repair workers.",
+        "Ask suppliers about quality, coil lengths and returns for defective pieces.",
+        "Begin with common sizes and record each measured cut and leftover length.",
+        "Review misfit returns and offcuts before expanding the range."
+      ],
+      "what_hurts": "A nearly matching valve may leak, and a cheap hose can fail under conditions you never asked about. Long coils consume shelf space and cash; cut pieces may be difficult to return. A customer may ask you to diagnose pump pressure over the counter. Know product limits, check measurements and refer complex systems to a trained installer rather than guessing.",
+      "verdict": "Build this if small farms nearby repeatedly buy hose and valve parts and you can measure accurately. Walk away if you cannot distinguish common fittings or have nowhere to store coils safely.",
+      "faq": [
+        {
+          "q": "Can you cut hose to any requested length?",
+          "a": "Yes, when you have the right tool and explain the measurement and return terms before cutting. Keep offcuts recorded so their cost does not disappear."
+        },
+        {
+          "q": "Should you stock pump motors as well?",
+          "a": "Only if you can support warranty, installation and electrical safety questions. Hoses and valves are a clearer first range than an unplanned motor dealership."
+        },
+        {
+          "q": "What if the customer does not know the diameter?",
+          "a": "Ask them to bring the old fitting or reliable measurements. A guessed size can waste their field time and create a return you cannot resell."
+        }
+      ],
+      "validate_prompt": "I want to retail irrigation hoses and valves for small farms in India. Which local sizes, supplier quality, current prices and shop rules should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S05-I06",
+      "slug": "shade-net-and-plant-support-supply",
+      "title": "Shade Net and Plant Support Supply",
+      "hook": "A grower building a small protected patch may need netting, poles and clips in usable quantities rather than a large contractor package.",
+      "summary": "You retail measured shade net, plant support materials and fasteners for nurseries and small growers. Buyers bring dimensions and collect practical supplies for their own setup or installer. The shop avoids promising structural design while helping customers buy the correct material specification.",
+      "what_it_is": "You find out which crops and nursery setups use shade or support materials around your town. You show labelled samples of net grade, clips, ties and poles, and ask buyers for measurements and intended use before cutting any material. You explain supplier specifications honestly and refer structural questions to a trained installer. You keep rolls dry and away from sharp edges, measure cuts with the customer and record leftover lengths. For larger setups, take a confirmed order rather than tying up cash in an unusual roll. A small counter is useful when growers need replacement clips or short sections after the initial installation.",
+      "who_pays_you": "Nursery owners, flower growers, vegetable farmers and small protected cultivation installers may buy. Their needs vary by crop and structure, so a local sample display can help them make an informed choice. Home gardeners may want a small piece, but the business needs enough real agricultural demand to support rolls and transport. You ask installers which fittings fail most often.",
+      "how_money_comes": "Sell measured net and individual support components with a clear price per unit, plus confirmed bulk orders with an advance when appropriate. Offcuts, damaged rolls and slow grades affect margin, so record them rather than treating every metre bought as sellable. Repeat sales may come from replacement clips and seasonal repairs. A supplier return agreement matters when a batch is defective. You use Validate for current local material and freight cost.",
+      "what_you_need": "Covered roll storage, accurate measuring space, safe cutter, sample labels, supplier specifications and a method to protect fragile clips. You need enough product understanding to avoid substituting an unsuitable grade. You check local shop requirements and any product standards relevant to the goods. You do not undertake installation without the skill and safety equipment.",
+      "first_30_days": [
+        "Ask nurseries and growers which net grades and small fittings they currently purchase elsewhere.",
+        "Compare suppliers for labelled specifications and handling of damaged rolls.",
+        "Display a narrow sample range and trial measured sales with written cut sizes.",
+        "Track offcuts and returns before ordering another full roll."
+      ],
+      "what_hurts": "One wrong measurement can leave you with a cut piece nobody else wants. Wind damage or poor installation may be blamed on the material even when the structure was unsuitable. Large rolls need protected storage, while seasonal demand can stop abruptly. You put the specification and cut size on the bill, refer design questions and do not claim that a retail sale guarantees a structure's performance.",
+      "verdict": "Build this if local growers already use netting and support systems and you can measure and store material carefully. Walk away if full rolls will sit unused or customers expect you to design structures without training.",
+      "faq": [
+        {
+          "q": "Can you sell a small cut from a roll?",
+          "a": "Yes, if the product and supplier terms permit it. Measure in front of the buyer and explain whether a custom cut can be returned before making it."
+        },
+        {
+          "q": "Should you install shade structures too?",
+          "a": "Only after appropriate training and a separate quote. Selling parts does not mean you can judge foundations, wind load or field safety from a counter."
+        },
+        {
+          "q": "How do you handle a torn new roll?",
+          "a": "Inspect on arrival and document the defect with the supplier. Do not pass damaged material to a grower as though it were a full quality piece."
+        }
+      ],
+      "validate_prompt": "I want to retail shade net and plant support materials for growers in India. Which local specifications, cutting losses, supplier terms and current margins should I validate?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S05-I07",
+      "slug": "labelled-compost-and-soil-conditioner-shop",
+      "title": "Labelled Compost and Soil Conditioner Shop",
+      "hook": "A kitchen garden owner may need a small trustworthy bag of growing material without buying an unlabelled tractor load.",
+      "summary": "You stock sealed labelled compost and soil improvement products in practical sizes for kitchen gardeners and small farms. Customers can compare contents and intended use before buying. The counter depends on dry storage, honest labels and careful separation from regulated fertiliser claims.",
+      "what_it_is": "You choose products with clear packaging and supplier information, then verify the rules applying to each product category before selling. You store bags dry and off the floor so contents do not become wet or contaminated. You ask whether the buyer has a kitchen garden, nursery tray or field plot, but do not claim a single bag will solve an unknown soil problem. You offer small packs for home growers and planned pickup for heavier farm orders. You keep batch details and bills for complaints. If a product is legally classified as a fertiliser or another regulated input, obtain the appropriate dealer approval rather than calling it something else.",
+      "who_pays_you": "Households growing vegetables, nurseries and farmers trying an approved soil input may buy. A gardener wants a clean manageable bag, while a farm customer cares about bulk transport and verified product details. Reach people through local gardening groups or existing nurseries with permission. In a village with abundant trusted local compost, packaged material needs a clear quality or convenience advantage.",
+      "how_money_comes": "Retail margins on sealed packs pay for storage, handling and some damaged bags. Heavy goods can make home delivery expensive, so quote transport separately for larger orders. You use preorders for bulk bags and avoid buying a pile that may get wet before sale. You do not extend long credit against a product whose supplier expects immediate payment. Validate current supplier costs and applicable product rules before setting your menu.",
+      "what_you_need": "Dry raised storage, genuine labelled stock, supplier invoices, a way to move heavy bags safely and knowledge of product limitations. You check the legal classification and dealer requirements for every line. You wear appropriate protection when handling dusty bags, and do not relabel unknown material under your own brand. A simple inventory record helps prevent damaged packs from being sold.",
+      "first_30_days": [
+        "Ask kitchen gardeners and nurseries which bag sizes and labelled materials they already trust.",
+        "Confirm product classification and dealer requirements before placing a resale order.",
+        "Trial a narrow sealed range in dry raised storage with visible contents and prices.",
+        "Record damaged bags, customer questions and actual repeat purchases before adding bulk stock."
+      ],
+      "what_hurts": "A damp bag can smell, lose quality and generate complaints. Product categories can carry different rules, while marketing claims may overpromise a crop result. Bulk transport eats margin, and a gardener may blame poor plants on the bag without checking watering or soil conditions. You keep labels intact, explain the product honestly and refer diagnosis to qualified agricultural guidance.",
+      "verdict": "Build this if you can obtain compliant labelled stock and keep it dry near real gardeners. Walk away if the only supply is unverified material you would have to rebag with unsupported claims.",
+      "faq": [
+        {
+          "q": "Can you call any compost organic fertiliser?",
+          "a": "Do not improvise product classifications or claims. Check the current rules and the supplier's registered label for the exact line you plan to retail."
+        },
+        {
+          "q": "Should you sell loose material by weight?",
+          "a": "Only when you can verify, store and label it properly under applicable rules. Sealed bags are a clearer starting point for a small counter."
+        },
+        {
+          "q": "What if a customer wants a crop cure?",
+          "a": "Explain the bag's stated use, but do not diagnose a soil problem from a quick conversation. Suggest qualified local advice when a field decision is at stake."
+        }
+      ],
+      "validate_prompt": "I want to retail labelled compost and soil conditioners in an Indian village. What product classification, dealer requirements, storage and current margins should I verify?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "homemaker",
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S05-I08",
+      "slug": "field-safety-gear-and-rainwear-counter",
+      "title": "Field Safety Gear and Rainwear Counter",
+      "hook": "Farm work continues through sun and rain, but suitable gloves, boots and protective clothing are often missing nearby.",
+      "summary": "You retail practical field gloves, boots, hats and rainwear in sizes local workers actually use. Buyers can try or compare fit before a shift. Stock quality and honest protection claims matter more than a fashionable clothing display.",
+      "what_it_is": "Talk to farm workers about the tasks that wear out gloves and footwear, then choose correctly labelled goods for those uses. Provide size samples and a clean try on method, and explain what each product is designed to protect against. You keep rainwear folded dry and inspect seams and soles before sale. You do not promise that ordinary gloves are suitable for pesticide handling or electrical work without verified specifications. A seasonal display may help workers find goods quickly, while smaller everyday replacements keep the counter active. You track size returns so the next order matches real customers.",
+      "who_pays_you": "Farm workers, small farmers, nursery staff and labour contractors buying for their crews may pay. Individual workers want affordable durable items; a contractor may request a consistent size range in bulk. You check whether the local farming calendar gives regular demand. Some families may buy rainwear for other outdoor jobs, but keep the product promise grounded in actual specifications rather than one label for every hazard.",
+      "how_money_comes": "You earn a margin on each item, with bulk orders quoted after verifying sizes and supplier stock. Boots and raincoats cost more to hold than gloves, so begin with a careful range and reorder known sizes. State exchange terms for unused goods clearly. Sales may jump before a rainy spell and slow afterward; reserve cash for restocking the fast moving items. Validate current local buying prices and returns.",
+      "what_you_need": "Dry storage, size samples, reliable supplier bills and product labels that describe intended use. You need a clean area for fitting boots and a way to handle exchanges hygienically. You check ordinary retail rules and any specific claims associated with protective gear. You avoid stocking damaged items that could fail during work.",
+      "first_30_days": [
+        "Ask local farm workers which gear fails first and what sizes they cannot find nearby.",
+        "Inspect supplier samples for stitching, grip and honest intended use labels.",
+        "Open with a small size range and post exchange conditions before selling.",
+        "Track size requests, defects and rainy season sales before expanding the shelf."
+      ],
+      "what_hurts": "Wrong sizes sit unsold while the needed ones disappear, and low quality boots can fail in the field. A customer may assume any protective gear is suitable for hazardous chemicals when it is not. Seasonal rainwear can tie up cash after the weather changes. You explain limits, retain bills and reject suppliers whose products cannot support the claims printed on the package.",
+      "verdict": "Build this if nearby field workers repeatedly need reliable gear and you can manage sizing. Walk away if you would sell generic protection for hazardous work without verified suitability. Product suitability matters more than a quick sale.",
+      "faq": [
+        {
+          "q": "Can a customer exchange worn boots?",
+          "a": "Set a fair policy for unused size exchanges and manufacturing defects. Wear after field use is different, so inspect the item and follow supplier warranty terms."
+        },
+        {
+          "q": "Are all gloves suitable for spraying?",
+          "a": "No. Protective suitability depends on the chemical and verified product specification. Do not recommend an ordinary glove as spray protection based on appearance."
+        },
+        {
+          "q": "Should you stock every boot size?",
+          "a": "Start with the sizes workers actually request and use supplier special orders for rarer ones. A broad display that never turns is costly."
+        }
+      ],
+      "validate_prompt": "I want a field safety gear and rainwear counter for farm workers in India. Which product standards, local sizes, supplier returns and margins should I check?",
+      "investment_band": "25k_1l",
+      "life_stage": [
+        "working_professional",
+        "homemaker"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S05-I09",
+      "slug": "licensed-fertiliser-order-and-retail-desk",
+      "title": "Licensed Fertiliser Order and Retail Desk",
+      "hook": "Farmers need an approved fertiliser in the right bag size near planting time, with a bill they can trust.",
+      "summary": "You run a properly authorised fertiliser retail desk, using confirmed farmer orders to plan seasonal stock. Labels, storage, invoices and dealer records are central to the work. The model suits someone who can meet the legal requirements and manage bulky inventory without informal substitutions.",
+      "what_it_is": "Secure the current authorisation and training or premises conditions that apply to the fertiliser lines you plan to sell. You work with approved suppliers, keep the required records and store bags under the labelled conditions. You ask farmers for the product and quantity they intend to buy, but avoid prescribing nutrient use from a counter without qualified information. Issue correct bills and make any regulated price visible. For a product you do not hold, take an order only after confirming supplier availability and a realistic arrival date. You never split, relabel or substitute a bag outside the applicable rules.",
+      "who_pays_you": "Farmers preparing fields for locally grown crops are the customers. Some plan ahead; others need a bag immediately when operations begin. A convenient authorised shop can save a trip, but an existing cooperative or dealer may already serve them well. You ask farmers about actual supply gaps and payment habits before investing in a storeroom full of bags.",
+      "how_money_comes": "Retail income follows the applicable pricing framework and supplier terms rather than an invented markup. High volume can still leave little cash if you carry slow stock, pay freight and extend credit until harvest. Confirmed orders help plan purchases, but keep a reasonable supply for walk ins if the economics support it. Maintain separate records for supplier payments and farmer credit. Tap Validate for current local prices, compliance and transport cost.",
+      "what_you_need": "Appropriate fertiliser dealer authorisation, an approved dry premises, trained handling, supplier invoices, product records and equipment to move heavy bags safely. You need to understand label restrictions and pricing obligations. Verify state requirements before opening. You keep regulated goods separate from unsuitable storage and never sell damaged or untraceable bags.",
+      "first_30_days": [
+        "Check current dealer authorisation, qualification and premises conditions with the responsible state office.",
+        "Speak with farmers about confirmed seasonal products and reliable suppliers rather than guessing from a catalogue.",
+        "Arrange compliant storage, invoices and records before accepting a sale.",
+        "Trial a modest stock order and reconcile every bag, bill and payment after the first selling period."
+      ],
+      "what_hurts": "A sudden supply shortage can bring angry farmers, while a delayed season leaves bulky bags occupying expensive space. A wrong record or noncompliant sale can threaten the business. Credit requests rise when cash is tight, but the supplier still needs payment. You never sell an unapproved substitute to rescue a missed order. You keep promises tied to stock you can document and deliver.",
+      "verdict": "Build this if you can meet dealer rules and finance a cautious seasonal inventory. Walk away if approval is uncertain or you would need to hide stock and pricing records.",
+      "faq": [
+        {
+          "q": "Can you sell before a dealer licence is granted?",
+          "a": "Do not assume you can. Confirm the authorisation required for the exact product and premises, and wait until the conditions are met before retailing it."
+        },
+        {
+          "q": "Should you recommend a dose for any crop?",
+          "a": "Use qualified agronomic guidance and the approved product label. A retailer should not guess from a hurried description of a field and risk damaging the crop."
+        },
+        {
+          "q": "What if the requested bag is unavailable?",
+          "a": "Tell the farmer the true availability and date. Do not switch to another product without a sound, authorised basis and the buyer's informed agreement."
+        }
+      ],
+      "validate_prompt": "I want to open a licensed fertiliser retail desk in an Indian village. What current state dealer approval, price rules, storage and supplier terms should I verify?",
+      "investment_band": "1l_5l",
+      "life_stage": [
+        "working_professional"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "shop",
+      "time_needed": "full_time",
+      "skill_level": "trained",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    },
+    {
+      "code": "C009-S05-I10",
+      "slug": "farmer-group-preordered-tool-supply",
+      "title": "Farmer Group Preordered Tool Supply",
+      "hook": "Several small farms may need the same dependable tool, but each would otherwise make a separate trip to a distant dealer.",
+      "summary": "You take confirmed orders from a farmer group for nonchemical tools and replacement parts, then arrange one supplier purchase and a local collection day. Buyers see specifications and prices before paying. The model avoids a large permanent inventory while testing real demand.",
+      "what_it_is": "You meet a farmer group to list the hand tools, hose pieces or plant supports members want, including exact specifications and quantities. You check supplier availability and give each person a written price and delivery date before collecting an agreed advance. You place the order only after enough members confirm. On the collection day, sort goods by name, let buyers inspect their items and issue individual bills. You keep a small replacement policy tied to the supplier's terms. This is a planned buying service, not a promise that every item will be cheapest or arrive overnight.",
+      "who_pays_you": "Farmer groups, neighbouring smallholders and local repair workers who can wait for a planned order are the customers. A person facing an urgent broken pump needs a stocked counter instead. You work with one group at a time until you can coordinate specifications without confusion. The group organiser may introduce you, but take each member's own order and payment record.",
+      "how_money_comes": "You earn a disclosed margin or group order service fee that covers supplier transport, sorting and returns. Advances help fund uncommon goods, while the balance is collected at handover under written terms. A group purchase may improve freight economics, but a wrong specification can erase that benefit. You keep funds and orders traceable by member and do not spend an advance on unrelated stock. Validate current supplier quotes before publishing a group price.",
+      "what_you_need": "Supplier contacts, clear sample specifications, order forms, a dry sorting space and dependable transport for the agreed goods. You need precise records and a fair process for missing or defective items. You check local trading and invoice requirements. You keep regulated inputs outside the service unless you hold the applicable authorisation and can meet its conditions.",
+      "first_30_days": [
+        "Ask one farmer group which nonchemical parts they repeatedly travel to town to buy.",
+        "Gather exact sizes and supplier quotes, then show an itemised order proposal.",
+        "Take a small paid group order with individual confirmations and clear delivery terms.",
+        "Inspect each arrival and settle missing or damaged items before scaling to another group."
+      ],
+      "what_hurts": "One member may change a size after the supplier has dispatched, or a delivery delay can upset an entire group. A bulk discount looks attractive until sorting, freight and returns are counted. If you treat a group leader's guess as everyone else's order, disputes follow. You confirm each specification, protect advances and be honest when a special item cannot be returned.",
+      "verdict": "Build this if you can coordinate exact group orders and reliable supplier delivery without holding broad stock. Walk away if buyers need immediate goods or you cannot keep each person's payment separate.",
+      "faq": [
+        {
+          "q": "Do you need a shop to run group orders?",
+          "a": "A small lawful collection and sorting point may be enough for nonchemical goods. Check local trading rules and choose a pickup method that keeps items secure."
+        },
+        {
+          "q": "How do you handle a member who changes their mind?",
+          "a": "State cancellation and supplier return terms before taking an advance. Do not force another member to absorb an unwanted special order without consent."
+        },
+        {
+          "q": "Can you include seeds or pesticides?",
+          "a": "Only with the authorisation and handling needed for those regulated goods. Begin with nonchemical tools and parts if you are not approved for other lines."
+        }
+      ],
+      "validate_prompt": "I want to take group preorders for nonchemical farm tools in an Indian village. What supplier terms, current freight costs, records and local trading rules should I validate?",
+      "investment_band": "under_25k",
+      "life_stage": [
+        "working_professional",
+        "student"
+      ],
+      "place": [
+        "village",
+        "small_town"
+      ],
+      "work_mode": "mixed",
+      "time_needed": "part_time",
+      "skill_level": "basic",
+      "gender_fit": "any",
+      "confidence": "confident",
+      "writer": "Agent 2"
+    }
+  ]
+}

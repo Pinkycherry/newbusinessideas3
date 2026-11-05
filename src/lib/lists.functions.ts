@@ -201,3 +201,14 @@ export const getListPage = createServerFn({ method: "GET" })
       totalIdeas: total ?? 0,
     };
   });
+
+// Live bbusiness.online listicle functions kept for /list and /list/$slug (6 Nov 2026).
+export {
+  getListicle,
+  getListicleIndex,
+  type ListicleEntry,
+  type ListicleFact,
+  type ListiclePage,
+  type ListicleSection,
+  type ListicleSummary,
+} from "./live-lists.functions";
