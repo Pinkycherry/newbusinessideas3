@@ -44,7 +44,6 @@ const STATIC_PAGES = [
   "/founders",
   "/services",
   "/contact",
-  "/pricing",
   "/terms",
   "/privacy",
   "/disclaimer",

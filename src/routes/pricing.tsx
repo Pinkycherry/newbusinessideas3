@@ -1,9 +1,13 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 
 import { ContentPage, Section, metaFor } from "@/components/page-layout";
 import { useStaggerReveal } from "@/motion";
 
 export const Route = createFileRoute("/pricing")({
+  // AdSense approval (founder, 6 Nov 2026): no pricing page; the site is free. Header link stays, the URL moves home.
+  beforeLoad: () => {
+    throw redirect({ href: "/", replace: true, statusCode: 301 });
+  },
   head: () =>
     metaFor(
       "Pricing | BBI – Bro Business Ideas",
