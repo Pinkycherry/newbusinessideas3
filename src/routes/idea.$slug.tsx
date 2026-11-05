@@ -85,6 +85,8 @@ const ideaDetailQuery = (slug: string) =>
     gcTime: 60_000,
     queryFn: async () => {
       const result = await getIdeaBySlug({ data: { slug } });
+      // AdSense approval: an old idea comes back as { moved }, which the loader turns into a 301.
+      if (result && "moved" in result) return result as never;
       if (!result?.idea) return null;
       return result;
     },
