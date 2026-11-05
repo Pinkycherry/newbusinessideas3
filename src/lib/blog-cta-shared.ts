@@ -2,8 +2,10 @@ import type { AuthState } from "@/hooks/use-auth";
 
 /** Pure helpers behind blog-cta.tsx, kept apart so that file only exports components. */
 
-export function isSignedIn(auth: AuthState): boolean {
-  return auth.status === "authenticated";
+// AdSense review (founder, 6 Nov 2026): bbusiness.online has no sign-up; every reader gets the
+// direct Validate path, never a "Sign up free" prompt.
+export function isSignedIn(_auth: AuthState): boolean {
+  return true;
 }
 
 export function signInHref(redirect: string): string {

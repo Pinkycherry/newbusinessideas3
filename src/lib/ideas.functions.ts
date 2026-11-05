@@ -128,6 +128,10 @@ export const MODE_LABEL: Record<string, string> = {
 export {
   db,
   getCatalog,
+  getFeaturedIdeas,
+  getSurpriseIdeas,
+  getTrendingIdeas,
+  searchIdeas,
   catalogQuery,
   getCategoryPage,
   getSubcategoriesForCategory,

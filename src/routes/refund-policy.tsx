@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { ContentPage, Section, metaFor } from "@/components/glass-editorial";
+import { ContentPage, Section, metaFor } from "@/components/page-layout";
 import { contactEmail } from "@/lib/site-config";
 
 export const Route = createFileRoute("/refund-policy")({

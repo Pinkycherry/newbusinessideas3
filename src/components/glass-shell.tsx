@@ -39,7 +39,6 @@ const navGroups = [
   { label: "About", links: [
     { label: "Our story", to: "/about", description: "Why this library exists" },
     { label: "The founders", to: "/founders", description: "Who signs the research" },
-    { label: "Pricing", to: "/pricing", description: "What costs nothing today" },
     { label: "Contact", to: "/contact", description: "Talk to a person" },
   ] },
 ] as const;
@@ -69,7 +68,6 @@ export function GlassHeader() {
           ))}
         </nav>
         <div className="gh-nav-actions">
-          <Link to="/sign-in" className="gh-sign-in">Sign in</Link>
           <Link to="/blueprints" className="gh-nav-cta">Explore ideas <ArrowUpRight size={16} aria-hidden="true" /></Link>
         </div>
         <button type="button" className="gh-menu-toggle" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} aria-controls="gh-mobile-nav" onClick={() => setMenuOpen((open) => !open)}>
@@ -82,7 +80,6 @@ export function GlassHeader() {
             <summary>{group.label}<ChevronDown size={17} aria-hidden="true" /></summary>
             <div>{group.links.map((item) => <Link key={item.label} to={item.to} onClick={() => setMenuOpen(false)}>{item.label}<ArrowUpRight size={16} aria-hidden="true" /></Link>)}</div>
           </details>)}
-          <Link to="/sign-in" onClick={() => setMenuOpen(false)}>Sign in<ArrowUpRight size={16} aria-hidden="true" /></Link>
         </nav>
       )}
     </header>

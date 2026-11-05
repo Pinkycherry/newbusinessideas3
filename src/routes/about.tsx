@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { Bullets, ContentPage, Section, metaFor } from "@/components/glass-editorial";
+import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout";
 import { JsonLd, personSchema } from "@/lib/schema";
 import { COMMUNITY, communityMembers, contactEmail, TEAM } from "@/lib/site-config";
 
@@ -20,7 +20,7 @@ import { COMMUNITY, communityMembers, contactEmail, TEAM } from "@/lib/site-conf
 export const Route = createFileRoute("/about")({
   head: () =>
     metaFor(
-      "About | bbusiness.online",
+      "About | BBI – Bro Business Ideas",
       "BBI is a free library of researched business blueprints, built by four engineers from Madurai after paying three platforms to validate four ideas and getting templated answers back.",
     ),
   component: AboutPage,
@@ -204,8 +204,7 @@ function AboutPage() {
           </p>
           <p className="rounded-2xl border border-accent/40 bg-accent/5 px-5 py-4 text-base font-semibold leading-relaxed text-foreground">
             Students, people with disabilities, widows, single mothers and founders starting with
-            zero investment pay nothing. Not a rupee, not a dollar — including any subscription we
-            ever charge, and including personalised guides and workflows built for your specific
+            zero investment pay nothing. Not a rupee, not a dollar — including personalised guides and workflows built for your specific
             situation. Email us and say which applies to you. That is the entire process.
           </p>
           <p className="mt-4">
@@ -223,9 +222,7 @@ function AboutPage() {
             law.
           </p>
           <p>
-            <strong className="text-foreground">Not one rupee is charged for any of that.</strong>{" "}
-            The only thing we would ever charge for is a subscription to this website, to keep it
-            running. Advice given in person, over email, to anyone who asks, is free and always will
+            <strong className="text-foreground">Not one rupee is charged for any of that.</strong>{" "} Advice given in person, over email, to anyone who asks, is free and always will
             be.
           </p>
           <p>

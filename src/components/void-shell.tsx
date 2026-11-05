@@ -40,7 +40,6 @@ const FOOTER_COLUMNS = [
     links: [
       { to: "/browse", label: "Browse ideas" },
       { to: "/search", label: "Search" },
-      { to: "/pricing", label: "Pricing" },
       { to: "/services", label: "Services" },
       { to: "/blog", label: "Blog" },
     ],
@@ -187,9 +186,6 @@ export function VoidHeader({ categories }: { categories: CategoryNode[] }) {
             ))}
           </Menu>
 
-          <Link to="/pricing" className="vs-navlink">
-            Pricing
-          </Link>
         </nav>
 
         <div className="vs-actions">
@@ -199,9 +195,6 @@ export function VoidHeader({ categories }: { categories: CategoryNode[] }) {
               <path d="M16.5 16.5 L21 21" stroke="currentColor" strokeWidth="2" fill="none" />
             </svg>
             <span>Search ideas</span>
-          </Link>
-          <Link to="/sign-in" className="vs-signin">
-            Sign in
           </Link>
           <Link to="/browse" data-cta="primary" className="vs-cta">
             Browse free
@@ -241,7 +234,7 @@ export function VoidHeader({ categories }: { categories: CategoryNode[] }) {
           </Link>
         ))}
         <p className="vs-panel-label">Explore</p>
-        {[...EXPLORE_ITEMS, ...COMPANY_ITEMS, { to: "/pricing", label: "Pricing" } as const].map(
+        {[...EXPLORE_ITEMS, ...COMPANY_ITEMS].map(
           (i) => (
             <Link
               key={i.to}

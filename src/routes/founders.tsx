@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { ContentPage, Section, metaFor } from "@/components/glass-editorial";
+import { ContentPage, Section, metaFor } from "@/components/page-layout";
 import { SocialLinks } from "@/components/social-links";
 import { JsonLd, personSchema } from "@/lib/schema";
 import { FOUNDER_PROFILES, contactEmail } from "@/lib/site-config";

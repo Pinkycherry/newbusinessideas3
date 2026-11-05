@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { Bullets, ContentPage, Section, metaFor } from "@/components/glass-editorial";
+import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout";
 import { contactEmail } from "@/lib/site-config";
 
 export const Route = createFileRoute("/terms")({
@@ -68,7 +68,7 @@ function TermsPage() {
       </Section>
       <Section heading="Changes and uptime">
         <p>
-          We can change, pause or remove features, entries and pricing at any time. We aim to keep
+          We can change, pause or remove features and entries at any time. We aim to keep
           the site up and working. We cannot promise it never goes down.
         </p>
       </Section>

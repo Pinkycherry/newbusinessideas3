@@ -128,7 +128,7 @@ export function ValidatePanel() {
             <Tile label="Funding Needed" href="/calculator/funding-needed" />
             <Tile label="Unit Economics" href="/unit-economics-india" />
             <Tile label="Cash Flow" href="/startup-cash-flow-india" />
-            <Tile label="Pricing" href="/business-pricing-india" />
+            <Tile label="Your first quote" href="/business-pricing-india" />
             <Tile label="Launch Plan" href="/startup-launch-plan-india" />
             <Tile label="Research Desk" href="/business-idea-research-india" />
             <Tile label="Time Fit" href="/business-idea-time-fit" />
@@ -198,7 +198,7 @@ export function LearnPanel() {
             items={[
               ["Cash flow", "/startup-cash-flow-india"],
               ["Unit economics", "/unit-economics-india"],
-              ["Pricing your offer", "/business-pricing-india"],
+              ["Quoting your first sale", "/business-pricing-india"],
               ["Business models", "/business-models-india"],
               ["Risk check", "/business-idea-risk-check"],
               ["Pivot or stop", "/business-idea-pivot-or-stop"],
@@ -366,12 +366,9 @@ export function Header({ active: _active }: { active?: string | undefined }) {
               {m.label}<ChevronDown size={16} aria-hidden="true" />
             </button>
           </div>)}
-          <a href="/pricing">Pricing</a>
           <a className="mm-search" href="/search" aria-label="Search"><Search size={19} aria-hidden="true" /></a>
         </div>
         <div className="mm-actions">
-          <a className="mm-login" href="/sign-in">Login</a>
-          <a className="mm-report" href="/product">Get Report</a>
           <a className="mm-mobile-search" href="/search" aria-label="Search"><Search size={20} aria-hidden="true" /></a>
           <button className="mm-mobile-toggle" type="button" aria-label={mobile ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={mobile} aria-controls="mm-mobile" onClick={() => {setMobile(!mobile);setOpen(null);}}>
@@ -390,8 +387,6 @@ export function Header({ active: _active }: { active?: string | undefined }) {
           <div className="mm-mobile-content"><Panel /></div>
         </details>)}
         <a className="mm-mobile-link" href="/search">Search</a>
-        <a className="mm-mobile-link" href="/pricing">Pricing</a>
-        <a className="mm-mobile-link" href="/sign-in">Login</a>
       </nav>
     </header>
   );

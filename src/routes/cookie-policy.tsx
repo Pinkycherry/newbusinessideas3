@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { Bullets, ContentPage, Section, metaFor } from "@/components/glass-editorial";
+import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout";
 import { contactEmail } from "@/lib/site-config";
 
 export const Route = createFileRoute("/cookie-policy")({
@@ -25,7 +25,7 @@ function CookiePolicyPage() {
       <Section heading="What the site stores today">
         <Bullets
           items={[
-            "What it needs to work: your sign-in session if you sign in with Google, and small preferences such as a saved shortlist, kept in your browser's storage.",
+            "What it needs to work: small preferences such as a saved shortlist, kept in your browser's storage.",
             "Ordinary request data such as IP address and browser type, used to run the site and keep it secure.",
           ]}
         />

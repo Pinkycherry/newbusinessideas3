@@ -153,7 +153,8 @@ function BuiltWithSection({ still = false }: { still?: boolean }) {
  * Exact structure is provisional pending the founder's reference images;
  * see PENDING.md.
  */
-const navLinks = [{ to: "/pricing", label: "Pricing" }];
+// AdSense review (founder, 6 Nov 2026): free site, no pricing link.
+const navLinks: { to: string; label: string }[] = [];
 
 const EXPLORE_ITEMS = [
   { to: "/browse", label: "Browse all categories" },
@@ -267,6 +268,8 @@ function useSiteResources() {
  * and an inline style, because four attempts at stating it in CSS measured as
  * the rule matching and the colour not changing. */
 function SignInAction({ onNavigate, full }: { onNavigate?: () => void; full: boolean }) {
+  // AdSense review (founder, 6 Nov 2026): no sign-in on bbusiness.online; the newsletter stays.
+  if (true as boolean) return null;
   const [hovered, setHovered] = useState(false);
   const ref = useRef<HTMLAnchorElement | null>(null);
   // Set as important — see the note in hover-border-gradient.tsx. A plain
@@ -734,7 +737,6 @@ const footerColumns: { title: string; links: { to: string; label: string }[] }[]
     links: [
       { to: "/browse", label: "Browse categories" },
       { to: "/search", label: "Search" },
-      { to: "/pricing", label: "Pricing" },
       { to: "/services", label: "Services" },
       { to: "/blog", label: "Blog" },
     ],

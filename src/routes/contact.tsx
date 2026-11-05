@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { ContentPage, Section, metaFor } from "@/components/glass-editorial";
+import { ContentPage, Section, metaFor } from "@/components/page-layout";
 import { SocialLinks } from "@/components/social-links";
 import { contactEmail, TEAM } from "@/lib/site-config";
 
@@ -15,7 +15,7 @@ import { contactEmail, TEAM } from "@/lib/site-config";
 export const Route = createFileRoute("/contact")({
   head: () =>
     metaFor(
-      "Contact | bbusiness.online",
+      "Contact | BBI – Bro Business Ideas",
       "One address, answered by people. No chatbot, no automated replies. Free personalised help for students, people with disabilities, widows, single mothers and zero-investment founders.",
     ),
   component: ContactPage,
@@ -112,8 +112,7 @@ function ContactPage() {
       <Section heading="If you are in one of these groups, everything is free">
         <p className="rounded-2xl border border-accent/40 bg-accent/5 px-5 py-4 text-base font-semibold leading-relaxed text-foreground">
           Students, people with disabilities, widows, single mothers and founders starting with zero
-          investment pay nothing. Not a rupee, not a dollar — including any subscription we ever
-          charge, and including personalised guides and workflows built for your situation. Email
+          investment pay nothing. Not a rupee, not a dollar — including personalised guides and workflows built for your situation. Email
           us, say which applies to you, and that is the whole process.
         </p>
         <p className="mt-4">
@@ -128,9 +127,7 @@ function ContactPage() {
           friends who work in finance and law.
         </p>
         <p>
-          <strong className="text-foreground">Not one rupee is charged for any of it.</strong> The
-          only thing BBI would ever charge for is a subscription to this website, to keep it
-          running. Advice over email is free and always will be.
+          <strong className="text-foreground">Not one rupee is charged for any of it.</strong> Advice over email is free and always will be.
         </p>
         <p>
           The honest half: nobody here can promise your business will work. You will get the best we
