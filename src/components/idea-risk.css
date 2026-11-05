@@ -1,0 +1,79 @@
+/* Personal downside and smaller first promise. */
+.glass-home .rk-page{width:min(100% - 2.5rem,1320px);margin:auto;padding-bottom:3.5rem;color:#282943}
+.glass-home .rk-page *{box-sizing:border-box}
+.glass-home .rk-page .gl-breadcrumb{padding:1.4rem 0 .9rem}
+.glass-home .rk-page h1,.glass-home .rk-page h2,.glass-home .rk-page h3{color:#282943;letter-spacing:-.035em}
+.glass-home .rk-page h2{font-size:clamp(1.9rem,3vw,2.8rem);line-height:1.12;margin:.35rem 0 .8rem}
+.glass-home .rk-page p{line-height:1.58}
+.glass-home .rk-page section{scroll-margin-top:90px;padding:clamp(1.8rem,3vw,2.8rem) 0}
+.glass-home .rk-page a:not(.gh-button){display:inline-flex;align-items:center;gap:.35rem;color:#59459e;font-weight:750;text-decoration:none}
+.glass-home .rk-page a:hover{text-decoration:underline}
+.glass-home .rk-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.7fr);gap:2rem;align-items:center;padding:clamp(1.5rem,3vw,2.8rem);border:1px solid #fff;border-radius:27px 65px 27px 27px;background:linear-gradient(120deg,#fff,#e9e6f8 58%,#e5f3f3)}
+.glass-home .rk-hero>*{min-width:0}
+.glass-home .rk-hero h1{max-width:19ch;font-size:clamp(2.7rem,4.3vw,4.1rem);line-height:1.06;margin:.5rem 0 .8rem}
+.glass-home .rk-hero h1 em{font-style:normal;color:#765dc6}
+.glass-home .rk-hero p{max-width:65ch;color:#596074}
+.glass-home .rk-hero aside{padding:1.25rem;border:1px solid #fff;border-radius:18px;background:#ffffffda}
+.glass-home .rk-hero aside>strong{display:block;font-size:1.1rem;margin-bottom:.65rem}
+.glass-home .rk-hero aside div{display:flex;gap:1rem;align-items:baseline;border-top:1px solid #ddd9e8;padding:.55rem 0}
+.glass-home .rk-hero aside span{min-width:58px;color:#6f59b7;font-size:.69rem;font-weight:800}
+.glass-home .rk-hero aside p{margin:0;font-size:.85rem}
+.glass-home .rk-open,.glass-home .rk-smaller,.glass-home .rk-stop,.glass-home .rk-cash,.glass-home .rk-faq{display:grid;grid-template-columns:minmax(0,.38fr) minmax(0,.62fr);gap:2rem}
+.glass-home .rk-open>*,.glass-home .rk-smaller>*,.glass-home .rk-stop>*,.glass-home .rk-cash>*,.glass-home .rk-faq>*{min-width:0}
+.glass-home .rk-open>div:first-child p:not(.gh-eyebrow),.glass-home .rk-smaller>div:first-child p:not(.gh-eyebrow),.glass-home .rk-stop>div:first-child p:not(.gh-eyebrow),.glass-home .rk-cash>div:first-child p:not(.gh-eyebrow){color:#596074}
+.glass-home .rk-open-questions{align-self:start;padding:1rem 1.3rem;border:1px solid #fff;border-radius:17px;background:#fff}
+.glass-home .rk-open-questions p{padding:.6rem 0;border-bottom:1px solid #e0ddea;margin:0;font-size:.9rem}
+.glass-home .rk-open-questions a{margin-top:.85rem}
+.glass-home .rk-ledger{padding:clamp(1.4rem,3vw,2.5rem)!important;border:1px solid #fff;border-radius:24px 60px 24px 24px;background:#eae7f8}
+.glass-home .rk-ledger-intro{max-width:72ch}.glass-home .rk-ledger-intro p:not(.gh-eyebrow){color:#596074}
+.glass-home .rk-workspace{display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,.38fr);align-items:start;gap:.8rem;margin-top:1rem}
+.glass-home .rk-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:.7rem}
+.glass-home .rk-fields fieldset{min-width:0;padding:1rem;border:1px solid #fff;border-radius:16px;background:#fff}
+.glass-home .rk-fields legend{color:#4e418f;font-weight:800;padding:0 .25rem}
+.glass-home .rk-fields label,.glass-home .rk-stop-fields label{display:block;min-width:0;margin:.6rem 0;color:#545b70;font-size:.81rem;font-weight:750}
+.glass-home .rk-page input,.glass-home .rk-page textarea{display:block;width:100%;min-width:0;min-height:44px;margin-top:.38rem;padding:.6rem .7rem;border:1px solid #c9c5dc;border-radius:9px;background:#fff;color:#282943;font:inherit}
+.glass-home .rk-page input:focus-visible,.glass-home .rk-page textarea:focus-visible,.glass-home .rk-page button:focus-visible{outline:3px solid #7560c8;outline-offset:2px}
+.glass-home .rk-readout{min-width:0;padding:1.15rem;border:1px solid #fff;border-radius:17px;background:#fff}
+.glass-home .rk-readout>div{padding:.8rem 0;border-top:1px solid #e2deeb}
+.glass-home .rk-readout span,.glass-home .rk-readout strong,.glass-home .rk-readout small{display:block}
+.glass-home .rk-readout span{font-size:.77rem;color:#666c7c}.glass-home .rk-readout strong{font-size:1.15rem;margin:.3rem 0;overflow-wrap:anywhere}
+.glass-home .rk-readout small{font-size:.75rem;color:#6a7181;line-height:1.45}
+.glass-home .rk-readout .rk-boundary{padding:1rem;border-radius:12px;background:#292b4a;color:#fff}
+.glass-home .rk-boundary span{color:#d3d0e8}.glass-home .rk-boundary strong{color:#fff}
+.glass-home .rk-readout>p:last-child{font-size:.77rem;color:#686e80}
+.glass-home .rk-pattern{display:grid;grid-template-columns:minmax(0,.42fr) minmax(0,.58fr);gap:2rem}
+.glass-home .rk-pattern>div p:not(.gh-eyebrow){color:#596074}
+.glass-home .rk-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:1rem}
+.glass-home .rk-tabs button{min-height:44px;padding:.5rem .8rem;border:1px solid #c1b7e3;border-radius:9px;background:#fff;color:#5947a0;font-weight:750;cursor:pointer}
+.glass-home .rk-tabs button[aria-pressed=true]{background:#302a61;color:#fff;border-color:#302a61}
+.glass-home .rk-pattern article{align-self:start;padding:1.3rem;border:1px solid #fff;border-radius:17px;background:#fff}
+.glass-home .rk-pattern article>span{color:#705ab7;font-size:.7rem;font-weight:800}
+.glass-home .rk-pattern article h3{font-size:1.1rem;margin:.65rem 0 .2rem}
+.glass-home .rk-pattern article p{color:#5a6173;font-size:.88rem}
+.glass-home .rk-pattern article strong{display:block;padding-top:.7rem;border-top:1px solid #e1deeb}
+.glass-home .rk-smaller-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:.65rem}
+.glass-home .rk-smaller-grid article{min-width:0;padding:1rem;border:1px solid #fff;border-radius:15px;background:#fff}
+.glass-home .rk-smaller-grid p{color:#5a6173;font-size:.82rem}
+.glass-home .rk-smaller>a{grid-column:2}
+.glass-home .rk-art-section{display:grid;grid-template-columns:minmax(0,.55fr) minmax(0,.45fr);gap:2rem;align-items:center;padding:1rem!important;border-radius:22px;background:#fff}
+.glass-home .rk-art-section>*{min-width:0}
+.glass-home .rk-art{aspect-ratio:16/9;display:grid;place-items:center;overflow:hidden;border-radius:14px;background:#e7e4ef}
+.glass-home .rk-art img{display:block;width:100%;height:100%;object-fit:contain}
+.glass-home .rk-art-section>div:last-child{padding:1rem}
+.glass-home .rk-art-section p:not(.gh-eyebrow){color:#596074}
+.glass-home .rk-art-section a{margin:0 .8rem .35rem 0}
+.glass-home .rk-stop-fields{align-self:start;padding:1.1rem;border:1px solid #fff;border-radius:17px;background:#fff}
+.glass-home .rk-stop-fields textarea{resize:vertical}
+.glass-home .rk-stop-fields small{color:#6c7181}
+.glass-home .rk-cash-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-content:start;align-items:start;gap:.6rem}
+.glass-home .rk-cash-links a{display:grid!important;gap:.35rem;padding:1rem;border:1px solid #fff;border-radius:15px;background:#fff}
+.glass-home .rk-cash-links span{font-size:.82rem;color:#5c6375;font-weight:400}
+.glass-home .rk-faq details{padding:1rem 0;border-bottom:1px solid #d9d7e5}
+.glass-home .rk-faq summary{cursor:pointer;font-weight:750}
+.glass-home .rk-faq details p{color:#5b6275}
+.glass-home .rk-final{display:flex;align-items:end;justify-content:space-between;gap:2rem;padding:2rem;border:1px solid #fff;border-radius:24px;background:linear-gradient(120deg,#e8e5f8,#fff,#e8f4f4)}
+.glass-home .rk-final>div:first-child{max-width:67ch}
+.glass-home .rk-final p:not(.gh-eyebrow){color:#596074}
+.glass-home .rk-final>div:last-child{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:flex-end}
+@media(max-width:1000px){.glass-home .rk-fields,.glass-home .rk-smaller-grid,.glass-home .rk-cash-links{grid-template-columns:1fr}}
+@media(max-width:760px){.glass-home .rk-page{width:min(100% - 1.25rem,1320px)}.glass-home .rk-hero,.glass-home .rk-open,.glass-home .rk-workspace,.glass-home .rk-pattern,.glass-home .rk-smaller,.glass-home .rk-art-section,.glass-home .rk-stop,.glass-home .rk-cash,.glass-home .rk-faq{grid-template-columns:1fr;gap:1rem}.glass-home .rk-hero{padding:1.3rem;border-radius:22px}.glass-home .rk-hero h1{font-size:clamp(2.1rem,9vw,2.7rem)}.glass-home .rk-page h2{font-size:clamp(1.65rem,7vw,2rem)}.glass-home .rk-page section{padding:2.3rem 0}.glass-home .rk-ledger{border-radius:20px}.glass-home .rk-art-section{padding:.6rem!important}.glass-home .rk-art-section>div:last-child{padding:.6rem}.glass-home .rk-smaller>a{grid-column:1}.glass-home .rk-final{display:block}.glass-home .rk-final>div:last-child{justify-content:flex-start;margin-top:1rem}}

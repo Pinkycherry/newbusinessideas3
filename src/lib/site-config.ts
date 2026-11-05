@@ -68,28 +68,16 @@ export function contactEmail(): string {
 }
 
 /**
- * SINGLE SOURCE OF TRUTH for whether this deployment may be indexed.
- *
- * Defaults to TRUE so the production site behaves normally with no variable
- * set. Setting `SITE_INDEXABLE=false` on a deployment turns the whole site
- * into a staging site in one move, read at request time with no rebuild:
- *
- *   - `robots.txt` becomes `Disallow: /`
- *   - every page emits `<meta name="robots" content="noindex,nofollow">`
- *   - every sitemap returns an empty urlset
- *
- * All three matter together. A `noindex` tag alone still lets crawlers walk
- * the site, and a `Disallow` alone is worse than nothing: a blocked page can
- * still be indexed from a link elsewhere, and because the crawler may not
- * fetch it, it never reads the `noindex` that would have removed it. The
- * teardown order that follows from this is deliberate -- serve `noindex` with
- * crawling still ALLOWED until the URLs have dropped out, and only then
- * block. Doing both at once is the usual reason a de-indexed domain stays in
- * the index for months.
+ * This repository is the public demo. Keep its HTML, generated sitemaps and
+ * robots.txt on a search hold until the founder connects the real domain and
+ * explicitly approves indexability. The Vercel X-Robots-Tag also covers
+ * non-HTML URLs and image files. Release requires a reviewed code change.
  */
 export function siteIndexable(): boolean {
-  const raw = typeof process !== "undefined" ? process.env?.["SITE_INDEXABLE"] : undefined;
-  return (raw ?? "").trim().toLowerCase() !== "false";
+  // Pinky 1 demo hold, 2026-10-22: keep every route out of search until the
+  // founder connects businessidea.io and explicitly releases indexing.
+  // This deliberately cannot be overridden by a Vercel environment variable.
+  return false;
 }
 
 /**

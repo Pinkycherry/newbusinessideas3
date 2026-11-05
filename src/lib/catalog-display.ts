@@ -1,4 +1,4 @@
-import type { CategoryNode } from "./ideas.functions";
+import type { CategoryNode } from "./catalog";
 
 /**
  * How many categories a surface shows, and how many it is hiding.
@@ -31,7 +31,7 @@ export type CategorySelection = {
 export function topCategories(categories: CategoryNode[], limit: number): CategorySelection {
   const safeLimit = Math.max(0, Math.floor(limit));
   const sorted = [...categories].sort(
-    (a, b) => b.ideaCount - a.ideaCount || a.categoryName.localeCompare(b.categoryName),
+    (a, b) => b.ideaCount - a.ideaCount || a.position - b.position,
   );
   const shown = sorted.slice(0, safeLimit);
   const hiddenCount = Math.max(0, sorted.length - shown.length);

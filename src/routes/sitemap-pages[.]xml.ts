@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { guideImage } from "@/config/guide-imagery";
 import { urlsetXml, xmlResponse } from "@/lib/sitemap";
+import { CALCULATORS } from "@/lib/calculators";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
 import { CASE_STUDIES } from "@/lib/case-studies-data";
 
@@ -19,8 +20,8 @@ import { CASE_STUDIES } from "@/lib/case-studies-data";
  * - `/useful-tools`, which redirects to `/calculator`. A sitemap should name the
  *   destination, not the signpost.
  * - `/search` and `/sign-in`, functional pages with nothing to index.
- * - `/idea/*`, `/category/*` and `/validate/*`, which sitemap-ideas and
- *   sitemap-categories already own. Listing a URL in two sitemaps is not an
+ * - `/category/*`, which sitemap-categories owns (100 categories and
+ *   1,000 subcategories). Listing a URL in two sitemaps is not an
  *   error, but it makes coverage reports harder to read for no gain.
  */
 
@@ -33,8 +34,6 @@ const STATIC_PAGES = [
   "/founder-stories",
   "/founder-glossary",
   "/learning-resources",
-  "/list",
-  "/faq",
   "/sitemap",
   "/about",
   // The destination of the author link on every idea page and every blog
@@ -44,6 +43,7 @@ const STATIC_PAGES = [
   "/founders",
   "/services",
   "/contact",
+  "/pricing",
   "/terms",
   "/privacy",
   "/disclaimer",
@@ -59,7 +59,7 @@ export const Route = createFileRoute("/sitemap-pages.xml")({
         xmlResponse(
           urlsetXml([
             ...STATIC_PAGES.map((path) => ({ path })),
-            // AdSense approval: individual calculators are noindex, so only the /calculator hub is listed.
+            ...CALCULATORS.map((calculator) => ({ path: `/calculator/${calculator.slug}` })),
             ...STARTUP_GUIDES.map((guide) => {
               const image = guideImage(guide.slug);
               return {

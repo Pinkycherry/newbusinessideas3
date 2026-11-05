@@ -1,34 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { sitemapIndexXml, xmlResponse, type SitemapChild } from "@/lib/sitemap";
-import {
-  countCompletedIdeas,
-  fetchBlogPostsForSitemap,
-  fetchTrancheLastmods,
-  trancheCount,
-} from "@/lib/sitemap.server";
+import { fetchBlogPostsForSitemap } from "@/lib/sitemap.server";
 
-/**
- * The one sitemap to submit to Search Console.
- *
- * The idea children are ENUMERATED FROM THE LIVE ROW COUNT, not listed by
- * hand. Cross ten thousand ideas and an eleventh tranche appears here on its
- * own; nothing needs editing and nothing can fall behind the data the way a
- * typed list does.
- */
+/** The one sitemap to submit to Search Console. */
 export const Route = createFileRoute("/sitemap-index.xml")({
   server: {
     handlers: {
       GET: async () => {
-        const total = await countCompletedIdeas();
-        const tranches = trancheCount(total);
-        const [lastmods, blogPosts] = await Promise.all([
-          fetchTrancheLastmods(tranches),
-          fetchBlogPostsForSitemap(),
-        ]);
-        // Newest of the batch, so the index only re-reads sitemap-blog.xml
-        // when a post actually changed — same reasoning as every other
-        // child's lastmod here.
+        // The blog lives in the database; a failed read must not take the
+        // category sitemap down with it.
+        const blogPosts = await fetchBlogPostsForSitemap().catch(() => []);
         const blogLastmod = blogPosts.reduce<string | null>((newest, post) => {
           if (!post.lastmod) return newest;
           return !newest || post.lastmod > newest ? post.lastmod : newest;
@@ -37,8 +19,6 @@ export const Route = createFileRoute("/sitemap-index.xml")({
         const children: SitemapChild[] = [
           { path: "/sitemap-pages.xml" },
           { path: "/sitemap-categories.xml" },
-          // India Idea Atlas (BBI_EXPANSION.md). Empty until a set is published.
-          { path: "/sitemap-india.xml" },
           { path: "/sitemap-blog.xml", lastmod: blogLastmod },
         ];
 

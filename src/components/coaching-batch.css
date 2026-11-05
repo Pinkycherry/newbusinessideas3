@@ -1,0 +1,82 @@
+
+.glass-home .cb-page{width:min(1320px,calc(100% - 48px));margin:0 auto;color:#232334}
+.glass-home .cb-page *{box-sizing:border-box}
+.glass-home .cb-page a{color:#4337ab;text-decoration:none;font-weight:700}
+.glass-home .cb-page a:hover{text-decoration:underline}
+.glass-home .cb-page a:focus-visible,.glass-home .cb-page input:focus-visible,.glass-home .cb-page summary:focus-visible{outline:3px solid #6858ca;outline-offset:3px}
+.glass-home .cb-page h1,.glass-home .cb-page h2,.glass-home .cb-page h3{letter-spacing:-.035em;color:#232334}
+.glass-home .cb-page h1{font-size:clamp(2.5rem,3.55vw,3.75rem);line-height:1.08;margin:12px 0 16px;max-width:20ch}
+.glass-home .cb-page h2{font-size:clamp(1.85rem,2.7vw,2.8rem);line-height:1.12;margin:8px 0 16px;max-width:19ch}
+.glass-home .cb-page h3{font-size:clamp(1.16rem,1.4vw,1.5rem);line-height:1.25;margin:0 0 8px}
+.glass-home .cb-page p{line-height:1.6;margin:0 0 14px}
+.glass-home .cb-page .gh-eyebrow{font-size:.73rem;line-height:1.4;letter-spacing:.11em;font-weight:800;color:#6959a9;margin:0}
+.glass-home .cb-page .gl-breadcrumb{padding:20px 0 0;margin-bottom:0}
+.glass-home .cb-hero{display:grid;grid-template-columns:minmax(0,1.16fr) minmax(330px,.8fr);gap:clamp(24px,4vw,72px);align-items:center;padding:28px 0 40px}
+.glass-home .cb-hero>div>p:not(.gh-eyebrow){font-size:clamp(1.04rem,1.35vw,1.23rem);max-width:58ch}
+.glass-home .cb-hero .gh-button{margin-top:8px;display:inline-flex;align-items:center;gap:10px;min-height:48px}
+.glass-home .cb-offer-slip{padding:34px;min-height:260px;border-radius:36px 36px 65px 36px;background:linear-gradient(144deg,#eeeafd 5%,#fff 70%);border:1px solid #e3dcf8;box-shadow:0 24px 65px rgba(53,47,109,.10);display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.glass-home .cb-offer-slip>span,.glass-home .cb-result>span{font-size:.72rem;font-weight:800;letter-spacing:.12em;color:#6959a9}
+.glass-home .cb-offer-slip strong{display:block;font-size:clamp(1.4rem,2vw,2rem);line-height:1.22;letter-spacing:-.03em;margin:18px 0}
+.glass-home .cb-offer-slip p{max-width:45ch}
+.glass-home .cb-offer-slip a,.glass-home .cb-page section a,.glass-home .cb-next a{display:inline-flex;align-items:center;gap:8px;min-height:44px}
+.glass-home .cb-source-ideas,.glass-home .cb-two-clocks,.glass-home .cb-desk,.glass-home .cb-buyer,.glass-home .cb-source-art,.glass-home .cb-boundaries,.glass-home .cb-faq,.glass-home .cb-next{padding:54px 0;border-top:1px solid #e7e2f0}
+.glass-home .cb-section-lead{display:grid;grid-template-columns:minmax(0,.58fr) minmax(0,1fr);gap:10px 32px;align-items:start}
+.glass-home .cb-section-lead .gh-eyebrow{grid-column:1/-1}
+.glass-home .cb-section-lead h2{margin:0}
+.glass-home .cb-section-lead>p:last-child{max-width:55ch}
+.glass-home .cb-ideas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:23px 0 8px}
+.glass-home .cb-ideas article{padding:26px;border-radius:28px;background:#f5f2fb;border:1px solid #e8e3f5;display:flex;flex-direction:column;min-height:215px}
+.glass-home .cb-ideas article:nth-child(2){background:#f0f7f8;border-color:#dcebed}
+.glass-home .cb-ideas article:nth-child(3){background:#f6f5f0;border-color:#e9e9df}
+.glass-home .cb-ideas article p{font-size:.96rem}
+.glass-home .cb-ideas article a{margin-top:auto}
+.glass-home .cb-two-clocks,.glass-home .cb-buyer,.glass-home .cb-boundaries,.glass-home .cb-faq{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:clamp(24px,5vw,80px);align-items:start}
+.glass-home .cb-two-clocks>div:first-child p:not(.gh-eyebrow),.glass-home .cb-buyer>div:first-child p:not(.gh-eyebrow),.glass-home .cb-boundaries>div:first-child p:not(.gh-eyebrow){max-width:56ch}
+.glass-home .cb-clock-lines{border-left:2px solid #d1c9ec;padding-left:26px}
+.glass-home .cb-clock-lines p{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid #e9e4f0}
+.glass-home .cb-clock-lines p:last-child{border:0}
+.glass-home .cb-clock-lines span{color:#575567}
+.glass-home .cb-desk-heading{max-width:66ch;margin-bottom:20px}
+.glass-home .cb-desk-heading h2{max-width:none}
+.glass-home .cb-workspace{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.72fr);gap:20px;align-items:start}
+.glass-home .cb-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.glass-home .cb-fields fieldset{padding:24px;border:1px solid #e0daec;border-radius:28px;background:#fff;min-width:0;margin:0}
+.glass-home .cb-fields legend{font-weight:800;font-size:1.2rem;letter-spacing:-.02em;padding:0 4px}
+.glass-home .cb-fields fieldset>p{font-size:.91rem;color:#5d596c;min-height:48px}
+.glass-home .cb-fields fieldset>div{display:grid;gap:13px}
+.glass-home .cb-fields label{display:grid;gap:3px;font-weight:700;font-size:.91rem;min-width:0}
+.glass-home .cb-fields label small{color:#666371;font-weight:400;line-height:1.35}
+.glass-home .cb-input-wrap{display:flex;align-items:center;gap:8px;border:1px solid #cfc8e2;border-radius:14px;background:#faf9ff;padding:0 10px;margin-top:4px}
+.glass-home .cb-input-wrap:focus-within{outline:2px solid #6858ca}
+.glass-home .cb-input-wrap input{min-width:0;width:100%;height:43px;border:0;outline:0;background:transparent;font:inherit;color:#232334}
+.glass-home .cb-input-wrap em{font-style:normal;font-size:.78rem;color:#666371;white-space:nowrap}
+.glass-home .cb-result{position:sticky;top:92px;padding:28px;border-radius:28px;background:#282442;color:#fff;box-shadow:0 20px 45px rgba(31,27,60,.18)}
+.glass-home .cb-result>span{color:#cbc2ff}
+.glass-home .cb-result h3{color:#fff;font-size:clamp(1.35rem,2.1vw,2.2rem);margin:14px 0}
+.glass-home .cb-result p{color:#e3e0f0}
+.glass-home .cb-result dl{margin:18px 0}
+.glass-home .cb-result dl div{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-top:1px solid #5d576f;padding:11px 0}
+.glass-home .cb-result dt{font-size:.88rem;color:#d9d4e9}
+.glass-home .cb-result dd{margin:0;font-size:1.2rem;font-weight:800;white-space:nowrap}
+.glass-home .cb-result small{display:block;border-top:1px solid #5d576f;padding-top:15px;color:#cbc7db;line-height:1.5}
+.glass-home .cb-buyer-note{border-radius:32px;background:#eaf3f3;padding:28px}
+.glass-home .cb-buyer-note strong{display:block;font-size:1.23rem;margin-bottom:12px}
+.glass-home .cb-buyer-note p{padding:12px 0;margin:0;border-top:1px solid #cfdfdf}
+.glass-home .cb-source-art{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:clamp(24px,4vw,56px);align-items:center}
+.glass-home .cb-source-art figure{margin:0}
+.glass-home .cb-source-art img{display:block;width:100%;aspect-ratio:16/9;height:auto;object-fit:cover;border-radius:28px}
+.glass-home .cb-source-art figcaption{margin-top:10px;font-size:.82rem;color:#605d6e}
+.glass-home .cb-boundary-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.glass-home .cb-boundary-list article{border-left:2px solid #a89ddd;padding:12px 13px;background:#f8f6fd;border-radius:0 14px 14px 0}
+.glass-home .cb-boundary-list strong{display:block;line-height:1.3}
+.glass-home .cb-boundary-list p{margin:9px 0 0;font-size:.88rem}
+.glass-home .cb-faq details{border-bottom:1px solid #ddd7eb;padding:14px 0}
+.glass-home .cb-faq details:first-child{border-top:1px solid #ddd7eb}
+.glass-home .cb-faq summary{cursor:pointer;font-weight:750;min-height:44px;display:flex;align-items:center}
+.glass-home .cb-faq details p{color:#575567;padding:0 16px}
+.glass-home .cb-next{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-bottom:54px}
+.glass-home .cb-next>div:last-child{display:grid;align-content:center;gap:8px}
+.glass-home .cb-next a{padding:10px 16px;border-radius:15px;background:#f0ecfa}
+@media(max-width:900px){.glass-home .cb-hero,.glass-home .cb-two-clocks,.glass-home .cb-buyer,.glass-home .cb-source-art,.glass-home .cb-boundaries,.glass-home .cb-faq{grid-template-columns:1fr}.glass-home .cb-workspace{grid-template-columns:1fr}.glass-home .cb-result{position:static}.glass-home .cb-boundary-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:680px){.glass-home .cb-page{width:min(100% - 32px,1320px)}.glass-home .cb-hero{padding:24px 0 38px;gap:22px}.glass-home .cb-page h1{font-size:clamp(2.35rem,10vw,3.4rem)}.glass-home .cb-page h2{font-size:clamp(1.75rem,7vw,2.25rem)}.glass-home .cb-offer-slip{min-height:0;padding:24px;border-radius:26px 26px 42px 26px}.glass-home .cb-source-ideas,.glass-home .cb-two-clocks,.glass-home .cb-desk,.glass-home .cb-buyer,.glass-home .cb-source-art,.glass-home .cb-boundaries,.glass-home .cb-faq,.glass-home .cb-next{padding:35px 0}.glass-home .cb-section-lead,.glass-home .cb-ideas,.glass-home .cb-fields,.glass-home .cb-next,.glass-home .cb-boundary-list{grid-template-columns:1fr}.glass-home .cb-ideas article{min-height:0;padding:21px}.glass-home .cb-clock-lines{padding-left:15px}.glass-home .cb-clock-lines p{grid-template-columns:1fr;gap:3px}.glass-home .cb-fields fieldset>p{min-height:0}.glass-home .cb-source-art{gap:17px}.glass-home .cb-result{padding:24px}.glass-home .cb-next{margin-bottom:25px}}
+@media(prefers-reduced-motion:reduce){.glass-home .cb-page *{scroll-behavior:auto}}

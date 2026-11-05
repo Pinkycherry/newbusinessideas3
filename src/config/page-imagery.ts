@@ -23,7 +23,7 @@ export const PAGE_IMAGES = {
       "library of researched business ideas for beginners in India",
     ],
     description:
-      "The full BBI idea library: every category of researched business ideas in one place, free after one sign-in.",
+      "The full BBI idea library: every category of researched business ideas in one place, free to browse on this demo.",
   },
   glossary: {
     src: `${DIR}/founder-glossary-unit-economics-startup-terms-business-definitions.webp`,

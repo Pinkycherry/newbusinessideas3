@@ -172,6 +172,22 @@ export function collectionPageSchema(input: {
   };
 }
 
+/** An ordered list of links, e.g. the ten subcategories of a category page. */
+export function itemListSchema(input: { name: string; items: { name: string; path: string }[] }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: input.name,
+    numberOfItems: input.items.length,
+    itemListElement: input.items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      url: `${siteUrl()}${item.path}`,
+    })),
+  };
+}
+
 export function webPageSchema(input: { path: string; name: string; description: string }) {
   return {
     "@context": "https://schema.org",

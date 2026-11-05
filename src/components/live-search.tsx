@@ -1,14 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search } from "lucide-react";
 
-import { searchIdeas } from "@/lib/ideas.functions";
+import { searchTaxonomy } from "@/lib/catalog";
 
 /**
- * Live suggest search. The query itself stays on the server (createServerFn);
- * only the matched card array crosses to the client.
+ * Live suggest search over the 100 categories and 1,000 subcategories. The
+ * name index is small and static, so matching runs in the browser.
  */
 export function LiveSearch({
   className = "",
@@ -36,14 +35,10 @@ export function LiveSearch({
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
-  const results = useQuery({
-    queryKey: ["live-search", debounced],
-    queryFn: () => searchIdeas({ data: { q: debounced } }),
-    enabled: debounced.length >= 2,
-    staleTime: 60_000,
-  });
-
-  const items = (results.data ?? []).slice(0, 6);
+  const items = useMemo(
+    () => (debounced.length >= 2 ? searchTaxonomy(debounced, 6) : []),
+    [debounced],
+  );
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,8 +59,8 @@ export function LiveSearch({
             setOpen(true);
           }}
           onFocus={() => setOpen(true)}
-          placeholder="Search ideas…"
-          aria-label="Search business ideas"
+          placeholder="Search categories…"
+          aria-label="Search business categories"
           className="w-full min-w-0 bg-transparent text-xs text-foreground outline-none placeholder:text-muted-foreground"
         />
       </form>
@@ -79,28 +74,34 @@ export function LiveSearch({
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="glass-nav absolute left-0 top-[calc(100%+0.5rem)] z-50 w-[min(24rem,80vw)] overflow-hidden rounded-2xl p-1.5"
           >
-            {results.isLoading && (
-              <div className="space-y-1.5 p-1.5">
-                {[0, 1, 2].map((i) => (
-                  <div key={i} className="iv-skeleton h-8 w-full" />
-                ))}
-              </div>
-            )}
-            {!results.isLoading && items.length === 0 && (
+            {items.length === 0 && (
               <p className="px-3 py-2.5 text-xs text-muted-foreground">No matches yet.</p>
             )}
-            {items.map((idea) => (
+            {items.map((hit) => (
               <button
-                key={idea.ideaId}
+                key={hit.kind === "category" ? hit.categorySlug : hit.subcategorySlug}
                 type="button"
                 onClick={() => {
                   setOpen(false);
                   onNavigate?.();
-                  navigate({ to: "/idea/$slug", params: { slug: idea.slug } });
+                  if (hit.kind === "category") {
+                    navigate({
+                      to: "/category/$categorySlug",
+                      params: { categorySlug: hit.categorySlug },
+                    });
+                  } else {
+                    navigate({
+                      to: "/category/$categorySlug/$subcategorySlug",
+                      params: { categorySlug: hit.categorySlug, subcategorySlug: hit.subcategorySlug },
+                    });
+                  }
                 }}
                 className="block w-full truncate rounded-xl px-3 py-2 text-left text-xs font-semibold text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
               >
-                {idea.title}
+                {hit.name}
+                {hit.kind === "subcategory" && (
+                  <span className="ml-1.5 font-normal opacity-70">· {hit.categoryName}</span>
+                )}
               </button>
             ))}
           </motion.div>

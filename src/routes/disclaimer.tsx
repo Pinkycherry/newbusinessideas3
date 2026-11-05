@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout";
+import { Bullets, ContentPage, Section, metaFor } from "@/components/glass-editorial";
 
 export const Route = createFileRoute("/disclaimer")({
   head: () =>

@@ -1,150 +1,46 @@
+import { V2PageAsideCta, V2PageCard, V2PageFaq, V2PageHero, V2PageSection } from "@/components/v2/page-sections";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { ArrowUpRight } from "lucide-react";
 
-import { SiteShell, Breadcrumbs } from "@/components/site-shell";
-import { ExploreRail } from "@/components/explore-rail";
+import { GlassShell } from "@/components/glass-shell";
 import { formatDate } from "@/lib/blog-shared";
 import { getBlogPosts } from "@/lib/blog.functions";
 import { hideImgIfBroken } from "@/lib/utils";
-import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
+import "@/components/glass-library.css";
+import "@/components/journal-reading-room.css";
 
-const postsQuery = queryOptions({
-  queryKey: ["blog", "posts", 1],
-  queryFn: () => getBlogPosts({ data: { page: 1 } }),
-});
+const postsQuery = queryOptions({ queryKey: ["blog", "posts", 1], queryFn: () => getBlogPosts({ data: { page: 1 } }) });
 
 export const Route = createFileRoute("/blog/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(postsQuery),
-  head: () => ({
-    meta: [
-      { title: "Blog — Founder Playbooks | BBI – Bro Business Ideas" },
-      {
-        name: "description",
-        content:
-          "Long-form founder playbooks and market breakdowns from BBI — real research, no filler.",
-      },
-      { property: "og:title", content: "Blog — Founder Playbooks | BBI – Bro Business Ideas" },
-      {
-        property: "og:description",
-        content: "Long-form founder playbooks and market breakdowns from BBI.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () => ({ meta: [
+    { title: "Founder Journal: Business Ideas and First Moves in India | BusinessIdea.io" },
+    { name: "description", content: "Read original articles on first customers, side businesses, pricing and local business ideas in India, with the published featured imagery." },
+    { property: "og:type", content: "website" },
+  ] }),
   component: BlogIndex,
-  errorComponent: () => (
-    <SiteShell tone="instrument">
-      <div className="mx-auto max-w-6xl px-4 py-24">
-        <h1 className="text-2xl font-bold">The blog feed is unavailable</h1>
-        <p className="mt-2 text-muted-foreground">
-          We couldn&apos;t reach the blog just now. Nothing here is cached or faked — try again in a
-          moment.
-        </p>
-      </div>
-    </SiteShell>
-  ),
+  errorComponent: () => <GlassShell><div className="gl-page gl-message"><h1>The articles could not load.</h1><p>Please try again in a moment.</p><Link to="/">Return home</Link></div></GlassShell>,
 });
 
 function BlogIndex() {
   const { data } = useSuspenseQuery(postsQuery);
-  // One headline reveal per page, on the H1, and one stagger on the post grid.
-  const titleRef = useTextReveal<HTMLHeadingElement>();
-  // Masthead depth scene: one shared observer + one shared frame callback
-  // for the whole header. Cursor depth on fine pointers, scroll depth on touch
-  // (see motion.css, coarse-pointer block).
-  const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
-
-  const gridRef = useStaggerReveal<HTMLDivElement>({ direction: "up", stagger: 0.05 });
-
-  return (
-    <SiteShell tone="instrument">
-      <div ref={sceneRef} className="cx-scene mx-auto max-w-6xl px-3 py-12 sm:px-4">
-        {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
-        <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Blog" }]} />
-        <h1
-          ref={titleRef}
-          className="cx-layer cx-z3 mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl"
-        >
-          Founder{" "}
-          <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
-            playbooks
-          </span>
-        </h1>
-        <p className="mt-4 max-w-2xl text-muted-foreground">
-          Long-form writing on markets, founders and what actually works — held to the same standard
-          as the idea library: real research, no filler. Free after one sign-in.
-        </p>
-
-        {data.posts.length === 0 ? (
-          <p className="mt-12 text-muted-foreground">No posts published yet.</p>
-        ) : (
-          <div ref={gridRef} className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {data.posts.map((post, i) => {
-              // The most recent post reads as a genuine feature, not just the
-              // first tile in an identical grid (brief 12.7 — no repetitive
-              // same-size card walls).
-              const featured = i === 0 && data.posts.length > 2;
-              return (
-                <Link
-                  key={post.id}
-                  to="/blog/$slug"
-                  params={{ slug: post.slug }}
-                  className={`glass mo-card flex h-full flex-col overflow-hidden rounded-2xl ${
-                    featured ? "sm:col-span-2 lg:col-span-2" : ""
-                  }`}
-                >
-                  {post.image && (
-                    // The card already clips its own corners, so the media slot
-                    // is square-cornered on purpose — a second radius here
-                    // would notch the image away from the card edge.
-                    <div
-                      style={{ borderRadius: 0 }}
-                      className={`mo-media relative w-full ${featured ? "aspect-[21/9]" : "aspect-video"}`}
-                    >
-                      <img
-                        src={post.image}
-                        alt={post.imageAlt ?? post.title}
-                        width={post.imageWidth ?? 1672}
-                        height={post.imageHeight ?? 941}
-                        loading="lazy"
-                        decoding="async"
-                        ref={hideImgIfBroken}
-                        className="h-full w-full object-cover opacity-90"
-                      />
-                      {/* Gradient scrim so text over/near the image always stays
-                          legible and the photo never looks like a raw drop-in
-                          (brief 12.8). */}
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/70 via-background/0 to-transparent" />
-                    </div>
-                  )}
-                  <div className="flex flex-1 flex-col gap-3 p-5 pb-7">
-                    <div className="flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-accent">
-                      <span>{formatDate(post.date)}</span>
-                      <span aria-hidden className="text-muted-foreground">
-                        ·
-                      </span>
-                      <span className="text-muted-foreground">{post.readingMinutes} min read</span>
-                    </div>
-                    <h2
-                      className={`font-semibold leading-snug ${featured ? "text-2xl" : "text-lg"}`}
-                    >
-                      {post.title}
-                    </h2>
-                    <p className="text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
-                    <span className="mt-auto pt-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                      Read article →
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        )}
-        {/* EDITABLE SECTION END */}
-
-        <ExploreRail exclude="blog" heading="Keep exploring" />
-      </div>
-    </SiteShell>
-  );
+  const featured=data.posts.find(post=>post.slug==="find-first-paying-customer-without-ads" && post.image) ?? data.posts.find(post=>post.image);
+  const routes=[
+    {slug:"find-first-paying-customer-without-ads",label:"The first paying customer",question:"Who has this problem today?",step:"Observe a real buying attempt, not just interest."},
+    {slug:"realistic-part-time-business-ideas",label:"A start after work",question:"What can fit my actual week?",step:"Count energy, travel and delivery hours."},
+    {slug:"realistic-small-town-business-ideas",label:"A small-town start",question:"What repeats near me?",step:"Watch the existing alternatives in your catchment."},
+    {slug:"how-to-price-a-side-hustle-with-no-customers",label:"The first price",question:"What can I charge honestly?",step:"Quote the real scope and count every cost."},
+  ].map(path=>({...path,post:data.posts.find(post=>post.slug===path.slug)})).filter(path=>Boolean(path.post));
+  return <GlassShell><div className="gl-page jr-page">
+    <nav className="gl-breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link><span>/</span><span>Blog</span></nav>
+    <V2PageHero className="jr-hero"><div><p className="gh-eyebrow">THE FOUNDER JOURNAL · INDIA</p><h1>Someone else has asked your question too.</h1><p>A collection of published business idea articles for the person trying to start in the middle of ordinary life: work hours, a real town, limited cash, and the need for a first customer.</p><a href="#journal-paths" className="gh-button gh-button-primary">Choose a starting question <ArrowUpRight size={17}/></a></div>{featured && <Link to="/blog/$slug" params={{slug:featured.slug}} className="jr-feature">{featured.image && <img src={featured.image} alt={featured.imageAlt ?? featured.title} width={featured.imageWidth ?? 1672} height={featured.imageHeight ?? 941} ref={hideImgIfBroken}/>}<span><small>EDITOR'S START / {formatDate(featured.date)}</small><strong>{featured.title}</strong><span>Open the original article <ArrowUpRight size={16}/></span></span></Link>}</V2PageHero>
+    <V2PageFaq className="jr-questions" id="journal-paths" aria-labelledby="jr-questions-title"><div><p className="gh-eyebrow">01 / OPEN THE RIGHT DOOR</p><h2 id="jr-questions-title">What are you deciding today?</h2><p>Follow the question that belongs to your situation. Each path opens an actual published article, then gives you a small action to take into your own market.</p></div><div className="jr-question-grid">{routes.map((path,index)=><article key={path.slug}><span>0{index+1} / {path.label}</span><h3>{path.question}</h3><p>{path.step}</p><Link to="/blog/$slug" params={{slug:path.slug}}>Read {path.post!.title} <ArrowUpRight size={16}/></Link></article>)}</div></V2PageFaq>
+    <V2PageSection className="jr-evidence" aria-labelledby="jr-evidence-title"><div><p className="gh-eyebrow">02 / A BETTER WAY TO READ</p><h2 id="jr-evidence-title">An article is a starting conversation.</h2><p>Read an example, then go outside the page. Ask whether the buyer, cash requirement and first test still make sense in your area. A popular list cannot know your commute or your customer.</p><Link to="/business-idea-reading-room" className="gh-text-link">Read a source guide beside this journal <ArrowUpRight size={17}/></Link></div><div><div><strong>Underline the condition</strong><span>Who would this idea fit, and what must be true?</span></div><div><strong>Find the counterexample</strong><span>Where would it be expensive, slow or hard to deliver?</span></div><div><strong>Try a small promise</strong><span>Can you ask a real buyer to commit to a defined offer?</span></div></div></V2PageSection>
+    <V2PageSection className="gl-index jr-index" aria-labelledby="articles-heading"><div className="gl-section-heading"><div><p className="gh-eyebrow">03 / ALL PUBLISHED ARTICLES</p><h2 id="articles-heading">Browse the original journal.</h2><p>All published posts on this page keep their source URLs, article bodies and featured images. Start anywhere; take one useful question with you.</p></div></div>{data.posts.length ? <div className="gl-guide-grid gl-blog-grid">{data.posts.map((post, index) => <V2PageCard key={post.id} className={index === 0 ? "gl-guide-card gl-feature-article" : "gl-guide-card"}>
+      {post.image && <Link to="/blog/$slug" params={{ slug: post.slug }} className="gl-guide-media" tabIndex={-1}><img src={post.image} alt={post.imageAlt ?? post.title} width={post.imageWidth ?? 1672} height={post.imageHeight ?? 941} loading="lazy" decoding="async" ref={hideImgIfBroken} /></Link>}
+      <span className="gh-eyebrow">{formatDate(post.date)} · {post.readingMinutes} min read</span><h3><Link to="/blog/$slug" params={{ slug: post.slug }}>{post.title}</Link></h3><p>{post.excerpt}</p><Link to="/blog/$slug" params={{ slug: post.slug }} className="gl-idea-action">Read article <ArrowUpRight size={17} /></Link></V2PageCard>)}</div> : <div className="gl-empty"><h3>No posts published yet.</h3><p>Explore the guides while the journal fills up.</p><Link to="/startup-guides">Read the guides</Link></div>}</V2PageSection>
+    <V2PageSection className="jr-after" aria-labelledby="jr-after-title"><div><p className="gh-eyebrow">04 / AFTER THE READING</p><h2 id="jr-after-title">Turn the idea into a decision.</h2><p>When a story sounds possible, compare it with your actual cash, operating model and a buyer who can say yes or no.</p></div><div><Link to="/startup-costs-india"><strong>Can I fund the first sale?</strong><span>Open the rupee cost ledger <ArrowUpRight size={16}/></span></Link><Link to="/startup-idea-validation"><strong>Will someone commit?</strong><span>Work through a buyer test <ArrowUpRight size={16}/></span></Link><Link to="/blueprints"><strong>What else is published?</strong><span>Browse completed idea blueprints <ArrowUpRight size={16}/></span></Link></div></V2PageSection>
+    <V2PageAsideCta className="gl-bottom-note"><div><p className="gh-eyebrow">KEEP EXPLORING</p><h2>Find a practical direction.</h2><p>The category map is a good place to turn a broad question into a focused path.</p></div><Link to="/browse" className="gh-button gh-button-primary">Explore ideas <ArrowUpRight size={17} /></Link></V2PageAsideCta>
+  </div></GlassShell>;
 }

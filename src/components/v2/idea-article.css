@@ -1,0 +1,42 @@
+@font-face{font-family:SellerIdeaInter;src:url('/bought/lists/images/s_inter_v13_UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2.bin') format('woff2');font-display:swap;font-weight:100 900}
+@font-face{font-family:SellerIdeaOutfit;src:url('/bought/lists/images/s_outfit_v15_QGYvz_MVcBeNP4NJtEtq.woff2.bin') format('woff2');font-display:swap;font-weight:100 900}
+.seller-idea{font-family:SellerIdeaInter,Inter,sans-serif;color:#0f172a;padding-top:104px;background:#fff}
+.seller-idea h1,.seller-idea h2,.seller-idea h3{font-family:SellerIdeaOutfit,Outfit,sans-serif}
+.seller-idea-breadcrumb{max-width:1152px;margin:auto;padding:16px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;color:#64748b;font-size:14px}
+.seller-idea-breadcrumb>span{display:inline-flex;align-items:center;gap:8px}
+.seller-idea-breadcrumb [aria-current]{color:#0f172a}
+.seller-idea-body{max-width:1024px;margin:auto;padding:40px 24px 80px;min-width:0}
+.seller-idea-body:hover{transform:none;box-shadow:none}
+.seller-idea-header h1{margin:16px 0;font-size:clamp(1.875rem,3.5vw,2.25rem);font-weight:700;line-height:1.18;letter-spacing:-.025em}
+.seller-idea-badges{display:flex;flex-wrap:wrap;gap:8px;font-size:12px}
+.seller-idea-badges span{padding:4px 10px;border-radius:999px;background:#f1f5f9}
+.seller-idea-prose{font-size:16px;line-height:1.85;color:#475569;overflow-wrap:anywhere;white-space:pre-line}
+.seller-idea-prose p+p{margin-top:18px}
+.seller-idea-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.seller-idea-primary,.seller-idea-secondary{display:inline-flex;min-height:44px;align-items:center;justify-content:center;gap:10px;border-radius:12px;padding:11px 20px;font-size:14px;font-weight:600;line-height:1.5}
+.seller-idea-primary{background:#0f172a;color:white}.seller-idea-primary:hover{background:#334155}
+.seller-idea-secondary{border:1px solid #e2e8f0;background:white}
+.seller-idea-source{display:flex;gap:12px;align-items:flex-start;margin-top:24px;padding:16px;border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc;font-size:13px;color:#64748b}.seller-idea-source svg{flex-shrink:0;color:#7c3aed}.seller-idea-source p{margin-top:6px}
+.seller-idea-section,.seller-idea-summary{margin-top:56px;scroll-margin-top:112px}
+.seller-idea-section h2,.seller-idea-summary h2{display:flex;align-items:center;gap:9px;margin:0 0 18px;font-size:24px;line-height:1.3;font-weight:700;letter-spacing:-.015em}
+.seller-idea-section h3{font-size:16px;font-weight:600;line-height:1.5}
+.seller-idea-summary{border-left:4px solid #8b5cf6;background:#faf7ff;padding:24px;border-radius:16px;margin-top:32px}
+.seller-idea-summary h2{font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:#7c3aed}
+.seller-idea-callout{border:1px solid #ddd6fe;border-radius:16px;background:#faf7ff;padding:24px}
+.seller-idea-callout h3{margin-bottom:12px}
+.seller-idea-jump-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:40px}
+.seller-idea-jump-grid a{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding:14px;border:1px solid #e2e8f0;border-radius:12px;font-size:12px;line-height:1.5;font-weight:500;overflow-wrap:anywhere}.seller-idea-jump-grid svg{flex-shrink:0}
+.seller-idea-assessment{display:grid;gap:14px;margin-top:24px}.seller-idea-assessment>div{padding:16px 20px;border-radius:12px;background:#f8fafc}.seller-idea-assessment a{display:inline-flex;align-items:center;gap:8px;margin-top:8px;font-size:14px;color:#7c3aed}
+.seller-idea-intro{color:#64748b;line-height:1.75}
+.seller-idea-risk-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+.seller-idea-icon-list{display:grid;gap:18px}.seller-idea-icon-list li{display:flex;align-items:flex-start;gap:10px}.seller-idea-icon-list svg{flex-shrink:0;margin-top:5px;color:#7c3aed}
+.seller-idea-steps{list-style:decimal;padding-left:25px;display:grid;gap:20px}.seller-idea-steps li{padding-left:8px}.seller-idea-steps+.seller-idea-callout{margin-top:24px}
+.seller-idea-bullets{list-style:disc;padding-left:24px;display:grid;gap:12px;color:#475569;line-height:1.85}
+.seller-idea-validation{padding:32px;border:1px solid #ddd6fe;border-radius:16px;background:#faf7ff}.seller-idea-validation>h2{justify-content:center}.seller-idea-guide{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:20px;font-size:14px;color:#7c3aed}
+.seller-idea-section .seller-idea-section{margin-top:28px}.seller-idea-section .seller-idea-section h2{font-size:19px}
+.seller-idea #idea-faq{padding:0;margin-top:56px}.seller-idea #idea-faq h2{font-size:24px}
+.seller-idea-related{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.seller-idea-related>a{display:block;padding:20px;border:1px solid #e2e8f0;border-radius:12px}.seller-idea-related p{margin-top:8px;color:#64748b;font-size:14px;line-height:1.7}.seller-idea-related span{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:13px;color:#7c3aed}
+@media(hover:hover){.seller-idea-related>a:hover,.seller-idea-jump-grid>a:hover{transform:translateY(-2px);border-color:#a78bfa;box-shadow:0 8px 20px -12px #0f172a4d}.seller-idea a:hover{color:#7c3aed}.seller-idea .seller-idea-primary:hover{color:#fff}}
+.seller-idea-backlinks{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;margin-top:40px;font-size:14px}.seller-idea-backlinks a{display:inline-flex;align-items:center;gap:8px;color:#7c3aed}
+.seller-idea-resources{padding:28px;border:1px solid #e2e8f0;border-radius:16px;background:#f8fafc}.seller-idea-resource-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}.seller-idea-resource-grid h3{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#64748b}.seller-idea-resource-grid ul{display:grid;gap:14px;margin-top:18px}.seller-idea-resource-grid a{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px}.seller-idea-resource-grid p{font-size:12px;color:#64748b;margin-top:5px}
+@media(max-width:767px){.seller-idea-breadcrumb{padding:16px}.seller-idea-body{padding:28px 16px 56px}.seller-idea-jump-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.seller-idea-risk-columns,.seller-idea-resource-grid{grid-template-columns:1fr}.seller-idea-validation,.seller-idea-resources,.seller-idea-callout,.seller-idea-summary{padding:20px}.seller-idea-section{margin-top:48px}.seller-idea-related{grid-template-columns:1fr}}

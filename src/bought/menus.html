@@ -1,0 +1,66 @@
+<!-- Bind the shared, server-rendered header on pages without React hydration.
+     Markup and CSS come from the same sources as the React page families. -->
+<script>
+(function () {
+  var root = document.querySelector('.mm-header');
+  if (!root) return;
+  var buttons = Array.from(root.querySelectorAll('.mm-desktop button[aria-controls]'));
+  var mobileButton = root.querySelector('.mm-mobile-toggle');
+  var mobile = root.querySelector('#mm-mobile');
+  var timer, pinned = false;
+  function cancel() { clearTimeout(timer); }
+  function closePanels() {
+    buttons.forEach(function (b) {
+      b.setAttribute('aria-expanded', 'false');
+      var panel = document.getElementById(b.getAttribute('aria-controls'));
+      panel.hidden = true;
+      panel.classList.remove('open');
+    });
+  }
+  function closeMobile() {
+    mobile.hidden = true;
+    mobileButton.setAttribute('aria-expanded', 'false');
+    mobileButton.setAttribute('aria-label', 'Open navigation menu');
+  }
+  function closeSoon() {
+    cancel();
+    timer = setTimeout(function () {
+      if (!pinned && !root.querySelector('.mm-panel:focus-within, .mm-disclosure:focus-within')) closePanels();
+    }, 180);
+  }
+  buttons.forEach(function (button) {
+    var panel = document.getElementById(button.getAttribute('aria-controls'));
+    function open() {
+      cancel(); closePanels(); panel.hidden = false;
+      panel.classList.add('open'); button.setAttribute('aria-expanded', 'true');
+    }
+    button.parentElement.addEventListener('mouseenter', open);
+    button.parentElement.addEventListener('mouseleave', closeSoon);
+    button.addEventListener('click', function () { pinned = true; open(); });
+    button.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown') { e.preventDefault(); pinned = true; open(); panel.querySelector('a').focus(); }
+    });
+    panel.addEventListener('mouseenter', cancel);
+    panel.addEventListener('mouseleave', closeSoon);
+  });
+  mobileButton.addEventListener('click', function () {
+    cancel(); closePanels();
+    var opening = mobile.hidden;
+    mobile.hidden = !opening;
+    mobileButton.setAttribute('aria-expanded', String(opening));
+    mobileButton.setAttribute('aria-label', opening ? 'Close navigation menu' : 'Open navigation menu');
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var trigger = buttons.find(function (b) { return b.getAttribute('aria-expanded') === 'true'; });
+    if (trigger) trigger.focus(); else if (!mobile.hidden) mobileButton.focus();
+    cancel(); pinned = false; closePanels(); closeMobile();
+  });
+  document.addEventListener('mousedown', function (e) {
+    if (!root.contains(e.target)) { cancel(); pinned = false; closePanels(); closeMobile(); }
+  });
+  root.addEventListener('focusout', function (e) {
+    if (!root.contains(e.relatedTarget)) closePanels();
+  });
+})();
+</script>

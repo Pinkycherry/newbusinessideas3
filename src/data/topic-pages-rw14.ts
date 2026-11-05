@@ -1,0 +1,193 @@
+import type { TopicPage } from "@/bought/topic-page";
+import { PARENT, UPDATED, UPDATED_ON, IMG, SRC, TOOLS, CTA } from "./topic-pages-shared";
+
+const FSSAI = { label: "FSSAI FoSCoS: food registration and licence", href: "https://foscos.fssai.gov.in/", note: "Every food business needs FSSAI registration or a licence, depending on its size." };
+const JANSAMARTH = { label: "Jan Samarth portal", href: "https://www.jansamarth.in/", note: "Single government portal for several credit-linked schemes." };
+
+/**
+ * Rewrite 14 (owner review: previous version failed as thin and generic).
+ * Seller layout: generator tool page (/business-plan). Seller sections kept in order:
+ * 3 steps, real output (what the plan contains), why, statistics (numbers to show), everything about,
+ * FAQ, continue, tools, CTA, sources.
+ * No researched figures: every number is a [Validate: ...] marker or a blank the reader fills in.
+ */
+export const businessPlan: TopicPage = {
+  slug: "how-to-write-a-business-plan-for-a-bank-loan-in-india",
+  updated: UPDATED_ON,
+  sellerRef: "https://ideaproof.io/business-plan",
+  parent: PARENT,
+  explore: { guideCategory: "Launch & Ops", categories: ["small-manufacturing-business-ideas", "food-processing-business-ideas", "retail-shop-business-ideas", "dairy-and-milk-product-business-ideas", "printing-and-signage-business-ideas", "tailoring-and-boutique-business-ideas", "automobile-and-two-wheeler-service-business-ideas", "village-and-small-town-business-ideas"] },
+  seo: {
+    title: "How to Write a Business Plan for a Bank Loan in India: Project Report Format, Numbers and Documents",
+    description: "Write a project report your bank branch will actually read, for MUDRA, PMEGP, Stand-Up India or a regular MSME loan: the nine sections in the bank's order, a worked rupee project-cost and repayment sheet, the documents to attach, branch steps and the mistakes that get files returned.",
+  },
+  hero: {
+    eyebrow: "Business plan for a bank loan",
+    h1: "How to Write a Business Plan for a Bank Loan in India",
+    highlight: "Business Plan",
+    intro: "A branch manager has many files on the desk and a few minutes for yours. What they want to know is simple: who you sell to, exactly what the money will buy, how much you are putting in yourself, and how the EMI will be paid every month, including the slow ones. A clear, honest project report answers all of that. You can write it yourself, in plain words, this weekend, and many first-time borrowers do.",
+    sub: "For **MUDRA**, **PMEGP**, **Stand-Up India**, **CGTMSE-backed** and regular **MSME loans**. Consultants are optional; your own understanding of the numbers is not.",
+    updated: UPDATED,
+    primary: { label: "Start with 3 steps", href: "#three-steps-to-a-bank-ready-business-plan" },
+    secondary: { label: "Loans and schemes", href: "/how-to-get-funding-for-a-small-business-in-india" },
+    image: IMG.funding,
+    imageAlt: "A founder preparing a project report for a bank loan",
+  },
+  sections: [
+    {
+      type: "rich",
+      heading: "Three steps to a bank-ready business plan",
+      blocks: [
+        { kind: "h3", text: "Step 1: Collect your numbers and quotations" },
+        { kind: "p", text: "Before you write a word, collect: written quotations for every machine, vehicle, furniture item and fit-out (two per item is better); the rent agreement or ownership papers for the premises; a list of first stock and raw material with supplier prices; your monthly running costs; and the amount you will put in yourself. Use the [startup cost calculator](/calculator/startup-cost), the [break-even calculator](/calculator/break-even) and the [funding needed calculator](/calculator/funding-needed). Check your own credit report too; banks will." },
+        { kind: "h3", text: "Step 2: Write the plan in the bank's order" },
+        { kind: "p", text: "Use the nine sections below. Keep each one short and true. Banks prefer plain facts and realistic sales to big promises. A small business loan report is often just a few pages; larger PMEGP or term-loan projects may need more detail. Ask your branch whether they have a standard format; many do, and using it saves time." },
+        { kind: "h3", text: "Step 3: Attach proof and visit the branch" },
+        { kind: "p", text: "Carry the report with your Udyam certificate, KYC, quotations, premises papers, bank statements and any early orders or letters of intent. Meet the branch manager or the MSME loan officer, ask which scheme they will process for your case, and collect their exact document list. For several schemes you can also apply online through the [Jan Samarth portal](https://www.jansamarth.in/), or for PMEGP on the [KVIC PMEGP portal](https://www.kviconline.gov.in/pmegpeportal/pmegphome/index.jsp)." },
+        { kind: "callout", title: "Before you write", text: "A plan built on a tested idea is far stronger. If nobody outside your family has paid you yet, spend two weekends on [checking whether your idea is good](/how-to-check-if-your-business-idea-is-good-in-india) first. A few months of sales in a separate current account persuade a bank more than any report." },
+      ],
+    },
+    {
+      type: "rich",
+      heading: "What a bank-ready plan contains",
+      intro: "The usual sections of a project report for a small business loan, with what to write in each.",
+      blocks: [
+        { kind: "h3", text: "1. About you and the business" },
+        { kind: "p", text: "Your name, age, education, work experience in this line, address, and the business structure (proprietorship, partnership, LLP or private limited company) with your [Udyam](https://udyamregistration.gov.in/) number. Experience matters: if you worked five years in a bakery before opening one, say so plainly." },
+        { kind: "h3", text: "2. What you sell and to whom" },
+        { kind: "p", text: "One paragraph on your product or service and one on your buyers: who, where, how they buy today. Mention any orders or regular customers you already have." },
+        { kind: "h3", text: "3. Market and competition" },
+        { kind: "p", text: "Who else sells near you, their prices, and why buyers will choose you (location, quality, price, timing, language, service). Use our [competitor analysis guide](/how-to-do-competitor-analysis-for-a-small-business-in-india) and the [market size method](/how-to-calculate-tam-sam-som-for-a-business-in-india)." },
+        { kind: "h3", text: "4. Project cost" },
+        { kind: "p", text: "Fixed assets (machinery, equipment, vehicle, furniture, interiors, deposit) and working capital (raw material, stock, the first months of wages, rent and power until sales cover them), each with its quotation or basis." },
+        { kind: "h3", text: "5. Means of finance" },
+        { kind: "p", text: "Your own contribution, the loan amount, and any subsidy or margin money (for example under [PMEGP](https://www.kviconline.gov.in/pmegpeportal/pmegphome/index.jsp)). The total must equal the project cost. Each scheme sets its own rules for the promoter's contribution. [Validate: current promoter contribution and subsidy rules for MUDRA, PMEGP and Stand-Up India loans]" },
+        { kind: "h3", text: "6. Sales and profit estimate" },
+        { kind: "p", text: "Monthly sales for the first year and yearly figures for the next few years, built from real prices × realistic quantities. Show costs line by line and the profit left. Start low and grow; banks distrust a plan that is full from month one. See [business numbers to track](/business-numbers-every-small-business-in-india-should-track)." },
+        { kind: "h3", text: "7. Repayment plan" },
+        { kind: "p", text: "The EMI for the loan amount, rate and tenure the branch quotes, and how monthly profit covers it with room to spare. Mention any moratorium you are requesting while the unit starts up." },
+        { kind: "h3", text: "8. Licences and approvals" },
+        { kind: "p", text: "GST if applicable, FSSAI for food, shop and establishment registration, trade licence, pollution consent for some units, fire NOC for larger premises. Say which are done and which are applied for." },
+        { kind: "h3", text: "9. Documents attached" },
+        { kind: "p", text: "A numbered list of everything in the file, so the officer can check it quickly." },
+      ],
+    },
+    {
+      type: "rich",
+      heading: "Why a written plan helps you",
+      blocks: [
+        { kind: "list", items: [
+          "**It shows the bank you have thought about repayment**, not just the loan. That is the single biggest worry of any loan officer.",
+          "**It forces you to check your price and costs before you borrow.** Many founders find a mistake while writing that would have cost them the loan, or the business.",
+          "**It helps you borrow the right amount**: not so little that you run out before the unit is ready, not so much that the EMI chokes you.",
+          "**Your family can read it** and understand exactly what is at stake, especially if a family member is a co-applicant or guarantor.",
+          "**It becomes your operating plan.** Compare actual sales with the plan every month.",
+        ] },
+        { kind: "h3", text: "Mistakes that get files returned" },
+        { kind: "list", items: [
+          "**Inflated sales** that start at full capacity in month one.",
+          "**No working capital** in the project cost, so the unit runs out of cash after setup.",
+          "**Quotations missing or from unknown suppliers**, or prices far above market.",
+          "**Copy-pasted reports from the internet or an agent** that do not match your town, product or experience. Officers recognise them.",
+          "**Personal and business money mixed** in one account, so the bank cannot see real sales.",
+          "**Paying agents who promise a guaranteed loan or subsidy.** Scheme applications are free on official portals.",
+          "**Errors in the credit report** that you never checked.",
+        ] },
+        { kind: "h3", text: "Differences by place and sector" },
+        { kind: "list", items: [
+          "**Metro branches** see many applications; a tidy, complete file and clean bank statements matter most.",
+          "**Tier 2 and tier 3 branches** often know local businesses; your reputation, local references and existing account history help.",
+          "**Rural branches and regional rural banks** handle many PMEGP, dairy, poultry and agri-processing loans; land papers, animal or crop details and SHG membership may be asked for.",
+          "**Manufacturing** needs detailed machine quotations and power load; **services** need proof of skill and client demand; **trading** needs stock turnover and supplier terms.",
+        ] },
+      ],
+    },
+    {
+      type: "rich",
+      heading: "Numbers your plan must show",
+      intro: "Banks look for these, whatever the scheme. Fill them with your own quotations and today's local prices.",
+      blocks: [
+        { kind: "table", columns: ["Number", "Why the bank asks", "How to get it right"], rows: [
+          ["Total project cost", "To size the loan", "Add quotations; do not guess"],
+          ["Your own contribution", "Shows commitment", "Savings or family money you are putting in"],
+          ["Working capital", "Money to run the first months", "Use the [funding needed calculator](/calculator/funding-needed)"],
+          ["Monthly sales estimate", "To check repayment", "Real prices × realistic quantities; early orders if you have them"],
+          ["Break-even point", "When the business stops losing money", "Use the [break-even calculator](/calculator/break-even)"],
+          ["Monthly EMI", "Repayment ability", "Ask the branch for rate and tenure, then check the EMI fits your profit"],
+          ["Debt service coverage", "Whether profit covers EMI with room to spare", "Yearly profit before interest and depreciation ÷ yearly loan repayments"],
+        ] },
+        { kind: "h3", text: "Worked rupee example: project cost and repayment sheet for a small flour mill" },
+        { kind: "table", columns: ["Line", "How to work it out", "Your figure"], rows: [
+          ["Machinery", "Quotations for the mill, motor and sieving unit", "₹ ______"],
+          ["Electrical work and installation", "Electrician's quotation; power connection charges", "₹ ______"],
+          ["Shed fit-out or deposit", "Rent agreement or contractor's estimate", "₹ ______"],
+          ["Working capital", "Grain stock + bags + first months of wages, rent and power", "₹ ______"],
+          ["**Total project cost (A)**", "Add the lines", "₹ ______"],
+          ["Own contribution (B)", "As required by the scheme", "₹ ______"],
+          ["Subsidy or margin money (C)", "If eligible under PMEGP or a state scheme", "₹ ______"],
+          ["**Loan amount**", "A − B − C", "₹ ______"],
+          ["Monthly sales", "Kg milled per day × working days × your rate per kg, plus packed flour sales", "₹ ______"],
+          ["Monthly costs", "Power, wages, bags, maintenance, rent", "₹ ______"],
+          ["Monthly profit", "Sales − costs", "₹ ______"],
+          ["Monthly EMI", "From the branch's rate and tenure", "₹ ______"],
+          ["**Room to spare**", "Monthly profit − EMI − your own minimum draw", "₹ ______"],
+        ] },
+        { kind: "p", text: "If the last line is close to zero, borrow less, start smaller or extend the tenure. Check today's loan rates before you finalise. [Validate: current interest rate range for MUDRA and MSME term loans at public sector banks]" },
+        { kind: "checklist", title: "Document checklist for your loan file", items: [
+          "PAN and Aadhaar of the proprietor, partners or directors",
+          "Udyam registration certificate",
+          "Passport-size photographs",
+          "Address proof of business premises (rent agreement or ownership papers)",
+          "Quotations for machinery, equipment and fit-out",
+          "Bank statements of the business and personal accounts for recent months",
+          "Project report with sales, costs and repayment plan",
+          "GST registration and returns, if registered",
+          "FSSAI, shop registration or other licences that apply",
+          "Caste or category certificate if applying under Stand-Up India or a reserved category",
+          "Experience or training certificates (an EDP certificate is needed for PMEGP)",
+          "Income tax returns of recent years, if filed",
+        ] },
+      ],
+    },
+    {
+      type: "chips",
+      heading: "Everything about planning and funding on our site",
+      items: [
+        { label: "How to get funding for a small business", href: "/how-to-get-funding-for-a-small-business-in-india" },
+        { label: "How to raise funds for a startup", href: "/how-to-raise-funds-for-a-startup-in-india" },
+        { label: "How much money is needed to start", href: "/how-much-money-is-needed-to-start-a-business-in-india" },
+        { label: "Free government resources for starting a business", href: "/free-government-resources-for-starting-a-business-in-india" },
+        { label: "Business numbers to track", href: "/business-numbers-every-small-business-in-india-should-track" },
+        { label: "Startup cost ledger", href: "/startup-costs-india" },
+        { label: "Launch evidence plan", href: "/startup-launch-plan-india" },
+        { label: "Small manufacturing business ideas", href: "/category/small-manufacturing-business-ideas" },
+        { label: "Templates", href: "/templates" },
+      ],
+    },
+    { type: "dbfaq", heading: "Bank loan and project report questions", intro: "Real questions from our published idea guides about loans, licences and starting costs. More on our [founder FAQ page](/faq).", categories: ["small-manufacturing-business-ideas", "food-processing-business-ideas", "retail-shop-business-ideas", "dairy-and-milk-product-business-ideas", "printing-and-signage-business-ideas", "tailoring-and-boutique-business-ideas", "village-and-small-town-business-ideas", "home-based-business-ideas"], match: "(loan|mudra|pmegp|bank|licen|registration|register|investment|capital|how much .*(start|need))", limit: 10 },
+    {
+      type: "rich",
+      heading: "Continue your journey",
+      blocks: [
+        { kind: "h3", text: "What to do this week" },
+        { kind: "table", columns: ["Day", "Task"], rows: [
+          ["Day 1", "List every item you need; ask two suppliers for written quotations"],
+          ["Day 2", "Register on Udyam; check your free credit report and fix errors"],
+          ["Day 3", "Fill the project cost and means of finance lines"],
+          ["Day 4", "Build monthly sales and costs from real prices; run the break-even calculator"],
+          ["Day 5", "Write sections 1 to 3 and 8 in plain words"],
+          ["Day 6", "Visit your branch; ask for their format, scheme and document list"],
+          ["Day 7", "Finish the report, attach documents in order, and submit"],
+        ] },
+        { kind: "list", items: [
+          "**Check your idea first:** a plan built on a tested idea is far stronger. [Is my business idea good?](/how-to-check-if-your-business-idea-is-good-in-india)",
+          "**Avoid the traps** that make a loan hard to repay: [common mistakes when starting a business](/common-mistakes-to-avoid-when-starting-a-business-in-india).",
+          "**See how similar businesses earn** and what they cost: [browse business ideas](/browse).",
+        ] },
+      ],
+    },
+    TOOLS,
+    { ...CTA, heading: "Ready to write your plan?", body: "Start with your numbers in the free startup cost calculator, then fill the nine sections above in plain words.", button: { label: "Open the startup cost calculator", href: "/calculator/startup-cost" } },
+    { type: "sources", heading: "Sources", items: [SRC.mudra, SRC.standUp, SRC.pmegp, SRC.cgtmse, JANSAMARTH, SRC.udyam, SRC.gst, FSSAI, { label: "RBI: lending to MSMEs", href: "https://www.rbi.org.in/", note: "Reserve Bank of India guidance on priority-sector lending to micro and small enterprises." }] },
+  ],
+};

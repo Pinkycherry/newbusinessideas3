@@ -14,10 +14,11 @@ import "../styles.css";
 import "../motion.css";
 import "../components/idea-cinema/cinema.css";
 import { PointerChannelProvider, PageTransition } from "../motion";
-import { catalogQuery } from "../lib/ideas.functions";
+import { catalogQuery } from "../lib/catalog";
 import { getPageResources } from "../lib/resources.functions";
 import { JsonLd, organisationSchema } from "@/lib/schema";
 import { canonicalUrl, siteIndexable } from "../lib/site-config";
+import { SiteInteractions } from "@/components/v2/site-interactions";
 
 /**
  * The 404 and error screens render outside every route's SiteShell, so they
@@ -268,13 +269,6 @@ function RootShell({ children }: { children: ReactNode }) {
         <FontStylesheet />
         <CanonicalLink />
         <RobotsMeta />
-        {/* Google AdSense: site verification and the ads script (owner, ca-pub-8835654119501794). */}
-        <meta name="google-adsense-account" content="ca-pub-8835654119501794" />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8835654119501794"
-          crossOrigin="anonymous"
-        />
         {/* The publishing entity, declared once for the whole site rather than
             per route. Every page already said what it was about; none said who
             stands behind it, which is the E-E-A-T signal that was missing. */}
@@ -318,6 +312,7 @@ function RootComponent() {
           the GSAP SplitText headline reveal in use-text-reveal.ts, switched
           off for breaking layout on any heading that wrapped to two lines. */}
       <PageTransition>
+        <SiteInteractions />
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
       </PageTransition>

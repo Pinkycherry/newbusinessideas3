@@ -1,156 +1,60 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
+import { useServerFn } from '@tanstack/react-start';
+import { ArrowRight, ChevronRight, Search, Star } from 'lucide-react';
+import { V2Frame } from '@/components/v2/frame';
+import { SellerFaq } from '@/components/v2/faq';
+import { BAND_LABEL, SKILL_LABEL, TIME_LABEL } from '@/lib/ideas.functions';
+import { getListsHub } from '@/lib/lists.functions';
+import { getBrowseIdeas, type BrowseFilters } from '@/lib/browse.functions';
+import { getPageResources } from '@/lib/resources.functions';
+import { ShortlistToggle } from '@/components/founder-workspace/shortlist-toggle';
+import { useFounderWorkspace, type WorkspaceIdea } from '@/lib/founder-workspace';
 
-import { SiteShell, Breadcrumbs } from "@/components/site-shell";
-import { ExploreRail } from "@/components/explore-rail";
-import { getCatalog } from "@/lib/ideas.functions";
-import FocusCards from "@/components/aceternity/focus-cards";
-import { categoryImage } from "@/config/category-imagery";
-import { EXPANSION_SUBCATEGORIES } from "@/config/expansion-taxonomy";
-import { absoluteUrl, JsonLd, breadcrumbSchema, collectionPageSchema } from "@/lib/schema";
-import { PAGE_IMAGES, pageImageMeta } from "@/config/page-imagery";
-import { PageHeroImage } from "@/components/page-hero-image";
-import { usePillInteraction } from "@/hooks/use-pill-interaction";
-import { useScrollProgress, useTextReveal } from "@/motion";
-
-const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog() });
-
-export const Route = createFileRoute("/browse")({
-  loader: ({ context }) => context.queryClient.ensureQueryData(catalogQuery),
-  head: () => ({
-    meta: [
-      { title: "Browse Business Idea Categories | BBI – Bro Business Ideas" },
-      {
-        name: "description",
-        content:
-          "Browse every business idea category and subcategory in the BBI library, from AI automation to fintech and creator media.",
-      },
-      {
-        property: "og:title",
-        content: "Browse Business Idea Categories | BBI – Bro Business Ideas",
-      },
-      {
-        property: "og:description",
-        content:
-          "Browse the BBI idea library by category and subcategory. Explore practical business models and use Validate for current local details.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      ...pageImageMeta(PAGE_IMAGES.browse, absoluteUrl),
-    ],
-  }),
-  component: BrowsePage,
-  errorComponent: () => (
-    <SiteShell tone="instrument">
-      <p className="mx-auto max-w-6xl px-4 py-24">
-        Couldn't load the idea library — try refreshing.
-      </p>
-    </SiteShell>
-  ),
-  notFoundComponent: () => (
-    <SiteShell tone="instrument">
-      <p className="mx-auto max-w-6xl px-4 py-24">That page doesn't exist.</p>
-    </SiteShell>
-  ),
+const initial:BrowseFilters={q:'',category:'',investment:'',time:'',skill:'',page:1};
+export const Route=createFileRoute('/browse')({
+  loader:async()=>{const [hub,results,resources]=await Promise.all([getListsHub(),getBrowseIdeas({data:initial}),getPageResources()]);return {hub,results,resources};},
+  head:()=>({meta:[{title:'Browse Published Business Ideas | BusinessIdea.io'},{name:'description',content:'Browse published Indian business ideas by category and focused list.'}]}),
+  component:BrowsePage,
 });
+const wrap='mx-auto max-w-6xl px-4 md:px-6';
+const section='scroll-mt-28 py-12 lg:py-16';
+const card='group block min-w-0 rounded-xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md';
+const primary='inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-700';
+const chip='min-h-10 rounded-full border px-4 py-2 text-sm font-medium transition hover:border-primary/50';
 
-function SubcategoryPill({
-  categorySlug,
-  subcategorySlug,
-  label,
-}: {
-  categorySlug: string;
-  subcategorySlug: string;
-  label: string;
-}) {
-  const pill = usePillInteraction<HTMLAnchorElement>();
-  return (
-    <Link
-      to="/category/$categorySlug/$subcategorySlug"
-      params={{ categorySlug, subcategorySlug }}
-      className="glass-pill iv-tag px-4 py-2 text-sm"
-      ref={pill.ref}
-      onMouseEnter={pill.onMouseEnter}
-      onMouseLeave={pill.onMouseLeave}
-      onPointerDown={pill.onPointerDown}
-      onPointerUp={pill.onPointerUp}
-    >
-      {label}
-    </Link>
-  );
+function Filter({title,value,options,onChange}:{title:string;value:string;options:Record<string,string>;onChange:(value:string)=>void}){
+ return <fieldset><legend className="mb-3 text-sm font-semibold">{title}</legend><div className="flex flex-wrap gap-2"><button type="button" className={`${chip} ${!value?'bg-slate-900 text-white':'bg-card'}`} aria-pressed={!value} onClick={()=>onChange('')}>Any</button>{Object.entries(options).map(([key,label])=><button key={key} type="button" className={`${chip} ${value===key?'bg-slate-900 text-white':'bg-card'}`} aria-pressed={value===key} onClick={()=>onChange(key)}>{label}</button>)}</div></fieldset>;
 }
-
-function BrowsePage() {
-  const { data } = useSuspenseQuery(catalogQuery);
-  const headingRef = useTextReveal<HTMLHeadingElement>();
-  const depthRef = useScrollProgress<HTMLDivElement>();
-  return (
-    <>
-      <JsonLd
-        schema={[
-          collectionPageSchema({
-            path: "/browse",
-            name: "Browse Business Idea Categories",
-            description: "Every category and subcategory in the BBI business idea library.",
-            itemCount: data.totalIdeas,
-            image: PAGE_IMAGES.browse.src,
-          }),
-          breadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Browse", path: "/browse" },
-          ]),
-        ]}
-      />
-      <SiteShell tone="instrument">
-        <div ref={depthRef} className="bbi-depth mx-auto max-w-6xl px-4 py-12">
-          <Breadcrumbs items={[{ label: "Home", to: "/" }, { label: "Browse" }]} />
-          <div className="bbi-depth-back">
-            <h1 ref={headingRef} className="mt-4 text-3xl font-bold tracking-tight">
-              The full idea library
-            </h1>
-            {/* The total comes from live completed ideas. The new expansion
-                categories are grouped by their ten approved subcategories. */}
-            <p className="mt-2 text-sm text-muted-foreground">
-              {data.totalIdeas} business ideas across {data.totalCategories} live categories
-            </p>
-            <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-              New collections open into ten focused subcategories. Established collections show
-              their ideas directly.
-            </p>
-            {/* Someone landing on the library from search has no idea what it
-                costs, and the answer is the most persuasive thing on the page. */}
-            <p className="mt-1 text-xs uppercase tracking-[0.16em] text-muted-foreground">
-              Free after one sign-in · No credit card · Pay nothing, ever
-            </p>
-            <PageHeroImage image={PAGE_IMAGES.browse} />
-          </div>
-          {/* Was `space-y-6`: fourteen full-width bars, each holding a single
-              line of text and a count, roughly 1,600px of page to say what a
-              grid says in 400. FocusCards instead: hovering one category pulls
-              it forward and lets the rest fall back, so a long grid answers
-              where the reader is looking. Photography is this site's own
-              committed category images (src/config/category-imagery.ts) --
-              matched to the category, not an external, unreliable source. */}
-          <FocusCards
-            className="bbi-depth-front mt-8"
-            cards={data.categories.map((category) => {
-              const photo = categoryImage(category.categorySlug);
-              return {
-                title: category.categoryName,
-                meta: EXPANSION_SUBCATEGORIES[category.categorySlug]
-                  ? `10 subcategories · ${category.ideaCount} ideas`
-                  : `${category.ideaCount} blueprints`,
-                src: photo.src,
-                alt: photo.alt,
-                to: "/category/$categorySlug",
-                params: { categorySlug: category.categorySlug },
-              };
-            })}
-          />
-
-          <ExploreRail exclude="ideas" heading="Keep exploring" />
-        </div>
-      </SiteShell>
-    </>
-  );
+function BrowsePage(){
+ const {hub,results:loaded,resources}=Route.useLoaderData();
+ const [filters,setFilters]=useState(initial),[results,setResults]=useState(loaded),[loading,setLoading]=useState(false),[error,setError]=useState('');
+ const run=useServerFn(getBrowseIdeas),first=useRef(true);
+ useEffect(()=>{
+   if(first.current){first.current=false;return;}
+   let active=true;
+   const timer=window.setTimeout(async()=>{setLoading(true);setError('');try{const next=await run({data:filters});if(active)setResults(previous=>filters.page>1?{...next,ideas:[...previous.ideas,...next.ideas]}:next);}catch(e){if(active)setError(e instanceof Error?e.message:'Please try again.');}finally{if(active)setLoading(false);}},filters.q?250:0);
+   return ()=>{active=false;window.clearTimeout(timer);};
+ },[filters,run]);
+ const update=(key:keyof BrowseFilters,value:string)=>setFilters(previous=>({...previous,[key]:value,page:1}));
+ const picks=results.ideas.slice(0,3);
+ const {shortlist}=useFounderWorkspace();
+ const asWorkspaceIdea=(idea:typeof results.ideas[number]):WorkspaceIdea=>({slug:idea.slug,title:idea.title,hook:idea.hook,summary:idea.summary,categoryCode:idea.category_code,investmentBand:idea.investment_band,timeNeeded:idea.time_needed,skillLevel:idea.skill_level,workMode:idea.work_mode});
+ const plans=[['Business model canvas','/business-models-india'],['Market and competition','/business-idea-research-india'],['Product and first offer','/product-business-ideas-india'],['Pricing and unit economics','/unit-economics-india'],['Go-to-market plan','/first-customer-india'],['Demand and validation','/business-demand-test-india'],['Funding and startup costs','/startup-costs-india'],['Assemble your launch plan','/startup-launch-plan-india']];
+ return <V2Frame active="/browse">
+  <div className="bg-muted/30 pt-24 lg:pt-28"><nav className={`${wrap} flex flex-wrap items-center gap-2 py-3 text-sm text-muted-foreground`} aria-label="Breadcrumb"><a href="/">Home</a><ChevronRight size={15}/><span>Browse</span></nav></div>
+  <section className="bg-gradient-to-b from-primary/5 to-background py-12"><div className={wrap}><span className="rounded-full bg-secondary px-3 py-1 text-xs font-bold">Unlimited idea library</span><h1 className="mt-4 max-w-3xl text-3xl font-bold md:text-5xl">Find a direction worth exploring.</h1><p className="mt-4 max-w-2xl text-muted-foreground">Browse a growing library of published ideas, categories and focused lists.</p><div className="mt-6 flex flex-wrap gap-3"><a className={primary} href="#picker">Find an idea<ArrowRight size={17}/></a><a className="inline-flex min-h-11 items-center rounded-xl border bg-card px-5 py-3 text-sm font-semibold" href="#idea-table">Compare published ideas</a></div></div></section>
+  <div className={wrap}>
+   <section id="picker" className={section}><h2 className="text-2xl font-bold">Business idea picker</h2><p className="mt-3 text-muted-foreground">Start with a budget, place, skill or kind of customer.</p><div className="mt-6 rounded-2xl border bg-muted/20 p-5 md:p-7"><label className="flex items-center gap-3 rounded-xl border bg-card px-4"><Search size={20} className="shrink-0"/><span className="sr-only">Search published ideas</span><input type="search" value={filters.q} onChange={e=>update('q',e.target.value)} placeholder="Search published ideas" className="min-h-12 min-w-0 flex-1 bg-transparent outline-none"/></label><div className="mt-6 grid gap-6"><Filter title="Starting investment" value={filters.investment} options={BAND_LABEL} onChange={value=>update('investment',value)}/><Filter title="Available time" value={filters.time} options={TIME_LABEL} onChange={value=>update('time',value)}/><Filter title="Skills and experience" value={filters.skill} options={SKILL_LABEL} onChange={value=>update('skill',value)}/><label className="flex flex-wrap items-center gap-3 text-sm font-semibold">Category<select className="min-h-11 max-w-full rounded-lg border bg-card px-3 font-normal" value={filters.category} onChange={e=>update('category',e.target.value)}><option value="">All categories</option>{hub.categories.map(c=><option key={c.code} value={c.code}>{c.name}</option>)}</select></label></div></div>{error&&<p className="mt-4 rounded-xl border border-red-200 p-4 text-sm text-red-700" role="alert">{error}</p>}<div className="mt-6 grid gap-4 md:grid-cols-3" aria-busy={loading}>{picks.map(idea=><article key={idea.slug} className={card}><a href={`/idea/${idea.slug}`} className="block min-w-0"><h3 className="break-words text-lg font-bold">{idea.title}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{idea.hook}</p></a><div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-3"><a href={`/idea/${idea.slug}`} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-blue-700 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-800"><ArrowRight size={15}/>Read full idea</a><ShortlistToggle compact className="w-full [&>button]:w-full" idea={asWorkspaceIdea(idea)}/><a href={`/idea/${idea.slug}#idea-validate`} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800 hover:border-blue-500 hover:bg-blue-50"><Star size={15}/>Validate this idea</a></div></article>)}</div>{!picks.length&&!loading&&<p className="mt-5 rounded-xl border p-5 text-muted-foreground">No published idea matches. Try another search or reset the filters.</p>}</section>
+   <section id="idea-table" className={section}><div className="flex flex-wrap items-end justify-between gap-3"><div><h2 className="text-2xl font-bold">Compare published business ideas</h2><p className="mt-2 text-sm text-muted-foreground">Add candidates to your local shortlist, then compare their published details side by side.</p></div><a className={`${primary} ${shortlist.length<2?"pointer-events-none opacity-50":""}`} aria-disabled={shortlist.length<2} href={shortlist.length<2?undefined:"/startup-idea-comparison"}>Compare selected ({shortlist.length}/4)<ArrowRight size={16}/></a></div><div className="mt-6 overflow-x-auto rounded-xl border bg-card"><table className="w-full min-w-[680px] text-left text-sm"><thead className="bg-muted/40"><tr>{['Business idea','Starting investment','Time','Skill','Work setting'].map(h=><th key={h} className="p-4 font-semibold">{h}</th>)}</tr></thead><tbody>{results.ideas.map(idea=><tr className="border-t hover:bg-primary/5" key={idea.slug}><td className="p-4 align-top"><a className="break-words font-semibold hover:text-primary" href={`/idea/${idea.slug}`}>{idea.title}</a><div className="mt-3 grid min-w-[140px] gap-2"><a className="inline-flex min-h-9 items-center gap-1.5 rounded-lg bg-blue-700 px-2.5 py-2 text-xs font-semibold text-white hover:bg-blue-800" href={`/idea/${idea.slug}`}>Read full idea <ArrowRight size={13}/></a><ShortlistToggle compact className="[&>button]:w-full" idea={asWorkspaceIdea(idea)}/><a className="inline-flex min-h-9 items-center justify-center gap-1.5 rounded-lg border border-slate-300 bg-white px-2.5 py-2 text-xs font-semibold text-slate-800 hover:border-blue-500 hover:bg-blue-50" href={`/idea/${idea.slug}#idea-validate`}><Star size={13}/>Validate this idea</a></div></td><td className="p-4">{BAND_LABEL[idea.investment_band]||idea.investment_band}</td><td className="p-4">{TIME_LABEL[idea.time_needed]||idea.time_needed}</td><td className="p-4">{SKILL_LABEL[idea.skill_level]||idea.skill_level}</td><td className="p-4">{idea.work_mode.replaceAll('_',' ')}</td></tr>)}</tbody></table></div>{results.hasMore&&<button className={`${primary} mt-6`} type="button" disabled={loading} onClick={()=>setFilters(previous=>({...previous,page:previous.page+1}))}>{loading?'Loading…':'Explore more ideas'}<ArrowRight size={16}/></button>}</section>
+   <section id="test-your-shortlist" className={section}><h2 className="text-2xl font-bold">Choose the idea you can test</h2><div className="mt-6 grid gap-4 md:grid-cols-3">{[['Compare the buyer','/startup-idea-comparison'],['Check the costs','/startup-costs-india'],['Test real demand','/business-demand-test-india']].map(([label,href])=><a className={card} key={href} href={href}><h3 className="font-bold">{label}</h3><ArrowRight className="mt-4 text-primary" size={18}/></a>)}</div></section>
+   <section className={`${section} rounded-2xl border border-primary/20 bg-primary/5 px-5 text-center md:px-8`}><h2 className="text-2xl font-bold">Shortlisted an idea? Test it before you spend.</h2><p className="mx-auto mt-3 max-w-2xl text-muted-foreground">Read the buyer, cost, work and risk sections, then test the strongest assumption with a real potential customer.</p><a className={`${primary} mt-6`} href="/startup-idea-validation">Validate your idea<ArrowRight size={16}/></a></section>
+   <section id="directory" className={section}><h2 className="text-2xl font-bold">Business idea lists, by category</h2><div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{hub.categories.map(c=><article key={c.code} className={card}><h3 className="text-lg font-bold"><a href={`/category/${c.slug}`} className="hover:text-primary">{c.name}</a></h3><ul className="mt-4 space-y-3 text-sm text-muted-foreground">{c.subs.slice(0,4).map(s=><li key={s.code}><a href={`/lists/${s.slug}`} className="hover:text-primary hover:underline">{s.name}</a></li>)}</ul><a href={`/category/${c.slug}`} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">Explore category<ArrowRight size={16}/></a></article>)}</div><a className={`${primary} mt-6`} href="/all-business-ideas">View complete list index<ArrowRight size={16}/></a></section>
+   <section id="plan" className={section}><h2 className="text-2xl font-bold">From shortlisted idea to written business plan</h2><div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{plans.map(([label,href])=><a className={card} key={href} href={href}><h3 className="font-bold">{label}</h3><ArrowRight className="mt-4 text-primary" size={17}/></a>)}</div></section>
+   <SellerFaq id="faq" title="Frequently asked questions" faq={[{q:'Which list should I start with?',a:'Start with the constraint that matters most: your available time, location, skill, customer type or startup budget.'},{q:'How should I compare ideas?',a:'Read the buyer, cost, work and risk sections, then test the strongest assumption with a real potential customer.'},{q:'Are these ideas guaranteed to work?',a:'No. Each idea is a research starting point. Local demand, permissions, pricing and execution still need direct validation.'}]}/>
+   <section className={`${section} rounded-2xl border bg-muted/20 px-5 md:px-8`}><h2 className="text-2xl font-bold">Keep going: hubs, comparisons and deep dives</h2><div className="mt-6 grid gap-6 md:grid-cols-3">{[['Start from the hub',[['Business idea lists','/lists'],['Complete idea index','/all-business-ideas'],['Published blueprints','/blueprints']]],['Compare your options',[['Business models','/business-models-india'],['Compare ideas','/startup-idea-comparison'],['Pricing','/business-pricing-india']]],['Go deeper',[['Founder glossary','/founder-glossary'],['Startup guides','/startup-guides'],['Founder tools','/tools']]]].map(([title,links])=><div key={title as string}><h3 className="font-bold">{title as string}</h3><ul className="mt-4 space-y-3">{(links as string[][]).map(([label,href])=><li key={href}><a className="text-sm text-muted-foreground hover:text-primary hover:underline" href={href}>{label}</a></li>)}</ul></div>)}</div></section>
+   <section className={section}><h2 className="text-2xl font-bold">Related research and guides</h2><div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{resources.guides.map(guide=><a className={card} key={guide.slug} href={`/startup-guides/${guide.slug}`}><h3 className="font-bold">{guide.label}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{guide.blurb}</p><ArrowRight className="mt-4 text-primary" size={16}/></a>)}</div></section>
+   <section className="pb-12"><h2 className="text-2xl font-bold">People also search for</h2><div className="mt-5 flex flex-wrap gap-2">{hub.categories.slice(0,12).map(c=><a key={c.code} className={`${chip} bg-muted/20`} href={`/category/${c.slug}`}>{c.name}</a>)}</div></section>
+  </div>
+ </V2Frame>;
 }

@@ -44,6 +44,35 @@
   --route-pending: 0;
 }
 
+/* Purchased page interaction language, shared by current and older route bodies. */
+@keyframes seller-section-enter {
+  from { opacity: 0; transform: translate3d(0, 20px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.seller-scroll-reveal { animation: seller-section-enter 600ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+main :where(a, button, [role="button"], summary),
+main :where(article, [class*="card"], [class*="Card"]) {
+  transition-property: color, background-color, border-color, box-shadow, transform;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+main :where(button, [role="button"], a[class*="button"], a[class*="btn"], a[class*="rounded"]):active { transform: scale(0.98); }
+@media (hover: hover) and (pointer: fine) {
+  main a:hover { text-decoration-color: currentColor; }
+  main :where(button, [role="button"], summary):hover { filter: brightness(0.97); }
+  main :where(a[class*="rounded"], a[class*="button"], a[class*="btn"], a[class*="card"], article, [class*="premium-card"], [class*="resource-card"], [class*="guide-card"]):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px -12px rgb(15 23 42 / 0.3);
+    border-color: color-mix(in srgb, var(--primary) 50%, transparent);
+  }
+  main :where(a[class*="bg-slate-900"], button[class*="bg-slate-900"]):hover { background-color: #334155; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .seller-scroll-reveal { animation: none; }
+  main :where(a, button, [role="button"], summary, article, [class*="card"]):hover,
+  main :where(a, button, [role="button"]):active { transform: none; }
+}
+
 /* ------------------------------------------------------------
    Route transition (see src/motion/page-transition.tsx).
    Enter-only, on top of a paint that has already happened.

@@ -1,0 +1,52 @@
+/* Shared seller surface for the existing content and interactive page families.
+   The original route logic remains in place while hero, cards, accordions,
+   comparison tables and calls to action use the same visual grammar as /lists. */
+.v2 .glass-home.v2-surface {
+  --gh-ink: #0f172a;
+  --gh-muted: #64748b;
+  --gh-violet: #7c3aed;
+  --gh-blue: #a78bfa;
+  --gh-line: #e2e8f0;
+  --gh-panel: #ffffff;
+  color: #0f172a;
+  background: #ffffff;
+  overflow: visible;
+}
+.v2 .v2-surface :is(.gh-eyebrow,.gh-kicker) { color: #7c3aed; }
+.v2 .v2-surface.cf { --cf-ink: #0f172a; --cf-muted: #64748b; background: #fff; color: #0f172a; }
+.v2 .v2-surface :is(.cf-kicker,.cf-section-heading > span) { color: #7c3aed; }
+.v2 .v2-surface :is(.cf-button-dark,.cf-header-action) { border-color: #7c3aed; border-radius: .75rem; background: #7c3aed; color: #fff; }
+.v2 .v2-surface :is(.cf-button-light,.cf-step,.cf-visual,.cf-output,.cf-feature-panel,.cf-next-links a) { border: 1px solid #e2e8f0; border-radius: 1rem; background: #fff; box-shadow: 0 1px 2px #0f172a0d; color: #0f172a; }
+.v2 .v2-surface :is(.cf-band,.cf-soft,.cf-dark) { background: #f5f0ff; color: #0f172a; }
+.v2 .v2-surface :is(.gl-page,.gl-editorial) { max-width: 1152px; }
+.v2 .v2-surface :is(.gl-breadcrumb,.gh-breadcrumb) { color: #64748b; }
+.v2 .v2-surface :is(.gl-hero,.gl-idea-hero,.gl-calculator-hero,.gl-editorial-hero,.gl-article-hero,.bm-hero,.cf-hero,.bt-hero,.ic-hero,.dj-hero,.rr-hero,.gr-hero,.bp-hero,.ps-hero,.tf-hero,.ob-hero,.sb-hero,.rk-hero,.wk-hero,.ir-hero,.pt-sub-hero,.sv-hero,.fc-hero,.ue-hero,.sc-hero) {
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #f5f0ff 0%, #fff 75%);
+  box-shadow: none;
+  color: #0f172a;
+}
+.v2 .v2-surface :is(.gl-hero,.gl-idea-hero,.gl-calculator-hero,.gl-editorial-hero,.gl-article-hero) h1,
+.v2 .v2-surface :is(.gh-hero,.bm-hero,.cf-hero,.bt-hero,.ic-hero,.dj-hero,.rr-hero,.gr-hero,.bp-hero,.ps-hero,.tf-hero,.ob-hero,.sb-hero,.rk-hero,.wk-hero,.ir-hero,.pt-sub-hero,.sv-hero,.fc-hero,.ue-hero,.sc-hero) h1 { color: #0f172a; letter-spacing: -.045em; }
+.v2 .v2-surface :is(.gl-hero,.gl-idea-hero,.gl-calculator-hero,.gl-editorial-hero,.gl-article-hero,.gh-hero,.bm-hero,.cf-hero,.bt-hero,.ic-hero,.dj-hero,.rr-hero,.gr-hero,.bp-hero,.ps-hero,.tf-hero,.ob-hero,.sb-hero,.rk-hero,.wk-hero,.ir-hero,.pt-sub-hero,.sv-hero,.fc-hero,.ue-hero,.sc-hero) h1 em { font-style: normal; color: #7c3aed; background: none; -webkit-text-fill-color: currentColor; }
+.v2 .v2-surface :is(.gl-category,.gl-path-card,.gl-tool-card,.gl-guide-card,.gl-resource-card,.gl-blueprint-card,.gl-glossary-card,.gl-pricing-card,.gl-service-card,.gl-idea-card,.gl-idea-section,.gl-idea-sidebar > div,.gl-calculator-panel,.gl-editorial-unit,.rr-feature-card,.sb-lane-card) {
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 1px 2px #0f172a0d;
+}
+.v2 .v2-surface :is(.gl-category,.gl-path-card,.gl-tool-card,.gl-guide-card,.gl-resource-card,.gl-blueprint-card,.gl-glossary-card,.gl-pricing-card,.gl-service-card,.gl-idea-card):hover { border-color: #c4b5fd; box-shadow: 0 4px 12px #0f172a10; }
+.v2 .v2-surface :is(.gh-button-primary,.gl-idea-action,.gl-idea-validate-link) { border-color: #7c3aed; border-radius: .75rem; background: #7c3aed; color: #fff !important; box-shadow: 0 3px 8px #7c3aed30; }
+.v2 .v2-surface :is(.gh-button-secondary,.gl-sort,.gl-search,.gl-related-list a) { border-color: #e2e8f0; border-radius: .75rem; background: #fff; color: #0f172a; box-shadow: none; }
+.v2 .v2-surface :is(.gl-bottom-note,.gl-blueprint-invite,.gl-editorial-next,.gl-back-path) { border: 1px solid #ddd6fe; border-radius: 1rem; background: #f5f0ff; box-shadow: none; }
+.v2 .v2-surface :is(.gl-faq,.bm-faq,.cf-faq,.bt-faq,.ic-faq,.dj-faq,.bp-faq,.ps-faq,.tf-faq,.ob-faq,.sb-faq,.rk-faq,.wk-faq,.ir-faq,.sv-faq,.fc-faq,.ue-faq,.sc-faq) details { border: 1px solid #e2e8f0; border-radius: .75rem; background: #fff; }
+.v2 .v2-surface :is(table,.gl-comparison-table) { border-color: #e2e8f0; background: #fff; }
+.v2 .v2-surface :is(table th,table td) { border-color: #e2e8f0; }
+.v2 .v2-surface :is(.gl-section-heading h2,.gl-editorial-unit h2,.gl-idea-section h2) { color: #0f172a; }
+.v2 .v2-surface :is(.gl-category-spark,.gl-art-core) { color: #7c3aed; background: #f5f0ff; box-shadow: none; }
+.v2 .v2-surface a:hover { color: #7c3aed; }
+.v2 .v2-surface :is(.gh-button-primary,.gl-idea-action,.gl-idea-validate-link):hover { color: #fff; background: #6d28d9; }
+@media (max-width: 680px) {
+  .v2 .v2-surface :is(.gl-hero,.gl-idea-hero,.gl-calculator-hero,.gl-editorial-hero,.gl-article-hero) { border-radius: 1rem; }
+}

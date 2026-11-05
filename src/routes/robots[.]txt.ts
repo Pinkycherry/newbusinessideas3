@@ -14,10 +14,10 @@ import { siteUrl, siteIndexable } from "@/lib/site-config";
  * `/search` is excluded because search result pages are infinite, thin, and
  * generate crawl traffic that finds nothing worth indexing.
  *
- * When `SITE_INDEXABLE=false` this becomes a blanket disallow. Note that on a
- * domain being TORN DOWN that is the wrong move on its own: a crawler that
- * cannot fetch a page cannot read the `noindex` that removes it. See the note
- * on `siteIndexable` for the order that actually de-indexes a site.
+ * When `siteIndexable()` is false, crawlers may fetch the preview so they can
+ * read the sitewide noindex header and HTML meta. There is no sitemap. Google
+ * explicitly warns that a robots.txt disallow can hide the noindex rule and
+ * leave a URL-only result in search.
  */
 const BODY = () =>
   (siteIndexable()
@@ -29,7 +29,7 @@ const BODY = () =>
         `Sitemap: ${siteUrl()}/sitemap-index.xml`,
         "",
       ]
-    : ["User-agent: *", "Disallow: /", ""]
+    : ["User-agent: *", "Allow: /", "# Preview: every response carries noindex", ""]
   ).join("\n");
 
 export const Route = createFileRoute("/robots.txt")({

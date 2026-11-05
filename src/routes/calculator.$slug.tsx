@@ -1,339 +1,51 @@
 import { useId, useState } from "react";
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
+import { ArrowRight, ChevronRight, RotateCcw } from "lucide-react";
+import { V2Frame } from "@/components/v2/frame";
+import { READY_CALCULATORS, isReadyCalculator, isVerifiedCalculator, defaultInputs, fieldGroups, findCalculator, readValues, type Calculator, type FieldIssue, type Reading } from "@/lib/calculators";
 
-import { SiteShell, Breadcrumbs } from "@/components/site-shell";
-import { ExploreRail } from "@/components/explore-rail";
-import {
-  CALCULATORS,
-  defaultInputs,
-  fieldGroups,
-  findCalculator,
-  readValues,
-  type Calculator,
-  type FieldIssue,
-  type Reading,
-} from "@/lib/calculators";
-import { JsonLd, breadcrumbSchema, webPageSchema } from "@/lib/schema";
-import { useDepthScene, useStaggerReveal, useTextReveal } from "@/motion";
-
-/**
- * One route for every calculator. It renders whatever `src/lib/calculators.ts`
- * describes and contains no arithmetic of its own — a fifth calculator needs
- * one new entry in that registry and no change to this file.
- *
- * Everything happens in the browser. There is no server function, no database
- * read and no fetch: the loader below only looks a slug up in an array that is
- * already in the bundle, so it can answer "no such calculator" before the page
- * paints.
- */
 export const Route = createFileRoute("/calculator/$slug")({
-  loader: ({ params }) => {
-    const calculator = findCalculator(params.slug);
-    if (!calculator) throw notFound();
-    return { slug: calculator.slug, name: `${calculator.title} ${calculator.highlight}` };
-  },
-  head: ({ loaderData }) => {
-    const calculator = loaderData ? findCalculator(loaderData.slug) : undefined;
-    if (!calculator) {
-      return {
-        meta: [
-          { title: "Calculator not found | BBI – Bro Business Ideas" },
-          { name: "robots", content: "noindex" },
-        ],
-      };
-    }
-    const title = `${calculator.title} ${calculator.highlight} — India, in rupees | BBI – Bro Business Ideas`;
-    return {
-      meta: [
-        { title },
-        // AdSense approval: individual calculators are templated, so they stay out of the index.
-        { name: "robots", content: "noindex, follow" },
-        { name: "description", content: calculator.description },
-        { property: "og:title", content: title },
-        { property: "og:description", content: calculator.description },
-        { property: "og:type", content: "website" },
-        { name: "twitter:card", content: "summary_large_image" },
-      ],
-    };
-  },
+  loader: ({ params }) => { const calculator=findCalculator(params.slug); if(!calculator || !isReadyCalculator(calculator)) throw notFound(); return {slug:calculator.slug}; },
+  head: ({loaderData}) => { const tool=loaderData?findCalculator(loaderData.slug):undefined; return {meta:[{title:`${tool?.title??"Calculator"} | BusinessIdea.io`},{name:"description",content:tool?.description??""}]}; },
   component: CalculatorRoute,
-  notFoundComponent: () => (
-    <SiteShell tone="instrument">
-      <div className="mx-auto max-w-3xl px-4 py-24">
-        <h1 className="text-2xl font-bold">That calculator doesn&apos;t exist</h1>
-        <p className="mt-2 text-muted-foreground">
-          Nothing is published at this address. The full list is on the calculators page.
-        </p>
-        <Link to="/calculator" className="mo-link mt-5 inline-block font-semibold text-primary">
-          See every calculator
-        </Link>
-      </div>
-    </SiteShell>
-  ),
+  notFoundComponent: () => <V2Frame><div className="mx-auto max-w-6xl px-4 pt-32 pb-16"><h1 className="text-3xl font-bold">Calculator unavailable</h1><a className="mt-5 inline-flex rounded-lg bg-slate-900 px-5 py-3 font-semibold text-white" href="/calculator">Working calculators</a></div></V2Frame>,
 });
-
-function CalculatorRoute() {
-  const { slug } = Route.useParams();
-  const calculator = findCalculator(slug);
-  if (!calculator) throw notFound();
-  // Keyed on the slug so moving between calculators starts from that
-  // calculator's own defaults instead of carrying the last one's typing over.
-  return <CalculatorPage key={calculator.slug} calculator={calculator} />;
+const wrap="mx-auto max-w-6xl px-4 md:px-6";
+function CalculatorRoute(){ const {slug}=Route.useParams(); const calculator=findCalculator(slug); if(!calculator || !isReadyCalculator(calculator)) throw notFound(); return <CalculatorPage key={slug} calculator={calculator}/>; }
+function CalculatorPage({calculator}:{calculator:Calculator}){
+  const [typed,setTyped]=useState<Record<string,string>>(()=>defaultInputs(calculator));
+  const [reportTab,setReportTab]=useState<"results"|"inputs"|"formulas">("results");
+  const {values,issues}=readValues(calculator.fields,typed);
+  const readings=issues.length?[]:calculator.compute(values);
+  const issueFor=(key:string)=>issues.find(issue=>issue.key===key);
+  const others=READY_CALCULATORS.filter(t=>t.slug!==calculator.slug).slice(0,8);
+  const sourceFormulaNeedsReview=!isVerifiedCalculator(calculator);
+  const first=calculator.fields[0];
+  const scenarios=first&&!issues.length?[0.8,1,1.2].map(factor=>{
+    const input=Math.max(first.min,Math.min(first.max,(values[first.key]??0)*factor));
+    const outputs=calculator.compute({...values,[first.key]:input});
+    return {factor,input,reading:outputs.find(item=>item.primary)??outputs[0]};
+  }):[];
+  return <V2Frame active="/tools">
+    <div className="bg-muted/30 pt-24 lg:pt-28"><nav className={`${wrap} flex flex-wrap items-center gap-2 py-3 text-sm`} aria-label="Breadcrumb"><a href="/">Home</a><ChevronRight size={15}/><a href="/calculator">Calculators</a><ChevronRight size={15}/><span>{calculator.title}</span></nav></div>
+    <section className="bg-gradient-to-b from-blue-50 to-background py-12 lg:py-16"><div className={wrap}><span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-800">Founder calculator</span><h1 className="mt-4 text-3xl font-bold md:text-5xl">{calculator.title} <span className="text-blue-600">{calculator.highlight}</span></h1><p className="mt-4 max-w-2xl text-muted-foreground">{calculator.intro}</p><div className="mt-6 flex flex-wrap gap-3"><a href="#calculator-inputs" className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700">Calculate <ArrowRight size={17}/></a><a href="#formula" className="inline-flex min-h-11 items-center rounded-lg border bg-card px-6 py-3 font-semibold hover:border-blue-500">See the formula</a></div></div></section>
+    <section className="bg-slate-50 py-12 lg:py-16"><div className={wrap}><h2 className="text-2xl font-bold">What this calculator answers</h2><p className="mt-3 max-w-3xl text-lg">{calculator.answers}</p><p className="mt-3 max-w-3xl text-muted-foreground">{calculator.description}</p>{sourceFormulaNeedsReview&&<p className="mt-5 max-w-3xl rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950"><strong>Source formula review:</strong> This imported calculator uses the original archive’s generic inputs and arithmetic. Its named business metric has not been independently verified. Inspect the formula and check it against your own accounting before using the result for a decision.</p>}</div></section>
+    <section id="calculator-inputs" className="scroll-mt-28 py-12 lg:py-16"><div className={`${wrap} grid items-start gap-6 lg:grid-cols-2`}>
+      <form className="rounded-xl border bg-card p-5 shadow-sm md:p-7" onSubmit={e=>e.preventDefault()}><div className="flex items-center justify-between gap-3"><h2 className="text-2xl font-bold">Your numbers</h2><button type="button" onClick={()=>setTyped(defaultInputs(calculator))} className="inline-flex min-h-11 items-center gap-1 rounded-lg border px-4 text-sm font-semibold"><RotateCcw size={15}/> Reset</button></div><p className="mt-2 text-sm text-muted-foreground">Replace the example figures with your own. Results update as you type.</p><div className="mt-6 space-y-6">{fieldGroups(calculator).map(({group,fields})=><fieldset key={group} className="space-y-4"><legend className="mb-3 font-semibold">{group}</legend><div className="grid gap-4 sm:grid-cols-2">{fields.map(field=><FieldInput key={field.key} field={field} value={typed[field.key]??""} issue={issueFor(field.key)} onChange={next=>setTyped(prev=>({...prev,[field.key]:next}))}/>)}</div></fieldset>)}</div></form>
+      <div className="rounded-xl border bg-card p-5 shadow-sm md:p-7" aria-live="polite"><h2 className="text-2xl font-bold">{issues.length?"Check your inputs":"What this comes to"}</h2>{issues.length?<ul className="mt-5 list-disc space-y-2 pl-5 text-sm text-red-700">{issues.map(issue=><li key={issue.key}><strong>{issue.label}</strong> — {issue.message}</li>)}</ul>:<><ol className="mt-5 space-y-3">{readings.map(reading=><ResultRow key={reading.key} reading={reading}/>)}</ol><p className="mt-5 text-sm text-muted-foreground">The result comes from the entered figures and formulas. It does not measure local demand or promise a return.</p></>}</div>
+    </div></section>
+    <section className="bg-slate-50 py-12 lg:py-16"><div className={wrap}><h2 className="text-3xl font-bold">Compare scenarios</h2><p className="mt-3 max-w-3xl text-muted-foreground">Only your first input changes. These are calculations from your numbers, not forecasts.</p><div className="mt-6 grid gap-4 md:grid-cols-3">{scenarios.map(({factor,input,reading})=><div key={factor} className="rounded-xl border bg-card p-6"><p className="font-semibold text-blue-700">{factor===1?"Your input":factor<1?"Lower input":"Higher input"}</p><h3 className="mt-3 font-semibold">{first?.label}: {first?.prefix}{input.toLocaleString("en-IN")}{first?.suffix}</h3><p className="mt-4 break-words text-2xl font-bold">{reading?.display}</p><p className="mt-2 break-words text-sm text-muted-foreground">{reading?.formula}</p></div>)}</div></div></section>
+    <section className="py-12 lg:py-16"><div className={wrap}><h2 className="text-3xl font-bold">Understand your result</h2><div className="mt-6 grid gap-4 md:grid-cols-2">{readings.map(reading=><div className="rounded-xl border bg-card p-6" key={reading.key}><h3 className="text-lg font-bold">{reading.label}</h3><p className="mt-3 break-words text-2xl font-semibold text-blue-700">{reading.display}</p><p className="mt-3 text-sm text-muted-foreground">{reading.note??reading.formula}</p></div>)}</div><a href="/business-demand-test-india" className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700">Validate your idea <ArrowRight size={16}/></a></div></section>
+    <section className="bg-slate-50 py-12 lg:py-16"><div className={wrap}><h2 className="text-3xl font-bold">{calculator.title} report</h2><div role="tablist" aria-label="Calculator report" className="mt-6 flex flex-wrap gap-2">{(["results","inputs","formulas"] as const).map(tab=><button type="button" role="tab" aria-selected={reportTab===tab} key={tab} onClick={()=>setReportTab(tab)} className={`min-h-11 rounded-xl px-5 py-3 font-semibold capitalize ${reportTab===tab?"bg-blue-600 text-white":"border bg-white text-slate-800 hover:border-blue-500"}`}>{tab}</button>)}</div><div role="tabpanel" className="mt-4 rounded-xl border bg-white p-6">{reportTab==="results"&&(issues.length?<p>Correct your inputs to see the report.</p>:<ul className="grid gap-4 sm:grid-cols-2">{readings.map(reading=><ResultRow reading={reading} key={reading.key}/>)}</ul>)}{reportTab==="inputs"&&<dl className="grid gap-4 sm:grid-cols-2">{calculator.fields.map(field=><div key={field.key}><dt className="text-sm text-muted-foreground">{field.label}</dt><dd className="mt-1 break-words font-semibold">{typed[field.key]} {field.unitLabel}</dd></div>)}</dl>}{reportTab==="formulas"&&(issues.length?<p>Correct your inputs to see the applied formulas.</p>:<dl className="space-y-5">{readings.map(reading=><div key={reading.key}><dt className="font-semibold">{reading.label}</dt><dd className="mt-1 break-words text-muted-foreground">{reading.formula}</dd></div>)}</dl>)}</div></div></section>
+    <section id="formula" className="scroll-mt-28 py-12 lg:py-16"><div className={wrap}><h2 className="text-3xl font-bold">{calculator.title} formula</h2><p className="mt-3 text-muted-foreground">Check the working against the values you entered.</p><div className="mt-6 grid gap-4 md:grid-cols-2">{readings.map(reading=><div key={reading.key} className="rounded-xl border bg-white p-6"><h3 className="font-bold">{reading.label}</h3><p className="mt-3 break-words text-muted-foreground">{reading.formula}</p></div>)}</div></div></section>
+    <section className="bg-slate-50 py-12 lg:py-16"><div className={wrap}><h2 className="text-3xl font-bold">Input tips</h2><div className="mt-6 grid gap-4 md:grid-cols-2">{calculator.fields.map(field=><div className="rounded-xl border bg-white p-6" key={field.key}><h3 className="font-bold">{field.label}</h3><p className="mt-2 text-muted-foreground">{field.help}</p></div>)}</div></div></section>
+    <section className="py-12 lg:py-16"><div className={wrap}><h2 className="text-3xl font-bold">Check before you decide</h2><div className="mt-6 grid gap-4 md:grid-cols-3">{calculator.fields.slice(0,3).map((field,index)=><div className="rounded-xl border bg-white p-6" key={field.key}><span className="text-sm font-bold text-blue-700">0{index+1}</span><h3 className="mt-2 font-bold">{field.label}</h3><p className="mt-2 text-sm text-muted-foreground">{field.help}</p></div>)}</div></div></section>
+    <section className="bg-slate-50 py-12 lg:py-16"><div className={wrap}><h2 className="text-2xl font-bold">Related calculators</h2><div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{others.map(tool=><a key={tool.slug} className="rounded-xl border bg-card p-5 font-semibold hover:border-blue-500" href={`/calculator/${tool.slug}`}>{tool.title} <ArrowRight size={16} className="ml-1 inline text-blue-700"/></a>)}</div><h2 className="mt-10 text-2xl font-bold">Next step</h2><div className="mt-5 grid gap-3 md:grid-cols-3">{[["Browse ideas","/browse"],["Test demand","/business-demand-test-india"],["Compare two ideas","/startup-idea-comparison"]].map(([t,h])=><a key={h} className="rounded-xl border bg-card p-5 font-semibold hover:border-blue-500" href={h}>{t} <ArrowRight size={16} className="inline text-blue-700"/></a>)}</div><h2 className="mt-10 text-2xl font-bold">Related resources</h2><div className="mt-4 flex flex-wrap gap-2">{[["Tools","/tools"],["Idea lists","/lists"],["Startup costs in India","/startup-costs-india"]].map(([t,h])=><a key={h} href={h} className="rounded-full border bg-card px-4 py-2 text-sm">{t}</a>)}</div></div></section>
+    <section className="bg-blue-700 py-12 text-white lg:py-16"><div className={wrap}><h2 className="text-3xl font-bold">Turn the result into a plan</h2><p className="mt-3 max-w-2xl text-blue-100">Use your own numbers to compare an idea with real demand.</p><a href="/business-demand-test-india" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-xl bg-white px-6 py-3 font-semibold text-blue-800 hover:bg-blue-50">Validate your idea <ArrowRight size={16}/></a></div></section>
+  </V2Frame>;
 }
-
-function CalculatorPage({ calculator }: { calculator: Calculator }) {
-  const [typed, setTyped] = useState<Record<string, string>>(() => defaultInputs(calculator));
-
-  // Read, check, then compute — in that order, every render. The arithmetic is
-  // a few subtractions on at most ten numbers, so it runs on each keystroke
-  // and the answer is on screen in the same paint as the character. Nothing
-  // here is debounced, animated or counted up: a number the visitor is driving
-  // must never lag behind their own typing.
-  const { values, issues } = readValues(calculator.fields, typed);
-  const readings = issues.length === 0 ? calculator.compute(values) : [];
-  const issueFor = (key: string): FieldIssue | undefined => issues.find((i) => i.key === key);
-
-  const titleRef = useTextReveal<HTMLHeadingElement>();
-  // Masthead depth scene: one shared observer + one shared frame callback
-  // for the whole header. Cursor depth on fine pointers, scroll depth on touch
-  // (see motion.css, coarse-pointer block).
-  const sceneRef = useDepthScene<HTMLDivElement>({ strength: 0.5 });
-
-  const fieldsRef = useStaggerReveal<HTMLDivElement>({
-    selector: "[data-field]",
-    distance: 12,
-    stagger: 0.035,
-  });
-
-  const pageName = `${calculator.title} ${calculator.highlight}`;
-  const path = `/calculator/${calculator.slug}`;
-  const others = CALCULATORS.filter((c) => c.slug !== calculator.slug);
-
-  return (
-    <>
-      <JsonLd
-        schema={[
-          webPageSchema({ path, name: pageName, description: calculator.description }),
-          breadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Calculators", path: "/calculator" },
-            { name: pageName, path },
-          ]),
-        ]}
-      />
-      <SiteShell tone="instrument">
-        <div ref={sceneRef} className="cx-scene mx-auto max-w-6xl px-3 py-12 sm:px-4">
-          {/* EDITABLE SECTION START — safe to add, remove, or reorder sections below without breaking routing or data fetching. */}
-          <Breadcrumbs
-            items={[
-              { label: "Home", to: "/" },
-              { label: "Calculators", to: "/calculator" },
-              { label: pageName },
-            ]}
-          />
-          <p className="mt-6 t-eyebrow">Calculator</p>
-          <h1
-            ref={titleRef}
-            className="cx-layer cx-z3 mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl"
-          >
-            {calculator.title}{" "}
-            <span className="bg-gradient-to-r from-primary via-accent to-warm bg-clip-text text-transparent">
-              {calculator.highlight}
-            </span>
-          </h1>
-          <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">{calculator.intro}</p>
-
-          <div className="mt-10 grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,25rem)]">
-            <form
-              className="glass mo-card rounded-2xl px-5 py-6 sm:px-7"
-              onSubmit={(event) => event.preventDefault()}
-            >
-              <div className="flex flex-wrap items-baseline justify-between gap-3">
-                <h2 className="font-display text-lg font-bold tracking-tight">Your numbers</h2>
-                <button
-                  type="button"
-                  onClick={() => setTyped(defaultInputs(calculator))}
-                  className="rounded-full border border-border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground hover:border-primary hover:text-foreground"
-                >
-                  Reset
-                </button>
-              </div>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                The boxes start with example figures so the page is never blank. Replace them with
-                yours — the answers change as you type.
-              </p>
-
-              <div ref={fieldsRef} className="mt-6 space-y-7">
-                {fieldGroups(calculator).map(({ group, fields }) => (
-                  <fieldset key={group} className="border-0 p-0">
-                    <legend className="t-eyebrow">{group}</legend>
-                    <div className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-5">
-                      {fields.map((field) => (
-                        <FieldInput
-                          key={field.key}
-                          field={field}
-                          value={typed[field.key] ?? ""}
-                          issue={issueFor(field.key)}
-                          onChange={(next) => setTyped((prev) => ({ ...prev, [field.key]: next }))}
-                        />
-                      ))}
-                    </div>
-                  </fieldset>
-                ))}
-              </div>
-            </form>
-
-            <div className="lg:sticky lg:top-24">
-              <div aria-live="polite" className="glass mo-card rounded-2xl px-5 py-6 sm:px-7">
-                {issues.length > 0 ? (
-                  <>
-                    <h2 className="font-display text-lg font-bold tracking-tight">
-                      Nothing to work out yet
-                    </h2>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                      Every box has to hold a real number before the sums can run. Right now:
-                    </p>
-                    <ul className="mt-4 space-y-1">
-                      {issues.map((issue) => (
-                        <li
-                          key={issue.key}
-                          className="mo-row -mx-2 rounded-lg px-2 py-1.5 text-sm leading-relaxed"
-                        >
-                          <span className="font-semibold text-foreground">{issue.label}</span>
-                          <span className="text-muted-foreground"> — {issue.message}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                ) : (
-                  <>
-                    <h2 className="font-display text-lg font-bold tracking-tight">
-                      What this comes to
-                    </h2>
-                    <ul className="mt-4 space-y-2">
-                      {readings.map((reading) => (
-                        <ResultRow key={reading.key} reading={reading} />
-                      ))}
-                    </ul>
-                    <p className="mt-5 border-t border-border pt-4 text-xs leading-relaxed text-muted-foreground">
-                      These answers come only from the figures above. This page holds no benchmark,
-                      no market average and no opinion on whether a number is good — it does the
-                      arithmetic and shows its working.
-                    </p>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="glass mt-10 rounded-2xl px-5 py-6 sm:px-7">
-            <h2 className="font-display text-lg font-bold tracking-tight">Other calculators</h2>
-            {/* Was a single-column list -- 59 full-width rows, each with a
-                title and a two-line description, made this the longest
-                scroll on the page for what is really just a set of links.
-                A dense grid of short cards gets the same 59 options into a
-                fraction of the height, and drops the description (already
-                on each calculator's own page) rather than truncate it. */}
-            <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
-              {others.map((other) => (
-                <Link
-                  key={other.slug}
-                  to="/calculator/$slug"
-                  params={{ slug: other.slug }}
-                  className="rounded-lg border border-border/70 bg-card/50 px-3 py-2.5 text-xs font-semibold leading-snug transition-colors duration-200 hover:border-primary/60 hover:text-primary"
-                >
-                  {other.title} {other.highlight}
-                </Link>
-              ))}
-            </div>
-          </div>
-          {/* EDITABLE SECTION END */}
-
-          <ExploreRail exclude="calculators" heading="Keep exploring" />
-        </div>
-      </SiteShell>
-    </>
-  );
+function FieldInput({field,value,issue,onChange}:{field:Calculator["fields"][number];value:string;issue:FieldIssue|undefined;onChange:(next:string)=>void}){
+  const id=useId(),helpId=`${id}-help`,errorId=`${id}-error`;
+  return <div><label htmlFor={id} className="block text-sm font-semibold">{field.label} <span className="font-normal text-muted-foreground">({field.unitLabel})</span></label><div className="mt-2 flex min-h-11 items-center rounded-lg border bg-background px-3">{field.prefix&&<span aria-hidden="true" className="text-muted-foreground">{field.prefix}</span>}<input id={id} name={field.key} type="text" inputMode="decimal" autoComplete="off" value={value} onChange={e=>onChange(e.target.value)} aria-describedby={issue?`${helpId} ${errorId}`:helpId} aria-invalid={issue?true:undefined} className="w-full min-w-0 bg-transparent p-2 outline-none"/>{field.suffix&&<span aria-hidden="true" className="text-muted-foreground">{field.suffix}</span>}</div><p id={helpId} className="mt-1 text-xs text-muted-foreground">{field.help}</p>{issue&&<p id={errorId} className="mt-1 text-xs text-red-700">{issue.message}</p>}</div>;
 }
-
-function FieldInput({
-  field,
-  value,
-  issue,
-  onChange,
-}: {
-  field: Calculator["fields"][number];
-  value: string;
-  issue: FieldIssue | undefined;
-  onChange: (next: string) => void;
-}) {
-  const id = useId();
-  const helpId = `${id}-help`;
-  const errorId = `${id}-error`;
-
-  return (
-    <div data-field>
-      <label htmlFor={id} className="block text-sm font-semibold">
-        {field.label} <span className="font-normal text-muted-foreground">({field.unitLabel})</span>
-      </label>
-      <div className="mt-1.5 flex items-center gap-2 rounded-md border border-input bg-card px-3 focus-within:border-primary">
-        {field.prefix && (
-          <span aria-hidden className="text-sm text-muted-foreground">
-            {field.prefix}
-          </span>
-        )}
-        <input
-          id={id}
-          name={field.key}
-          type="text"
-          inputMode="decimal"
-          autoComplete="off"
-          value={value}
-          onChange={(event) => onChange(event.target.value)}
-          aria-describedby={issue ? `${helpId} ${errorId}` : helpId}
-          aria-invalid={issue ? true : undefined}
-          className="w-full min-w-0 bg-transparent py-2.5 text-sm tabular-nums outline-none"
-        />
-        {field.suffix && (
-          <span aria-hidden className="whitespace-nowrap text-xs text-muted-foreground">
-            {field.suffix}
-          </span>
-        )}
-      </div>
-      <p id={helpId} className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
-        {field.help}
-      </p>
-      {issue && (
-        <p id={errorId} className="mt-1 text-xs font-medium text-destructive">
-          {issue.message}
-        </p>
-      )}
-    </div>
-  );
-}
-
-function ResultRow({ reading }: { reading: Reading }) {
-  const blocked = reading.status === "blocked";
-  return (
-    <li className="mo-row -mx-2 rounded-xl px-2 py-2.5">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-        {reading.label}
-      </p>
-      <p
-        className={`mt-1 font-display font-bold tabular-nums ${
-          blocked
-            ? "text-lg leading-snug text-muted-foreground"
-            : reading.primary
-              ? "text-3xl text-accent"
-              : "text-xl"
-        }`}
-      >
-        {reading.display}
-      </p>
-      <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{reading.formula}</p>
-      {reading.note && (
-        <p className="mt-1 text-xs leading-relaxed text-muted-foreground/80">{reading.note}</p>
-      )}
-    </li>
-  );
-}
+function ResultRow({reading}:{reading:Reading}){return <li className={`rounded-xl border p-4 ${reading.primary?"border-primary/30 bg-primary/5":"bg-background"}`}><span className="text-sm text-muted-foreground">{reading.label}</span><strong className="mt-1 block break-words text-xl">{reading.display}</strong><p className="mt-2 text-xs text-muted-foreground">{reading.formula}</p>{reading.note&&<p className="mt-2 text-xs text-muted-foreground">{reading.note}</p>}</li>}

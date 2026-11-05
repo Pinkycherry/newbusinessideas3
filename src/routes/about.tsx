@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { Bullets, ContentPage, Section, metaFor } from "@/components/page-layout";
+import { Bullets, ContentPage, Section, metaFor } from "@/components/glass-editorial";
 import { JsonLd, personSchema } from "@/lib/schema";
 import { COMMUNITY, communityMembers, contactEmail, TEAM } from "@/lib/site-config";
 
@@ -20,7 +20,7 @@ import { COMMUNITY, communityMembers, contactEmail, TEAM } from "@/lib/site-conf
 export const Route = createFileRoute("/about")({
   head: () =>
     metaFor(
-      "About | BBI – Bro Business Ideas",
+      "About | BusinessIdea.io",
       "BBI is a free library of researched business blueprints, built by four engineers from Madurai after paying three platforms to validate four ideas and getting templated answers back.",
     ),
   component: AboutPage,

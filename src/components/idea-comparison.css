@@ -1,0 +1,80 @@
+/* Two candidate ideas, a fair evidence board, no synthetic winner. */
+.glass-home .ic-page{width:min(100% - 2.5rem,1320px);margin:auto;padding-bottom:3.5rem;color:#282943}
+.glass-home .ic-page *{box-sizing:border-box}
+.glass-home .ic-page .gl-breadcrumb{padding:1.4rem 0 .9rem}
+.glass-home .ic-page h1,.glass-home .ic-page h2,.glass-home .ic-page h3{color:#282943;letter-spacing:-.035em}
+.glass-home .ic-page h2{font-size:clamp(1.9rem,3vw,2.8rem);line-height:1.12;margin:.35rem 0 .8rem}
+.glass-home .ic-page p{line-height:1.58}
+.glass-home .ic-page section{scroll-margin-top:90px;padding:clamp(1.8rem,3vw,2.8rem) 0}
+.glass-home .ic-page a:not(.gh-button){display:inline-flex;align-items:center;gap:.35rem;color:#58449e;font-weight:750;text-decoration:none}
+.glass-home .ic-page a:hover{text-decoration:underline}
+.glass-home .ic-hero{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.7fr);gap:2rem;align-items:center;padding:clamp(1.5rem,3vw,2.8rem);border:1px solid #fff;border-radius:27px 65px 27px 27px;background:linear-gradient(120deg,#fff,#e9e6f8 58%,#e5f3f3)}
+.glass-home .ic-hero>*{min-width:0}
+.glass-home .ic-hero h1{max-width:19ch;font-size:clamp(2.7rem,4.3vw,4.1rem);line-height:1.06;margin:.5rem 0 .8rem}
+.glass-home .ic-hero h1 em{font-style:normal;color:#745ac5}
+.glass-home .ic-hero p{max-width:65ch;color:#596074}
+.glass-home .ic-hero aside{padding:1.3rem;border:1px solid #fff;border-radius:18px;background:#ffffffdb}
+.glass-home .ic-hero aside>strong{display:block;font-size:1.1rem;margin-bottom:.65rem}
+.glass-home .ic-hero aside label{display:block;margin:.65rem 0;color:#50576b;font-size:.83rem;font-weight:750}
+.glass-home .ic-page input,.glass-home .ic-page textarea{display:block;width:100%;min-width:0;min-height:44px;margin-top:.4rem;padding:.65rem .75rem;border:1px solid #c9c5db;border-radius:9px;background:#fff;color:#282943;font:inherit}
+.glass-home .ic-page input:focus-visible,.glass-home .ic-page textarea:focus-visible,.glass-home .ic-page button:focus-visible{outline:3px solid #765fc9;outline-offset:2px}
+.glass-home .ic-hero aside p{font-size:.8rem;margin:.6rem 0 0}
+.glass-home .ic-rule,.glass-home .ic-cost,.glass-home .ic-example,.glass-home .ic-week,.glass-home .ic-decision,.glass-home .ic-faq{display:grid;grid-template-columns:minmax(0,.38fr) minmax(0,.62fr);gap:2rem}
+.glass-home .ic-rule>*,.glass-home .ic-cost>*,.glass-home .ic-example>*,.glass-home .ic-week>*,.glass-home .ic-decision>*,.glass-home .ic-faq>*{min-width:0}
+.glass-home .ic-rule>div:first-child p:not(.gh-eyebrow),.glass-home .ic-cost>div:first-child p:not(.gh-eyebrow),.glass-home .ic-week>div:first-child p:not(.gh-eyebrow),.glass-home .ic-decision>div:first-child p:not(.gh-eyebrow){color:#596074}
+.glass-home .ic-rule-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;align-items:start;gap:.7rem}
+.glass-home .ic-rule-pair article,.glass-home .ic-example-columns article{padding:1.1rem;border:1px solid #fff;border-radius:15px;background:#fff}
+.glass-home .ic-rule-pair span,.glass-home .ic-example-columns span{font-size:.68rem;color:#6f59b6;font-weight:800}
+.glass-home .ic-rule-pair strong,.glass-home .ic-example-columns strong{display:block;margin:.5rem 0}
+.glass-home .ic-rule-pair p,.glass-home .ic-example-columns p{font-size:.83rem;color:#5b6274}
+.glass-home .ic-board{padding:clamp(1.4rem,3vw,2.5rem)!important;border:1px solid #fff;border-radius:24px 60px 24px 24px;background:#e9e6f8}
+.glass-home .ic-board-intro{display:flex;justify-content:space-between;align-items:end;gap:2rem}
+.glass-home .ic-board-intro>div{max-width:72ch}
+.glass-home .ic-board-intro p:not(.gh-eyebrow){color:#596074}
+.glass-home .ic-board-intro aside{min-width:190px;padding:1rem;border-radius:14px;background:#fff}
+.glass-home .ic-board-intro aside p{font-size:.8rem;margin:.25rem 0}
+.glass-home .ic-lenses{display:grid;gap:.65rem;margin-top:1rem}
+.glass-home .ic-lenses article{min-width:0;padding:1.15rem;border:1px solid #fff;border-radius:15px;background:#fff}
+.glass-home .ic-lens-title{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:.65rem;align-items:start}
+.glass-home .ic-lens-title>span{color:#765fc2;font-size:.75rem;font-weight:800}
+.glass-home .ic-lens-title h3{font-size:1.12rem;margin:0}
+.glass-home .ic-lens-title p{font-size:.82rem;color:#5a6173;margin:.25rem 0}
+.glass-home .ic-lens-title a{font-size:.79rem;white-space:nowrap}
+.glass-home .ic-options{display:flex;gap:.45rem;flex-wrap:wrap;margin:.7rem 0}
+.glass-home .ic-options button{min-height:44px;max-width:100%;padding:.5rem .8rem;border:1px solid #c0b7df;border-radius:9px;background:#f7f5fd;color:#59489b;font-weight:750;cursor:pointer;overflow-wrap:anywhere}
+.glass-home .ic-options button[aria-pressed=true]{background:#302a61;color:#fff;border-color:#302a61}
+.glass-home .ic-lenses label,.glass-home .ic-decision label{display:block;color:#53596d;font-size:.79rem;font-weight:750}
+.glass-home .ic-cost-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;align-items:start;gap:.65rem}
+.glass-home .ic-cost-actions a{display:grid!important;gap:.45rem;padding:1.1rem;border:1px solid #fff;border-radius:15px;background:#fff}
+.glass-home .ic-cost-actions a span{font-size:.83rem;color:#5b6274;font-weight:400}
+.glass-home .ic-example{padding:2rem!important;border-radius:22px;background:#292b4b}
+.glass-home .ic-example h2{color:#fff}.glass-home .ic-example .gh-eyebrow{color:#c6b7f8}
+.glass-home .ic-example p{color:#d8d9e9}
+.glass-home .ic-example-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;gap:.65rem}
+.glass-home .ic-example-columns article{background:#ffffff12;border-color:#ffffff25}
+.glass-home .ic-example-columns span{color:#c6b7f8}.glass-home .ic-example-columns strong{color:#fff}
+.glass-home .ic-image{display:grid;grid-template-columns:minmax(0,.55fr) minmax(0,.45fr);gap:2rem;align-items:center;padding:1rem!important;border-radius:22px;background:#fff}
+.glass-home .ic-image>*{min-width:0}
+.glass-home .ic-art{aspect-ratio:16/9;display:grid;place-items:center;overflow:hidden;border-radius:14px;background:#e7e4ef}
+.glass-home .ic-art img{display:block;width:100%;height:100%;object-fit:contain}
+.glass-home .ic-image>div:last-child{padding:1rem}
+.glass-home .ic-image p:not(.gh-eyebrow){color:#596074}
+.glass-home .ic-week{grid-template-columns:minmax(0,.29fr) minmax(0,.71fr)}
+.glass-home .ic-week ol{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:start;gap:.6rem;list-style:none;padding:0;margin:0}
+.glass-home .ic-week li{padding:1rem;border:1px solid #fff;border-radius:15px;background:#fff}
+.glass-home .ic-week li span{display:block;color:#7059b7;font-size:.67rem;font-weight:800}
+.glass-home .ic-week li strong{display:block;margin:.5rem 0}
+.glass-home .ic-week li p{font-size:.82rem;color:#5d6476}
+.glass-home .ic-week>a{grid-column:2}
+.glass-home .ic-decision{align-items:center;border-block:1px solid #dad8e7}
+.glass-home .ic-decision textarea{resize:vertical}
+.glass-home .ic-decision small{display:block;margin-top:.5rem;color:#6b7080}
+.glass-home .ic-faq details{padding:1rem 0;border-bottom:1px solid #d8d6e5}
+.glass-home .ic-faq summary{cursor:pointer;font-weight:750}
+.glass-home .ic-faq details p{color:#596074}
+.glass-home .ic-final{display:flex;align-items:end;justify-content:space-between;gap:2rem;padding:2rem;border:1px solid #fff;border-radius:24px;background:linear-gradient(120deg,#e8e5f8,#fff,#e8f4f4)}
+.glass-home .ic-final>div:first-child{max-width:67ch}
+.glass-home .ic-final p:not(.gh-eyebrow){color:#596074}
+.glass-home .ic-final>div:last-child{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:flex-end}
+@media(max-width:1000px){.glass-home .ic-week ol{grid-template-columns:repeat(2,minmax(0,1fr))}.glass-home .ic-lens-title{grid-template-columns:28px 1fr}.glass-home .ic-lens-title a{grid-column:2}}
+@media(max-width:760px){.glass-home .ic-page{width:min(100% - 1.25rem,1320px)}.glass-home .ic-hero,.glass-home .ic-rule,.glass-home .ic-cost,.glass-home .ic-example,.glass-home .ic-image,.glass-home .ic-week,.glass-home .ic-decision,.glass-home .ic-faq{grid-template-columns:1fr;gap:1rem}.glass-home .ic-hero{padding:1.3rem;border-radius:22px}.glass-home .ic-hero h1{font-size:clamp(2.1rem,9vw,2.7rem)}.glass-home .ic-page h2{font-size:clamp(1.65rem,7vw,2rem)}.glass-home .ic-page section{padding:2.3rem 0}.glass-home .ic-rule-pair,.glass-home .ic-cost-actions,.glass-home .ic-example-columns,.glass-home .ic-week ol{grid-template-columns:1fr}.glass-home .ic-board-intro{display:block}.glass-home .ic-board-intro aside{margin-top:1rem}.glass-home .ic-board{border-radius:20px}.glass-home .ic-image{padding:.6rem!important}.glass-home .ic-image>div:last-child{padding:.6rem}.glass-home .ic-week>a{grid-column:1}.glass-home .ic-final{display:block}.glass-home .ic-final>div:last-child{justify-content:flex-start;margin-top:1rem}}

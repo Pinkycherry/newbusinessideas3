@@ -65,7 +65,7 @@ export const GENERATED_CALCULATORS: readonly Calculator[] = [
           key: "cac",
           label: "CAC",
           display: formatRupees(cac),
-          formula: `${formatRupees(values.marketingSpend)} + ${formatRupees(values.salesSpend)} / ${formatCount(values.newCustomers)}`,
+          formula: `(${formatRupees(values.marketingSpend)} + ${formatRupees(values.salesSpend)}) / ${formatCount(values.newCustomers)}`,
           status: "ok",
           primary: true,
         },

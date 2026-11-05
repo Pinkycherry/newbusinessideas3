@@ -1,0 +1,53 @@
+import menuPanels from "./menu-panels.json";
+import sharedFooterSource from "@/components/v2/v2.css?raw";
+
+/**
+ * Footer rules only (plus the footer logo), taken from the shared v2.css so the
+ * raw purchased pages show the exact footer the React routes render, without
+ * pulling header or page rules into pages that keep their own header.
+ */
+const sharedFooterStyles = sharedFooterSource
+  .split("\n")
+  .filter((line) => /^(\.v2-footer|\.mm-brand[ {]|@media[^{]*\{ \.v2-footer)/.test(line))
+  .concat(".v2-footer, .v2-footer .v2-footer-bottom { border-top-color: transparent !important; border-bottom-color: transparent !important; }")
+  .join("\n")
+  .replaceAll("var(--primary)", "var(--primary, #4643ba)");
+
+/**
+ * Every route shows one footer: the shared site footer (src/components/v2/frame.tsx
+ * `Footer`, rendered to menu-panels.json). Swap the seller's page footer for it.
+ */
+function withSharedFooter(html: string): string {
+  let page = html.replace(/<footer\b[^>]*role="contentinfo"[^>]*>[\s\S]*?<\/footer>/, menuPanels.footer);
+  if (!page.includes('class="v2 v2-footer"')) return page;
+  if (!page.includes("bbi-shared-header-styles") && !page.includes("bbi-shared-footer-styles")) {
+    page = page.replace("</head>", `<style id="bbi-shared-footer-styles">${sharedFooterStyles}</style></head>`);
+  }
+  return page;
+}
+
+/** The whole site stays out of search until the founder releases it. */
+function withNoindex(html: string): string {
+  const page = html.replace(/<meta[^>]+name=["']robots["'][^>]*>/gi, "");
+  return page.replace(/<head([^>]*)>/i, `<head$1><meta name="robots" content="noindex, nofollow, noarchive, noimageindex">`);
+}
+
+/**
+ * Serve a purchased page snapshot without redesigning its original frame.
+ * Preserve the supplied header, page markup, copy and interactions.
+ * Only namespace the page-local image, stylesheet and script paths so each
+ * imported folder can keep its own editable assets.
+ */
+export function boughtPage(html: string, assetFolder: string): Response {
+  const base = `/bought/${assetFolder}`;
+  const prepared = withNoindex(withSharedFooter(html))
+    .replace(/(["'(=])\.\/(images|scripts|styles)\//g, `$1${base}/$2/`)
+    // The authored homepage uses the site's existing featured images and
+    // transparent golden tree under /images/. Other purchased snapshots keep
+    // their original namespaced assets.
+    .replace(/(["'(=])\/images\//g, assetFolder === "home" || assetFolder === "lists" ? "$1/images/" : `$1${base}/images/`)
+    .replaceAll(`${base}/scripts/~flock.js`, `${base}/scripts/flock.js`);
+  return new Response(prepared, {
+    headers: { "Content-Type": "text/html; charset=utf-8" },
+  });
+}

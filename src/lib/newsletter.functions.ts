@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-import { db } from "./ideas.functions";
+import { db } from "./db";
 
 /**
  * Newsletter signup.
