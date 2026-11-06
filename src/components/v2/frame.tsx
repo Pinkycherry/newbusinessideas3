@@ -426,7 +426,7 @@ export function Footer() {
               {/* Only categories with published ideas, so no footer link is a 404 (founder, 7 Nov 2026). */}
               {TAXONOMY.filter((c) => LIVE_CATEGORY_SLUGS.has(c.slug)).map((c) => (
                 <li key={c.slug}>
-                  <a href={`/category/${c.slug}`}>{c.short}</a>
+                  <a href={`/category/${c.slug}`}>{c.name}</a>
                 </li>
               ))}
             </ul>
