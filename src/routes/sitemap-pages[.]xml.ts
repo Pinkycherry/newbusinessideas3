@@ -81,7 +81,7 @@ const STATIC_PAGES = [
   "/startup-terms-india",
   "/unit-economics-india",
   "/weekend-market-stall-profit-check",
-  "/case-studies",
+  "/researched-case-studies",
   "/failed-startups/india",
   "/open-source",
   "/templates",

@@ -68,6 +68,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProductRouteImport } from './routes/product'
 import { Route as ProductBusinessIdeasIndiaRouteImport } from './routes/product-business-ideas-india'
 import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
+import { Route as ResearchedCaseStudiesRouteImport } from './routes/researched-case-studies'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as ServiceBusinessIdeasIndiaRouteImport } from './routes/service-business-ideas-india'
@@ -452,6 +453,11 @@ const RefundPolicyRoute = RefundPolicyRouteImport.update({
   path: '/refund-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResearchedCaseStudiesRoute = ResearchedCaseStudiesRouteImport.update({
+  id: '/researched-case-studies',
+  path: '/researched-case-studies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   id: '/robots.txt',
   path: '/robots.txt',
@@ -821,6 +827,7 @@ export interface FileRoutesByFullPath {
   '/product': typeof ProductRoute
   '/product-business-ideas-india': typeof ProductBusinessIdeasIndiaRoute
   '/refund-policy': typeof RefundPolicyRoute
+  '/researched-case-studies': typeof ResearchedCaseStudiesRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/search': typeof SearchRoute
   '/service-business-ideas-india': typeof ServiceBusinessIdeasIndiaRoute
@@ -941,6 +948,7 @@ export interface FileRoutesByTo {
   '/product': typeof ProductRoute
   '/product-business-ideas-india': typeof ProductBusinessIdeasIndiaRoute
   '/refund-policy': typeof RefundPolicyRoute
+  '/researched-case-studies': typeof ResearchedCaseStudiesRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/search': typeof SearchRoute
   '/service-business-ideas-india': typeof ServiceBusinessIdeasIndiaRoute
@@ -1061,6 +1069,7 @@ export interface FileRoutesById {
   '/product': typeof ProductRoute
   '/product-business-ideas-india': typeof ProductBusinessIdeasIndiaRoute
   '/refund-policy': typeof RefundPolicyRoute
+  '/researched-case-studies': typeof ResearchedCaseStudiesRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/search': typeof SearchRoute
   '/service-business-ideas-india': typeof ServiceBusinessIdeasIndiaRoute
@@ -1184,6 +1193,7 @@ export interface FileRouteTypes {
     | '/product'
     | '/product-business-ideas-india'
     | '/refund-policy'
+    | '/researched-case-studies'
     | '/robots.txt'
     | '/search'
     | '/service-business-ideas-india'
@@ -1304,6 +1314,7 @@ export interface FileRouteTypes {
     | '/product'
     | '/product-business-ideas-india'
     | '/refund-policy'
+    | '/researched-case-studies'
     | '/robots.txt'
     | '/search'
     | '/service-business-ideas-india'
@@ -1423,6 +1434,7 @@ export interface FileRouteTypes {
     | '/product'
     | '/product-business-ideas-india'
     | '/refund-policy'
+    | '/researched-case-studies'
     | '/robots.txt'
     | '/search'
     | '/service-business-ideas-india'
@@ -1545,6 +1557,7 @@ export interface RootRouteChildren {
   ProductRoute: typeof ProductRoute
   ProductBusinessIdeasIndiaRoute: typeof ProductBusinessIdeasIndiaRoute
   RefundPolicyRoute: typeof RefundPolicyRoute
+  ResearchedCaseStudiesRoute: typeof ResearchedCaseStudiesRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SearchRoute: typeof SearchRoute
   ServiceBusinessIdeasIndiaRoute: typeof ServiceBusinessIdeasIndiaRoute
@@ -2012,6 +2025,13 @@ declare module '@tanstack/react-router' {
       path: '/refund-policy'
       fullPath: '/refund-policy'
       preLoaderRoute: typeof RefundPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/researched-case-studies': {
+      id: '/researched-case-studies'
+      path: '/researched-case-studies'
+      fullPath: '/researched-case-studies'
+      preLoaderRoute: typeof ResearchedCaseStudiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/robots.txt': {
@@ -2581,6 +2601,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProductRoute: ProductRoute,
   ProductBusinessIdeasIndiaRoute: ProductBusinessIdeasIndiaRoute,
   RefundPolicyRoute: RefundPolicyRoute,
+  ResearchedCaseStudiesRoute: ResearchedCaseStudiesRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SearchRoute: SearchRoute,
   ServiceBusinessIdeasIndiaRoute: ServiceBusinessIdeasIndiaRoute,

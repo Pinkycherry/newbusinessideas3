@@ -231,7 +231,7 @@ export const govResources: TopicPage = {
       items: [
         { label: "Indian startup failures", href: "/failed-startups/india" },
         { label: "Common mistakes to avoid", href: "/common-mistakes-to-avoid-when-starting-a-business-in-india" },
-        { label: "Case studies", href: "/case-studies" },
+        { label: "Case studies", href: "/researched-case-studies" },
       ],
     },
     {

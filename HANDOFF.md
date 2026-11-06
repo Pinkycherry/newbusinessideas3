@@ -13,11 +13,12 @@ Read this first. Update and commit it to main before you stop. Times are IST.
 
 ## Done (newest first)
 
+- 7 Nov — /case-studies (purchased snapshot: seller brand, sign-up offer, dollar figures, dead ./pages links) replaced by our own page https://bbusiness.online/researched-case-studies (glass layout). Same 12 pivot cases (problem, pivot, what would have failed, solution), 5-step loop, 6 patterns, 6 famous failures, FAQ; seller quotes, seller metrics and seller brand left out (they would read as fake testimonials under our brand). Every link goes to our pages. /case-studies 301 to the new page; sitemap-pages.xml updated; internal links updated.
+
 - 7 Nov — Copy button removed from the AI picker on every page (src/components/founder-workspace/provider-prompt-actions.tsx; long prompts are shortened to fit the link). Footer: full category names ("Online Business Ideas", not "Online"), glass style, 3 columns on desktop; purchased pages got the same footer (src/bought/menu-panels.json footer regenerated from Footer, it still listed 100 categories with dead links). Check: https://bbusiness.online/about (footer) https://bbusiness.online/how-to-validate-a-business-idea-in-india
 
 - 7 Nov — Founder's parts 2 and 3: thin 3D buttons (2.5rem high), tilt and image hover zoom removed everywhere, spacing fix so text lines never touch (heading line-height, gaps between stacked text), glass skin site-wide including the purchased pages (/lists, the 25 topic pages, /case-studies, /failed-startups/india). Content untouched, no indexing change. Check: https://bbusiness.online/category/beauty-business-ideas https://bbusiness.online/how-to-validate-a-business-idea-in-india https://bbusiness.online/calculator/startup-cost
   - Undo: delete the "Site-wide glass skin" section at the end of glass.css and the bbi-glass style lines in serve.ts and topic-page.ts.
-  - Open question for the founder: https://bbusiness.online/case-studies shows another brand (IdeaProof), dollar figures and "10,000+ founders". It is in sitemap-pages.xml. Not changed; waiting for his answer.
 
 - 7 Nov — sitemap-india.xml (empty) taken out of the sitemap index; Search Console showed "1 error" for it. Commit 927eb2a, cache purged. Index now lists pages, categories, blog. Founder removes the india sitemap entry in Search Console. Add it back when India sets publish. Check: https://bbusiness.online/sitemap-index.xml
 
@@ -60,6 +61,7 @@ Read this first. Update and commit it to main before you stop. Times are IST.
 - Idea and calculator pages noindex; hubs, categories, subcategories, topic pages indexed. Never noindex for layout reasons. Don't make indexing decisions without the founder.
 - Change only what he asks; never touch content when fixing layout.
 - Never show the template seller's brand (IdeaProof or any other) on any page. Locked rule (founder, 7 Nov).
+- Screenshots only when strictly needed; open Cloudflare only when needed (cache purge). Locked rule (founder, 7 Nov).
 - Footer categories always show the full name ending in "Business Ideas". If Footer in frame.tsx changes, regenerate the footer in src/bought/menu-panels.json.
 - Purge the Cloudflare cache after each deploy (dashboard, Caching, Configuration, Purge Everything).
 

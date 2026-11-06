@@ -34,7 +34,7 @@ function FounderStoryDetailPage() {
       <div className="mx-auto max-w-3xl px-4 py-16 text-center">
         <h1 className="text-2xl font-bold">This founder story is not published.</h1>
         <p className="mt-2 text-muted-foreground">The story may be a draft, a composite or a record that does not yet meet the evidence requirements.</p>
-        <Link to="/case-studies" className="mt-6 inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold hover:border-primary/50"><ArrowLeft size={16}/> Back to case studies</Link>
+        <Link to="/founder-stories" className="mt-6 inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold hover:border-primary/50"><ArrowLeft size={16}/> Back to case studies</Link>
       </div>
     </V2Frame>;
   }

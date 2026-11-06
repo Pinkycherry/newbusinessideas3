@@ -158,7 +158,7 @@ export const mistakes: TopicPage = {
         { label: "Why startups fail", href: "/why-startups-fail-2026-2027" },
         { label: "Business idea risk check", href: "/business-idea-risk-check" },
         { label: "Is my business idea good?", href: "/how-to-check-if-your-business-idea-is-good-in-india" },
-        { label: "Case studies", href: "/case-studies" },
+        { label: "Case studies", href: "/researched-case-studies" },
       ],
     },
     TOOLS,

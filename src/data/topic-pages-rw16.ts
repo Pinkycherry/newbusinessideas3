@@ -177,7 +177,7 @@ export const fundingQuestions: TopicPage = {
         { label: "Indian startup failures", href: "/failed-startups/india" },
         { label: "Common mistakes to avoid", href: "/common-mistakes-to-avoid-when-starting-a-business-in-india" },
         { label: "Why startups fail", href: "/why-startups-fail-2026-2027" },
-        { label: "Case studies", href: "/case-studies" },
+        { label: "Case studies", href: "/researched-case-studies" },
       ],
     },
     TOOLS,

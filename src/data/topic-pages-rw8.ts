@@ -213,7 +213,7 @@ export const pmf: TopicPage = {
         { label: "Is my business idea good?", href: "/how-to-check-if-your-business-idea-is-good-in-india" },
         { label: "Packaged snack business ideas", href: "/category/packaged-snack-business-ideas" },
         { label: "Tuition and coaching business ideas", href: "/category/tuition-and-coaching-business-ideas" },
-        { label: "Case studies", href: "/case-studies" },
+        { label: "Case studies", href: "/researched-case-studies" },
       ],
     },
     TOOLS,
