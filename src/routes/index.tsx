@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Check, Search } from "lucide-react";
+import { ArrowRight, BadgeIndianRupee, BookOpenCheck, Calculator, Check, Layers3, MapPin, Quote, Scale, Search, SearchCheck, ShieldCheck, Smartphone, Sparkles, TriangleAlert, UserRoundCheck } from "lucide-react";
 
 import { V2Frame } from "@/components/v2/frame";
 import { getListsHub } from "@/lib/lists.functions";
@@ -43,12 +43,6 @@ const wrap = "mx-auto w-full max-w-6xl px-4 sm:px-6";
 const eyebrow = "text-xs font-semibold uppercase tracking-[0.16em] text-[#4643ba]";
 const h2 = "mt-2 font-display text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl";
 
-const FOUR = [
-  { t: "Who will actually pay you", d: "A named buyer, not a vague market. If nobody specific pays, the idea says so." },
-  { t: "How the money really works", d: "How a rupee comes in, how often, and what it costs you to earn it." },
-  { t: "What will hurt in year one", d: "The painful risks people find out too late, written down before you spend." },
-  { t: "A straight verdict", d: "Build it, or walk away. Sometimes the honest answer is: do not build this one." },
-];
 
 const IMG = "/images/categories/";
 const BUILT_FOR = [
@@ -100,92 +94,243 @@ const card = "rounded-2xl border border-slate-200 bg-white transition duration-2
 const sec = "py-10 sm:py-14";
 const more = "inline-flex items-center gap-1 text-sm font-semibold text-[#4643ba] hover:underline";
 
+const ICON_ROW = [
+  { I: UserRoundCheck, t: "Who pays you", d: "A named buyer in a real Indian town, not a vague market." },
+  { I: BadgeIndianRupee, t: "How the money works", d: "How a rupee comes in, how often, and what it costs." },
+  { I: TriangleAlert, t: "What hurts in year one", d: "The risks people find too late, written down first." },
+  { I: Scale, t: "A straight verdict", d: "Build it, or walk away. We say which." },
+  { I: SearchCheck, t: "Validate for free", d: "Test any idea with an AI tool you already use." },
+  { I: Calculator, t: "Free calculators", d: "Break-even, margins and startup cost in minutes." },
+];
+
+const INSIDE = [
+  { I: Search, t: "Search by any word", d: "Tiffin, tuition, tailoring" },
+  { I: Layers3, t: "Sorted by category", d: "Easy to browse and compare" },
+  { I: BookOpenCheck, t: "Same checks on every idea", d: "Buyer, money, risk, verdict" },
+  { I: Smartphone, t: "Made for your phone", d: "Light pages, no app needed" },
+];
+
+const STRIP = ["Home Kitchen Food", "Tuition and Coaching", "Tailoring and Boutique", "Beauty", "Reselling", "Street Food"];
+
+function Sparkle({ className }: { className?: string }) {
+  return (
+    <svg aria-hidden viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M12 2c.6 4.8 2.2 7.4 10 10-7.8 2.6-9.4 5.2-10 10-.6-4.8-2.2-7.4-10-10 7.8-2.6 9.4-5.2 10-10Z" />
+    </svg>
+  );
+}
+
 function HomePage() {
   const { hub, posts, live } = Route.useLoaderData();
   const featured = live.recent[0];
   const fresh = live.recent.slice(1, 9);
   const categories = hub.categories;
-  const topCats = categories.slice(0, 8);
+  const strip = STRIP.map((n) => categories.find((c) => c.name.startsWith(n))).filter((c): c is (typeof categories)[number] => Boolean(c));
+  const sideCats = categories.slice(0, 7);
   const tools = READY_CALCULATORS.slice(0, 12);
   const topics = TOPIC_PAGES.slice(0, 10);
   const guides = STARTUP_GUIDES.slice(0, 10);
+  const total = hub.total > 0 ? hub.total.toLocaleString("en-IN") : "";
 
-  const stats = [
-    hub.total > 0 ? [hub.total.toLocaleString("en-IN"), "researched blueprints"] : null,
-    categories.length > 0 ? [String(categories.length), "categories"] : null,
-    [String(TOPIC_PAGES.length), "answers for India"],
-    [String(READY_CALCULATORS.length), "free calculators"],
-  ].filter(Boolean) as string[][];
+  const floats = [
+    total ? { I: BookOpenCheck, n: total, l: "Researched blueprints" } : null,
+    categories.length ? { I: Layers3, n: String(categories.length), l: "Categories" } : null,
+    { I: Calculator, n: String(READY_CALCULATORS.length), l: "Free calculators" },
+  ].filter(Boolean) as { I: typeof Search; n: string; l: string }[];
 
   return (
     <V2Frame active="/">
-      {/* Hero: the problem, the promise, and a real blueprint as proof */}
-      <section className="border-b border-slate-200 bg-gradient-to-b from-[#f4f3ff] via-white to-white pt-24 pb-10 sm:pt-28 sm:pb-12">
-        <div className={wrap + " grid grid-cols-1 items-center gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 [&>*]:min-w-0"}>
-          <div>
-            <p className={eyebrow}>Free for every reader in India</p>
-            <h1 className="mt-3 font-display text-[2.15rem] font-bold leading-[1.08] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem]">
-              Tired of paying just to check if <span className="text-[#4643ba]">your idea will work?</span>
-            </h1>
-            <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
-              We built a free home for real business ideas: side hustles, zero investment ideas, work from home ideas and low investment ideas. Every idea is researched, not guessed.
-            </p>
-            <form action="/search" method="get" className="mt-6 flex max-w-xl items-center gap-2 rounded-2xl bg-white p-1.5 shadow-sm ring-1 ring-slate-200 focus-within:ring-2 focus-within:ring-[#4643ba]">
-              <Search aria-hidden className="ml-2 h-5 w-5 shrink-0 text-slate-400" />
-              <input name="q" type="search" placeholder="Try tiffin, tuition, tailoring…" aria-label="Search business ideas" className="min-w-0 flex-1 bg-transparent px-1 py-2.5 text-base outline-none" />
-              <button type="submit" className="min-h-11 rounded-xl bg-[#4643ba] px-4 text-sm font-semibold text-white transition hover:bg-[#3a37a0]">Search</button>
-            </form>
-            <div className="mt-4 flex flex-wrap items-center gap-3">
-              <Link to="/browse" className="inline-flex min-h-11 items-center gap-1.5 rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white transition hover:bg-slate-800">
-                Browse the library <ArrowRight size={16} />
-              </Link>
-              <a href="/startup-idea-validation" className="inline-flex min-h-11 items-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-[#4643ba] hover:text-[#4643ba]">
-                Check your own idea
-              </a>
+      <div className="relative overflow-hidden bg-[linear-gradient(180deg,#f1efff_0%,#f7f6ff_45%,#ffffff_100%)]">
+        <div aria-hidden className="pointer-events-none absolute -top-24 right-[-10%] h-[520px] w-[520px] rounded-full bg-[#cfc9ff]/50 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute top-64 left-[-12%] h-[380px] w-[380px] rounded-full bg-[#e5e1ff]/70 blur-3xl" />
+
+        {/* Hero */}
+        <section className="relative pt-24 pb-8 sm:pt-28 lg:pb-12">
+          <div className={wrap + " grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] [&>*]:min-w-0"}>
+            <div>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#4643ba]/25 bg-white/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#4643ba]">
+                <Sparkles aria-hidden size={13} /> Free for every reader in India
+              </span>
+              <h1 className="mt-4 font-display text-[2.3rem] font-bold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.6rem]">
+                Tired of paying just to check if{" "}
+                <span className="bg-gradient-to-r from-[#4643ba] to-[#7b6ff0] bg-clip-text text-transparent">your idea will work?</span>
+              </h1>
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
+                We built a free home for real business ideas: side hustles, zero investment ideas, work from home ideas and low investment ideas. Every idea is researched, not guessed.
+              </p>
+              <form action="/search" method="get" className="mt-6 flex max-w-xl items-center gap-2 rounded-2xl bg-white p-1.5 shadow-[0_10px_30px_-15px_rgba(70,67,186,0.45)] ring-1 ring-[#4643ba]/15 focus-within:ring-2 focus-within:ring-[#4643ba]">
+                <Search aria-hidden className="ml-2 h-5 w-5 shrink-0 text-slate-400" />
+                <input name="q" type="search" placeholder="Try tiffin, tuition, tailoring…" aria-label="Search business ideas" className="min-w-0 flex-1 bg-transparent px-1 py-2.5 text-base outline-none" />
+                <button type="submit" className="min-h-11 rounded-xl bg-[#4643ba] px-4 text-sm font-semibold text-white transition hover:bg-[#3a37a0]">Search</button>
+              </form>
+              <div className="mt-5 flex flex-wrap items-center gap-4">
+                <Link to="/browse" className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-gradient-to-r from-[#4643ba] to-[#6a5fe6] px-6 text-sm font-semibold text-white shadow-[0_12px_24px_-12px_rgba(70,67,186,0.8)] transition hover:brightness-110">
+                  Explore the library <ArrowRight size={16} />
+                </Link>
+                <a href="#how-we-research" className="inline-flex min-h-12 items-center gap-2 text-sm font-semibold text-[#4643ba] hover:underline">
+                  <span className="grid h-8 w-8 place-items-center rounded-full border border-[#4643ba]/30 bg-white"><ShieldCheck aria-hidden size={15} /></span>
+                  How we research
+                </a>
+              </div>
+              <div className="mt-6 flex items-center gap-3">
+                <div className="flex -space-x-2">
+                  {TEAM.map((m) => (
+                    <span key={m.name} title={m.name} className="grid h-9 w-9 place-items-center rounded-full border-2 border-white bg-gradient-to-br from-[#e0dcff] to-[#c3bbff] text-xs font-bold text-[#4643ba]">
+                      {m.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-sm leading-snug text-slate-600">
+                  Researched and signed off by {TEAM.length} named people.<br className="hidden sm:block" /> No sign-up. Nothing to pay.
+                </p>
+              </div>
             </div>
-            <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-600">
-              {["No sign-up", "Nothing to pay", "Every blueprint signed off by a named person"].map((t) => (
-                <li key={t} className="inline-flex items-center gap-1.5"><Check aria-hidden size={16} className="text-[#4643ba]" />{t}</li>
-              ))}
-            </ul>
+
+            {/* Product preview: a real blueprint, with live library numbers floating around it */}
+            <div className="relative mx-auto w-full max-w-lg lg:max-w-none lg:pl-6">
+              <Sparkle className="absolute -left-2 top-6 hidden h-7 w-7 text-[#4643ba] lg:block" />
+              <Sparkle className="absolute -bottom-4 right-10 hidden h-6 w-6 text-[#7b6ff0] lg:block" />
+              {featured && (
+                <a href={`/idea/${featured.slug}`} className="group relative block rounded-[1.75rem] bg-white p-2 shadow-[0_30px_60px_-30px_rgba(70,67,186,0.55)] ring-1 ring-[#4643ba]/10 transition duration-300 hover:-translate-y-1 motion-reduce:transform-none lg:mr-32">
+                  <div className="flex items-center gap-1.5 px-3 py-2">
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#ff8f8f]" /><span className="h-2.5 w-2.5 rounded-full bg-[#ffd36b]" /><span className="h-2.5 w-2.5 rounded-full bg-[#7ddc9a]" />
+                    <span className="ml-2 truncate rounded-full bg-slate-100 px-3 py-0.5 text-[11px] text-slate-500">bbusiness.online/idea/{featured.slug}</span>
+                  </div>
+                  <div className="rounded-[1.35rem] bg-gradient-to-b from-[#f6f5ff] to-white p-5">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="rounded-full bg-[#4643ba] px-2.5 py-1 text-[11px] font-semibold text-white">A real blueprint</span>
+                      <span className="text-[11px] text-slate-500">Updated {shortDate(featured.updated_at)}</span>
+                    </div>
+                    <h2 className="mt-3 font-display text-xl font-semibold leading-snug text-slate-900">{featured.title}</h2>
+                    {featured.category_name && <p className="text-xs text-slate-500">{featured.category_name}</p>}
+                    <dl className="mt-4 space-y-2.5">
+                      {([
+                        [UserRoundCheck, "Who pays you", featured.target_customer],
+                        [BadgeIndianRupee, "How the money works", featured.how_you_make_money],
+                        [TriangleAlert, "What hurts in year one", firstLine(featured.cons_json)],
+                        [Scale, "The verdict", featured.verdict],
+                      ] as const).map(([I, k, v]) => v ? (
+                        <div key={k} className="flex gap-3 rounded-xl bg-white p-2.5 ring-1 ring-slate-100">
+                          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#4643ba]/10 text-[#4643ba]"><I aria-hidden size={16} /></span>
+                          <div className="min-w-0">
+                            <dt className="text-[11px] font-semibold uppercase tracking-wide text-[#4643ba]">{k}</dt>
+                            <dd className="line-clamp-2 text-[13px] leading-relaxed text-slate-600">{v}</dd>
+                          </div>
+                        </div>
+                      ) : null)}
+                    </dl>
+                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#4643ba]">Read the full blueprint <ArrowRight size={16} className="transition group-hover:translate-x-0.5" /></span>
+                  </div>
+                </a>
+              )}
+              <ul className="mt-4 grid grid-cols-3 gap-2 lg:absolute lg:right-0 lg:top-12 lg:mt-0 lg:flex lg:w-36 lg:flex-col lg:gap-3">
+                {floats.map(({ I, n, l }) => (
+                  <li key={l} className="rounded-2xl bg-white p-3 shadow-[0_16px_30px_-18px_rgba(70,67,186,0.6)] ring-1 ring-[#4643ba]/10 lg:p-4">
+                    <span className="grid h-8 w-8 place-items-center rounded-full bg-[#4643ba]/10 text-[#4643ba]"><I aria-hidden size={15} /></span>
+                    <span className="mt-2 block font-display text-lg font-bold leading-none text-slate-900 lg:text-2xl">{n}</span>
+                    <span className="mt-1 block text-[11px] leading-tight text-slate-500 lg:text-xs">{l}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
-          {featured && (
-            <a href={`/idea/${featured.slug}`} className={card + " block p-5 sm:p-6"}>
-              <div className="flex items-center justify-between gap-3">
-                <span className="rounded-full bg-[#4643ba]/10 px-2.5 py-1 text-xs font-semibold text-[#4643ba]">A real blueprint from the library</span>
-                <span className="text-xs text-slate-500">Updated {shortDate(featured.updated_at)}</span>
+          {/* What people start with: real categories, not borrowed logos */}
+          {strip.length > 0 && (
+            <div className={wrap + " mt-10"}>
+              <div className="rounded-2xl bg-white/90 px-4 py-4 shadow-[0_10px_30px_-20px_rgba(70,67,186,0.5)] ring-1 ring-[#4643ba]/10 sm:px-6">
+                <p className="text-center text-sm text-slate-500">What people across India start with, researched in the library</p>
+                <ul className="mt-3 flex flex-wrap justify-center gap-x-6 gap-y-2">
+                  {strip.map((c) => (
+                    <li key={c.slug}>
+                      <Link to="/category/$categorySlug" params={{ categorySlug: c.slug }} className="inline-flex items-center gap-1.5 font-display text-[15px] font-semibold text-slate-700 transition hover:text-[#4643ba]">
+                        <MapPin aria-hidden size={14} className="text-[#7b6ff0]" />{c.name.replace(/ Business Ideas$/, "")}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <h2 className="mt-3 font-display text-xl font-semibold leading-snug text-slate-900">{featured.title}</h2>
-              {featured.category_name && <p className="text-xs text-slate-500">{featured.category_name}</p>}
-              <dl className="mt-4 space-y-3">
-                {[
-                  ["Who pays you", featured.target_customer],
-                  ["How the money works", featured.how_you_make_money],
-                  ["What hurts in year one", firstLine(featured.cons_json)],
-                  ["The verdict", featured.verdict],
-                ].map(([k, v]) => v ? (
-                  <div key={k as string} className="border-l-2 border-[#4643ba]/30 pl-3">
-                    <dt className="text-[11px] font-semibold uppercase tracking-wide text-[#4643ba]">{k}</dt>
-                    <dd className="mt-0.5 line-clamp-2 text-sm leading-relaxed text-slate-600">{v}</dd>
-                  </div>
-                ) : null)}
-              </dl>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#4643ba]">Read the full blueprint <ArrowRight size={16} /></span>
-            </a>
+            </div>
           )}
-        </div>
+        </section>
+      </div>
 
-        {/* Live numbers: all counted from the library, nothing typed by hand */}
-        <div className={wrap + " mt-8"}>
-          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200 lg:grid-cols-4">
-            {stats.map(([n, l]) => (
-              <div key={l} className="bg-white px-4 py-3">
-                <dt className="font-display text-xl font-bold text-slate-900">{n}</dt>
-                <dd className="text-xs text-slate-500">{l}</dd>
-              </div>
+      {/* What every blueprint gives you */}
+      <section className={sec}>
+        <div className={wrap}>
+          <h2 className="max-w-xl font-display text-2xl font-semibold tracking-tight text-slate-900 sm:text-[2rem] sm:leading-tight">Everything you need to decide, before you spend a rupee</h2>
+          <ul className="mt-8 grid grid-cols-2 gap-y-8 sm:grid-cols-3 lg:grid-cols-6 lg:divide-x lg:divide-slate-200">
+            {ICON_ROW.map(({ I, t, d }) => (
+              <li key={t} className="px-3 text-center">
+                <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-[#efedff] to-[#e0dcff] text-[#4643ba]"><I aria-hidden size={22} /></span>
+                <h3 className="mt-3 font-display text-[15px] font-semibold leading-snug text-slate-900">{t}</h3>
+                <p className="mt-1 text-[13px] leading-relaxed text-slate-500">{d}</p>
+              </li>
             ))}
-          </dl>
+          </ul>
+        </div>
+      </section>
+
+      {/* Inside the library: a working mini browser of the real library */}
+      <section className={"bg-[linear-gradient(180deg,#f4f2ff,#faf9ff)] " + sec}>
+        <div className={wrap + " grid grid-cols-1 items-center gap-8 lg:grid-cols-[0.8fr_1.2fr] [&>*]:min-w-0"}>
+          <div>
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Inside the library</h2>
+            <p className="mt-1 text-slate-600">One library. Every idea checked the same way.</p>
+            <ul className="mt-6 grid grid-cols-2 gap-4">
+              {INSIDE.map(({ I, t, d }) => (
+                <li key={t} className="flex gap-3">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-[#4643ba] shadow-sm ring-1 ring-[#4643ba]/10"><I aria-hidden size={17} /></span>
+                  <span><span className="block text-sm font-semibold text-slate-900">{t}</span><span className="block text-xs text-slate-500">{d}</span></span>
+                </li>
+              ))}
+            </ul>
+            <ol className="mt-7 space-y-3 border-t border-[#4643ba]/10 pt-6">
+              {[
+                ["Find an idea", "Search, or open a category that fits your money, time and town."],
+                ["Read the four answers", "Who pays, how the money works, what hurts, and a straight verdict."],
+                ["Check it for free", "Press Validate on any blueprint. We never charge for it."],
+              ].map(([t, d], i) => (
+                <li key={t} className="flex gap-3">
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#4643ba] text-xs font-bold text-white">{i + 1}</span>
+                  <span className="text-sm text-slate-600"><span className="font-semibold text-slate-900">{t}.</span> {d}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div className="relative">
+            <Sparkle className="absolute -top-6 left-4 hidden h-7 w-7 text-[#4643ba] lg:block" />
+            <div className="rounded-3xl bg-white p-3 shadow-[0_30px_60px_-35px_rgba(70,67,186,0.6)] ring-1 ring-[#4643ba]/10 sm:p-4">
+              <form action="/search" method="get" className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2 ring-1 ring-slate-200">
+                <Search aria-hidden size={16} className="text-slate-400" />
+                <input name="q" type="search" placeholder="Search ideas, categories or keywords…" aria-label="Search the library" className="min-w-0 flex-1 bg-transparent text-sm outline-none" />
+              </form>
+              <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-[11rem_1fr]">
+                <ul className="hidden space-y-0.5 sm:block">
+                  <li><Link to="/browse" className="block rounded-lg bg-[#4643ba]/10 px-2.5 py-1.5 text-xs font-semibold text-[#4643ba]">All categories</Link></li>
+                  {sideCats.map((c) => (
+                    <li key={c.slug}><Link to="/category/$categorySlug" params={{ categorySlug: c.slug }} className="block truncate rounded-lg px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-[#4643ba]">{c.name.replace(/ Business Ideas$/, "")}</Link></li>
+                  ))}
+                </ul>
+                <ul className="space-y-2">
+                  {fresh.slice(0, 4).map((i) => (
+                    <li key={i.slug}>
+                      <a href={`/idea/${i.slug}`} className="group flex items-center gap-3 rounded-xl p-2 ring-1 ring-slate-100 transition hover:bg-[#f6f5ff] hover:ring-[#4643ba]/20">
+                        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-[#4643ba] to-[#7b6ff0] font-display text-sm font-bold text-white">
+                          {i.title.split(" ").filter((w) => /^[A-Z]/.test(w)).map((w) => w[0]).join("").slice(0, 2)}
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block truncate text-sm font-semibold text-slate-900">{i.title}</span>
+                          <span className="block truncate text-xs text-slate-500">{i.category_name?.replace(/ Business Ideas$/, "")} · Updated {shortDate(i.updated_at)}</span>
+                        </span>
+                        <span className="shrink-0 rounded-lg border border-[#4643ba]/30 px-3 py-1 text-xs font-semibold text-[#4643ba] group-hover:bg-[#4643ba] group-hover:text-white">Read</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -197,13 +342,7 @@ function HomePage() {
               <p className={eyebrow}>Start where you are</p>
               <h2 className={h2}>For the person with an idea and nothing else.</h2>
             </div>
-            <div className="hidden flex-wrap gap-2 sm:flex">
-              {topCats.slice(0, 4).map((c) => (
-                <Link key={c.slug} to="/category/$categorySlug" params={{ categorySlug: c.slug }} className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-700 hover:border-[#4643ba] hover:text-[#4643ba]">
-                  {c.name.replace(/ Business Ideas$/, "")}
-                </Link>
-              ))}
-            </div>
+            <Link to="/browse" className={more}>See every category <ArrowRight size={16} /></Link>
           </div>
           <ul className="-mx-4 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-3">
             {BUILT_FOR.map((b) => (
@@ -221,8 +360,35 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Fresh in the library */}
-      {fresh.length > 0 && (
+      {/* Why it stays free: the brand band */}
+      <section className="pb-10 sm:pb-14">
+        <div className={wrap}>
+          <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#4643ba] via-[#5a50d6] to-[#8a7ff5] px-6 py-10 text-white sm:px-10 lg:py-12">
+            <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-white/10 blur-2xl" />
+            <div className="relative grid grid-cols-1 items-center gap-8 lg:grid-cols-2 [&>*]:min-w-0">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/75">Why it stays free</p>
+                <h2 className="mt-2 font-display text-2xl font-semibold leading-tight sm:text-[2rem]">Checking an idea should not cost the money you were going to start it with.</h2>
+                <p className="mt-3 max-w-lg text-white/85">No sign-up, no card, no account. Read every blueprint, validate as many ideas as you like, and come back in a year: it is all still here.</p>
+                <Link to="/browse" className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-xl bg-white px-6 text-sm font-semibold text-[#4643ba] transition hover:bg-[#f1efff]">Explore the library <ArrowRight size={16} /></Link>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="rounded-2xl bg-white/12 p-4 ring-1 ring-white/20 backdrop-blur-sm">
+                  <h3 className="text-xs font-semibold uppercase tracking-wide text-white/80">What most validation tools ask</h3>
+                  <ul className="mt-2 space-y-1.5">{THEM.map((x) => <li key={x} className="text-[13px] leading-relaxed text-white/85">✕ {x}</li>)}</ul>
+                </div>
+                <div className="rounded-2xl bg-white p-4 text-slate-700 shadow-xl sm:-rotate-1">
+                  <h3 className="text-xs font-semibold uppercase tracking-wide text-[#4643ba]">What BBI does instead</h3>
+                  <ul className="mt-2 space-y-1.5">{US.map((x) => <li key={x} className="flex gap-2 text-[13px] leading-relaxed"><Check aria-hidden size={15} className="mt-0.5 shrink-0 text-[#4643ba]" />{x}</li>)}</ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Good first reads */}
+      {fresh.length > 4 && (
         <section className={"border-y border-slate-200 bg-slate-50 " + sec}>
           <div className={wrap}>
             <div className="flex flex-wrap items-end justify-between gap-3">
@@ -233,7 +399,7 @@ function HomePage() {
               <Link to="/browse" className={more}>See every blueprint <ArrowRight size={16} /></Link>
             </div>
             <ul className="-mx-4 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-4">
-              {fresh.map((i) => (
+              {fresh.slice(4).map((i) => (
                 <li key={i.slug} className="w-[78%] shrink-0 snap-start sm:w-auto">
                   <a href={`/idea/${i.slug}`} className={card + " flex h-full flex-col p-4"}>
                     <span className="text-xs font-medium text-[#4643ba]">{i.category_name?.replace(/ Business Ideas$/, "")}</span>
@@ -247,37 +413,6 @@ function HomePage() {
           </div>
         </section>
       )}
-
-      {/* How it works + the four answers */}
-      <section className={sec}>
-        <div className={wrap + " grid gap-8 lg:grid-cols-[0.9fr_1.1fr]"}>
-          <div>
-            <p className={eyebrow}>How it works</p>
-            <h2 className={h2}>Three steps. No account.</h2>
-            <ol className="mt-5 space-y-4">
-              {[
-                ["Find an idea", "Search, or open a category that fits your money, time and town."],
-                ["Read the four answers", "Who pays, how the money works, what hurts, and a straight verdict."],
-                ["Check it for free", "Press Validate on any blueprint and test it with an AI tool you already use. We never charge for it."],
-              ].map(([t, d], i) => (
-                <li key={t} className="flex gap-3">
-                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#4643ba] text-sm font-bold text-white">{i + 1}</span>
-                  <span><span className="block font-semibold text-slate-900">{t}</span><span className="block text-sm text-slate-600">{d}</span></span>
-                </li>
-              ))}
-            </ol>
-          </div>
-          <div className="grid grid-cols-2 gap-2 sm:gap-3">
-            {FOUR.map((f, i) => (
-              <div key={f.t} className="rounded-2xl border border-slate-200 bg-white p-3.5 sm:p-5">
-                <span className="text-xs font-bold text-[#4643ba]">0{i + 1}</span>
-                <h3 className="mt-1 font-display text-sm font-semibold leading-snug text-slate-900 sm:text-base">{f.t}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-slate-600">{f.d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Library: every category with its subcategories */}
       <section className={"border-y border-slate-200 bg-slate-50 " + sec}>
@@ -423,9 +558,23 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Why we built it, and why it stays free */}
-      <section className={"border-y border-slate-200 bg-slate-50 " + sec}>
-        <div className={wrap + " grid gap-8 lg:grid-cols-2"}>
+      {/* Who we are: the founders' own words */}
+      <section className={"bg-[linear-gradient(180deg,#faf9ff,#f4f2ff)] " + sec}>
+        <div className={wrap + " grid grid-cols-1 items-center gap-8 lg:grid-cols-[0.9fr_1.1fr] [&>*]:min-w-0"}>
+          <div className="relative rounded-[2rem] bg-gradient-to-br from-[#4643ba] to-[#7b6ff0] p-6 text-white sm:p-8">
+            <Quote aria-hidden size={36} className="text-white/60" />
+            <p className="mt-3 font-display text-xl leading-snug sm:text-2xl">
+              We tell you who will actually pay you, how the money works, and what will hurt in year one. Then we give it to you straight.
+            </p>
+            <p className="mt-4 text-sm text-white/80">The founders' promise, written on the first day</p>
+            <div className="mt-5 flex -space-x-2">
+              {TEAM.map((m) => (
+                <span key={m.name} title={m.name} className="grid h-9 w-9 place-items-center rounded-full border-2 border-[#5a50d6] bg-white text-xs font-bold text-[#4643ba]">
+                  {m.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
+                </span>
+              ))}
+            </div>
+          </div>
           <div>
             <p className={eyebrow}>Who we are</p>
             <h2 className={h2}>We have been where you are.</h2>
@@ -435,26 +584,10 @@ function HomePage() {
             <p className="mt-3 text-base leading-relaxed text-slate-600">
               Some of us have been jobless. Some of us have started over with no savings. BBI is for the person Googling “business ideas” from a phone, at 1am, hoping something makes sense for their actual life.
             </p>
-            <blockquote className="mt-4 border-l-2 border-[#4643ba] pl-4 font-display text-lg text-slate-900">
-              “We tell you who will actually pay you, how the money works, and what will hurt in year one. Then we give it to you straight.”
-            </blockquote>
             <div className="mt-4 flex flex-wrap gap-4 text-sm font-semibold">
               <Link to="/about" className="text-[#4643ba] hover:underline">Read the full story</Link>
+              <Link to="/founders" className="text-[#4643ba] hover:underline">Meet the founders</Link>
               <Link to="/contact" className="text-[#4643ba] hover:underline">Write to us</Link>
-            </div>
-          </div>
-          <div>
-            <p className={eyebrow}>Why it stays free</p>
-            <h2 className={h2}>Checking an idea should not cost the money you were going to start it with.</h2>
-            <div className="mt-5 grid gap-3">
-              <div className="rounded-2xl border border-slate-200 bg-white p-5">
-                <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">What most idea validation tools ask of you</h3>
-                <ul className="mt-2 space-y-1.5">{THEM.map((x) => <li key={x} className="text-sm leading-relaxed text-slate-600">✕ {x}</li>)}</ul>
-              </div>
-              <div className="rounded-2xl border border-[#4643ba]/40 bg-white p-5">
-                <h3 className="text-xs font-semibold uppercase tracking-wide text-[#4643ba]">What BBI does instead</h3>
-                <ul className="mt-2 space-y-1.5">{US.map((x) => <li key={x} className="flex gap-2 text-sm leading-relaxed text-slate-700"><Check aria-hidden size={16} className="mt-0.5 shrink-0 text-[#4643ba]" />{x}</li>)}</ul>
-              </div>
             </div>
           </div>
         </div>
@@ -475,12 +608,15 @@ function HomePage() {
               </details>
             ))}
           </div>
-          <div className="mt-10 rounded-3xl border border-[#4643ba]/20 bg-gradient-to-br from-[#f4f3ff] to-white px-6 py-8 text-center sm:px-10">
-            <h2 className="mx-auto max-w-2xl font-display text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Read one honest blueprint before you spend a rupee.</h2>
-            <p className="mx-auto mt-2 max-w-xl text-slate-600">Follow the buyer, the money and the risks. If the honest answer is to walk away, you will hear it here first.</p>
-            <div className="mt-5 flex flex-wrap justify-center gap-3">
-              <Link to="/browse" className="inline-flex min-h-11 items-center gap-1.5 rounded-xl bg-[#4643ba] px-5 text-sm font-semibold text-white transition hover:bg-[#3a37a0]">Browse the library <ArrowRight size={16} /></Link>
-              <a href="/startup-idea-validation" className="inline-flex min-h-11 items-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-[#4643ba] hover:text-[#4643ba]">Check your own idea</a>
+          <div className="mt-10 grid grid-cols-1 items-center gap-6 rounded-[2rem] bg-white p-6 shadow-[0_30px_60px_-40px_rgba(70,67,186,0.7)] ring-1 ring-[#4643ba]/15 sm:p-8 lg:grid-cols-[auto_1fr_auto]">
+            <span className="grid h-20 w-20 place-items-center rounded-full bg-gradient-to-br from-[#efedff] to-[#dcd7ff] text-[#4643ba]"><Sparkles aria-hidden size={32} /></span>
+            <div>
+              <h2 className="font-display text-2xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-3xl">Read one honest blueprint.<br />Before you spend a rupee.</h2>
+              <p className="mt-2 text-slate-600">Follow the buyer, the money and the risks. If the honest answer is to walk away, you will hear it here first.</p>
+            </div>
+            <div className="text-center">
+              <Link to="/browse" className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-gradient-to-r from-[#4643ba] to-[#6a5fe6] px-7 text-sm font-semibold text-white shadow-[0_12px_24px_-12px_rgba(70,67,186,0.8)] transition hover:brightness-110">Explore the library <ArrowRight size={16} /></Link>
+              <p className="mt-2 flex items-center justify-center gap-1.5 text-xs text-slate-500"><ShieldCheck aria-hidden size={14} className="text-[#4643ba]" /> No sign-up · Nothing to pay</p>
             </div>
           </div>
         </div>
