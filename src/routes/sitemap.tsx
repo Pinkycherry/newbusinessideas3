@@ -68,11 +68,14 @@ const getSitemapData = createServerFn({ method: "GET" }).handler(
 );
 
 export const Route = createFileRoute("/sitemap")({
-  head: () =>
-    metaFor(
+  // Founder, 6 Nov 2026: layout is broken, so noindex until it is redesigned. Links stay followed.
+  head: () => {
+    const m = metaFor(
       "Site Map | BBI – Bro Business Ideas",
       "Every page on BBI in one place: business idea categories, focused paths, calculators, startup guides, founder stories and reference pages.",
-    ),
+    );
+    return { meta: [...m.meta, { name: "robots", content: "noindex, follow" }] };
+  },
   loader: () => getSitemapData(),
   component: SitemapPage,
 });

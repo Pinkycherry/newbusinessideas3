@@ -35,7 +35,6 @@ const STATIC_PAGES = [
   "/learning-resources",
   "/list",
   "/faq",
-  "/sitemap",
   "/about",
   // The destination of the author link on every idea page and every blog
   // post. Left out of here it would be crawled only through those bylines,
