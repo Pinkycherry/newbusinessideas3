@@ -103,7 +103,7 @@ function Ledger() {
         <line key={i} x1="150" x2="370" y1={40 + i * 22} y2={40 + i * 22} {...stroke} />
       ))}
       <line x1="300" x2="300" y1="28" y2="232" stroke="#ca0808" strokeWidth="2" />
-      <text x="318" y="70" fill="#f3c3ad" fontSize="34" fontFamily="Poppins, sans-serif">
+      <text x="318" y="70" fill="#f3c3ad" fontSize="34" fontFamily="Outfit, sans-serif">
         ₹
       </text>
       <rect x="170" y="120" width="110" height="10" fill="#6b3f35" />

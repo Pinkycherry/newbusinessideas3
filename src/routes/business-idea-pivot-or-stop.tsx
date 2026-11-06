@@ -55,7 +55,6 @@ export const Route = createFileRoute("/business-idea-pivot-or-stop")({
         content:
           "Use buyer evidence, a cash boundary and one smaller test to decide whether to adjust, pause or stop a business idea in India.",
       },
-      { name: "robots", content: "noindex,nofollow" },
       { property: "og:title", content: "When to pivot or stop a business idea | bbusiness.online" },
       { property: "og:type", content: "article" },
     ],

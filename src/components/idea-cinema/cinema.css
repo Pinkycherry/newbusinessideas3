@@ -9,7 +9,7 @@
    Started as the approved idea-page trial and was promoted to the whole site
    unchanged; the idea-page markup is components/idea-cinema/idea-cinema.tsx.
 
-   Direction: Poppins, warm black, opposed red/pale corner illumination,
+   Direction: "Outfit", warm black, opposed red/pale corner illumination,
    sculpted translucent surfaces and small responsive movements. Surface
    depth is painted with static gradients, not live backdrop blur. The
    homepage never receives .cm-page and retains its existing presentation.
@@ -1052,7 +1052,7 @@ html.light .bbi-instrument.cm-page {
   color: var(--cm-red-text);
 }
 
-/* One family: legacy mono and display utilities read in Poppins, figures
+/* One family: legacy mono and display utilities read in "Outfit", figures
    stay aligned with tabular numerals. Real code keeps a monospace face. */
 .cm-page :is(.font-mono, .font-display, .font-condensed, .font-serif, .ins-num) {
   font-family: var(--cm-font) !important;

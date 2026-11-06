@@ -27,7 +27,7 @@
 
   background: var(--ia-ink);
   color: var(--ia-paper);
-  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
   font-size: clamp(16px, 0.95rem + 0.2vw, 18px);
   line-height: 1.55;
   overflow-x: clip;
@@ -892,7 +892,7 @@
   border: 0;
   background: #fff1e8;
   color: #120404;
-  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
   line-height: 1.55;
 }
 .india-atlas.ia .ia-dialog::backdrop {

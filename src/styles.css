@@ -1,6 +1,10 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+
+/* Self-hosted variable fonts from the bought templates (same files the topic and list pages use). */
+@font-face{font-family:"Inter";src:url("/bought/lists/images/s_inter_v13_UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2.bin") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Outfit";src:url("/bought/lists/images/s_outfit_v15_QGYvz_MVcBeNP4NJtEtq.woff2.bin") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -17,8 +21,9 @@
      reserved for figures — trend scores, counts, IDs — so numbers line up in
      a column and read as data. Instrument Serif is kept for the single
      display moment per page, not as a general heading face. */
-  --font-display: "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  /* Founder, 7 Nov 2026: the bought templates' fonts site-wide: Outfit for headings, Inter for text. */
+  --font-display: "Outfit", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
   --color-background: var(--background);
@@ -3350,7 +3355,7 @@ html.light .bbi-instrument,
 
   background: var(--ins-void);
   color: var(--ins-read);
-  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
 
   --background: var(--ins-void);
   --foreground: var(--ins-read);
@@ -3436,14 +3441,14 @@ html.light .bbi-instrument,
    were the same family. */
 .bbi-instrument h1,
 .bbi-instrument h2 {
-  font-family: "IBM Plex Sans Condensed", "IBM Plex Sans", sans-serif;
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
   font-weight: 700;
   letter-spacing: -0.012em;
   line-height: 1.02;
 }
 .bbi-instrument h3,
 .bbi-instrument h4 {
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 600;
 }
 
@@ -4951,7 +4956,7 @@ html.light .bbi-instrument.cm-page {
   --cm-cut: 2.5rem;
   --cm-notch: 0.75rem;
   --cm-pad: clamp(1rem, 0.6rem + 1.6vw, 2rem);
-  --cm-font: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --cm-font: "Inter", ui-sans-serif, system-ui, sans-serif;
 
   /* The shell and shared components read these. */
   --ins-void: var(--cinema-ink);
@@ -7143,7 +7148,7 @@ html[data-cm] body::after {
 html[data-tone="instrument"] [role="listbox"] {
   max-width: calc(100vw - 1.5rem);
   border-radius: 0.8rem !important;
-  font-family: Poppins, sans-serif;
+  font-family: "Inter", sans-serif;
 }
 @layer utilities {
   html.light .bbi-instrument button[role="combobox"] {

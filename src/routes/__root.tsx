@@ -258,10 +258,10 @@ function FontStylesheet() {
   );
 }
 
-/** Poppins 400 and 600: body text and headings on the first screen. */
+/** Inter (text) and Outfit (headings), self-hosted, the bought templates' fonts (founder, 7 Nov 2026). */
 const FONT_PRELOADS = [
-  "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecg.woff2",
-  "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2",
+  "/bought/lists/images/s_inter_v13_UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2.bin",
+  "/bought/lists/images/s_outfit_v15_QGYvz_MVcBeNP4NJtEtq.woff2.bin",
 ];
 
 function RootShell({ children }: { children: ReactNode }) {

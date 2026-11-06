@@ -4,6 +4,7 @@ import { guideImage } from "@/config/guide-imagery";
 import { urlsetXml, xmlResponse } from "@/lib/sitemap";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
 import { CASE_STUDIES } from "@/lib/case-studies-data";
+import { TOPIC_PAGES } from "@/data/topic-pages";
 
 /**
  * Every page on this site that is not an idea or a category.
@@ -49,6 +50,43 @@ const STATIC_PAGES = [
   "/gdpr",
   "/refund-policy",
   "/cookie-policy",
+  // Founder, 7 Nov 2026: every live, indexable page belongs in a sitemap.
+  "/sitemap",
+  "/topics",
+  "/lists",
+  "/all-business-ideas",
+  "/startup-idea-validation",
+  "/startup-idea-comparison",
+  "/business-ideas-india",
+  "/local-business-ideas-india",
+  "/online-business-ideas-india",
+  "/product-business-ideas-india",
+  "/service-business-ideas-india",
+  "/side-business-ideas-india",
+  "/business-models-india",
+  "/business-pricing-india",
+  "/business-demand-test-india",
+  "/business-idea-reading-room",
+  "/business-idea-research-india",
+  "/business-idea-risk-check",
+  "/business-idea-time-fit",
+  "/business-idea-toolkit",
+  "/business-idea-pivot-or-stop",
+  "/coaching-batch-business-idea-india",
+  "/first-customer-india",
+  "/founder-decision-journal",
+  "/startup-cash-flow-india",
+  "/startup-costs-india",
+  "/startup-launch-plan-india",
+  "/startup-terms-india",
+  "/unit-economics-india",
+  "/weekend-market-stall-profit-check",
+  "/case-studies",
+  "/failed-startups/india",
+  "/open-source",
+  "/templates",
+  "/tools",
+  "/tools/alternate",
 ];
 
 export const Route = createFileRoute("/sitemap-pages.xml")({
@@ -67,6 +105,8 @@ export const Route = createFileRoute("/sitemap-pages.xml")({
               };
             }),
             ...CASE_STUDIES.map((story) => ({ path: `/founder-stories/${story.slug}` })),
+            // The 25 "Answers for India" topic pages.
+            ...TOPIC_PAGES.map((page) => ({ path: `/${page.slug}` })),
           ]),
         ),
     },

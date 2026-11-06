@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowRight, BookOpen, Calculator, ChartNoAxesCombined, ChevronDown, ClipboardCheck, Clock, Coins, Menu, NotebookPen, Rocket, Search, Wallet, X, type LucideIcon } from "lucide-react";
 
 import { TAXONOMY } from "@/data/taxonomy";
+import { LIVE_CATEGORY_SLUGS } from "@/config/live-categories";
 
 import "./v2.css";
 import { useGlassMotion } from "@/components/home/use-glass-motion";
@@ -422,7 +423,8 @@ export function Footer() {
           <div className="v2-footer-cats">
             <h3>Business idea categories</h3>
             <ul>
-              {TAXONOMY.map((c) => (
+              {/* Only categories with published ideas, so no footer link is a 404 (founder, 7 Nov 2026). */}
+              {TAXONOMY.filter((c) => LIVE_CATEGORY_SLUGS.has(c.slug)).map((c) => (
                 <li key={c.slug}>
                   <a href={`/category/${c.slug}`}>{c.short}</a>
                 </li>

@@ -13,8 +13,8 @@ html.light .home-page.bbi-instrument,
   --ins-dim: #cfb5b4;
   --ins-faint: #ac8989;
   --home-red: #ca0808;
-  --font-sans: "Poppins", sans-serif;
-  --font-display: "Poppins", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Outfit", sans-serif;
   --home-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   font-family: var(--font-sans);
   background: #120404;

@@ -39,6 +39,7 @@ import { Route as FoundersRouteImport } from './routes/founders'
 import { Route as FrameworksComparisonRouteImport } from './routes/frameworks-comparison'
 import { Route as FreeGovernmentResourcesForStartingABusinessInIndiaRouteImport } from './routes/free-government-resources-for-starting-a-business-in-india'
 import { Route as GdprRouteImport } from './routes/gdpr'
+import { Route as GlossaryRouteImport } from './routes/glossary'
 import { Route as HowMuchMoneyIsNeededToStartABusinessInIndiaRouteImport } from './routes/how-much-money-is-needed-to-start-a-business-in-india'
 import { Route as HowToBuildAnMvpWithLowInvestmentInIndiaRouteImport } from './routes/how-to-build-an-mvp-with-low-investment-in-india'
 import { Route as HowToCalculateCashRunwayForASmallBusinessInIndiaRouteImport } from './routes/how-to-calculate-cash-runway-for-a-small-business-in-india'
@@ -281,6 +282,11 @@ const FreeGovernmentResourcesForStartingABusinessInIndiaRoute =
 const GdprRoute = GdprRouteImport.update({
   id: '/gdpr',
   path: '/gdpr',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlossaryRoute = GlossaryRouteImport.update({
+  id: '/glossary',
+  path: '/glossary',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HowMuchMoneyIsNeededToStartABusinessInIndiaRoute =
@@ -786,6 +792,7 @@ export interface FileRoutesByFullPath {
   '/frameworks-comparison': typeof FrameworksComparisonRoute
   '/free-government-resources-for-starting-a-business-in-india': typeof FreeGovernmentResourcesForStartingABusinessInIndiaRoute
   '/gdpr': typeof GdprRoute
+  '/glossary': typeof GlossaryRoute
   '/how-much-money-is-needed-to-start-a-business-in-india': typeof HowMuchMoneyIsNeededToStartABusinessInIndiaRoute
   '/how-to-build-an-mvp-with-low-investment-in-india': typeof HowToBuildAnMvpWithLowInvestmentInIndiaRoute
   '/how-to-calculate-cash-runway-for-a-small-business-in-india': typeof HowToCalculateCashRunwayForASmallBusinessInIndiaRoute
@@ -905,6 +912,7 @@ export interface FileRoutesByTo {
   '/frameworks-comparison': typeof FrameworksComparisonRoute
   '/free-government-resources-for-starting-a-business-in-india': typeof FreeGovernmentResourcesForStartingABusinessInIndiaRoute
   '/gdpr': typeof GdprRoute
+  '/glossary': typeof GlossaryRoute
   '/how-much-money-is-needed-to-start-a-business-in-india': typeof HowMuchMoneyIsNeededToStartABusinessInIndiaRoute
   '/how-to-build-an-mvp-with-low-investment-in-india': typeof HowToBuildAnMvpWithLowInvestmentInIndiaRoute
   '/how-to-calculate-cash-runway-for-a-small-business-in-india': typeof HowToCalculateCashRunwayForASmallBusinessInIndiaRoute
@@ -1024,6 +1032,7 @@ export interface FileRoutesById {
   '/frameworks-comparison': typeof FrameworksComparisonRoute
   '/free-government-resources-for-starting-a-business-in-india': typeof FreeGovernmentResourcesForStartingABusinessInIndiaRoute
   '/gdpr': typeof GdprRoute
+  '/glossary': typeof GlossaryRoute
   '/how-much-money-is-needed-to-start-a-business-in-india': typeof HowMuchMoneyIsNeededToStartABusinessInIndiaRoute
   '/how-to-build-an-mvp-with-low-investment-in-india': typeof HowToBuildAnMvpWithLowInvestmentInIndiaRoute
   '/how-to-calculate-cash-runway-for-a-small-business-in-india': typeof HowToCalculateCashRunwayForASmallBusinessInIndiaRoute
@@ -1146,6 +1155,7 @@ export interface FileRouteTypes {
     | '/frameworks-comparison'
     | '/free-government-resources-for-starting-a-business-in-india'
     | '/gdpr'
+    | '/glossary'
     | '/how-much-money-is-needed-to-start-a-business-in-india'
     | '/how-to-build-an-mvp-with-low-investment-in-india'
     | '/how-to-calculate-cash-runway-for-a-small-business-in-india'
@@ -1265,6 +1275,7 @@ export interface FileRouteTypes {
     | '/frameworks-comparison'
     | '/free-government-resources-for-starting-a-business-in-india'
     | '/gdpr'
+    | '/glossary'
     | '/how-much-money-is-needed-to-start-a-business-in-india'
     | '/how-to-build-an-mvp-with-low-investment-in-india'
     | '/how-to-calculate-cash-runway-for-a-small-business-in-india'
@@ -1383,6 +1394,7 @@ export interface FileRouteTypes {
     | '/frameworks-comparison'
     | '/free-government-resources-for-starting-a-business-in-india'
     | '/gdpr'
+    | '/glossary'
     | '/how-much-money-is-needed-to-start-a-business-in-india'
     | '/how-to-build-an-mvp-with-low-investment-in-india'
     | '/how-to-calculate-cash-runway-for-a-small-business-in-india'
@@ -1504,6 +1516,7 @@ export interface RootRouteChildren {
   FrameworksComparisonRoute: typeof FrameworksComparisonRoute
   FreeGovernmentResourcesForStartingABusinessInIndiaRoute: typeof FreeGovernmentResourcesForStartingABusinessInIndiaRoute
   GdprRoute: typeof GdprRoute
+  GlossaryRoute: typeof GlossaryRoute
   HowMuchMoneyIsNeededToStartABusinessInIndiaRoute: typeof HowMuchMoneyIsNeededToStartABusinessInIndiaRoute
   HowToBuildAnMvpWithLowInvestmentInIndiaRoute: typeof HowToBuildAnMvpWithLowInvestmentInIndiaRoute
   HowToCalculateCashRunwayForASmallBusinessInIndiaRoute: typeof HowToCalculateCashRunwayForASmallBusinessInIndiaRoute
@@ -1796,6 +1809,13 @@ declare module '@tanstack/react-router' {
       path: '/gdpr'
       fullPath: '/gdpr'
       preLoaderRoute: typeof GdprRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glossary': {
+      id: '/glossary'
+      path: '/glossary'
+      fullPath: '/glossary'
+      preLoaderRoute: typeof GlossaryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/how-much-money-is-needed-to-start-a-business-in-india': {
@@ -2513,6 +2533,7 @@ const rootRouteChildren: RootRouteChildren = {
   FreeGovernmentResourcesForStartingABusinessInIndiaRoute:
     FreeGovernmentResourcesForStartingABusinessInIndiaRoute,
   GdprRoute: GdprRoute,
+  GlossaryRoute: GlossaryRoute,
   HowMuchMoneyIsNeededToStartABusinessInIndiaRoute:
     HowMuchMoneyIsNeededToStartABusinessInIndiaRoute,
   HowToBuildAnMvpWithLowInvestmentInIndiaRoute:

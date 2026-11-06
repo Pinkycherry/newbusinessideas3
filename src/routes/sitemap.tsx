@@ -1,7 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
-import { ContentPage, Section, metaFor } from "@/components/page-layout";
+import { ArrowRight, BookOpen, Calculator, ClipboardCheck, Compass, Layers3, Newspaper, ShieldCheck } from "lucide-react";
+import type { ReactNode } from "react";
+
+import { metaFor } from "@/components/page-layout";
+import { V2Frame } from "@/components/v2/frame";
+import { TOPIC_PAGES } from "@/data/topic-pages";
+import { LIVE_CATEGORY_SLUGS } from "@/config/live-categories";
+import { LIVE_SUBCATEGORY_PATHS } from "@/config/live-subcategories";
 import { CALCULATORS } from "@/lib/calculators";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
 import { CASE_STUDIES } from "@/lib/case-studies-data";
@@ -68,58 +75,67 @@ const getSitemapData = createServerFn({ method: "GET" }).handler(
 );
 
 export const Route = createFileRoute("/sitemap")({
-  // Founder, 6 Nov 2026: layout is broken, so noindex until it is redesigned. Links stay followed.
-  head: () => {
-    const m = metaFor(
-      "Site Map | BBI – Bro Business Ideas",
-      "Every page on BBI in one place: business idea categories, focused paths, calculators, startup guides, founder stories and reference pages.",
-    );
-    return { meta: [...m.meta, { name: "robots", content: "noindex, follow" }] };
-  },
+  // Founder, 7 Nov 2026: redesigned in the glass layout and indexable again.
+  head: () =>
+    metaFor(
+      "Site Map | bbusiness.online",
+      "Every page on bbusiness.online in one place: business idea categories, answers for India, calculators, startup guides, blog posts and reference pages.",
+    ),
   loader: () => getSitemapData(),
   component: SitemapPage,
 });
 
 /** Static destinations, grouped the way a reader would look for them. */
-const PAGE_GROUPS: { heading: string; links: { to: string; label: string }[] }[] = [
+const PAGE_GROUPS: { heading: string; icon: typeof BookOpen; links: { to: string; label: string }[] }[] = [
   {
     heading: "Browse the library",
+    icon: BookOpen,
     links: [
       { to: "/", label: "Home" },
-      { to: "/browse", label: "Browse all categories" },
-      { to: "/blueprints", label: "Published blueprints" },
+      { to: "/browse", label: "Browse all ideas" },
+      { to: "/all-business-ideas", label: "All business ideas" },
+      { to: "/lists", label: "Idea lists" },
       { to: "/blog", label: "Blog" },
+      { to: "/topics", label: "Answers for India" },
+    ],
+  },
+  {
+    heading: "Check and plan",
+    icon: ClipboardCheck,
+    links: [
+      { to: "/startup-idea-validation", label: "Validate an idea" },
+      { to: "/startup-idea-comparison", label: "Compare ideas" },
+      { to: "/business-demand-test-india", label: "Demand test" },
+      { to: "/first-customer-india", label: "First customer" },
+      { to: "/startup-costs-india", label: "Startup costs" },
+      { to: "/unit-economics-india", label: "Unit economics" },
+      { to: "/business-idea-pivot-or-stop", label: "Pivot or stop" },
     ],
   },
   {
     heading: "Tools and reference",
+    icon: Calculator,
     links: [
       { to: "/calculator", label: "All calculators" },
-      { to: "/startup-guides", label: "All startup guides" },
-      { to: "/founder-stories", label: "Founder stories" },
+      { to: "/startup-guides", label: "Startup guides" },
       { to: "/founder-glossary", label: "Founder glossary" },
       { to: "/learning-resources", label: "Learning resources" },
+      { to: "/tools", label: "Founder tools" },
+      { to: "/faq", label: "FAQ" },
     ],
   },
   {
-    heading: "About BBI",
+    heading: "About and policies",
+    icon: ShieldCheck,
     links: [
       { to: "/about", label: "About" },
-      // Listed beside About rather than under it: /about is the story and all
-      // four people, /founders is the two who sign the research off.
       { to: "/founders", label: "Founders" },
-      { to: "/services", label: "Services" },
-      { to: "/pricing", label: "Pricing" },
       { to: "/contact", label: "Contact" },
-    ],
-  },
-  {
-    heading: "Policies",
-    links: [
       { to: "/terms", label: "Terms of use" },
       { to: "/privacy", label: "Privacy policy" },
-      { to: "/refund-policy", label: "Refund policy" },
       { to: "/disclaimer", label: "Disclaimer" },
+      { to: "/cookie-policy", label: "Cookie policy" },
+      { to: "/refund-policy", label: "Refund policy" },
       { to: "/gdpr", label: "GDPR" },
     ],
   },
@@ -130,7 +146,7 @@ const PAGE_GROUPS: { heading: string; links: { to: string; label: string }[] }[]
  * ten-item section takes two rows rather than the four a grid forced.
  */
 function PillRow({ children }: { children: React.ReactNode }) {
-  return <div className="flex flex-wrap gap-1.5">{children}</div>;
+  return <div className="flex flex-wrap gap-2">{children}</div>;
 }
 
 /**
@@ -163,7 +179,7 @@ function Chip({
   label: string;
 }) {
   return (
-    <Link to={to} params={params as never} className="ins-action bbi-sitemap-chip">
+    <Link to={to} params={params as never} className="g-chip">
       {label}
     </Link>
   );
@@ -183,106 +199,118 @@ function packByWidth<T>(items: readonly T[], label: (item: T) => string): T[] {
   return [...items].sort((a, b) => label(a).length - label(b).length);
 }
 
+const wrap = "mx-auto w-full max-w-6xl px-4 sm:px-6";
+
+function Block({ id, icon: Icon, title, count, children }: { id: string; icon: typeof BookOpen; title: string; count?: number; children: ReactNode }) {
+  return (
+    <section id={id} className="g-tile scroll-mt-28 p-5 sm:p-6" data-stagger>
+      <h2 className="flex items-center gap-3 font-display text-xl font-semibold text-slate-900">
+        <span className="g-icon !h-11 !w-11 shrink-0"><Icon aria-hidden size={19} /></span>
+        {title}
+        {count !== undefined && <span className="ml-auto rounded-full bg-[#4643ba]/10 px-2.5 py-0.5 text-xs font-semibold text-[#4643ba]">{count}</span>}
+      </h2>
+      <div className="mt-4">{children}</div>
+    </section>
+  );
+}
+
 function SitemapPage() {
   const { blogPosts } = Route.useLoaderData();
+  const categories = TAXONOMY.filter((c) => LIVE_CATEGORY_SLUGS.has(c.slug));
+  const jump = [["pages", "Main pages"], ["answers", "Answers for India"], ["guides", "Startup guides"], ["calculators", "Calculators"], ["blog", "Blog"], ["categories", "Categories"]];
   return (
-    <ContentPage
-      wide
-      tone="brief"
-      eyebrow="Site map"
-      title="Every page on"
-      highlight="BBI"
-      intro="Browse the business idea categories, focused paths, calculators, startup guides, founder stories and journal posts. Search the separate index of completed source blueprints from the links below."
-    >
-      {PAGE_GROUPS.map((group) => (
-        <Section key={group.heading} heading={group.heading}>
-          <PillRow>
-            {group.links.map((link) => (
-              <Chip key={link.to} to={link.to} label={link.label} />
-            ))}
-          </PillRow>
-        </Section>
-      ))}
+    <V2Frame>
+      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#f1efff,#faf9ff_60%,#fff)] pt-28 pb-8 sm:pt-32">
+        <div className={wrap + " text-center"}>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#4643ba]">Site map</p>
+          <h1 className="mx-auto mt-3 max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl">Every page on bbusiness.online</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-slate-600">Categories, answers for India, calculators, startup guides and blog posts, all in one place.</p>
+          <ul className="mt-6 flex flex-wrap justify-center gap-2">
+            {jump.map(([id, t]) => <li key={id}><a href={`#${id}`} className="g-chip">{t}</a></li>)}
+          </ul>
+        </div>
+      </section>
 
-      <Section heading="Calculators">
-        <PillRow>
-          {packByWidth(CALCULATORS, (c) => c.title).map((calculator) => (
-            <Chip
-              key={calculator.slug}
-              to="/calculator/$slug"
-              params={{ slug: calculator.slug }}
-              label={calculator.title}
-            />
-          ))}
-        </PillRow>
-      </Section>
-
-      <Section heading="Startup guides">
-        <PillRow>
-          {packByWidth(STARTUP_GUIDES, (g) => g.title).map((guide) => (
-            <Chip
-              key={guide.slug}
-              to="/startup-guides/$slug"
-              params={{ slug: guide.slug }}
-              label={guide.title}
-            />
-          ))}
-        </PillRow>
-      </Section>
-
-      <Section heading="Founder stories">
-        <PillRow>
-          {packByWidth(CASE_STUDIES, (c) => c.title).map((study) => (
-            <Chip
-              key={study.slug}
-              to="/founder-stories/$slug"
-              params={{ slug: study.slug }}
-              label={study.title}
-            />
-          ))}
-        </PillRow>
-      </Section>
-
-      <Section heading="Blog posts">
-        <PillRow>
-          {packByWidth(blogPosts, (p) => p.title).map((post) => (
-            <Chip
-              key={post.slug}
-              to="/blog/$slug"
-              params={{ slug: post.slug }}
-              label={post.title}
-            />
-          ))}
-        </PillRow>
-      </Section>
-
-      <Section heading="Categories and subcategories">
-        <div className="space-y-5">
-          {TAXONOMY.map((category) => (
-            <div key={category.slug}>
-              <h3 className="mb-2.5 text-base font-semibold tracking-tight text-foreground">
-                <Link
-                  to="/category/$categorySlug"
-                  params={{ categorySlug: category.slug }}
-                  className="transition-colors hover:text-primary"
-                >
-                  {category.name}
-                </Link>
-              </h3>
-              <PillRow>
-                {packByWidth(category.subcategories, (s) => s.name).map((sub) => (
-                  <Chip
-                    key={sub.slug}
-                    to="/category/$categorySlug/$subcategorySlug"
-                    params={{ categorySlug: category.slug, subcategorySlug: sub.slug }}
-                    label={sub.name.replace(/ Business Ideas$/, "")}
-                  />
-                ))}
-              </PillRow>
-            </div>
+      <div className={wrap + " grid gap-5 pb-16"} data-reveal>
+        <div id="pages" className="grid scroll-mt-28 gap-5 md:grid-cols-2">
+          {PAGE_GROUPS.map((group) => (
+            <Block key={group.heading} id={group.heading.toLowerCase().replace(/\W+/g, "-")} icon={group.icon} title={group.heading}>
+              <PillRow>{group.links.map((link) => <Chip key={link.to} to={link.to} label={link.label} />)}</PillRow>
+            </Block>
           ))}
         </div>
-      </Section>
-    </ContentPage>
+
+        <Block id="answers" icon={Compass} title="Answers for India" count={TOPIC_PAGES.length}>
+          <ul className="grid gap-2.5 md:grid-cols-2">
+            {TOPIC_PAGES.map((p) => (
+              <li key={p.slug}><a href={`/${p.slug}`} className="g-link"><span>{p.seo.title.replace(/:.*$/, "")}</span><span className="g-arrow"><ArrowRight aria-hidden size={15} /></span></a></li>
+            ))}
+          </ul>
+        </Block>
+
+        <Block id="guides" icon={ClipboardCheck} title="Startup guides" count={STARTUP_GUIDES.length}>
+          <PillRow>
+            {packByWidth(STARTUP_GUIDES, (g) => g.title).map((guide) => (
+              <Chip key={guide.slug} to="/startup-guides/$slug" params={{ slug: guide.slug }} label={guide.title.replace(/:.*$/, "")} />
+            ))}
+          </PillRow>
+        </Block>
+
+        <Block id="calculators" icon={Calculator} title="Calculators" count={CALCULATORS.length}>
+          <PillRow>
+            {packByWidth(CALCULATORS, (c) => c.title).map((calculator) => (
+              <Chip key={calculator.slug} to="/calculator/$slug" params={{ slug: calculator.slug }} label={calculator.title} />
+            ))}
+          </PillRow>
+        </Block>
+
+        {blogPosts.length > 0 && (
+          <Block id="blog" icon={Newspaper} title="Blog posts" count={blogPosts.length}>
+            <ul className="grid gap-2.5 md:grid-cols-2">
+              {blogPosts.map((post) => (
+                <li key={post.slug}><a href={`/blog/${post.slug}`} className="g-link"><span>{post.title}</span><span className="g-arrow"><ArrowRight aria-hidden size={15} /></span></a></li>
+              ))}
+            </ul>
+          </Block>
+        )}
+
+        {CASE_STUDIES.length > 0 && (
+          <Block id="stories" icon={BookOpen} title="Founder stories" count={CASE_STUDIES.length}>
+            <PillRow>{CASE_STUDIES.map((study) => <Chip key={study.slug} to="/founder-stories/$slug" params={{ slug: study.slug }} label={study.title} />)}</PillRow>
+          </Block>
+        )}
+
+        <section id="categories" className="scroll-mt-28" data-stagger>
+          <h2 className="flex items-center gap-3 font-display text-2xl font-semibold text-slate-900">
+            <span className="g-icon !h-11 !w-11 shrink-0"><Layers3 aria-hidden size={19} /></span>
+            Categories and subcategories
+            <span className="rounded-full bg-[#4643ba]/10 px-2.5 py-0.5 text-xs font-semibold text-[#4643ba]">{categories.length}</span>
+          </h2>
+          <div className="mt-5 grid gap-4 md:grid-cols-2">
+            {categories.map((category) => {
+              const subs = category.subcategories.filter((sub) => LIVE_SUBCATEGORY_PATHS.has(`${category.slug}/${sub.slug}`));
+              return (
+                <div key={category.slug} className="g-tile p-5">
+                  <Link to="/category/$categorySlug" params={{ categorySlug: category.slug }} className="flex items-center justify-between gap-3 font-display text-lg font-semibold text-slate-900 hover:text-[#4643ba]">
+                    {category.name}
+                    <span className="g-arrow grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#958cff] to-[#4643ba] text-white"><ArrowRight aria-hidden size={15} /></span>
+                  </Link>
+                  {subs.length > 0 && (
+                    <div className="mt-3">
+                      <PillRow>
+                        {packByWidth(subs, (s) => s.name).map((sub) => (
+                          <Chip key={sub.slug} to="/category/$categorySlug/$subcategorySlug" params={{ categorySlug: category.slug, subcategorySlug: sub.slug }} label={sub.name.replace(/ Business Ideas$/, "")} />
+                        ))}
+                      </PillRow>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+        <p className="text-center text-sm text-slate-500">Search engines read the same pages through <a href="/sitemap-index.xml" className="font-semibold text-[#4643ba]">sitemap-index.xml</a>.</p>
+      </div>
+    </V2Frame>
   );
 }

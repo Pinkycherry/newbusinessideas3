@@ -5,7 +5,7 @@
   --hf-crimson: #ca0808;
   --hf-paper: #fff2ed;
   --hf-muted: #dbbeba;
-  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
 }
 
 .hf-toolkit .hf-guides,
@@ -250,7 +250,7 @@
   color: #ffd6d0;
   cursor: pointer;
   font:
-    400 0.6875rem/1.3 "Poppins",
+    400 0.6875rem/1.3 "Outfit",
     ui-sans-serif,
     system-ui,
     sans-serif;

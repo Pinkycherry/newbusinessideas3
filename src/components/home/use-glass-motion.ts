@@ -12,7 +12,7 @@ export function useGlassMotion() {
       els.forEach((el) => el.querySelectorAll<HTMLElement>("[data-stagger]").forEach((c, i) => { c.style.transitionDelay = `${Math.min(i, 8) * 80}ms`; }));
       io = new IntersectionObserver((entries) => {
         entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("rv-in"); io?.unobserve(e.target); } });
-      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.06 });
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0 });
       els.forEach((el) => io!.observe(el));
     }
     const fine = window.matchMedia("(pointer: fine)").matches;
