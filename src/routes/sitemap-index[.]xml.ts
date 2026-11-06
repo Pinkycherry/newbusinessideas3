@@ -37,8 +37,8 @@ export const Route = createFileRoute("/sitemap-index.xml")({
         const children: SitemapChild[] = [
           { path: "/sitemap-pages.xml" },
           { path: "/sitemap-categories.xml" },
-          // India Idea Atlas (BBI_EXPANSION.md). Empty until a set is published.
-          { path: "/sitemap-india.xml" },
+          // sitemap-india.xml is left out while it is empty: Search Console reports an
+          // empty sitemap as an error (founder, 7 Nov 2026). Add it back when India sets publish.
           { path: "/sitemap-blog.xml", lastmod: blogLastmod },
         ];
 
