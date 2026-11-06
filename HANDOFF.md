@@ -2,9 +2,9 @@
 
 Read this first. Update and commit it to main before you stop. Times are IST.
 
-## Current state (6 Nov 2026, ~22:30 IST, Pinky 2)
+## Current state (7 Nov 2026, ~00:30 IST, Pinky 2)
 
-- Live commit: 4599f6c on main (check https://bbusiness.online/version.json).
+- Live commit: 4a37bc6 on main (check https://bbusiness.online/version.json).
 - Data: 4,200 ideas, 42 live categories, 420 subcategories. Under Google AdSense review.
 - New glass layout live on: home, idea pages, /topics, /browse, validate form. Other pages still use older layouts.
 - Indexing rule (founder): individual idea pages and individual calculator pages are noindex. Everything else in the submitted sitemaps stays indexed. Never noindex a page because of its layout.
@@ -12,6 +12,14 @@ Read this first. Update and commit it to main before you stop. Times are IST.
 - Cloudflare: free Workers plan, rate limit is being hit. Founder moves to the paid plan in 3 to 4 days. Keep live checks to a minimum.
 
 ## Done (newest first)
+
+- 7 Nov ~00:15 — Founder's answers to the audit, commit 4a37bc6, cache purged, checked live:
+  - Q1 C: /sitemap redesigned in the glass layout and indexable again, back in sitemap-pages.xml. https://bbusiness.online/sitemap
+  - Q2 A: footer shows only the 42 live categories (src/config/live-categories.ts). Add a slug there when a new category goes live.
+  - Q3 A: sitemap-pages.xml now has 101 URLs (was 41): the 25 India answer pages, /topics, /lists, validation, tool and guide hub pages. https://bbusiness.online/sitemap-pages.xml
+  - Q4 A: /glossary 301 to /founder-glossary, guides page link fixed; /business-idea-pivot-or-stop is indexable. https://bbusiness.online/glossary
+  - Q5: bought-template fonts site-wide, Outfit for headings and Inter for text, self-hosted (src/styles.css @font-face). Founder will review brand fonts later.
+  - Also fixed: scroll reveal kept very long pages blank on phones (threshold 0 in use-glass-motion.ts).
 
 - 6 Nov ~22:00 — /sitemap set to noindex, follow and removed from sitemap-pages.xml (founder's order on 6 Nov, because the page layout is broken). Commit 4599f6c. NOTE: founder said later the same evening "don't noindex for layout". Question 1 below asks whether to undo it. Check: https://bbusiness.online/sitemap
 - 6 Nov ~21:00 — Audit of 15 page types at 360px and 1366px (results below).
@@ -31,8 +39,7 @@ Read this first. Update and commit it to main before you stop. Times are IST.
 
 ## Next steps
 
-- Wait for the founder's answers to the audit questions; act only on answered ones.
-- Sitemap page redesign (glass layout).
+- Founder resubmits https://bbusiness.online/sitemap-index.xml in Search Console (pages sitemap grew to 101).
 - Content protection (AI bots blocked, Googlebot allowed) — pending, planned.
 - Remaining old-layout pages to the glass system.
 - Topic pages: 25 built of 147; wait for the founder before building more.
@@ -57,4 +64,5 @@ Read this first. Update and commit it to main before you stop. Times are IST.
 - Undo one commit: on GitHub, open the commit and revert it, or re-upload the previous version of the file to main.
 - Fast rollback: Cloudflare dashboard, Workers and Pages, pinkycherry-newbusinessideas3, Deployments, pick an older deployment, Rollback.
 - Full backup of the site before the new layout: branch backup-live-before-new-layout.
-- Undo the /sitemap noindex: in src/routes/sitemap.tsx remove the robots meta line, and add "/sitemap" back to STATIC_PAGES in src/routes/sitemap-pages[.]xml.ts.
+- Fonts: revert the two --font-display / --font-sans lines in src/styles.css @theme and the FONT_PRELOADS list in src/routes/__root.tsx.
+- Footer: remove the LIVE_CATEGORY_SLUGS filter in src/components/v2/frame.tsx.
