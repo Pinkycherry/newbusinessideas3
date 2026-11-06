@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, type CSSProperties, type ReactNode } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BadgeIndianRupee, BookOpen, ClipboardCheck, Compass, FileSearch, HeartHandshake, MessagesSquare, Newspaper, Users, Wallet, BookOpenCheck, Calculator, Check, Layers3, MapPin, Quote, Scale, Search, SearchCheck, ShieldCheck, Smartphone, Sparkles, TriangleAlert, UserRoundCheck } from "lucide-react";
 
@@ -10,7 +10,6 @@ import { STARTUP_GUIDES } from "@/lib/guides-data";
 import { TOPIC_PAGES } from "@/data/topic-pages";
 import { getHomeLive, type HomeIdea } from "@/lib/home-live.functions";
 import { TEAM, contactEmail, ORGANISATION_NAME } from "@/lib/site-config";
-import { GLASS_CSS } from "@/components/home/glass-styles";
 import { IndiaMap3D } from "@/components/home/india-map-3d";
 
 /**
@@ -164,55 +163,8 @@ const PROCESS = [
 
 /** Raised, pressable primary button. */
 const btn3d = "g-btn";
+const btnHero = "g-btn g-shine";
 const btn3dLight = "g-btn-light";
-
-/** 3D tilt with a moving glare for [data-tilt] cards; 3D rise for [data-stagger] on scroll. */
-const TILT_CSS = `
-[data-tilt]{transform-style:preserve-3d;will-change:transform}
-[data-tilt]::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.75),rgba(255,255,255,0) 42%);opacity:0;transition:opacity .25s;pointer-events:none;mix-blend-mode:soft-light}
-[data-tilt]:hover::after{opacity:1}
-.rv-on [data-reveal] [data-stagger]{transform:perspective(900px) rotateX(22deg) translateY(26px) scale(.97);transform-origin:50% 100%}
-.rv-on [data-reveal].rv-in [data-stagger]{transform:none}
-@media (prefers-reduced-motion:reduce){[data-tilt]{transform:none!important}}
-`;
-
-function useGlassMotion() {
-  useEffect(() => {
-    const root = document.documentElement;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let io: IntersectionObserver | null = null;
-    if ("IntersectionObserver" in window) {
-      root.classList.add("rv-on");
-      const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-      els.forEach((el) => el.querySelectorAll<HTMLElement>("[data-stagger]").forEach((c, i) => { c.style.transitionDelay = `${Math.min(i, 8) * 80}ms`; }));
-      io = new IntersectionObserver((entries) => {
-        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("rv-in"); io?.unobserve(e.target); } });
-      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.06 });
-      els.forEach((el) => io!.observe(el));
-    }
-    const fine = window.matchMedia("(pointer: fine)").matches;
-    const onMove = (ev: PointerEvent) => {
-      if (reduce || !fine) return;
-      const el = (ev.target as HTMLElement).closest<HTMLElement>("[data-tilt]");
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      const px = (ev.clientX - r.left) / r.width, py = (ev.clientY - r.top) / r.height;
-      el.style.transition = "transform .08s linear";
-      el.style.transform = `perspective(900px) rotateX(${(0.5 - py) * 14}deg) rotateY(${(px - 0.5) * 16}deg) translateY(-4px)`;
-      el.style.setProperty("--gx", `${px * 100}%`);
-      el.style.setProperty("--gy", `${py * 100}%`);
-    };
-    const onOut = (ev: PointerEvent) => {
-      const el = (ev.target as HTMLElement).closest<HTMLElement>("[data-tilt]");
-      if (!el || (ev.relatedTarget instanceof Node && el.contains(ev.relatedTarget))) return;
-      el.style.transition = "transform .5s cubic-bezier(.2,.7,.2,1)";
-      el.style.transform = "";
-    };
-    document.addEventListener("pointermove", onMove);
-    document.addEventListener("pointerout", onOut);
-    return () => { io?.disconnect(); root.classList.remove("rv-on"); document.removeEventListener("pointermove", onMove); document.removeEventListener("pointerout", onOut); };
-  }, []);
-}
 
 /** The ecosystem hub: every kind of page around one centre, Odoo-style. */
 const HUB = [
@@ -228,6 +180,18 @@ const HUB = [
 
 const GUIDE_PICKS = ["Business Idea Validation Framework", "Zero-Investment Business Models", "Startup Cash Flow Management", "Competitor Analysis Framework", "Minimum Viable Product Development", "Startup Equity Split Guide"];
 
+/** Continuous slideshow: the row is drawn twice and slides forever; the copy is hidden from readers. */
+function Marquee({ children, speed = 48, rev = false }: { children: ReactNode; speed?: number; rev?: boolean }) {
+  return (
+    <div className={"g-marquee mt-6 py-3" + (rev ? " rev" : "")} style={{ "--g-speed": `${speed}s` } as CSSProperties}>
+      <div className="g-marquee-track">
+        <ul className="flex gap-4 pl-4">{children}</ul>
+        <ul className="flex gap-4 pl-4" aria-hidden="true" inert>{children}</ul>
+      </div>
+    </div>
+  );
+}
+
 function Sparkle({ className }: { className?: string }) {
   return (
     <svg aria-hidden viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -238,7 +202,6 @@ function Sparkle({ className }: { className?: string }) {
 
 function HomePage() {
   const { hub, posts, live } = Route.useLoaderData();
-  useGlassMotion();
   const featured = live.recent[0];
   const fresh = live.recent.slice(1, 9);
   const categories = hub.categories;
@@ -258,7 +221,6 @@ function HomePage() {
 
   return (
     <V2Frame active="/">
-      <style dangerouslySetInnerHTML={{ __html: GLASS_CSS + TILT_CSS }} />
       <div className="relative overflow-hidden bg-[linear-gradient(180deg,#f1efff_0%,#f7f6ff_45%,#ffffff_100%)]">
         <div aria-hidden className="pointer-events-none absolute -top-24 right-[-10%] h-[520px] w-[520px] rounded-full bg-[#cfc9ff]/50 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute top-64 left-[-12%] h-[380px] w-[380px] rounded-full bg-[#e5e1ff]/70 blur-3xl" />
@@ -283,7 +245,7 @@ function HomePage() {
                 <button type="submit" className="min-h-11 rounded-xl bg-[#4643ba] px-4 text-sm font-semibold text-white transition hover:bg-[#3a37a0]">Search</button>
               </form>
               <div className="mt-5 flex flex-wrap items-center gap-4">
-                <Link to="/browse" className={btn3d}>
+                <Link to="/browse" className={btnHero}>
                   Explore the library <ArrowRight size={16} />
                 </Link>
                 <a href="#how-we-research" className="inline-flex min-h-12 items-center gap-2 text-sm font-semibold text-[#4643ba] hover:underline">
@@ -641,9 +603,10 @@ function HomePage() {
               </div>
               <Link to="/browse" className={more}>See all {categories.length} categories <ArrowRight size={16} /></Link>
             </div>
-            <ul className="-mx-4 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-4">
+          </div>
+          <Marquee speed={55}>
               {glimpse.map(({ c, img }) => (
-                <li key={c.slug} data-stagger className="w-[70%] shrink-0 snap-start sm:w-auto">
+                <li key={c.slug} className="w-64 shrink-0 sm:w-72">
                   <Link to="/category/$categorySlug" params={{ categorySlug: c.slug }} className="group relative block overflow-hidden rounded-2xl bg-white shadow-[0_16px_34px_-22px_rgba(70,67,186,0.7)] ring-1 ring-[#4643ba]/10 transition duration-300 hover:-translate-y-1 hover:shadow-[0_26px_40px_-22px_rgba(70,67,186,0.75)] motion-reduce:transform-none">
                     <div className="relative aspect-[4/3] overflow-hidden">
                       <img src={"/images/categories/" + img} alt={c.name} loading="lazy" width={640} height={480} className="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transform-none" />
@@ -658,7 +621,8 @@ function HomePage() {
                   </Link>
                 </li>
               ))}
-            </ul>
+          </Marquee>
+          <div>
           </div>
         </section>
       )}
@@ -674,9 +638,10 @@ function HomePage() {
               </div>
               <Link to="/browse" className={more}>See every blueprint <ArrowRight size={16} /></Link>
             </div>
-            <ul className="-mx-4 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-4">
-              {fresh.slice(4).map((i) => (
-                <li key={i.slug} className="w-[78%] shrink-0 snap-start sm:w-auto">
+          </div>
+          <Marquee speed={60} rev>
+              {fresh.map((i) => (
+                <li key={i.slug} className="w-64 shrink-0 sm:w-72">
                   <a href={`/idea/${i.slug}`} className={card + " flex h-full flex-col p-4"}>
                     <span className="text-xs font-medium text-[#4643ba]">{i.category_name?.replace(/ Business Ideas$/, "")}</span>
                     <span className="mt-1 font-display text-base font-semibold leading-snug text-slate-900">{i.title}</span>
@@ -685,7 +650,8 @@ function HomePage() {
                   </a>
                 </li>
               ))}
-            </ul>
+          </Marquee>
+          <div>
           </div>
         </section>
       )}
@@ -751,38 +717,26 @@ function HomePage() {
           </div>
           <div className="relative mt-10 grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-2">
             {[
-              { n: "01", t: "Make the numbers add up", body: (
-                <div className="flex flex-wrap gap-2">
-                  {tools.map((x) => <Link key={x.slug} to="/calculator/$slug" params={{ slug: x.slug }} className="g-chip">{x.title}</Link>)}
-                </div>
-              ), more: ["/calculator", "All calculators"] },
-              { n: "02", t: "Answers for India", body: (
-                <ul className="space-y-1.5">
-                  {topics.map((x) => <li key={x.slug}><a href={`/${x.slug}`} className="text-sm text-slate-700 hover:text-[#4643ba] hover:underline">{x.seo.title}</a></li>)}
-                </ul>
-              ), more: ["/topics", "All answers"] },
-              { n: "04", t: "Check your own idea", body: (
-                <div>
-                  <p className="text-sm leading-relaxed text-slate-600">Press Validate on any blueprint, or bring your own idea. The checks run in an AI tool you already use, so it costs you nothing.</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    <a href="/startup-idea-validation" className="g-chip">Validate an idea</a>
-                    <a href="/how-to-validate-a-business-idea-in-india" className="g-chip">How validation works</a>
-                    <a href="/how-to-talk-to-customers-before-starting-a-business-in-india" className="g-chip">Talk to customers first</a>
-                  </div>
-                </div>
-              ), more: ["/startup-idea-validation", "Start validating"] },
-              { n: "03", t: "Read before you build", body: (
-                <ul className="space-y-1.5">
-                  {guides.map((g) => <li key={g.slug}><Link to="/startup-guides/$slug" params={{ slug: g.slug }} className="text-sm text-slate-700 hover:text-[#4643ba] hover:underline">{g.title}</Link></li>)}
-                </ul>
-              ), more: ["/startup-guides", "All guides"] },
+              { n: "01", t: "Make the numbers add up", links: tools.slice(0, 6).map((x) => ({ href: `/calculator/${x.slug}`, label: x.title })), more: ["/calculator", "All calculators"] },
+              { n: "02", t: "Answers for India", links: topics.slice(0, 5).map((x) => ({ href: `/${x.slug}`, label: x.seo.title.replace(/:.*$/, "").replace(/\?.*$/, "?") })), more: ["/topics", "All answers"] },
+              { n: "03", t: "Read before you build", links: guides.slice(0, 5).map((g) => ({ href: `/startup-guides/${g.slug}`, label: g.title.replace(/:.*$/, "") })), more: ["/startup-guides", "All guides"] },
+              { n: "04", t: "Check your own idea", links: [
+                { href: "/startup-idea-validation", label: "Validate your idea for free" },
+                { href: "/how-to-validate-a-business-idea-in-india", label: "How validation works in India" },
+                { href: "/how-to-talk-to-customers-before-starting-a-business-in-india", label: "Talk to customers before you start" },
+                { href: "/how-to-check-if-your-business-idea-is-good-in-india", label: "Is my business idea good?" },
+              ], more: ["/startup-idea-validation", "Start validating"] },
             ].map((c) => (
-              <div key={c.n} data-stagger className={"g-step " + (c.n === "04" ? "md:order-3" : c.n === "03" ? "md:order-4" : "")}>
+              <div key={c.n} data-stagger className="g-step">
                 <span className="g-step-tab">{c.n}</span>
-                <div data-tilt className="g-step-card p-5 pl-6 pt-8 sm:p-6 sm:pt-9">
+                <div className="g-step-card p-5 pl-6 pt-8 sm:p-6 sm:pt-9">
                   <h3 className="font-display text-xl font-semibold uppercase tracking-wide text-slate-800">{c.t}</h3>
-                  <div className="mt-3">{c.body}</div>
-                  <a href={c.more[0]} className={more + " mt-4"}>{c.more[1]} <ArrowRight size={16} /></a>
+                  <ul className="mt-4 grid gap-2.5">
+                    {c.links.map((l) => (
+                      <li key={l.href}><a href={l.href} className="g-link"><span>{l.label}</span><span className="g-arrow"><ArrowRight aria-hidden size={15} /></span></a></li>
+                    ))}
+                  </ul>
+                  <a href={c.more[0]} className="g-btn-light mt-5 !min-h-11">{c.more[1]} <ArrowRight size={16} /></a>
                 </div>
               </div>
             ))}
@@ -801,16 +755,18 @@ function HomePage() {
               </div>
               <Link to="/blog" className={more}>All articles <ArrowRight size={16} /></Link>
             </div>
-            <ul className="-mx-4 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-4">
+          </div>
+          <Marquee speed={70}>
               {posts.map((p) => (
-                <li key={p.slug} className="w-[78%] shrink-0 snap-start sm:w-auto">
+                <li key={p.slug} className="w-64 shrink-0 sm:w-80">
                   <a href={`/blog/${p.slug}`} className={card + " group block h-full overflow-hidden"}>
                     {p.image && <img src={p.image} alt={p.imageAlt ?? ""} loading="lazy" width={640} height={360} className="aspect-video w-full object-cover" />}
                     <h3 className="p-4 font-display text-sm font-semibold leading-snug text-slate-900 group-hover:text-[#4643ba]">{p.title}</h3>
                   </a>
                 </li>
               ))}
-            </ul>
+          </Marquee>
+          <div>
           </div>
         </section>
       )}
@@ -837,7 +793,7 @@ function HomePage() {
               <p className="mt-2 text-slate-600">Follow the buyer, the money and the risks. If the honest answer is to walk away, you will hear it here first.</p>
             </div>
             <div className="text-center">
-              <Link to="/browse" className={btn3d}>Explore the library <ArrowRight size={16} /></Link>
+              <Link to="/browse" className={btnHero}>Explore the library <ArrowRight size={16} /></Link>
               <p className="mt-2 flex items-center justify-center gap-1.5 text-xs text-slate-500"><ShieldCheck aria-hidden size={14} className="text-[#4643ba]" /> No sign-up · Nothing to pay</p>
             </div>
           </div>

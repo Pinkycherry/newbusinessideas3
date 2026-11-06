@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ArrowLeft, ArrowRight, ChevronRight, Check, ShieldCheck, ThumbsUp, TriangleAlert } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BadgeIndianRupee, BookOpen, Briefcase, Clock, Compass, GraduationCap, Hammer, MapPin, Quote, Scale, ShieldCheck, Sparkles, TriangleAlert, UserRoundCheck, Users, Wrench } from 'lucide-react';
 import { V2Frame } from './frame';
 import { SellerFaq } from './faq';
 import { ValidateButton } from '@/components/validate-button';
@@ -7,7 +7,6 @@ import { ShortlistToggle } from '@/components/founder-workspace/shortlist-toggle
 import { useFounderWorkspace, type WorkspaceIdea } from '@/lib/founder-workspace';
 import { IDEA_PAGE as copy } from '@/config/idea-page';
 import type { ContentLink } from './content-page';
-import './idea-article.css';
 
 export type IdeaArticleField = { id: string; title: string; text?: string; items?: string[] };
 export type IdeaArticleData = {
@@ -18,71 +17,223 @@ export type IdeaArticleData = {
   prompt?: string; categoryName?: string; published?: string | null;
 };
 
-/** Full source text is preserved, including paragraph and list breaks. */
-function Prose({ text }: { text: string }) {
-  return <div className="seller-idea-prose">{text.split(/\n\s*\n/).filter(Boolean).map((p, i) => <p key={i}>{p}</p>)}</div>;
+/**
+ * Idea page in the glass system (6 Nov 2026). Mobile first: one column under 1024px, a sticky
+ * contents rail beside the article on desktop. Every link is a visible glass control.
+ */
+
+const wrap = 'mx-auto w-full max-w-6xl px-4 sm:px-6';
+/** Database values such as "small_town" or "any" read as plain words. */
+const pretty = (v: string) => {
+  const t = v.replaceAll('_', ' ').trim();
+  if (/^any$/i.test(t)) return 'Anyone';
+  return t.charAt(0).toUpperCase() + t.slice(1);
+};
+
+function Prose({ text, className = '' }: { text: string; className?: string }) {
+  return <div className={'space-y-3 text-[15px] leading-7 text-slate-700 sm:text-base ' + className}>{text.split(/\n\s*\n/).filter(Boolean).map((p, i) => <p key={i}>{p}</p>)}</div>;
 }
-function ArticleSection({ id, title, children }: { id: string; title: string; children: ReactNode }) {
-  return <section id={id} className="seller-idea-section"><h2>{title}</h2>{children}</section>;
+
+const FIELD_ICON: Record<string, { I: typeof BookOpen; c: string }> = {
+  'idea-description': { I: BookOpen, c: '' },
+  'idea-customer': { I: UserRoundCheck, c: 'pink' },
+  'idea-revenue': { I: BadgeIndianRupee, c: 'teal' },
+  'idea-needs': { I: Wrench, c: 'amber' },
+};
+
+function Card({ id, icon, title, children, tone = '' }: { id: string; icon?: ReactNode; title: string; children: ReactNode; tone?: string }) {
+  return (
+    <section id={id} className={'g-tile scroll-mt-28 p-5 sm:p-7 ' + tone} data-stagger>
+      <h2 className="flex items-center gap-3 font-display text-xl font-semibold text-slate-900 sm:text-2xl">{icon}{title}</h2>
+      <div className="mt-4">{children}</div>
+    </section>
+  );
 }
-function Field({ field }: { field: IdeaArticleField }) {
-  if (!field.text && !field.items?.length) return null;
-  return <ArticleSection id={field.id} title={field.title}>{field.text && <Prose text={field.text}/ >}{field.items?.length ? <ul className="seller-idea-bullets">{field.items.map((item, index) => <li key={index}>{item}</li>)}</ul> : null}</ArticleSection>;
-}
-function LinkGroup({ title, links }: { title: string; links: ContentLink[] }) {
-  return <div><h3>{title}</h3><ul>{links.map(link => <li key={link.href}><a href={link.href}>{link.label}<ArrowRight size={15}/></a>{link.note && <p>{link.note}</p>}</li>)}</ul></div>;
+
+function GLink({ href, children }: { href: string; children: ReactNode }) {
+  return <a href={href} className="g-link"><span>{children}</span><span className="g-arrow"><ArrowRight aria-hidden size={15} /></span></a>;
 }
 
 export function IdeaArticle({ data }: { data: IdeaArticleData }) {
   const browseList = data.lists[0]?.href ?? '/lists';
   const { shortlist } = useFounderWorkspace();
   const workspaceIdea: WorkspaceIdea = {
-    slug: data.slug,
-    title: data.title,
-    hook: data.hook,
-    summary: data.summary,
-    description: data.summary,
-    categoryName: data.categoryName,
-    targetCustomer: data.fields.find(field => /buyer|customer|who pays/i.test(field.title))?.text,
-    revenueModel: data.fields.find(field => /revenue|money|pricing/i.test(field.title))?.text,
-    startupCost: data.fields.find(field => /cost|capital|investment/i.test(field.title))?.text,
+    slug: data.slug, title: data.title, hook: data.hook, summary: data.summary, description: data.summary, categoryName: data.categoryName,
+    targetCustomer: data.fields.find(f => /buyer|customer|who pays/i.test(f.title))?.text,
+    revenueModel: data.fields.find(f => /revenue|money|pricing/i.test(f.title))?.text,
+    startupCost: data.fields.find(f => /cost|capital|investment/i.test(f.title))?.text,
     risks: data.risks.join('; ').slice(0, 1200),
     firstSteps: data.steps.slice(0, 8),
   };
+  const fit = (id: string) => data.fit.find(f => f.id === id);
+  const stats = [
+    { id: 'idea-investment', I: BadgeIndianRupee, c: '' },
+    { id: 'idea-time', I: Clock, c: 'blue' },
+    { id: 'idea-skills', I: GraduationCap, c: 'violet' },
+    { id: 'idea-work-mode', I: MapPin, c: 'teal' },
+  ].map(s => ({ ...s, f: fit(s.id) })).filter(s => s.f?.text);
+  const who = [fit('idea-gender-fit')?.text, ...(fit('idea-life-stage')?.items ?? [])].filter((x): x is string => Boolean(x)).map(pretty);
+  const places = (fit('idea-places')?.items ?? []).map(pretty);
+  const jump: string[][] = [
+    ...data.fields.map(f => [f.id, f.title]),
+    ['idea-assessment', 'How to assess it'],
+    ['idea-risks', 'What can hurt'],
+    ...(data.steps.length ? [['idea-first-steps', 'First steps']] : []),
+    ['idea-fit', 'Who this fits'],
+    ['idea-validate', 'Validate it'],
+  ];
+
   return <V2Frame>
-    <div className="seller-idea">
-      <nav className="seller-idea-breadcrumb" aria-label="Breadcrumb">{data.breadcrumbs.map(link => <span key={link.href}><a href={link.href}>{link.label}</a><ChevronRight size={14}/></span>)}<span aria-current="page">{data.title}</span></nav>
-      <article className="seller-idea-body">
-        <header className="seller-idea-header">
-          <div className="seller-idea-badges"><span>{copy.badge}</span>{data.categoryName && <span>{data.categoryName}</span>}</div>
-          <h1>{data.title}</h1>
-          {data.hook && <Prose text={data.hook}/>}
-          <div className="seller-idea-actions"><a className="seller-idea-primary" href="#idea-validate">{copy.validate}<ArrowRight size={17}/></a><a className="seller-idea-secondary" href={browseList}>Browse related ideas</a></div>
-          <div className="mt-4 flex flex-wrap items-center gap-3"><ShortlistToggle idea={workspaceIdea}/><a href={shortlist.length>=2?"/startup-idea-comparison":"/browse"} className="inline-flex min-h-10 items-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-blue-500">{shortlist.length>=2?`Compare saved ideas (${shortlist.length}/4)`:"Find ideas to compare"}</a></div>
-          <div className="seller-idea-source"><ShieldCheck size={18}/><div><a href="/about">bbusiness.online</a>{data.published && <span> · Published {new Date(data.published).toLocaleDateString('en-IN', {day:'numeric',month:'long',year:'numeric'})}</span>}<p>Read the business, buyer, costs and risks before deciding what to test.</p></div></div>
-        </header>
-        <section id="idea-summary" className="seller-idea-summary"><h2>{copy.summary}</h2><Prose text={data.summary}/></section>
-        {data.verdict && <ArticleSection id="idea-verdict" title={copy.verdict}><div className="seller-idea-callout"><Prose text={data.verdict}/></div></ArticleSection>}
-        <nav className="seller-idea-jump-grid" aria-label="Read this idea">{[...data.fields, ...data.fit].filter(field=>field.text||field.items?.length).map(field=><a key={field.id} href={`#${field.id}`}>{field.title}<ArrowRight size={14}/></a>)}</nav>
-        {data.fields.map(field=><Field key={field.id} field={field}/>)}
-        <ArticleSection id="idea-assessment" title={copy.score}><p className="seller-idea-intro">The score is a screening signal for a business model in general, not a verdict on your specific version of it in your market.</p><div className="seller-idea-assessment">{[
-          ['Capital efficiency', '#idea-needs', 'Check startup costs'],
-          ['Speed to first revenue', '#idea-first-customer', 'Find your first customer'],
-          ['Execution difficulty', '#idea-skills', 'Check skills and experience'],
-          ['Margin quality', '#idea-revenue', 'Examine the money model'],
-          ['Time load', '#idea-time', 'Check the work involved'],
-        ].map(([label, target, action])=><div key={label}><h3>{label}</h3><a href={data.fields.some(f=>`#${f.id}`===target)||data.fit.some(f=>`#${f.id}`===target) ? target : label==='Speed to first revenue'?'/first-customer-india':label==='Execution difficulty'?'/business-idea-risk-check':'/business-idea-time-fit'}>{action}<ArrowRight size={15}/></a></div>)}</div></ArticleSection>
-        <section id="idea-opportunities-risks" className="seller-idea-section seller-idea-risk-columns"><div><h2><ThumbsUp size={21}/>{copy.opportunities}</h2>{data.opportunities.length ? <ul className="seller-idea-icon-list">{data.opportunities.map((text,i)=><li key={i}><Check size={18}/><Prose text={text}/></li>)}</ul> : <a href="/business-demand-test-india">Test the demand for your offer <ArrowRight size={15}/></a>}</div><div><h2><TriangleAlert size={21}/>{copy.risks}</h2><ul className="seller-idea-icon-list">{data.risks.map((text,i)=><li key={i}><TriangleAlert size={18}/><Prose text={text}/></li>)}</ul></div></section>
-        {data.steps.length > 0 && <ArticleSection id="idea-first-steps" title={copy.steps}><ol className="seller-idea-steps">{data.steps.map((step,i)=><li key={i}><Prose text={step}/></li>)}</ol><aside className="seller-idea-callout"><h3>Decide your stopping point in advance</h3><a href="/business-idea-pivot-or-stop">Work through the pivot or stop guide <ArrowRight size={16}/></a></aside></ArticleSection>}
-        {data.tools.length > 0 && <Field field={{id:'idea-tools', title:copy.tools, items:data.tools}}/>}
-        <ArticleSection id="idea-fit" title={copy.fit}>{data.fit.map(field=><Field key={field.id} field={field}/>)}</ArticleSection>
-        <section id="idea-validate" className="seller-idea-section seller-idea-validation"><h2>{copy.validate}</h2><ValidateButton slug={data.slug}/><a className="seller-idea-guide" href="/startup-guides">Read a startup guide for your next step <ArrowRight size={16}/></a></section>
-        {data.prompt && <ArticleSection id="idea-research-prompt" title={copy.prompt}><Prose text={data.prompt}/></ArticleSection>}
-        <SellerFaq title={copy.faq} faq={data.faq} id="idea-faq"/>
-        <ArticleSection id="idea-related" title={copy.similar}><div className="seller-idea-related">{(data.related.length ? data.related : data.lists).map(link=><a key={link.href} href={link.href}><h3>{link.label}</h3>{link.note && <p>{link.note}</p>}<span>Read more <ArrowRight size={15}/></span></a>)}</div></ArticleSection>
-        <section id="idea-failure-research" className="seller-idea-section seller-idea-callout"><h2>{copy.failure}</h2>{data.risks.map((risk,i)=><Prose key={i} text={risk}/>)}<a href="/failed-startups/india">Read the startup failure research <ArrowRight size={16}/></a></section>
-        <nav className="seller-idea-backlinks" aria-label="Continue browsing"><a href="/browse"><ArrowLeft size={16}/>All business ideas</a><a href={browseList}>Deeper list for this category<ArrowRight size={16}/></a></nav>
-        <section id="idea-resources" className="seller-idea-section seller-idea-resources"><h2>{copy.onward}</h2><div className="seller-idea-resource-grid"><LinkGroup title="Start from the hub" links={[{label:'All business ideas',href:'/all-business-ideas'},{label:'Business idea lists',href:'/lists'},...data.lists.slice(0,2)]}/><LinkGroup title="Compare your options" links={[{label:'Compare business models',href:'/business-models-india'},{label:'Compare business ideas',href:'/startup-idea-comparison'},{label:'Check unit economics',href:'/unit-economics-india'},{label:'Check startup costs',href:'/startup-costs-india'}]}/><LinkGroup title="Go deeper" links={[{label:'Startup guides',href:'/startup-guides'},{label:'Startup failure research',href:'/failed-startups/india'},{label:'Founder glossary',href:'/founder-glossary'},{label:'Founder tools',href:'/tools'}]}/></div></section>
+    {/* Hero */}
+    <div className="relative overflow-hidden bg-[linear-gradient(180deg,#f1efff_0%,#f7f6ff_55%,#ffffff_100%)] pt-24 pb-8 sm:pt-28">
+      <div aria-hidden className="pointer-events-none absolute -top-24 right-[-10%] h-[420px] w-[420px] rounded-full bg-[#cfc9ff]/45 blur-3xl" />
+      <div className={wrap + ' relative'}>
+        <nav aria-label="Breadcrumb" className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-1 text-xs text-slate-500 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
+          {data.breadcrumbs.map(l => <a key={l.href} href={l.href} className="shrink-0 rounded-full bg-white/80 px-3 py-1.5 ring-1 ring-[#4643ba]/10 hover:text-[#4643ba]">{l.label}</a>)}
+        </nav>
+        <div className="mt-5 flex flex-wrap gap-2">
+          <span className="rounded-full bg-[#4643ba] px-3 py-1 text-[11px] font-semibold text-white">{copy.badge}</span>
+          {data.categoryName && <span className="rounded-full bg-white px-3 py-1 text-[11px] font-semibold text-[#4643ba] ring-1 ring-[#4643ba]/15">{data.categoryName}</span>}
+        </div>
+        <h1 className="mt-4 max-w-4xl font-display text-[2rem] font-bold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl">{data.title}</h1>
+        {data.hook && <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">{data.hook}</p>}
+        <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap">
+          <a className="g-btn g-shine w-full sm:w-auto" href="#idea-validate">{copy.validate}<ArrowRight size={17} /></a>
+          <a className="g-btn-light w-full sm:w-auto" href={browseList}>Browse related ideas</a>
+        </div>
+        <div className="mt-3 grid grid-cols-2 gap-3 sm:flex">
+          <ShortlistToggle idea={workspaceIdea} className="[&>button]:w-full [&>button]:min-h-11" />
+          <a href={shortlist.length >= 2 ? '/startup-idea-comparison' : '/browse'} className="g-btn-light !min-h-11 !px-3 w-full sm:w-auto">{shortlist.length >= 2 ? `Compare (${shortlist.length}/4)` : 'Find ideas to compare'}</a>
+        </div>
+        {stats.length > 0 && (
+          <dl className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {stats.map(({ id, I, c, f }) => (
+              <div key={id} className="g-tile flex items-center gap-3 p-3 sm:p-4">
+                <span className={'g-icon !h-11 !w-11 shrink-0 ' + c}><I aria-hidden size={19} /></span>
+                <div className="min-w-0"><dt className="text-[10px] font-semibold uppercase tracking-wide text-[#4643ba]">{f!.title}</dt><dd className="font-display text-sm font-semibold leading-tight text-slate-900 sm:text-base">{f!.text}</dd></div>
+              </div>
+            ))}
+          </dl>
+        )}
+        <p className="mt-5 flex items-center gap-2 text-xs text-slate-500"><ShieldCheck size={15} className="text-[#4643ba]" /><a href="/about" className="font-semibold text-slate-700 hover:text-[#4643ba]">bbusiness.online</a>{data.published && <span>· Published {new Date(data.published).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</span>}</p>
+      </div>
+    </div>
+
+    <div className={wrap + ' grid gap-8 pb-16 lg:grid-cols-[15rem_1fr]'} data-reveal>
+      {/* Contents: sticky rail on desktop, sliding chips on phones */}
+      <nav aria-label="On this page" className="order-first -mx-4 overflow-x-auto px-4 [scrollbar-width:none] lg:sticky lg:top-28 lg:mx-0 lg:self-start lg:overflow-visible lg:px-0">
+        <p className="hidden text-[11px] font-semibold uppercase tracking-[0.16em] text-[#4643ba] lg:block">On this page</p>
+        <ul className="flex gap-2 lg:mt-3 lg:flex-col">
+          {jump.map(([id = "", t]) => <li key={id} className="shrink-0"><a href={`#${id}`} className="g-chip whitespace-nowrap lg:w-full lg:whitespace-normal">{t}</a></li>)}
+        </ul>
+      </nav>
+
+      <article className="grid min-w-0 gap-5 sm:gap-6">
+        <section id="idea-summary" className="relative overflow-hidden rounded-[22px] bg-gradient-to-br from-[#4643ba] to-[#7b6ff0] p-5 text-white shadow-[0_30px_60px_-35px_rgba(70,67,186,0.9)] sm:p-7" data-stagger>
+          <Quote aria-hidden size={30} className="text-white/50" />
+          <h2 className="mt-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/75">{copy.summary}</h2>
+          <Prose text={data.summary} className="mt-2 !text-white/95 sm:!text-lg" />
+        </section>
+
+        {data.verdict && (
+          <Card id="idea-verdict" title={copy.verdict} icon={<span className="g-icon !h-11 !w-11 violet"><Scale size={19} /></span>} tone="ring-2 ring-[#7b6ff0]/25">
+            <Prose text={data.verdict} />
+          </Card>
+        )}
+
+        {data.fields.map(f => {
+          const ic = FIELD_ICON[f.id] ?? { I: Sparkles, c: '' };
+          return f.text ? <Card key={f.id} id={f.id} title={f.title} icon={<span className={'g-icon !h-11 !w-11 ' + ic.c}><ic.I size={19} /></span>}><Prose text={f.text} /></Card> : null;
+        })}
+
+        <Card id="idea-assessment" title={copy.score} icon={<span className="g-icon !h-11 !w-11 blue"><Compass size={19} /></span>}>
+          <p className="text-sm text-slate-500">A screening signal for the business model in general, not a verdict on your version of it.</p>
+          <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
+            {[
+              ['Capital efficiency', '#idea-needs', 'Check startup costs'],
+              ['Speed to first revenue', '/first-customer-india', 'Find your first customer'],
+              ['Execution difficulty', '/business-idea-risk-check', 'Check skills and risk'],
+              ['Margin quality', '#idea-revenue', 'Examine the money model'],
+              ['Time load', '/business-idea-time-fit', 'Check the work involved'],
+            ].map(([label, href, action]) => <li key={label}><GLink href={href}><span className="block text-[11px] font-semibold uppercase tracking-wide text-[#4643ba]">{label}</span>{action}</GLink></li>)}
+          </ul>
+        </Card>
+
+        <Card id="idea-risks" title={copy.risks} icon={<span className="g-icon !h-11 !w-11 amber"><TriangleAlert size={19} /></span>} tone="!bg-[linear-gradient(160deg,#fffaf2,#fff3e3)]">
+          {data.risks.map((r, i) => <Prose key={i} text={r} />)}
+          <div className="mt-5 grid gap-2.5 sm:grid-cols-2">
+            <GLink href="/business-demand-test-india">Test the demand for your offer</GLink>
+            <GLink href="/failed-startups/india">Read the startup failure research</GLink>
+          </div>
+        </Card>
+
+        {data.steps.length > 0 && (
+          <Card id="idea-first-steps" title={copy.steps} icon={<span className="g-icon !h-11 !w-11 teal"><Hammer size={19} /></span>}>
+            <ol className="relative grid gap-4 before:absolute before:left-[17px] before:top-2 before:bottom-2 before:w-0.5 before:bg-gradient-to-b before:from-[#7b6ff0] before:to-[#c3bbff]">
+              {data.steps.map((step, i) => (
+                <li key={i} className="relative flex gap-4">
+                  <span className="relative z-10 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-b from-[#8079f4] to-[#4643ba] text-sm font-bold text-white shadow-[0_3px_0_#302d91]">{i + 1}</span>
+                  <Prose text={step} className="pt-1" />
+                </li>
+              ))}
+            </ol>
+            <div className="mt-5"><GLink href="/business-idea-pivot-or-stop">Decide your stopping point in advance</GLink></div>
+          </Card>
+        )}
+
+        {data.tools.length > 0 && <Card id="idea-tools" title={copy.tools}><ul className="flex flex-wrap gap-2">{data.tools.map(t => <li key={t} className="g-chip">{t}</li>)}</ul></Card>}
+
+        <Card id="idea-fit" title={copy.fit} icon={<span className="g-icon !h-11 !w-11 pink"><Users size={19} /></span>}>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div>
+              <h3 className="text-[11px] font-semibold uppercase tracking-wide text-[#4643ba]">Who can do this</h3>
+              <ul className="mt-2 flex flex-wrap gap-2">{(who.length ? who : ['Anyone']).map(w => <li key={w} className="g-chip !min-h-9"><Briefcase size={13} className="mr-1.5 text-[#7b6ff0]" />{w}</li>)}</ul>
+            </div>
+            <div>
+              <h3 className="text-[11px] font-semibold uppercase tracking-wide text-[#4643ba]">Where it can work</h3>
+              <ul className="mt-2 flex flex-wrap gap-2">{(places.length ? places : ['Anywhere']).map(p => <li key={p} className="g-chip !min-h-9"><MapPin size={13} className="mr-1.5 text-[#d6337f]" />{p}</li>)}</ul>
+            </div>
+          </div>
+        </Card>
+
+        <section id="idea-validate" className="scroll-mt-28" data-stagger>
+          <h2 className="font-display text-2xl font-semibold text-slate-900 sm:text-3xl">{copy.validate}</h2>
+          <p className="mt-2 text-slate-600">Add your town, budget and time. The checks run in an AI tool you already use, so it costs you nothing.</p>
+          <div className="mt-5"><ValidateButton slug={data.slug} /></div>
+        </section>
+
+        {data.prompt && <Card id="idea-research-prompt" title={copy.prompt}><Prose text={data.prompt} /></Card>}
+
+        <div data-stagger><SellerFaq title={copy.faq} faq={data.faq} id="idea-faq" /></div>
+
+        {(data.related.length || data.lists.length) > 0 && (
+          <section id="idea-related" className="scroll-mt-28" data-stagger>
+            <h2 className="font-display text-2xl font-semibold text-slate-900">{copy.similar}</h2>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              {(data.related.length ? data.related : data.lists).map(l => (
+                <li key={l.href}>
+                  <a href={l.href} className="g-tile group flex h-full flex-col p-4" data-tilt>
+                    <span className="font-display text-base font-semibold text-slate-900 group-hover:text-[#4643ba]">{l.label}</span>
+                    {l.note && <span className="mt-1 line-clamp-2 text-sm text-slate-600">{l.note}</span>}
+                    <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#4643ba]">Read this idea <ArrowRight size={15} /></span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <section id="idea-resources" className="g-tile p-5 sm:p-7" data-stagger>
+          <h2 className="font-display text-xl font-semibold text-slate-900">{copy.onward}</h2>
+          <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+            <GLink href="/browse"><ArrowLeft size={14} className="mr-1 inline" />All business ideas</GLink>
+            <GLink href={browseList}>Deeper list for this category</GLink>
+            <GLink href="/startup-idea-comparison">Compare business ideas</GLink>
+            <GLink href="/startup-costs-india">Check startup costs</GLink>
+            <GLink href="/startup-guides">Startup guides</GLink>
+            <GLink href="/topics">Answers for India</GLink>
+          </div>
+        </section>
       </article>
     </div>
   </V2Frame>;

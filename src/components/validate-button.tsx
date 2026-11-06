@@ -13,7 +13,7 @@ const languages = [
   "English", "Hindi", "Telugu", "Tamil", "Marathi", "Bengali", "Kannada",
   "Malayalam", "Gujarati", "Punjabi", "Odia", "Urdu", "Other Indian language",
 ];
-const fieldClass = "mt-2 block min-h-11 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-3 py-2.5 font-normal text-slate-950 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100";
+const fieldClass = "mt-2 block min-h-12 w-full min-w-0 rounded-xl border border-[#4643ba]/15 bg-white px-3 py-2.5 font-normal text-slate-950 shadow-[inset_0_1px_2px_rgba(70,67,186,0.08)] outline-none transition focus:border-[#4643ba] focus:ring-2 focus:ring-[#4643ba]/15";
 const outputIcons = {
   report: FileText,
   roadmap: Check,
@@ -89,26 +89,26 @@ export function ValidateButton({ slug }: { slug: string }) {
   };
   const imageIntent = outputs.includes("image");
 
-  return <div className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5 md:p-7">
+  return <div className="g-tile p-4 sm:p-6 md:p-7">
     <div className="flex items-center gap-3">
-      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary"><FileText size={21}/></span>
+      <span className="g-icon shrink-0 !h-12 !w-12"><FileText size={21}/></span>
       <div><h3 className="text-xl font-bold">Tailor the validation to your situation</h3><p className="mt-1 text-sm text-muted-foreground">These details go with the idea you picked. They stay only in this browser.</p></div>
     </div>
     <form onSubmit={prepare} className="mt-5 space-y-5">
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block text-sm font-semibold">Your town or market (include state if known)
           <span className="mt-1 block text-xs font-normal text-slate-500">Example: Warangal, Telangana</span>
-          <span className="relative block"><MapPin className="pointer-events-none absolute left-3 top-3 text-slate-400" size={16}/><input className={fieldClass + " pl-9"} maxLength={120} value={location} onChange={event => { setLocation(event.target.value); resetPrepared(); }} onBlur={saveContext} placeholder="Town, city, district or state" /></span>
+          <span className="relative block"><MapPin className="pointer-events-none absolute left-3 top-[1.4rem] text-[#7b6ff0]" size={16}/><input className={fieldClass + " pl-9"} maxLength={120} value={location} onChange={event => { setLocation(event.target.value); resetPrepared(); }} onBlur={saveContext} placeholder="Town, city, district or state" /></span>
         </label>
         <label className="block text-sm font-semibold">Budget available (₹)
           <span className="mt-1 block text-xs font-normal text-slate-500">Use an amount or range.</span>
-          <span className="relative block"><Coins className="pointer-events-none absolute left-3 top-3 text-slate-400" size={16}/><input className={fieldClass + " pl-9"} maxLength={60} value={budgetINR} onChange={event => { setBudgetINR(event.target.value); resetPrepared(); }} onBlur={saveContext} placeholder="₹50,000 or ₹40,000–₹60,000" /></span>
+          <span className="relative block"><Coins className="pointer-events-none absolute left-3 top-[1.4rem] text-[#7b6ff0]" size={16}/><input className={fieldClass + " pl-9"} maxLength={60} value={budgetINR} onChange={event => { setBudgetINR(event.target.value); resetPrepared(); }} onBlur={saveContext} placeholder="₹50,000 or ₹40,000–₹60,000" /></span>
         </label>
         <label className="block text-sm font-semibold">Time you can give each week
-          <span className="relative block"><Clock3 className="pointer-events-none absolute left-3 top-3 text-slate-400" size={16}/><input className={fieldClass + " pl-9"} maxLength={40} value={hoursPerWeek} onChange={event => { setHoursPerWeek(event.target.value); resetPrepared(); }} onBlur={saveContext} placeholder="Weekends, or 8–10 hours" /></span>
+          <span className="relative block"><Clock3 className="pointer-events-none absolute left-3 top-[1.4rem] text-[#7b6ff0]" size={16}/><input className={fieldClass + " pl-9"} maxLength={40} value={hoursPerWeek} onChange={event => { setHoursPerWeek(event.target.value); resetPrepared(); }} onBlur={saveContext} placeholder="Weekends, or 8–10 hours" /></span>
         </label>
         <label className="block text-sm font-semibold">Response language
-          <span className="relative block"><Languages className="pointer-events-none absolute left-3 top-3 text-slate-400" size={16}/><select className={fieldClass + " appearance-none pr-9"} value={language} onChange={event => { setLanguage(event.target.value); resetPrepared(); saveFounderContext({ language: event.target.value }); }}><option value="English">English</option>{languages.filter(item => item !== "English").map(item => <option key={item} value={item}>{item}</option>)}</select><ChevronDown className="pointer-events-none absolute right-3 top-3 text-slate-400" size={16}/></span>
+          <span className="relative block"><Languages className="pointer-events-none absolute left-3 top-[1.4rem] text-[#7b6ff0]" size={16}/><select className={fieldClass + " appearance-none pl-9 pr-9"} value={language} onChange={event => { setLanguage(event.target.value); resetPrepared(); saveFounderContext({ language: event.target.value }); }}><option value="English">English</option>{languages.filter(item => item !== "English").map(item => <option key={item} value={item}>{item}</option>)}</select><ChevronDown className="pointer-events-none absolute right-3 top-[1.4rem] text-[#7b6ff0]" size={16}/></span>
         </label>
         <label className="block text-sm font-semibold">Who might buy first?
           <input className={fieldClass} maxLength={300} value={buyer} onChange={event => { setBuyer(event.target.value); resetPrepared(); }} onBlur={saveContext} placeholder="e.g. nearby tuition centres or PG owners" />
@@ -139,10 +139,10 @@ export function ValidateButton({ slug }: { slug: string }) {
           {VALIDATE_OUTPUTS.map(output => {
             const checked = outputs.includes(output.id);
             const Icon = outputIcons[output.id];
-            return <label key={output.id} className={"flex cursor-pointer items-start gap-3 rounded-xl border p-3 transition " + (checked ? "border-blue-500 bg-blue-50" : "border-slate-200 bg-white hover:border-blue-300")}>
-              <input type="checkbox" checked={checked} onChange={() => toggleOutput(output.id)} className="mt-1 h-4 w-4 accent-blue-700" />
-              <span className="min-w-0 flex-1"><span className="flex items-center gap-2 font-semibold text-slate-900"><Icon size={16} className="text-blue-700"/>{output.label}</span><span className="mt-1 block text-xs font-normal leading-5 text-slate-600">{output.helper}</span></span>
-              {checked && <Check size={15} className="shrink-0 text-blue-700" aria-hidden="true"/>}
+            return <label key={output.id} className={"flex cursor-pointer items-start gap-3 rounded-xl border p-3 transition " + (checked ? "border-[#4643ba]/50 bg-[#f1efff] shadow-[0_3px_0_#d3cefc]" : "border-[#4643ba]/12 bg-white hover:border-[#4643ba]/40")}>
+              <input type="checkbox" checked={checked} onChange={() => toggleOutput(output.id)} className="mt-1 h-4 w-4 accent-[#4643ba]" />
+              <span className="min-w-0 flex-1"><span className="flex items-center gap-2 font-semibold text-slate-900"><Icon size={16} className="text-[#4643ba]"/>{output.label}</span><span className="mt-1 block text-xs font-normal leading-5 text-slate-600">{output.helper}</span></span>
+              {checked && <Check size={15} className="shrink-0 text-[#4643ba]" aria-hidden="true"/>}
             </label>;
           })}
         </div>
@@ -150,7 +150,7 @@ export function ValidateButton({ slug }: { slug: string }) {
 
       {imageIntent && <p className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">For an image request, only ChatGPT and Grok are offered below. The actual image feature can still depend on the chosen service's current session and plan.</p>}
 
-      <button type="submit" disabled={loading} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-5 py-3 font-semibold text-white transition hover:bg-blue-800 disabled:cursor-wait disabled:opacity-60 sm:w-auto">
+      <button type="submit" disabled={loading} className="g-btn g-shine w-full disabled:cursor-wait disabled:opacity-60 sm:w-auto">
         {loading ? "Getting ready…" : "Validate this idea"}
         {!loading && <ArrowRight size={17}/>}
       </button>

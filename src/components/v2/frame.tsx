@@ -4,6 +4,7 @@ import { ArrowRight, BookOpen, Calculator, ChartNoAxesCombined, ChevronDown, Cli
 import { TAXONOMY } from "@/data/taxonomy";
 
 import "./v2.css";
+import { useGlassMotion } from "@/components/home/use-glass-motion";
 import { useFounderWorkspace, removeShortlistIdea, clearShortlist, MAX_SHORTLIST } from "@/lib/founder-workspace";
 
 /**
@@ -471,6 +472,7 @@ function FounderShortlistTray({ shortlist }: { shortlist: ReturnType<typeof useF
 }
 
 export function V2Frame({ active, children, showShortlistTray = true }: { active?: string | undefined; children: ReactNode; showShortlistTray?: boolean }) {
+  useGlassMotion();
   const { shortlist } = useFounderWorkspace();
   const trayVisible = showShortlistTray && shortlist.length > 0;
   return (

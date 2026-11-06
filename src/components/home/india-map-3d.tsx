@@ -54,7 +54,7 @@ export function IndiaMap3D() {
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const W0 = mount.clientWidth, H0 = mount.clientHeight;
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
       renderer.setSize(W0, H0);
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -80,7 +80,7 @@ export function IndiaMap3D() {
       const key = new THREE.DirectionalLight(0xffffff, 0.9);
       key.position.set(-300, -400, 800);
       key.castShadow = true;
-      key.shadow.mapSize.set(2048, 2048);
+      key.shadow.mapSize.set(1024, 1024);
       Object.assign(key.shadow.camera, { left: -420, right: 420, top: 420, bottom: -420, near: 10, far: 2000 });
       scene.add(key);
       const rimPink = new THREE.PointLight(0xff7ab6, 60000, 0, 2);
@@ -117,7 +117,7 @@ export function IndiaMap3D() {
           side: THREE.FrontSide,
           emissive: new THREE.Color(0x7b6ff0), emissiveIntensity: 0,
         });
-        const side = new THREE.MeshPhysicalMaterial({ color: new THREE.Color(shade(Math.min(1, t + 0.25))).multiplyScalar(0.85), roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.1, transmission: 0.25, thickness: 10, ior: 1.4, envMapIntensity: 0.7, side: THREE.DoubleSide });
+        const side = new THREE.MeshPhysicalMaterial({ color: new THREE.Color(shade(Math.min(1, t + 0.25))).multiplyScalar(0.85), roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.1, envMapIntensity: 0.8, side: THREE.DoubleSide });
         const mesh = new THREE.Mesh(geo, [mat, side]);
         mesh.scale.y = -1; // SVG y runs down; a negative scale flips it and three.js keeps faces correct
         mesh.castShadow = true;
@@ -228,16 +228,26 @@ export function IndiaMap3D() {
       const v = new THREE.Vector3();
       let labelTick = 0;
       let hadLabels = false;
+      let lastProg = -1;
+      let settleFrames = 30;
+      const glow = new THREE.Color(0x8f86ff);
       const loop = () => {
         raf = requestAnimationFrame(loop);
         if (!visible) return;
-        const t = clock.getElapsedTime();
+        clock.getElapsedTime();
         // scroll: the map tilts up as the section rises through the screen
         const r = wrap.getBoundingClientRect();
         const prog = Math.max(0, Math.min(1, 1 - (r.top + r.height * 0.5) / (window.innerHeight + r.height * 0.5)));
+        // render only while something moves: keeps scrolling smooth on phones
+        const moving = Math.abs(prog - lastProg) > 0.0005 || Math.abs(yawGoal - yaw) > 1e-4 || Math.abs(pitchGoal - pitch) > 1e-4 ||
+          camera.position.distanceTo(camGoal.pos) > 0.3 || target.distanceTo(camGoal.target) > 0.3 ||
+          entries.some((e) => Math.abs((e === hovered || e.s.id === selectedId ? 1 : 0) - e.lift) > 0.01);
+        if (moving) settleFrames = 6;
+        else if (settleFrames-- <= 0) return;
+        lastProg = prog;
         yaw += (yawGoal - yaw) * 0.08;
         pitch += (pitchGoal - pitch) * 0.08;
-        group.rotation.z = yaw + (reduce || selectedId ? 0 : Math.sin(t * 0.25) * 0.05);
+        group.rotation.z = yaw;
         group.rotation.x = pitch + (reduce ? 0 : (0.5 - prog) * 0.35);
         camera.position.lerp(camGoal.pos, 0.07);
         target.lerp(camGoal.target, 0.07);
@@ -247,12 +257,12 @@ export function IndiaMap3D() {
           e.lift += (goal - e.lift) * 0.15;
           e.mesh.position.z = e.lift * 14;
           e.mat.emissiveIntensity = e.lift * 0.45;
-          e.mat.color.copy(e.base).lerp(new THREE.Color(0x8f86ff), e.lift * 0.35);
+          e.mat.color.copy(e.base).lerp(glow, e.lift * 0.35);
         }
         for (const { c, m } of cityPts) {
           const on = !selectedId || c.stateId === selectedId;
           const e = entries.find((x) => x.s.id === c.stateId);
-          m.position.z = (e ? e.h + e.mesh.position.z : 8) + 4 + (reduce ? 0 : Math.sin(t * 2 + m.position.x) * 1.2);
+          m.position.z = (e ? e.h + e.mesh.position.z : 8) + 4;
           m.scale.setScalar(on ? (selectedId ? 1.5 : 1) : 0.001);
         }
         renderer.render(scene, camera);
