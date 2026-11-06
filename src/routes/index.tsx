@@ -10,6 +10,8 @@ import { STARTUP_GUIDES } from "@/lib/guides-data";
 import { TOPIC_PAGES } from "@/data/topic-pages";
 import { getHomeLive, type HomeIdea } from "@/lib/home-live.functions";
 import { TEAM, contactEmail, ORGANISATION_NAME } from "@/lib/site-config";
+import { GLASS_CSS } from "@/components/home/glass-styles";
+import { IndiaMap3D } from "@/components/home/india-map-3d";
 
 /**
  * Home page for bbusiness.online (6 Nov 2026). Free for every reader in India: no prices, no
@@ -143,16 +145,6 @@ const GLIMPSE: [string, string][] = [
   ["Local Service", "small-town-business-ideas-india-local-market-shop-service-youth.webp"],
 ];
 
-const PAGE_TYPES = [
-  { I: BookOpen, t: "Researched blueprints", d: "Full idea pages: buyer, money, risks, verdict.", to: "/browse", img: HOME_IMG.pageBlueprints },
-  { I: SearchCheck, t: "Validate your idea", d: "Test your own idea free with a tool you already use.", to: "/startup-idea-validation", img: HOME_IMG.pageValidate },
-  { I: Calculator, t: "Free calculators", d: "Break-even, margins, startup cost, payback.", to: "/calculator", img: HOME_IMG.pageCalculators },
-  { I: Compass, t: "Answers for India", d: "Funding, GST, first customers, bank loans.", to: "/topics", img: HOME_IMG.pageTopics },
-  { I: ClipboardCheck, t: "Startup guides", d: "Read before you build, step by step.", to: "/startup-guides", img: HOME_IMG.pageGuides },
-  { I: Layers3, t: "Idea lists", d: "Hand-picked sets for one kind of reader.", to: "/lists", img: HOME_IMG.pageLists },
-  { I: Newspaper, t: "The blog", d: "Long reads on mistakes, pricing and grit.", to: "/blog", img: HOME_IMG.pageBlog },
-  { I: Users, t: "The founders", d: "Who writes this, and why it is free.", to: "/founders", img: HOME_IMG.pageFounders },
-];
 
 /** The story, in order. Every line is already published on /about and /founders. */
 const STORY = [
@@ -171,36 +163,70 @@ const PROCESS = [
 ];
 
 /** Raised, pressable primary button. */
-const btn3d = "inline-flex min-h-12 items-center gap-2 rounded-xl bg-gradient-to-b from-[#625de0] to-[#4643ba] px-6 text-sm font-semibold text-white ring-1 ring-inset ring-white/20 shadow-[0_4px_0_#2e2b8c,0_14px_24px_-10px_rgba(70,67,186,0.75)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_6px_0_#2e2b8c,0_18px_28px_-10px_rgba(70,67,186,0.8)] active:translate-y-[3px] active:shadow-[0_1px_0_#2e2b8c,0_6px_12px_-8px_rgba(70,67,186,0.7)] motion-reduce:transform-none";
-const btn3dLight = "inline-flex min-h-12 items-center gap-2 rounded-xl bg-white px-6 text-sm font-semibold text-[#4643ba] shadow-[0_4px_0_#d6d2ff,0_12px_22px_-12px_rgba(70,67,186,0.6)] ring-1 ring-[#4643ba]/15 transition duration-150 hover:-translate-y-0.5 active:translate-y-[3px] active:shadow-[0_1px_0_#d6d2ff] motion-reduce:transform-none";
+const btn3d = "g-btn";
+const btn3dLight = "g-btn-light";
 
-/** Scroll reveal: content is visible without JS; JS only adds the fade-up as sections enter. */
-const REVEAL_CSS = `
-.rv-on [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
-.rv-on [data-reveal].rv-in{opacity:1;transform:none}
-.rv-on [data-reveal] [data-stagger]{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
-.rv-on [data-reveal].rv-in [data-stagger]{opacity:1;transform:none}
-@keyframes bbi-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@media (min-width:1024px){.bbi-float-lg{animation:bbi-float 6s ease-in-out infinite}}
-@keyframes bbi-dash{to{stroke-dashoffset:0}}
-.rv-on [data-reveal].rv-in .bbi-path{animation:bbi-dash 1.6s ease forwards}
-@media (prefers-reduced-motion:reduce){.rv-on [data-reveal],.rv-on [data-reveal] [data-stagger]{opacity:1!important;transform:none!important;transition:none!important}.bbi-float-lg{animation:none}.bbi-path{stroke-dashoffset:0!important}}
+/** 3D tilt with a moving glare for [data-tilt] cards; 3D rise for [data-stagger] on scroll. */
+const TILT_CSS = `
+[data-tilt]{transform-style:preserve-3d;will-change:transform}
+[data-tilt]::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.75),rgba(255,255,255,0) 42%);opacity:0;transition:opacity .25s;pointer-events:none;mix-blend-mode:soft-light}
+[data-tilt]:hover::after{opacity:1}
+.rv-on [data-reveal] [data-stagger]{transform:perspective(900px) rotateX(22deg) translateY(26px) scale(.97);transform-origin:50% 100%}
+.rv-on [data-reveal].rv-in [data-stagger]{transform:none}
+@media (prefers-reduced-motion:reduce){[data-tilt]{transform:none!important}}
 `;
 
-function useReveal() {
+function useGlassMotion() {
   useEffect(() => {
     const root = document.documentElement;
-    if (!("IntersectionObserver" in window)) return;
-    root.classList.add("rv-on");
-    const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-    els.forEach((el) => el.querySelectorAll<HTMLElement>("[data-stagger]").forEach((c, i) => { c.style.transitionDelay = `${Math.min(i, 8) * 70}ms`; }));
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("rv-in"); io.unobserve(e.target); } });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
-    els.forEach((el) => io.observe(el));
-    return () => { io.disconnect(); root.classList.remove("rv-on"); };
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let io: IntersectionObserver | null = null;
+    if ("IntersectionObserver" in window) {
+      root.classList.add("rv-on");
+      const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+      els.forEach((el) => el.querySelectorAll<HTMLElement>("[data-stagger]").forEach((c, i) => { c.style.transitionDelay = `${Math.min(i, 8) * 80}ms`; }));
+      io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("rv-in"); io?.unobserve(e.target); } });
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.06 });
+      els.forEach((el) => io!.observe(el));
+    }
+    const fine = window.matchMedia("(pointer: fine)").matches;
+    const onMove = (ev: PointerEvent) => {
+      if (reduce || !fine) return;
+      const el = (ev.target as HTMLElement).closest<HTMLElement>("[data-tilt]");
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const px = (ev.clientX - r.left) / r.width, py = (ev.clientY - r.top) / r.height;
+      el.style.transition = "transform .08s linear";
+      el.style.transform = `perspective(900px) rotateX(${(0.5 - py) * 14}deg) rotateY(${(px - 0.5) * 16}deg) translateY(-4px)`;
+      el.style.setProperty("--gx", `${px * 100}%`);
+      el.style.setProperty("--gy", `${py * 100}%`);
+    };
+    const onOut = (ev: PointerEvent) => {
+      const el = (ev.target as HTMLElement).closest<HTMLElement>("[data-tilt]");
+      if (!el || (ev.relatedTarget instanceof Node && el.contains(ev.relatedTarget))) return;
+      el.style.transition = "transform .5s cubic-bezier(.2,.7,.2,1)";
+      el.style.transform = "";
+    };
+    document.addEventListener("pointermove", onMove);
+    document.addEventListener("pointerout", onOut);
+    return () => { io?.disconnect(); root.classList.remove("rv-on"); document.removeEventListener("pointermove", onMove); document.removeEventListener("pointerout", onOut); };
   }, []);
 }
+
+/** The ecosystem hub: every kind of page around one centre, Odoo-style. */
+const HUB = [
+  { I: BookOpen, c: "", t: "Blueprints", d: "4 honest answers per idea", to: "/browse" },
+  { I: SearchCheck, c: "pink", t: "Validate", d: "Check your own idea free", to: "/startup-idea-validation" },
+  { I: Calculator, c: "blue", t: "Calculators", d: "Break-even to payback", to: "/calculator" },
+  { I: Compass, c: "teal", t: "Answers for India", d: "Funding, GST, bank loans", to: "/topics" },
+  { I: ClipboardCheck, c: "amber", t: "Startup guides", d: "Read before you build", to: "/startup-guides" },
+  { I: Layers3, c: "violet", t: "Idea lists", d: "Sets for one kind of reader", to: "/lists" },
+  { I: Newspaper, c: "pink", t: "Blog", d: "Long reads, real mistakes", to: "/blog" },
+  { I: Users, c: "blue", t: "Founders", d: "Who writes this, and why", to: "/founders" },
+];
+
+const GUIDE_PICKS = ["Business Idea Validation Framework", "Zero-Investment Business Models", "Startup Cash Flow Management", "Competitor Analysis Framework", "Minimum Viable Product Development", "Startup Equity Split Guide"];
 
 function Sparkle({ className }: { className?: string }) {
   return (
@@ -212,7 +238,7 @@ function Sparkle({ className }: { className?: string }) {
 
 function HomePage() {
   const { hub, posts, live } = Route.useLoaderData();
-  useReveal();
+  useGlassMotion();
   const featured = live.recent[0];
   const fresh = live.recent.slice(1, 9);
   const categories = hub.categories;
@@ -221,7 +247,7 @@ function HomePage() {
   const glimpse = GLIMPSE.map(([n, img]) => ({ c: categories.find((c) => c.name.replace(/ Business Ideas$/, "") === n), img })).filter((g): g is { c: (typeof categories)[number]; img: string } => Boolean(g.c));
   const tools = READY_CALCULATORS.slice(0, 8);
   const topics = TOPIC_PAGES.slice(0, 6);
-  const guides = STARTUP_GUIDES.slice(0, 6);
+  const guides = GUIDE_PICKS.map((t) => STARTUP_GUIDES.find((g) => g.title.startsWith(t))).filter((g): g is (typeof STARTUP_GUIDES)[number] => Boolean(g));
   const total = hub.total > 0 ? hub.total.toLocaleString("en-IN") : "";
 
   const floats = [
@@ -232,7 +258,7 @@ function HomePage() {
 
   return (
     <V2Frame active="/">
-      <style dangerouslySetInnerHTML={{ __html: REVEAL_CSS }} />
+      <style dangerouslySetInnerHTML={{ __html: GLASS_CSS + TILT_CSS }} />
       <div className="relative overflow-hidden bg-[linear-gradient(180deg,#f1efff_0%,#f7f6ff_45%,#ffffff_100%)]">
         <div aria-hidden className="pointer-events-none absolute -top-24 right-[-10%] h-[520px] w-[520px] rounded-full bg-[#cfc9ff]/50 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute top-64 left-[-12%] h-[380px] w-[380px] rounded-full bg-[#e5e1ff]/70 blur-3xl" />
@@ -358,8 +384,8 @@ function HomePage() {
           <h2 className="max-w-xl font-display text-2xl font-semibold tracking-tight text-slate-900 sm:text-[2rem] sm:leading-tight">Everything you need to decide, before you spend a rupee</h2>
           <ul className="mt-8 grid grid-cols-2 gap-y-8 sm:grid-cols-3 lg:grid-cols-6 lg:divide-x lg:divide-slate-200">
             {ICON_ROW.map(({ I, t, d }) => (
-              <li key={t} className="px-3 text-center">
-                <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-[#efedff] to-[#e0dcff] text-[#4643ba]"><I aria-hidden size={22} /></span>
+              <li key={t} data-stagger className="px-3 text-center">
+                <span className={"g-icon mx-auto " + ["", "pink", "amber", "violet", "blue", "teal"][ICON_ROW.findIndex((r) => r.t === t)]}><I aria-hidden size={22} /></span>
                 <h3 className="mt-3 font-display text-[15px] font-semibold leading-snug text-slate-900">{t}</h3>
                 <p className="mt-1 text-[13px] leading-relaxed text-slate-500">{d}</p>
               </li>
@@ -428,6 +454,18 @@ function HomePage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* 3D India: where women are starting up, state by state */}
+      <section className={"relative overflow-hidden bg-[linear-gradient(180deg,#ffffff,#f3f1ff_40%,#faf9ff)] " + sec} data-reveal id="india-map">
+        <div className={wrap}>
+          <div className="mx-auto max-w-3xl text-center">
+            <p className={eyebrow}>The anatomy of India's startups, 2026</p>
+            <h2 className={h2}>1 lakh women are already building. Your state is on this map.</h2>
+            <p className="mt-3 text-slate-600">Each state rises by the number of startups with at least one woman director or partner, as recognised by the Government of India. Hover or tap any state for its number, then zoom into its cities.</p>
+          </div>
+          <div className="mt-8"><IndiaMap3D /></div>
         </div>
       </section>
 
@@ -546,6 +584,52 @@ function HomePage() {
         </div>
       </section>
 
+      {/* The ecosystem: every kind of page around one hub */}
+      <section className={"relative overflow-hidden bg-[radial-gradient(ellipse_at_center,#efedff_0%,#faf9ff_55%,#ffffff_100%)] " + sec} data-reveal>
+        <div className={wrap}>
+          <div className="text-center">
+            <p className={eyebrow}>The bbusiness.online ecosystem</p>
+            <h2 className={h2}>One free home. Eight ways to make up your mind.</h2>
+          </div>
+          <div className="relative mx-auto mt-10 max-w-5xl lg:h-[640px]">
+            <svg aria-hidden viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 hidden h-full w-full lg:block">
+              <defs>
+                <linearGradient id="hubline" x1="0" x2="1"><stop offset="0" stopColor="#7b6ff0" /><stop offset=".5" stopColor="#ff7ab6" /><stop offset="1" stopColor="#5aa3ff" /></linearGradient>
+              </defs>
+              {HUB.map((_, i) => {
+                const a = -Math.PI / 2 + (i * 2 * Math.PI) / HUB.length;
+                return <line key={i} x1="50" y1="50" x2={50 + 40 * Math.cos(a)} y2={50 + 40 * Math.sin(a)} stroke="url(#hubline)" strokeWidth="0.35" strokeLinecap="round" className="g-flow" vectorEffect="non-scaling-stroke" style={{ strokeWidth: 2 }} />;
+              })}
+            </svg>
+            <div className="relative mx-auto grid h-56 w-56 place-items-center lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2" data-stagger>
+              <span aria-hidden className="absolute inset-[-34px] rounded-full border border-[#7b6ff0]/25 [transform:rotateX(70deg)]" />
+              <span aria-hidden className="absolute inset-[-58px] rounded-full border border-[#ff7ab6]/20 [transform:rotateX(70deg)_rotateY(18deg)]" />
+              <div className="g-hub grid h-full w-full place-items-center text-center">
+                <div>
+                  <p className="font-display text-2xl font-bold tracking-tight"><span className="text-slate-900">bbusiness</span><span className="bg-gradient-to-r from-[#4643ba] to-[#d6337f] bg-clip-text text-transparent">.online</span></p>
+                  <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">Free business research</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">for India</p>
+                </div>
+              </div>
+            </div>
+            <ul className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:mt-0 lg:block">
+              {HUB.map(({ I, c, t, d, to }, i) => {
+                const a = -Math.PI / 2 + (i * 2 * Math.PI) / HUB.length;
+                return (
+                  <li key={t} data-stagger className="lg:absolute lg:w-48 lg:-translate-x-1/2 lg:-translate-y-1/2" style={{ left: `${50 + 40 * Math.cos(a)}%`, top: `${50 + 40 * Math.sin(a)}%` }}>
+                    <a href={to} data-tilt className="g-tile flex h-full flex-col items-center p-4 text-center">
+                      <span className={"g-icon " + c}><I aria-hidden size={24} /></span>
+                      <span className="mt-3 font-display text-[15px] font-semibold text-slate-900">{t}</span>
+                      <span className="mt-0.5 text-xs text-slate-500">{d}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* Category glimpse: eight image cards, the rest on /browse */}
       {glimpse.length > 0 && (
         <section className={sec} data-reveal>
@@ -578,33 +662,6 @@ function HomePage() {
           </div>
         </section>
       )}
-
-      {/* Everything on bbusiness.online: one card per kind of page */}
-      <section className={"bg-[linear-gradient(180deg,#f4f2ff,#faf9ff)] " + sec} data-reveal>
-        <div className={wrap}>
-          <div className="text-center">
-            <p className={eyebrow}>Everything on bbusiness.online</p>
-            <h2 className={h2}>One site. Eight ways to make up your mind.</h2>
-          </div>
-          <ul className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-            {PAGE_TYPES.map(({ I, t, d, to, img }) => (
-              <li key={t} data-stagger>
-                <a href={to} className="group block h-full overflow-hidden rounded-2xl bg-white shadow-[0_14px_30px_-22px_rgba(70,67,186,0.7)] ring-1 ring-[#4643ba]/10 transition duration-300 hover:-translate-y-1 motion-reduce:transform-none">
-                  <div className="relative aspect-video overflow-hidden">
-                    <img src={img} alt="" loading="lazy" width={640} height={360} className="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transform-none" />
-                    <div className="absolute inset-0 bg-[#4643ba]/15 mix-blend-multiply" />
-                  </div>
-                  <div className="relative px-3.5 pb-4 pt-7 sm:px-4">
-                    <span className="absolute -top-6 left-1/2 grid h-12 w-12 -translate-x-1/2 place-items-center rounded-full bg-gradient-to-b from-[#625de0] to-[#4643ba] text-white shadow-[0_4px_0_#2e2b8c] ring-4 ring-white"><I aria-hidden size={19} /></span>
-                    <span className="block text-center font-display text-sm font-semibold text-slate-900 group-hover:text-[#4643ba] sm:text-base">{t}</span>
-                    <span className="mt-1 block text-center text-xs leading-relaxed text-slate-500 sm:text-[13px]">{d}</span>
-                  </div>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
 
       {/* Good first reads */}
       {fresh.length > 4 && (
@@ -685,46 +742,50 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Tools, topic guides and startup guides */}
-      <section data-reveal className={sec}>
-        <div className={wrap + " grid gap-8 lg:grid-cols-3"}>
-          <div>
-            <p className={eyebrow}>Free calculators</p>
-            <h2 className="mt-2 font-display text-xl font-semibold text-slate-900">Make your next move add up.</h2>
-            <ul className="mt-3 grid grid-cols-2 gap-2">
-              {tools.map((t) => (
-                <li key={t.slug}>
-                  <Link to="/calculator/$slug" params={{ slug: t.slug }} className="flex min-h-11 items-center rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 transition hover:border-[#4643ba] hover:text-[#4643ba]">
-                    {t.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <Link to="/calculator" className={more + " mt-3"}>All calculators <ArrowRight size={16} /></Link>
+      {/* Tools and reading: glass infographic cards */}
+      <section className={"relative " + sec} data-reveal>
+        <div className={wrap}>
+          <div className="text-center">
+            <p className={eyebrow}>Free tools and reading</p>
+            <h2 className={h2}>Four steps from a hunch to a decision.</h2>
           </div>
-          <div>
-            <p className={eyebrow}>Answers for India</p>
-            <h2 className="mt-2 font-display text-xl font-semibold text-slate-900">The questions people ask first.</h2>
-            <ul className="mt-3 divide-y divide-slate-100">
-              {topics.map((p) => (
-                <li key={p.slug}>
-                  <a href={`/${p.slug}`} className="block py-1.5 text-sm text-slate-700 hover:text-[#4643ba] hover:underline">{p.seo.title}</a>
-                </li>
-              ))}
-            </ul>
-            <Link to="/topics" className={more + " mt-3"}>All topics <ArrowRight size={16} /></Link>
-          </div>
-          <div>
-            <p className={eyebrow}>Startup guides</p>
-            <h2 className="mt-2 font-display text-xl font-semibold text-slate-900">Read before you build.</h2>
-            <ul className="mt-3 divide-y divide-slate-100">
-              {guides.map((g) => (
-                <li key={g.slug}>
-                  <Link to="/startup-guides/$slug" params={{ slug: g.slug }} className="block py-1.5 text-sm text-slate-700 hover:text-[#4643ba] hover:underline">{g.title}</Link>
-                </li>
-              ))}
-            </ul>
-            <Link to="/startup-guides" className={more + " mt-3"}>All guides <ArrowRight size={16} /></Link>
+          <div className="relative mt-10 grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-2">
+            {[
+              { n: "01", t: "Make the numbers add up", body: (
+                <div className="flex flex-wrap gap-2">
+                  {tools.map((x) => <Link key={x.slug} to="/calculator/$slug" params={{ slug: x.slug }} className="g-chip">{x.title}</Link>)}
+                </div>
+              ), more: ["/calculator", "All calculators"] },
+              { n: "02", t: "Answers for India", body: (
+                <ul className="space-y-1.5">
+                  {topics.map((x) => <li key={x.slug}><a href={`/${x.slug}`} className="text-sm text-slate-700 hover:text-[#4643ba] hover:underline">{x.seo.title}</a></li>)}
+                </ul>
+              ), more: ["/topics", "All answers"] },
+              { n: "04", t: "Check your own idea", body: (
+                <div>
+                  <p className="text-sm leading-relaxed text-slate-600">Press Validate on any blueprint, or bring your own idea. The checks run in an AI tool you already use, so it costs you nothing.</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <a href="/startup-idea-validation" className="g-chip">Validate an idea</a>
+                    <a href="/how-to-validate-a-business-idea-in-india" className="g-chip">How validation works</a>
+                    <a href="/how-to-talk-to-customers-before-starting-a-business-in-india" className="g-chip">Talk to customers first</a>
+                  </div>
+                </div>
+              ), more: ["/startup-idea-validation", "Start validating"] },
+              { n: "03", t: "Read before you build", body: (
+                <ul className="space-y-1.5">
+                  {guides.map((g) => <li key={g.slug}><Link to="/startup-guides/$slug" params={{ slug: g.slug }} className="text-sm text-slate-700 hover:text-[#4643ba] hover:underline">{g.title}</Link></li>)}
+                </ul>
+              ), more: ["/startup-guides", "All guides"] },
+            ].map((c) => (
+              <div key={c.n} data-stagger className={"g-step " + (c.n === "04" ? "md:order-3" : c.n === "03" ? "md:order-4" : "")}>
+                <span className="g-step-tab">{c.n}</span>
+                <div data-tilt className="g-step-card p-5 pl-6 pt-8 sm:p-6 sm:pt-9">
+                  <h3 className="font-display text-xl font-semibold uppercase tracking-wide text-slate-800">{c.t}</h3>
+                  <div className="mt-3">{c.body}</div>
+                  <a href={c.more[0]} className={more + " mt-4"}>{c.more[1]} <ArrowRight size={16} /></a>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
