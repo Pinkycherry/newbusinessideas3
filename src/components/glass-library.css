@@ -280,7 +280,7 @@
 .glass-home .gl-guide-card { overflow:hidden; }
 .glass-home .gl-guide-media { display:block; width:calc(100% + 3.5rem); aspect-ratio:16/9; margin:-1.75rem -1.75rem 1.35rem; overflow:hidden; background:#e8e6f3; }
 .glass-home .gl-guide-media img { display:block; width:100%; height:100%; object-fit:cover; transition:transform .3s ease; }
-.glass-home .gl-guide-media:hover img { transform:scale(1.035); }
+.glass-home .gl-guide-media:hover img { transform:none; }
 .glass-home .gl-blog-grid .gl-feature-article .gl-guide-media { width:calc(100% + 5.2rem); aspect-ratio:21/9; margin:-2.6rem -2.6rem 1.6rem; }
 .glass-home .gl-featured-figure { max-width:950px; margin:1.5rem auto 2rem; overflow:hidden; border:1px solid #fff; border-radius:25px; background:#e9e7f4; }
 .glass-home .gl-featured-figure img { display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; }

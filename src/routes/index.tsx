@@ -579,7 +579,7 @@ function HomePage() {
                 const a = -Math.PI / 2 + (i * 2 * Math.PI) / HUB.length;
                 return (
                   <li key={t} data-stagger className="lg:absolute lg:w-48 lg:-translate-x-1/2 lg:-translate-y-1/2" style={{ left: `${50 + 40 * Math.cos(a)}%`, top: `${50 + 40 * Math.sin(a)}%` }}>
-                    <a href={to} data-tilt className="g-tile flex h-full flex-col items-center p-4 text-center">
+                    <a href={to} className="g-tile flex h-full flex-col items-center p-4 text-center">
                       <span className={"g-icon " + c}><I aria-hidden size={24} /></span>
                       <span className="mt-3 font-display text-[15px] font-semibold text-slate-900">{t}</span>
                       <span className="mt-0.5 text-xs text-slate-500">{d}</span>
@@ -609,7 +609,7 @@ function HomePage() {
                 <li key={c.slug} className="w-64 shrink-0 sm:w-72">
                   <Link to="/category/$categorySlug" params={{ categorySlug: c.slug }} className="group relative block overflow-hidden rounded-2xl bg-white shadow-[0_16px_34px_-22px_rgba(70,67,186,0.7)] ring-1 ring-[#4643ba]/10 transition duration-300 hover:-translate-y-1 hover:shadow-[0_26px_40px_-22px_rgba(70,67,186,0.75)] motion-reduce:transform-none">
                     <div className="relative aspect-[4/3] overflow-hidden">
-                      <img src={"/images/categories/" + img} alt={c.name} loading="lazy" width={640} height={480} className="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transform-none" />
+                      <img src={"/images/categories/" + img} alt={c.name} loading="lazy" width={640} height={480} className="h-full w-full object-cover" />
                       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/45 to-transparent" />
                       <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-[#4643ba] backdrop-blur">{c.subs.reduce((n, x) => n + x.count, 0)} ideas</span>
                     </div>

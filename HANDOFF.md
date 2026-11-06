@@ -2,16 +2,20 @@
 
 Read this first. Update and commit it to main before you stop. Times are IST.
 
-## Current state (7 Nov 2026, ~00:30 IST, Pinky 2)
+## Current state (7 Nov 2026, Pinky 2)
 
 - Live commit: 927eb2a on main (check https://bbusiness.online/version.json).
 - Data: 4,200 ideas, 42 live categories, 420 subcategories. Under Google AdSense review.
-- New glass layout live on: home, idea pages, /topics, /browse, validate form. Other pages still use older layouts.
+- Glass layout on every page: the glass skin in src/components/home/glass.css (section "Site-wide glass skin") restyles older buttons, cards, link rows and tab bars; purchased pages get the same CSS (src/bought/serve.ts, topic-page.ts).
 - Indexing rule (founder): individual idea pages and individual calculator pages are noindex. Everything else in the submitted sitemaps stays indexed. Never noindex a page because of its layout.
 - Sitemaps (submitted by the founder, all Success except india): https://bbusiness.online/sitemap-index.xml with pages (101), categories (504), blog (23). sitemap-india.xml is out of the index while empty.
 - Cloudflare: free Workers plan, rate limit is being hit. Founder moves to the paid plan in 3 to 4 days. Keep live checks to a minimum.
 
 ## Done (newest first)
+
+- 7 Nov — Founder's parts 2 and 3: thin 3D buttons (2.5rem high), tilt and image hover zoom removed everywhere, spacing fix so text lines never touch (heading line-height, gaps between stacked text), glass skin site-wide including the purchased pages (/lists, the 25 topic pages, /case-studies, /failed-startups/india). Content untouched, no indexing change. Check: https://bbusiness.online/category/beauty-business-ideas https://bbusiness.online/how-to-validate-a-business-idea-in-india https://bbusiness.online/calculator/startup-cost
+  - Undo: delete the "Site-wide glass skin" section at the end of glass.css and the bbi-glass style lines in serve.ts and topic-page.ts.
+  - Open question for the founder: https://bbusiness.online/case-studies shows another brand (IdeaProof), dollar figures and "10,000+ founders". It is in sitemap-pages.xml. Not changed; waiting for his answer.
 
 - 7 Nov — sitemap-india.xml (empty) taken out of the sitemap index; Search Console showed "1 error" for it. Commit 927eb2a, cache purged. Index now lists pages, categories, blog. Founder removes the india sitemap entry in Search Console. Add it back when India sets publish. Check: https://bbusiness.online/sitemap-index.xml
 

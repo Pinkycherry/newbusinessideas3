@@ -765,14 +765,14 @@
     transition-delay: 120ms;
   }
   .rh-hub .rh-card--calculators.rh-card--lead:is(:hover, :focus-visible) {
-    transform: perspective(1100px) rotateX(3deg) translateY(-5px);
+    transform: translateY(-2px);
   }
   /* Folios: paper covers hinge open around their left-hand spine. */
   .rh-hub .rh-card--guides {
     transform-origin: left center;
   }
   .rh-hub .rh-card--guides:is(:hover, :focus-visible) {
-    transform: perspective(1200px) rotateY(-9deg) translateY(-7px);
+    transform: translateY(-2px);
     border-color: #ffd4ad;
   }
   .rh-hub .rh-card--guides:is(:hover, :focus-visible) .rh-card-arrow {
@@ -840,7 +840,7 @@
     border-color: #ffe1c8;
   }
   .rh-hub [data-kind="guides"] .rh-action:is(:hover, :focus-visible) {
-    transform: perspective(700px) rotateY(-8deg) translateX(3px);
+    transform: translateY(-2px);
   }
   .rh-hub [data-kind="glossary"] .rh-action:is(:hover, :focus-visible) {
     transform: translateX(5px);

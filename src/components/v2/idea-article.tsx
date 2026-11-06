@@ -212,7 +212,7 @@ export function IdeaArticle({ data }: { data: IdeaArticleData }) {
             <ul className="mt-4 grid gap-3 sm:grid-cols-2">
               {(data.related.length ? data.related : data.lists).map(l => (
                 <li key={l.href}>
-                  <a href={l.href} className="g-tile group flex h-full flex-col p-4" data-tilt>
+                  <a href={l.href} className="g-tile group flex h-full flex-col p-4">
                     <span className="font-display text-base font-semibold text-slate-900 group-hover:text-[#4643ba]">{l.label}</span>
                     {l.note && <span className="mt-1 line-clamp-2 text-sm text-slate-600">{l.note}</span>}
                     <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#4643ba]">Read this idea <ArrowRight size={15} /></span>

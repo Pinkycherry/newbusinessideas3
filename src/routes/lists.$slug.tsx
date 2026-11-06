@@ -63,7 +63,7 @@ function Head({ p, title, words, updated }: { p: ListPage; title: string; words:
       <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">{title}</h1>
       <p className="text-sm md:text-base text-muted-foreground mb-3 max-w-2xl mx-auto">{sentences(p.intro, 1)}</p>
       <div className="flex items-center justify-center mb-3">
-        <a href="/product" className={`${BTN} rounded-lg hover:bg-slate-700 h-11 py-2 gap-2 bg-primary text-primary-foreground shadow-md hover:shadow-lg hover:scale-[1.02] transition-all min-h-[44px] px-5 text-sm font-semibold`}>
+        <a href="/product" className={`${BTN} rounded-lg hover:bg-slate-700 h-11 py-2 gap-2 bg-primary text-primary-foreground shadow-md hover:shadow-lg transition-all min-h-[44px] px-5 text-sm font-semibold`}>
           <Lightbulb className="h-4 w-4" />
           Validate your idea
           <ArrowRight className="h-3.5 w-3.5" />
