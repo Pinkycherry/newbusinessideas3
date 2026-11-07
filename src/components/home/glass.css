@@ -128,7 +128,7 @@ main :is(a,button):is(.gh-button-secondary,.td-secondary,.pt-secondary,.calc-sec
 
 /* 3b. Tab and filter bars from older pages: thin glass pills, the chosen one in brand glass */
 main :is(.fd-filters,.td-chips,.gl-letterbar,.bt-tabs,.vf-decision-tabs,.pt-quick-set,[role="tablist"]) > :is(a,button){
-min-height:2.375rem;padding:.4rem .9rem;border-radius:11px;font-size:.84rem;font-weight:600;line-height:1.25;color:#3b3897;
+display:inline-flex;align-items:center;justify-content:center;text-align:center;min-height:2.375rem;padding:.45rem .9rem .5rem;border-radius:11px;font-size:.84rem;font-weight:600;line-height:1.25;color:#3b3897;
 background:linear-gradient(180deg,#fff,#f3f1ff);border:1px solid rgba(70,67,186,.14);box-shadow:inset 0 1px 0 #fff,0 2px 0 #e2defd,0 6px 12px -10px rgba(70,67,186,.45);transition:transform .15s ease,box-shadow .15s ease}
 main :is(.fd-filters,.td-chips,.gl-letterbar,.bt-tabs,.vf-decision-tabs,.pt-quick-set,[role="tablist"]) > :is(a,button):hover{transform:translateY(-1px);color:#4643ba;border-color:rgba(124,111,240,.4)}
 main :is(.fd-filters,.td-chips,.gl-letterbar,.bt-tabs,.vf-decision-tabs,.pt-quick-set,[role="tablist"]) > :is(a,button):is([aria-pressed="true"],[aria-selected="true"],[aria-current],.active,.is-active){
