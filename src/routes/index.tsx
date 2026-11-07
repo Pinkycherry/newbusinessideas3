@@ -255,11 +255,14 @@ function HomePage() {
                 </a>
               </div>
               <div className="mt-6 flex items-center gap-3">
-                <div className="flex shrink-0 -space-x-2">
+                <ul className="eh-team flex shrink-0 flex-wrap gap-x-3 gap-y-2" aria-label="The people who sign off every blueprint">
                   {TEAM.map((m) => (
-                    <img key={m.name} title={m.name} src={`/icons/letters/letter-${m.name[0]!.toLowerCase()}.webp`} alt={m.name} width={40} height={42} className="eh-letter h-10 w-10 shrink-0 object-contain" />
+                    <li key={m.name} title={m.name} className="flex items-center gap-1.5">
+                      <img src={`/icons/letters/letter-${m.name[0]!.toLowerCase()}.webp`} alt="" width={32} height={33} className="eh-letter h-8 w-8 shrink-0 object-contain" />
+                      <span className="text-xs font-semibold text-white">{m.name.split(" ")[0]}</span>
+                    </li>
                   ))}
-                </div>
+                </ul>
                 <p className="text-sm leading-snug text-slate-600">
                   Researched and signed off by {TEAM.length} named people.<br className="hidden sm:block" /> No sign-up. Nothing to pay.
                 </p>
@@ -376,7 +379,7 @@ function HomePage() {
                 ["Check it for free", "Press Validate on any blueprint. We never charge for it."],
               ].map(([t, d], i) => (
                 <li key={t} className="flex gap-3">
-                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#4643ba] text-xs font-bold text-white">{i + 1}</span>
+                  <img src={`/icons/numbers/number-${i + 1}.webp`} alt="" width={32} height={33} loading="lazy" decoding="async" className="h-8 w-8 shrink-0 object-contain" />
                   <span className="text-sm text-slate-600"><span className="font-semibold text-slate-900">{t}.</span> {d}</span>
                 </li>
               ))}
@@ -440,9 +443,10 @@ function HomePage() {
             </div>
             <Link to="/browse" className={more}>See every category <ArrowRight size={16} /></Link>
           </div>
-          <ul className="-mx-4 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-3">
-            {BUILT_FOR.map((b) => (
-              <li key={b.t} className="w-[78%] shrink-0 snap-start sm:w-auto">
+        </div>
+        <Marquee speed={52}>
+{BUILT_FOR.map((b) => (
+              <li key={b.t} className="w-72 shrink-0 sm:w-80">
                 <a href={b.to} className={card + " group block h-full overflow-hidden"}>
                   <img src={IMG + b.img} alt={b.t + " business ideas"} loading="lazy" width={640} height={360} className="aspect-video w-full object-cover" />
                   <span className="block p-4">
@@ -452,7 +456,8 @@ function HomePage() {
                 </a>
               </li>
             ))}
-          </ul>
+        </Marquee>
+        <div>
         </div>
       </section>
 
@@ -482,11 +487,14 @@ function HomePage() {
                 <Quote aria-hidden size={26} className="text-[#7b6ff0]" />
                 <p className="mt-1 font-display text-lg leading-snug text-slate-900">We tell you who will actually pay you, how the money works, and what will hurt in year one. Then we give it to you straight.</p>
                 <div className="mt-3 flex items-center gap-3">
-                  <div className="flex shrink-0 -space-x-2">
+                  <ul className="flex flex-wrap gap-x-3 gap-y-1.5">
                     {TEAM.map((m) => (
-                      <img key={m.name} title={m.name} src={`/icons/letters/letter-${m.name[0]!.toLowerCase()}.webp`} alt={m.name} width={36} height={38} className="eh-letter h-9 w-9 shrink-0 object-contain" />
+                      <li key={m.name} className="flex items-center gap-1.5">
+                        <img src={`/icons/letters/letter-${m.name[0]!.toLowerCase()}.webp`} alt="" width={28} height={29} className="eh-letter h-7 w-7 shrink-0 object-contain" />
+                        <span className="text-xs font-semibold text-slate-900">{m.name.split(" ")[0]}</span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                   <span className="text-xs text-slate-500">The founders' promise</span>
                 </div>
               </div>
@@ -573,7 +581,7 @@ function HomePage() {
                 const a = -Math.PI / 2 + (i * 2 * Math.PI) / HUB.length;
                 return (
                   <li key={t} data-stagger className="lg:absolute lg:w-48 lg:-translate-x-1/2 lg:-translate-y-1/2" style={{ left: `${50 + 40 * Math.cos(a)}%`, top: `${50 + 40 * Math.sin(a)}%` }}>
-                    <a href={to} className="g-tile flex h-full flex-col items-center p-4 text-center" style={{ "--eb-angle": `${Math.round(90 + (a * 180) / Math.PI)}deg` } as CSSProperties}>
+                    <a href={to} className="eh-orb flex h-full flex-col items-center p-3 text-center" style={{ "--orb-delay": `${i * 0.35}s` } as CSSProperties}>
                       <img src={img} alt="" width={76} height={80} loading="lazy" decoding="async" className="ember-ico h-[4.75rem] w-auto" />
                       <span className="mt-3 font-display text-[15px] font-semibold text-slate-900">{t}</span>
                       <span className="mt-0.5 text-xs text-slate-500">{d}</span>
@@ -665,7 +673,7 @@ function HomePage() {
               {PROCESS.map(({ t, d }, i) => (
                 <li key={t} data-stagger className={"flex flex-col items-center text-center " + (i % 2 === 0 ? "lg:pt-24" : "lg:pt-0")}>
                   <img src={["/icons/home/home-who-pays-you.webp", "/icons/home/home-how-the-money-works.webp", "/icons/home/home-what-hurts-year-one.webp", "/icons/home/home-validate.webp"][i]} alt="" width={72} height={75} loading="lazy" decoding="async" className="h-[4.5rem] w-[4.5rem] object-contain" />
-                  <span className="mt-3 grid h-7 w-7 place-items-center rounded-full bg-[#4643ba] text-xs font-bold text-white">{i + 1}</span>
+                  <img src={`/icons/numbers/number-${i + 1}.webp`} alt={`Step ${i + 1}`} width={36} height={37} loading="lazy" decoding="async" className="mt-3 h-9 w-9 object-contain" />
                   <h3 className="mt-2 font-display text-base font-semibold text-slate-900">{t}</h3>
                   <p className="mt-1 max-w-[15rem] text-sm leading-relaxed text-slate-600">{d}</p>
                 </li>
@@ -718,7 +726,7 @@ function HomePage() {
               ], more: ["/startup-idea-validation", "Start validating"] },
             ].map((c) => (
               <div key={c.n} data-stagger className="g-step">
-                <span className="g-step-tab">{c.n}</span>
+                <img src={`/icons/numbers/number-${Number(c.n)}.webp`} alt={`Step ${Number(c.n)}`} width={64} height={66} loading="lazy" decoding="async" className="g-step-num" />
                 <div className="g-step-card p-5 pl-6 pt-8 sm:p-6 sm:pt-9">
                   <h3 className="font-display text-xl font-semibold uppercase tracking-wide text-slate-800">{c.t}</h3>
                   <ul className="mt-4 grid gap-2.5">

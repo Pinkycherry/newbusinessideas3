@@ -1,6 +1,7 @@
 import menuPanels from "./menu-panels.json";
 import sharedFooterSource from "@/components/v2/v2.css?raw";
 import glassCss from "@/components/home/glass.css?raw";
+import emberCss from "@/components/home/ember.css?raw";
 
 /**
  * Footer rules only (plus the footer logo), taken from the shared v2.css so the
@@ -45,7 +46,8 @@ export function boughtPage(html: string, assetFolder: string): Response {
   const base = `/bought/${assetFolder}`;
   // Glass system (7 Nov 2026): the purchased pages get the same thin 3D buttons, glass cards and spacing.
   const prepared = withNoindex(withSharedFooter(html))
-    .replace("</head>", `<style id="bbi-glass">${glassCss}</style></head>`)
+    .replace("</head>", `<style id="bbi-glass">${glassCss}</style><style id="bbi-ember">${emberCss}</style></head>`)
+    .replace(/<body([^>]*)>/, (m: string, a: string) => (a.includes('class="') ? m.replace('class="', 'class="ember ') : `<body${a} class="ember">`))
     .replace(/(["'(=])\.\/(images|scripts|styles)\//g, `$1${base}/$2/`)
     // The authored homepage uses the site's existing featured images and
     // transparent golden tree under /images/. Other purchased snapshots keep

@@ -47,6 +47,8 @@ export function IndiaMap3D({ ember = false }: { ember?: boolean } = {}) {
     let cleanup = () => {};
 
     const start = async () => {
+      // Founder, 8 Nov 2026: the 3D map vanished on his phone. Phones get the flat map, which always draws.
+      if (window.innerWidth < 640) return;
       const canvasTest = document.createElement("canvas");
       if (!canvasTest.getContext("webgl2") && !canvasTest.getContext("webgl")) return;
       const THREE = await import("three");

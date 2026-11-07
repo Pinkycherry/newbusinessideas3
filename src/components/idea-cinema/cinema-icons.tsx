@@ -124,6 +124,14 @@ const MARKS: Record<CinemaIconName, Mark> = {
   },
 };
 
+const OWN_ICON: Partial<Record<CinemaIconName, string>> = {
+  opportunity: "/icons/ui/ui-opportunity.webp", customer: "/icons/home/home-who-pays-you.webp", revenue: "/icons/home/home-how-the-money-works.webp",
+  edge: "/icons/ui/ui-strengths.webp", cost: "/icons/ui/ui-startup-cost.webp", income: "/icons/ui/ui-income.webp", launch: "/icons/ui/ui-launch.webp",
+  tools: "/icons/ui/ui-tools-needed.webp", timeline: "/icons/ui/ui-timeline.webp", demand: "/icons/ui/ui-roi.webp", risk: "/icons/home/home-what-hurts-year-one.webp",
+  verdict: "/icons/home/home-straight-verdict.webp", strength: "/icons/ui/ui-strengths.webp", calculator: "/icons/home/home-calculators.webp",
+  guide: "/icons/ui/ui-guide.webp", glossary: "/icons/ui/ui-glossary.webp", journal: "/icons/ui/ui-journal.webp",
+};
+
 export function CinemaIcon({
   name,
   className = "",
@@ -133,6 +141,9 @@ export function CinemaIcon({
   className?: string;
   size?: number;
 }) {
+  // Founder, 8 Nov 2026: our own fire-red glass icons everywhere on the idea page (arrows stay line glyphs).
+  const own = OWN_ICON[name];
+  if (own) return <img src={own} alt="" width={Math.round(size * 1.9)} height={Math.round(size * 1.9)} loading="lazy" decoding="async" className={`ci ci-own ${className}`} />;
   const mark = MARKS[name];
   return (
     <svg

@@ -10,7 +10,7 @@
 
 .ember{
   --e-bg:#000;
-  --e-red:#e01b1f;--e-red-hi:#ff3a2a;--e-red-core:#b10802;--e-red-deep:#8b0100;--e-red-dark:#4a0002;--e-poster:#a11c1e;
+  --e-red:#e01b1f;--e-red-hi:#ff4848;--e-red-core:#b10802;--e-red-deep:#8b0100;--e-red-dark:#4a0002;--e-poster:#a11c1e;
   --e-ink:#fff;--e-ink-2:#d8d0d0;--e-mute:#a59c9c;--e-dim:#7a7171;
   --e-line:#2a2525;--e-line-2:#3a3333;
   --e-fill:linear-gradient(160deg,#1f1a1a 0%,#141111 45%,#0c0a0a 100%);
@@ -39,11 +39,11 @@ html:has(.v2.ember),body:has(.v2.ember){background:#000}
 .ember :is([class*="bg-[linear-gradient"],[class*="bg-[radial-gradient"]){background:transparent!important}
 .ember [class*=" bg-[#4643ba]/"],.ember [class^="bg-[#4643ba]/"]{background:rgba(224,27,31,.14)!important;color:#ff6b5e!important}
 .ember [class*="bg-[#cfc9ff]"],.ember [class*="bg-[#e5e1ff]"]{display:none}
-.ember [class~="bg-[#4643ba]"]{background:linear-gradient(180deg,#ff3a2a,#b10802)!important;color:#fff!important}
+.ember [class~="bg-[#4643ba]"]{background:linear-gradient(180deg,#ff4848,#b10802)!important;color:#fff!important}
 .ember :is(.border-slate-200,.border-slate-100,.border-white,.border,[class*="border-[#4643ba]"],[class*="border-white/"]){border-color:var(--e-line)!important}
 .ember :is(.ring-1,.ring-2,.ring-4,[class*="ring-[#4643ba]"],.ring-slate-100,.ring-slate-200,.ring-white,[class*="ring-[#efedff]"]){--tw-ring-color:var(--e-line)!important}
 .ember [class*="shadow-[0_"],.ember :is(.shadow-xl,.shadow-md,.shadow-sm){box-shadow:0 26px 50px -30px rgba(0,0,0,1)!important}
-.ember [class~="from-[#4643ba]"]{--tw-gradient-from:#e6250c!important}
+.ember [class~="from-[#4643ba]"],.ember [class~="from-[#8f86ff]"],.ember [class~="from-[#7b6ff0]"]{--tw-gradient-from:#e01b1f!important}
 .ember [class~="to-[#7b6ff0]"],.ember [class~="to-[#4643ba]"]{--tw-gradient-to:#8b0100!important}
 .ember [class~="from-[#f1efff]"],.ember [class~="from-[#f6f5ff]"]{--tw-gradient-from:#000!important}
 .ember .to-white{--tw-gradient-to:transparent!important}
@@ -63,27 +63,27 @@ html:has(.v2.ember),body:has(.v2.ember){background:#000}
   [data-ember="faq"] [class*="rounded-[2rem]"],
   #india-map .g-tile,
   .eh-hero [class*="rounded-[1.75rem]"],.eh-hero ul > li[class*="rounded-2xl"],.eh-hero [class*="rounded-2xl"][class*="bg-white/90"]){
-  border:1px solid transparent!important;
-  background:var(--eb-fill,var(--e-fill)) padding-box,linear-gradient(var(--eb-angle,135deg),var(--eb-c1,rgba(230,37,12,.95)) 0%,var(--eb-c2,rgba(139,1,0,.45)) 26%,#2a2424 55%,#221d1d 100%) border-box!important;
-  box-shadow:0 30px 60px -36px rgba(0,0,0,1)!important}
+  border:1px solid #2a2323!important;
+  background:radial-gradient(ellipse 85% 75% at var(--eb-at,0% 0%),var(--eb-c1,rgba(177,8,2,.42)) 0%,var(--eb-c2,rgba(139,1,0,.16)) 40%,transparent 72%),var(--eb-fill,var(--e-fill))!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 30px 60px -36px rgba(0,0,0,1)!important}
 
 /* ---------- Buttons: the icons' glossy red ---------- */
 .ember .g-btn,.ember main :is(a,button):is([class*="bg-slate-900"],[class*="bg-\[#4643ba\]"],[class*="bg-violet-6"],[class*="bg-blue-6"],[class*="bg-blue-7"],.gl-idea-action){
   color:#fff!important;border-radius:11px!important;
-  background:linear-gradient(180deg,#ff4a33 0%,#e6250c 38%,#b10802 74%,#7a0000 100%)!important;
-  box-shadow:inset 0 1px 0 rgba(255,200,180,.55),inset 0 -2px 3px rgba(60,0,0,.5),0 2px 0 #4a0002,0 12px 26px -10px rgba(224,27,31,.65)!important}
+  background:linear-gradient(180deg,#e8262b 0%,#c8141a 40%,#9a0a0f 75%,#5c0306 100%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,190,190,.45),inset 0 -2px 3px rgba(60,0,0,.5),0 2px 0 #4a0002,0 12px 26px -10px rgba(224,27,31,.65)!important}
 .ember .g-btn::before{background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,0))}
 .ember .g-btn:hover{filter:brightness(1.08)}
-.ember :is(.g-btn,.g-btn-light,.g-link):focus-visible{outline-color:#ff3a2a}
+.ember :is(.g-btn,.g-btn-light,.g-link):focus-visible{outline-color:#ff4848}
 .ember .g-btn-light,.ember .g-chip,.ember .g-link,
 .ember main :is(a,button):is(.gh-button-secondary,.td-secondary,[class*="inline-flex"][class*="border"]:is([class*="font-semibold"],[class*="min-h"],[class*="px-"]),[class*="rounded-full"][class*="border"][class*="px-4"]):not(.g-btn){
   color:#f1e9e9!important;border-radius:11px;background:linear-gradient(180deg,#1f1a1a,#120f0f)!important;border:1px solid #3a2f2f!important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 8px 18px -12px rgba(0,0,0,1)!important}
 .ember .g-btn-light:hover,.ember .g-chip:hover,.ember .g-link:hover{color:#fff!important;border-color:#e01b1f!important}
 .ember .g-btn-light::after{background:linear-gradient(100deg,transparent,rgba(255,80,60,.14),transparent)}
-.ember .g-link .g-arrow{background:linear-gradient(180deg,#ff4a33,#b10802)!important;box-shadow:0 6px 14px -6px rgba(224,27,31,.8)!important}
-.ember main :is(a,button):is([aria-pressed="true"],[aria-selected="true"]):not(.g-btn){background:linear-gradient(180deg,#ff4a33,#b10802)!important;border-color:transparent!important}
-.ember .g-icon{background:linear-gradient(180deg,#ff4a33,#8b0100)!important;box-shadow:inset 0 2px 0 rgba(255,200,180,.5),0 12px 22px -10px rgba(224,27,31,.7)!important}
+.ember .g-link .g-arrow{background:linear-gradient(180deg,#e8262b,#9a0a0f)!important;box-shadow:0 6px 14px -6px rgba(224,27,31,.8)!important}
+.ember main :is(a,button):is([aria-pressed="true"],[aria-selected="true"]):not(.g-btn){background:linear-gradient(180deg,#e8262b,#9a0a0f)!important;border-color:transparent!important}
+.ember .g-icon{background:linear-gradient(180deg,#e8262b,#7a0509)!important;box-shadow:inset 0 2px 0 rgba(255,200,180,.5),0 12px 22px -10px rgba(224,27,31,.7)!important}
 .ember img[src*="/icons/"]{filter:drop-shadow(0 10px 16px rgba(177,8,2,.35))}
 
 /* ---------- Forms ---------- */
@@ -114,37 +114,37 @@ html:has(.v2.ember),body:has(.v2.ember){background:#000}
 .ember .eh-hero a[href="#how-we-research"]{color:#fff!important}
 .ember .eh-hero a[href="#how-we-research"] span{background:rgba(0,0,0,.35)!important;border-color:rgba(255,255,255,.25)!important}
 .ember .eh-letter{filter:drop-shadow(0 6px 10px rgba(0,0,0,.55))!important}
-.ember .eh-hero [class*="rounded-[1.75rem]"]{--eb-angle:200deg;--eb-c1:rgba(255,120,100,.9)}
+.ember .eh-hero [class*="rounded-[1.75rem]"]{--eb-at:65% 0%;--eb-c1:rgba(224,27,31,.45)}
 .ember .eh-hero [class*="rounded-[1.75rem]"] [class*="rounded-[1.35rem]"]{background:#0e0b0b!important}
-.ember .eh-hero ul > li[class*="rounded-2xl"]:nth-child(1){--eb-angle:270deg}
-.ember .eh-hero ul > li[class*="rounded-2xl"]:nth-child(2){--eb-angle:240deg}
-.ember .eh-hero ul > li[class*="rounded-2xl"]:nth-child(3){--eb-angle:300deg}
-.ember .eh-hero [class*="bg-white/90"]{--eb-angle:0deg;--eb-c1:rgba(230,37,12,.8)}
+.ember .eh-hero ul > li[class*="rounded-2xl"]:nth-child(1){--eb-at:100% 50%}
+.ember .eh-hero ul > li[class*="rounded-2xl"]:nth-child(2){--eb-at:100% 15%}
+.ember .eh-hero ul > li[class*="rounded-2xl"]:nth-child(3){--eb-at:100% 85%}
+.ember .eh-hero [class*="bg-white/90"]{--eb-at:50% 100%;--eb-c1:rgba(177,8,2,.4)}
 
 /* Icon row: no cards, red light lines between items, a horizon under the heading */
 .ember [data-ember="line"] h2{padding-bottom:1rem;background:linear-gradient(90deg,#e01b1f,rgba(139,1,0,.4) 30%,transparent 60%) bottom/100% 1px no-repeat!important}
 .ember [data-ember="line"] ul > li{border-color:transparent!important;border-image:linear-gradient(180deg,transparent,rgba(224,27,31,.65),transparent) 1!important}
 
 /* Inside the library: one big card lit from the top-left */
-.ember [data-ember="inside"] [class*="rounded-3xl"][class*="bg-white"]{--eb-angle:135deg;--eb-fill:var(--e-fill-red)}
+.ember [data-ember="inside"] [class*="rounded-3xl"][class*="bg-white"]{--eb-at:0% 0%;--eb-fill:var(--e-fill-red)}
 .ember [data-ember="inside"]{background:radial-gradient(ellipse 35% 45% at 72% 50%,rgba(177,8,2,.22),transparent 70%)!important}
 .ember [data-ember="inside"] li a{background:#141010!important}
 
 /* Map: dashboard lit from the bottom-left, toward the map */
 .ember #india-map{background:radial-gradient(ellipse 40% 50% at 32% 55%,rgba(177,8,2,.2),transparent 70%)!important}
-.ember #india-map .g-tile{--eb-angle:60deg}
+.ember #india-map .g-tile{--eb-at:8% 92%}
 
 /* Built for: six cards lit from the centre of the grid */
 .ember [data-ember="built"]{background:radial-gradient(ellipse 30% 30% at 50% 62%,rgba(177,8,2,.3),transparent 75%)!important}
-.ember [data-ember="built"] li:nth-child(1) > a{--eb-angle:315deg}
-.ember [data-ember="built"] li:nth-child(2) > a{--eb-angle:0deg;--eb-c1:#ff3a2a}
-.ember [data-ember="built"] li:nth-child(3) > a{--eb-angle:45deg}
-.ember [data-ember="built"] li:nth-child(4) > a{--eb-angle:225deg}
-.ember [data-ember="built"] li:nth-child(5) > a{--eb-angle:180deg;--eb-c1:#ff3a2a}
-.ember [data-ember="built"] li:nth-child(6) > a{--eb-angle:135deg}
+.ember [data-ember="built"] li:nth-child(1) > a{--eb-at:100% 100%}
+.ember [data-ember="built"] li:nth-child(2) > a{--eb-at:50% 100%;--eb-c1:rgba(224,27,31,.5)}
+.ember [data-ember="built"] li:nth-child(3) > a{--eb-at:0% 100%}
+.ember [data-ember="built"] li:nth-child(4) > a{--eb-at:100% 0%}
+.ember [data-ember="built"] li:nth-child(5) > a{--eb-at:50% 0%;--eb-c1:rgba(224,27,31,.5)}
+.ember [data-ember="built"] li:nth-child(6) > a{--eb-at:0% 0%}
 
 /* Story: quote card lit from the left; red timeline; definition with a red rule */
-.ember [data-ember="story"] [class*="-mt-16"]{--eb-angle:90deg;--eb-fill:var(--e-fill-red)}
+.ember [data-ember="story"] [class*="-mt-16"]{--eb-at:0% 50%;--eb-fill:var(--e-fill-red)}
 .ember [data-ember="story"] [class*="overflow-hidden"][class*="rounded-[2rem]"]{box-shadow:0 30px 60px -30px rgba(177,8,2,.55)!important}
 .ember [data-ember="story"] ol > span[aria-hidden]{background:linear-gradient(90deg,transparent,#e01b1f 20%,#8b0100 50%,#e01b1f 80%,transparent)!important;height:1px!important}
 .ember [data-ember="story"] [class~="bg-[#f7f6ff]"]{background:#0e0b0b!important;border:0!important;border-left:3px solid #e01b1f!important;border-radius:4px 16px 16px 4px!important}
@@ -158,51 +158,51 @@ html:has(.v2.ember),body:has(.v2.ember){background:#000}
 .ember [class~="via-[#5a50d6]"] [class*="bg-white"][class*="shadow-xl"]{background:#0b0808!important;color:#e9dede!important}
 
 /* Hub: every tile lit on the side facing the centre (angle set inline per tile) */
-.ember [data-ember="hub"] .g-tile{--eb-c2:rgba(139,1,0,.3)}
+
 .ember .g-hub{background:radial-gradient(circle at 50% 35%,#2a1213 0%,#120c0c 62%,#070505 100%)!important;box-shadow:0 0 0 10px rgba(255,255,255,.015),0 0 0 11px #3a2626,0 0 100px 24px rgba(177,8,2,.35)!important}
-.ember .g-hub::before{background:conic-gradient(from 0deg,#e01b1f,#4a0002,#ff3a2a,#4a0002,#e01b1f)}
+.ember .g-hub::before{background:conic-gradient(from 0deg,#e01b1f,#4a0002,#ff4848,#4a0002,#e01b1f)}
 .ember .g-flow{stroke:#e01b1f}
 .ember #hubline stop{stop-color:#e01b1f}.ember #hubline stop:nth-child(2){stop-color:#8b0100}
 
 /* Library glimpse: image cards, the light walks round the row */
-.ember [data-ember="glimpse"] li:nth-child(4n+1) > a{--eb-angle:0deg}
-.ember [data-ember="glimpse"] li:nth-child(4n+2) > a{--eb-angle:70deg}
-.ember [data-ember="glimpse"] li:nth-child(4n+3) > a{--eb-angle:180deg}
-.ember [data-ember="glimpse"] li:nth-child(4n) > a{--eb-angle:290deg}
+.ember [data-ember="glimpse"] li:nth-child(4n+1) > a{--eb-at:50% 100%}
+.ember [data-ember="glimpse"] li:nth-child(4n+2) > a{--eb-at:0% 80%}
+.ember [data-ember="glimpse"] li:nth-child(4n+3) > a{--eb-at:50% 0%}
+.ember [data-ember="glimpse"] li:nth-child(4n) > a{--eb-at:100% 70%}
 .ember [data-ember="glimpse"] li > a [class*="from-black"]{--tw-gradient-from:rgba(74,0,2,.75)!important}
 .ember [data-ember="glimpse"] li > a span[class*="bg-white/90"]{background:rgba(0,0,0,.65)!important;color:#fff!important}
 
 /* Good first reads: dark-red cards, edge light alternates top and bottom like a wave */
 .ember [data-ember="reads"] li > a{--eb-fill:var(--e-fill-red)}
-.ember [data-ember="reads"] li:nth-child(odd) > a{--eb-angle:180deg}
-.ember [data-ember="reads"] li:nth-child(even) > a{--eb-angle:0deg}
+.ember [data-ember="reads"] li:nth-child(odd) > a{--eb-at:50% 0%}
+.ember [data-ember="reads"] li:nth-child(even) > a{--eb-at:50% 100%}
 
 /* Research: red curve; team cards lit from the centre of the 2x2 grid */
 .ember [data-ember="research"]{background:radial-gradient(ellipse 30% 40% at 70% 78%,rgba(177,8,2,.22),transparent 70%)!important}
 .ember svg [stroke="#b9b2ff"],.ember svg [stroke="#4643ba"],.ember svg [stroke="#7b6ff0"]{stroke:#e01b1f}
-.ember [data-ember="research"] ul > li[class*="rounded-2xl"]:nth-child(1){--eb-angle:315deg}
-.ember [data-ember="research"] ul > li[class*="rounded-2xl"]:nth-child(2){--eb-angle:45deg}
-.ember [data-ember="research"] ul > li[class*="rounded-2xl"]:nth-child(3){--eb-angle:225deg}
-.ember [data-ember="research"] ul > li[class*="rounded-2xl"]:nth-child(4){--eb-angle:135deg}
+.ember [data-ember="research"] ul > li[class*="rounded-2xl"]:nth-child(1){--eb-at:100% 100%}
+.ember [data-ember="research"] ul > li[class*="rounded-2xl"]:nth-child(2){--eb-at:0% 100%}
+.ember [data-ember="research"] ul > li[class*="rounded-2xl"]:nth-child(3){--eb-at:100% 0%}
+.ember [data-ember="research"] ul > li[class*="rounded-2xl"]:nth-child(4){--eb-at:0% 0%}
 
 /* Tools and reading: four step cards lit from the centre; glossy red tabs */
-.ember [data-ember="tools"] .g-step:nth-child(1) .g-step-card{--eb-angle:315deg}
-.ember [data-ember="tools"] .g-step:nth-child(2) .g-step-card{--eb-angle:45deg}
-.ember [data-ember="tools"] .g-step:nth-child(3) .g-step-card{--eb-angle:225deg}
-.ember [data-ember="tools"] .g-step:nth-child(4) .g-step-card{--eb-angle:135deg}
+.ember [data-ember="tools"] .g-step:nth-child(1) .g-step-card{--eb-at:100% 100%}
+.ember [data-ember="tools"] .g-step:nth-child(2) .g-step-card{--eb-at:0% 100%}
+.ember [data-ember="tools"] .g-step:nth-child(3) .g-step-card{--eb-at:100% 0%}
+.ember [data-ember="tools"] .g-step:nth-child(4) .g-step-card{--eb-at:0% 0%}
 .ember [data-ember="tools"]{background:radial-gradient(ellipse 25% 30% at 50% 55%,rgba(177,8,2,.3),transparent 75%)!important}
-.ember .g-step-tab{font-family:"Anton",Impact,sans-serif;font-weight:400;background:linear-gradient(180deg,#ff4a33 0%,#e6250c 38%,#b10802 74%,#7a0000 100%)!important;box-shadow:inset 0 1px 0 rgba(255,200,180,.55),0 14px 28px -12px rgba(224,27,31,.7)!important;width:72px!important;height:60px!important;font-size:1.5rem!important;border-radius:16px!important}
+.ember .g-step-tab{font-family:"Anton",Impact,sans-serif;font-weight:400;background:linear-gradient(180deg,#e8262b 0%,#c8141a 40%,#9a0a0f 75%,#5c0306 100%)!important;box-shadow:inset 0 1px 0 rgba(255,190,190,.45),0 14px 28px -12px rgba(224,27,31,.7)!important;width:72px!important;height:60px!important;font-size:1.5rem!important;border-radius:16px!important}
 .ember .g-step{padding-top:26px;padding-left:26px}
 .ember [data-ember="tools"] h3{font-family:"Archivo Black",system-ui,sans-serif!important;font-weight:400!important;font-size:1.05rem!important;letter-spacing:.06em!important}
 
 /* Blog: light alternates left and right */
-.ember [data-ember="blog"] li:nth-child(odd) > a{--eb-angle:90deg}
-.ember [data-ember="blog"] li:nth-child(even) > a{--eb-angle:270deg}
+.ember [data-ember="blog"] li:nth-child(odd) > a{--eb-at:0% 50%}
+.ember [data-ember="blog"] li:nth-child(even) > a{--eb-at:100% 50%}
 
 /* FAQ: plain rows, the open one gets a red rule; closing card lit from the left */
 .ember [data-ember="faq"] details{background:#0e0b0b!important;border-color:#241e1e!important}
 .ember [data-ember="faq"] details[open]{border-left:3px solid #e01b1f!important}
-.ember [data-ember="faq"] [class*="rounded-[2rem]"]{--eb-angle:90deg;--eb-fill:radial-gradient(ellipse 40% 90% at 0% 50%,rgba(177,8,2,.45),transparent 70%),linear-gradient(160deg,#1f1a1a,#0c0a0a)}
+.ember [data-ember="faq"] [class*="rounded-[2rem]"]{--eb-at:0% 50%;--eb-fill:radial-gradient(ellipse 40% 90% at 0% 50%,rgba(177,8,2,.45),transparent 70%),linear-gradient(160deg,#1f1a1a,#0c0a0a)}
 
 /* ---------- Header ---------- */
 .ember .mm-header .mm-nav{background:rgba(14,10,10,.84);border:1px solid #2e2424;box-shadow:0 16px 36px -18px rgba(0,0,0,1);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
@@ -210,20 +210,20 @@ html:has(.v2.ember),body:has(.v2.ember){background:#000}
 .ember .mm-header .mm-brand span{color:#e01b1f}
 .ember .mm-header .mm-desktop > a,.ember .mm-header .mm-disclosure > button,.ember .mm-header .mm-mobile-toggle,.ember .mm-header .mm-mobile-search{color:#ddd3d3}
 .ember .mm-header .mm-desktop a:hover,.ember .mm-header .mm-disclosure > button:hover{color:#fff;background:#221a1a}
-.ember .mm-header .mm-disclosure > button[aria-expanded=true]{color:#fff;background:linear-gradient(180deg,#e6250c,#8b0100);box-shadow:none}
-.ember .mm-header .mm-report{border-radius:11px;background:linear-gradient(180deg,#ff4a33 0%,#e6250c 38%,#b10802 74%,#7a0000 100%);box-shadow:inset 0 1px 0 rgba(255,200,180,.55),0 10px 22px -10px rgba(224,27,31,.7)}
+.ember .mm-header .mm-disclosure > button[aria-expanded=true]{color:#fff;background:linear-gradient(180deg,#c8141a,#7a0509);box-shadow:none}
+.ember .mm-header .mm-report{border-radius:11px;background:linear-gradient(180deg,#e8262b 0%,#c8141a 40%,#9a0a0f 75%,#5c0306 100%);box-shadow:inset 0 1px 0 rgba(255,190,190,.45),0 10px 22px -10px rgba(224,27,31,.7)}
 .ember .mm-panel{background:#0f0b0b;border-color:#2e2424;color:#ddd3d3;box-shadow:0 30px 70px -20px rgba(0,0,0,1)}
 .ember .mm-panel :is(h4,b,strong){color:#fff}
 .ember .mm-panel :is(p,span,a){color:#cfc5c5}
-.ember .mm-panel a:hover{color:#ff3a2a}
+.ember .mm-panel a:hover{color:#ff4848}
 .ember .mm-panel [class*="mm-hero"],.ember .mm-panel [class*="mm-banner"],.ember .mm-panel [class*="mm-tile"],.ember .mm-panel [class*="mm-pdf"]{background:linear-gradient(160deg,#1f1a1a,#0e0b0b)!important;border-color:#2e2424!important}
-.ember .mm-panel .ic{background:linear-gradient(180deg,#ff4a33,#8b0100)!important;color:#fff}
-.ember .mm-panel .mm-btn{background:linear-gradient(180deg,#ff4a33,#b10802);color:#fff!important;border-color:transparent}
+.ember .mm-panel .ic{background:linear-gradient(180deg,#e8262b,#7a0509)!important;color:#fff}
+.ember .mm-panel .mm-btn{background:linear-gradient(180deg,#e8262b,#9a0a0f);color:#fff!important;border-color:transparent}
 .ember .mm-header .mm-mobile{background:#0f0b0b;border-color:#2e2424}
 .ember .mm-header .mm-mobile :is(summary,.mm-mobile-link){color:#fff}
 .ember .mm-header .mm-mobile details,.ember .mm-header .mm-quick{border-color:#2e2424}
 .ember .mm-header .mm-quick a{background:linear-gradient(180deg,#1f1a1a,#120f0f);border-color:#3a2f2f;color:#f1e9e9}
-.ember .mm-header .mm-quick a:first-child{background:linear-gradient(180deg,#ff4a33,#b10802);color:#fff;border-color:transparent}
+.ember .mm-header .mm-quick a:first-child{background:linear-gradient(180deg,#e8262b,#9a0a0f);color:#fff;border-color:transparent}
 
 /* ---------- Footer ---------- */
 .ember .v2-footer{background:radial-gradient(ellipse 40% 60% at 0% 0%,rgba(139,1,0,.3),transparent 70%),#000;border-top:1px solid #1d1515}
@@ -233,7 +233,7 @@ html:has(.v2.ember),body:has(.v2.ember){background:#000}
 .ember .v2-footer h3{font-family:"Archivo Black",system-ui,sans-serif;font-weight:400;color:#e01b1f}
 .ember .v2-footer .v2-footer-cols a:hover,.ember .v2-footer .v2-footer-bottom a:hover{color:#fff}
 .ember .v2-footer .v2-footer-actions a{border-radius:11px;background:linear-gradient(180deg,#1f1a1a,#120f0f);border-color:#3a2f2f;color:#f1e9e9;box-shadow:none}
-.ember .v2-footer .v2-footer-actions a:first-child{background:linear-gradient(180deg,#ff4a33 0%,#e6250c 38%,#b10802 74%,#7a0000 100%);color:#fff;border-color:transparent;box-shadow:0 10px 22px -10px rgba(224,27,31,.7)}
+.ember .v2-footer .v2-footer-actions a:first-child{background:linear-gradient(180deg,#e8262b 0%,#c8141a 40%,#9a0a0f 75%,#5c0306 100%);color:#fff;border-color:transparent;box-shadow:0 10px 22px -10px rgba(224,27,31,.7)}
 .ember .v2-footer .v2-footer-cats{border:1px solid transparent;background:linear-gradient(160deg,#1a1515,#0b0909) padding-box,linear-gradient(120deg,rgba(224,27,31,.8),#2a2424 35%,#221d1d) border-box;box-shadow:none}
 .ember .v2-footer .v2-footer-cats a{background:#141010;border-color:#332929;color:#cfc5c5}
 .ember .v2-footer .v2-footer-cats a:hover{border-color:#e01b1f;color:#fff}
@@ -243,3 +243,78 @@ html:has(.v2.ember),body:has(.v2.ember){background:#000}
 .ember [class*="bg-blue-50"],.ember [class*="bg-violet-50"]{background:#171313!important}
 .ember [class*="border-blue"],.ember [class*="border-violet"]{border-color:var(--e-line-2)!important}
 .ember main section:is(.bg-slate-50,.bg-white,.bg-card):not([data-ember="research"]){background:transparent!important}
+
+/* ================= Site-wide (8 Nov 2026): every page in the ember palette ================= */
+.ember{--card:#120f0f;--card-foreground:#fff;--popover:#0f0b0b;--popover-foreground:#fff;--muted:#171313;--muted-foreground:#a59c9c;
+  --secondary:#1a1515;--secondary-foreground:#fff;--accent:#221616;--accent-foreground:#fff;--border:#2a2323;--input:#2a2323;--ring:#e01b1f;--primary-foreground:#fff;
+  --destructive:#e01b1f;accent-color:#e01b1f;caret-color:#e01b1f}
+.ember ::selection{background:#8b0100;color:#fff}
+.ember *{-webkit-tap-highlight-color:rgba(224,27,31,.22)}
+.ember :focus-visible{outline-color:#e01b1f!important}
+.ember :is(input,textarea,select):focus{outline-color:#e01b1f!important;border-color:#e01b1f!important}
+.ember :is([class*="focus-within:ring"]:focus-within,[class*="focus:ring"]:focus,[class*="focus-visible:ring"]:focus-visible){--tw-ring-color:rgba(224,27,31,.65)!important}
+.ember [class*="focus-visible:outline-blue"]:focus-visible,.ember [class*="focus:border-blue"]:focus{outline-color:#e01b1f!important;border-color:#e01b1f!important}
+/* Old blue, violet, indigo, sky and purple classes on older pages */
+.ember :is([class*="text-blue-"],[class*="text-violet-"],[class*="text-indigo-"],[class*="text-sky-"],[class*="text-purple-"]){color:#ff4848!important}
+.ember :is([class*="bg-blue-50"],[class*="bg-blue-100"],[class*="bg-violet-50"],[class*="bg-violet-100"],[class*="bg-indigo-50"],[class*="bg-indigo-100"],[class*="bg-sky-50"],[class*="bg-purple-50"]){background:#1a1212!important}
+.ember :is([class*="bg-blue-6"],[class*="bg-blue-7"],[class*="bg-blue-8"],[class*="bg-violet-6"],[class*="bg-violet-7"],[class*="bg-violet-8"],[class*="bg-indigo-6"],[class*="bg-indigo-7"],[class*="bg-purple-6"]){background:linear-gradient(180deg,#e8262b 0%,#c8141a 40%,#9a0a0f 75%,#5c0306 100%)!important;color:#fff!important}
+.ember :is([class*="border-blue-"],[class*="border-violet-"],[class*="border-indigo-"],[class*="ring-blue-"],[class*="ring-violet-"]){border-color:#4a2a2a!important;--tw-ring-color:#4a2a2a!important}
+.ember :is([class*="from-violet"],[class*="from-blue"],[class*="from-indigo"]){--tw-gradient-from:#1a0a0b!important}
+.ember :is([class*="to-violet"],[class*="to-blue"],[class*="to-indigo"]){--tw-gradient-to:#000!important}
+.ember :is([class*="via-violet"],[class*="via-blue"],[class*="via-indigo"]){--tw-gradient-via:#120707!important}
+.ember :is(.bg-primary){background:linear-gradient(180deg,#e8262b,#9a0a0f)!important;color:#fff!important}
+.ember :is(.bg-background){background:#000!important}
+.ember :is(.bg-gray-50,.bg-gray-100,.bg-zinc-50,.bg-neutral-50,.bg-stone-50,.bg-amber-50,.bg-emerald-50,.bg-green-50,.bg-rose-50,.bg-red-50,.bg-orange-50,.bg-yellow-50){background:#171313!important}
+.ember :is(.text-amber-700,.text-amber-800,.text-amber-900,.text-orange-600,.text-orange-700,.text-emerald-700,.text-green-700,.text-emerald-800,.text-rose-700,.text-red-700){color:#ff6b6b!important}
+.ember :is(.ring-amber-200,.ring-emerald-200,.border-amber-200,.border-emerald-200){--tw-ring-color:#4a2a2a!important;border-color:#4a2a2a!important}
+
+/* Generic cards on every page: dark fill, red shade whose corner changes card to card */
+.ember main :is(div,article,li,aside,details):is([class*="rounded-xl"],[class*="rounded-2xl"],[class*="rounded-3xl"]):is([class*="bg-card"],[class*="bg-white"]):is([class*="border"],[class*="shadow"],[class*="ring"]):not([data-ember] *),
+.ember main a:is([class*="rounded-xl"],[class*="rounded-2xl"],[class*="rounded-3xl"]):is([class*="bg-card"],[class*="bg-white"]):is([class*="border"],[class*="shadow"]):not([class*="inline-flex"]):not([data-ember] *),
+.ember main .g-tile:not([data-ember] *),.ember main .premium-card{
+  border:1px solid #2a2323!important;
+  background:radial-gradient(ellipse 85% 75% at var(--eb-at,0% 0%),rgba(177,8,2,.34) 0%,rgba(139,1,0,.12) 40%,transparent 72%),linear-gradient(160deg,#1f1a1a 0%,#141111 45%,#0c0a0a 100%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 26px 50px -32px rgba(0,0,0,1)!important}
+.ember main :is(li,article,div,a):nth-child(3n+2){--eb-at:100% 100%}
+.ember main :is(li,article,div,a):nth-child(3n){--eb-at:100% 0%}
+.ember main :is(li,article,div,a):nth-child(3n+1){--eb-at:0% 0%}
+
+/* Map: bars and labels in red only */
+.ember #india-map [class*="from-[#8f86ff]"]{background:linear-gradient(90deg,#e01b1f,#8b0100)!important}
+.ember #india-map [class*="bg-[#4643ba]/10"]{background:#241818!important}
+.ember #india-map [class*="bg-white/80"],.ember #india-map [class*="bg-white/70"],.ember #india-map [class*="bg-white/85"]{background:rgba(12,8,8,.85)!important;color:#fff!important}
+
+/* Hub: no boxes, each icon floats on a round red glow */
+.ember .eh-orb{position:relative;background:none!important;border:0!important;box-shadow:none!important;transition:transform .3s ease}
+.ember .eh-orb::before{content:"";position:absolute;left:50%;top:2.6rem;width:8.5rem;height:8.5rem;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(224,27,31,.55) 0%,rgba(139,1,0,.28) 38%,transparent 70%);z-index:-1;pointer-events:none}
+.ember .eh-orb img{animation:eh-float 5s ease-in-out infinite;animation-delay:var(--orb-delay,0s)}
+.ember .eh-orb:hover{transform:translateY(-4px)}
+@keyframes eh-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@media (prefers-reduced-motion:reduce){.ember .eh-orb img{animation:none}}
+
+/* Step numbers from our own glass digits */
+.ember .g-step-num{position:absolute;left:0;top:0;z-index:2;width:64px;height:auto;filter:drop-shadow(0 12px 18px rgba(177,8,2,.45))}
+.g-step-num{position:absolute;left:0;top:0;z-index:2;width:64px;height:auto}
+
+/* Hero team names */
+.ember .eh-team li span{color:#fff!important}
+
+/* Idea page: our glass icons replace the line icons */
+.ember .cm-page .cm-head-icon{background:none!important;border:0!important;box-shadow:none!important;width:3.2rem;height:3.2rem;flex-basis:3.2rem}
+.ember .cm-page .cm-head-icon img,.ember .cm-page .ci-own{width:3.2rem;height:auto}
+.ember .cm-page .cm-subhead-icon img{width:2rem;height:auto}
+
+/* Header text never invisible on the dark bar */
+.ember .mm-header .mm-panel :is(.mm-label,.mm-badge){color:#ff6b6b!important;background:#241414!important;border-color:#3a2323!important}
+.ember .mm-header .mm-panel [class*="tone"],.ember .mm-header .mm-panel .mm-hero{color:#fff}
+.ember .mm-header .mm-panel :is(h4,h5){color:#fff!important}
+.ember .mm-header .mm-panel :is(p,li,span){color:#d0c6c6!important}
+.ember .mm-header .mm-panel .ic,.ember .mm-header .mm-mobile .ic{background:linear-gradient(180deg,#e8262b,#7a0509)!important;color:#fff!important;box-shadow:inset 0 1px 0 rgba(255,190,190,.4)!important}
+.ember .mm-header .mm-panel .ic svg,.ember .mm-header .mm-mobile .ic svg{color:#fff!important;stroke:#fff!important}
+.ember .mm-header .mm-mobile-content :is(a,p,span){color:#e2d8d8!important}
+.ember .mm-pill{background:#1a1515!important;border:1px solid #3a2f2f!important;color:#fff!important}
+.ember .mm-pill:hover{border-color:#e01b1f!important}
+/* Link rows (title left, arrow right): dark rows with readable text */
+.ember main a:is([class*="rounded-xl"],[class*="rounded-lg"])[class*="border"][class*="justify-between"]{color:#f1e9e9!important;background:linear-gradient(180deg,#1c1717,#110e0e)!important;border-color:#332929!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)!important}
+.ember main a:is([class*="rounded-xl"],[class*="rounded-lg"])[class*="border"][class*="justify-between"]:hover{border-color:#e01b1f!important;color:#fff!important}
+.ember main a:is([class*="rounded-xl"],[class*="rounded-lg"])[class*="border"][class*="justify-between"] > svg:last-child{color:#ff4848!important}

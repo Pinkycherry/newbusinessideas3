@@ -5,7 +5,8 @@ export function useGlassMotion() {
   useEffect(() => {
     const root = document.documentElement;
     let io: IntersectionObserver | null = null;
-    if ("IntersectionObserver" in window) {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if ("IntersectionObserver" in window && !reduceMotion) {
       root.classList.add("rv-on");
       // Site-wide (7 Nov 2026): every section after the first fades up as it enters, like /calculator.
       document.querySelectorAll<HTMLElement>("main section").forEach((sec, i) => {
@@ -13,9 +14,23 @@ export function useGlassMotion() {
         sec.setAttribute("data-reveal", "");
       });
       const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-      els.forEach((el) => el.querySelectorAll<HTMLElement>("[data-stagger]").forEach((c, i) => { c.style.transitionDelay = `${Math.min(i, 8) * 80}ms`; }));
+      // Founder, 8 Nov 2026: cards inside a section arrive one after another, alternating from the left
+      // and the right, and the whole thing plays again in both scroll directions (down and up).
+      els.forEach((el) => {
+        const kids = el.querySelectorAll<HTMLElement>("[data-stagger]").length ? Array.from(el.querySelectorAll<HTMLElement>("[data-stagger]"))
+          : Array.from(el.querySelectorAll<HTMLElement>(":scope > div > ul:not([data-loop-copy]) > li, :scope > div > div > ul > li, :scope > div > ol > li, :scope > div > div[class*='grid'] > *")).filter((k) => !k.closest(".g-marquee")).slice(0, 24);
+        kids.forEach((c, i) => {
+          c.setAttribute("data-stagger", "");
+          c.style.transitionDelay = `${Math.min(i, 8) * 70}ms`;
+          if (!c.dataset["from"]) c.dataset["from"] = i % 3 === 0 ? "left" : i % 3 === 1 ? "up" : "right";
+        });
+      });
       io = new IntersectionObserver((entries) => {
-        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("rv-in"); io?.unobserve(e.target); } });
+        entries.forEach((e) => {
+          const el = e.target as HTMLElement;
+          if (e.isIntersecting) { el.classList.add("rv-in"); el.classList.remove("rv-above"); }
+          else { el.classList.remove("rv-in"); el.classList.toggle("rv-above", e.boundingClientRect.top < 0); }
+        });
       }, { rootMargin: "0px 0px -8% 0px", threshold: 0 });
       els.forEach((el) => io!.observe(el));
     }
@@ -50,13 +65,18 @@ export function useGlassMotion() {
         row.addEventListener("pointerdown", hold, { passive: true });
         row.addEventListener("touchstart", hold, { passive: true });
         row.addEventListener("wheel", hold, { passive: true });
+        // Founder, 8 Nov 2026: rows drift on their own, right to left and back again, so readers see they scroll.
+        let dir = 1;
+        let pos = row.scrollLeft;
         timers.push(window.setInterval(() => {
-          if (!visible.has(row) || Date.now() - held < 6000 || row.scrollWidth <= row.clientWidth + 24) return;
-          const first = row.firstElementChild as HTMLElement | null;
-          const step = first ? first.getBoundingClientRect().width + (parseFloat(getComputedStyle(row).columnGap) || 12) : row.clientWidth * 0.8;
-          const atEnd = row.scrollLeft + row.clientWidth >= row.scrollWidth - 8;
-          row.scrollTo({ left: atEnd ? 0 : row.scrollLeft + step, behavior: "smooth" });
-        }, 3200));
+          if (!visible.has(row) || Date.now() - held < 4000 || row.scrollWidth <= row.clientWidth + 24) { pos = row.scrollLeft; return; }
+          const max = row.scrollWidth - row.clientWidth;
+          pos += dir * 0.6;
+          if (pos >= max) { pos = max; dir = -1; } else if (pos <= 0) { pos = 0; dir = 1; }
+          row.style.scrollSnapType = "none";
+          row.scrollLeft = pos;
+        }, 16));
+        row.addEventListener("touchend", () => { row.style.scrollSnapType = ""; }, { passive: true });
       });
     };
     wireRows();

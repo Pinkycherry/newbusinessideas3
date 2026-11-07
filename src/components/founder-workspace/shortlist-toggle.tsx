@@ -20,6 +20,7 @@ export function ShortlistToggle({ idea, compact = false, className = "" }: { ide
       {selected ? <Check size={16}/> : <Plus size={16}/>}
       {selected ? "Added to compare" : "Add to compare"}
     </button>
-    {notice && <p role="status" className="mt-2 text-xs leading-5 text-slate-600">{notice}</p>}
+    {/* Founder, 8 Nov 2026: no visible note under the button (it moved the card layout); screen readers still hear it. */}
+    <span role="status" className="sr-only">{notice}</span>
   </div>;
 }

@@ -903,7 +903,7 @@ export function SiteShell({
   const footerCategories = topCategories(allCategories, 5);
   return (
     <div
-      className={`relative flex min-h-screen flex-col text-foreground${
+      className={`ember relative flex min-h-screen flex-col text-foreground${
         tone === "instrument" ? " bbi-instrument" : ""
       }${plain ? " cm-page" : " home-page"}`}
     >

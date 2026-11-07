@@ -165,3 +165,11 @@ main img{-webkit-user-drag:none;user-select:none;-webkit-touch-callout:none}
 /* Subcategory icon tile (7 Nov 2026): a dark ember stage behind the fire-red glass icons hides the cut edges and makes them read at any size. */
 .icon-tile{display:grid;place-items:center;overflow:hidden;border-radius:28px;padding:.75rem;background:radial-gradient(circle at 50% 38%,#3d0d14 0%,#1a0709 62%,#0d0405 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 0 1px rgba(255,80,60,.18),0 18px 40px -18px rgba(200,20,20,.55)}
 .icon-tile img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(255,40,20,.35))}
+
+/* Two-way scroll motion (8 Nov 2026): sections replay when scrolled back into view, from below
+   when scrolling down and from above when scrolling up; cards come in from the left, below or right. */
+.rv-on [data-reveal].rv-above{transform:translateY(-22px)}
+.rv-on [data-reveal] [data-stagger][data-from="left"]{transform:translateX(-34px)}
+.rv-on [data-reveal] [data-stagger][data-from="right"]{transform:translateX(34px)}
+.rv-on [data-reveal] [data-stagger][data-from="up"]{transform:translateY(26px)}
+.rv-on [data-reveal].rv-in [data-stagger]{opacity:1;transform:none}

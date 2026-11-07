@@ -507,7 +507,7 @@ function FounderShortlistTray({ shortlist }: { shortlist: ReturnType<typeof useF
   </aside>;
 }
 
-export function V2Frame({ active, children, showShortlistTray = true, ember = false }: { active?: string | undefined; children: ReactNode; showShortlistTray?: boolean; ember?: boolean }) {
+export function V2Frame({ active, children, showShortlistTray = true, ember = true }: { active?: string | undefined; children: ReactNode; showShortlistTray?: boolean; ember?: boolean }) {
   useGlassMotion();
   const { shortlist } = useFounderWorkspace();
   const trayVisible = showShortlistTray && shortlist.length > 0;
