@@ -15,6 +15,7 @@ import "../motion.css";
 import "../live-palette.css";
 import "../components/idea-cinema/cinema.css";
 import "../components/home/glass.css";
+import "../components/home/ember.css";
 import { PointerChannelProvider, PageTransition } from "../motion";
 import { catalogQuery } from "../lib/catalog";
 import { getPageResources } from "../lib/resources.functions";

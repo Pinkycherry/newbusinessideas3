@@ -14,9 +14,11 @@ const MAX = Math.max(...MAP_STATES.map((s) => s.total));
 const TOTAL = MAP_STATES.reduce((a, s) => a + s.total, 0);
 const T2025 = MAP_STATES.reduce((a, s) => a + s.y2025, 0);
 const fmt = (n: number) => n.toLocaleString("en-IN");
+// Ember theme (black site, 7 Nov 2026 sample): deep maroon -> fire red. Default stays lavender -> indigo.
+let EMBER = false;
 const shade = (t: number) => {
   // lavender -> brand indigo
-  const a = [228, 224, 255], b = [62, 46, 205];
+  const a = EMBER ? [46, 30, 26] : [228, 224, 255], b = EMBER ? [253, 67, 4] : [62, 46, 205];
   const c = a.map((v, i) => Math.round(v + ((b[i] ?? v) - v) * t));
   return `rgb(${c[0]},${c[1]},${c[2]})`;
 };
@@ -26,7 +28,8 @@ const rise = (s: MapState) => Math.sqrt(s.total / MAX);
 type Hover = { s: MapState; x: number; y: number } | null;
 type Label = { name: string; x: number; y: number };
 
-export function IndiaMap3D() {
+export function IndiaMap3D({ ember = false }: { ember?: boolean } = {}) {
+  EMBER = ember;
   const wrapRef = useRef<HTMLDivElement>(null);
   const mountRef = useRef<HTMLDivElement>(null);
   const api = useRef<{ select: (id: string | null) => void; zoom: (f: number) => void } | null>(null);
@@ -71,14 +74,14 @@ export function IndiaMap3D() {
       const target = home.target.clone();
       camera.lookAt(target);
 
-      scene.add(new THREE.HemisphereLight(0xffffff, 0xd9d4ff, 2.2)); // replaces the costly environment map (speed)
+      scene.add(new THREE.HemisphereLight(0xffffff, EMBER ? 0x2a1a14 : 0xd9d4ff, 2.2)); // replaces the costly environment map (speed)
       const key = new THREE.DirectionalLight(0xffffff, 1.6);
       key.position.set(-300, -400, 800);
       scene.add(key);
-      const rimPink = new THREE.PointLight(0xff7ab6, 60000, 0, 2);
+      const rimPink = new THREE.PointLight(EMBER ? 0xfd4304 : 0xff7ab6, 60000, 0, 2);
       rimPink.position.set(380, 300, 260);
       scene.add(rimPink);
-      const rimBlue = new THREE.PointLight(0x5aa3ff, 50000, 0, 2);
+      const rimBlue = new THREE.PointLight(EMBER ? 0xba5105 : 0x5aa3ff, 50000, 0, 2);
       rimBlue.position.set(-420, 260, 220);
       scene.add(rimBlue);
 
@@ -89,7 +92,7 @@ export function IndiaMap3D() {
       const parsed = new SVGLoader().parse(svg);
       type Entry = { s: MapState; mesh: InstanceType<typeof THREE.Mesh>; mat: InstanceType<typeof THREE.MeshStandardMaterial>; h: number; lift: number; base: InstanceType<typeof THREE.Color> };
       const entries: Entry[] = [];
-      const edgeMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.75 });
+      const edgeMat = new THREE.LineBasicMaterial({ color: EMBER ? 0xffb08a : 0xffffff, transparent: true, opacity: EMBER ? 0.45 : 0.75 });
       parsed.paths.forEach((p) => {
         const id = (p.userData as { node: Element }).node.getAttribute("id");
         const s = MAP_STATES.find((x) => x.id === id);
@@ -103,7 +106,7 @@ export function IndiaMap3D() {
         const mat = new THREE.MeshStandardMaterial({
           color: base, roughness: 0.3, metalness: 0.0, envMapIntensity: 0.35,
           side: THREE.FrontSide,
-          emissive: new THREE.Color(0x7b6ff0), emissiveIntensity: 0,
+          emissive: new THREE.Color(EMBER ? 0xfd4304 : 0x7b6ff0), emissiveIntensity: 0,
         });
         const side = new THREE.MeshStandardMaterial({ color: new THREE.Color(shade(Math.min(1, t + 0.25))).multiplyScalar(0.85), roughness: 0.25, envMapIntensity: 0.8, side: THREE.DoubleSide });
         const mesh = new THREE.Mesh(geo, [mat, side]);
@@ -117,7 +120,7 @@ export function IndiaMap3D() {
 
       // glowing city dots sitting on top of their state
       const dotGeo = new THREE.SphereGeometry(2.6, 16, 12);
-      const dotMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xff7ab6, emissiveIntensity: 1.4, roughness: 0.3 });
+      const dotMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: EMBER ? 0xffd2b0 : 0xff7ab6, emissiveIntensity: 1.4, roughness: 0.3 });
       const cityPts = MAP_CITIES.map((c) => {
         const e = entries.find((x) => x.s.id === c.stateId);
         const z = (e ? e.h : 8) + 4;
@@ -216,7 +219,7 @@ export function IndiaMap3D() {
       let hadLabels = false;
       let lastProg = -1;
       let settleFrames = 30;
-      const glow = new THREE.Color(0x8f86ff);
+      const glow = new THREE.Color(EMBER ? 0xff6a35 : 0x8f86ff);
       const loop = () => {
         raf = requestAnimationFrame(loop);
         if (!visible) return;
@@ -311,9 +314,9 @@ export function IndiaMap3D() {
         <div aria-hidden className="pointer-events-none absolute inset-6 rounded-full bg-[radial-gradient(circle,rgba(124,111,240,0.28),transparent_65%)] blur-2xl" />
         <div ref={mountRef} className="relative aspect-[6/6.4] w-full sm:aspect-[6/5.6]">
           {/* Flat map for first paint, search engines and devices without WebGL */}
-          <svg viewBox={`0 0 ${MAP_W} ${MAP_H}`} role="img" aria-label="Map of India: women-led startups recognised by DPIIT in each state" className={"absolute inset-0 h-full w-full transition-opacity duration-700 " + (ready ? "pointer-events-none opacity-0" : "opacity-100")} style={{ filter: "drop-shadow(0 8px 0 #c9c3ff) drop-shadow(0 24px 30px rgba(70,67,186,.25))" }}>
+          <svg viewBox={`0 0 ${MAP_W} ${MAP_H}`} role="img" aria-label="Map of India: women-led startups recognised by DPIIT in each state" className={"absolute inset-0 h-full w-full transition-opacity duration-700 " + (ready ? "pointer-events-none opacity-0" : "opacity-100")} style={{ filter: ember ? "drop-shadow(0 8px 0 #2a1a14) drop-shadow(0 24px 30px rgba(253,67,4,.3))" : "drop-shadow(0 8px 0 #c9c3ff) drop-shadow(0 24px 30px rgba(70,67,186,.25))" }}>
             {MAP_STATES.map((s) => (
-              <path key={s.id} d={s.d} fill={shade(level(s))} stroke="#fff" strokeWidth={0.8}>
+              <path key={s.id} d={s.d} fill={shade(level(s))} stroke={ember ? "#ffb08a" : "#fff"} strokeWidth={0.8}>
                 <title>{`${s.name}: ${fmt(s.total)} women-led startups recognised (since 2017)`}</title>
               </path>
             ))}

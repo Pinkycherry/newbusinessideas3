@@ -507,12 +507,12 @@ function FounderShortlistTray({ shortlist }: { shortlist: ReturnType<typeof useF
   </aside>;
 }
 
-export function V2Frame({ active, children, showShortlistTray = true }: { active?: string | undefined; children: ReactNode; showShortlistTray?: boolean }) {
+export function V2Frame({ active, children, showShortlistTray = true, ember = false }: { active?: string | undefined; children: ReactNode; showShortlistTray?: boolean; ember?: boolean }) {
   useGlassMotion();
   const { shortlist } = useFounderWorkspace();
   const trayVisible = showShortlistTray && shortlist.length > 0;
   return (
-    <div className="v2 min-h-screen flex flex-col bg-background">
+    <div className={"v2 min-h-screen flex flex-col bg-background" + (ember ? " ember" : "")}>
       <Header active={active} />
       <main className={"flex-grow " + (trayVisible ? "pb-56 sm:pb-40" : "")}>{children}</main>
       <Footer />

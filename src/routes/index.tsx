@@ -42,8 +42,8 @@ export const Route = createFileRoute("/")({
 });
 
 const wrap = "mx-auto w-full max-w-6xl px-4 sm:px-6";
-const eyebrow = "text-xs font-semibold uppercase tracking-[0.16em] text-[#4643ba]";
-const h2 = "mt-2 font-display text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl";
+const eyebrow = "eh-eyebrow text-xs font-semibold uppercase tracking-[0.16em] text-[#4643ba]";
+const h2 = "eh-h2 mt-2 font-display text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl";
 
 
 const IMG = "/images/categories/";
@@ -97,19 +97,19 @@ const sec = "py-10 sm:py-14";
 const more = "inline-flex items-center gap-1 text-sm font-semibold text-[#4643ba] hover:underline";
 
 const ICON_ROW = [
-  { I: UserRoundCheck, t: "Who pays you", d: "A named buyer in a real Indian town, not a vague market." },
-  { I: BadgeIndianRupee, t: "How the money works", d: "How a rupee comes in, how often, and what it costs." },
-  { I: TriangleAlert, t: "What hurts in year one", d: "The risks people find too late, written down first." },
-  { I: Scale, t: "A straight verdict", d: "Build it, or walk away. We say which." },
-  { I: SearchCheck, t: "Validate for free", d: "Test any idea with an AI tool you already use." },
-  { I: Calculator, t: "Free calculators", d: "Break-even, margins and startup cost in minutes." },
+  { img: "/icons/home/home-who-pays-you.webp", I: UserRoundCheck, t: "Who pays you", d: "A named buyer in a real Indian town, not a vague market." },
+  { img: "/icons/home/home-how-the-money-works.webp", I: BadgeIndianRupee, t: "How the money works", d: "How a rupee comes in, how often, and what it costs." },
+  { img: "/icons/home/home-what-hurts-year-one.webp", I: TriangleAlert, t: "What hurts in year one", d: "The risks people find too late, written down first." },
+  { img: "/icons/home/home-straight-verdict.webp", I: Scale, t: "A straight verdict", d: "Build it, or walk away. We say which." },
+  { img: "/icons/home/home-validate-free.webp", I: SearchCheck, t: "Validate for free", d: "Test any idea with an AI tool you already use." },
+  { img: "/icons/home/home-free-calculators.webp", I: Calculator, t: "Free calculators", d: "Break-even, margins and startup cost in minutes." },
 ];
 
 const INSIDE = [
-  { I: Search, t: "Search by any word", d: "Tiffin, tuition, tailoring" },
-  { I: Layers3, t: "Sorted by category", d: "Easy to browse and compare" },
-  { I: BookOpenCheck, t: "Same checks on every idea", d: "Buyer, money, risk, verdict" },
-  { I: Smartphone, t: "Made for your phone", d: "Light pages, no app needed" },
+  { ic: "/icons/home/home-validate-free.webp", t: "Search by any word", d: "Tiffin, tuition, tailoring" },
+  { ic: "/icons/ui/ui-category.webp", t: "Sorted by category", d: "Easy to browse and compare" },
+  { ic: "/icons/ui/ui-compare.webp", t: "Same checks on every idea", d: "Buyer, money, risk, verdict" },
+  { ic: "/icons/ui/ui-launch.webp", t: "Made for your phone", d: "Light pages, no app needed" },
 ];
 
 const STRIP = ["Home Kitchen Food", "Tuition and Coaching", "Tailoring and Boutique", "Beauty", "Reselling", "Street Food"];
@@ -147,10 +147,10 @@ const GLIMPSE: [string, string][] = [
 
 /** The story, in order. Every line is already published on /about and /founders. */
 const STORY = [
-  { I: Wallet, t: "Paid three platforms", d: "Our founder paid three validation platforms to check four business ideas." },
-  { I: FileSearch, t: "Got templated answers", d: "The same generic shape every time. One had no refund policy, another offered half back." },
-  { I: MessagesSquare, t: "Asked our communities", d: "Two WhatsApp communities of side hustlers and job holders told the same story." },
-  { I: HeartHandshake, t: "Built it free instead", d: "Four engineers from Madurai built the honest library they needed back then." },
+  { ic: "/icons/ui/ui-startup-cost.webp", t: "Paid three platforms", d: "Our founder paid three validation platforms to check four business ideas." },
+  { ic: "/icons/ui/ui-sources.webp", t: "Got templated answers", d: "The same generic shape every time. One had no refund policy, another offered half back." },
+  { ic: "/icons/ui/ui-language.webp", t: "Asked our communities", d: "Two WhatsApp communities of side hustlers and job holders told the same story." },
+  { ic: "/icons/ui/ui-about.webp", t: "Built it free instead", d: "Four engineers from Madurai built the honest library they needed back then." },
 ];
 
 /** How a blueprint is made: the curved infographic. */
@@ -168,14 +168,14 @@ const btn3dLight = "g-btn-light";
 
 /** The ecosystem hub: every kind of page around one centre, Odoo-style. */
 const HUB = [
-  { I: BookOpen, c: "", t: "Blueprints", d: "4 honest answers per idea", to: "/browse" },
-  { I: SearchCheck, c: "pink", t: "Validate", d: "Check your own idea free", to: "/startup-idea-validation" },
-  { I: Calculator, c: "blue", t: "Calculators", d: "Break-even to payback", to: "/calculator" },
-  { I: Compass, c: "teal", t: "Answers for India", d: "Funding, GST, bank loans", to: "/topics" },
-  { I: ClipboardCheck, c: "amber", t: "Startup guides", d: "Read before you build", to: "/startup-guides" },
-  { I: Layers3, c: "violet", t: "Idea lists", d: "Sets for one kind of reader", to: "/lists" },
-  { I: Newspaper, c: "pink", t: "Blog", d: "Long reads, real mistakes", to: "/blog" },
-  { I: Users, c: "blue", t: "Founders", d: "Who writes this, and why", to: "/founders" },
+  { I: BookOpen, c: "", img: "/icons/home/home-blueprints.webp", t: "Blueprints", d: "4 honest answers per idea", to: "/browse" },
+  { I: SearchCheck, c: "pink", img: "/icons/home/home-validate.webp", t: "Validate", d: "Check your own idea free", to: "/startup-idea-validation" },
+  { I: Calculator, c: "blue", img: "/icons/home/home-calculators.webp", t: "Calculators", d: "Break-even to payback", to: "/calculator" },
+  { I: Compass, c: "teal", img: "/icons/home/home-answers-for-india.webp", t: "Answers for India", d: "Funding, GST, bank loans", to: "/topics" },
+  { I: ClipboardCheck, c: "amber", img: "/icons/home/home-startup-guides.webp", t: "Startup guides", d: "Read before you build", to: "/startup-guides" },
+  { I: Layers3, c: "violet", img: "/icons/home/home-idea-lists.webp", t: "Idea lists", d: "Sets for one kind of reader", to: "/lists" },
+  { I: Newspaper, c: "pink", img: "/icons/home/home-blog.webp", t: "Blog", d: "Long reads, real mistakes", to: "/blog" },
+  { I: Users, c: "blue", img: "/icons/home/home-founders.webp", t: "Founders", d: "Who writes this, and why", to: "/founders" },
 ];
 
 const GUIDE_PICKS = ["Business Idea Validation Framework", "Zero-Investment Business Models", "Startup Cash Flow Management", "Competitor Analysis Framework", "Minimum Viable Product Development", "Startup Equity Split Guide"];
@@ -214,27 +214,28 @@ function HomePage() {
   const total = hub.total > 0 ? hub.total.toLocaleString("en-IN") : "";
 
   const floats = [
-    total ? { I: BookOpenCheck, n: total, l: "Researched blueprints" } : null,
-    categories.length ? { I: Layers3, n: String(categories.length), l: "Categories" } : null,
-    { I: Calculator, n: String(READY_CALCULATORS.length), l: "Free calculators" },
-  ].filter(Boolean) as { I: typeof Search; n: string; l: string }[];
+    total ? { ic: "/icons/home/home-blueprints.webp", n: total, l: "Researched blueprints" } : null,
+    categories.length ? { ic: "/icons/ui/ui-category.webp", n: String(categories.length), l: "Categories" } : null,
+    { ic: "/icons/home/home-calculators.webp", n: String(READY_CALCULATORS.length), l: "Free calculators" },
+  ].filter(Boolean) as { ic: string; n: string; l: string }[];
 
   return (
-    <V2Frame active="/">
+    <V2Frame active="/" ember>
       <div className="relative overflow-hidden bg-[linear-gradient(180deg,#f1efff_0%,#f7f6ff_45%,#ffffff_100%)]">
         <div aria-hidden className="pointer-events-none absolute -top-24 right-[-10%] h-[520px] w-[520px] rounded-full bg-[#cfc9ff]/50 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute top-64 left-[-12%] h-[380px] w-[380px] rounded-full bg-[#e5e1ff]/70 blur-3xl" />
 
-        {/* Hero */}
-        <section className="relative pt-24 pb-8 sm:pt-28 lg:pb-12">
+        {/* Hero: poster stage (ember theme draws the red stage, light beam and grain) */}
+        <section className="eh-hero relative pt-24 pb-8 sm:pt-28 lg:pb-12">
+          <div aria-hidden className="eh-stage" />
           <div className={wrap + " grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] [&>*]:min-w-0"}>
             <div>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-[#4643ba]/25 bg-white/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#4643ba]">
                 <Sparkles aria-hidden size={13} /> Free for every reader in India
               </span>
-              <h1 className="mt-4 font-display text-[2.3rem] font-bold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.6rem]">
-                Tired of paying just to check if{" "}
-                <span className="bg-gradient-to-r from-[#4643ba] to-[#7b6ff0] bg-clip-text text-transparent">your idea will work?</span>
+              <h1 className="eh-title mt-4 font-display text-[2.3rem] font-bold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.6rem]">
+                <span className="eh-kicker">Tired of paying just to check if</span>{" "}
+                <span className="eh-giant">your idea will work?</span>
               </h1>
               <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
                 We built a free home for real business ideas: side hustles, zero investment ideas, work from home ideas and low investment ideas. Every idea is researched, not guessed.
@@ -254,11 +255,9 @@ function HomePage() {
                 </a>
               </div>
               <div className="mt-6 flex items-center gap-3">
-                <div className="flex -space-x-2">
+                <div className="flex shrink-0 -space-x-2">
                   {TEAM.map((m) => (
-                    <span key={m.name} title={m.name} className="grid h-9 w-9 place-items-center rounded-full border-2 border-white bg-gradient-to-br from-[#e0dcff] to-[#c3bbff] text-xs font-bold text-[#4643ba]">
-                      {m.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
-                    </span>
+                    <img key={m.name} title={m.name} src={`/icons/letters/letter-${m.name[0]!.toLowerCase()}.webp`} alt={m.name} width={40} height={42} className="eh-letter h-10 w-10 shrink-0 object-contain" />
                   ))}
                 </div>
                 <p className="text-sm leading-snug text-slate-600">
@@ -269,7 +268,7 @@ function HomePage() {
 
             {/* Product preview: a real blueprint, with live library numbers floating around it */}
             <div className="relative mx-auto w-full max-w-lg lg:max-w-none lg:pl-6">
-              <div aria-hidden className="absolute -inset-y-6 right-6 left-24 hidden overflow-hidden rounded-[2.25rem] lg:block">
+              <div aria-hidden className="eh-hide absolute -inset-y-6 right-6 left-24 hidden overflow-hidden rounded-[2.25rem] lg:block">
                 <img src={HOME_IMG.hero} alt="" width={1280} height={720} className="h-full w-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#f1efff] via-[#e9e6ff]/75 to-[#4643ba]/35" />
               </div>
@@ -290,13 +289,13 @@ function HomePage() {
                     {featured.category_name && <p className="text-xs text-slate-500">{featured.category_name}</p>}
                     <dl className="mt-4 space-y-2.5">
                       {([
-                        [UserRoundCheck, "Who pays you", featured.target_customer],
-                        [BadgeIndianRupee, "How the money works", featured.how_you_make_money],
-                        [TriangleAlert, "What hurts in year one", firstLine(featured.cons_json)],
-                        [Scale, "The verdict", featured.verdict],
-                      ] as const).map(([I, k, v]) => v ? (
+                        ["who-pays-you", "Who pays you", featured.target_customer],
+                        ["how-the-money-works", "How the money works", featured.how_you_make_money],
+                        ["what-hurts-year-one", "What hurts in year one", firstLine(featured.cons_json)],
+                        ["straight-verdict", "The verdict", featured.verdict],
+                      ] as const).map(([ic, k, v]) => v ? (
                         <div key={k} className="flex gap-3 rounded-xl bg-white p-2.5 ring-1 ring-slate-100">
-                          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#4643ba]/10 text-[#4643ba]"><I aria-hidden size={16} /></span>
+                          <img src={`/icons/home/home-${ic}.webp`} alt="" width={36} height={38} loading="lazy" decoding="async" className="h-9 w-9 shrink-0 object-contain" />
                           <div className="min-w-0">
                             <dt className="text-[11px] font-semibold uppercase tracking-wide text-[#4643ba]">{k}</dt>
                             <dd className="line-clamp-2 text-[13px] leading-relaxed text-slate-600">{v}</dd>
@@ -309,9 +308,9 @@ function HomePage() {
                 </a>
               )}
               <ul className="mt-4 grid grid-cols-3 gap-2 lg:absolute lg:right-0 lg:top-12 lg:mt-0 lg:flex lg:w-36 lg:flex-col lg:gap-3">
-                {floats.map(({ I, n, l }) => (
+                {floats.map(({ ic, n, l }) => (
                   <li key={l} className="rounded-2xl bg-white p-3 shadow-[0_16px_30px_-18px_rgba(70,67,186,0.6)] ring-1 ring-[#4643ba]/10 bbi-float-lg lg:p-4" style={{ animationDelay: `${floats.findIndex((f) => f.l === l) * 0.8}s` }}>
-                    <span className="grid h-8 w-8 place-items-center rounded-full bg-[#4643ba]/10 text-[#4643ba]"><I aria-hidden size={15} /></span>
+                    <img src={ic} alt="" width={40} height={42} loading="lazy" decoding="async" className="h-10 w-10 object-contain" />
                     <span className="mt-2 block font-display text-lg font-bold leading-none text-slate-900 lg:text-2xl">{n}</span>
                     <span className="mt-1 block text-[11px] leading-tight text-slate-500 lg:text-xs">{l}</span>
                   </li>
@@ -341,13 +340,13 @@ function HomePage() {
       </div>
 
       {/* What every blueprint gives you */}
-      <section data-reveal className={sec}>
+      <section data-reveal data-ember="line" className={sec}>
         <div className={wrap}>
-          <h2 className="max-w-xl font-display text-2xl font-semibold tracking-tight text-slate-900 sm:text-[2rem] sm:leading-tight">Everything you need to decide, before you spend a rupee</h2>
+          <h2 className="eh-h2 max-w-xl font-display text-2xl font-semibold tracking-tight text-slate-900 sm:text-[2rem] sm:leading-tight">Everything you need to decide, before you spend a rupee</h2>
           <ul className="mt-8 grid grid-cols-2 gap-y-8 sm:grid-cols-3 lg:grid-cols-6 lg:divide-x lg:divide-slate-200">
-            {ICON_ROW.map(({ I, t, d }) => (
+            {ICON_ROW.map(({ img, t, d }) => (
               <li key={t} data-stagger className="px-3 text-center">
-                <span className={"g-icon mx-auto " + ["", "pink", "amber", "violet", "blue", "teal"][ICON_ROW.findIndex((r) => r.t === t)]}><I aria-hidden size={22} /></span>
+                <img src={img} alt="" width={88} height={92} loading="lazy" decoding="async" className="ember-ico mx-auto h-[5.5rem] w-auto" />
                 <h3 className="mt-3 font-display text-[15px] font-semibold leading-snug text-slate-900">{t}</h3>
                 <p className="mt-1 text-[13px] leading-relaxed text-slate-500">{d}</p>
               </li>
@@ -357,15 +356,15 @@ function HomePage() {
       </section>
 
       {/* Inside the library: a working mini browser of the real library */}
-      <section data-reveal className={"bg-[linear-gradient(180deg,#f4f2ff,#faf9ff)] " + sec}>
+      <section data-reveal data-ember="inside" className={"bg-[linear-gradient(180deg,#f4f2ff,#faf9ff)] " + sec}>
         <div className={wrap + " grid grid-cols-1 items-center gap-8 lg:grid-cols-[0.8fr_1.2fr] [&>*]:min-w-0"}>
           <div>
-            <h2 className="font-display text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Inside the library</h2>
+            <h2 className="eh-h2 font-display text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Inside the library</h2>
             <p className="mt-1 text-slate-600">One library. Every idea checked the same way.</p>
             <ul className="mt-6 grid grid-cols-2 gap-4">
-              {INSIDE.map(({ I, t, d }) => (
+              {INSIDE.map(({ ic, t, d }) => (
                 <li key={t} className="flex gap-3">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-[#4643ba] shadow-sm ring-1 ring-[#4643ba]/10"><I aria-hidden size={17} /></span>
+                  <img src={ic} alt="" width={48} height={50} loading="lazy" decoding="async" className="h-12 w-12 shrink-0 object-contain" />
                   <span><span className="block text-sm font-semibold text-slate-900">{t}</span><span className="block text-xs text-slate-500">{d}</span></span>
                 </li>
               ))}
@@ -427,12 +426,12 @@ function HomePage() {
             <h2 className={h2}>1 lakh women are already building. Your state is on this map.</h2>
             <p className="mt-3 text-slate-600">Each state rises by the number of startups with at least one woman director or partner, as recognised by the Government of India. Hover or tap any state for its number, then zoom into its cities.</p>
           </div>
-          <div className="mt-8"><IndiaMap3D /></div>
+          <div className="mt-8"><IndiaMap3D ember /></div>
         </div>
       </section>
 
       {/* Start where you are */}
-      <section data-reveal className={sec}>
+      <section data-reveal data-ember="built" className={sec}>
         <div className={wrap}>
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
@@ -458,7 +457,7 @@ function HomePage() {
       </section>
 
       {/* Why we started: the brand story as a timeline, plus a plain definition of the site */}
-      <section className={sec} data-reveal id="why-we-started">
+      <section className={sec} data-reveal data-ember="story" id="why-we-started">
         <div className={wrap}>
           <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[1fr_1fr] [&>*]:min-w-0">
             <div>
@@ -483,11 +482,9 @@ function HomePage() {
                 <Quote aria-hidden size={26} className="text-[#7b6ff0]" />
                 <p className="mt-1 font-display text-lg leading-snug text-slate-900">We tell you who will actually pay you, how the money works, and what will hurt in year one. Then we give it to you straight.</p>
                 <div className="mt-3 flex items-center gap-3">
-                  <div className="flex -space-x-2">
+                  <div className="flex shrink-0 -space-x-2">
                     {TEAM.map((m) => (
-                      <span key={m.name} title={m.name} className="grid h-8 w-8 place-items-center rounded-full border-2 border-white bg-gradient-to-br from-[#e0dcff] to-[#c3bbff] text-[10px] font-bold text-[#4643ba]">
-                        {m.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
-                      </span>
+                      <img key={m.name} title={m.name} src={`/icons/letters/letter-${m.name[0]!.toLowerCase()}.webp`} alt={m.name} width={36} height={38} className="eh-letter h-9 w-9 shrink-0 object-contain" />
                     ))}
                   </div>
                   <span className="text-xs text-slate-500">The founders' promise</span>
@@ -498,12 +495,9 @@ function HomePage() {
 
           <ol className="relative mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
             <span aria-hidden className="absolute left-[12.5%] right-[12.5%] top-7 hidden h-0.5 bg-gradient-to-r from-[#c3bbff] via-[#7b6ff0] to-[#c3bbff] lg:block" />
-            {STORY.map(({ I, t, d }, i) => (
+            {STORY.map(({ ic, t, d }) => (
               <li key={t} data-stagger className="relative text-center">
-                <span className="relative mx-auto grid h-14 w-14 place-items-center rounded-full bg-white text-[#4643ba] shadow-[0_10px_24px_-12px_rgba(70,67,186,0.8)] ring-4 ring-[#efedff]">
-                  <I aria-hidden size={22} />
-                  <span className="absolute -right-1 -top-1 grid h-6 w-6 place-items-center rounded-full bg-[#4643ba] text-[11px] font-bold text-white">{i + 1}</span>
-                </span>
+                <img src={ic} alt="" width={64} height={67} loading="lazy" decoding="async" className="eh-story-ico relative mx-auto h-16 w-16 object-contain" />
                 <h3 className="mt-3 font-display text-base font-semibold text-slate-900">{t}</h3>
                 <p className="mx-auto mt-1 max-w-[16rem] text-sm leading-relaxed text-slate-600">{d}</p>
               </li>
@@ -520,14 +514,14 @@ function HomePage() {
       </section>
 
       {/* Why it stays free: the brand band */}
-      <section data-reveal className="pb-10 sm:pb-14">
+      <section data-reveal data-ember="band" className="pb-10 sm:pb-14">
         <div className={wrap}>
           <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#4643ba] via-[#5a50d6] to-[#8a7ff5] px-6 py-10 text-white sm:px-10 lg:py-12">
             <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-white/10 blur-2xl" />
             <div className="relative grid grid-cols-1 items-center gap-8 lg:grid-cols-2 [&>*]:min-w-0">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/75">Why it stays free</p>
-                <h2 className="mt-2 font-display text-2xl font-semibold leading-tight sm:text-[2rem]">Checking an idea should not cost the money you were going to start it with.</h2>
+                <h2 className="eh-h2 mt-2 font-display text-2xl font-semibold leading-tight sm:text-[2rem]">Checking an idea should not cost the money you were going to start it with.</h2>
                 <p className="mt-3 max-w-lg text-white/85">No sign-up, no card, no account. Read every blueprint, validate as many ideas as you like, and come back in a year: it is all still here.</p>
                 <Link to="/browse" className={btn3dLight + " mt-6"}>Explore the library <ArrowRight size={16} /></Link>
               </div>
@@ -547,7 +541,7 @@ function HomePage() {
       </section>
 
       {/* The ecosystem: every kind of page around one hub */}
-      <section className={"relative overflow-hidden bg-[radial-gradient(ellipse_at_center,#efedff_0%,#faf9ff_55%,#ffffff_100%)] " + sec} data-reveal>
+      <section className={"relative overflow-hidden bg-[radial-gradient(ellipse_at_center,#efedff_0%,#faf9ff_55%,#ffffff_100%)] " + sec} data-reveal data-ember="hub">
         <div className={wrap}>
           <div className="text-center">
             <p className={eyebrow}>The bbusiness.online ecosystem</p>
@@ -575,12 +569,12 @@ function HomePage() {
               </div>
             </div>
             <ul className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:mt-0 lg:block">
-              {HUB.map(({ I, c, t, d, to }, i) => {
+              {HUB.map(({ img, t, d, to }, i) => {
                 const a = -Math.PI / 2 + (i * 2 * Math.PI) / HUB.length;
                 return (
                   <li key={t} data-stagger className="lg:absolute lg:w-48 lg:-translate-x-1/2 lg:-translate-y-1/2" style={{ left: `${50 + 40 * Math.cos(a)}%`, top: `${50 + 40 * Math.sin(a)}%` }}>
-                    <a href={to} className="g-tile flex h-full flex-col items-center p-4 text-center">
-                      <span className={"g-icon " + c}><I aria-hidden size={24} /></span>
+                    <a href={to} className="g-tile flex h-full flex-col items-center p-4 text-center" style={{ "--eb-angle": `${Math.round(90 + (a * 180) / Math.PI)}deg` } as CSSProperties}>
+                      <img src={img} alt="" width={76} height={80} loading="lazy" decoding="async" className="ember-ico h-[4.75rem] w-auto" />
                       <span className="mt-3 font-display text-[15px] font-semibold text-slate-900">{t}</span>
                       <span className="mt-0.5 text-xs text-slate-500">{d}</span>
                     </a>
@@ -594,7 +588,7 @@ function HomePage() {
 
       {/* Category glimpse: eight image cards, the rest on /browse */}
       {glimpse.length > 0 && (
-        <section className={sec} data-reveal>
+        <section className={sec} data-reveal data-ember="glimpse">
           <div className={wrap}>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
@@ -614,7 +608,7 @@ function HomePage() {
                       <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-[#4643ba] backdrop-blur">{c.subs.reduce((n, x) => n + x.count, 0)} ideas</span>
                     </div>
                     <div className="relative px-4 pb-4 pt-7">
-                      <span className="absolute -top-6 left-4 grid h-12 w-12 place-items-center rounded-full bg-white text-[#4643ba] shadow-md ring-4 ring-white"><Layers3 aria-hidden size={19} /></span>
+                      <img src="/icons/ui/ui-category.webp" alt="" width={52} height={54} loading="lazy" decoding="async" className="absolute -top-7 left-4 h-[3.25rem] w-[3.25rem] object-contain" />
                       <span className="block font-display text-base font-semibold text-slate-900 group-hover:text-[#4643ba]">{c.name.replace(/ Business Ideas$/, "")}</span>
                       <span className="mt-0.5 block truncate text-xs text-slate-500">{c.subs.slice(0, 2).map((x) => x.name.replace(/ Business Ideas$/, "")).join(" · ")}</span>
                     </div>
@@ -629,7 +623,7 @@ function HomePage() {
 
       {/* Good first reads */}
       {fresh.length > 4 && (
-        <section data-reveal className={"border-y border-slate-200 bg-slate-50 " + sec}>
+        <section data-reveal data-ember="reads" className={"border-y border-slate-200 bg-slate-50 " + sec}>
           <div className={wrap}>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
@@ -657,7 +651,7 @@ function HomePage() {
       )}
 
       {/* How a blueprint is made: curved infographic, then the people accountable */}
-      <section className={"bg-[linear-gradient(180deg,#f4f2ff,#ffffff)] " + sec} id="how-we-research" data-reveal>
+      <section className={"bg-[linear-gradient(180deg,#f4f2ff,#ffffff)] " + sec} id="how-we-research" data-reveal data-ember="research">
         <div className={wrap}>
           <div className="text-center">
             <p className={eyebrow}>How we research every blueprint</p>
@@ -670,9 +664,7 @@ function HomePage() {
             <ol className="relative grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {PROCESS.map(({ t, d }, i) => (
                 <li key={t} data-stagger className={"flex flex-col items-center text-center " + (i % 2 === 0 ? "lg:pt-24" : "lg:pt-0")}>
-                  <span className="grid h-16 w-16 place-items-center rounded-2xl bg-white text-[#4643ba] shadow-[0_14px_28px_-14px_rgba(70,67,186,0.8)] ring-1 ring-[#4643ba]/10">
-                    {[UserRoundCheck, BadgeIndianRupee, TriangleAlert, ShieldCheck].map((Ic, k) => k === i ? <Ic key={k} aria-hidden size={26} /> : null)}
-                  </span>
+                  <img src={["/icons/home/home-who-pays-you.webp", "/icons/home/home-how-the-money-works.webp", "/icons/home/home-what-hurts-year-one.webp", "/icons/home/home-validate.webp"][i]} alt="" width={72} height={75} loading="lazy" decoding="async" className="h-[4.5rem] w-[4.5rem] object-contain" />
                   <span className="mt-3 grid h-7 w-7 place-items-center rounded-full bg-[#4643ba] text-xs font-bold text-white">{i + 1}</span>
                   <h3 className="mt-2 font-display text-base font-semibold text-slate-900">{t}</h3>
                   <p className="mt-1 max-w-[15rem] text-sm leading-relaxed text-slate-600">{d}</p>
@@ -693,9 +685,7 @@ function HomePage() {
             <ul className="grid gap-3 sm:grid-cols-2">
               {TEAM.map((m) => (
                 <li key={m.name} data-stagger className="flex gap-3 rounded-2xl bg-white p-4 shadow-[0_12px_26px_-20px_rgba(70,67,186,0.7)] ring-1 ring-[#4643ba]/10 transition hover:-translate-y-0.5 motion-reduce:transform-none">
-                  <span aria-hidden className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#e0dcff] to-[#c3bbff] font-display text-sm font-bold text-[#4643ba]">
-                    {m.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
-                  </span>
+                  <img aria-hidden src={`/icons/letters/letter-${m.name[0]!.toLowerCase()}.webp`} alt="" width={56} height={58} loading="lazy" decoding="async" className="h-14 w-14 shrink-0 object-contain" />
                   <span>
                     <span className="block text-sm font-semibold text-slate-900">{m.name}</span>
                     <span className="block text-xs leading-relaxed text-slate-600">{m.role}</span>
@@ -709,7 +699,7 @@ function HomePage() {
       </section>
 
       {/* Tools and reading: glass infographic cards */}
-      <section className={"relative " + sec} data-reveal>
+      <section className={"relative " + sec} data-reveal data-ember="tools">
         <div className={wrap}>
           <div className="text-center">
             <p className={eyebrow}>Free tools and reading</p>
@@ -746,7 +736,7 @@ function HomePage() {
 
       {/* Blog: heading and a 16:9 image only */}
       {posts.length > 0 && (
-        <section data-reveal className={"border-y border-slate-200 bg-slate-50 " + sec}>
+        <section data-reveal data-ember="blog" className={"border-y border-slate-200 bg-slate-50 " + sec}>
           <div className={wrap}>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
@@ -772,7 +762,7 @@ function HomePage() {
       )}
 
       {/* FAQ and the closing call */}
-      <section data-reveal className={sec}>
+      <section data-reveal data-ember="faq" className={sec}>
         <div className={wrap}>
           <p className={eyebrow}>FAQ</p>
           <h2 className={h2}>Honest answers to fair questions.</h2>
@@ -787,9 +777,9 @@ function HomePage() {
             ))}
           </div>
           <div className="mt-10 grid grid-cols-1 items-center gap-6 rounded-[2rem] bg-white p-6 shadow-[0_30px_60px_-40px_rgba(70,67,186,0.7)] ring-1 ring-[#4643ba]/15 sm:p-8 lg:grid-cols-[auto_1fr_auto]">
-            <span className="grid h-20 w-20 place-items-center rounded-full bg-gradient-to-br from-[#efedff] to-[#dcd7ff] text-[#4643ba]"><Sparkles aria-hidden size={32} /></span>
+            <img src="/icons/home/home-blueprints.webp" alt="" width={96} height={100} loading="lazy" decoding="async" className="h-24 w-24 object-contain" />
             <div>
-              <h2 className="font-display text-2xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-3xl">Read one honest blueprint.<br />Before you spend a rupee.</h2>
+              <h2 className="eh-h2 font-display text-2xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-3xl">Read one honest blueprint.<br />Before you spend a rupee.</h2>
               <p className="mt-2 text-slate-600">Follow the buyer, the money and the risks. If the honest answer is to walk away, you will hear it here first.</p>
             </div>
             <div className="text-center">

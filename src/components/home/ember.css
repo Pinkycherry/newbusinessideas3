@@ -1,0 +1,245 @@
+/* ---------------------------------------------------------------------------------------------
+   Ember theme v3 (7 Nov 2026, founder's references: red/black posters + our fire-red glass icons).
+   Black page, white and red type, the icons' red (#8b0100 deep, #b10802 core, #e6250c bright),
+   grey-black cards whose borders carry a red gradient that changes per section (light composed
+   across the section, never the same corner on every card). Headings: Anton (condensed) and
+   Archivo Black (wide), self-hosted. Applies only inside an element with class "ember".
+   --------------------------------------------------------------------------------------------- */
+@font-face{font-family:"Anton";src:url("/fonts/anton-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Archivo Black";src:url("/fonts/archivo-black-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+
+.ember{
+  --e-bg:#000;
+  --e-red:#e01b1f;--e-red-hi:#ff3a2a;--e-red-core:#b10802;--e-red-deep:#8b0100;--e-red-dark:#4a0002;--e-poster:#a11c1e;
+  --e-ink:#fff;--e-ink-2:#d8d0d0;--e-mute:#a59c9c;--e-dim:#7a7171;
+  --e-line:#2a2525;--e-line-2:#3a3333;
+  --e-fill:linear-gradient(160deg,#1f1a1a 0%,#141111 45%,#0c0a0a 100%);
+  --e-fill-red:linear-gradient(160deg,#2a1213 0%,#150d0d 45%,#0b0808 100%);
+  --e-grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --e-scratch:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420'><filter id='s'><feTurbulence type='fractalNoise' baseFrequency='.09' numOctaves='4' seed='4'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -9 6.7'/></filter><rect width='100%' height='100%' filter='url(%23s)'/></svg>");
+  --primary:#e01b1f;--background:#000;--foreground:#fff;
+  background:#000!important;color:var(--e-ink-2);color-scheme:dark;
+}
+html:has(.v2.ember),body:has(.v2.ember){background:#000}
+
+/* ---------- Type ---------- */
+.ember :is(.text-slate-950,.text-slate-900,.text-slate-800,.text-gray-900,.text-foreground){color:var(--e-ink)!important}
+.ember :is(.text-slate-700,.text-slate-600,.text-gray-700,.text-gray-600){color:var(--e-ink-2)!important}
+.ember :is(.text-slate-500,.text-gray-500,.text-muted-foreground){color:var(--e-mute)!important}
+.ember :is(.text-slate-400,.text-slate-300){color:var(--e-dim)!important}
+.ember [class~="text-[#4643ba]"],.ember [class~="text-[#7b6ff0]"],.ember [class~="text-[#3b3897]"],.ember [class~="text-[#d6337f]"],.ember :is(.text-primary,.text-violet-700,.text-violet-800,.text-blue-700,.text-indigo-700){color:var(--e-red-hi)!important}
+.ember [class*="hover:text-[#4643ba]"]:hover,.group:hover [class*="group-hover:text-[#4643ba]"]{color:var(--e-red-hi)!important}
+.ember .bg-clip-text{background:none!important;-webkit-background-clip:border-box;background-clip:border-box;color:var(--e-red)!important;-webkit-text-fill-color:currentColor}
+.ember .eh-h2{font-family:"Anton",Impact,"Arial Narrow",sans-serif!important;font-weight:400!important;text-transform:uppercase;letter-spacing:.01em!important;line-height:1.02!important;font-size:clamp(2rem,4.2vw,3.1rem)!important;color:#fff!important}
+.ember .eh-eyebrow{font-family:"Archivo Black",system-ui,sans-serif!important;font-weight:400!important;letter-spacing:.14em!important;color:var(--e-red)!important;font-size:.72rem!important}
+.ember main h3.font-display{letter-spacing:.005em}
+
+/* ---------- Surfaces ---------- */
+.ember :is(.bg-white,.bg-card,[class*="bg-white/"],.bg-slate-50,.bg-slate-100,.bg-violet-50,.bg-violet-100,[class~="bg-[#f7f6ff]"]){background:#171313!important}
+.ember :is([class*="bg-[linear-gradient"],[class*="bg-[radial-gradient"]){background:transparent!important}
+.ember [class*=" bg-[#4643ba]/"],.ember [class^="bg-[#4643ba]/"]{background:rgba(224,27,31,.14)!important;color:#ff6b5e!important}
+.ember [class*="bg-[#cfc9ff]"],.ember [class*="bg-[#e5e1ff]"]{display:none}
+.ember [class~="bg-[#4643ba]"]{background:linear-gradient(180deg,#ff3a2a,#b10802)!important;color:#fff!important}
+.ember :is(.border-slate-200,.border-slate-100,.border-white,.border,[class*="border-[#4643ba]"],[class*="border-white/"]){border-color:var(--e-line)!important}
+.ember :is(.ring-1,.ring-2,.ring-4,[class*="ring-[#4643ba]"],.ring-slate-100,.ring-slate-200,.ring-white,[class*="ring-[#efedff]"]){--tw-ring-color:var(--e-line)!important}
+.ember [class*="shadow-[0_"],.ember :is(.shadow-xl,.shadow-md,.shadow-sm){box-shadow:0 26px 50px -30px rgba(0,0,0,1)!important}
+.ember [class~="from-[#4643ba]"]{--tw-gradient-from:#e6250c!important}
+.ember [class~="to-[#7b6ff0]"],.ember [class~="to-[#4643ba]"]{--tw-gradient-to:#8b0100!important}
+.ember [class~="from-[#f1efff]"],.ember [class~="from-[#f6f5ff]"]{--tw-gradient-from:#000!important}
+.ember .to-white{--tw-gradient-to:transparent!important}
+.ember main section{background:transparent!important;border-color:#140f0f!important}
+.ember main > div:first-child{background:#000!important}
+.ember .eh-hide{display:none!important}
+
+/* Gradient-border card recipe: fill on the padding box, red light on the border box.
+   Each section sets --eb-angle per card so the light composes across the section. */
+.ember :is(.eb,
+  [data-ember] .g-tile,[data-ember] .g-step-card,
+  [data-ember="inside"] [class*="rounded-3xl"][class*="bg-white"],
+  [data-ember="built"] li > a,
+  [data-ember="story"] [class*="-mt-16"],
+  [data-ember="glimpse"] li > a,[data-ember="reads"] li > a,[data-ember="blog"] li > a,
+  [data-ember="research"] ul > li[class*="rounded-2xl"],
+  [data-ember="faq"] [class*="rounded-[2rem]"],
+  #india-map .g-tile,
+  .eh-hero [class*="rounded-[1.75rem]"],.eh-hero ul > li[class*="rounded-2xl"],.eh-hero [class*="rounded-2xl"][class*="bg-white/90"]){
+  border:1px solid transparent!important;
+  background:var(--eb-fill,var(--e-fill)) padding-box,linear-gradient(var(--eb-angle,135deg),var(--eb-c1,rgba(230,37,12,.95)) 0%,var(--eb-c2,rgba(139,1,0,.45)) 26%,#2a2424 55%,#221d1d 100%) border-box!important;
+  box-shadow:0 30px 60px -36px rgba(0,0,0,1)!important}
+
+/* ---------- Buttons: the icons' glossy red ---------- */
+.ember .g-btn,.ember main :is(a,button):is([class*="bg-slate-900"],[class*="bg-\[#4643ba\]"],[class*="bg-violet-6"],[class*="bg-blue-6"],[class*="bg-blue-7"],.gl-idea-action){
+  color:#fff!important;border-radius:11px!important;
+  background:linear-gradient(180deg,#ff4a33 0%,#e6250c 38%,#b10802 74%,#7a0000 100%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,200,180,.55),inset 0 -2px 3px rgba(60,0,0,.5),0 2px 0 #4a0002,0 12px 26px -10px rgba(224,27,31,.65)!important}
+.ember .g-btn::before{background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,0))}
+.ember .g-btn:hover{filter:brightness(1.08)}
+.ember :is(.g-btn,.g-btn-light,.g-link):focus-visible{outline-color:#ff3a2a}
+.ember .g-btn-light,.ember .g-chip,.ember .g-link,
+.ember main :is(a,button):is(.gh-button-secondary,.td-secondary,[class*="inline-flex"][class*="border"]:is([class*="font-semibold"],[class*="min-h"],[class*="px-"]),[class*="rounded-full"][class*="border"][class*="px-4"]):not(.g-btn){
+  color:#f1e9e9!important;border-radius:11px;background:linear-gradient(180deg,#1f1a1a,#120f0f)!important;border:1px solid #3a2f2f!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 8px 18px -12px rgba(0,0,0,1)!important}
+.ember .g-btn-light:hover,.ember .g-chip:hover,.ember .g-link:hover{color:#fff!important;border-color:#e01b1f!important}
+.ember .g-btn-light::after{background:linear-gradient(100deg,transparent,rgba(255,80,60,.14),transparent)}
+.ember .g-link .g-arrow{background:linear-gradient(180deg,#ff4a33,#b10802)!important;box-shadow:0 6px 14px -6px rgba(224,27,31,.8)!important}
+.ember main :is(a,button):is([aria-pressed="true"],[aria-selected="true"]):not(.g-btn){background:linear-gradient(180deg,#ff4a33,#b10802)!important;border-color:transparent!important}
+.ember .g-icon{background:linear-gradient(180deg,#ff4a33,#8b0100)!important;box-shadow:inset 0 2px 0 rgba(255,200,180,.5),0 12px 22px -10px rgba(224,27,31,.7)!important}
+.ember img[src*="/icons/"]{filter:drop-shadow(0 10px 16px rgba(177,8,2,.35))}
+
+/* ---------- Forms ---------- */
+.ember :is(input,select,textarea){color:#fff;background:transparent}
+.ember input::placeholder{color:var(--e-dim)}
+.ember form:has(input[type=search]){background:rgba(10,6,6,.82)!important;border:1px solid #3a2f2f;--tw-ring-color:transparent!important;box-shadow:0 20px 40px -24px rgba(0,0,0,1)!important}
+
+/* ================= Section compositions ================= */
+
+/* Hero: the red poster stage, a light beam, grain; giant distressed words in perspective */
+.ember .eh-hero{position:relative;isolation:isolate}
+.ember .eh-stage{position:absolute;inset:-6rem 0 0;z-index:-1;pointer-events:none;
+  background:
+    linear-gradient(118deg,transparent 28%,rgba(255,232,220,.12) 40%,rgba(255,232,220,.04) 52%,transparent 60%),
+    radial-gradient(ellipse 75% 70% at 38% 42%,#b3171d 0%,#94121a 30%,#5c070b 62%,#1a0103 86%,#000 100%);
+  -webkit-mask-image:linear-gradient(#000 78%,transparent);mask-image:linear-gradient(#000 78%,transparent)}
+.ember .eh-stage::after{content:"";position:absolute;inset:0;background-image:var(--e-grain);opacity:.22;mix-blend-mode:overlay}
+.ember .eh-title{font-size:inherit;line-height:1!important}
+.ember .eh-kicker{display:block;font-family:"Archivo Black",system-ui,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.04em;font-size:clamp(1rem,2.1vw,1.45rem);line-height:1.15;color:#140000!important}
+.ember .eh-giant{display:block;margin-top:.35rem;font-family:"Anton",Impact,"Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(3.3rem,8.4vw,7rem);line-height:.92;letter-spacing:.005em;color:#f6ecdc!important;
+  transform:perspective(900px) rotateY(20deg);transform-origin:left center;
+  -webkit-mask-image:var(--e-scratch);mask-image:var(--e-scratch);-webkit-mask-size:420px;mask-size:420px;
+  text-shadow:0 2px 0 rgba(60,0,0,.35)}
+@media (max-width:640px){.ember .eh-giant{transform:perspective(700px) rotateY(14deg)}}
+.ember .eh-hero p{color:#f3e2e2!important}
+.ember .eh-hero p.text-slate-600,.ember .eh-hero .text-slate-500{color:#ecd3d3!important}
+.ember .eh-hero [class*="rounded-full"][class*="border-[#4643ba]"]{background:rgba(10,0,0,.45)!important;color:#ffd7d0!important;border-color:rgba(255,255,255,.18)!important}
+.ember .eh-hero a[href="#how-we-research"]{color:#fff!important}
+.ember .eh-hero a[href="#how-we-research"] span{background:rgba(0,0,0,.35)!important;border-color:rgba(255,255,255,.25)!important}
+.ember .eh-letter{filter:drop-shadow(0 6px 10px rgba(0,0,0,.55))!important}
+.ember .eh-hero [class*="rounded-[1.75rem]"]{--eb-angle:200deg;--eb-c1:rgba(255,120,100,.9)}
+.ember .eh-hero [class*="rounded-[1.75rem]"] [class*="rounded-[1.35rem]"]{background:#0e0b0b!important}
+.ember .eh-hero ul > li[class*="rounded-2xl"]:nth-child(1){--eb-angle:270deg}
+.ember .eh-hero ul > li[class*="rounded-2xl"]:nth-child(2){--eb-angle:240deg}
+.ember .eh-hero ul > li[class*="rounded-2xl"]:nth-child(3){--eb-angle:300deg}
+.ember .eh-hero [class*="bg-white/90"]{--eb-angle:0deg;--eb-c1:rgba(230,37,12,.8)}
+
+/* Icon row: no cards, red light lines between items, a horizon under the heading */
+.ember [data-ember="line"] h2{padding-bottom:1rem;background:linear-gradient(90deg,#e01b1f,rgba(139,1,0,.4) 30%,transparent 60%) bottom/100% 1px no-repeat!important}
+.ember [data-ember="line"] ul > li{border-color:transparent!important;border-image:linear-gradient(180deg,transparent,rgba(224,27,31,.65),transparent) 1!important}
+
+/* Inside the library: one big card lit from the top-left */
+.ember [data-ember="inside"] [class*="rounded-3xl"][class*="bg-white"]{--eb-angle:135deg;--eb-fill:var(--e-fill-red)}
+.ember [data-ember="inside"]{background:radial-gradient(ellipse 35% 45% at 72% 50%,rgba(177,8,2,.22),transparent 70%)!important}
+.ember [data-ember="inside"] li a{background:#141010!important}
+
+/* Map: dashboard lit from the bottom-left, toward the map */
+.ember #india-map{background:radial-gradient(ellipse 40% 50% at 32% 55%,rgba(177,8,2,.2),transparent 70%)!important}
+.ember #india-map .g-tile{--eb-angle:60deg}
+
+/* Built for: six cards lit from the centre of the grid */
+.ember [data-ember="built"]{background:radial-gradient(ellipse 30% 30% at 50% 62%,rgba(177,8,2,.3),transparent 75%)!important}
+.ember [data-ember="built"] li:nth-child(1) > a{--eb-angle:315deg}
+.ember [data-ember="built"] li:nth-child(2) > a{--eb-angle:0deg;--eb-c1:#ff3a2a}
+.ember [data-ember="built"] li:nth-child(3) > a{--eb-angle:45deg}
+.ember [data-ember="built"] li:nth-child(4) > a{--eb-angle:225deg}
+.ember [data-ember="built"] li:nth-child(5) > a{--eb-angle:180deg;--eb-c1:#ff3a2a}
+.ember [data-ember="built"] li:nth-child(6) > a{--eb-angle:135deg}
+
+/* Story: quote card lit from the left; red timeline; definition with a red rule */
+.ember [data-ember="story"] [class*="-mt-16"]{--eb-angle:90deg;--eb-fill:var(--e-fill-red)}
+.ember [data-ember="story"] [class*="overflow-hidden"][class*="rounded-[2rem]"]{box-shadow:0 30px 60px -30px rgba(177,8,2,.55)!important}
+.ember [data-ember="story"] ol > span[aria-hidden]{background:linear-gradient(90deg,transparent,#e01b1f 20%,#8b0100 50%,#e01b1f 80%,transparent)!important;height:1px!important}
+.ember [data-ember="story"] [class~="bg-[#f7f6ff]"]{background:#0e0b0b!important;border:0!important;border-left:3px solid #e01b1f!important;border-radius:4px 16px 16px 4px!important}
+
+/* Why it stays free: a second poster stage */
+.ember [class~="via-[#5a50d6]"]{background:linear-gradient(118deg,transparent 30%,rgba(255,232,220,.08) 42%,transparent 56%),radial-gradient(ellipse 80% 90% at 30% 40%,#a11c1e 0%,#7a0d12 40%,#2a0204 85%)!important;box-shadow:0 40px 80px -40px rgba(177,8,2,.6)!important}
+.ember [class~="via-[#5a50d6]"]::after{content:"";position:absolute;inset:0;background-image:var(--e-grain);opacity:.2;mix-blend-mode:overlay;pointer-events:none;border-radius:inherit}
+.ember [class~="via-[#5a50d6]"] .eh-h2{font-size:clamp(2rem,4vw,3rem)!important}
+.ember [class~="via-[#5a50d6]"] :is(.text-white\/75,.text-white\/85,.text-white\/80){color:#f3dada!important}
+.ember [class~="via-[#5a50d6]"] [class*="bg-white/12"]{background:rgba(0,0,0,.35)!important;--tw-ring-color:rgba(255,255,255,.12)!important}
+.ember [class~="via-[#5a50d6]"] [class*="bg-white"][class*="shadow-xl"]{background:#0b0808!important;color:#e9dede!important}
+
+/* Hub: every tile lit on the side facing the centre (angle set inline per tile) */
+.ember [data-ember="hub"] .g-tile{--eb-c2:rgba(139,1,0,.3)}
+.ember .g-hub{background:radial-gradient(circle at 50% 35%,#2a1213 0%,#120c0c 62%,#070505 100%)!important;box-shadow:0 0 0 10px rgba(255,255,255,.015),0 0 0 11px #3a2626,0 0 100px 24px rgba(177,8,2,.35)!important}
+.ember .g-hub::before{background:conic-gradient(from 0deg,#e01b1f,#4a0002,#ff3a2a,#4a0002,#e01b1f)}
+.ember .g-flow{stroke:#e01b1f}
+.ember #hubline stop{stop-color:#e01b1f}.ember #hubline stop:nth-child(2){stop-color:#8b0100}
+
+/* Library glimpse: image cards, the light walks round the row */
+.ember [data-ember="glimpse"] li:nth-child(4n+1) > a{--eb-angle:0deg}
+.ember [data-ember="glimpse"] li:nth-child(4n+2) > a{--eb-angle:70deg}
+.ember [data-ember="glimpse"] li:nth-child(4n+3) > a{--eb-angle:180deg}
+.ember [data-ember="glimpse"] li:nth-child(4n) > a{--eb-angle:290deg}
+.ember [data-ember="glimpse"] li > a [class*="from-black"]{--tw-gradient-from:rgba(74,0,2,.75)!important}
+.ember [data-ember="glimpse"] li > a span[class*="bg-white/90"]{background:rgba(0,0,0,.65)!important;color:#fff!important}
+
+/* Good first reads: dark-red cards, edge light alternates top and bottom like a wave */
+.ember [data-ember="reads"] li > a{--eb-fill:var(--e-fill-red)}
+.ember [data-ember="reads"] li:nth-child(odd) > a{--eb-angle:180deg}
+.ember [data-ember="reads"] li:nth-child(even) > a{--eb-angle:0deg}
+
+/* Research: red curve; team cards lit from the centre of the 2x2 grid */
+.ember [data-ember="research"]{background:radial-gradient(ellipse 30% 40% at 70% 78%,rgba(177,8,2,.22),transparent 70%)!important}
+.ember svg [stroke="#b9b2ff"],.ember svg [stroke="#4643ba"],.ember svg [stroke="#7b6ff0"]{stroke:#e01b1f}
+.ember [data-ember="research"] ul > li[class*="rounded-2xl"]:nth-child(1){--eb-angle:315deg}
+.ember [data-ember="research"] ul > li[class*="rounded-2xl"]:nth-child(2){--eb-angle:45deg}
+.ember [data-ember="research"] ul > li[class*="rounded-2xl"]:nth-child(3){--eb-angle:225deg}
+.ember [data-ember="research"] ul > li[class*="rounded-2xl"]:nth-child(4){--eb-angle:135deg}
+
+/* Tools and reading: four step cards lit from the centre; glossy red tabs */
+.ember [data-ember="tools"] .g-step:nth-child(1) .g-step-card{--eb-angle:315deg}
+.ember [data-ember="tools"] .g-step:nth-child(2) .g-step-card{--eb-angle:45deg}
+.ember [data-ember="tools"] .g-step:nth-child(3) .g-step-card{--eb-angle:225deg}
+.ember [data-ember="tools"] .g-step:nth-child(4) .g-step-card{--eb-angle:135deg}
+.ember [data-ember="tools"]{background:radial-gradient(ellipse 25% 30% at 50% 55%,rgba(177,8,2,.3),transparent 75%)!important}
+.ember .g-step-tab{font-family:"Anton",Impact,sans-serif;font-weight:400;background:linear-gradient(180deg,#ff4a33 0%,#e6250c 38%,#b10802 74%,#7a0000 100%)!important;box-shadow:inset 0 1px 0 rgba(255,200,180,.55),0 14px 28px -12px rgba(224,27,31,.7)!important;width:72px!important;height:60px!important;font-size:1.5rem!important;border-radius:16px!important}
+.ember .g-step{padding-top:26px;padding-left:26px}
+.ember [data-ember="tools"] h3{font-family:"Archivo Black",system-ui,sans-serif!important;font-weight:400!important;font-size:1.05rem!important;letter-spacing:.06em!important}
+
+/* Blog: light alternates left and right */
+.ember [data-ember="blog"] li:nth-child(odd) > a{--eb-angle:90deg}
+.ember [data-ember="blog"] li:nth-child(even) > a{--eb-angle:270deg}
+
+/* FAQ: plain rows, the open one gets a red rule; closing card lit from the left */
+.ember [data-ember="faq"] details{background:#0e0b0b!important;border-color:#241e1e!important}
+.ember [data-ember="faq"] details[open]{border-left:3px solid #e01b1f!important}
+.ember [data-ember="faq"] [class*="rounded-[2rem]"]{--eb-angle:90deg;--eb-fill:radial-gradient(ellipse 40% 90% at 0% 50%,rgba(177,8,2,.45),transparent 70%),linear-gradient(160deg,#1f1a1a,#0c0a0a)}
+
+/* ---------- Header ---------- */
+.ember .mm-header .mm-nav{background:rgba(14,10,10,.84);border:1px solid #2e2424;box-shadow:0 16px 36px -18px rgba(0,0,0,1);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.ember .mm-header .mm-brand{color:#fff}
+.ember .mm-header .mm-brand span{color:#e01b1f}
+.ember .mm-header .mm-desktop > a,.ember .mm-header .mm-disclosure > button,.ember .mm-header .mm-mobile-toggle,.ember .mm-header .mm-mobile-search{color:#ddd3d3}
+.ember .mm-header .mm-desktop a:hover,.ember .mm-header .mm-disclosure > button:hover{color:#fff;background:#221a1a}
+.ember .mm-header .mm-disclosure > button[aria-expanded=true]{color:#fff;background:linear-gradient(180deg,#e6250c,#8b0100);box-shadow:none}
+.ember .mm-header .mm-report{border-radius:11px;background:linear-gradient(180deg,#ff4a33 0%,#e6250c 38%,#b10802 74%,#7a0000 100%);box-shadow:inset 0 1px 0 rgba(255,200,180,.55),0 10px 22px -10px rgba(224,27,31,.7)}
+.ember .mm-panel{background:#0f0b0b;border-color:#2e2424;color:#ddd3d3;box-shadow:0 30px 70px -20px rgba(0,0,0,1)}
+.ember .mm-panel :is(h4,b,strong){color:#fff}
+.ember .mm-panel :is(p,span,a){color:#cfc5c5}
+.ember .mm-panel a:hover{color:#ff3a2a}
+.ember .mm-panel [class*="mm-hero"],.ember .mm-panel [class*="mm-banner"],.ember .mm-panel [class*="mm-tile"],.ember .mm-panel [class*="mm-pdf"]{background:linear-gradient(160deg,#1f1a1a,#0e0b0b)!important;border-color:#2e2424!important}
+.ember .mm-panel .ic{background:linear-gradient(180deg,#ff4a33,#8b0100)!important;color:#fff}
+.ember .mm-panel .mm-btn{background:linear-gradient(180deg,#ff4a33,#b10802);color:#fff!important;border-color:transparent}
+.ember .mm-header .mm-mobile{background:#0f0b0b;border-color:#2e2424}
+.ember .mm-header .mm-mobile :is(summary,.mm-mobile-link){color:#fff}
+.ember .mm-header .mm-mobile details,.ember .mm-header .mm-quick{border-color:#2e2424}
+.ember .mm-header .mm-quick a{background:linear-gradient(180deg,#1f1a1a,#120f0f);border-color:#3a2f2f;color:#f1e9e9}
+.ember .mm-header .mm-quick a:first-child{background:linear-gradient(180deg,#ff4a33,#b10802);color:#fff;border-color:transparent}
+
+/* ---------- Footer ---------- */
+.ember .v2-footer{background:radial-gradient(ellipse 40% 60% at 0% 0%,rgba(139,1,0,.3),transparent 70%),#000;border-top:1px solid #1d1515}
+.ember .v2-footer :is(p,a){color:#b3a9a9}
+.ember .v2-footer .mm-brand{color:#fff}
+.ember .v2-footer .mm-brand span{color:#e01b1f}
+.ember .v2-footer h3{font-family:"Archivo Black",system-ui,sans-serif;font-weight:400;color:#e01b1f}
+.ember .v2-footer .v2-footer-cols a:hover,.ember .v2-footer .v2-footer-bottom a:hover{color:#fff}
+.ember .v2-footer .v2-footer-actions a{border-radius:11px;background:linear-gradient(180deg,#1f1a1a,#120f0f);border-color:#3a2f2f;color:#f1e9e9;box-shadow:none}
+.ember .v2-footer .v2-footer-actions a:first-child{background:linear-gradient(180deg,#ff4a33 0%,#e6250c 38%,#b10802 74%,#7a0000 100%);color:#fff;border-color:transparent;box-shadow:0 10px 22px -10px rgba(224,27,31,.7)}
+.ember .v2-footer .v2-footer-cats{border:1px solid transparent;background:linear-gradient(160deg,#1a1515,#0b0909) padding-box,linear-gradient(120deg,rgba(224,27,31,.8),#2a2424 35%,#221d1d) border-box;box-shadow:none}
+.ember .v2-footer .v2-footer-cats a{background:#141010;border-color:#332929;color:#cfc5c5}
+.ember .v2-footer .v2-footer-cats a:hover{border-color:#e01b1f;color:#fff}
+.ember .v2-footer .v2-footer-bottom{border-color:#1d1515;color:#7a7171}
+.ember .v2-footer .v2-footer-bottom a{color:#7a7171}
+
+.ember [class*="bg-blue-50"],.ember [class*="bg-violet-50"]{background:#171313!important}
+.ember [class*="border-blue"],.ember [class*="border-violet"]{border-color:var(--e-line-2)!important}
+.ember main section:is(.bg-slate-50,.bg-white,.bg-card):not([data-ember="research"]){background:transparent!important}

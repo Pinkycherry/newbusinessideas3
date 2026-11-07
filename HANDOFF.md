@@ -24,6 +24,8 @@ Read this first. Update and commit it to main before you stop. Times are IST.
 
 - 7 Nov — Subcategory icons: 150 fire-red glass icons (batches 1-15 from the founder's ChatGPT sheets in BRAND-NEW-COPY src/Icons) cut out with transparent background into public/icons/sub/<subcategory-slug>.webp; list in src/config/subcategory-icons.ts. Shown above the title on each subcategory page and beside each focused list on category pages. Check: https://bbusiness.online/category/beauty-business-ideas/bridal-makeup-artist-business-ideas https://bbusiness.online/category/beauty-business-ideas
 
+- 8 Nov — Home page in the new black and red look (founder's go, home only). src/components/home/ember.css: scoped to the "ember" class, which only the home page sets (V2Frame ember prop), so no other page changes. Red from our glass icons (#e01b1f, #b10802, #8b0100), Anton and Archivo Black headings (self-hosted, public/fonts), red poster hero with giant distressed words, red gradient card borders planned per section, red 3D India map (IndiaMap3D ember). New assets: public/icons/home (14), public/icons/ui (40), public/icons/letters (A to Z), cut from BRAND-NEW-COPY src/Icons sheets. Team initials use the letter icons. Next: same look on other pages one by one (pass ember to V2Frame and add section hooks). https://bbusiness.online/
+
 - 7 Nov — P2 batch, commit 604ea61, cache purged, checked live:
   - Auto motion on every page (use-glass-motion.ts): sections below the first screen fade up; every sideways card row slides one card every 3.2 s, loops, pauses on touch or off screen, off with reduced motion.
   - Subcategory icons on a dark ember tile (.icon-tile in glass.css), bigger on the page head. https://bbusiness.online/category/beauty-business-ideas
