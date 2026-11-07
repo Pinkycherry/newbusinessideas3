@@ -14,6 +14,16 @@ export function useGlassMotion() {
       }, { rootMargin: "0px 0px -8% 0px", threshold: 0 });
       els.forEach((el) => io!.observe(el));
     }
-    return () => { io?.disconnect(); root.classList.remove("rv-on"); };
+    // Speed (7 Nov 2026): looping animations run only while on screen.
+    let anim: IntersectionObserver | null = null;
+    if ("IntersectionObserver" in window) {
+      anim = new IntersectionObserver((entries) => {
+        entries.forEach((e) => e.target.classList.toggle("is-off", !e.isIntersecting));
+      }, { rootMargin: "100px 0px" });
+      const looping = new Set<Element>(document.querySelectorAll(".g-marquee, .g-hub, .g-shine, .bbi-float-lg"));
+      document.querySelectorAll(".g-flow").forEach((f) => { const svg = f.closest("svg"); if (svg) looping.add(svg); });
+      looping.forEach((el) => anim!.observe(el));
+    }
+    return () => { io?.disconnect(); anim?.disconnect(); root.classList.remove("rv-on"); };
   }, []);
 }

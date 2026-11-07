@@ -69,6 +69,10 @@ background:linear-gradient(180deg,#ffffff,#f5f3ff);border:1px solid rgba(70,67,1
 .g-marquee.rev .g-marquee-track{animation-direction:reverse}
 .g-marquee:hover .g-marquee-track,.g-marquee:focus-within .g-marquee-track{animation-play-state:paused}
 @keyframes g-marquee{to{transform:translateX(-50%)}}
+.is-off,.is-off *,.is-off::before,.is-off::after{animation-play-state:paused!important}
+.g-marquee-track{will-change:transform}
+/* Speed: sections far below the screen are not painted until the reader gets near them */
+main section[data-reveal]:not(#india-map){content-visibility:auto;contain-intrinsic-size:auto 800px}
 
 .rv-on [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
 .rv-on [data-reveal].rv-in{opacity:1;transform:none}

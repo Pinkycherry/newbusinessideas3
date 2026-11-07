@@ -48,16 +48,13 @@ export function IndiaMap3D() {
       if (!canvasTest.getContext("webgl2") && !canvasTest.getContext("webgl")) return;
       const THREE = await import("three");
       const { SVGLoader } = await import("three/examples/jsm/loaders/SVGLoader.js");
-      const { RoomEnvironment } = await import("three/examples/jsm/environments/RoomEnvironment.js");
       if (disposed) return;
 
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const W0 = mount.clientWidth, H0 = mount.clientHeight;
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+      // Speed (7 Nov 2026): lighter renderer, no shadow map, no scroll-linked redraws.
+      const renderer = new THREE.WebGLRenderer({ antialias: window.devicePixelRatio < 1.5, alpha: true, powerPreference: "low-power" });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
       renderer.setSize(W0, H0);
-      renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       renderer.toneMapping = THREE.NeutralToneMapping;
       renderer.toneMappingExposure = 0.9;
       renderer.domElement.style.position = "absolute";
@@ -66,8 +63,6 @@ export function IndiaMap3D() {
       renderer.domElement.style.touchAction = "pan-y";
 
       const scene = new THREE.Scene();
-      const pmrem = new THREE.PMREMGenerator(renderer);
-      scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 
       const camera = new THREE.PerspectiveCamera(32, W0 / H0, 1, 5000);
       const near = W0 < 640 ? 0.86 : 1;
@@ -76,12 +71,9 @@ export function IndiaMap3D() {
       const target = home.target.clone();
       camera.lookAt(target);
 
-      scene.add(new THREE.HemisphereLight(0xffffff, 0xcfc8ff, 0.35));
-      const key = new THREE.DirectionalLight(0xffffff, 0.9);
+      scene.add(new THREE.HemisphereLight(0xffffff, 0xd9d4ff, 2.2)); // replaces the costly environment map (speed)
+      const key = new THREE.DirectionalLight(0xffffff, 1.6);
       key.position.set(-300, -400, 800);
-      key.castShadow = true;
-      key.shadow.mapSize.set(1024, 1024);
-      Object.assign(key.shadow.camera, { left: -420, right: 420, top: 420, bottom: -420, near: 10, far: 2000 });
       scene.add(key);
       const rimPink = new THREE.PointLight(0xff7ab6, 60000, 0, 2);
       rimPink.position.set(380, 300, 260);
@@ -90,16 +82,12 @@ export function IndiaMap3D() {
       rimBlue.position.set(-420, 260, 220);
       scene.add(rimBlue);
 
-      const ground = new THREE.Mesh(new THREE.PlaneGeometry(2400, 2400), new THREE.ShadowMaterial({ opacity: 0.16, color: 0x2e2a8c }));
-      ground.receiveShadow = true;
-      ground.position.z = -0.5;
-      scene.add(ground);
 
       const group = new THREE.Group();
       scene.add(group);
       const svg = `<svg xmlns="http://www.w3.org/2000/svg">${MAP_STATES.map((s) => `<path id="${s.id}" d="${s.d}"/>`).join("")}</svg>`;
       const parsed = new SVGLoader().parse(svg);
-      type Entry = { s: MapState; mesh: InstanceType<typeof THREE.Mesh>; mat: InstanceType<typeof THREE.MeshPhysicalMaterial>; h: number; lift: number; base: InstanceType<typeof THREE.Color> };
+      type Entry = { s: MapState; mesh: InstanceType<typeof THREE.Mesh>; mat: InstanceType<typeof THREE.MeshStandardMaterial>; h: number; lift: number; base: InstanceType<typeof THREE.Color> };
       const entries: Entry[] = [];
       const edgeMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.75 });
       parsed.paths.forEach((p) => {
@@ -109,19 +97,17 @@ export function IndiaMap3D() {
         const t = level(s);
         const h = 5 + 62 * rise(s);
         const shapes = SVGLoader.createShapes(p);
-        const geo = new THREE.ExtrudeGeometry(shapes, { depth: h, bevelEnabled: true, bevelThickness: 1.2, bevelSize: 0.6, bevelSegments: 2, curveSegments: 4 });
+        const geo = new THREE.ExtrudeGeometry(shapes, { depth: h, bevelEnabled: true, bevelThickness: 1.2, bevelSize: 0.6, bevelSegments: 1, curveSegments: 2 });
         geo.translate(-MAP_W / 2, -MAP_H / 2, 0);
         const base = new THREE.Color(shade(t));
-        const mat = new THREE.MeshPhysicalMaterial({
-          color: base, roughness: 0.28, metalness: 0.0, clearcoat: 1, clearcoatRoughness: 0.08, envMapIntensity: 0.25,
+        const mat = new THREE.MeshStandardMaterial({
+          color: base, roughness: 0.3, metalness: 0.0, envMapIntensity: 0.35,
           side: THREE.FrontSide,
           emissive: new THREE.Color(0x7b6ff0), emissiveIntensity: 0,
         });
-        const side = new THREE.MeshPhysicalMaterial({ color: new THREE.Color(shade(Math.min(1, t + 0.25))).multiplyScalar(0.85), roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.1, envMapIntensity: 0.8, side: THREE.DoubleSide });
+        const side = new THREE.MeshStandardMaterial({ color: new THREE.Color(shade(Math.min(1, t + 0.25))).multiplyScalar(0.85), roughness: 0.25, envMapIntensity: 0.8, side: THREE.DoubleSide });
         const mesh = new THREE.Mesh(geo, [mat, side]);
         mesh.scale.y = -1; // SVG y runs down; a negative scale flips it and three.js keeps faces correct
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
         mesh.userData['id'] = s.id;
         const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 35), edgeMat);
         mesh.add(edges);
@@ -236,8 +222,7 @@ export function IndiaMap3D() {
         if (!visible) return;
         clock.getElapsedTime();
         // scroll: the map tilts up as the section rises through the screen
-        const r = wrap.getBoundingClientRect();
-        const prog = Math.max(0, Math.min(1, 1 - (r.top + r.height * 0.5) / (window.innerHeight + r.height * 0.5)));
+        const prog = 0.5; // no scroll-linked tilt (founder, 7 Nov 2026)
         // render only while something moves: keeps scrolling smooth on phones
         const moving = Math.abs(prog - lastProg) > 0.0005 || Math.abs(yawGoal - yaw) > 1e-4 || Math.abs(pitchGoal - pitch) > 1e-4 ||
           camera.position.distanceTo(camGoal.pos) > 0.3 || target.distanceTo(camGoal.target) > 0.3 ||
@@ -248,7 +233,7 @@ export function IndiaMap3D() {
         yaw += (yawGoal - yaw) * 0.08;
         pitch += (pitchGoal - pitch) * 0.08;
         group.rotation.z = yaw;
-        group.rotation.x = pitch + (reduce ? 0 : (0.5 - prog) * 0.35);
+        group.rotation.x = pitch;
         camera.position.lerp(camGoal.pos, 0.07);
         target.lerp(camGoal.target, 0.07);
         camera.lookAt(target);
@@ -282,8 +267,10 @@ export function IndiaMap3D() {
           }
         }
       };
+      renderer.domElement.addEventListener("webglcontextlost", (ev) => { ev.preventDefault(); setReady(false); });
+      renderer.render(scene, camera);
       loop();
-      setReady(true);
+      if (renderer.info.render.calls > 0) setReady(true);
 
       cleanup = () => {
         cancelAnimationFrame(raf);
@@ -301,14 +288,13 @@ export function IndiaMap3D() {
           m.geometry?.dispose();
           m.material?.dispose();
         });
-        pmrem.dispose();
         renderer.dispose();
         el.remove();
       };
     };
 
     const gate = new IntersectionObserver(([en]) => {
-      if (en?.isIntersecting) { gate.disconnect(); void start(); }
+      if (en?.isIntersecting) { gate.disconnect(); const go = () => { void start().catch(() => setReady(false)); }; if ("requestIdleCallback" in window) (window as unknown as { requestIdleCallback: (f: () => void, o?: { timeout: number }) => void }).requestIdleCallback(go, { timeout: 1500 }); else setTimeout(go, 200); }
     }, { rootMargin: "300px" });
     gate.observe(wrap);
     return () => { disposed = true; gate.disconnect(); cleanup(); };

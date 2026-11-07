@@ -13,6 +13,8 @@ Read this first. Update and commit it to main before you stop. Times are IST.
 
 ## Done (newest first)
 
+- 7 Nov — Home speed: 3D map no longer redraws on every scroll frame (scroll tilt removed), no shadow map, no environment map, lighter materials, starts in idle time; flat SVG map shows if WebGL fails or is lost. Looping animations pause off screen (use-glass-motion.ts, .is-off); sections below the screen use content-visibility:auto (glass.css). Local test: long frames while scrolling past the map went from ~850 ms each to none. Check: https://bbusiness.online/#india-map
+
 - 7 Nov — /case-studies (purchased snapshot: seller brand, sign-up offer, dollar figures, dead ./pages links) replaced by our own page https://bbusiness.online/researched-case-studies (glass layout). Same 12 pivot cases (problem, pivot, what would have failed, solution), 5-step loop, 6 patterns, 6 famous failures, FAQ; seller quotes, seller metrics and seller brand left out (they would read as fake testimonials under our brand). Every link goes to our pages. /case-studies 301 to the new page; sitemap-pages.xml updated; internal links updated.
 
 - 7 Nov — Copy button removed from the AI picker on every page (src/components/founder-workspace/provider-prompt-actions.tsx; long prompts are shortened to fit the link). Footer: full category names ("Online Business Ideas", not "Online"), glass style, 3 columns on desktop; purchased pages got the same footer (src/bought/menu-panels.json footer regenerated from Footer, it still listed 100 categories with dead links). Check: https://bbusiness.online/about (footer) https://bbusiness.online/how-to-validate-a-business-idea-in-india
