@@ -408,8 +408,8 @@ html:has(.v2.ember),body:has(.v2.ember){background:#000}
 .ember main :is(p,li,dd){color:#ddd4d4}
 
 /* Category reveal (nakome pen): cards wipe in left to right, one after another */
-.rv-on [data-reveal] [data-stagger][data-from="wipe"]{opacity:0;transform:none;clip-path:inset(0 100% 0 0 round 16px);transition:clip-path .8s cubic-bezier(.2,.7,.2,1),opacity .5s ease}
-.rv-on [data-reveal].rv-in [data-stagger][data-from="wipe"]{opacity:1;clip-path:inset(0 0 0 0 round 16px)}
+.rv-on [data-reveal] [data-stagger][data-from="wipe"]{opacity:0;transform:none;clip-path:inset(-40px 100% -40px -40px);transition:clip-path .8s cubic-bezier(.2,.7,.2,1),opacity .5s ease}
+.rv-on [data-reveal].rv-in [data-stagger][data-from="wipe"]{opacity:1;clip-path:inset(-40px -40px -40px -40px)}
 /* Big link blocks that use the brand fill keep card corners, not a pill */
 .ember main :is(a,button):is([class*="justify-between"],[class*=" p-4"],[class*=" p-5"],[class*=" p-6"],[class*="flex-col"],[class*="min-h-2"]):is([class*="bg-\[#4643ba\]"],[class*="bg-slate-900"],[class*="bg-primary"],[class*="bg-blue-"],[class*="bg-violet-"]),
 .ember main :is(a,button):is([class*="justify-between"],[class*=" p-4"],[class*=" p-5"],[class*=" p-6"],[class*="flex-col"],[class*="min-h-2"]):is([class*="bg-\[#4643ba\]"],[class*="bg-slate-900"],[class*="bg-primary"])::after{border-radius:18px!important}
@@ -478,3 +478,9 @@ html:has(.v2.ember),body:has(.v2.ember){background:#000}
 /* Text inside red buttons and red link blocks is always white */
 .ember :is(.g-btn,.mm-report,.mm-panel .mm-btn) *,
 .ember main :is(a,button):is([class*="bg-slate-900"],[class*="bg-\[#4643ba\]"],[class*="bg-violet-6"],[class*="bg-blue-6"],[class*="bg-blue-7"],[class*="bg-primary"],.gl-idea-action,.gh-button-primary,.td-primary,.pt-primary,.calc-primary,.fd-button) *{color:#fff!important;opacity:1!important}
+
+/* Hub (founder, 8 Nov 2026): the centre circle and its rings are never clipped; each icon sits exactly on the end of its line */
+.rv-on [data-ember="hub"] [data-stagger][data-from]{clip-path:none!important;transform:scale(.92);opacity:0;transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.rv-on [data-ember="hub"].rv-in [data-stagger][data-from]{transform:none;opacity:1}
+@media (min-width:1024px){.ember [data-ember="hub"] ul > li{translate:-50% -3.1rem!important}}
+.ember [data-ember="hub"] [class*="border-[#7b6ff0]"],.ember [data-ember="hub"] [class*="border-[#ff7ab6]"]{border-color:rgba(235,30,36,.35)!important}
