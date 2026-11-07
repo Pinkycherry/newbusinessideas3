@@ -2,6 +2,7 @@
 import { OLD_CATEGORY_REDIRECTS } from "@/config/old-category-redirects";
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
+import { cleanFetch } from "@/lib/clean-fetch";
 import { queryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 
@@ -19,6 +20,7 @@ export function db() {
   if (!url || !key) throw new Error("BBI database credentials are not configured.");
   return createClient(url, key, {
     auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
+    global: { fetch: cleanFetch },
   });
 }
 

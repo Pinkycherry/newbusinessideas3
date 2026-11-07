@@ -24,6 +24,8 @@ export function useGlassMotion() {
       document.querySelectorAll(".g-flow").forEach((f) => { const svg = f.closest("svg"); if (svg) looping.add(svg); });
       looping.forEach((el) => anim!.observe(el));
     }
+    // Slideshow loop copies stay clickable but out of the keyboard order.
+    document.querySelectorAll<HTMLElement>("[data-loop-copy] a, [data-loop-copy] button").forEach((el) => { el.tabIndex = -1; });
     // Content protection (7 Nov 2026): long copies carry the source link; images have no save menu.
     const onCopy = (ev: ClipboardEvent) => {
       const text = window.getSelection()?.toString() ?? "";

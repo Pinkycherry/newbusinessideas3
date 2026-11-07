@@ -1,12 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
+import { cleanFetch } from "@/lib/clean-fetch";
 
 /** Published source blueprints remain read-only until their editorial migration is complete. */
 const SOURCE_URL = "https://jqzadwobnfypmytcbpkw.supabase.co";
 const SOURCE_PUBLIC_KEY = "sb_publishable_3gLu1JHF--npnOfAH4j4Sw_EYP10mOQ";
 const source = () => createClient(SOURCE_URL, SOURCE_PUBLIC_KEY, {
   auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
+    global: { fetch: cleanFetch },
 });
 
 export type LegacyIdea = {

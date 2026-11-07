@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
+import { cleanFetch } from "@/lib/clean-fetch";
 
 /**
  * Ideas live in the Supabase `ideas` table (row level security: the public
@@ -19,6 +20,7 @@ function client() {
   const key = process.env["BBI_DB_ANON_KEY"] || PUBLIC_KEY;
   return createClient(url, key, {
     auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
+    global: { fetch: cleanFetch },
   });
 }
 

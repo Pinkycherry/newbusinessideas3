@@ -283,10 +283,12 @@ export function IndiaMap3D() {
         el.removeEventListener("pointerdown", onDragStart);
         window.removeEventListener("pointermove", onDragMove);
         window.removeEventListener("pointerup", onDragEnd);
+        // Leaving the home page must never throw: state meshes carry an array of materials.
         scene.traverse((o) => {
-          const m = o as unknown as { geometry?: { dispose: () => void }; material?: { dispose: () => void } };
-          m.geometry?.dispose();
-          m.material?.dispose();
+          const m = o as unknown as { geometry?: { dispose?: () => void }; material?: { dispose?: () => void } | { dispose?: () => void }[] };
+          m.geometry?.dispose?.();
+          const mats = Array.isArray(m.material) ? m.material : m.material ? [m.material] : [];
+          mats.forEach((x) => x.dispose?.());
         });
         renderer.dispose();
         el.remove();
@@ -297,7 +299,7 @@ export function IndiaMap3D() {
       if (en?.isIntersecting) { gate.disconnect(); const go = () => { void start().catch(() => setReady(false)); }; if ("requestIdleCallback" in window) (window as unknown as { requestIdleCallback: (f: () => void, o?: { timeout: number }) => void }).requestIdleCallback(go, { timeout: 1500 }); else setTimeout(go, 200); }
     }, { rootMargin: "300px" });
     gate.observe(wrap);
-    return () => { disposed = true; gate.disconnect(); cleanup(); };
+    return () => { disposed = true; gate.disconnect(); try { cleanup(); } catch (e) { console.error("map cleanup", e); } };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

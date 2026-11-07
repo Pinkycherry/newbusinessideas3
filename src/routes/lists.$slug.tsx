@@ -105,50 +105,30 @@ function Intro({ p }: { p: ListPage }) {
 }
 
 function Comparison({ ideas }: { ideas: ListIdea[] }) {
-  const rows: [string, (i: ListIdea) => string][] = [
-    ["Money to Start", band],
-    ["Best For", (i) => clip(sentences(i.who_pays_you, 1), 90)],
-  ];
+  // 7 Nov 2026: one compact card per idea instead of a wide table with a sticky label column.
+  // Phones swipe through the cards; tablets and desktops see them side by side. No text is cut.
+  if (!ideas.length) return null;
   return (
-    <div className="rounded-lg bg-card text-card-foreground overflow-hidden border border-border/60 shadow-sm mb-8">
-      <div className="px-5 py-4 bg-primary/[0.03] border-b border-border/50 flex items-center gap-3">
-        <Star className="h-4 w-4 text-primary fill-primary" />
+    <section className="mb-8" aria-labelledby="quick-compare">
+      <div className="mb-3 flex items-end justify-between gap-3">
         <div>
-          <h2 className="text-base font-bold text-foreground leading-snug">Quick Comparison</h2>
-          <p className="text-sm text-muted-foreground mt-1 leading-snug">Compare top options at a glance</p>
+          <h2 id="quick-compare" className="flex items-center gap-2 text-lg font-bold text-foreground"><Star className="h-4 w-4 fill-primary text-primary" />Quick comparison</h2>
+          <p className="mt-1 text-sm text-muted-foreground">The top ideas side by side. Swipe on a phone.</p>
         </div>
       </div>
-      <div className="p-0">
-        <div className="overflow-x-auto scrollbar-thin">
-          <table className="w-full min-w-max border-separate border-spacing-0 text-sm">
-            <thead>
-              <tr className="border-b border-border/50">
-                <th className="sticky left-0 z-10 bg-[#f1efff] px-3 py-4 text-left text-xs font-bold uppercase tracking-wider text-foreground shadow-[2px_0_0_rgba(70,67,186,0.12)] sm:px-4"><span className="block w-[84px] sm:w-[128px]">Feature</span></th>
-                {ideas.map((i) => (
-                  <th key={i.slug} className="border-l border-border/40 px-4 py-4 text-center text-sm font-semibold leading-snug text-foreground/80">
-                    <span className="block w-[170px] whitespace-normal break-words leading-snug sm:w-[200px]">
-                      {i.title}
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map(([label, get]) => (
-                <tr key={label} className="border-b border-border/30 last:border-b-0 hover:bg-primary/[0.02] transition-colors">
-                  <td className="sticky left-0 z-10 bg-[#f1efff] px-3 py-4 align-top text-xs font-bold uppercase leading-snug tracking-wide text-foreground shadow-[2px_0_0_rgba(70,67,186,0.12)] sm:px-4"><span className="block w-[84px] whitespace-normal sm:w-[128px]">{label}</span></td>
-                  {ideas.map((i) => (
-                    <td key={i.slug} className="border-l border-border/20 px-4 py-4 text-center align-top text-sm leading-relaxed text-foreground/90">
-                      <span className="block w-[170px] whitespace-normal break-words font-medium sm:w-[200px]">{get(i)}</span>
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+      <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 lg:grid-cols-5">
+        {ideas.map((i) => (
+          <li key={i.slug} className="g-tile flex w-[78%] shrink-0 snap-start flex-col p-4 sm:w-[46%] md:w-auto">
+            <a href={`/idea/${i.slug}`} className="font-display text-[15px] font-semibold leading-snug text-slate-900 hover:text-[#4643ba]">{i.title}</a>
+            <dl className="mt-3 grid gap-2 text-sm">
+              <div><dt className="text-[11px] font-semibold uppercase tracking-wide text-[#4643ba]">Money to start</dt><dd className="mt-0.5 font-medium text-slate-800">{band(i) || "See the idea"}</dd></div>
+              <div><dt className="text-[11px] font-semibold uppercase tracking-wide text-[#4643ba]">Best for</dt><dd className="mt-0.5 text-slate-600">{sentences(i.who_pays_you, 1)}</dd></div>
+            </dl>
+            <a href={`/idea/${i.slug}`} className="g-link mt-auto !min-h-10 !py-2 text-sm" style={{ marginTop: "0.9rem" }}><span>Read this idea</span><span className="g-arrow"><ArrowRight aria-hidden size={14} /></span></a>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 

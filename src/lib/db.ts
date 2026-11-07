@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { cleanFetch } from "@/lib/clean-fetch";
 
 /**
  * Server-side database client for the parts of the site that still read rows
@@ -16,6 +17,7 @@ export function db() {
   if (!url || !key) throw new Error("BBI database credentials are not configured.");
   return createClient(url, key, {
     auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
+    global: { fetch: cleanFetch },
   });
 }
 

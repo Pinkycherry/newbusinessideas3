@@ -186,7 +186,7 @@ function Marquee({ children, speed = 48, rev = false }: { children: ReactNode; s
     <div className={"g-marquee mt-6 py-3" + (rev ? " rev" : "")} style={{ "--g-speed": `${speed}s` } as CSSProperties}>
       <div className="g-marquee-track">
         <ul className="flex gap-4 pl-4">{children}</ul>
-        <ul className="flex gap-4 pl-4" aria-hidden="true" inert>{children}</ul>
+        <ul className="flex gap-4 pl-4" aria-hidden="true" data-loop-copy>{children}</ul>
       </div>
     </div>
   );
