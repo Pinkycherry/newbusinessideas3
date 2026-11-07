@@ -24,6 +24,16 @@ export function useGlassMotion() {
       document.querySelectorAll(".g-flow").forEach((f) => { const svg = f.closest("svg"); if (svg) looping.add(svg); });
       looping.forEach((el) => anim!.observe(el));
     }
-    return () => { io?.disconnect(); anim?.disconnect(); root.classList.remove("rv-on"); };
+    // Content protection (7 Nov 2026): long copies carry the source link; images have no save menu.
+    const onCopy = (ev: ClipboardEvent) => {
+      const text = window.getSelection()?.toString() ?? "";
+      if (text.length < 200 || !ev.clipboardData) return;
+      ev.clipboardData.setData("text/plain", `${text.slice(0, 600)}…\n\nRead the full page at ${location.href} (bbusiness.online). Copying the content is not allowed.`);
+      ev.preventDefault();
+    };
+    const onMenu = (ev: MouseEvent) => { if ((ev.target as HTMLElement | null)?.closest("img")) ev.preventDefault(); };
+    document.addEventListener("copy", onCopy);
+    document.addEventListener("contextmenu", onMenu);
+    return () => { io?.disconnect(); anim?.disconnect(); root.classList.remove("rv-on"); document.removeEventListener("copy", onCopy); document.removeEventListener("contextmenu", onMenu); };
   }, []);
 }

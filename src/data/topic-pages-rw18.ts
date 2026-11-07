@@ -240,7 +240,7 @@ export const govResources: TopicPage = {
       items: [
         { label: "Business idea research", href: "/business-idea-research-india" },
         { label: "Market research", href: "/market-research" },
-        { label: "Open source research", href: "/open-source" },
+        { label: "Founder tools", href: "/tools" },
       ],
     },
     TOOLS,

@@ -83,10 +83,8 @@ const STATIC_PAGES = [
   "/weekend-market-stall-profit-check",
   "/researched-case-studies",
   "/failed-startups/india",
-  "/open-source",
   "/templates",
   "/tools",
-  "/tools/alternate",
 ];
 
 export const Route = createFileRoute("/sitemap-pages.xml")({

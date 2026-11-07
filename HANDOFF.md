@@ -13,6 +13,11 @@ Read this first. Update and commit it to main before you stop. Times are IST.
 
 ## Done (newest first)
 
+- 7 Nov — Content protection: src/lib/ai-bots.ts lists AI crawlers and site downloaders; robots.txt disallows them (plus Google-Extended and Applebot-Extended); src/server.ts answers them with 403 (robots.txt stays readable). Googlebot, AdsBot, Mediapartners-Google (AdSense) and Bingbot allowed. tdm-reservation meta; printing turned off and images not draggable (glass.css); copies over 200 characters carry the source link (use-glass-motion.ts). Limit: screenshots and a person copying by hand cannot be stopped on any website.
+- 7 Nov — Seller brand gone: /open-source and /tools/alternate (purchased snapshots with the seller name, seller tool ads, 181 and 62 dead links) 301 to /tools; removed from sitemap-pages.xml (99 URLs); internal links updated. Check all sitemap pages: no seller brand left.
+
+- 7 Nov — Quick Comparison table on category/subcategory pages: labels overlapped the first column on phones (min-width is ignored on table cells). Fixed widths inside the cells, solid sticky label column (src/routes/lists.$slug.tsx Comparison).
+
 - 7 Nov — Icons batches 16-20 added (freelance, handmade, home-based, home kitchen food, home textile): 200 icons in public/icons/sub, 198 shown. PENDING redo in ChatGPT (files kept, hidden in src/config/subcategory-icons.ts): batch 9 cell 2 daily-current-affairs-batch (text inside), batch 9 cell 8 state-service-exam-coaching (State Emblem of India, restricted use).
 
 - 7 Nov — Subcategory icons: 150 fire-red glass icons (batches 1-15 from the founder's ChatGPT sheets in BRAND-NEW-COPY src/Icons) cut out with transparent background into public/icons/sub/<subcategory-slug>.webp; list in src/config/subcategory-icons.ts. Shown above the title on each subcategory page and beside each focused list on category pages. Check: https://bbusiness.online/category/beauty-business-ideas/bridal-makeup-artist-business-ideas https://bbusiness.online/category/beauty-business-ideas

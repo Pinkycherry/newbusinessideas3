@@ -2,6 +2,7 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import { isBlockedAgent } from "./lib/ai-bots";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -85,6 +86,13 @@ async function renderAndMaybeCache(request: Request, env: unknown, ctx: unknown)
 
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
+    // Content protection: AI crawlers and site downloaders get a 403 (robots.txt stays readable).
+    if (isBlockedAgent(request.headers.get("user-agent")) && new URL(request.url).pathname !== "/robots.txt") {
+      return new Response("Automated copying of bbusiness.online is not allowed.", {
+        status: 403,
+        headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" },
+      });
+    }
     try {
       if (isCacheablePage(request)) {
         const cache = edgeCache();

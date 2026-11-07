@@ -129,6 +129,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      // Content protection: text and data mining reserved (W3C TDMRep), 7 Nov 2026.
+      { name: "tdm-reservation", content: "1" },
       { title: "BBI — Bro Business Ideas | Researched Business Idea Blueprints" },
       {
         name: "description",

@@ -123,10 +123,10 @@ function Comparison({ ideas }: { ideas: ListIdea[] }) {
           <table className="w-full min-w-max border-separate border-spacing-0 text-sm">
             <thead>
               <tr className="border-b border-border/50">
-                <th className="sticky left-0 z-10 min-w-[124px] bg-muted px-4 py-4 text-left text-xs font-bold uppercase tracking-wider text-foreground sm:min-w-[160px]">Feature</th>
+                <th className="sticky left-0 z-10 bg-[#f1efff] px-3 py-4 text-left text-xs font-bold uppercase tracking-wider text-foreground shadow-[2px_0_0_rgba(70,67,186,0.12)] sm:px-4"><span className="block w-[84px] sm:w-[128px]">Feature</span></th>
                 {ideas.map((i) => (
-                  <th key={i.slug} className="min-w-[180px] max-w-[220px] border-l border-border/40 px-4 py-4 text-center text-sm font-semibold leading-snug text-foreground/80">
-                    <span className="block whitespace-normal break-words leading-snug">
+                  <th key={i.slug} className="border-l border-border/40 px-4 py-4 text-center text-sm font-semibold leading-snug text-foreground/80">
+                    <span className="block w-[170px] whitespace-normal break-words leading-snug sm:w-[200px]">
                       {i.title}
                     </span>
                   </th>
@@ -136,10 +136,10 @@ function Comparison({ ideas }: { ideas: ListIdea[] }) {
             <tbody>
               {rows.map(([label, get]) => (
                 <tr key={label} className="border-b border-border/30 last:border-b-0 hover:bg-primary/[0.02] transition-colors">
-                  <td className="sticky left-0 z-10 min-w-[124px] border-r border-border/20 bg-muted px-4 py-4 text-xs font-bold uppercase leading-snug tracking-wide text-foreground sm:min-w-[160px]">{label}</td>
+                  <td className="sticky left-0 z-10 bg-[#f1efff] px-3 py-4 align-top text-xs font-bold uppercase leading-snug tracking-wide text-foreground shadow-[2px_0_0_rgba(70,67,186,0.12)] sm:px-4"><span className="block w-[84px] whitespace-normal sm:w-[128px]">{label}</span></td>
                   {ideas.map((i) => (
-                    <td key={i.slug} className="min-w-[180px] max-w-[220px] border-l border-border/20 px-4 py-4 text-center text-sm leading-relaxed text-foreground/90">
-                      <span className="block whitespace-normal break-words font-medium">{get(i)}</span>
+                    <td key={i.slug} className="border-l border-border/20 px-4 py-4 text-center align-top text-sm leading-relaxed text-foreground/90">
+                      <span className="block w-[170px] whitespace-normal break-words font-medium sm:w-[200px]">{get(i)}</span>
                     </td>
                   ))}
                 </tr>

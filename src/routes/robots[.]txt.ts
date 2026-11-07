@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { siteUrl, siteIndexable } from "@/lib/site-config";
+import { AI_CRAWLERS, AI_ROBOTS_TOKENS } from "@/lib/ai-bots";
 
 /**
  * robots.txt, served from the app so the sitemap line follows the domain.
@@ -22,6 +23,8 @@ import { siteUrl, siteIndexable } from "@/lib/site-config";
 const BODY = () =>
   (siteIndexable()
     ? [
+        // Content protection (7 Nov 2026): AI crawlers and AI training are not allowed. Google Search and AdSense stay allowed.
+        ...[...AI_CRAWLERS, ...AI_ROBOTS_TOKENS].flatMap((bot) => [`User-agent: ${bot}`, "Disallow: /", ""]),
         "User-agent: *",
         "Allow: /",
         "Disallow: /search",
