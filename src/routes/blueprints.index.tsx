@@ -1,9 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowRight, ChevronRight, Search, Star } from "lucide-react";
+import { ArrowRight, ChevronRight, Lightbulb, Search, Star, Wallet } from "lucide-react";
 import { z } from "zod";
 import { V2Frame } from "@/components/v2/frame";
-import { categoryImage } from "@/config/category-imagery";
+import { subcategoryIcon } from "@/config/subcategory-icons";
 import { getLegacyIdeaCards } from "@/lib/legacy-ideas.functions";
 import { ShortlistToggle } from "@/components/founder-workspace/shortlist-toggle";
 import { useFounderWorkspace, type WorkspaceIdea } from "@/lib/founder-workspace";
@@ -36,10 +36,15 @@ function BlueprintLibrary(){
     <label className="flex min-h-12 min-w-0 flex-1 items-center gap-2 rounded-xl border border-slate-300 bg-white px-4"><Search size={19} className="shrink-0 text-slate-500"/><span className="sr-only">Search published blueprint titles</span><input type="search" maxLength={80} value={term} onChange={e=>setTerm(e.target.value)} placeholder="Try farming, repair or tuition" className="min-w-0 flex-1 bg-transparent text-slate-950 outline-none"/></label>
     <button type="submit" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-violet-700 px-6 py-3 font-semibold text-white hover:bg-violet-800">Search <ArrowRight size={17}/></button>
    </form>
-   {items.length?<div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{items.map(item=>{const image=categoryImage(item.categorySlug);return <article key={item.slug} className="flex min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-    <a href={`/idea/${item.slug}`} className="block aspect-[16/9] overflow-hidden"><img src={image.src} alt={image.alt} loading="lazy" width={1280} height={720} className="h-full w-full object-cover"/></a>
-    <div className="flex flex-1 flex-col p-5"><span className="text-xs font-bold uppercase tracking-wider text-violet-700">{item.categoryName}</span><h3 className="mt-3 text-lg font-semibold leading-snug text-slate-950"><a href={`/idea/${item.slug}`} className="hover:text-violet-700">{item.title}</a></h3><p className="mt-3 line-clamp-4 flex-1 text-sm leading-6 text-slate-600">{item.description}</p>
-    <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-3"><a href={`/idea/${item.slug}`} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-blue-700 px-3 py-2.5 text-sm font-semibold text-white hover:bg-blue-800"><ArrowRight size={15}/>Read full idea</a><ShortlistToggle compact className="w-full [&>button]:w-full" idea={asWorkspaceIdea(item)}/><a href={`/idea/${item.slug}#idea-validate`} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm font-semibold text-slate-800 hover:border-blue-500 hover:bg-blue-50"><Star size={15}/>Validate this idea</a></div></div>
+   {items.length?<div className="mt-7 grid gap-4 lg:grid-cols-2">{items.map(item=>{const icon=subcategoryIcon(item.subcategorySlug??"");return <article key={item.slug} className="flex min-w-0 flex-col rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-violet-300 hover:shadow-md sm:p-5">
+    <div className="flex min-w-0 flex-1 gap-4"><a href={`/idea/${item.slug}`} aria-hidden="true" tabIndex={-1} className="icon-tile h-24 w-20 shrink-0 !rounded-2xl !p-1.5 sm:h-28 sm:w-24">{icon?<img src={icon} alt="" width={96} height={130} loading="lazy" decoding="async"/>:<Lightbulb size={34} className="text-orange-200 drop-shadow-[0_4px_10px_rgba(255,60,30,.5)]"/>}</a>
+    <div className="flex min-w-0 flex-1 flex-col">
+     {item.subcategoryName?<a href={`/lists/${item.subcategorySlug}`} className="w-fit text-[11px] font-bold uppercase tracking-wider text-violet-700 hover:underline">{item.subcategoryName}</a>:<span className="text-[11px] font-bold uppercase tracking-wider text-violet-700">{item.categoryName}</span>}
+     <h3 className="mt-1 text-base font-semibold leading-snug text-slate-950 sm:text-lg"><a href={`/idea/${item.slug}`} className="hover:text-violet-700">{item.title}</a></h3>
+     {item.whoPays&&<p className="mt-1.5 line-clamp-2 text-sm leading-6 text-slate-600"><span className="font-semibold text-slate-800">Who pays you: </span>{item.whoPays}</p>}
+     {item.moneyToStart&&<div className="mt-2.5 flex flex-wrap gap-1.5"><span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-900 ring-1 ring-amber-200"><Wallet size={13}/>{item.moneyToStart} to start</span></div>}
+     </div></div>
+    <div className="mt-4 flex items-center gap-2 border-t border-slate-100 pt-3"><a href={`/idea/${item.slug}`} className="inline-flex min-h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-xl bg-violet-700 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-800">Read idea <ArrowRight size={15}/></a><ShortlistToggle compact className="shrink-0 [&>button]:whitespace-nowrap" idea={asWorkspaceIdea(item)}/><a href={`/idea/${item.slug}#idea-validate`} aria-label={`Validate ${item.title}`} title="Validate this idea" className="ml-auto inline-flex min-h-10 min-w-10 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-800 hover:border-violet-500"><Star size={14}/><span className="hidden sm:inline">Validate</span></a></div>
    </article>})}</div>:<div className="mt-7 rounded-xl border p-6"><h3 className="font-semibold">No published ideas matched this search.</h3><a className="mt-3 inline-block text-violet-700 underline" href="/browse">Explore categories</a></div>}
    {pages>1&&<nav className="mt-8 flex items-center justify-center gap-4" aria-label="Blueprint pages">{page>1&&<a className="rounded-xl border px-4 py-3" href={`/blueprints?page=${page-1}&q=${encodeURIComponent(q??"")}`}>Previous</a>}<span className="text-sm">Page {page} of {pages}</span>{page<pages&&<a className="rounded-xl border px-4 py-3" href={`/blueprints?page=${page+1}&q=${encodeURIComponent(q??"")}`}>Next →</a>}</nav>}
   </div></section>

@@ -371,6 +371,7 @@ export function Header({ active: _active }: { active?: string | undefined }) {
           <a className="mm-search" href="/search" aria-label="Search"><Search size={19} aria-hidden="true" /></a>
         </div>
         <div className="mm-actions">
+          <a className="mm-report mm-cta" href="/browse">Browse ideas</a>
           <a className="mm-mobile-search" href="/search" aria-label="Search"><Search size={20} aria-hidden="true" /></a>
           <button className="mm-mobile-toggle" type="button" aria-label={mobile ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={mobile} aria-controls="mm-mobile" onClick={() => {setMobile(!mobile);setOpen(null);}}>
@@ -384,6 +385,7 @@ export function Header({ active: _active }: { active?: string | undefined }) {
         <Panel />
       </div>)}
       <nav id="mm-mobile" className="mm-mobile" aria-label="Mobile navigation" hidden={!mobile}>
+        <div className="mm-quick">{[["Browse ideas","/browse"],["Idea lists","/lists"],["Validate an idea","/product"],["Free tools","/tools"]].map(([label,href])=><a key={href} href={href}>{label}</a>)}</div>
         {MEGA.map(({label, Panel}) => <details key={label}>
           <summary>{label}<ChevronDown size={18} aria-hidden="true" /></summary>
           <div className="mm-mobile-content"><Panel /></div>
@@ -396,14 +398,39 @@ export function Header({ active: _active }: { active?: string | undefined }) {
 
 type L = { label: string; href: string };
 
+/* Footer redesign (7 Nov 2026, P2 n10): clear columns by task, then every live category, then legal. */
+const FOOTER_COLS: { title: string; links: L[] }[] = [
+  { title: "Find ideas", links: [
+    { label: "Browse business ideas", href: "/browse" },
+    { label: "Business idea lists", href: "/lists" },
+    { label: "Idea blueprints", href: "/blueprints" },
+    { label: "Business idea topics", href: "/topics" },
+    { label: "Search ideas", href: "/search" },
+  ] },
+  { title: "Check an idea", links: [
+    { label: "Validate an idea", href: "/product" },
+    { label: "Compare ideas", href: "/startup-idea-comparison" },
+    { label: "Startup cost calculators", href: "/calculator" },
+    { label: "Free founder tools", href: "/tools" },
+  ] },
+  { title: "Learn", links: [
+    { label: "How to validate an idea", href: "/how-to-validate-a-business-idea-in-india" },
+    { label: "Researched case studies", href: "/researched-case-studies" },
+    { label: "Failed startups in India", href: "/failed-startups/india" },
+    { label: "Founder glossary", href: "/founder-glossary" },
+  ] },
+  { title: "Company", links: [
+    { label: "About us", href: "/about" },
+    { label: "Contact", href: "/contact" },
+    { label: "Site map", href: "/sitemap" },
+  ] },
+];
+
 const LEGAL: L[] = [
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms", href: "/terms" },
   { label: "Cookie Policy", href: "/cookie-policy" },
   { label: "Disclaimer", href: "/disclaimer" },
-  { label: "Site Map", href: "/sitemap" },
 ];
 
 export function Footer() {
@@ -416,25 +443,32 @@ export function Footer() {
             <p>A free library of researched business ideas for India: who pays you, how the money works and what hurts in year one.</p>
             <div className="v2-footer-actions">
               <a href="/browse">Browse ideas</a>
-              <a href="/lists">Idea lists</a>
               <a href="/product">Validate an idea</a>
             </div>
           </div>
-          <div className="v2-footer-cats">
-            <h3>Business idea categories</h3>
-            <ul>
-              {/* Only categories with published ideas, so no footer link is a 404 (founder, 7 Nov 2026). */}
-              {TAXONOMY.filter((c) => LIVE_CATEGORY_SLUGS.has(c.slug)).map((c) => (
-                <li key={c.slug}>
-                  <a href={`/category/${c.slug}`}>{c.name}</a>
-                </li>
-              ))}
-            </ul>
+          <div className="v2-footer-cols">
+            {FOOTER_COLS.map((col) => (
+              <nav key={col.title} aria-label={col.title}>
+                <h3>{col.title}</h3>
+                <ul>{col.links.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul>
+              </nav>
+            ))}
           </div>
+        </div>
+        <div className="v2-footer-cats">
+          <h3>Business idea categories</h3>
+          <ul>
+            {/* Only categories with published ideas, so no footer link is a 404 (founder, 7 Nov 2026). */}
+            {TAXONOMY.filter((c) => LIVE_CATEGORY_SLUGS.has(c.slug)).map((c) => (
+              <li key={c.slug}>
+                <a href={`/category/${c.slug}`}>{c.name}</a>
+              </li>
+            ))}
+          </ul>
         </div>
         <div className="v2-footer-bottom">
           <p>© {new Date().getFullYear()} bbusiness.online</p>
-          <nav aria-label="Footer">
+          <nav aria-label="Legal">
             {LEGAL.map((l) => (
               <a key={l.href} href={l.href}>
                 {l.label}

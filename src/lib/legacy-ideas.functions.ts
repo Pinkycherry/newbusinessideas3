@@ -64,6 +64,17 @@ export const getLegacyIdea = createServerFn({ method: "GET" })
 
 export type LegacyIdeaCard = {
   slug: string; title: string; description: string; categoryName: string; categorySlug: string;
+  /** /blueprints cards (7 Nov 2026): subcategory icon, one plain "who pays you" line, money to start. */
+  subcategorySlug?: string; subcategoryName?: string; whoPays?: string; moneyToStart?: string;
+};
+
+const sentences = (text: string | null | undefined) => (text ?? "").replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+/).filter(Boolean);
+const clip = (text: string, max: number) => (text.length <= max ? text : text.slice(0, text.lastIndexOf(" ", max)).replace(/[,;:]$/, "") + "…");
+/** First plain sentence about the buyer (skips the "Who pays for X?" question lead). */
+const BUYER = /customer|buyer|pay|client|famil|parent|student|shop|owner|household|business|office|school|people|women|men\b/i;
+const whoPaysLine = (text: string | null | undefined) => {
+  const all = sentences(text).filter((s) => !s.endsWith("?") && !s.endsWith(":"));
+  return clip(all.find((s) => s.length >= 45 && BUYER.test(s)) ?? all[0] ?? "", 150);
 };
 
 /** Homepage source pool until the editorial `published` table is populated.
@@ -108,7 +119,7 @@ export const getLegacyIdeaCards = createServerFn({ method: "GET" })
   .handler(async ({ data }): Promise<{ items: LegacyIdeaCard[]; total: number; page: number }> => {
     const perPage = 24;
     let query = source().from("ideas")
-      .select("slug,title,business_description,category_name,category_slug", { count: "exact" })
+      .select("slug,title,business_description,category_name,category_slug,subcategory_slug,subcategory_name,target_customer,startup_cost", { count: "exact" })
       .eq("status", "completed");
     const term = data.q.replace(/[%_,()]/g, "").trim();
     if (term) query = query.ilike("title", "%" + term + "%");
@@ -120,6 +131,8 @@ export const getLegacyIdeaCards = createServerFn({ method: "GET" })
         slug: row.slug, title: row.title,
         description: (row.business_description ?? "").split(/(?<=[.!?])\s+/)[0]?.slice(0, 210) ?? "",
         categoryName: row.category_name ?? "", categorySlug: row.category_slug ?? "",
+        subcategorySlug: row.subcategory_slug ?? "", subcategoryName: (row.subcategory_name ?? "").replace(/\s*Business Ideas$/i, ""),
+        whoPays: whoPaysLine(row.target_customer), moneyToStart: (row.startup_cost ?? "").replace(/\s*to start\.?$/i, "").trim(),
       })),
       total: count ?? 0, page: data.page,
     };
