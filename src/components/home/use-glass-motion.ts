@@ -22,7 +22,9 @@ export function useGlassMotion() {
         kids.forEach((c, i) => {
           c.setAttribute("data-stagger", "");
           c.style.transitionDelay = `${Math.min(i, 8) * 70}ms`;
-          if (!c.dataset["from"]) c.dataset["from"] = i % 3 === 0 ? "left" : i % 3 === 1 ? "up" : "right";
+          // Grids of four or more cards (categories, lists) wipe in one after another; small groups slide in.
+          if (!c.dataset["from"]) c.dataset["from"] = kids.length >= 4 ? "wipe" : i % 3 === 0 ? "left" : i % 3 === 1 ? "up" : "right";
+          if (kids.length >= 4) c.style.transitionDelay = `${Math.min(i, 12) * 100}ms`;
         });
       });
       io = new IntersectionObserver((entries) => {

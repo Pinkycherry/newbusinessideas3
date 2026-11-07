@@ -347,3 +347,69 @@ html:has(.v2.ember),body:has(.v2.ember){background:#000}
 .ember main :is([class*="text-[#0"],[class*="text-[#1"],[class*="text-[#2"],[class*="text-[#3"],.text-black,.text-gray-800,.text-gray-900,.text-neutral-800,.text-neutral-900,.text-zinc-800,.text-zinc-900,.text-stone-900,.text-slate-950){color:#ece3e3!important}
 .ember main :is([class*="text-[#4"],[class*="text-[#5"],[class*="text-[#6"]){color:#ff4848!important}
 .ember main :is(h1,h2,h3,h4,strong,b){color:inherit}
+
+/* =====================================================================================
+   Buttons v2 (founder, 8 Nov 2026), from his two references:
+   MAIN buttons = liquid glass pill (Petr Knoll pen): translucent red glass, blur, inner rim light,
+   a diagonal light sweep that slides on hover, presses in on click.
+   GENERAL buttons = soft raised pill (jouanmarcel pen): layered top and bottom shadows, inner
+   shade that deepens on hover, a slow red pulse while focused, pressed-in on click. Dark version.
+   ===================================================================================== */
+@property --e-sweep{syntax:"<angle>";inherits:false;initial-value:-45deg}
+.ember :is(.g-btn,.mm-report,.mm-quick a:first-child,.v2-footer-actions a:first-child,.mm-panel .mm-btn),
+.ember main :is(a,button):is([class*="bg-slate-900"],[class*="bg-\[#4643ba\]"],[class*="bg-violet-6"],[class*="bg-blue-6"],[class*="bg-blue-7"],[class*="bg-primary"],.gl-idea-action,.gh-button-primary,.td-primary,.pt-primary,.calc-primary,.fd-button){
+  position:relative;isolation:isolate;overflow:hidden;border-radius:999px!important;color:#fff!important;
+  background:linear-gradient(-75deg,rgba(224,27,31,.55),rgba(255,92,92,.78),rgba(224,27,31,.55)),linear-gradient(180deg,#5c0306,#2a0103)!important;
+  border:1px solid rgba(255,150,150,.38)!important;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  box-shadow:inset 0 .125em .125em rgba(0,0,0,.25),inset 0 -.125em .125em rgba(255,255,255,.28),0 .25em .3em -.1em rgba(0,0,0,.55),0 0 .1em .25em inset rgba(255,255,255,.12),0 12px 26px -12px rgba(224,27,31,.65)!important;
+  text-shadow:0 1px 1px rgba(60,0,0,.55);transition:transform .4s cubic-bezier(.25,1,.5,1),box-shadow .4s cubic-bezier(.25,1,.5,1),filter .3s ease}
+.ember :is(.g-btn,.mm-report,.mm-quick a:first-child,.v2-footer-actions a:first-child)::after,
+.ember main :is(a,button):is([class*="bg-\[#4643ba\]"],.gl-idea-action,.gh-button-primary)::after{
+  content:"";position:absolute;inset:1px;z-index:1;border-radius:999px;pointer-events:none;mix-blend-mode:screen;
+  background:linear-gradient(var(--e-sweep),rgba(255,255,255,0) 0%,rgba(255,255,255,.45) 40% 50%,rgba(255,255,255,0) 55%) 0% 50%/200% 200% no-repeat!important;
+  transform:none!important;top:1px!important;left:1px!important;width:auto!important;height:auto!important;animation:none!important;
+  transition:background-position .5s cubic-bezier(.25,1,.5,1),--e-sweep .5s cubic-bezier(.25,1,.5,1)}
+.ember .g-btn::before{display:none!important}
+.ember :is(.g-btn,.mm-report,.mm-quick a:first-child,.v2-footer-actions a:first-child):hover,
+.ember main :is(a,button):is([class*="bg-\[#4643ba\]"],.gl-idea-action,.gh-button-primary):hover{transform:scale(.975);filter:brightness(1.08);
+  box-shadow:inset 0 .125em .125em rgba(0,0,0,.25),inset 0 -.125em .125em rgba(255,255,255,.4),0 .15em .05em -.1em rgba(0,0,0,.6),0 0 .05em .1em inset rgba(255,255,255,.35),0 14px 30px -12px rgba(224,27,31,.8)!important}
+.ember :is(.g-btn,.mm-report,.mm-quick a:first-child,.v2-footer-actions a:first-child):hover::after,
+.ember main :is(a,button):is([class*="bg-\[#4643ba\]"],.gl-idea-action,.gh-button-primary):hover::after{background-position:25% 50%!important}
+.ember :is(.g-btn,.mm-report):active{transform:scale(.95) rotateX(18deg)}
+.ember :is(.g-btn,.mm-report):active::after{background-position:50% 15%!important;--e-sweep:-15deg}
+
+.ember :is(.g-btn-light,.g-chip,.mm-quick a,.v2-footer-actions a,.mm-pill),
+.ember main :is(a,button):is(.gh-button-secondary,.td-secondary,.pt-secondary,.calc-secondary,[class*="inline-flex"][class*="border"]:is([class*="font-semibold"],[class*="min-h"],[class*="px-"]),[class*="rounded-full"][class*="border"][class*="px-4"]):not(.g-btn):not([aria-pressed="true"]){
+  border-radius:30px!important;color:#ece3e3!important;text-shadow:0 1px 0 #000;
+  background:linear-gradient(to top,#171212 0%,#2a2222 80%,#302828 100%)!important;border:1px solid #4a3c3c!important;
+  box-shadow:0 4px 3px 1px rgba(255,255,255,.035),0 6px 8px rgba(0,0,0,.7),0 -4px 4px rgba(0,0,0,.55),0 -6px 4px rgba(255,255,255,.03),inset 0 0 3px 0 rgba(255,255,255,.1)!important;
+  transition:box-shadow .2s ease,color .2s ease}
+.ember :is(.g-btn-light,.g-chip,.mm-quick a,.v2-footer-actions a,.mm-pill):hover,
+.ember main :is(a,button):is(.gh-button-secondary,.td-secondary,[class*="inline-flex"][class*="border"],[class*="rounded-full"][class*="border"]):not(.g-btn):not([class*="bg-\[#4643ba\]"]):hover{
+  background:linear-gradient(to top,#171212 0%,#2a2222 80%,#302828 100%)!important;color:#fff!important;border-color:#6a3a3a!important;
+  box-shadow:0 4px 3px 1px rgba(255,255,255,.035),0 6px 8px rgba(0,0,0,.7),0 -4px 4px rgba(0,0,0,.55),0 -6px 4px rgba(255,255,255,.03),inset 0 0 3px 3px rgba(224,27,31,.45)!important}
+.ember :is(.g-btn-light,.g-chip,.mm-pill):hover > *{transform:scale(.975)}
+@keyframes e-pulse{from{box-shadow:0 4px 3px 1px rgba(255,255,255,.035),0 6px 8px rgba(0,0,0,.7),0 -4px 4px rgba(0,0,0,.55),inset 0 0 10px 0 rgba(224,27,31,.7)}to{box-shadow:0 4px 3px 1px rgba(255,255,255,.035),0 6px 8px rgba(0,0,0,.7),0 -4px 4px rgba(0,0,0,.55),inset 0 0 3px 3px rgba(224,27,31,.4)}}
+.ember :is(.g-btn-light,.g-chip,.mm-pill):focus-visible:not(:active){animation:e-pulse .9s alternate infinite}
+.ember :is(.g-btn-light,.g-chip,.mm-pill):active{box-shadow:0 4px 3px 1px rgba(255,255,255,.03),0 6px 8px rgba(0,0,0,.7),inset 0 0 5px 3px #000,inset 0 0 30px rgba(224,27,31,.35)!important}
+
+/* Cards that open something: more glass, more red, and a hairline red edge so they read as clickable */
+.ember main :is(div,article,li,aside,details):is([class*="rounded-xl"],[class*="rounded-2xl"],[class*="rounded-3xl"]):is([class*="bg-card"],[class*="bg-white"]):is([class*="border"],[class*="shadow"],[class*="ring"]):not([data-ember] *),
+.ember main .g-tile:not([data-ember] *),.ember main .premium-card{
+  background:linear-gradient(135deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,0) 38%),radial-gradient(ellipse 90% 80% at var(--eb-at,0% 0%),rgba(200,20,26,.55) 0%,rgba(139,1,0,.2) 42%,transparent 74%),linear-gradient(160deg,#1f1a1a 0%,#141111 45%,#0c0a0a 100%)!important;
+  border:.5px solid rgba(224,27,31,.45)!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+/* Every link to an idea, category, list or article: a hairline red edge, so it reads as clickable */
+.ember main a:is([href^="/idea/"],[href^="/category/"],[href^="/lists/"],[href^="/list/"],[href^="/blog/"],[href^="/blueprints"],[href^="/startup-guides/"]):not(.g-btn):not(.g-btn-light):not(.g-link):not([class*="rounded"]):not([class*="inline-flex"]){
+  outline:.5px solid rgba(224,27,31,.6);outline-offset:4px;border-radius:6px;transition:outline-color .2s ease,background-color .2s ease}
+.ember main a:is([href^="/idea/"],[href^="/category/"],[href^="/lists/"],[href^="/list/"],[href^="/blog/"]):not(.g-btn):not(.g-btn-light):not(.g-link):not([class*="rounded"]):not([class*="inline-flex"]):hover{outline-color:#ff4848;background-color:rgba(224,27,31,.12)}
+.ember main a:is([href^="/idea/"],[href^="/category/"],[href^="/lists/"],[href^="/list/"],[href^="/blog/"])[class*="rounded"]:not(.g-btn):not(.g-btn-light):not([class*="inline-flex"]){outline:.5px solid rgba(224,27,31,.55);outline-offset:-1px}
+/* Paragraph text a touch brighter so lists read as content, not faint lines */
+.ember main :is(p,li,dd){color:#ddd4d4}
+
+/* Category reveal (nakome pen): cards wipe in left to right, one after another */
+.rv-on [data-reveal] [data-stagger][data-from="wipe"]{opacity:0;transform:none;clip-path:inset(0 100% 0 0 round 16px);transition:clip-path .8s cubic-bezier(.2,.7,.2,1),opacity .5s ease}
+.rv-on [data-reveal].rv-in [data-stagger][data-from="wipe"]{opacity:1;clip-path:inset(0 0 0 0 round 16px)}
+/* Big link blocks that use the brand fill keep card corners, not a pill */
+.ember main :is(a,button):is([class*="justify-between"],[class*=" p-4"],[class*=" p-5"],[class*=" p-6"],[class*="flex-col"],[class*="min-h-2"]):is([class*="bg-\[#4643ba\]"],[class*="bg-slate-900"],[class*="bg-primary"],[class*="bg-blue-"],[class*="bg-violet-"]),
+.ember main :is(a,button):is([class*="justify-between"],[class*=" p-4"],[class*=" p-5"],[class*=" p-6"],[class*="flex-col"],[class*="min-h-2"]):is([class*="bg-\[#4643ba\]"],[class*="bg-slate-900"],[class*="bg-primary"])::after{border-radius:18px!important}
