@@ -13,6 +13,8 @@ Read this first. Update and commit it to main before you stop. Times are IST.
 
 ## Done (newest first)
 
+- 7 Nov — Subcategory icons: 150 fire-red glass icons (batches 1-15 from the founder's ChatGPT sheets in BRAND-NEW-COPY src/Icons) cut out with transparent background into public/icons/sub/<subcategory-slug>.webp; list in src/config/subcategory-icons.ts. Shown above the title on each subcategory page and beside each focused list on category pages. Check: https://bbusiness.online/category/beauty-business-ideas/bridal-makeup-artist-business-ideas https://bbusiness.online/category/beauty-business-ideas
+
 - 7 Nov — Home speed: 3D map no longer redraws on every scroll frame (scroll tilt removed), no shadow map, no environment map, lighter materials, starts in idle time; flat SVG map shows if WebGL fails or is lost. Looping animations pause off screen (use-glass-motion.ts, .is-off); sections below the screen use content-visibility:auto (glass.css). Local test: long frames while scrolling past the map went from ~850 ms each to none. Check: https://bbusiness.online/#india-map
 
 - 7 Nov — /case-studies (purchased snapshot: seller brand, sign-up offer, dollar figures, dead ./pages links) replaced by our own page https://bbusiness.online/researched-case-studies (glass layout). Same 12 pivot cases (problem, pivot, what would have failed, solution), 5-step loop, 6 patterns, 6 famous failures, FAQ; seller quotes, seller metrics and seller brand left out (they would read as fake testimonials under our brand). Every link goes to our pages. /case-studies 301 to the new page; sitemap-pages.xml updated; internal links updated.

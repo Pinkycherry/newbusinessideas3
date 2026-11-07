@@ -1,3 +1,4 @@
+import { subcategoryIcon } from "@/config/subcategory-icons";
 import { SellerFaq as Faq } from "@/components/v2/faq";
 export { SellerFaq as Faq } from "@/components/v2/faq";
 import { createFileRoute, notFound } from "@tanstack/react-router";
@@ -57,6 +58,7 @@ const BTN =
 function Head({ p, title, words, updated }: { p: ListPage; title: string; words: number; updated: string }) {
   return (
     <div className="text-center mb-6">
+      {subcategoryIcon(p.slug) && <img src={subcategoryIcon(p.slug)!} alt={`${p.name} icon`} width={154} height={208} fetchPriority="high" decoding="async" className="mx-auto mb-4 h-40 w-auto sm:h-48" />}
       <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 standard-badge-primary mb-3">
         {lower(p.name)}
       </div>
@@ -290,7 +292,7 @@ export function ListPageBody({ p, categorySlug, canonicalPath, parent, directory
           <Head p={p} title={title} words={words} updated={updated} />
           <Tldr p={p} title={title} month={month} />
           <Intro p={p} />
-          {directory && directory.length>0 && <section id="focused-lists" className="mb-12 scroll-mt-28"><h2 className="mb-5 text-2xl font-bold">Focused lists</h2><div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">{directory.map(sub=><a key={sub.slug} href={`/lists/${sub.slug}`} className="group flex min-h-14 min-w-0 items-center justify-between gap-3 rounded-xl border bg-card px-4 py-3 text-sm font-semibold transition hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-sm"><span className="min-w-0 break-words">{sub.name}</span><ArrowRight className="shrink-0 text-primary" size={16}/></a>)}</div></section>}
+          {directory && directory.length>0 && <section id="focused-lists" className="mb-12 scroll-mt-28"><h2 className="mb-5 text-2xl font-bold">Focused lists</h2><div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">{directory.map(sub=><a key={sub.slug} href={`/lists/${sub.slug}`} className="group flex min-h-14 min-w-0 items-center justify-between gap-3 rounded-xl border bg-card px-4 py-3 text-sm font-semibold transition hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-sm"><span className="flex min-w-0 items-center gap-3">{subcategoryIcon(sub.slug) && <img src={subcategoryIcon(sub.slug)!} alt="" width={40} height={54} loading="lazy" decoding="async" className="h-12 w-auto shrink-0" />}<span className="min-w-0 break-words">{sub.name}</span></span><ArrowRight className="shrink-0 text-primary" size={16}/></a>)}</div></section>}
           <ListReportPromo p={p}/>
           <Comparison ideas={top} />
           <section className="space-y-8 mb-12">
