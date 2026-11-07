@@ -24,6 +24,8 @@ Read this first. Update and commit it to main before you stop. Times are IST.
 
 - 7 Nov — Subcategory icons: 150 fire-red glass icons (batches 1-15 from the founder's ChatGPT sheets in BRAND-NEW-COPY src/Icons) cut out with transparent background into public/icons/sub/<subcategory-slug>.webp; list in src/config/subcategory-icons.ts. Shown above the title on each subcategory page and beside each focused list on category pages. Check: https://bbusiness.online/category/beauty-business-ideas/bridal-makeup-artist-business-ideas https://bbusiness.online/category/beauty-business-ideas
 
+- 8 Nov ~06:00 IST — Speed: slow loads were cold server renders (2 to 5 s right after each cache purge; cached pages answer in 0.2 s). Edge cache now keeps pages for a day (src/server.ts EDGE_TTL_SECONDS 86400). Card backdrop blur removed (scroll jank). One hover style for every button: lift, glow, press.
+
 - 8 Nov ~05:40 IST — Hub fix: centre circle no longer clipped into a square (the card wipe-in clipped it), each hub icon now sits on the end of its line (desktop), rings red. Card wipe-in no longer cuts card shadows and red outlines. NOT DONE site-wide yet: idea page phone layout, compare padding, header menu rethink, guide images, numbers 8-100, subcat icons 21-42.
 
 - 8 Nov ~05:00 IST — Founder fix pass: cards less maroon (neutral black-grey glass, small bright red corner light, 1px red edge), main buttons true red glass with white text above the light sweep, link hairlines 1px (visible on phones), red section labels, tighter header bar, compact menu panels (small type, tool tiles as one-line chips, duplicate category columns hidden). PENDING: founder wants the header menu rethought (engaging names, smarter grouping, better use of space) beyond this compact pass.

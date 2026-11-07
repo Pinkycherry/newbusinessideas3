@@ -51,7 +51,8 @@ function isH3SwallowedErrorBody(body: string): boolean {
  * Public pages are the same for every visitor, so a rendered page is kept in Cloudflare's edge
  * cache for an hour and served from there without rendering again.
  */
-const EDGE_TTL_SECONDS = 3600;
+// Speed (8 Nov 2026): a day, not an hour, so far fewer visitors wait for a fresh render (each deploy purges the cache anyway).
+const EDGE_TTL_SECONDS = 86400;
 
 function isCacheablePage(request: Request): boolean {
   if (request.method !== "GET") return false;

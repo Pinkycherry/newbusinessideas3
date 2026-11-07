@@ -484,3 +484,9 @@ html:has(.v2.ember),body:has(.v2.ember){background:#000}
 .rv-on [data-ember="hub"].rv-in [data-stagger][data-from]{transform:none;opacity:1}
 @media (min-width:1024px){.ember [data-ember="hub"] ul > li{translate:-50% -3.1rem!important}}
 .ember [data-ember="hub"] [class*="border-[#7b6ff0]"],.ember [data-ember="hub"] [class*="border-[#ff7ab6]"]{border-color:rgba(235,30,36,.35)!important}
+/* Speed (8 Nov 2026): no backdrop blur on cards (it repainted every card while scrolling); buttons keep theirs */
+.ember main :is(div,article,li,aside,details,a),.ember main .g-tile,.ember main .premium-card{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+/* Hover, every button: lift and glow, same timing everywhere */
+.ember :is(.g-btn,.g-btn-light,.g-chip,.g-link,.mm-report,.mm-pill,.mm-quick a,.v2-footer-actions a,.v2-footer-cats a),.ember main :is(a,button)[class*="inline-flex"]{transition:transform .25s cubic-bezier(.25,1,.5,1),box-shadow .25s ease,filter .25s ease,background-color .25s ease,color .2s ease,border-color .2s ease!important}
+.ember :is(.g-btn,.mm-report,.g-btn-light,.g-chip,.mm-pill,.mm-quick a,.v2-footer-actions a):hover{transform:translateY(-2px)!important;filter:brightness(1.12)}
+.ember :is(.g-btn,.mm-report,.g-btn-light,.g-chip,.mm-pill):active{transform:translateY(1px) scale(.97)!important}
