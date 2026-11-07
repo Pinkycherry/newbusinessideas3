@@ -234,7 +234,7 @@ function HomePage() {
                 <Sparkles aria-hidden size={13} /> Free for every reader in India
               </span>
               <h1 className="eh-title mt-4 font-display text-[2.3rem] font-bold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.6rem]">
-                <span className="eh-kicker">Tired of paying just to check if</span>{" "}
+                <span className="eh-kicker" data-keep-colour="">Tired of paying just to check if</span>{" "}
                 <span className="eh-giant">your idea will work?</span>
               </h1>
               <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">

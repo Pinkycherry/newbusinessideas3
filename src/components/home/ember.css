@@ -490,3 +490,29 @@ html:has(.v2.ember),body:has(.v2.ember){background:#000}
 .ember :is(.g-btn,.g-btn-light,.g-chip,.g-link,.mm-report,.mm-pill,.mm-quick a,.v2-footer-actions a,.v2-footer-cats a),.ember main :is(a,button)[class*="inline-flex"]{transition:transform .25s cubic-bezier(.25,1,.5,1),box-shadow .25s ease,filter .25s ease,background-color .25s ease,color .2s ease,border-color .2s ease!important}
 .ember :is(.g-btn,.mm-report,.g-btn-light,.g-chip,.mm-pill,.mm-quick a,.v2-footer-actions a):hover{transform:translateY(-2px)!important;filter:brightness(1.12)}
 .ember :is(.g-btn,.mm-report,.g-btn-light,.g-chip,.mm-pill):active{transform:translateY(1px) scale(.97)!important}
+/* Header buttons slim, labels always white (founder, 8 Nov 2026) */
+.ember .mm-header .mm-report,.ember .mm-header .mm-cta{min-height:36px!important;padding:6px 16px!important;font-size:13px!important;font-weight:600!important;border-radius:999px!important;color:#fff!important}
+.ember .mm-header .mm-quick{gap:6px!important;padding:4px 0 10px!important}
+.ember .mm-header .mm-quick a{min-height:38px!important;padding:6px 10px!important;font-size:13px!important;font-weight:600!important;border-radius:12px!important;color:#fff!important;text-shadow:0 1px 1px #000}
+.ember .mm-header .mm-quick a:not(:first-child){background:linear-gradient(180deg,#221c1c,#141111)!important;border:1px solid #3a2e2e!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important}
+.ember .mm-header .mm-mobile summary{font-size:15px!important;font-weight:600!important;color:#fff!important}
+/* Phone menu content uses the same compact layout as the desktop panels */
+.ember .mm-mobile-content{font-size:13.5px}
+.ember .mm-mobile-content .mm-hero{padding:12px!important;gap:6px!important;border-radius:14px!important;background:linear-gradient(160deg,#1f1a1a,#0e0b0b)!important;border:1px solid rgba(235,30,36,.3)!important}
+.ember .mm-mobile-content .mm-hero h4{font-size:15px!important;margin:0!important;color:#fff!important}
+.ember .mm-mobile-content .mm-hero p{font-size:13px!important;color:#d6cccc!important}
+.ember .mm-mobile-content .mm-hero p + p,.ember .mm-mobile-content .mm-cols .mm-cols{display:none!important}
+.ember .mm-mobile-content .mm-hero .ic{width:32px!important;height:32px!important;font-size:14px!important}
+.ember .mm-mobile-content .mm-hero .mm-btn{min-height:32px!important;padding:5px 12px!important;font-size:13px!important;color:#fff!important}
+.ember .mm-mobile-content .mm-label{font-size:11px!important;letter-spacing:.12em;margin:12px 0 4px!important;color:#f2262c!important;background:none!important}
+.ember .mm-mobile-content .mm-list a{font-size:14px!important;padding:7px 0!important;min-height:0!important;color:#eee!important}
+.ember .mm-mobile-content .mm-tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important}
+.ember .mm-mobile-content .mm-tile{display:flex!important;align-items:center;gap:8px;padding:8px 10px!important;text-align:left!important;font-size:13px!important;border-radius:10px!important;background:#171414!important;border:1px solid #2e2626!important;color:#eee!important;min-height:0!important}
+.ember .mm-mobile-content .mm-tile i{height:24px!important;width:24px!important;flex:none;margin:0!important;border-radius:7px!important;background:#2a1717!important;color:#ff5a5a!important}
+.ember .mm-mobile-content .mm-tile i svg{width:14px!important;height:14px!important}
+.ember .mm-mobile-content .mm-tile br{display:none}
+.ember .mm-mobile-content :is(.mm-banner,[class*="mm-pdf"]){padding:9px 11px!important;border-radius:12px!important;background:#171414!important;border:1px solid #2e2626!important}
+.ember .mm-mobile-content :is(.mm-banner,[class*="mm-pdf"]) *{color:#eee!important}
+.ember .mm-mobile-content .mm-pill{font-size:13px!important;padding:6px 14px!important}
+html body .ember .mm-header .mm-mobile .mm-quick a[href],html body .ember .mm-header .mm-actions a.mm-report[href]{color:#fff!important;-webkit-text-fill-color:#fff}
+html body .ember .mm-header .mm-panel .mm-btn[href],html body .ember .mm-header .mm-mobile .mm-btn[href]{color:#fff!important}

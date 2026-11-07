@@ -1,5 +1,38 @@
 import { useEffect } from "react";
 
+/**
+ * Palette guard (founder, 8 Nov 2026): older pages still carried colours from the light theme
+ * (navy text, white borders, violet, blue, green, light panels). After each page renders, every
+ * element inside the ember frame is checked once and anything off the black / white / red palette
+ * is mapped onto it. Runs in idle time, a few thousand elements, once per page plus two late passes.
+ */
+function paletteGuard(scope: Element) {
+  const parse = (c: string) => { const m = c.match(/rgba?\(([^)]+)\)/); if (!m) return null; const v = m[1]!.split(",").map(Number); return { r: v[0]!, g: v[1]!, b: v[2]!, a: v.length > 3 ? v[3]! : 1 }; };
+  const hsl = (c: { r: number; g: number; b: number }) => { const r = c.r / 255, g = c.g / 255, b = c.b / 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b); let h = 0, s = 0; const l = (mx + mn) / 2; if (mx !== mn) { const d = mx - mn; s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn); h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h *= 60; } return { h, s, l }; };
+  const offHue = (h: number, s: number) => s > 0.28 && h > 18 && h < 340;
+  scope.querySelectorAll<HTMLElement>("*").forEach((el) => {
+    if (el.closest("svg,canvas,img,video,picture,.eh-stage,[data-keep-colour]") && el.tagName !== "svg") return;
+    if (el.dataset["pg"]) return;
+    el.dataset["pg"] = "1";
+    const cs = getComputedStyle(el);
+    const hasText = Array.from(el.childNodes).some((n) => n.nodeType === 3 && (n.textContent ?? "").trim());
+    if (hasText) {
+      const c = parse(cs.color);
+      if (c && c.a > 0.3) { const { h, s, l } = hsl(c); if (l < 0.42) el.style.setProperty("color", "#ece3e3", "important"); else if (offHue(h, s)) el.style.setProperty("color", "#ff4f4f", "important"); }
+    }
+    const bg = parse(cs.backgroundColor);
+    if (bg && bg.a > 0.25) { const { h, s, l } = hsl(bg); if (l > 0.7) el.style.setProperty("background-color", "#161313", "important"); else if (offHue(h, s)) el.style.setProperty("background-color", l > 0.35 ? "#c8141a" : "#2a1416", "important"); }
+    if (cs.backgroundImage.includes("gradient")) {
+      const cols = (cs.backgroundImage.match(/rgba?\([^)]+\)/g) ?? []).map(parse).filter(Boolean) as { r: number; g: number; b: number; a: number }[];
+      if (cols.some((c) => { const { h, s, l } = hsl(c); return c.a > 0.3 && (l > 0.78 || (offHue(h, s) && l > 0.12)); })) el.style.setProperty("background-image", "linear-gradient(160deg,#1c1818,#100d0d)", "important");
+    }
+    if (parseFloat(cs.borderTopWidth) > 0 || parseFloat(cs.borderLeftWidth) > 0) {
+      const bc = parse(cs.borderTopColor) ?? parse(cs.borderLeftColor);
+      if (bc && bc.a > 0.3) { const { h, s, l } = hsl(bc); if (l > 0.7 || offHue(h, s)) el.style.setProperty("border-color", "rgba(235,30,36,.35)", "important"); }
+    }
+  });
+}
+
 /** Scroll reveal (fade up) for every page in the shared frame. Content stays visible without JS. */
 export function useGlassMotion() {
   useEffect(() => {
@@ -83,6 +116,13 @@ export function useGlassMotion() {
     };
     wireRows();
     timers.push(window.setTimeout(wireRows, 2500), window.setTimeout(wireRows, 6000));
+    const frame = document.querySelector(".ember");
+    if (frame) {
+      const guard = () => { try { paletteGuard(frame); } catch (e) { console.error("palette guard", e); } };
+      const idle = (window as { requestIdleCallback?: (cb: () => void) => number }).requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 300));
+      idle(guard);
+      timers.push(window.setTimeout(guard, 1800), window.setTimeout(guard, 5000));
+    }
     // Slideshow loop copies stay clickable but out of the keyboard order.
     document.querySelectorAll<HTMLElement>("[data-loop-copy] a, [data-loop-copy] button").forEach((el) => { el.tabIndex = -1; });
     // Content protection (7 Nov 2026): long copies carry the source link; images have no save menu.
