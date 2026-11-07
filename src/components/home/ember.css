@@ -516,3 +516,10 @@ html:has(.v2.ember),body:has(.v2.ember){background:#000}
 .ember .mm-mobile-content .mm-pill{font-size:13px!important;padding:6px 14px!important}
 html body .ember .mm-header .mm-mobile .mm-quick a[href],html body .ember .mm-header .mm-actions a.mm-report[href]{color:#fff!important;-webkit-text-fill-color:#fff}
 html body .ember .mm-header .mm-panel .mm-btn[href],html body .ember .mm-header .mm-mobile .mm-btn[href]{color:#fff!important}
+/* Editorial pages (founders, about, contact, policies): no card or background behind each section,
+   just the page; sections are separated by space and a thin red rule (founder, 8 Nov 2026) */
+.ember .gl-editorial :is(.gl-editorial-hero,.gl-editorial-unit,.gl-editorial-section,.gl-editorial-stack,.v2p-section,.v2p-hero){background:none!important;background-image:none!important;border:0!important;box-shadow:none!important;border-radius:0!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.ember .gl-editorial .gl-editorial-unit{padding-left:0!important;padding-right:0!important}
+.ember .gl-editorial .gl-editorial-unit + .gl-editorial-unit{border-top:1px solid transparent!important;border-image:linear-gradient(90deg,rgba(235,30,36,.6),rgba(235,30,36,.15) 45%,transparent 80%) 1!important}
+.ember .gl-editorial .gl-editorial-section h2{color:#fff!important}
+.ember :is(.glass-home,.v2-surface,.gl-page,.gl-editorial){background:transparent!important;background-image:none!important;box-shadow:none!important}

@@ -20,6 +20,8 @@ function paletteGuard(scope: Element) {
       const c = parse(cs.color);
       if (c && c.a > 0.3) { const { h, s, l } = hsl(c); if (l < 0.42) el.style.setProperty("color", "#ece3e3", "important"); else if (offHue(h, s)) el.style.setProperty("color", "#ff4f4f", "important"); }
     }
+    // Editorial pages (about, founders, contact, policies): sections are plain, never boxed.
+    if (el.matches(".gl-editorial :is(.gl-editorial-unit,.gl-editorial-section,.gl-editorial-hero,.v2p-section,.v2p-hero,.gl-editorial-stack)")) return;
     const bg = parse(cs.backgroundColor);
     if (bg && bg.a > 0.25) { const { h, s, l } = hsl(bg); if (l > 0.7) el.style.setProperty("background-color", "#161313", "important"); else if (offHue(h, s)) el.style.setProperty("background-color", l > 0.35 ? "#c8141a" : "#2a1416", "important"); }
     if (cs.backgroundImage.includes("gradient")) {

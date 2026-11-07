@@ -24,6 +24,9 @@ Read this first. Update and commit it to main before you stop. Times are IST.
 
 - 7 Nov — Subcategory icons: 150 fire-red glass icons (batches 1-15 from the founder's ChatGPT sheets in BRAND-NEW-COPY src/Icons) cut out with transparent background into public/icons/sub/<subcategory-slug>.webp; list in src/config/subcategory-icons.ts. Shown above the title on each subcategory page and beside each focused list on category pages. Check: https://bbusiness.online/category/beauty-business-ideas/bridal-makeup-artist-business-ideas https://bbusiness.online/category/beauty-business-ideas
 
+- 8 Nov ~08:00 IST — Founders page (and every page built on ContentPage: about, contact, policies): no card or background behind each section any more; plain page, sections split by a thin red rule. Palette guard skips those section boxes.
+  - PENDING, founder's order: full audit of every page by tomorrow (9 Nov) night; all other open checks wait for it (idea page phone layout, compare padding, header menu rethink, purchased template pages colours, guide images, numbers 8-100, subcategory icons 21-42).
+
 - 8 Nov ~07:00 IST — Palette guard (use-glass-motion.ts paletteGuard): after each page renders, every element in the ember frame is checked once and dark text, white borders, light panels and off-palette hues (violet, blue, green, orange) are mapped to white / red / dark. Fixes /founders and the other older pages in one go. Mark an element data-keep-colour to skip it. Header: slim CTA, phone menu quick buttons slim with white labels, phone menu content compact like desktop.
 
 - 8 Nov ~06:00 IST — Speed: slow loads were cold server renders (2 to 5 s right after each cache purge; cached pages answer in 0.2 s). Edge cache now keeps pages for a day (src/server.ts EDGE_TTL_SECONDS 86400). Card backdrop blur removed (scroll jank). One hover style for every button: lift, glow, press.
