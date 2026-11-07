@@ -318,3 +318,32 @@ html:has(.v2.ember),body:has(.v2.ember){background:#000}
 .ember main a:is([class*="rounded-xl"],[class*="rounded-lg"])[class*="border"][class*="justify-between"]{color:#f1e9e9!important;background:linear-gradient(180deg,#1c1717,#110e0e)!important;border-color:#332929!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)!important}
 .ember main a:is([class*="rounded-xl"],[class*="rounded-lg"])[class*="border"][class*="justify-between"]:hover{border-color:#e01b1f!important;color:#fff!important}
 .ember main a:is([class*="rounded-xl"],[class*="rounded-lg"])[class*="border"][class*="justify-between"] > svg:last-child{color:#ff4848!important}
+
+/* ================= Glossy buttons everywhere (founder, 8 Nov 2026) ================= */
+.ember{--e-gloss:linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,.16) 46%,rgba(255,255,255,0) 50%,rgba(255,255,255,0) 100%);
+  --e-gloss-red:var(--e-gloss),linear-gradient(180deg,#f0353a 0%,#cc151b 48%,#9a0a0f 78%,#5c0306 100%);
+  --e-gloss-dark:linear-gradient(180deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,.05) 48%,rgba(255,255,255,0) 50%),linear-gradient(180deg,#221b1b,#120e0e)}
+.ember :is(.g-btn,.mm-report,.mm-quick a:first-child,.v2-footer-actions a:first-child,.mm-panel .mm-btn),
+.ember main :is(a,button):is([class*="bg-slate-900"],[class*="bg-\[#4643ba\]"],[class*="bg-violet-6"],[class*="bg-blue-6"],[class*="bg-blue-7"],[class*="bg-primary"],.gl-idea-action,.gh-button-primary,.td-primary,.pt-primary,.calc-primary,.fd-button){
+  background:var(--e-gloss-red)!important;color:#fff!important;border:1px solid rgba(255,140,140,.45)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -3px 6px rgba(60,0,0,.55),0 2px 0 #3a0003,0 12px 24px -10px rgba(224,27,31,.7)!important;text-shadow:0 1px 1px rgba(60,0,0,.6)}
+.ember :is(.g-btn-light,.g-chip,.mm-quick a,.v2-footer-actions a,.mm-pill),
+.ember main :is(a,button):is(.gh-button-secondary,.td-secondary,.pt-secondary,.calc-secondary,[class*="inline-flex"][class*="border"]:is([class*="font-semibold"],[class*="min-h"],[class*="px-"]),[class*="rounded-full"][class*="border"][class*="px-4"]):not(.g-btn):not([aria-pressed="true"]){
+  background:var(--e-gloss-dark)!important;border:1px solid #4a3a3a!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 8px 18px -12px rgba(0,0,0,1)!important}
+/* Hover: anything clickable that looks like a button turns glossy red */
+.ember :is(.g-btn-light,.g-chip,.g-link,.mm-quick a,.v2-footer-actions a,.mm-pill,.v2-footer-cats a):hover,
+.ember main :is(a,button):is(.gh-button-secondary,.td-secondary,[class*="inline-flex"][class*="border"],[class*="rounded-full"][class*="border"],[class*="rounded-xl"][class*="border"][class*="justify-between"]):hover{
+  background:var(--e-gloss-red)!important;color:#fff!important;border-color:rgba(255,140,140,.5)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 22px -10px rgba(224,27,31,.7)!important}
+.ember :is(.g-btn,.mm-report):hover{filter:brightness(1.1)}
+/* Header menu buttons and search: glossy pill on hover and when open */
+.ember .mm-header :is(.mm-disclosure > button,.mm-search,.mm-mobile-search,.mm-mobile-toggle){border-radius:999px}
+.ember .mm-header :is(.mm-disclosure > button:hover,.mm-disclosure > button[aria-expanded=true],.mm-search:hover,.mm-mobile-search:hover,.mm-mobile-toggle:hover){background:var(--e-gloss-red)!important;color:#fff!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 8px 18px -10px rgba(224,27,31,.7)!important}
+/* Plain text links: red with a soft glow on hover */
+.ember main a:not([class]):hover,.ember main p a:hover,.ember .v2-footer-cols a:hover{color:#ff5a5a!important;text-shadow:0 0 12px rgba(224,27,31,.55)}
+/* Subcategory icons: bigger and always visible */
+.ember .icon-tile{background:radial-gradient(circle at 50% 38%,#4a0d12 0%,#1a0709 62%,#0d0405 100%)!important;opacity:1!important}
+#focused-lists .icon-tile{width:4.5rem!important;height:5.5rem!important}
+/* Dark text left from the light theme never sits on the dark page */
+.ember main :is([class*="text-[#0"],[class*="text-[#1"],[class*="text-[#2"],[class*="text-[#3"],.text-black,.text-gray-800,.text-gray-900,.text-neutral-800,.text-neutral-900,.text-zinc-800,.text-zinc-900,.text-stone-900,.text-slate-950){color:#ece3e3!important}
+.ember main :is([class*="text-[#4"],[class*="text-[#5"],[class*="text-[#6"]){color:#ff4848!important}
+.ember main :is(h1,h2,h3,h4,strong,b){color:inherit}
