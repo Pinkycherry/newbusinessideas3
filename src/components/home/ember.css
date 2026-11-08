@@ -680,6 +680,6 @@ html body .ember .mm-header .mm-panel .mm-btn[href],html body .ember .mm-header 
 .ember :is(ul,ol,div)[class*="flex-wrap"]:has(> :nth-child(6)):has(> a[href^="/category/"],> li > a[href^="/category/"]) > *{flex:1 1 auto}
 .ember :is(ul,ol,div)[class*="flex-wrap"]:has(> :nth-child(6)):has(> a[href^="/category/"],> li > a[href^="/category/"]) > a,.ember :is(ul,ol,div)[class*="flex-wrap"]:has(> :nth-child(6)):has(> a[href^="/category/"],> li > a[href^="/category/"]) > li > a{justify-content:center;text-align:center;width:100%}
 @media (max-width:640px){.ember .v2-footer .v2-footer-cats{padding:16px 14px!important}.ember .v2-footer .v2-footer-cats ul{gap:6px!important;padding-right:0!important}.ember .v2-footer .v2-footer-cats a{font-size:12px!important;min-height:30px!important;padding:4px 10px!important}}
-/* Phones and tablets: the repeated " Business Ideas" tail is kept for readers of the page source and
-   screen readers but not drawn, so the chips pack tightly (the heading already says it) */
-@media (max-width:767px){.ember .v2-cat-suffix{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+/* Phones: full category names ("... Business Ideas" always shown), two per row, text wraps inside the chip */
+@media (max-width:640px){.ember .v2-footer .v2-footer-cats ul{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .ember .v2-footer .v2-footer-cats a{font-size:11.5px!important;line-height:1.25!important;min-height:40px!important;padding:5px 8px!important;border-radius:12px!important;white-space:normal}}
