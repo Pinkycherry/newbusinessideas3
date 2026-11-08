@@ -740,8 +740,6 @@ html .ember .v2-footer .v2-footer-cats a{font-size:.875rem!important;min-height:
 @media (min-width:640px){.e-totop{right:27px;bottom:52px}}
 @supports (animation-timeline:scroll()){.e-totop{animation:e-totop linear both;animation-timeline:scroll(root);animation-range:0 500px}
   @keyframes e-totop{0%,60%{opacity:0;visibility:hidden;transform:translateY(12px)}100%{opacity:1;visibility:visible;transform:none}}}
-html:has(.e-totop){scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html:has(.e-totop){scroll-behavior:auto}}
 
 /* ===== Fonts (founder approved 8 Nov 2026, option A) =====
    Page and section headings: Anton, ALL CAPS, key word red (highlight in use-glass-motion).
@@ -814,3 +812,5 @@ html .ember .v2-footer .v2-footer-cats ul.e-mq-track > li{flex:none!important}
     background:linear-gradient(#171414,#171414) padding-box,linear-gradient(90deg,rgba(224,27,31,.85),rgba(224,27,31,.15) 45%,rgba(255,255,255,.08)) border-box}
   .ember .mm-header .mm-mobile .mm-foot{display:none}
 }
+/* Speed (8 Nov 2026): the footer is not drawn until it is near the screen */
+.ember .v2-footer{content-visibility:auto;contain-intrinsic-size:auto 1100px}

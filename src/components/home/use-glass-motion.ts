@@ -6,14 +6,17 @@ import { useEffect } from "react";
  * element inside the ember frame is checked once and anything off the black / white / red palette
  * is mapped onto it. Runs in idle time, a few thousand elements, once per page plus two late passes.
  */
+// Speed (8 Nov 2026): remember checked elements in memory, not in a data attribute (writing an
+// attribute on thousands of elements made the browser restyle the whole page).
+const guarded = new WeakSet<Element>();
 function paletteGuard(scope: Element) {
   const parse = (c: string) => { const m = c.match(/rgba?\(([^)]+)\)/); if (!m) return null; const v = m[1]!.split(",").map(Number); return { r: v[0]!, g: v[1]!, b: v[2]!, a: v.length > 3 ? v[3]! : 1 }; };
   const hsl = (c: { r: number; g: number; b: number }) => { const r = c.r / 255, g = c.g / 255, b = c.b / 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b); let h = 0, s = 0; const l = (mx + mn) / 2; if (mx !== mn) { const d = mx - mn; s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn); h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h *= 60; } return { h, s, l }; };
   const offHue = (h: number, s: number) => s > 0.28 && h > 18 && h < 340;
   scope.querySelectorAll<HTMLElement>("*").forEach((el) => {
     if (el.closest("svg,canvas,img,video,picture,.eh-stage,[data-keep-colour]") && el.tagName !== "svg") return;
-    if (el.dataset["pg"]) return;
-    el.dataset["pg"] = "1";
+    if (guarded.has(el)) return;
+    guarded.add(el);
     const cs = getComputedStyle(el);
     const hasText = Array.from(el.childNodes).some((n) => n.nodeType === 3 && (n.textContent ?? "").trim());
     if (hasText) {
@@ -52,6 +55,7 @@ function paletteGuard(scope: Element) {
  */
 const KEYWORDS = ["business ideas", "business idea", "go wrong", "money to start", "pays? you", "money comes", "need", "guides?", "questions?", "tools?", "calculators?", "lists?", "resources", "side hustles?", "startup ideas?", "1 lakh women", "women", "validate", "free", "calculators?", "blueprints?", "ideas?", "India(?:'s)?", "money", "profit", "income", "startups?", "founders?", "verdict", "risks?", "guides?", "library", "categor(?:y|ies)", "compare", "answers?", "customers?", "buyers?", "costs?", "loans?", "GST", "map"];
 const KW_RES = KEYWORDS.map((k) => new RegExp(`\\b(${k})\\b`, "i"));
+const kwDone = new WeakSet<Element>();
 function redKeywords(scope: Element) {
   // CSS Custom Highlight: paints the words red without touching the DOM React owns.
   const H = (window as unknown as { Highlight?: new (...r: Range[]) => { add(r: Range): void } }).Highlight;
@@ -60,8 +64,8 @@ function redKeywords(scope: Element) {
   const hl = (reg.get("kw-red") as { add(r: Range): void } | undefined) ?? (() => { const x = new H(); reg.set("kw-red", x); return x; })();
   // Founder, 8 Nov 2026: card headings (h3) too, two colours: up to two key words red, the rest white.
   scope.querySelectorAll<HTMLElement>("main :is(h1,h2,h3,h4)").forEach((h) => {
-    if (h.dataset["kw"] || h.closest(".eh-stage,[data-keep-colour],.eh-hero")) return;
-    h.dataset["kw"] = "1";
+    if (kwDone.has(h) || h.closest(".eh-stage,[data-keep-colour],.eh-hero")) return;
+    kwDone.add(h);
     const isRed = (el: Element) => { const m = getComputedStyle(el).color.match(/\d+/g); return !!m && +m[0]! > 150 && +m[1]! < 90 && +m[2]! < 90; };
     if (Array.from(h.querySelectorAll("*:not(svg):not(svg *)")).some(isRed) || isRed(h)) return;
     const texts: Text[] = [];
@@ -168,7 +172,7 @@ export function useGlassMotion() {
       const guard = () => { try { redKeywords(frame); paletteGuard(frame); } catch (e) { console.error("palette guard", e); } };
       const idle = (window as { requestIdleCallback?: (cb: () => void) => number }).requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 300));
       idle(guard);
-      timers.push(window.setTimeout(guard, 1800), window.setTimeout(guard, 5000));
+      timers.push(window.setTimeout(() => idle(guard), 2500));
     }
     // Slideshow loop copies stay clickable but out of the keyboard order.
     document.querySelectorAll<HTMLElement>("[data-loop-copy] a, [data-loop-copy] button").forEach((el) => { el.tabIndex = -1; });

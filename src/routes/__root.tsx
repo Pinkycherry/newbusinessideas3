@@ -17,7 +17,7 @@ import "../components/idea-cinema/cinema.css";
 import "../components/home/glass.css";
 import "../components/home/ember.css";
 import "../components/home/ember-legacy.css";
-import { PointerChannelProvider, PageTransition } from "../motion";
+import { PageTransition } from "../motion";
 import { catalogQuery } from "../lib/catalog";
 import { getPageResources } from "../lib/resources.functions";
 import { JsonLd, organisationSchema } from "@/lib/schema";
@@ -297,7 +297,8 @@ function RootComponent() {
       {/* Publishes --ptr-x/y/v and --scroll-v on :root. Only the homepage
           reads them now: SiteShell suspends the channel on every page that
           runs the plain site system (components/site-stage.ts). */}
-      <PointerChannelProvider />
+      {/* PointerChannelProvider removed (founder, 8 Nov 2026 speed): it wrote CSS variables on <html>
+          every frame, which made the browser restyle the whole page on every scroll and mouse move. */}
       {/* Desktop-only custom pointer; refuses to run on touch or reduced motion. */}
       {/* The sitewide heading reveal is OFF, 2026-09-22, at the founder's
           request: every h1/h2/h3 on the site is static.
