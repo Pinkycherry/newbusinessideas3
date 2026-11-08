@@ -1,4 +1,4 @@
-import menuPanels from "./menu-panels.json";
+import { menuPanels } from "./shared-chrome";
 import sharedFooterSource from "@/components/v2/v2.css?raw";
 import glassCss from "@/components/home/glass.css?raw";
 import emberCss from "@/components/home/ember.css?raw";

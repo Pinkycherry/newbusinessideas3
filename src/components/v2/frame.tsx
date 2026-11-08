@@ -436,6 +436,8 @@ const LEGAL: L[] = [
 export function Footer() {
   return (
     <footer className="v2 v2-footer" role="contentinfo">
+      {/* Back to top (founder, 8 Nov 2026): plain link, shows after the reader scrolls (CSS only). */}
+      <a className="e-totop" href="#" aria-label="Back to top"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg></a>
       <div className="v2-footer-inner">
         <div className="v2-footer-top">
           <div className="v2-footer-brand">

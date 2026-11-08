@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import purchasedPage from "@/bought/lists-bbi.html?raw";
 import { boughtPage } from "@/bought/serve";
-import menuPanels from "@/bought/menu-panels.json";
+import { menuPanels } from "@/bought/shared-chrome";
 import menuBindings from "@/bought/menus.html?raw";
 import sharedHeaderStyles from "@/components/v2/v2.css?raw";
 import { getListsHub, getListPage } from "@/lib/lists.functions";
@@ -46,7 +46,15 @@ async function listsResponse() {
   groups.forEach((categories, index) => {
     slots[`BBI_SHELF_${index + 5}`] = categories.map(cat => `<div id="category-${esc(cat.slug)}" class="bbi-category-block"><div class="mb-5 flex flex-wrap items-end justify-between gap-3"><h2 class="text-2xl font-bold"><a href="/category/${encodeURIComponent(cat.slug)}" class="hover:text-primary">${esc(cat.name)}</a></h2><a class="text-sm font-semibold text-primary hover:underline" href="/category/${encodeURIComponent(cat.slug)}">Explore category →</a></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">${cat.subs.map(sub => card({ name:sub.name,slug:sub.slug,category:cat.name })).join("")}</div></div>`).join("");
   });
-  let page = purchasedPage.replace(/\{\{(BBI_[A-Z_0-9]+)\}\}/g, (_match, key: string) => slots[key] ?? "");
+  // Founder, 8 Nov 2026: category rows move on their own (slideshow), never a tall wall of chips and never a
+  // scrollbar. Each row is drawn twice so the loop is seamless; the copy is hidden from screen readers.
+  const chip = (cat: { slug: string; name: string }, copy: boolean) => `<a class="e-cat-chip"${copy ? ' tabindex="-1" aria-hidden="true"' : ""} href="#category-${esc(cat.slug)}">${esc(cat.name)}</a>`;
+  const marquee = (cats: { slug: string; name: string }[], reverse: boolean, label: string) => cats.length ? `<div class="e-mq${reverse ? " rev" : ""}" role="group" aria-label="${label}" style="--d:${Math.max(30, cats.length * 4)}s"><div class="e-mq-track">${cats.map(c => chip(c, false)).join("")}${cats.map(c => chip(c, true)).join("")}</div></div>` : "";
+  const rows = [0, 1, 2].map(r => hub.categories.filter((_, i) => i % 3 === r));
+  let page = purchasedPage
+    .replace('<div class="flex flex-wrap gap-2">{{BBI_CHIPS}}</div>', `<div class="e-mq-rows">${rows.map((row, i) => marquee(row, i % 2 === 1, "Business idea categories")).join("")}</div>`)
+    .replace('<div class="bbi-category-nav" aria-label="Jump to a category">{{BBI_CATEGORY_FILTER}}</div>', `<div class="bbi-category-nav e-mq-nav" aria-label="Jump to a category">${marquee(hub.categories, false, "Jump to a category")}</div>`)
+    .replace(/\{\{(BBI_[A-Z_0-9]+)\}\}/g, (_match, key: string) => slots[key] ?? "");
   page = page.replace('<div id="bbi-list-header"></div>', menuPanels.header)
     .replace('<div id="bbi-list-footer"></div>', menuPanels.footer)
     .replace('</head>', `<style id="bbi-shared-header-styles">${sharedHeaderStyles}</style></head>`)

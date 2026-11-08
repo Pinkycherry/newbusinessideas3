@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, Calculator, Compass, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { SellerFaq } from './faq';
 import type { ListPage } from '@/lib/lists.functions';
 import type { ContentLink } from './content-page';
@@ -13,7 +13,7 @@ const heading='mb-5 text-2xl font-bold';
 export function ListReportPromo({p}:{p:ListPage}) {
   const guide=p.resources?.guides[0];
   if(!guide)return null;
-  return <aside className="mb-8 flex flex-col gap-4 rounded-xl border border-primary/20 bg-primary/5 p-5 sm:flex-row sm:items-center"><BookOpen className="shrink-0 text-primary" size={26}/><div className="min-w-0 flex-1"><h2 className="font-bold">{guide.label}</h2><p className="mt-1 text-sm text-muted-foreground">{guide.note}</p></div><a className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white" href={guide.href}>Read guide<ArrowRight size={16}/></a></aside>;
+  return <aside className="mb-8 flex flex-col gap-4 rounded-xl border border-primary/20 bg-primary/5 p-5 sm:flex-row sm:items-center"><img src="/icons/ui/ui-guide.webp" alt="" width={44} height={46} loading="lazy" decoding="async" className="h-11 w-11 shrink-0 object-contain"/><div className="min-w-0 flex-1"><h2 className="font-bold">{guide.label}</h2><p className="mt-1 text-sm text-muted-foreground">{guide.note}</p></div><a className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white" href={guide.href}>Read guide<ArrowRight size={16}/></a></aside>;
 }
 
 export function ListCitation({p,updated,path=`/lists/${p.slug}`}:{p:ListPage;updated:string;path?:string}) {
@@ -34,14 +34,15 @@ export function ListBeforeBuild({p}:{p:ListPage}) {
 }
 
 export function ListRelatedResources({p}:{p:ListPage}) {
+  // Founder, 8 Nov 2026: our own glass icons, each group a card, links as clean rows (no boxed links).
   const groups=[
-    {title:'Related guides',icon:BookOpen,items:p.resources?.guides ?? []},
-    {title:'Related questions',icon:Compass,items:[{label:'How do you validate an idea?',href:'/startup-idea-validation'},{label:'How do you find a customer?',href:'/first-customer-india'},{label:'What can go wrong?',href:'/business-idea-risk-check'}]},
-    {title:'Helpful tools and calculators',icon:Calculator,items:p.resources?.calculators ?? []},
-    {title:'Compare options',icon:Compass,items:[{label:'Business models',href:'/business-models-india'},{label:'Compare ideas',href:'/startup-idea-comparison'},{label:'Founder frameworks',href:'/frameworks-comparison'}]},
-    {title:'Related lists',icon:BookOpen,items:p.siblings.slice(0,4).map(s=>({label:s.name,href:`/lists/${s.slug}`}))},
+    {title:'Related guides',icon:'/icons/ui/ui-guide.webp',items:p.resources?.guides ?? []},
+    {title:'Related questions',icon:'/icons/ui/ui-faq.webp',items:[{label:'How do you validate an idea?',href:'/startup-idea-validation'},{label:'How do you find a customer?',href:'/first-customer-india'},{label:'What can go wrong?',href:'/business-idea-risk-check'}]},
+    {title:'Helpful tools and calculators',icon:'/icons/home/home-calculators.webp',items:p.resources?.calculators ?? []},
+    {title:'Compare options',icon:'/icons/ui/ui-compare.webp',items:[{label:'Business models',href:'/business-models-india'},{label:'Compare ideas',href:'/startup-idea-comparison'},{label:'Founder frameworks',href:'/frameworks-comparison'}]},
+    {title:'Related lists',icon:'/icons/home/home-idea-lists.webp',items:p.siblings.slice(0,4).map(s=>({label:s.name,href:`/lists/${s.slug}`}))},
   ];
-  return <section className="bg-muted/30 py-12"><div className="mx-auto max-w-5xl px-4 md:px-6"><h2 className={heading}>Related resources</h2><div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{groups.filter(g=>g.items.length).map(group=><div key={group.title}><h3 className="mb-4 flex items-center gap-2 font-bold"><group.icon size={18} className="text-primary"/>{group.title}</h3><ul className="space-y-3">{group.items.map(item=><li key={item.href}><a className="text-sm leading-relaxed text-muted-foreground hover:text-primary hover:underline" href={item.href}>{item.label}</a></li>)}</ul></div>)}</div></div></section>;
+  return <section className="py-12"><div className="mx-auto max-w-5xl px-4 md:px-6"><h2 className={heading}>Related resources</h2><div className="e-res grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{groups.filter(g=>g.items.length).map(group=><div key={group.title} className="e-res-card"><h3 className="mb-3 flex items-center gap-3 font-bold"><img src={group.icon} alt="" width={40} height={42} loading="lazy" decoding="async" className="h-10 w-10 shrink-0 object-contain"/>{group.title}</h3><ul>{group.items.map(item=><li key={item.href}><a className="e-res-link" href={item.href}><span>{item.label}</span><ArrowRight size={15} aria-hidden="true"/></a></li>)}</ul></div>)}</div></div></section>;
 }
 
 export function ListRecentResearch({p}:{p:ListPage}) {

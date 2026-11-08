@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import purchasedIndiaPage from "@/bought/research-2-bbi.html?raw";
 import { boughtPage } from "@/bought/serve";
-import menuPanels from "@/bought/menu-panels.json";
+import { menuPanels } from "@/bought/shared-chrome";
 import menuBindings from "@/bought/menus.html?raw";
 import sharedHeaderStyles from "@/components/v2/v2.css?raw";
 

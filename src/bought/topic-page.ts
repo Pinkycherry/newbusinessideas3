@@ -8,7 +8,7 @@
  * slugs can be renamed there without touching this file. Header and footer
  * are the shared site header and footer.
  */
-import menuPanels from "./menu-panels.json";
+import { menuPanels } from "./shared-chrome";
 import menuBindings from "./menus.html?raw";
 import sharedHeaderStyles from "@/components/v2/v2.css?raw";
 import sellerShell from "./topics.html?raw";
