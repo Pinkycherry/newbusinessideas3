@@ -165,9 +165,9 @@ export function TopCard({ idea, actionHref, showAction = true }: { idea: ListIde
     <header className="flex min-w-0 flex-col gap-3 border-b border-slate-100 p-4 sm:flex-row sm:items-start sm:justify-between sm:p-5">
       <div className="min-w-0 flex-1">
         <h3 className="break-words text-lg font-bold leading-snug text-slate-950 sm:text-xl">{idea.title}</h3>
-        {idea.who_pays_you && <p className="mt-2 text-sm leading-5 text-slate-600"><strong className="font-semibold text-slate-800">Best for:</strong> {sentences(idea.who_pays_you, 1)}</p>}
+        {idea.who_pays_you && <p className="mt-2 text-sm leading-5 text-slate-600"><strong className="e-kw font-semibold text-slate-800">Best for:</strong> {sentences(idea.who_pays_you, 1)}</p>}
       </div>
-      {band(idea) && <span className="inline-flex max-w-full items-center rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-left text-sm font-semibold leading-snug text-slate-700 sm:max-w-[220px] sm:flex-none sm:break-words">Money to start: {band(idea)}</span>}
+      {band(idea) && <span className="inline-flex max-w-full items-center rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-left text-sm font-semibold leading-snug text-slate-700 sm:max-w-[220px] sm:flex-none sm:break-words"><span className="e-kw">Money to start:</span>&nbsp;{band(idea)}</span>}
     </header>
     <div className="p-4 sm:p-5">
       {summary && <p className="break-words text-sm leading-6 text-slate-600 sm:text-base">{summary}</p>}

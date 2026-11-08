@@ -50,7 +50,7 @@ function paletteGuard(scope: Element) {
  * the rest stays white. Headings that already carry a red word are left alone. One phrase per heading,
  * picked from the site's own vocabulary in priority order; a heading with none gets its last word.
  */
-const KEYWORDS = ["business ideas", "business idea", "side hustles?", "startup ideas?", "1 lakh women", "women", "validate", "free", "calculators?", "blueprints?", "ideas?", "India(?:'s)?", "money", "profit", "income", "startups?", "founders?", "verdict", "risks?", "guides?", "library", "categor(?:y|ies)", "compare", "answers?", "customers?", "buyers?", "costs?", "loans?", "GST", "map"];
+const KEYWORDS = ["business ideas", "business idea", "go wrong", "money to start", "pays? you", "money comes", "need", "guides?", "questions?", "tools?", "calculators?", "lists?", "resources", "side hustles?", "startup ideas?", "1 lakh women", "women", "validate", "free", "calculators?", "blueprints?", "ideas?", "India(?:'s)?", "money", "profit", "income", "startups?", "founders?", "verdict", "risks?", "guides?", "library", "categor(?:y|ies)", "compare", "answers?", "customers?", "buyers?", "costs?", "loans?", "GST", "map"];
 const KW_RES = KEYWORDS.map((k) => new RegExp(`\\b(${k})\\b`, "i"));
 function redKeywords(scope: Element) {
   // CSS Custom Highlight: paints the words red without touching the DOM React owns.
@@ -58,17 +58,23 @@ function redKeywords(scope: Element) {
   const reg = (CSS as unknown as { highlights?: Map<string, unknown> }).highlights;
   if (!H || !reg) return;
   const hl = (reg.get("kw-red") as { add(r: Range): void } | undefined) ?? (() => { const x = new H(); reg.set("kw-red", x); return x; })();
-  scope.querySelectorAll<HTMLElement>("main :is(h1,h2)").forEach((h) => {
+  // Founder, 8 Nov 2026: card headings (h3) too, two colours: up to two key words red, the rest white.
+  scope.querySelectorAll<HTMLElement>("main :is(h1,h2,h3,h4)").forEach((h) => {
     if (h.dataset["kw"] || h.closest(".eh-stage,[data-keep-colour],.eh-hero")) return;
     h.dataset["kw"] = "1";
     const isRed = (el: Element) => { const m = getComputedStyle(el).color.match(/\d+/g); return !!m && +m[0]! > 150 && +m[1]! < 90 && +m[2]! < 90; };
-    if (Array.from(h.querySelectorAll("*")).some(isRed) || isRed(h)) return;
+    if (Array.from(h.querySelectorAll("*:not(svg):not(svg *)")).some(isRed) || isRed(h)) return;
     const texts: Text[] = [];
     const walk = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
     for (let n = walk.nextNode(); n; n = walk.nextNode()) if ((n.textContent ?? "").trim()) texts.push(n as Text);
     if (!texts.length) return;
     const mark = (t: Text, start: number, len: number) => { const r = document.createRange(); r.setStart(t, start); r.setEnd(t, start + len); hl.add(r); };
-    for (const re of KW_RES) for (const t of texts) { const m = re.exec(t.data); if (m) { mark(t, m.index, m[0].length); return; } }
+    const max = h.tagName === "H3" || h.tagName === "H4" ? 2 : 1; let n = 0; const used: [Text, number, number][] = [];
+    for (const re of KW_RES) for (const t of texts) {
+      const m = re.exec(t.data);
+      if (m && !used.some(([u, a, b]) => u === t && m.index < b && m.index + m[0].length > a)) { mark(t, m.index, m[0].length); used.push([t, m.index, m.index + m[0].length]); if (++n >= max) return; break; }
+    }
+    if (n) return;
     const last = texts[texts.length - 1]!; const m = /([\p{L}\p{N}'’-]+)[^\p{L}\p{N}]*$/u.exec(last.data);
     if (m) mark(last, m.index, m[1]!.length);
   });
