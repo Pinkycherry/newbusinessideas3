@@ -8,7 +8,7 @@
  * slugs can be renamed there without touching this file. Header and footer
  * are the shared site header and footer.
  */
-import { menuPanels } from "./shared-chrome";
+import { menuPanels, keywordScript } from "./shared-chrome";
 import menuBindings from "./menus.html?raw";
 import sharedHeaderStyles from "@/components/v2/v2.css?raw";
 import sellerShell from "./topics.html?raw";
@@ -336,6 +336,6 @@ export async function renderTopicPage(input: TopicPage): Promise<Response> {
   const endBlock = validateBlock(p, "validate-end", "Validate this for your city today");
   if (srcAt >= 0) body[srcAt] = endBlock + body[srcAt]; else body.push(endBlock);
   const main = `<main class="flex-1">${crumbs(p)}${hero(p)}${validateBlock(p, "validate", "Validate this for your city today")}${withBands(body, bands)}</main>`;
-  const html = `<!DOCTYPE html><html lang="en-IN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>${esc(p.seo.title)}</title><meta name="description" content="${esc(p.seo.description)}"><link rel="canonical" href="${esc(url)}"><meta property="og:type" content="article"><meta property="og:title" content="${esc(p.seo.title)}"><meta property="og:description" content="${esc(p.seo.description)}"><meta property="og:url" content="${esc(url)}"><meta property="og:locale" content="en_IN"><meta property="og:site_name" content="bbusiness.online"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json">${schema(p)}</script><style>${STYLE}${MQ_CSS}${CHIP_CSS}${ASK_CSS}</style><link rel="stylesheet" href="/bought/topics/styles/index-BpDyUYDe.css"><style id="bbi-shared-header-styles">${sharedHeaderStyles}</style><style id="bbi-glass">${glassCss}</style><style id="bbi-ember">${emberCss}</style></head><body class="ember"><div id="root"><div class="min-h-screen flex flex-col">${menuPanels.header}${main}${menuPanels.footer}</div></div>${menuBindings}${SCRIPT}</body></html>`;
+  const html = `<!DOCTYPE html><html lang="en-IN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>${esc(p.seo.title)}</title><meta name="description" content="${esc(p.seo.description)}"><link rel="canonical" href="${esc(url)}"><meta property="og:type" content="article"><meta property="og:title" content="${esc(p.seo.title)}"><meta property="og:description" content="${esc(p.seo.description)}"><meta property="og:url" content="${esc(url)}"><meta property="og:locale" content="en_IN"><meta property="og:site_name" content="bbusiness.online"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json">${schema(p)}</script><style>${STYLE}${MQ_CSS}${CHIP_CSS}${ASK_CSS}</style><link rel="stylesheet" href="/bought/topics/styles/index-BpDyUYDe.css"><style id="bbi-shared-header-styles">${sharedHeaderStyles}</style><style id="bbi-glass">${glassCss}</style><style id="bbi-ember">${emberCss}</style></head><body class="ember"><div id="root"><div class="min-h-screen flex flex-col">${menuPanels.header}${main}${menuPanels.footer}</div></div>${menuBindings}${SCRIPT}${keywordScript}</body></html>`;
   return new Response(html, { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300" } });
 }

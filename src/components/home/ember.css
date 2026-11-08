@@ -733,11 +733,29 @@ html .ember .v2-footer .v2-footer-cats a{font-size:.875rem!important;min-height:
 @media (max-width:640px){.ember .e-cat-chip{font-size:.85rem!important;min-height:2.6rem;padding:.45rem .9rem!important}}
 
 /* Back to top: appears after the reader scrolls, above the PDF button */
-.e-totop{position:fixed;right:1rem;bottom:calc(1.25rem + 64px + env(safe-area-inset-bottom));z-index:45;display:grid;place-items:center;width:46px;height:46px;border-radius:14px;color:#fff;text-decoration:none;
+.e-totop{position:fixed;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom));z-index:45;display:grid;place-items:center;width:46px;height:46px;border-radius:14px;color:#fff;text-decoration:none;
   background:linear-gradient(90deg,#ff4a3d,#c8141a 45%,#ff2a2a);box-shadow:inset 0 0 5px rgba(255,255,255,.66),inset 0 2.1em 1.7em #120203,0 8px 18px rgba(0,0,0,.8);transition:transform .25s ease,box-shadow .25s ease}
 .e-totop:hover,.e-totop:focus-visible{translate:0 -3px;box-shadow:inset 0 0 8px rgba(255,255,255,.9),inset 0 2.1em 1.7em #160304,0 12px 24px rgba(0,0,0,.85),0 0 0 1px rgba(255,90,90,.5)}
-@media (min-width:640px){.e-totop{right:1.5rem;bottom:calc(1.75rem + 66px)}}
+/* Desktop: right above the browser's PDF (Acrobat) button corner */
+@media (min-width:640px){.e-totop{right:27px;bottom:52px}}
 @supports (animation-timeline:scroll()){.e-totop{animation:e-totop linear both;animation-timeline:scroll(root);animation-range:0 500px}
   @keyframes e-totop{0%,60%{opacity:0;visibility:hidden;transform:translateY(12px)}100%{opacity:1;visibility:visible;transform:none}}}
 html:has(.e-totop){scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html:has(.e-totop){scroll-behavior:auto}}
+
+/* ===== Fonts (founder approved 8 Nov 2026, option A) =====
+   Page and section headings: Anton, ALL CAPS, key word red (highlight in use-glass-motion).
+   Idea names and card titles: Anton in normal case, so long names fit. Labels: Archivo Black caps.
+   Text and buttons: Inter. Anton has one weight, so no fake bold. */
+.ember main :is(h1,h2):not(.cm-h1):not(.e-idea-title):not(.eh-hero *):not([data-keep-colour] *){
+  font-family:"Anton",Impact,"Arial Narrow",sans-serif!important;font-weight:400!important;font-synthesis:none;text-transform:uppercase;letter-spacing:.012em!important;line-height:1.05!important}
+.ember main :is(h1,h2) :is(b,strong,span,a){font-weight:400!important;font-synthesis:none}
+/* Idea title on the idea page, idea and card titles everywhere: normal case */
+.ember main :is(.cm-h1,.e-idea-title),
+.ember main h3:not(summary h3):not(details h3):not(.eh-hero *):not([data-ember="tools"] h3),
+.ember main :is(a,span,div,p).font-display:not(.eh-hero *){
+  font-family:"Anton",Impact,"Arial Narrow",sans-serif!important;font-weight:400!important;font-synthesis:none;text-transform:none!important;letter-spacing:.015em!important;line-height:1.12!important}
+.ember main h3 :is(b,strong,span,a){font-weight:400!important}
+/* Small labels above headings: Archivo Black caps, red */
+.ember main :is(p,span,div)[class*="uppercase"][class*="tracking"]:is([class*="text-xs"],[class*="text-sm"],[class*="text-[1"]):not(a *):not(button *):not([class*="bg-"]){
+  font-family:"Archivo Black",system-ui,sans-serif!important;font-weight:400!important;letter-spacing:.14em!important;color:#e01b1f!important}

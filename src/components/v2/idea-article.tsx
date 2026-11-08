@@ -95,7 +95,7 @@ export function IdeaArticle({ data }: { data: IdeaArticleData }) {
           <span className="rounded-full bg-[#4643ba] px-3 py-1 text-[11px] font-semibold text-white">{copy.badge}</span>
           {data.categoryName && <span className="rounded-full bg-white px-3 py-1 text-[11px] font-semibold text-[#4643ba] ring-1 ring-[#4643ba]/15">{data.categoryName}</span>}
         </div>
-        <h1 className="mt-4 max-w-4xl font-display text-[2rem] font-bold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl">{data.title}</h1>
+        <h1 className="e-idea-title mt-4 max-w-4xl font-display text-[2rem] font-bold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl">{data.title}</h1>
         {data.hook && <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">{data.hook}</p>}
         <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap">
           <a className="g-btn g-shine w-full sm:w-auto" href="#idea-validate">{copy.validate}<ArrowRight size={17} /></a>

@@ -1,4 +1,4 @@
-import { menuPanels } from "./shared-chrome";
+import { menuPanels, keywordScript } from "./shared-chrome";
 import sharedFooterSource from "@/components/v2/v2.css?raw";
 import glassCss from "@/components/home/glass.css?raw";
 import emberCss from "@/components/home/ember.css?raw";
@@ -53,7 +53,8 @@ export function boughtPage(html: string, assetFolder: string): Response {
     // transparent golden tree under /images/. Other purchased snapshots keep
     // their original namespaced assets.
     .replace(/(["'(=])\/images\//g, assetFolder === "home" || assetFolder === "lists" ? "$1/images/" : `$1${base}/images/`)
-    .replaceAll(`${base}/scripts/~flock.js`, `${base}/scripts/flock.js`);
+    .replaceAll(`${base}/scripts/~flock.js`, `${base}/scripts/flock.js`)
+    .replace("</body>", `${keywordScript}</body>`);
   return new Response(prepared, {
     headers: { "Content-Type": "text/html; charset=utf-8" },
   });
