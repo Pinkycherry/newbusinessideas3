@@ -768,3 +768,20 @@ html:has(.e-totop){scroll-behavior:smooth}
 .ember .e-kw{color:#e01b1f!important;font-weight:600}
 .ember .e-kw{white-space:nowrap}
 .ember span:has(> .e-kw){flex-wrap:wrap;column-gap:.15rem}
+
+/* ===== Footer categories, model A (founder locked 9 Nov 2026): three moving rows, opposite directions,
+   quiet dark chips with a red gradient edge; full red only on hover ===== */
+.ember .v2-footer .v2-footer-cats .e-fcats{display:grid;gap:2px;margin:0 -24px}
+.ember .v2-footer .v2-footer-cats .e-mq-track{margin:0;padding:0;list-style:none}
+.ember .v2-footer .v2-footer-cats .e-mq-track > li{flex:none;margin-right:10px}
+html .ember .v2-footer .v2-footer-cats a.e-fchip{display:inline-flex!important;align-items:center;gap:8px;min-height:2.5rem;padding:.5rem 1rem!important;border-radius:12px!important;white-space:nowrap;
+  font-size:.875rem!important;font-weight:500!important;color:#e9e2e2!important;text-shadow:none!important;width:auto!important;
+  background:linear-gradient(#171414,#171414) padding-box,linear-gradient(90deg,rgba(224,27,31,.85),rgba(224,27,31,.15) 45%,rgba(255,255,255,.08)) border-box!important;
+  border:1px solid transparent!important;box-shadow:none!important;transform:none;transition:background .25s ease,color .2s ease,box-shadow .25s ease,transform .25s ease!important}
+html .ember .v2-footer .v2-footer-cats a.e-fchip::after{content:"›";color:#e01b1f;font-size:1.1em}
+html .ember .v2-footer .v2-footer-cats a.e-fchip:is(:hover,:focus-visible){color:#fff!important;transform:translateY(-2px)!important;
+  background:linear-gradient(90deg,#ff4a3d,#c8141a 45%,#ff2a2a) padding-box,linear-gradient(90deg,#ff7a6a,#c8141a) border-box!important;box-shadow:0 8px 20px -8px rgba(224,27,31,.8)!important}
+html .ember .v2-footer .v2-footer-cats a.e-fchip:is(:hover,:focus-visible)::after{color:#fff}
+@media (max-width:640px){.ember .v2-footer .v2-footer-cats .e-fcats{margin:0 -14px}html .ember .v2-footer .v2-footer-cats a.e-fchip{font-size:.8rem!important;min-height:2.25rem;padding:.4rem .8rem!important}}
+html .ember .v2-footer .v2-footer-cats ul.e-mq-track{display:flex!important;flex-wrap:nowrap!important;grid-template-columns:none!important;grid-auto-flow:unset!important;width:max-content!important;gap:0!important;padding:0!important;overflow:visible!important}
+html .ember .v2-footer .v2-footer-cats ul.e-mq-track > li{flex:none!important}

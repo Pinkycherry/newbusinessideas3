@@ -459,14 +459,21 @@ export function Footer() {
         </div>
         <div className="v2-footer-cats">
           <h3>Business idea categories</h3>
-          <ul>
-            {/* Only categories with published ideas, so no footer link is a 404 (founder, 7 Nov 2026). */}
-            {TAXONOMY.filter((c) => LIVE_CATEGORY_SLUGS.has(c.slug)).map((c) => (
-              <li key={c.slug}>
-                <a href={`/category/${c.slug}`}>{c.name}</a>
-              </li>
-            ))}
-          </ul>
+          {/* Founder, 8-9 Nov 2026 (model A, locked): every live main category in three moving rows,
+              rows go opposite ways, quiet dark chips with a red edge. Only categories with published
+              ideas, so no footer link is a 404. Each row is drawn twice for a seamless loop; the copy is
+              hidden from screen readers and the keyboard. */}
+          <div className="e-fcats">
+            {[0, 1, 2].map((r) => {
+              const row = TAXONOMY.filter((c) => LIVE_CATEGORY_SLUGS.has(c.slug)).filter((_, i) => i % 3 === r);
+              return <div key={r} className={"e-mq" + (r === 1 ? " rev" : "")} style={{ ["--d" as string]: `${Math.max(40, row.length * 5)}s` }}>
+                <ul className="e-mq-track">
+                  {row.map((c) => <li key={c.slug}><a className="e-fchip" href={`/category/${c.slug}`}>{c.name}</a></li>)}
+                  {row.map((c) => <li key={c.slug + "-copy"} aria-hidden="true"><a className="e-fchip" tabIndex={-1} href={`/category/${c.slug}`}>{c.name}</a></li>)}
+                </ul>
+              </div>;
+            })}
+          </div>
         </div>
         <div className="v2-footer-bottom">
           <p>© {new Date().getFullYear()} bbusiness.online</p>
