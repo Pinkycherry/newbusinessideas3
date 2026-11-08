@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { highlightKeywords } from "@/lib/keyword-highlight";
 
 /**
  * Palette guard (founder, 8 Nov 2026): older pages still carried colours from the light theme
@@ -13,7 +14,7 @@ function paletteGuard(scope: Element) {
   const parse = (c: string) => { const m = c.match(/rgba?\(([^)]+)\)/); if (!m) return null; const v = m[1]!.split(",").map(Number); return { r: v[0]!, g: v[1]!, b: v[2]!, a: v.length > 3 ? v[3]! : 1 }; };
   const hsl = (c: { r: number; g: number; b: number }) => { const r = c.r / 255, g = c.g / 255, b = c.b / 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b); let h = 0, s = 0; const l = (mx + mn) / 2; if (mx !== mn) { const d = mx - mn; s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn); h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h *= 60; } return { h, s, l }; };
   const offHue = (h: number, s: number) => s > 0.28 && h > 18 && h < 340;
-  scope.querySelectorAll<HTMLElement>("*").forEach((el) => {
+  [scope as HTMLElement, ...Array.from(scope.querySelectorAll<HTMLElement>("*"))].forEach((el) => {
     if (el.closest("svg,canvas,img,video,picture,.eh-stage,[data-keep-colour]") && el.tagName !== "svg") return;
     if (guarded.has(el)) return;
     guarded.add(el);
@@ -45,42 +46,6 @@ function paletteGuard(scope: Element) {
       const bc = parse(cs.borderTopColor) ?? parse(cs.borderLeftColor);
       if (bc && bc.a > 0.3) { const { h, s, l } = hsl(bc); if (l > 0.7 || offHue(h, s)) el.style.setProperty("border-color", "rgba(235,30,36,.35)", "important"); }
     }
-  });
-}
-
-/**
- * Key words in red (founder, 8 Nov 2026): in every big heading the important word or phrase is red and
- * the rest stays white. Headings that already carry a red word are left alone. One phrase per heading,
- * picked from the site's own vocabulary in priority order; a heading with none gets its last word.
- */
-const KEYWORDS = ["business ideas", "business idea", "go wrong", "money to start", "pays? you", "money comes", "need", "guides?", "questions?", "tools?", "calculators?", "lists?", "resources", "side hustles?", "startup ideas?", "1 lakh women", "women", "validate", "free", "calculators?", "blueprints?", "ideas?", "India(?:'s)?", "money", "profit", "income", "startups?", "founders?", "verdict", "risks?", "guides?", "library", "categor(?:y|ies)", "compare", "answers?", "customers?", "buyers?", "costs?", "loans?", "GST", "map"];
-const KW_RES = KEYWORDS.map((k) => new RegExp(`\\b(${k})\\b`, "i"));
-const kwDone = new WeakSet<Element>();
-function redKeywords(scope: Element) {
-  // CSS Custom Highlight: paints the words red without touching the DOM React owns.
-  const H = (window as unknown as { Highlight?: new (...r: Range[]) => { add(r: Range): void } }).Highlight;
-  const reg = (CSS as unknown as { highlights?: Map<string, unknown> }).highlights;
-  if (!H || !reg) return;
-  const hl = (reg.get("kw-red") as { add(r: Range): void } | undefined) ?? (() => { const x = new H(); reg.set("kw-red", x); return x; })();
-  // Founder, 8 Nov 2026: card headings (h3) too, two colours: up to two key words red, the rest white.
-  scope.querySelectorAll<HTMLElement>("main :is(h1,h2,h3,h4)").forEach((h) => {
-    if (kwDone.has(h) || h.closest(".eh-stage,[data-keep-colour],.eh-hero")) return;
-    kwDone.add(h);
-    const isRed = (el: Element) => { const m = getComputedStyle(el).color.match(/\d+/g); return !!m && +m[0]! > 150 && +m[1]! < 90 && +m[2]! < 90; };
-    if (Array.from(h.querySelectorAll("*:not(svg):not(svg *)")).some(isRed) || isRed(h)) return;
-    const texts: Text[] = [];
-    const walk = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
-    for (let n = walk.nextNode(); n; n = walk.nextNode()) if ((n.textContent ?? "").trim()) texts.push(n as Text);
-    if (!texts.length) return;
-    const mark = (t: Text, start: number, len: number) => { const r = document.createRange(); r.setStart(t, start); r.setEnd(t, start + len); hl.add(r); };
-    const max = h.tagName === "H3" || h.tagName === "H4" ? 2 : 1; let n = 0; const used: [Text, number, number][] = [];
-    for (const re of KW_RES) for (const t of texts) {
-      const m = re.exec(t.data);
-      if (m && !used.some(([u, a, b]) => u === t && m.index < b && m.index + m[0].length > a)) { mark(t, m.index, m[0].length); used.push([t, m.index, m.index + m[0].length]); if (++n >= max) return; break; }
-    }
-    if (n) return;
-    const last = texts[texts.length - 1]!; const m = /([\p{L}\p{N}'’-]+)[^\p{L}\p{N}]*$/u.exec(last.data);
-    if (m) mark(last, m.index, m[1]!.length);
   });
 }
 
@@ -135,6 +100,7 @@ export function useGlassMotion() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const timers: number[] = [];
     let rowsSeen: IntersectionObserver | null = null;
+    let mo: MutationObserver | null = null;
     const visible = new WeakSet<Element>();
     const wired = new WeakSet<Element>();
     const wireRows = () => {
@@ -169,7 +135,14 @@ export function useGlassMotion() {
     timers.push(window.setTimeout(wireRows, 2500), window.setTimeout(wireRows, 6000));
     const frame = document.querySelector(".ember");
     if (frame) {
-      const guard = () => { try { redKeywords(frame); paletteGuard(frame); } catch (e) { console.error("palette guard", e); } };
+      const guard = () => { try { highlightKeywords(frame); paletteGuard(frame); } catch (e) { console.error("palette guard", e); } };
+      // Anything added later (toasts, trays, pop-ups, loaded cards) is checked too, in small batches.
+      let pending: Element[] = []; let later = 0;
+      mo = new MutationObserver((ms) => {
+        ms.forEach((m) => m.addedNodes.forEach((n) => { if (n.nodeType === 1) pending.push(n as Element); }));
+        if (!later) later = window.setTimeout(() => { later = 0; const list = pending; pending = []; try { list.forEach((el) => { if (el.isConnected) paletteGuard(el); }); highlightKeywords(frame); } catch (e) { console.error("palette guard", e); } }, 150);
+      });
+      mo.observe(frame, { childList: true, subtree: true });
       const idle = (window as { requestIdleCallback?: (cb: () => void) => number }).requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 300));
       idle(guard);
       timers.push(window.setTimeout(() => idle(guard), 2500));
@@ -186,6 +159,6 @@ export function useGlassMotion() {
     const onMenu = (ev: MouseEvent) => { if ((ev.target as HTMLElement | null)?.closest("img")) ev.preventDefault(); };
     document.addEventListener("copy", onCopy);
     document.addEventListener("contextmenu", onMenu);
-    return () => { io?.disconnect(); anim?.disconnect(); rowsSeen?.disconnect(); timers.forEach((t) => { window.clearInterval(t); window.clearTimeout(t); }); root.classList.remove("rv-on"); document.removeEventListener("copy", onCopy); document.removeEventListener("contextmenu", onMenu); };
+    return () => { mo?.disconnect(); io?.disconnect(); anim?.disconnect(); rowsSeen?.disconnect(); timers.forEach((t) => { window.clearInterval(t); window.clearTimeout(t); }); root.classList.remove("rv-on"); document.removeEventListener("copy", onCopy); document.removeEventListener("contextmenu", onMenu); };
   }, []);
 }
