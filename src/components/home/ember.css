@@ -523,3 +523,129 @@ html body .ember .mm-header .mm-panel .mm-btn[href],html body .ember .mm-header 
 .ember .gl-editorial .gl-editorial-unit + .gl-editorial-unit{border-top:1px solid transparent!important;border-image:linear-gradient(90deg,rgba(235,30,36,.6),rgba(235,30,36,.15) 45%,transparent 80%) 1!important}
 .ember .gl-editorial .gl-editorial-section h2{color:#fff!important}
 .ember :is(.glass-home,.v2-surface,.gl-page,.gl-editorial){background:transparent!important;background-image:none!important;box-shadow:none!important}
+
+/* =====================================================================================
+   v3 (founder approved 8 Nov 2026): Button A "red aura glass" for every main action,
+   C "dark frosted glass" for second actions, D chips, E links, F link rows; background 1
+   "ember swirl" at the top of every page and soft red side glows down the page.
+   ===================================================================================== */
+@property --aura{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes aura-spin{to{--aura:360deg}}
+.ember :is(.g-btn,.mm-report,.mm-quick a:first-child,.v2-footer-actions a:first-child,.mm-panel .mm-btn),
+.ember main :is(a,button):is([class*="bg-slate-900"],[class*="bg-\[#4643ba\]"],[class*="bg-violet-6"],[class*="bg-blue-6"],[class*="bg-blue-7"],[class*="bg-primary"],.gl-idea-action,.gh-button-primary,.td-primary,.pt-primary,.calc-primary,.fd-button){
+  position:relative;isolation:isolate;overflow:visible!important;border:0!important;border-radius:14px!important;color:#fff!important;font-weight:600!important;
+  background:linear-gradient(90deg,#ff4a3d,#c8141a 45%,#ff2a2a)!important;
+  box-shadow:inset 0 0 5px rgba(255,255,255,.66),inset 0 2.1em 1.7em #120203,0 6px 14px rgba(0,0,0,.8)!important;
+  text-shadow:0 1px 1px #000!important;filter:none!important;transform:none;transition:transform .3s ease,box-shadow .3s ease!important}
+.ember :is(.g-btn,.mm-report,.mm-quick a:first-child,.v2-footer-actions a:first-child,.mm-panel .mm-btn)::after,
+.ember main :is(a,button):is([class*="bg-\[#4643ba\]"],[class*="bg-slate-900"],[class*="bg-primary"],.gl-idea-action,.gh-button-primary)::after{display:none!important}
+.ember :is(.g-btn,.mm-report,.mm-quick a:first-child,.v2-footer-actions a:first-child,.mm-panel .mm-btn)::before,
+.ember main :is(a,button):is([class*="bg-\[#4643ba\]"],[class*="bg-slate-900"],[class*="bg-primary"],[class*="bg-blue-7"],.gl-idea-action,.gh-button-primary,.td-primary,.calc-primary){
+  }
+.ember :is(.g-btn,.mm-report,.mm-quick a:first-child,.v2-footer-actions a:first-child,.mm-panel .mm-btn)::before,
+.ember main :is(a,button):is([class*="bg-\[#4643ba\]"],[class*="bg-slate-900"],[class*="bg-primary"],[class*="bg-blue-7"],.gl-idea-action,.gh-button-primary,.td-primary,.calc-primary)::before{
+  content:""!important;display:block!important;position:absolute!important;inset:0!important;margin:0!important;border-radius:inherit!important;z-index:-1!important;pointer-events:none;
+  width:auto!important;height:auto!important;top:0!important;left:0!important;opacity:1!important;
+  background:conic-gradient(from var(--aura),transparent 80deg,#ff2a2a,#ff8a5a,#b10802,transparent 280deg)!important;filter:blur(0);transition:filter .35s ease}
+.ember :is(.g-btn,.mm-report,.mm-quick a:first-child,.v2-footer-actions a:first-child,.mm-panel .mm-btn):is(:hover,:focus-visible),
+.ember main :is(a,button):is([class*="bg-\[#4643ba\]"],[class*="bg-slate-900"],[class*="bg-primary"],[class*="bg-blue-7"],.gl-idea-action,.gh-button-primary,.td-primary,.calc-primary):is(:hover,:focus-visible){
+  transform:translateY(-2px)!important;box-shadow:inset 0 0 8px rgba(255,255,255,.9),inset 0 2.1em 1.7em #160304,0 10px 22px rgba(0,0,0,.85),0 0 0 1px rgba(255,90,90,.45)!important}
+.ember :is(.g-btn,.mm-report,.mm-quick a:first-child,.v2-footer-actions a:first-child,.mm-panel .mm-btn):is(:hover,:focus-visible)::before,
+.ember main :is(a,button):is([class*="bg-\[#4643ba\]"],[class*="bg-slate-900"],[class*="bg-primary"],[class*="bg-blue-7"],.gl-idea-action,.gh-button-primary,.td-primary,.calc-primary):is(:hover,:focus-visible)::before{filter:blur(14px);animation:aura-spin 2.4s linear infinite}
+.ember :is(.g-btn,.mm-report):active,.ember main :is(a,button):is([class*="bg-\[#4643ba\]"],.gl-idea-action,.gh-button-primary):active{transform:translateY(1px)!important;box-shadow:inset 0 0 5px rgba(255,255,255,.66),inset 0 2.1em 1.7em #000!important}
+@media (prefers-reduced-motion:reduce){.ember *::before{animation:none!important}}
+
+/* C: second actions, dark frosted glass; hover = red rim and glow */
+.ember :is(.g-btn-light,.g-chip,.mm-quick a:not(:first-child),.v2-footer-actions a:not(:first-child),.mm-pill),
+.ember main :is(a,button):is(.gh-button-secondary,.td-secondary,.pt-secondary,.calc-secondary,[class*="inline-flex"][class*="border"]:is([class*="font-semibold"],[class*="min-h"],[class*="px-"]),[class*="rounded-full"][class*="border"][class*="px-4"]):not(.g-btn):not([aria-pressed="true"]):not([class*="bg-\[#4643ba\]"]){
+  border-radius:14px!important;color:#f1ecec!important;font-weight:600!important;text-shadow:none!important;
+  background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.16)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 8px 24px rgba(0,0,0,.5)!important;transform:none;transition:all .25s ease!important}
+.ember :is(.g-btn-light,.g-chip,.mm-quick a:not(:first-child),.v2-footer-actions a:not(:first-child),.mm-pill):hover,
+.ember main :is(a,button):is(.gh-button-secondary,.td-secondary,.pt-secondary,.calc-secondary,[class*="inline-flex"][class*="border"],[class*="rounded-full"][class*="border"][class*="px-4"]):not(.g-btn):not([aria-pressed="true"]):not([class*="bg-\[#4643ba\]"]):hover{
+  color:#fff!important;background:rgba(224,27,31,.12)!important;border-color:rgba(255,70,70,.75)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 0 0 3px rgba(224,27,31,.18),0 10px 28px -8px rgba(224,27,31,.55)!important;transform:translateY(-1px)!important}
+
+/* D: chosen chip / filter */
+.ember main :is(a,button):is([aria-pressed="true"],[aria-selected="true"]):not(.g-btn){color:#fff!important;background:linear-gradient(180deg,#e01b1f,#9a0a0f)!important;border:1px solid rgba(255,150,150,.5)!important;box-shadow:0 6px 16px -6px rgba(224,27,31,.7)!important}
+
+/* E: links inside cards and text, red with an underline that draws in on hover; no boxes around titles */
+.ember main :is(h2,h3,h4) a,.ember main a:is([href^="/idea/"],[href^="/category/"],[href^="/lists/"],[href^="/blog/"]):not([class*="rounded"]):not([class*="inline-flex"]):not(.g-btn):not(.g-link){outline:0!important;background:linear-gradient(#ff4a4a,#ff4a4a) 0 100%/0% 1px no-repeat;transition:background-size .3s ease,color .2s ease}
+.ember main :is(h2,h3,h4) a:hover,.ember main a:is([href^="/idea/"],[href^="/category/"],[href^="/lists/"],[href^="/blog/"]):not([class*="rounded"]):not([class*="inline-flex"]):not(.g-btn):not(.g-link):hover{background-size:100% 1px;color:#ff6b6b!important}
+
+/* F: link rows (title + arrow): grey rows, red rim and red arrow on hover */
+.ember :is(.g-link,main a:is([class*="rounded-xl"],[class*="rounded-lg"])[class*="border"][class*="justify-between"]){border-radius:14px!important;background:linear-gradient(160deg,#211f1f,#141313)!important;border:1px solid #2e2b2b!important;color:#eee!important;box-shadow:none!important;transform:none!important}
+.ember :is(.g-link,main a:is([class*="rounded-xl"],[class*="rounded-lg"])[class*="border"][class*="justify-between"]):hover{border-color:rgba(224,27,31,.6)!important;background:linear-gradient(160deg,#2a1b1b,#151212)!important;color:#fff!important}
+.ember .g-link .g-arrow{background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.14);color:#ff5a5a!important;box-shadow:none!important}
+.ember .g-link:hover .g-arrow{background:#e01b1f!important;color:#fff!important;border-color:transparent}
+
+/* Selected choice cards (validate picker): dark red, never white; red ticks */
+.ember [class~="bg-[#f1efff]"]{background:linear-gradient(160deg,rgba(224,27,31,.22),rgba(224,27,31,.06))!important;border-color:rgba(255,80,80,.6)!important;box-shadow:none!important}
+.ember [class~="bg-[#f1efff]"] *{color:#fff!important}
+.ember input:is([type=checkbox],[type=radio]){accent-color:#e01b1f!important}
+
+/* Cards: grey, Cryptox style (no red wash), red only on hover */
+.ember main :is(div,article,li,aside,details):is([class*="rounded-xl"],[class*="rounded-2xl"],[class*="rounded-3xl"]):is([class*="bg-card"],[class*="bg-white"]):is([class*="border"],[class*="shadow"],[class*="ring"]):not([data-ember] *),
+.ember main .g-tile:not([data-ember] *),.ember main .premium-card{
+  background:linear-gradient(160deg,#262424 0%,#171616 45%,#101010 100%)!important;border:1px solid #2e2b2b!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 30px 60px -30px #000!important}
+.ember main a:is([class*="rounded-xl"],[class*="rounded-2xl"],[class*="rounded-3xl"]):is([class*="bg-card"],[class*="bg-white"]):is([class*="border"],[class*="shadow"]):not([data-ember] *):hover,.ember main .g-tile:not([data-ember] *):hover{border-color:rgba(224,27,31,.55)!important}
+
+/* Background 1 (ember swirl) at the top of every page except the home poster; side glows down the page */
+.ember main{position:relative;isolation:isolate;background:
+  radial-gradient(ellipse 20% 520px at 0% 1100px,rgba(190,14,18,.42),transparent 70%),
+  radial-gradient(ellipse 22% 560px at 100% 2100px,rgba(224,27,31,.36),transparent 70%),
+  radial-gradient(ellipse 20% 520px at 0% 3200px,rgba(190,14,18,.34),transparent 70%),
+  radial-gradient(ellipse 22% 560px at 100% 4300px,rgba(224,27,31,.3),transparent 70%),
+  radial-gradient(ellipse 20% 520px at 0% 5400px,rgba(190,14,18,.28),transparent 70%),
+  radial-gradient(ellipse 22% 560px at 100% 6500px,rgba(224,27,31,.26),transparent 70%),#000!important;background-repeat:no-repeat!important}
+.ember main::before{content:"";position:absolute;left:0;right:0;top:0;height:780px;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 55% 300px at 50% -40px,rgba(224,27,31,.8),rgba(160,10,14,.3) 45%,transparent 75%),
+  radial-gradient(circle 560px at 50% -120px,transparent 0 62%,rgba(224,27,31,.32) 66%,rgba(120,8,10,.1) 74%,transparent 82%),
+  radial-gradient(circle 760px at 50% -120px,transparent 0 76%,rgba(224,27,31,.15) 79%,transparent 86%)}
+.ember main:has(.eh-hero)::before{display:none}
+/* Page wrappers stay transparent so the page background shows */
+.ember main > :is(div,section):first-child:not(.eh-hero):not([class*="eh-"]){background-color:transparent}
+.ember :is(.glass-home,.v2-surface,.gl-page,.gl-editorial,.cm-page){background:transparent!important}
+
+/* ===== v3.1 (founder 8 Nov 2026): white text on every red surface, cement-grey cards with shade, backgrounds on every page, pop on choice ===== */
+/* Text on any red fill is always white */
+.ember :is([class*="bg-[#4643ba]"]:not([class*="bg-[#4643ba]/"]),[class*="bg-primary"],[class*="bg-blue-6"],[class*="bg-blue-7"],[class*="bg-violet-6"],[class*="bg-red-"],.g-btn,.mm-report,[aria-pressed="true"],[aria-selected="true"],.g-step-tab),
+.ember :is([class*="bg-[#4643ba]"]:not([class*="bg-[#4643ba]/"]),[class*="bg-primary"],[class*="bg-blue-6"],[class*="bg-blue-7"],[class*="bg-violet-6"],[class*="bg-red-"],.g-btn,.mm-report,[aria-pressed="true"],[aria-selected="true"]) *{color:#fff!important;-webkit-text-fill-color:#fff}
+/* Light red tints (badges): white text, not red-on-red */
+.ember [class*="bg-[#4643ba]/"],.ember [class*="bg-[#4643ba]/"] *{color:#fff!important}
+/* Cement-grey cards with a soft shade, a touch of red light in one corner (reference: dark trading page) */
+.ember main :is(div,article,li,aside,details):is([class*="rounded-xl"],[class*="rounded-2xl"],[class*="rounded-3xl"]):is([class*="bg-card"],[class*="bg-white"]):is([class*="border"],[class*="shadow"],[class*="ring"]):not([data-ember] *),
+.ember main .g-tile:not([data-ember] *),.ember main .premium-card,.ember .g-step-card,
+.ember :is([data-ember="inside"] [class*="rounded-3xl"][class*="bg-white"],[data-ember="built"] li > a,[data-ember="glimpse"] li > a,[data-ember="reads"] li > a,[data-ember="blog"] li > a,[data-ember="research"] ul > li[class*="rounded-2xl"],#india-map .g-tile,.eh-hero [class*="rounded-[1.75rem]"],.eh-hero ul > li[class*="rounded-2xl"]){
+  background:radial-gradient(ellipse 70% 55% at var(--eb-at,100% 100%),rgba(224,27,31,.16),transparent 70%),linear-gradient(155deg,#3b3634 0%,#2a2726 18%,#1b1a1a 48%,#121111 100%)!important;
+  border:1px solid #3a3533!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),inset 0 -1px 0 rgba(0,0,0,.6),0 30px 60px -32px #000!important}
+/* Home "Inside the library", "Explore the library" and lists: a red glow behind the section, not flat black */
+.ember [data-ember="inside"],.ember [data-ember="reads"],.ember [data-ember="glimpse"]{background:radial-gradient(ellipse 45% 60% at 70% 50%,rgba(224,27,31,.22),transparent 70%),radial-gradient(ellipse 30% 50% at 0% 80%,rgba(160,10,14,.25),transparent 70%)!important}
+/* No black band between the header and the first section on any page */
+.ember main > :is(section,div):first-child,.ember main > div:first-child > :is(section,header):first-child,.ember :is(.v2p-hero,.gl-editorial-hero,.gh-hero,[class*="-hero"]):not(.eh-hero){background-color:transparent!important}
+/* Backgrounds on every page, phones included: bigger side glows on small screens */
+@media (max-width:767px){.ember main{background:
+  radial-gradient(ellipse 70% 420px at 0% 700px,rgba(190,14,18,.4),transparent 70%),
+  radial-gradient(ellipse 70% 420px at 100% 1400px,rgba(224,27,31,.34),transparent 70%),
+  radial-gradient(ellipse 70% 420px at 0% 2200px,rgba(190,14,18,.32),transparent 70%),
+  radial-gradient(ellipse 70% 420px at 100% 3000px,rgba(224,27,31,.28),transparent 70%),
+  radial-gradient(ellipse 70% 420px at 0% 3800px,rgba(190,14,18,.26),transparent 70%),
+  radial-gradient(ellipse 70% 420px at 100% 4600px,rgba(224,27,31,.24),transparent 70%),
+  radial-gradient(ellipse 70% 420px at 0% 5400px,rgba(190,14,18,.22),transparent 70%),#000!important}
+  .ember main::before{height:520px}}
+/* Choosing an option: it pops in red */
+@keyframes e-pop{0%{transform:scale(.94)}55%{transform:scale(1.07)}100%{transform:scale(1)}}
+.ember main :is(a,button,label):is([aria-pressed="true"],[aria-selected="true"]){animation:e-pop .35s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 0 3px rgba(224,27,31,.25),0 8px 20px -6px rgba(224,27,31,.8)!important}
+.ember label:has(input:checked){animation:e-pop .35s cubic-bezier(.2,.8,.2,1)}
+/* Speed: no per-image shadow filters, no blur on buttons */
+.ember img[src*="/icons/"]{filter:none!important}
+.ember :is(.g-btn,.g-btn-light,.g-chip,.mm-report,.mm-pill),.ember main :is(a,button){-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+/* Swirl without a dark band under the header: one broad glow plus soft rings */
+.ember main::before{background:
+  radial-gradient(ellipse 70% 520px at 50% -60px,rgba(224,27,31,.55),rgba(160,10,14,.28) 45%,rgba(90,4,8,.12) 70%,transparent 90%),
+  radial-gradient(circle 560px at 50% -120px,transparent 0 60%,rgba(224,27,31,.22) 66%,rgba(120,8,10,.08) 76%,transparent 86%),
+  radial-gradient(circle 780px at 50% -120px,transparent 0 74%,rgba(224,27,31,.12) 79%,transparent 88%)!important}
+/* Old amber, yellow, orange, green, blue decorative blobs become soft red */
+.ember :is([class*="bg-amber-"],[class*="bg-yellow-"],[class*="bg-orange-"],[class*="bg-emerald-"],[class*="bg-green-"],[class*="bg-sky-"],[class*="bg-cyan-"],[class*="bg-teal-"],[class*="bg-pink-"],[class*="bg-rose-"],[class*="bg-indigo-"],[class*="bg-purple-"])[class*="blur"]{background-color:rgba(224,27,31,.14)!important}
+.ember :is([class*="from-amber"],[class*="from-orange"],[class*="from-yellow"],[class*="from-emerald"],[class*="from-sky"],[class*="from-pink"]){--tw-gradient-from:transparent!important}
+.ember main :is(section,div,header)[class*="bg-gradient-to-"]:is([class*="via-background"],[class*="to-background"],[class*="from-background"]){background-image:none!important}

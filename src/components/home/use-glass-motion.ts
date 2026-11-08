@@ -18,15 +18,25 @@ function paletteGuard(scope: Element) {
     const hasText = Array.from(el.childNodes).some((n) => n.nodeType === 3 && (n.textContent ?? "").trim());
     if (hasText) {
       const c = parse(cs.color);
-      if (c && c.a > 0.3) { const { h, s, l } = hsl(c); if (l < 0.42) el.style.setProperty("color", "#ece3e3", "important"); else if (offHue(h, s)) el.style.setProperty("color", "#ff4f4f", "important"); }
+      if (c && c.a > 0.3) {
+        const { h, s, l } = hsl(c);
+        // Red text on a red surface is unreadable: find the surface behind the text first.
+        let surface: { r: number; g: number; b: number; a: number } | null = null;
+        for (let p: HTMLElement | null = el; p && p !== scope; p = p.parentElement) { const b = parse(getComputedStyle(p).backgroundColor); const img = getComputedStyle(p).backgroundImage; if ((b && b.a > 0.35) || img.includes("gradient")) { surface = b && b.a > 0.35 ? b : (parse((img.match(/rgba?\([^)]+\)/) ?? [""])[0]!) ?? null); break; } }
+        const sRed = surface ? (() => { const x = hsl(surface); return x.s > 0.35 && (x.h < 18 || x.h > 340) && x.l > 0.18; })() : false;
+        const tRed = s > 0.35 && (h < 18 || h > 340);
+        if (sRed && (tRed || l < 0.6)) el.style.setProperty("color", "#ffffff", "important");
+        else if (l < 0.42) el.style.setProperty("color", "#ece3e3", "important");
+        else if (offHue(h, s)) el.style.setProperty("color", "#ff4f4f", "important");
+      }
     }
     // Editorial pages (about, founders, contact, policies): sections are plain, never boxed.
     if (el.matches(".gl-editorial :is(.gl-editorial-unit,.gl-editorial-section,.gl-editorial-hero,.v2p-section,.v2p-hero,.gl-editorial-stack)")) return;
     const bg = parse(cs.backgroundColor);
-    if (bg && bg.a > 0.25) { const { h, s, l } = hsl(bg); if (l > 0.7) el.style.setProperty("background-color", "#161313", "important"); else if (offHue(h, s)) el.style.setProperty("background-color", l > 0.35 ? "#c8141a" : "#2a1416", "important"); }
+    if (bg && bg.a > 0.25) { const { h, s, l } = hsl(bg); if (l > 0.7) el.style.setProperty("background-color", el.tagName === "SECTION" || el.getBoundingClientRect().width > window.innerWidth * 0.7 ? "transparent" : "#161313", "important"); else if (offHue(h, s)) el.style.setProperty("background-color", l > 0.35 ? "#c8141a" : "#2a1416", "important"); }
     if (cs.backgroundImage.includes("gradient")) {
       const cols = (cs.backgroundImage.match(/rgba?\([^)]+\)/g) ?? []).map(parse).filter(Boolean) as { r: number; g: number; b: number; a: number }[];
-      if (cols.some((c) => { const { h, s, l } = hsl(c); return c.a > 0.3 && (l > 0.78 || (offHue(h, s) && l > 0.12)); })) el.style.setProperty("background-image", "linear-gradient(160deg,#1c1818,#100d0d)", "important");
+      if (cols.some((c) => { const { h, s, l } = hsl(c); return c.a > 0.3 && (l > 0.78 || (offHue(h, s) && l > 0.12)); })) el.style.setProperty("background-image", el.tagName === "SECTION" || el.getBoundingClientRect().width > window.innerWidth * 0.7 ? "none" : "linear-gradient(160deg,#1c1818,#100d0d)", "important");
     }
     if (parseFloat(cs.borderTopWidth) > 0 || parseFloat(cs.borderLeftWidth) > 0) {
       const bc = parse(cs.borderTopColor) ?? parse(cs.borderLeftColor);

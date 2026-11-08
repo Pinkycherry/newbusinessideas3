@@ -116,15 +116,15 @@ function Comparison({ ideas }: { ideas: ListIdea[] }) {
           <p className="mt-1 text-sm text-muted-foreground">The top ideas side by side. Swipe on a phone.</p>
         </div>
       </div>
-      <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 lg:grid-cols-5">
+      <ul className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:grid-cols-2 md:overflow-visible md:px-0 lg:grid-cols-3">
         {ideas.map((i) => (
           <li key={i.slug} className="g-tile flex w-[78%] shrink-0 snap-start flex-col p-4 sm:w-[46%] md:w-auto">
             <a href={`/idea/${i.slug}`} className="font-display text-[15px] font-semibold leading-snug text-slate-900 hover:text-[#4643ba]">{i.title}</a>
             <dl className="mt-3 grid gap-2 text-sm">
               <div><dt className="text-[11px] font-semibold uppercase tracking-wide text-[#4643ba]">Money to start</dt><dd className="mt-0.5 font-medium text-slate-800">{band(i) || "See the idea"}</dd></div>
-              <div><dt className="text-[11px] font-semibold uppercase tracking-wide text-[#4643ba]">Best for</dt><dd className="mt-0.5 text-slate-600">{sentences(i.who_pays_you, 1)}</dd></div>
+              <div><dt className="text-[11px] font-semibold uppercase tracking-wide text-[#4643ba]">Best for</dt><dd className="mt-0.5 line-clamp-3 text-slate-600">{sentences(i.who_pays_you, 1)}</dd></div>
             </dl>
-            <a href={`/idea/${i.slug}`} className="g-link mt-auto !min-h-10 !py-2 text-sm" style={{ marginTop: "0.9rem" }}><span>Read this idea</span><span className="g-arrow"><ArrowRight aria-hidden size={14} /></span></a>
+            <a href={`/idea/${i.slug}`} className="g-link mt-auto !min-h-10 !py-2 text-sm whitespace-nowrap" style={{ marginTop: "0.9rem" }}><span>Read this idea</span><span className="g-arrow"><ArrowRight aria-hidden size={14} /></span></a>
           </li>
         ))}
       </ul>
