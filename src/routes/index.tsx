@@ -388,29 +388,27 @@ function HomePage() {
           <div className="relative">
             <Sparkle className="absolute -top-6 left-4 hidden h-7 w-7 text-[#4643ba] lg:block" />
             <div className="rounded-3xl bg-white p-3 shadow-[0_30px_60px_-35px_rgba(70,67,186,0.6)] ring-1 ring-[#4643ba]/10 sm:p-4">
-              <form action="/search" method="get" className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2 ring-1 ring-slate-200">
+              <form action="/search" method="get" className="eh-search flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2 ring-1 ring-slate-200">
                 <Search aria-hidden size={16} className="text-slate-400" />
                 <input name="q" type="search" placeholder="Search ideas, categories or keywords…" aria-label="Search the library" className="min-w-0 flex-1 bg-transparent text-sm outline-none" />
               </form>
               <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-[11rem_1fr]">
-                <ul className="hidden space-y-0.5 sm:block">
-                  <li><Link to="/browse" className="block rounded-lg bg-[#4643ba]/10 px-2.5 py-1.5 text-xs font-semibold text-[#4643ba]">All categories</Link></li>
+                <ul className="eh-cats hidden space-y-1 sm:block">
+                  <li className="mb-2.5"><Link to="/browse" className="eh-cat-all block rounded-lg px-2.5 py-1.5 text-xs font-semibold">All categories</Link></li>
                   {sideCats.map((c) => (
-                    <li key={c.slug}><Link to="/category/$categorySlug" params={{ categorySlug: c.slug }} className="block truncate rounded-lg px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-[#4643ba]">{c.name.replace(/ Business Ideas$/, "")}</Link></li>
+                    <li key={c.slug}><Link to="/category/$categorySlug" params={{ categorySlug: c.slug }} className="eh-cat block truncate rounded-lg px-2.5 py-1.5 text-xs text-slate-600">{c.name.replace(/ Business Ideas$/, "")}</Link></li>
                   ))}
                 </ul>
                 <ul className="space-y-2">
                   {fresh.slice(0, 4).map((i) => (
                     <li key={i.slug}>
                       <a href={`/idea/${i.slug}`} className="group flex items-center gap-3 rounded-xl p-2 ring-1 ring-slate-100 transition hover:bg-[#f6f5ff] hover:ring-[#4643ba]/20">
-                        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-[#4643ba] to-[#7b6ff0] font-display text-sm font-bold text-white">
-                          {i.title.split(" ").filter((w) => /^[A-Z]/.test(w)).map((w) => w[0]).join("").slice(0, 2)}
-                        </span>
+                        <img src={`/icons/letters/letter-${(i.title.match(/[A-Za-z]/)?.[0] ?? "b").toLowerCase()}.webp`} alt="" width={48} height={50} loading="lazy" decoding="async" className="h-12 w-12 shrink-0 object-contain" />
                         <span className="min-w-0 flex-1">
                           <span className="block truncate text-sm font-semibold text-slate-900">{i.title}</span>
                           <span className="block truncate text-xs text-slate-500">{i.category_name?.replace(/ Business Ideas$/, "")} · Updated {shortDate(i.updated_at)}</span>
                         </span>
-                        <span className="shrink-0 rounded-lg border border-[#4643ba]/30 px-3 py-1 text-xs font-semibold text-[#4643ba] group-hover:bg-[#4643ba] group-hover:text-white">Read</span>
+                        <span className="eh-read shrink-0 rounded-lg px-3 py-1 text-xs font-semibold">Read</span>
                       </a>
                     </li>
                   ))}

@@ -649,3 +649,37 @@ html body .ember .mm-header .mm-panel .mm-btn[href],html body .ember .mm-header 
 .ember :is([class*="bg-amber-"],[class*="bg-yellow-"],[class*="bg-orange-"],[class*="bg-emerald-"],[class*="bg-green-"],[class*="bg-sky-"],[class*="bg-cyan-"],[class*="bg-teal-"],[class*="bg-pink-"],[class*="bg-rose-"],[class*="bg-indigo-"],[class*="bg-purple-"])[class*="blur"]{background-color:rgba(224,27,31,.14)!important}
 .ember :is([class*="from-amber"],[class*="from-orange"],[class*="from-yellow"],[class*="from-emerald"],[class*="from-sky"],[class*="from-pink"]){--tw-gradient-from:transparent!important}
 .ember main :is(section,div,header)[class*="bg-gradient-to-"]:is([class*="via-background"],[class*="to-background"],[class*="from-background"]){background-image:none!important}
+
+/* ===== v3.2 (founder 8 Nov 2026, evening) ===== */
+/* Key words in red inside headings (painted by the CSS highlight in use-glass-motion) */
+::highlight(kw-red){color:#e01b1f}
+/* Search boxes: no square outline inside a rounded box; the whole box glows red instead */
+.ember input:is([type=search],[class*="bg-transparent"]):focus,.ember input:is([type=search],[class*="bg-transparent"]):focus-visible{outline:none!important;box-shadow:none!important;border-color:transparent!important}
+.ember :is(form,label,div):has(> input:is([type=search],[class*="bg-transparent"]):focus){box-shadow:0 0 0 1.5px rgba(255,70,70,.75),0 0 22px -4px rgba(224,27,31,.65)!important;transition:box-shadow .25s ease}
+/* Home "Inside the library": side categories with a hover, "All categories" as a red chip with room below */
+.ember .eh-cat-all{background:linear-gradient(180deg,#e01b1f,#9a0a0f)!important;color:#fff!important;border:1px solid rgba(255,150,150,.45)}
+.ember .eh-cat{border:1px solid #2e2a2a;background:rgba(255,255,255,.03)!important;color:#ddd!important;transition:background .2s ease,border-color .2s ease,transform .2s ease,color .2s ease}
+.ember .eh-cat:hover,.ember .eh-cat:focus-visible{background:rgba(224,27,31,.16)!important;border-color:rgba(255,70,70,.7)!important;color:#fff!important;transform:translateX(4px)}
+.ember .eh-read{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#f1ecec!important;transition:all .25s ease}
+.ember a:hover .eh-read,.ember a:focus-visible .eh-read{background:linear-gradient(180deg,#e01b1f,#9a0a0f)!important;border-color:rgba(255,150,150,.5);color:#fff!important;transform:translateX(-2px);box-shadow:0 6px 16px -6px rgba(224,27,31,.8)}
+.ember [class*="group-hover:bg-[#4643ba]"]{--tw-ring-color:transparent}
+.ember .group:hover [class*="group-hover:bg-[#4643ba]"]{background:linear-gradient(180deg,#e01b1f,#9a0a0f)!important;color:#fff!important}
+/* Cards with buttons: the card stays put on hover, only the buttons move */
+.ember main :is(article,li,div,a)[class*="hover:-translate"]:has(:is(a,button)[class*="inline-flex"],.g-btn,.g-btn-light):hover{translate:none!important;transform:none!important}
+.ember main :is(article,li,.g-tile):has(.g-btn,.g-btn-light,a[class*="inline-flex"][class*="rounded-xl"]):hover{transform:none!important;translate:none!important}
+/* Buttons inside cards: smaller text, one line, compact */
+.ember main :is(article,li,.g-tile) :is(a,button):is([class*="inline-flex"][class*="rounded-xl"],.g-btn,.g-btn-light){font-size:.8125rem!important;line-height:1.15!important;min-height:2.5rem!important;padding:.45rem .8rem!important;white-space:nowrap}
+.ember main .e-card-actions > *{flex:1 1 auto}
+.ember main .e-card-actions > * > button{width:100%}
+.ember main :is(article,li,.g-tile) :is(a,button):is([class*="inline-flex"],.g-btn,.g-btn-light) svg{transition:transform .25s ease}
+.ember main :is(article,li,.g-tile) :is(a,button):is([class*="inline-flex"],.g-btn,.g-btn-light):hover svg{transform:translateX(3px) scale(1.12)}
+/* Category lists everywhere (footer, browse, hubs): rows fill edge to edge, no ragged gaps */
+.ember .v2-footer .v2-footer-cats ul{display:flex!important;flex-wrap:wrap!important;gap:8px!important;overflow:visible!important;grid-auto-flow:unset!important}
+.ember .v2-footer .v2-footer-cats li{flex:1 1 auto}
+.ember .v2-footer .v2-footer-cats a{width:100%;justify-content:center;text-align:center}
+.ember :is(ul,ol,div)[class*="flex-wrap"]:has(> :nth-child(6)):has(> a[href^="/category/"],> li > a[href^="/category/"]) > *{flex:1 1 auto}
+.ember :is(ul,ol,div)[class*="flex-wrap"]:has(> :nth-child(6)):has(> a[href^="/category/"],> li > a[href^="/category/"]) > a,.ember :is(ul,ol,div)[class*="flex-wrap"]:has(> :nth-child(6)):has(> a[href^="/category/"],> li > a[href^="/category/"]) > li > a{justify-content:center;text-align:center;width:100%}
+@media (max-width:640px){.ember .v2-footer .v2-footer-cats{padding:16px 14px!important}.ember .v2-footer .v2-footer-cats ul{gap:6px!important;padding-right:0!important}.ember .v2-footer .v2-footer-cats a{font-size:12px!important;min-height:30px!important;padding:4px 10px!important}}
+/* Phones and tablets: the repeated " Business Ideas" tail is kept for readers of the page source and
+   screen readers but not drawn, so the chips pack tightly (the heading already says it) */
+@media (max-width:767px){.ember .v2-cat-suffix{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}

@@ -45,6 +45,35 @@ function paletteGuard(scope: Element) {
   });
 }
 
+/**
+ * Key words in red (founder, 8 Nov 2026): in every big heading the important word or phrase is red and
+ * the rest stays white. Headings that already carry a red word are left alone. One phrase per heading,
+ * picked from the site's own vocabulary in priority order; a heading with none gets its last word.
+ */
+const KEYWORDS = ["business ideas", "business idea", "side hustles?", "startup ideas?", "1 lakh women", "women", "validate", "free", "calculators?", "blueprints?", "ideas?", "India(?:'s)?", "money", "profit", "income", "startups?", "founders?", "verdict", "risks?", "guides?", "library", "categor(?:y|ies)", "compare", "answers?", "customers?", "buyers?", "costs?", "loans?", "GST", "map"];
+const KW_RES = KEYWORDS.map((k) => new RegExp(`\\b(${k})\\b`, "i"));
+function redKeywords(scope: Element) {
+  // CSS Custom Highlight: paints the words red without touching the DOM React owns.
+  const H = (window as unknown as { Highlight?: new (...r: Range[]) => { add(r: Range): void } }).Highlight;
+  const reg = (CSS as unknown as { highlights?: Map<string, unknown> }).highlights;
+  if (!H || !reg) return;
+  const hl = (reg.get("kw-red") as { add(r: Range): void } | undefined) ?? (() => { const x = new H(); reg.set("kw-red", x); return x; })();
+  scope.querySelectorAll<HTMLElement>("main :is(h1,h2)").forEach((h) => {
+    if (h.dataset["kw"] || h.closest(".eh-stage,[data-keep-colour],.eh-hero")) return;
+    h.dataset["kw"] = "1";
+    const isRed = (el: Element) => { const m = getComputedStyle(el).color.match(/\d+/g); return !!m && +m[0]! > 150 && +m[1]! < 90 && +m[2]! < 90; };
+    if (Array.from(h.querySelectorAll("*")).some(isRed) || isRed(h)) return;
+    const texts: Text[] = [];
+    const walk = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
+    for (let n = walk.nextNode(); n; n = walk.nextNode()) if ((n.textContent ?? "").trim()) texts.push(n as Text);
+    if (!texts.length) return;
+    const mark = (t: Text, start: number, len: number) => { const r = document.createRange(); r.setStart(t, start); r.setEnd(t, start + len); hl.add(r); };
+    for (const re of KW_RES) for (const t of texts) { const m = re.exec(t.data); if (m) { mark(t, m.index, m[0].length); return; } }
+    const last = texts[texts.length - 1]!; const m = /([\p{L}\p{N}'’-]+)[^\p{L}\p{N}]*$/u.exec(last.data);
+    if (m) mark(last, m.index, m[1]!.length);
+  });
+}
+
 /** Scroll reveal (fade up) for every page in the shared frame. Content stays visible without JS. */
 export function useGlassMotion() {
   useEffect(() => {
@@ -60,7 +89,7 @@ export function useGlassMotion() {
       });
       const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
       // Founder, 8 Nov 2026: cards inside a section arrive one after another, alternating from the left
-      // and the right, and the whole thing plays again in both scroll directions (down and up).
+      // and the right (once, on the way down).
       els.forEach((el) => {
         const kids = el.querySelectorAll<HTMLElement>("[data-stagger]").length ? Array.from(el.querySelectorAll<HTMLElement>("[data-stagger]"))
           : Array.from(el.querySelectorAll<HTMLElement>(":scope > div > ul:not([data-loop-copy]) > li, :scope > div > div > ul > li, :scope > div > ol > li, :scope > div > div[class*='grid'] > *")).filter((k) => !k.closest(".g-marquee")).slice(0, 24);
@@ -75,8 +104,8 @@ export function useGlassMotion() {
       io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
           const el = e.target as HTMLElement;
-          if (e.isIntersecting) { el.classList.add("rv-in"); el.classList.remove("rv-above"); }
-          else { el.classList.remove("rv-in"); el.classList.toggle("rv-above", e.boundingClientRect.top < 0); }
+          // Founder, 8 Nov 2026 (later): one way only. A section plays once as it comes in, then stays.
+          if (e.isIntersecting) { el.classList.add("rv-in"); el.classList.remove("rv-above"); io?.unobserve(el); }
         });
       }, { rootMargin: "0px 0px -8% 0px", threshold: 0 });
       els.forEach((el) => io!.observe(el));
@@ -130,7 +159,7 @@ export function useGlassMotion() {
     timers.push(window.setTimeout(wireRows, 2500), window.setTimeout(wireRows, 6000));
     const frame = document.querySelector(".ember");
     if (frame) {
-      const guard = () => { try { paletteGuard(frame); } catch (e) { console.error("palette guard", e); } };
+      const guard = () => { try { redKeywords(frame); paletteGuard(frame); } catch (e) { console.error("palette guard", e); } };
       const idle = (window as { requestIdleCallback?: (cb: () => void) => number }).requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 300));
       idle(guard);
       timers.push(window.setTimeout(guard, 1800), window.setTimeout(guard, 5000));
