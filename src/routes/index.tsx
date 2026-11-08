@@ -1,4 +1,4 @@
-import { useEffect, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BadgeIndianRupee, BookOpen, ClipboardCheck, Compass, FileSearch, HeartHandshake, MessagesSquare, Newspaper, Users, Wallet, BookOpenCheck, Calculator, Check, Layers3, MapPin, Quote, Scale, Search, SearchCheck, ShieldCheck, Smartphone, Sparkles, TriangleAlert, UserRoundCheck } from "lucide-react";
 
@@ -10,7 +10,7 @@ import { STARTUP_GUIDES } from "@/lib/guides-data";
 import { TOPIC_PAGES } from "@/data/topic-pages";
 import { getHomeLive, type HomeIdea } from "@/lib/home-live.functions";
 import { TEAM, contactEmail, ORGANISATION_NAME } from "@/lib/site-config";
-import { IndiaMap3D } from "@/components/home/india-map-3d";
+import { IndiaInfographic } from "@/components/home/india-infographic";
 
 /**
  * Home page for bbusiness.online (6 Nov 2026). Free for every reader in India: no prices, no
@@ -202,7 +202,18 @@ function Sparkle({ className }: { className?: string }) {
 
 function HomePage() {
   const { hub, posts, live } = Route.useLoaderData();
-  const featured = live.recent[0];
+  // Hero preview (founder, 9 Nov 2026): real blueprints from the library take turns, a new one every
+  // 6 seconds; it pauses while the reader points at it or the page is hidden.
+  const heroPool = live.recent.filter((i) => i.target_customer || i.verdict).slice(0, 6);
+  const [heroAt, setHeroAt] = useState(0);
+  const [heroHold, setHeroHold] = useState(false);
+  useEffect(() => {
+    if (heroPool.length < 2 || heroHold) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const t = window.setInterval(() => { if (!document.hidden) setHeroAt((i) => (i + 1) % heroPool.length); }, 6000);
+    return () => window.clearInterval(t);
+  }, [heroPool.length, heroHold]);
+  const featured = heroPool[heroAt] ?? live.recent[0];
   const fresh = live.recent.slice(1, 9);
   const categories = hub.categories;
   const strip = STRIP.map((n) => categories.find((c) => c.name.startsWith(n))).filter((c): c is (typeof categories)[number] => Boolean(c));
@@ -254,8 +265,9 @@ function HomePage() {
                   How we research
                 </a>
               </div>
-              <div className="mt-6 flex items-center gap-3">
-                <ul className="eh-team flex shrink-0 flex-wrap gap-x-3 gap-y-2" aria-label="The people who sign off every blueprint">
+              {/* Founder, 9 Nov 2026: on phones the names sit in neat rows above the line, never cut off */}
+              <div className="mt-6 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+                <ul className="eh-team grid w-full grid-cols-4 gap-x-2 gap-y-2 sm:flex sm:w-auto sm:shrink-0 sm:flex-wrap sm:gap-x-3" aria-label="The people who sign off every blueprint">
                   {TEAM.map((m) => (
                     <li key={m.name} title={m.name} className="flex items-center gap-1.5">
                       <img src={`/icons/letters/letter-${m.name[0]!.toLowerCase()}.webp`} alt="" width={32} height={33} className="eh-letter h-8 w-8 shrink-0 object-contain" />
@@ -278,7 +290,7 @@ function HomePage() {
               <Sparkle className="absolute -left-2 top-6 hidden h-7 w-7 text-[#4643ba] lg:block" />
               <Sparkle className="absolute -bottom-4 right-10 hidden h-6 w-6 text-[#7b6ff0] lg:block" />
               {featured && (
-                <a href={`/idea/${featured.slug}`} className="group relative block rounded-[1.75rem] bg-white p-2 shadow-[0_30px_60px_-30px_rgba(70,67,186,0.55)] ring-1 ring-[#4643ba]/10 transition duration-300 hover:-translate-y-1 motion-reduce:transform-none lg:mr-32">
+                <a key={featured.slug} onMouseEnter={() => setHeroHold(true)} onMouseLeave={() => setHeroHold(false)} onFocus={() => setHeroHold(true)} onBlur={() => setHeroHold(false)} href={`/idea/${featured.slug}`} className="eh-preview group relative block rounded-[1.75rem] bg-white p-2 shadow-[0_30px_60px_-30px_rgba(70,67,186,0.55)] ring-1 ring-[#4643ba]/10 transition duration-300 hover:-translate-y-1 motion-reduce:transform-none lg:mr-32">
                   <div className="flex items-center gap-1.5 px-3 py-2">
                     <span className="h-2.5 w-2.5 rounded-full bg-[#ff8f8f]" /><span className="h-2.5 w-2.5 rounded-full bg-[#ffd36b]" /><span className="h-2.5 w-2.5 rounded-full bg-[#7ddc9a]" />
                     <span className="ml-2 truncate rounded-full bg-slate-100 px-3 py-0.5 text-[11px] text-slate-500">bbusiness.online/idea/{featured.slug}</span>
@@ -307,6 +319,7 @@ function HomePage() {
                       ) : null)}
                     </dl>
                     <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#4643ba]">Read the full blueprint <ArrowRight size={16} className="transition group-hover:translate-x-0.5" /></span>
+                    {heroPool.length > 1 && <span className="eh-dots mt-3 flex gap-1.5" aria-hidden>{heroPool.map((h, i) => <span key={h.slug} className={"h-1.5 rounded-full transition-all " + (i === heroAt ? "w-6 bg-[#e01b1f]" : "w-1.5 bg-white/30")} />)}</span>}
                   </div>
                 </a>
               )}
@@ -425,9 +438,9 @@ function HomePage() {
           <div className="mx-auto max-w-3xl text-center">
             <p className={eyebrow}>The anatomy of India's startups, 2026</p>
             <h2 className={h2}>1 lakh women are already building. Your state is on this map.</h2>
-            <p className="mt-3 text-slate-600">Each state rises by the number of startups with at least one woman director or partner, as recognised by the Government of India. Hover or tap any state for its number, then zoom into its cities.</p>
+            <p className="mt-3 text-slate-600">The number of startups with at least one woman director or partner in each state, as recognised by the Government of India.</p>
           </div>
-          <div className="mt-8"><IndiaMap3D ember /></div>
+          <div className="mt-8"><IndiaInfographic /></div>
         </div>
       </section>
 

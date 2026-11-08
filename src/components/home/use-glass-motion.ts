@@ -31,7 +31,8 @@ function paletteGuard(scope: Element) {
         const tRed = s > 0.35 && (h < 18 || h > 340);
         if (sRed && (tRed || l < 0.6)) el.style.setProperty("color", "#ffffff", "important");
         else if (l < 0.42) el.style.setProperty("color", "#ece3e3", "important");
-        else if (offHue(h, s)) el.style.setProperty("color", "#ff4f4f", "important");
+        // Near-white tints (cream, pale blue) become plain white, not red (founder, 9 Nov 2026: hero title).
+        else if (offHue(h, s)) el.style.setProperty("color", l > 0.8 ? "#ffffff" : "#ff4f4f", "important");
       }
     }
     // Editorial pages (about, founders, contact, policies): sections are plain, never boxed.
