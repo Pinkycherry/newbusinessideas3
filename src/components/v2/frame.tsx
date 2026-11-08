@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ArrowRight, BookOpen, Calculator, ChartNoAxesCombined, ChevronDown, ClipboardCheck, Clock, Coins, Menu, NotebookPen, Rocket, Search, Wallet, X, type LucideIcon } from "lucide-react";
+import { ChevronDown, Menu, Search, X } from "lucide-react";
 
 import { TAXONOMY } from "@/data/taxonomy";
 import { LIVE_CATEGORY_SLUGS } from "@/config/live-categories";
@@ -14,298 +14,72 @@ import { useFounderWorkspace, removeShortlistIdea, clearShortlist, MAX_SHORTLIST
  * Also rendered to static markup for the purchased HTML pages.
  */
 
-function A({ children, className, href }: { children: ReactNode; className?: string | undefined; href?: string | undefined }) {
-  if (!href || href === "#") return null;
-  return (
-    <a href={href} className={className}>
-      {children}
-    </a>
-  );
-}
+/* ===== Mega menus (founder, 8 Nov 2026) =====
+   Wide panels of plain text links in columns under short headings, like the "Pure CSS Mega Menu"
+   reference. No icons (header space is strict). Short labels; the column heading carries the words.
+   Every column ends with "See all". Every link was checked live (200) when this was written. */
+type MCol = { h: string; links: [string, string][]; all?: [string, string]; box?: boolean };
+type MMenu = { label: string; cols: MCol[]; foot?: [string, string][]; more?: [string, string][] };
+const L = (slug: string) => `/lists/${slug}-business-ideas`;
+const C = (slug: string) => `/category/${slug}-business-ideas`;
 
-function Banner({ tone = "", title, sub, href }: { tone?: string; title: string; sub: string; href?: string }) {
-  return (
-    <A className={`mm-banner ${tone}`} href={href}>
-      <i className="ic" aria-hidden="true"><BookOpen size={22} /></i>
-      <div>
-        <b>{title}</b>
-        <span>{sub}</span>
-      </div>
-    </A>
-  );
-}
-
-function Links({ items, className = "mm-list" }: { items: (string | [string, string])[]; className?: string }) {
-  return (
-    <div className={className}>
-      {items.filter((x) => typeof x !== "string" && Boolean(x[1]) && x[1] !== "#").map((x) => {
-        const [t, href] = typeof x === "string" ? [x, undefined] : x;
-        return (
-          <A key={t} href={href}>
-            {t}
-          </A>
-        );
-      })}
-    </div>
-  );
-}
-
-function Hero({ tone = "", badge, badgeTone = "", icon, title, body, cta, href }: { tone?: string; badge: string; badgeTone?: string; icon: string; title: string; body: string[]; cta: string; href: string }) {
-  return (
-    <div className={`mm-hero ${tone}`}>
-      <div className="mm-hero-top"><div className="ic" aria-hidden="true">{icon}</div>
-      <span className={`mm-badge ${badgeTone}`}>{badge}</span></div>
-      <h4>{title}</h4>
-      {body.map((p) => (
-        <p key={p}>{p}</p>
-      ))}
-      <A className="mm-btn" href={href}>
-        {cta}
-      </A>
-    </div>
-  );
-}
-
-/** Category n (1-100) from the approved taxonomy as [label, link]. */
-function cat(n: number, label?: string): [string, string] {
-  const c = TAXONOMY.find((x) => x.n === n);
-  return [label ?? c?.short ?? "", c ? `/category/${c.slug}` : "/browse"];
-}
-
-/** Our broad idea categories for Learn > Startup ideas, from the approved taxonomy. */
-const OUR_IDEAS: [string, string][] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => cat(n));
-
-const TOOL_ICONS: Record<string, LucideIcon> = {
-  "/calculator/startup-cost": Wallet, "/calculator/break-even": Calculator,
-  "/calculator/roi": ChartNoAxesCombined, "/calculator/funding-needed": Coins,
-  "/unit-economics-india": Calculator, "/startup-cash-flow-india": ChartNoAxesCombined,
-  "/business-pricing-india": Coins, "/startup-launch-plan-india": Rocket,
-  "/business-idea-research-india": Search, "/business-idea-time-fit": Clock,
-  "/founder-decision-journal": NotebookPen,
-};
-function Tile({ label, href }: { label: string; href: string }) {
-  const Icon = TOOL_ICONS[href] ?? ClipboardCheck;
-  return (
-    <A className="mm-tile" href={href}>
-      <i aria-hidden="true"><Icon size={28} strokeWidth={1.6} /></i>
-      {label}
-    </A>
-  );
-}
-
-function Pdf({ title, sub, href }: { title: string; sub: string; href: string }) {
-  return (
-    <A className="mm-pdf" href={href}>
-      <div>
-        {title}
-        <em>{sub}</em>
-      </div>
-    </A>
-  );
-}
-
-export function ValidatePanel() {
-  return (
-    <>
-      <div>
-        <Hero badge="FREE" icon="✓" title="Validation Workbench" body={["Write your buyer, their problem and a small first offer on one page.", "Then test it with real buyers before you spend."]} cta="Start free →" href="/product" />
-        <div className="mm-label">Popular checks</div>
-        <Links
-          items={[
-            ["How to validate an idea", "/startup-idea-validation"],
-            ["Test demand", "/business-demand-test-india"],
-            ["Business idea risk check", "/business-idea-risk-check"],
-            ["Compare two ideas", "/startup-idea-comparison"],
-            ["Find your first customer", "/first-customer-india"],
-          ]}
-        />
-      </div>
-      <div className="mm-cols" style={{ gridTemplateColumns: "repeat(2,minmax(0,1fr))" }}>
-        <div>
-          <div className="mm-label mm-dot" style={{ marginTop: 0 }}>Founder tools</div>
-          <div className="mm-tiles">
-            <Tile label="Startup Cost" href="/calculator/startup-cost" />
-            <Tile label="Break-even" href="/calculator/break-even" />
-            <Tile label="Return on Investment" href="/calculator/roi" />
-            <Tile label="Funding Needed" href="/calculator/funding-needed" />
-            <Tile label="Unit Economics" href="/unit-economics-india" />
-            <Tile label="Cash Flow" href="/startup-cash-flow-india" />
-            <Tile label="Your first quote" href="/business-pricing-india" />
-            <Tile label="Launch Plan" href="/startup-launch-plan-india" />
-            <Tile label="Research Desk" href="/business-idea-research-india" />
-            <Tile label="Time Fit" href="/business-idea-time-fit" />
-            <Tile label="Decision Journal" href="/founder-decision-journal" />
-            <A className="mm-tile" href="/calculator">
-              <i className="mm-tile-more" aria-hidden="true"><ArrowRight size={28} /></i>VIEW ALL<br />calculators →
-            </A>
-          </div>
-        </div>
-        <div>
-          <div className="mm-label mm-dot" style={{ marginTop: 0 }}>Founder guides</div>
-          <Banner title="All startup guides" sub="Step-by-step guides for first-time founders" href="/startup-guides" />
-          <div className="mm-pdfs">
-            <Pdf title="Startup Costs in India" sub="What leaves your pocket first" href="/startup-costs-india" />
-            <Pdf title="Business Models in India" sub="How an idea earns" href="/business-models-india" />
-            <Pdf title="When to Pivot or Stop" sub="Reading the evidence" href="/business-idea-pivot-or-stop" />
-            <Pdf title="Your First Customer" sub="Reach one real buyer" href="/first-customer-india" />
-          </div>
-          <div className="mm-cols" style={{ gridTemplateColumns: "repeat(3,minmax(0,1fr))", gap: 12 }}>
-            <div>
-              <div className="mm-label" style={{ margin: "0 0 4px" }}>By place</div>
-              <Links items={[cat(1), cat(5), cat(9, "Small Town"), cat(10), cat(4)]} />
-            </div>
-            <div>
-              <div className="mm-label" style={{ margin: "0 0 4px" }}>For you</div>
-              <Links items={[cat(6, "Women"), cat(7, "Students"), cat(8, "Senior Citizens"), cat(14, "Parents"), cat(11, "Skilled People")]} />
-            </div>
-            <div>
-              <div className="mm-label" style={{ margin: "0 0 4px" }}>By industry</div>
-              <Links items={[cat(16), cat(27), cat(30), cat(37), cat(47)]} />
-            </div>
-          </div>
-          <A className="mm-pill" href="/browse">See all categories →</A>
-        </div>
-      </div>
-    </>
-  );
-}
-
-export function LearnPanel() {
-  return (
-    <>
-      <div>
-        <Hero tone="orange" badge="IDEA LIBRARY" badgeTone="o" icon="💡" title="Business Ideas Database" body={["Researched business ideas for India, organised by category."]} cta="Browse →" href="/browse" />
-        <div className="mm-label">Start here</div>
-        <Links
-          items={[
-            ["Business ideas in India", "/business-ideas-india"],
-            ["Side business ideas", "/side-business-ideas-india"],
-            ["Local business ideas", "/local-business-ideas-india"],
-            ["Online business ideas", "/online-business-ideas-india"],
-            ["Service business ideas", "/service-business-ideas-india"],
-            ["Product business ideas", "/product-business-ideas-india"],
-          ]}
-        />
-      </div>
-      <div className="mm-cols" style={{ gridTemplateColumns: "repeat(3,minmax(0,1fr))" }}>
-        <div>
-          <div className="mm-label mm-dot o" style={{ marginTop: 0 }}>Startup ideas</div>
-          <Banner tone="o" title="All Idea Lists" sub="Every business idea list in one place" href="/all-business-ideas" />
-          <Links items={OUR_IDEAS} />
-        </div>
-        <div>
-          <div className="mm-label mm-dot r" style={{ marginTop: 0 }}>Money and risk</div>
-          <Banner tone="r" title="Startup Costs" sub="What you spend before the first sale" href="/startup-costs-india" />
-          <Links
-            items={[
-              ["Cash flow", "/startup-cash-flow-india"],
-              ["Unit economics", "/unit-economics-india"],
-              ["Quoting your first sale", "/business-pricing-india"],
-              ["Business models", "/business-models-india"],
-              ["Risk check", "/business-idea-risk-check"],
-              ["Pivot or stop", "/business-idea-pivot-or-stop"],
-              ["Launch plan", "/startup-launch-plan-india"],
-            ]}
-          />
-          <div className="mm-label">More categories</div>
-          <Links className="mm-two mm-list" items={[cat(17), cat(19), cat(28), cat(38)]} />
-          <A className="mm-pill" href="/browse">See all categories →</A>
-        </div>
-        <div>
-          <div className="mm-label mm-dot b" style={{ marginTop: 0 }}>Knowledge</div>
-          <Banner tone="b" title="Startup Guides" sub="Step-by-step guides for founders" href="/startup-guides" />
-          <Links
-            items={[
-              ["Glossary", "/founder-glossary"],
-              ["Startup terms", "/startup-terms-india"],
-              ["Founder stories", "/founder-stories"],
-              ["Journal", "/blog"],
-              ["Reading room", "/business-idea-reading-room"],
-              ["Learning resources", "/learning-resources"],
-              ["Research desk", "/business-idea-research-india"],
-              ["Our founders", "/founders"],
-              ["About us", "/about"],
-              ["Contact", "/contact"],
-            ]}
-          />
-        </div>
-      </div>
-    </>
-  );
-}
-
-export function ToolsPanel() {
-  return (
-    <>
-      <div>
-        <Hero badge="FREE" badgeTone="p" icon="✓" title="Founder Toolkit" body={["Pick a founder question and work it through with your own numbers."]} cta="Open the toolkit →" href="/business-idea-toolkit" />
-        <div className="mm-label">Popular tools</div>
-        <Links
-          items={[
-            ["Startup cost calculator", "/calculator/startup-cost"],
-            ["Break-even calculator", "/calculator/break-even"],
-            ["Validation workbench", "/product"],
-          ]}
-        />
-      </div>
-      <div className="mm-cols" style={{ gridTemplateColumns: "repeat(3,minmax(0,1fr))" }}>
-        <div>
-          <div className="mm-label mm-dot g" style={{ marginTop: 0 }}>Calculators</div>
-          <Banner tone="g" title="All Calculators" sub="Free money calculators for founders" href="/calculator" />
-          <Links
-            className="mm-two mm-list"
-            items={[
-              ["Startup Cost", "/calculator/startup-cost"],
-              ["Break-even", "/calculator/break-even"],
-              ["ROI", "/calculator/roi"],
-              ["Funding Needed", "/calculator/funding-needed"],
-              ["Unit Economics", "/unit-economics-india"],
-              ["Cash Flow", "/startup-cash-flow-india"],
-            ]}
-          />
-        </div>
-        <div>
-          <div className="mm-label mm-dot pk" style={{ marginTop: 0 }}>Worksheets</div>
-          <Banner tone="pk" title="Templates" sub="Plans, interviews and more" href="/templates" />
-          <Links
-            items={[
-              ["Launch plan", "/startup-launch-plan-india"],
-              ["Demand test", "/business-demand-test-india"],
-              ["Compare two ideas", "/startup-idea-comparison"],
-              ["Decision journal", "/founder-decision-journal"],
-              ["Weekend stall profit check", "/weekend-market-stall-profit-check"],
-              ["Coaching batch check", "/coaching-batch-business-idea-india"],
-            ]}
-          />
-          <A className="mm-pill g" href="/learning-resources">All Resources →</A>
-        </div>
-        <div>
-          <div className="mm-label mm-dot g" style={{ marginTop: 0 }}>Tools directory</div>
-          <Banner tone="g" title="Useful Tools" sub="Free tools we recommend to founders" href="/useful-tools" />
-          <Links
-            className="mm-two mm-list"
-            items={[
-              ["Learning resources", "/learning-resources"],
-              ["Reading room", "/business-idea-reading-room"],
-              ["Search ideas", "/search"],
-              ["Blueprints", "/blueprints"],
-            ]}
-          />
-          <A className="mm-pill g" href="/useful-tools">See all tools →</A>
-          <div className="mm-label mm-dot">Idea lists</div>
-          <Banner title="All Idea Lists" sub="Every business idea list in one place" href="/all-business-ideas" />
-          <Links className="mm-two mm-list" items={[cat(1), cat(2), cat(3), cat(4), cat(5), cat(10)]} />
-        </div>
-      </div>
-    </>
-  );
-}
-
-const MEGA = [
-  { label: "Validate", Panel: ValidatePanel },
-  { label: "Learn", Panel: LearnPanel },
-  { label: "Free Tools", Panel: ToolsPanel },
+const MENUS: MMenu[] = [
+  { label: "Ideas", cols: [
+    { h: "By way of work", links: [["Work From Home", C("work-from-home")], ["Side Hustle", C("side-hustle")], ["Part Time", C("part-time")], ["Online", C("online")], ["Home Based", C("home-based")], ["Freelance", C("freelance")], ["Local Service", C("local-service")], ["Reselling", C("reselling")]], all: ["See all", "/browse"] },
+    { h: "By who you are", links: [["Women", C("women-friendly")], ["Students", C("student")], ["Senior Citizens", C("senior-citizen")], ["Village and Small Town", C("village-and-small-town")], ["Parents and Childcare", C("childcare-and-parenting-support")], ["Skilled People", C("skill-based")]], all: ["See all", "/browse"] },
+    { h: "Food business ideas", links: [["All Food", C("food")], ["Home Kitchen", C("home-kitchen-food")], ["Street Food", C("street-food")], ["Bakery", C("bakery-and-confectionery")], ["Cloud Kitchen", C("cloud-kitchen")], ["Catering", C("catering")], ["Packaged Snacks", C("packaged-snack")], ["Sweets and Mithai", C("sweet-shop-and-mithai")]], all: ["See all", "/browse"] },
+    { h: "Beauty and fashion", links: [["Beauty", C("beauty")], ["Salon and Grooming", C("salon-and-grooming")], ["Bridal Beauty", C("bridal-and-wedding-beauty")], ["Fashion and Apparel", C("fashion-and-apparel")], ["Tailoring and Boutique", C("tailoring-and-boutique")], ["Jewellery", C("jewellery-and-accessories")], ["Footwear and Bags", C("footwear-and-bag")], ["Personal Care", C("personal-care-product")]], all: ["See all", "/browse"] },
+    { h: "Skills and selling", links: [["Education", C("education")], ["Tuition and Coaching", C("tuition-and-coaching")], ["Exam Coaching", C("competitive-exam-coaching")], ["Digital Marketing", C("digital-marketing")], ["E-commerce Selling", C("e-commerce-selling")], ["Content Sites", C("affiliate-and-content-site")], ["Handmade Products", C("handmade-product")], ["Printing and Signage", C("printing-and-signage")]], all: ["See all", "/browse"] },
+    { h: "Start here", box: true, links: [["Browse all business ideas", "/browse"], ["Idea blueprints", "/blueprints"], ["Business idea topics", "/topics"], ["Every idea, A to Z", "/all-business-ideas"], ["Search ideas", "/search"]], all: ["See all categories", "/browse"] },
+  ], foot: [["Daily dabba supply", L("daily-dabba-supply")], ["Home tuition batch", L("home-tuition-batch")], ["Ladies tailoring shop", L("ladies-tailoring-shop")], ["Cloud kitchen", C("cloud-kitchen")]], more: [["See all lists", "/lists"], ["See all guides", "/startup-guides"]] },
+  { label: "Lists", cols: [
+    { h: "Home food", links: [["Daily Dabba Supply", L("daily-dabba-supply")], ["Home Cooked Meal Plans", L("home-cooked-meal-subscription")], ["Homemade Pickle Brand", L("homemade-pickle-brand")], ["Celebration Cakes", L("custom-celebration-cake")], ["Office Lunch Contract", L("office-lunch-contract")]], all: ["See all", "/lists"] },
+    { h: "Women and home", links: [["Women Led Home Food", L("women-led-home-food")], ["Women Led Stitching", L("women-led-stitching-work")], ["Home Beauty Studio", L("home-beauty-studio")], ["Homemaker Reselling", L("homemaker-reselling")], ["Home Daycare Group", L("home-daycare-group")]], all: ["See all", "/lists"] },
+    { h: "Teaching", links: [["Home Tuition Batch", L("home-tuition-batch")], ["Board Exam Tuition", L("board-exam-tuition")], ["Spoken English Batch", L("spoken-english-batch")], ["Bank Exam Coaching", L("bank-exam-coaching")], ["Retired Teacher Class", L("retired-teacher-class")]], all: ["See all", "/lists"] },
+    { h: "Online and digital", links: [["Own Brand Online Store", L("own-brand-online-store")], ["Online Course Selling", L("online-course-selling")], ["Freelance Websites", L("freelance-website-project")], ["Social Posting Service", L("social-posting-service")], ["Product Review Website", L("product-review-website")]], all: ["See all", "/lists"] },
+    { h: "Local shops and services", links: [["Village Daily Needs Shop", L("village-daily-needs-shop")], ["Copy and Print Shop", L("copy-and-print-shop")], ["Neighbourhood Home Help", L("neighbourhood-home-help")], ["Men Hair Salon", L("men-hair-salon")], ["Tea Stall and Chai", L("tea-stall-and-chai-brand")]], all: ["See all", "/lists"] },
+    { h: "Start here", box: true, links: [["All business idea lists", "/lists"], ["Every idea, A to Z", "/all-business-ideas"], ["Compare ideas", "/startup-idea-comparison"], ["Idea blueprints", "/blueprints"]], all: ["See all lists", "/lists"] },
+  ] },
+  { label: "Validate", cols: [
+    { h: "Check your idea", links: [["Validation workbench", "/product"], ["How to validate an idea", "/startup-idea-validation"], ["Validate in India", "/how-to-validate-a-business-idea-in-india"], ["Risk check", "/business-idea-risk-check"], ["Pivot or stop", "/business-idea-pivot-or-stop"]], all: ["See all", "/startup-guides"] },
+    { h: "Test with buyers", links: [["Test demand", "/business-demand-test-india"], ["Find your first customer", "/first-customer-india"], ["Research desk", "/business-idea-research-india"], ["Time fit check", "/business-idea-time-fit"]], all: ["See all", "/startup-guides"] },
+    { h: "Compare and decide", links: [["Compare two ideas", "/startup-idea-comparison"], ["Business models", "/business-models-india"], ["Decision journal", "/founder-decision-journal"], ["Launch plan", "/startup-launch-plan-india"]], all: ["See all", "/startup-guides"] },
+    { h: "Money check", links: [["Startup costs", "/startup-costs-india"], ["Price your first sale", "/business-pricing-india"], ["Unit economics", "/unit-economics-india"], ["Cash flow", "/startup-cash-flow-india"]], all: ["See all calculators", "/calculator"] },
+    { h: "Start here", box: true, links: [["Validate an idea free", "/product"], ["Read a blueprint first", "/blueprints"], ["Researched case studies", "/researched-case-studies"], ["Failed startups in India", "/failed-startups/india"]], all: ["See all guides", "/startup-guides"] },
+  ] },
+  { label: "Tools", cols: [
+    { h: "Calculators", links: [["Startup cost", "/calculator/startup-cost"], ["Break-even", "/calculator/break-even"], ["Return on investment", "/calculator/roi"], ["Funding needed", "/calculator/funding-needed"]], all: ["See all calculators", "/calculator"] },
+    { h: "Money planners", links: [["Unit economics", "/unit-economics-india"], ["Cash flow", "/startup-cash-flow-india"], ["Pricing", "/business-pricing-india"], ["Launch plan", "/startup-launch-plan-india"]], all: ["See all", "/tools"] },
+    { h: "Worksheets", links: [["Templates", "/templates"], ["Demand test", "/business-demand-test-india"], ["Compare two ideas", "/startup-idea-comparison"], ["Decision journal", "/founder-decision-journal"], ["Weekend stall profit check", "/weekend-market-stall-profit-check"], ["Coaching batch check", "/coaching-batch-business-idea-india"]], all: ["See all templates", "/templates"] },
+    { h: "Directories", links: [["Founder toolkit", "/business-idea-toolkit"], ["Free tools", "/tools"], ["Learning resources", "/learning-resources"], ["Reading room", "/business-idea-reading-room"]], all: ["See all tools", "/tools"] },
+    { h: "Start here", box: true, links: [["All calculators", "/calculator"], ["Founder toolkit", "/business-idea-toolkit"], ["Validation workbench", "/product"]], all: ["See all tools", "/tools"] },
+  ] },
+  { label: "Learn", cols: [
+    { h: "Startup guides", links: [["All startup guides", "/startup-guides"], ["How to validate", "/how-to-validate-a-business-idea-in-india"], ["Startup costs", "/startup-costs-india"], ["Business models", "/business-models-india"], ["First customer", "/first-customer-india"]], all: ["See all guides", "/startup-guides"] },
+    { h: "Real stories", links: [["Researched case studies", "/researched-case-studies"], ["Failed startups in India", "/failed-startups/india"], ["Founder stories", "/founder-stories"], ["Blog", "/blog"]], all: ["See all", "/blog"] },
+    { h: "Idea guides by type", links: [["Business ideas in India", "/business-ideas-india"], ["Side business ideas", "/side-business-ideas-india"], ["Local business ideas", "/local-business-ideas-india"], ["Online business ideas", "/online-business-ideas-india"], ["Service business ideas", "/service-business-ideas-india"], ["Product business ideas", "/product-business-ideas-india"]], all: ["See all", "/topics"] },
+    { h: "Words and reading", links: [["Founder glossary", "/founder-glossary"], ["Startup terms", "/startup-terms-india"], ["Reading room", "/business-idea-reading-room"], ["Learning resources", "/learning-resources"]], all: ["See all", "/learning-resources"] },
+    { h: "About us", box: true, links: [["Our founders", "/founders"], ["About bbusiness.online", "/about"], ["Contact", "/contact"]], all: ["See all guides", "/startup-guides"] },
+  ] },
 ];
+
+function MegaPanel({ m }: { m: MMenu }) {
+  return <>
+    <div className="mm-mega" style={{ ["--cols" as string]: String(m.cols.length) }}>
+      {m.cols.map((c) => <div key={c.h} className={"mm-col" + (c.box ? " mm-col-box" : "")}>
+        <div className="mm-h">{c.h}</div>
+        <ul>{c.links.map(([t, href]) => <li key={href + t}><a href={href}>{t}</a></li>)}</ul>
+        {c.all && <a className="mm-all" href={c.all[1]}>{c.all[0]} ›</a>}
+      </div>)}
+    </div>
+    {(m.foot || m.more) && <div className="mm-foot">
+      {m.foot && <><span>Popular now:</span>{m.foot.map(([t, href]) => <a key={href} href={href}>{t}</a>)}</>}
+      {m.more && <span className="mm-more">{m.more.map(([t, href]) => <a key={href} className="mm-all" href={href}>{t} ›</a>)}</span>}
+    </div>}
+  </>;
+}
+
+const MEGA = MENUS.map((m) => ({ label: m.label, Panel: () => <MegaPanel m={m} /> }));
 
 function Logo({ footer = false }: { footer?: boolean }) {
   return <a className={footer ? "mm-brand mm-brand-footer" : "mm-brand"} href="/" aria-label="bbusiness.online home">

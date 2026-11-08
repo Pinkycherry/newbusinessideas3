@@ -785,3 +785,32 @@ html .ember .v2-footer .v2-footer-cats a.e-fchip:is(:hover,:focus-visible)::afte
 @media (max-width:640px){.ember .v2-footer .v2-footer-cats .e-fcats{margin:0 -14px}html .ember .v2-footer .v2-footer-cats a.e-fchip{font-size:.8rem!important;min-height:2.25rem;padding:.4rem .8rem!important}}
 html .ember .v2-footer .v2-footer-cats ul.e-mq-track{display:flex!important;flex-wrap:nowrap!important;grid-template-columns:none!important;grid-auto-flow:unset!important;width:max-content!important;gap:0!important;padding:0!important;overflow:visible!important}
 html .ember .v2-footer .v2-footer-cats ul.e-mq-track > li{flex:none!important}
+
+/* ===== Mega menus (founder 8 Nov 2026): wide text columns, no icons, "See all" in every column ===== */
+.ember .mm-header .mm-panel{width:min(1320px,calc(100vw - 2rem))!important;padding:26px 30px 20px!important;border-radius:0 0 22px 22px!important;border-top:1px solid rgba(224,27,31,.45)!important;
+  background:linear-gradient(180deg,#1a1616,#0e0c0c)!important}
+.ember .mm-header .mm-panel.open{display:block!important}
+.mm-mega{display:grid;grid-template-columns:repeat(var(--cols,5),minmax(0,1fr));gap:12px 26px}
+.mm-mega .mm-col{min-width:0}
+.mm-mega .mm-h{font-family:"Archivo Black",system-ui,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#e01b1f;margin:0 0 8px}
+.mm-mega ul{list-style:none;margin:0;padding:0}
+.ember .mm-mega li a{display:block;padding:5px 0 5px 0;font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:1.35;color:#d9d0d0!important;text-decoration:none;border-left:2px solid transparent;transition:color .15s ease,padding .15s ease,border-color .15s ease}
+.ember .mm-mega li a:is(:hover,:focus-visible){color:#fff!important;padding-left:8px;border-left-color:#e01b1f}
+.ember .mm-panel a.mm-all,.ember .mm-mobile a.mm-all{display:inline-block;margin-top:8px;font-family:Inter,system-ui,sans-serif;font-size:13.5px;font-weight:600;color:#ff4f4f!important;text-decoration:none}
+.ember a.mm-all:hover{color:#fff!important}
+.mm-mega .mm-col-box{border-radius:16px;padding:14px 16px;background:radial-gradient(ellipse 80% 60% at 100% 0%,rgba(224,27,31,.2),transparent 70%),#151111;border:1px solid #2e2828}
+.mm-foot{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;border-top:1px solid rgba(255,255,255,.07);margin-top:16px;padding-top:12px;font-family:Inter,system-ui,sans-serif;font-size:13.5px;color:#a89d9d}
+.ember .mm-foot > a{color:#d9d0d0!important;text-decoration:none}.ember .mm-foot > a:hover{color:#fff!important}
+.mm-foot .mm-more{margin-left:auto;display:flex;gap:18px}.mm-foot .mm-more a{margin-top:0}
+@media (max-width:1180px){.mm-mega{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* Phones: inside the menu drawer each section opens on tap; links become small chips */
+@media (max-width:1023px){
+  .ember .mm-header .mm-mobile .mm-mega{display:block}
+  .ember .mm-header .mm-mobile .mm-col{margin:0 0 14px}
+  .ember .mm-header .mm-mobile .mm-col-box{padding:12px}
+  .ember .mm-header .mm-mobile .mm-h{margin:10px 0 8px}
+  .ember .mm-header .mm-mobile .mm-mega ul{display:flex;flex-wrap:wrap;gap:6px}
+  .ember .mm-header .mm-mobile .mm-mega li a{min-height:0!important;padding:6px 10px!important;border-radius:10px;font-size:13px;border:1px solid transparent;
+    background:linear-gradient(#171414,#171414) padding-box,linear-gradient(90deg,rgba(224,27,31,.85),rgba(224,27,31,.15) 45%,rgba(255,255,255,.08)) border-box}
+  .ember .mm-header .mm-mobile .mm-foot{display:none}
+}
