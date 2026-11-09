@@ -38,9 +38,10 @@ Real people the owner approved for later articles: Shanti Kulkarni (JNU PhD), Ja
 
 ## Status
 
-EF 01 to 04 written and fixed (keywords in headings, full prompts, fresh image SEO): trading bot scam (BotBro), monthly profit partnership (Sarita Gaikwad sand business), investment app (SD Pay), mobile tower installation (Patna contract). Waiting for the owner to generate article 1 images and check SEO before EF 05 to 08.
-Next topics claimed in topic-map.html: counterfeit packaging (Meerut duplicate boxes, Patna Fatuha oil packs), loan processing fee fraud (Samastipur 150 women), invest in US stocks from India (Stockal investor questions), share trading fraud (Dhamtari Wealth Tracker, accused held in Indore).
-Verified links for those: https://www.bhaskar.com/local/uttar-pradesh/meerut/video/meerut-fake-branded-packaging-box-factory-busted-police-raid-139584433.html, https://www.prabhatkhabar.com/state/bihar/samastipur/samastipur-rosera-loan-fraud-150-women, https://www.youtube.com/watch?v=-pXHp6MwBYg, https://www.amarujala.com/chhattisgarh/accused-of-duping-rs-3-12-crore-in-the-name-of-share-trading-arrested-from-indore-2026-11-01
+EF batch 1 complete, files in ef-batch1/: 01 trading bot scam, 02 monthly profit partnership, 03 investment app, 04 mobile tower installation, 05 counterfeit packaging (Meerut boxes), 06 loan processing fee fraud (Samastipur), 07 invest in US stocks from India (Stockal questions), 08 share trading fraud (Dhamtari), 09 free CRM for small business (Zoho CRM free edition, Bigin, Twenty agentic CRM; CRM setups for Subramanya, Dinesh, Priyanka, Sudhanshu), 10 small manufacturing unit (five ideas plus Udyam, PMEGP, Mudra, CGTMSE, 24 internal links).
+Owner feedback still to apply later: image prompts of 01 to 04 are weaker than 05 to 10; owner said not to rewrite them now.
+New owner rules from 9 Nov evening: no fraud stories on any site from now; no WhatsApp/email order automation, n8n, Make or Zapier topics; find newer platforms and business opportunities; cover Zoho and CRM setups; paragraphs vary between 2 and 6 mobile lines; every image has a marked place ([IMAGE N] in the body plus an "Image placement" list).
+Next: EF batch 2 (opportunity topics, not fraud), then UpcomingTools, NutriZoe, InfoPinky plans.
 
 ## Image SEO log (check before writing new image SEO)
 
@@ -48,6 +49,7 @@ EF 01: alt shapes used: "X warning shared by Siva Charan with...", "X explained 
 EF 02: alts "X promise weighed against...", "X maths counted truck by truck...", "X investors skip, placed on the table...", "X discussed by Siva Charan with...", "X balance between...", "X and earned prosperity, reflected at...".
 EF 03: alts "X story heard on...", "X chain climbing through...", "X compared with...", "X shown through...", "X refused by a trader...", "X lessons reflected in...".
 EF 04: alts "X story told in three torn paper scenes", "X risk seen from the top of...", "X practised every month in...", "X starts with the work order...", "X piling up into...", "X lessons reflected over incense...".
+EF 05 to 10: alts are full sentences naming the scene and keyword (for example "Siva Charan and a Varanasi jeweller compare a real box with counterfeit packaging..."); titles end in varied forms (", an Ethical Founder story", "| Ethical Founder", ", Ethical Founder"); descriptions start with the story, the brand or the keyword in rotation. Prompts now name the poster genre, a frame map, the story beat with eye contact, typography placement away from faces, finish and camera.
 Compositions used: EF01 15, 6, 7, 20, 25, 18. EF02 25, 9, 12, 7, 1, 30. EF03 29, 23, 5, 24, 16, 18. EF04 3, 21, 7, 14, 20, 11. Prefer unused ones next: 2, 4, 8, 10, 13, 17, 19, 22, 26, 27, 28, 31 to 34.
 
 ## How to continue
