@@ -314,3 +314,17 @@ just give a pass/fail:
 The agent reports findings back, corrections get applied, and only then
 does the uniqueness log in `01-RESEARCH-TABLE-50-ARTICLES.md` get updated
 and the next article starts.
+
+## Owner rules added 9 Nov 2026 (IST)
+
+- Targets: Ethical Founder 50, UpcomingTools 50, NutriZoe 50, InfoPinky 20. Batches of 10 per site; owner approves titles before writing.
+- Each site keeps its own plan file, voice, structure, intro and outro style, SEO pattern and image SEO pattern. Never shared across sites (one AdSense account).
+- One plan file per site holds all batches. One central log for all work. Both live in the repo folder NOV Articles- 3 website and as artifacts, with timestamps.
+- Topic theme: small business owners and small investors cheated in the name of AI, platforms, tools, apps and investments (franchise, dealership, partnership, schemes). No cyber-security topics (hacking, phishing, voice cloning, digital arrest, email compromise) and no loan-app or social-awareness pieces.
+- Research: typed Google searches in a visible browser tab, Indian regional languages only, pages 2 to 4 only, never sponsored results, last 7 days and at most 15 days. No English sites. Do not name a specific website in the search.
+- Sources per article: 6 to 8 individual platforms or sites and only 2 news sites. Exact URLs kept in the plan file for inline links.
+- Rupee figures appear only where the cited case needs them; never repeat or force the same figure into titles, SEO or meta.
+- Image prompts: 6 per article, each a different composition from the poster composition library (NOV Articles- 3 website/poster-composition-library.html). Poster title and tagline only; no credits, cast, dates, director, producer or platform text. No laptop-gadget clichés or random side characters.
+- Image SEO (alt, title, caption, description) written fresh per image. Banned: templated persona lines such as "<Author> of <Site> explains...".
+- Do not search the CMS or old files for the prompt format; build prompts from the composition library.
+- Replies to the owner: very short, with exact live URLs (artifact and site URLs, not repo links).
