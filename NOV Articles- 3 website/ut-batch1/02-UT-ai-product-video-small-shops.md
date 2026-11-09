@@ -1,32 +1,30 @@
 # UpcomingTools article: AI product video
 
-Title: AI product video for small shops: how a gift shop turned plain phone photos into a cinematic catalogue that sells across every channel
+Title: Proven AI Product Video Workflow for Shops From Phone Photos
 Focus keyword: ai product video
-Additional keywords: product photos for small shop, update shop catalogue, ai catalogue maker, clear dead stock, festival dead stock sale, visual product search, customer can't describe product, product video in owner voice, shop catalogue on phone
-Tags: AI Product Video, Product Photos, Shop Catalogue, Dead Stock, Image to Video, Small Shop India
-SEO title: AI Product Video for Small Shops From Simple Phone Photos
+Additional keywords: product image to video ai, photo to video ai, product photos for small shop, update shop catalogue, ai catalogue maker, clear dead stock, festival dead stock sale, visual product search, product video in owner voice
+Tags: AI Product Video, Image to Video AI, Product Photos, Shop Catalogue, Dead Stock, Small Shop India
+SEO title: Proven AI Product Video Workflow for Shops [Photo to Video]
 Slug: ai-product-video-photos-small-shops-catalogue
-Meta description: An AI product video workflow that turns plain phone photos into cinematic videos and a shop catalogue on every channel. The real setup we built for a gift shop.
+Meta description: Plain phone photos became an AI product video and a catalogue entry for every item in one family's shop, and old stock began selling. See the workflow.
 Rank Math TOC title: From phone photo to product video
 Category: Automation Guides
 
-# AI product video for small shops: how a gift shop turned plain phone photos into a cinematic catalogue that sells across every channel
+# AI Product Video for Small Shops That Starts With One Phone Photo
 
-## The shelf that nobody looked at
+## The shelf full of products nobody looked at
 
 On the third day of my Diwali leave, I was sitting in a gift shop, the kind of place where every inch of wall is covered with something shining. Photo frames, small idols, showpieces, hampers, soft toys, wall clocks, lamps. The owner was busy, so I did what I always do. I picked up a tea glass, sat on the stool near the door and watched.
 
 A young couple came in. The woman described something she had seen at a friend's house: "a small golden thing with two elephants, for the pooja room, not too big." The staff boy brought five different items. None were right. She left, politely, and the boy put the five items back on the shelf where they had been sitting, I guessed, for many months.
 
-[IMAGE 1]
-
 That moment had three problems inside it. The customer can't describe the product she wants. The staff can't show her everything quickly. And the shop has hundreds of items that nobody sees, which slowly become dead stock. I have seen this in gift shops, textile shops, footwear shops and hardware shops across Andhra Pradesh. The products are good. They are just invisible.
 
-The owner of that shop and I became friends over three teas. I won't name him or his shop, because I haven't asked his permission. But he reminded me of another gift shop owner we had already worked with, and that is the story I want to tell you today.
+The owner of that shop and I became friends over three teas. I won't name him or his shop, because I haven't asked his permission. But he reminded me of another shop owner we had already worked with, and that is the story I want to tell you today.
 
-## Purushottam garu and his son's photo routine
+## How one shop family started with product photos for small shop shelves
 
-Purushottam K runs a gift shop. I won't tell you where, or what his shop is called, because he prefers it that way. When I first met him, his shop had the same problem I described above: hundreds of beautiful products, a few dozen that sold well and a long tail that sat on shelves gathering dust.
+Purushottam K runs a busy shop full of small, beautiful things. I won't tell you where, or what his shop is called, because he prefers it that way. When I first met him, his shop had the same problem I described above: hundreds of beautiful products, a few dozen that sold well and a long tail that sat on shelves gathering dust.
 
 I didn't pitch anything. I sat, I joked about his collection of tiny brass elephants, and I said what I always say: "Uncle, the world is updating. Why can't you try showing these products to people before they come to the shop?" He asked how. I asked him whether anyone at home was good with phones. He laughed and said his son, who had just finished 12th class and was preparing for his medical entrance exam, was better with phones than with biology.
 
@@ -34,39 +32,39 @@ His son came to the shop that evening. I explained the idea to him in twenty min
 
 That was the beginning of the AI product video system we built together. The son still does one manual job, and I'll be honest about that. Everything after it runs on its own.
 
-## Product photos for small shop owners, the only manual step
+## The only manual step: phone photos from every side
 
 The whole system starts with simple product photos for small shop shelves, taken on an ordinary phone. No studio, no lights, no photographer. The son photographs each product from every side: front, back, top, bottom, and one close-up of any detail that matters, like a carving or a name engraving.
 
-We gave him a simple routine. One product at a time, on a plain cloth on the counter, near the window for daylight. Five or six photos per product. All the photos of one product go into one folder in a cloud drive, named with the product code from the shop register.
+[IMAGE 1]
 
-[IMAGE 2]
+We gave him a simple routine. One product at a time, on a plain cloth on the counter, near the window for daylight. Five or six photos per product. All the photos of one product go into one folder in a cloud drive, named with the product code from the shop register.
 
 That's it. That is the only manual work in the entire system. On a good day, he photographs twenty or thirty products in an hour, between chapters. On exam weeks, he does none, and the system waits patiently.
 
 I want shop owners to notice this. The hardest part of any catalogue is the discipline of photographing the products. If one family member gives one hour a day, the rest can be automated. If nobody gives that hour, no software in the world can help.
 
-## From plain photo to cinematic image, automatically
+## Photo to video AI starts with a cinematic product image
 
 The moment a new folder appears in the cloud drive, the automation wakes up. The first step sends each photo to an image AI model. Its job is to refine the photo: clean the background, correct the light, remove the counter cloth and the shadows, and then regenerate the product in a cinematic setting that suits it.
 
 A brass lamp is placed in a warm pooja room setting with soft diya light. A photo frame appears on a living room wall. A soft toy sits on a child's bed. A wedding hamper is shown on a decorated table. The product itself stays exactly as it is, because the model works from all the angles the son photographed. Only the setting changes.
 
+[IMAGE 2]
+
+Most photo to video AI tools give far better results when the starting image is clean and well lit, which is why this step comes first. We spent a lot of time on one rule: the product must never change. Customers get angry if the item they receive looks different from the picture. So the image AI is instructed to keep the product's shape, colour, size and details exactly true to the photos, and to change only the background, the light and the mood. When a regenerated image doesn't match, it goes into a "check" folder for the son to look at, instead of going ahead.
+
+## How product image to video AI creates the AI product video
+
+Once the cinematic images are ready, the second step sends them to a video AI model. This is the step most people search for as product image to video AI, and new tools for it appear every few months. This model turns the still images into a short AI product video, about eight to fifteen seconds long: the camera moves slowly around the product, the diya flickers, the soft toy's ribbon moves in a gentle breeze, the photo frame catches the light.
+
+We first tried a free tier of one video platform. It worked beautifully for the first few products and then hit its limits. A shop with hundreds of products needs hundreds of videos, and every festival needs new ones. The free tier was not built for that. So we moved to another platform that could handle the volume at a cost that made sense for the shop. I won't name either platform, because the shop's setup is its own business, and platforms change every few months anyway.
+
 [IMAGE 3]
-
-We spent a lot of time on one rule: the product must never change. Customers get angry if the item they receive looks different from the picture. So the image AI is instructed to keep the product's shape, colour, size and details exactly true to the photos, and to change only the background, the light and the mood. When a regenerated image doesn't match, it goes into a "check" folder for the son to look at, instead of going ahead.
-
-## From image to AI product video
-
-Once the cinematic images are ready, the second step sends them to a video AI model. This model turns the still images into a short AI product video, about eight to fifteen seconds long: the camera moves slowly around the product, the diya flickers, the soft toy's ribbon moves in a gentle breeze, the photo frame catches the light.
-
-We first tried a free tier of one video platform. It worked beautifully for the first few products and then hit its limits. A gift shop with hundreds of products needs hundreds of videos, and every festival needs new ones. The free tier was not built for that. So we moved to another platform that could handle the volume at a cost that made sense for the shop. I won't name either platform, because the shop's setup is its own business, and platforms change every few months anyway.
-
-[IMAGE 4]
 
 What matters is the design. We built the system in layers: photos, then images, then videos, then catalogue. Each layer is a separate step that can be swapped. If a better image model comes next month, we replace one step. If the video platform raises its prices, we replace another. The same design works on any automation platform by changing the nodes, which is why I always tell young builders not to marry one tool. I wrote about this way of thinking in my notes on [automation for small Indian businesses without coding](https://upcomingtools.com/automation-for-small-indian-businesses-without-coding/).
 
-## The ai catalogue maker step: update shop catalogue without typing
+## An AI catalogue maker to update shop catalogue entries without typing
 
 The third step is the one Purushottam garu loves most. Every finished image and video goes into an ai catalogue maker step that writes the product name, a short description, the price from the shop register and a few search words, and then places the product in the right category: pooja items, wedding gifts, kids, home décor, corporate gifts.
 
@@ -74,17 +72,19 @@ To update shop catalogue entries used to mean someone sitting with a laptop for 
 
 The catalogue is then shared across the shop's messaging and social channels: the messaging catalogue, the social media page, the broadcast lists for regular customers. One set of products, kept the same everywhere. For shop owners who haven't started a catalogue at all, my earlier guide on a [WhatsApp catalogue for small shops before a website](https://upcomingtools.com/whatsapp-catalog-for-small-shops-before-a-website/) is the right first step, and if you sell online too, the same idea works for [bulk product uploads with AI-written titles](https://upcomingtools.com/woocommerce-bulk-product-upload-with-ai-seo-meta-titles/).
 
-## When a customer can't describe product details, use visual product search
+## Visual product search when a customer can't describe the product
 
 Remember the young couple at the start of this article, and the "small golden thing with two elephants"? This is the problem I wanted to solve most, because it happens in every shop, every day. A customer can't describe product details well enough for the staff to find it, and the sale is lost.
 
 With a shop catalogue on phone, the staff boy doesn't need to guess. He opens the catalogue, types "elephant" or "brass" or "pooja," and shows the customer the videos. The customer points: "That one." It takes thirty seconds.
 
+[IMAGE 4]
+
 We also added a simple visual product search. A customer can show a photo she took at her friend's house, or a screenshot from social media, and the staff boy uploads it to the catalogue search. The system finds the closest products in the shop by how they look. Purushottam garu says this one feature has saved many sales that would have walked out of the door.
 
 Customers can also do this from home. When a regular customer messages "do you have something like this?" with a photo, the son runs the same visual product search and replies with two or three matching videos. The customer comes to the shop already knowing what she wants.
 
-## Clear dead stock with a festival dead stock sale
+## How to clear dead stock with a festival dead stock sale
 
 Here is the part that surprised Purushottam garu. Once every product had a beautiful AI product video, the old stock started to sell. Items that had sat on the back shelf for a year looked new again in a cinematic video. Customers had never noticed them in the shop, but they noticed them on their phones.
 
@@ -94,7 +94,7 @@ To clear dead stock deliberately, the system marks any product that hasn't sold 
 
 I can't share his figures, and I wouldn't put numbers in his mouth anyway. What he told me is that his back shelf is the emptiest it has been in years, and that he now buys new stock with less fear because he knows he can move the old stock. For more on timing these sales with the local calendar, read my notes on [business ideas around festivals and the local festival calendar](https://upcomingtools.com/business-ideas-around-festivals-local-festival-calendar/).
 
-## A product video in owner voice
+## Adding a product video in owner voice for regular customers
 
 The last layer we added was the voice. Purushottam garu's regular customers know him. They trust the way he describes a gift: who it suits, what occasion it fits, why it is worth the price. So for the most important products, we added a short product video in owner voice: a few seconds of narration, recorded with his clear consent and spoken in his cloned voice, over the cinematic video.
 
@@ -122,7 +122,7 @@ He noticed that certain return gifts were viewed again and again before every we
 
 None of this needed a data team. The catalogue showed him simple counts, and he used his own judgement. Shop owners have always had good instincts. The catalogue gave his instincts something to look at. When owners also want to be careful about honest promotion, my notes on [honest advertising for small business](https://upcomingtools.com/honest-advertising-for-small-business-real-customers/) explain why real customers matter more than reach.
 
-## Selling the same products beyond the shop
+## Using the same videos to sell beyond the shop
 
 Once every product had an image, a video and a description, Purushottam garu's son asked a natural question: why only sell in the shop? Many gift buyers look online first. With the catalogue ready, listing products on marketplaces became a much smaller job.
 
@@ -130,15 +130,15 @@ I always advise caution here. Online selling has its own problems: returns, deli
 
 For Purushottam garu, the shop still comes first. Online is a small, slow addition, and the son handles it only during his free hours. That pace suits a family business.
 
-## A short checklist for young builders
+## Checklist for young builders setting this up for shops
 
 If you are a student or a young person who wants to build systems like this for shops in your area, here is the checklist I gave to Purushottam garu's son, and to many others after him.
 
-Sit with the owner first and understand his products before you touch any tool. Photograph ten products and test every step by hand before automating anything. Keep a check folder for anything doubtful, because one wrong product image can cost the shop a customer's trust. Build in layers so you can replace a tool without breaking the system. And always ask the owner's permission before using his voice, his shop's name or his customers' details anywhere.
+Sit with the owner first and understand his products before you touch any tool. Photograph ten products and test every step by hand, including the product image to video AI step, before automating anything. Keep a check folder for anything doubtful, because one wrong product image can cost the shop a customer's trust. Build in layers so you can replace a tool without breaking the system. And always ask the owner's permission before using his voice, his shop's name or his customers' details anywhere.
 
 Most of all, be patient with the owner. He has run his shop his way for many years. Show him one result he likes, then the next. This is the kind of work I described in [business ideas for fixing other businesses](https://upcomingtools.com/business-ideas-for-fixing-other-businesses/), and it is one of the most satisfying jobs a young person can do in a small town.
 
-## What still needs a human
+## What still needs a human in the workflow
 
 I don't want anyone to think this is magic. The son still photographs every product. Purushottam garu still checks the "check" folder once a week and rejects images that look wrong. Prices still come from the shop register, which he updates himself. And the decision of what goes into a festival sale is his alone.
 
@@ -156,7 +156,7 @@ He told me it has become his favourite break. Twenty minutes with the products, 
 
 I think there is something important here for families. Many shops have a young person at home who is good with phones and has an hour to spare. That hour, used well, can change the shop. I wrote about this kind of family ambition in [business ideas for women entrepreneurs and family ambition](https://upcomingtools.com/business-ideas-women-entrepreneurs-family-ambition/), and the same spirit applies to sons and daughters preparing for exams.
 
-## What I saw on the Diwali road
+## Invisible shelves I saw on the Diwali road
 
 Back to my Diwali trip. In shop after shop, I saw shelves full of invisible products, staff guessing what customers want and owners worried about stock that wouldn't move. I sat, I joked, I asked the same question: "Why can't you try something like this? The world is updating."
 
@@ -170,13 +170,13 @@ If you run a shop and want to try this, here is how I would begin, the way I exp
 
 Start with photos. Pick your fifty slowest-moving products and photograph each one from every side on a plain background near a window. Put each product's photos in its own folder with a clear name.
 
-Then choose one image model and one video model, test them on ten products and check every result yourself. Make sure the product never changes. Only then connect the steps into an automation, and add the ai catalogue maker step at the end.
+Then choose one image model and one photo to video AI tool, test them on ten products and check every result yourself. Make sure the product never changes. Only then connect the steps into an automation, and add the ai catalogue maker step at the end.
 
 Share the catalogue on the channels your customers already use. Don't create new accounts nobody follows. And before the next festival, run a small festival dead stock sale with fresh videos.
 
 If you also sell through online marketplaces, the same videos work there. Open networks such as [ONDC](https://ondc.org/) are giving small sellers new ways to reach buyers, and a good AI product video helps any listing stand out. If you sell on cash on delivery, my guide on how to [reduce RTO with COD order confirmation](https://upcomingtools.com/reduce-rto-cod-orders-cod-order-confirmation/) will help you keep those sales.
 
-## Where this goes next
+## What comes after the product catalogue
 
 Purushottam garu's catalogue now grows every week, his back shelf keeps getting lighter and his son keeps preparing for his exam. In my next articles, I will write about what happens when a shop owner needs to manage his shop from far away, and how a supermarket owner in Bengaluru runs his entire store from his phone.
 
@@ -226,50 +226,50 @@ Photographing each product, checking doubtful images, keeping prices updated and
 
 # Image prompts
 
-Use the attached reference photo for Radha Krishna and keep his exact face, hair, skin tone and build; every other person, object, place and the whole story come from this prompt.
+Use the attached reference photo for Radha Krishna and keep his exact face, hair, skin tone and build in every image; every other person, object, place and the whole poster design come from the prompt.
 
 Image placement:
-Image 1: featured image, and also in the body right after the second paragraph under the heading "The shelf that nobody looked at" (marked [IMAGE 1] in the article)
-Image 2: in the body right after the second paragraph under the heading "Product photos for small shop owners, the only manual step" (marked [IMAGE 2] in the article)
-Image 3: in the body right after the second paragraph under the heading "From plain photo to cinematic image, automatically" (marked [IMAGE 3] in the article)
-Image 4: in the body right after the second paragraph under the heading "From image to AI product video" (marked [IMAGE 4] in the article)
-Image 5: in the body right after the second paragraph under the heading "Keeping a shop catalogue on phone for every staff member" (marked [IMAGE 5] in the article)
-Image 6: in the body right after the second paragraph under the heading "Clear dead stock with a festival dead stock sale" (marked [IMAGE 6] in the article)
+Image 1: featured image, and also in the body right after the first paragraph under the heading "The only manual step: phone photos from every side" (marked [IMAGE 1])
+Image 2: in the body right after the second paragraph under the heading "Photo to video AI starts with a cinematic product image" (marked [IMAGE 2])
+Image 3: in the body right after the second paragraph under the heading "How product image to video AI creates the AI product video" (marked [IMAGE 3])
+Image 4: in the body right after the second paragraph under the heading "Visual product search when a customer can't describe the product" (marked [IMAGE 4])
+Image 5: in the body right after the second paragraph under the heading "Keeping a shop catalogue on phone for every staff member" (marked [IMAGE 5])
+Image 6: in the body right after the second paragraph under the heading "How to clear dead stock with a festival dead stock sale" (marked [IMAGE 6])
 
 File names:
-1. ai-product-video-gift-shop-invisible-shelf.webp
-2. product-photos-for-small-shop-phone-routine.webp
-3. ai-product-video-cinematic-image-regeneration.webp
-4. image-to-ai-product-video-layered-workflow.webp
-5. shop-catalogue-on-phone-ai-catalogue-maker.webp
+1. ai-product-video-product-photos-for-small-shop.webp
+2. photo-to-video-ai-cinematic-product-image.webp
+3. product-image-to-video-ai-shop-workflow.webp
+4. visual-product-search-ai-product-video.webp
+5. update-shop-catalogue-ai-catalogue-maker.webp
 6. festival-dead-stock-sale-clear-dead-stock.webp
 
-Prompt 1: Bittersweet Telugu slice-of-life drama poster, warm brass gold and dusty rose grade. Frame map: a crowded gift shop interior with walls packed floor to ceiling with photo frames, brass idols, showpieces, wall clocks and lamps; the back shelf in soft shadow with a faint layer of dust. In the centre, a young couple, the woman in a mustard cotton kurta describing something with her hands shaped like a small object, the man beside her in a checked shirt; a staff boy in a grey polo holds five wrong items awkwardly in his arms. Story beat: Radha Krishna, in a sage green linen kurta with rolled sleeves, sits on a wooden stool near the door with a tea glass, turned toward the shop owner standing beside him in a white half-sleeve shirt, both watching the couple walk away; Radha Krishna looks into the owner's eyes with a gentle, knowing expression. Typography: title 'THE SHELF NOBODY SAW' in an elegant gold serif with a soft rose glow, across the upper shelves above everyone's heads; tagline 'good products, invisible to customers' in small spaced caps at the bottom. Finish: warm film grain, gentle dust in the light. Camera: ARRI Alexa Mini LF, 32mm, f/2.8, 1/50s, eye level. --ar 16:9 --style raw --v 7 --no phones, laptops, screens, logos, brand names, credits, dates, watermarks, neon, posing, text over faces
-Alt 1: Radha Krishna watches a customer leave a gift shop, the moment that shows why an ai product video matters
-Title 1: Why small shops need an AI product video, UpcomingTools
-Description 1: Radha Krishna of UpcomingTools saw shelves of invisible products on his Diwali trip, the same problem an AI product video catalogue solved for a gift shop.
+Prompt 1: Disaster-epic movie poster, 16:9, tiny figures against a giant threat. Between two tall shop shelves, a towering tidal wave made entirely of unsold products (brass lamps, photo frames, soft toys, wall clocks, boxed showpieces) curls overhead, frozen at its crest, a few items tumbling from the lip. Hero: Radha Krishna braced in a wide stance on the counter, half-turned to the viewer, laughing defiantly with one hand gripping a teenage boy's shoulder, sky-blue windbreaker snapping open over a white tee, grey cargo pants. The boy, navy hoodie, fires a phone camera straight up at the wave like a shield, phone back to the viewer, a sharp white flash bursting from it and freezing one lamp in mid-air. A plain white cloth on the counter whips in the wind. Palette #E6F0FF, #135CFD, #F2B45A brass, #FFF7EA cream. Title "STOP THE STOCK WAVE" in massive weathered disaster-film serif cracking at the edges, across the very top above the crest; tagline "one photo at a time" small caps bottom right. Shot on IMAX-format ARRI Alexa 65, 21mm, extreme low angle, 1/1000s frozen debris. --ar 16:9 --style raw --v 7 --no static pose, posing, screens facing camera, laptops, logos, brand names, credits, dates, neon, green, watermark, text over faces
+Alt 1: Product photos for small shop shelves taken on a phone, the first step of an AI product video workflow shown with Radha Krishna
+Title 1: AI product video starts with product photos for small shop | UpcomingTools
+Description 1: Every AI product video in this UpcomingTools workflow begins with simple product photos for small shop shelves, the routine Radha Krishna set up with one shop family.
 
-Prompt 2: Quiet coming-of-age drama poster in the style of an Indian indie film, soft window daylight with cool ivory and pale teal grade. Frame map: a shop counter by a large window, a plain off-white cloth spread across it; a brass lamp sits in the centre of the cloth; beside it a stack of biology textbooks and a highlighter pen. Story beat: a 17-year-old boy, slim, in a plain navy t-shirt and track pants, crouches at counter height photographing the lamp from a low angle with a phone held steadily, the phone's back toward the camera so no screen is visible; his father, a dignified man in his fifties in a cream kurta, watches from behind the counter with crossed arms and a proud half smile; Radha Krishna, in a light denim shirt, stands at the side and turns toward the father, looking into his eyes with an encouraging grin. Typography: title 'ONE HOUR BETWEEN CHAPTERS' in a clean modern serif, deep teal, set on the upper window glass away from faces; tagline 'the only manual step' in small caps beneath. Finish: natural, airy, fine grain. Camera: Sony FX6, 35mm, f/2.8, 1/100s. --ar 16:9 --style raw --v 7 --no visible screens, laptops, logos, brand names, credits, dates, watermarks, neon, posing, text over faces
-Alt 2: A student takes product photos for small shop items as his father and Radha Krishna look on
-Title 2: Product photos for small shop catalogues | UpcomingTools
-Description 2: The only manual step in the AI product video system is phone photography, and Radha Krishna of UpcomingTools explains the simple routine a gift shop family follows.
+Prompt 2: Retro grain split-screen poster, 16:9. The frame is divided by a vertical strip of old film celluloid. Left half: a dull, flat, grey photo of a brass lamp on a creased counter cloth, harsh shadow. Right half: the identical lamp blazing inside a decorated pooja room with diyas and marigold strings, warm cinematic glow. Hero: Radha Krishna mid-motion grabs the film-strip divider with both hands and rips it sideways like a curtain, revealing the glowing side, his face lit gold on one cheek and grey on the other, eyes sparkling, rust-orange denim jacket over a white henley. Particles of light stream from the tear. Palette left #B8C1CC flat grey, right #F6C36B gold, divider #135CFD tint, #FFF2DE cream. Title "SAME LAMP, NEW LIFE" in vintage halftone poster type, split colour across the seam, top band; tagline "only the light changes" small italic bottom of the grey half. Shot on Hasselblad X2D, 80mm, 1/250s, heavy film grain, light-leak flare at the tear. --ar 16:9 --style raw --v 7 --no static pose, posing, phones, laptops, logos, brand names, credits, dates, neon, green, watermark, text over faces
+Alt 2: Photo to video AI begins with a cinematic product image, revealed by Radha Krishna in a split poster
+Title 2: Photo to video AI and the cinematic product image, UpcomingTools
+Description 2: Before any photo to video AI step, UpcomingTools turns a plain shot into a cinematic product image that stays true to the item, as Radha Krishna explains.
 
-Prompt 3: Magical-realism transformation poster with a split-frame concept, left half cool flat grey daylight, right half rich warm cinematic amber. Frame map: the left half shows a plain brass lamp on a creased counter cloth with harsh shadows; the right half shows the same brass lamp, identical in every detail, glowing in a decorated pooja room with marigold garlands and soft diya light; a thin band of golden light particles flows from left to right across the centre seam, showing the change. Story beat: Radha Krishna, in a deep maroon kurta, stands at the seam with one hand gesturing from the plain lamp to the cinematic lamp, turned toward the shop owner in a white shirt who stands on the warm side, both looking into each other's eyes, the owner amazed, Radha Krishna calm and smiling. Typography: title 'SAME LAMP, NEW LIGHT' in a luminous gold serif across the top of the warm half; tagline 'the product never changes' in small italic at the bottom of the grey half. Finish: high detail, soft bloom on the warm side, flat on the grey side. Camera: Phase One XF IQ4, 80mm, f/4, 1/125s. --ar 16:9 --style raw --v 7 --no phones, laptops, screens, logos, brand names, credits, dates, watermarks, neon, posing, text over faces
-Alt 3: A plain lamp photo becomes a cinematic image in the ai product video workflow explained by Radha Krishna
-Title 3: Cinematic images for an AI product video | UpcomingTools
-Description 3: How UpcomingTools turns simple product photos for small shop shelves into cinematic images while keeping the product true, with Radha Krishna showing the before and after.
+Prompt 3: Chronophotography motion poster, 16:9, ghost repeats. A soft toy teddy on a child's bed is repeated eight times across the frame in a smooth arc, each repeat a frame of movement (ribbon lifting, head tilting, light shifting), the early repeats faded and the last one crisp, like a stop-motion strip floating in air. Hero: Radha Krishna in the foreground spins an old metal film reel on one finger like a basketball, mid-laugh, leaning back, the reel flinging a ribbon of glowing frames that become the teddy repeats, navy overshirt open over a mustard tee, black jeans. A teenage boy beside him counts the frames on his fingers, mouth open. Palette #F4F8FF, #135CFD, #FFD39A, #E7C8B0 soft fabric. Title "NOW IT MOVES" in bold kinetic stretched sans with motion streaks, top left; tagline "photo, image, video, catalogue" small caps along the bottom. Shot on Sony FX3, 35mm, 1/4s long exposure for the reel streak with flash freeze on faces. --ar 16:9 --style raw --v 7 --no static pose, posing, phones, laptops, logos, brand names, credits, dates, neon, green, watermark, text over faces
+Alt 3: Product image to video AI turning a still into an AI product video, with Radha Krishna spinning the reel
+Title 3: Product image to video AI for shops | UpcomingTools workflow
+Description 3: The UpcomingTools layered workflow sends each image through product image to video AI to make a short AI product video, a system Radha Krishna built to swap tools easily.
 
-Prompt 4: Epic film-strip storytelling poster in a vintage Indian cinema style, sepia cream and burnished gold grade. Frame map: a long horizontal film strip flows across the frame in four connected frames; frame one a phone-shot photo of a soft toy on a cloth, frame two the same toy on a child's bed in morning light, frame three the toy in a moving scene with a ribbon fluttering, frame four the toy on a catalogue page among other gifts; the strip curls gently at both ends. Below the strip, in a cosy shop corner, Radha Krishna, in a mustard overshirt over a white tee, sits on the edge of a low table, explaining with one hand drawing a line along the strip, turned toward the owner's son in a navy tee who sits opposite him, both looking into each other's eyes, the son focused and smiling. Typography: title 'PHOTO, IMAGE, VIDEO, CATALOGUE' in a bold vintage marquee serif along the top edge of the film strip; tagline 'each step can be swapped' in small caps at the bottom right. Finish: aged paper texture, light grain. Camera: Canon EOS R5, 24-70mm at 35mm, f/4, 1/80s. --ar 16:9 --style raw --v 7 --no phones, laptops, screens, logos, brand names, credits, dates, watermarks, neon, posing, text over faces
-Alt 4: Radha Krishna explains the layered image to ai product video workflow to a shop owner's son
-Title 4: Image to AI product video, step by step | UpcomingTools
-Description 4: The layered AI product video workflow built by UpcomingTools moves from photo to image to video to catalogue, explained by Radha Krishna for any automation platform.
+Prompt 4: Mirrored-profile psychological poster, 16:9. Two giant side profiles face each other from the left and right edges: a woman customer in a printed cotton kurta, brow furrowed trying to remember, and a young staff boy, eyes wide in recognition. In the space between their foreheads floats a glowing brass elephant pair, assembled from drifting fragments of a blurry snapshot. Hero: below the floating object, Radha Krishna mid-snap of his fingers, arm extended, the snap releasing a ring of light that locks the fragments into place, playful wink, white oxford shirt with sleeves rolled, light khaki chinos. Palette #FBF6EE, #2D4D8C, #135CFD ring, #E9B44C brass. Title "SHOW IT, FIND IT" in elegant condensed serif, centred along the top edge between the profiles; tagline "when words fail, pictures search" small caps at the base. Shot on Canon EOS R5 C, 50mm, 1/200s, double exposure blend of profiles and shop. --ar 16:9 --style raw --v 7 --no static pose, posing, phones, laptops, logos, brand names, credits, dates, neon, green, watermark, text over faces
+Alt 4: Visual product search helps staff find the right item for an AI product video catalogue, shown with Radha Krishna
+Title 4: Visual product search for small shops | UpcomingTools
+Description 4: When a customer can't describe what she wants, visual product search in the AI product video catalogue finds it, the UpcomingTools fix Radha Krishna describes.
 
-Prompt 5: Bright family-comedy poster in Telugu cinema style, cheerful morning cream and leaf green grade. Frame map: a gift shop counter where a staff boy in a grey polo holds up a large printed catalogue booklet toward a smiling middle-aged woman customer in a peacock blue saree, who points at one item; above them, a fan of floating printed catalogue pages arcs across the shop like playing cards, each page showing a different gift on a clean background. Story beat: Radha Krishna, in a crisp white kurta with a light brown sleeveless jacket, stands behind the counter beside the owner in a cream shirt; the owner laughs, relieved, and Radha Krishna turns to him, looking into his eyes with a playful grin. Typography: title 'FOUND IN THIRTY SECONDS' in a bold, rounded, cheerful serif, leaf green with a cream outline, across the top above the floating pages; tagline 'one catalogue on every channel' in small caps at the bottom. Finish: crisp, light grain. Camera: Nikon Z9, 28mm, f/4, 1/125s. --ar 16:9 --style raw --v 7 --no phones, laptops, screens, logos, brand names, credits, dates, watermarks, neon, posing, text over faces
-Alt 5: A staff boy shows a customer the shop catalogue on phone, built with the ai catalogue maker Radha Krishna set up
+Prompt 5: Duotone pop-art poster, 16:9. The entire frame in two inks, deep brand blue #135CFD over warm cream #FFF4E2, with halftone dot texture. Dozens of printed catalogue pages fan out in a huge spiral like thrown playing cards, each page a different product. Hero: Radha Krishna mid-throw, flinging a stack of pages into the spiral with a big grin, body twisted, unbuttoned short-sleeve camp shirt flaring, wide trousers. A staff boy sprawls happily across the counter catching pages in both hands, and a woman customer points at one page in mid-air, delighted. Title "FOUND IN SECONDS" in fat flowing retro script with a thick drop shadow, sweeping diagonally from top left; tagline "one catalogue, every channel" in small block caps bottom right. Graphic print finish, halftone and slight misregistration, no camera realism. --ar 16:9 --style raw --v 7 --no static pose, posing, phones, laptops, logos, brand names, credits, dates, neon, green, watermark, text over faces
+Alt 5: AI catalogue maker that helps update shop catalogue pages, with Radha Krishna throwing them into the air
 Title 5: Update shop catalogue with an AI catalogue maker, UpcomingTools
-Description 5: UpcomingTools built an ai catalogue maker step that keeps a gift shop's catalogue updated across every channel, and Radha Krishna explains how staff now find products quickly.
+Description 5: An AI catalogue maker step lets the shop update shop catalogue entries each morning with a fresh AI product video, part of the UpcomingTools setup by Radha Krishna.
 
-Prompt 6: Festive Telugu family-entertainer poster, Diwali night grade of deep indigo, lamp gold and marigold. Frame map: the back shelf of a gift shop, now nearly empty, a few remaining items glowing; in the foreground, a line of happy customers at the counter holding wrapped gifts; strings of diyas and marigold garlands frame the top of the shop; firecracker sparkles in the sky seen through the doorway. Story beat: the shop owner, in a festive silk kurta of deep green, stands by the empty back shelf with arms open in disbelief and joy; Radha Krishna, in a simple cream silk kurta with a dupatta over one shoulder, stands beside him, laughing, turned toward him and looking into his eyes. Typography: title 'THE BACK SHELF IS EMPTY' in a festive hand-painted gold serif across the indigo sky in the doorway; tagline 'old stock, new light' in small spaced caps at the bottom left. Finish: warm glow, soft bokeh on the diyas, light grain. Camera: ARRI Alexa 35, 40mm, f/2, 1/50s. --ar 16:9 --style raw --v 7 --no phones, laptops, screens, logos, brand names, credits, dates, watermarks, neon, posing, text over faces
-Alt 6: A gift shop owner celebrates an empty back shelf after a festival dead stock sale planned with Radha Krishna
+Prompt 6: Festival-blockbuster low-angle poster, 16:9. Shot from floor level looking up at the back shelf as it erupts: lamps, frames and showpieces launch off the shelf in arcs like Diwali rockets, trailing gold sparks, landing in the hands of happy customers below. The shop owner, a dignified man in a deep blue festive shirt, throws both arms up mid-shout of joy. Hero: Radha Krishna mid-jump beside him, catching a brass lamp out of the air one-handed, head thrown back laughing, cream bomber jacket over a maroon tee, dark jeans. Real diya strings and sparklers through the doorway behind. Palette #0F2350 night blue, #F6C36B gold, #FF8A3D spark orange, #FFF6E5 cream. Title "BACK SHELF, EMPTY" in festive hand-painted Telugu-cinema serif with gold foil 3D edges, arched across the top; tagline "old stock, new light" small caps lower left. Shot on ARRI Alexa 35, 16mm, extreme low angle, 1/60s with flash freeze, spark trails. --ar 16:9 --style raw --v 7 --no static pose, posing, phones, laptops, logos, brand names, credits, dates, neon, green, watermark, text over faces
+Alt 6: A festival dead stock sale that helped clear dead stock with fresh AI product video clips, celebrated with Radha Krishna
 Title 6: Festival dead stock sale with AI product video | UpcomingTools
-Description 6: Fresh AI product videos helped a gift shop clear dead stock before Diwali, a festival dead stock sale idea shared by Radha Krishna of UpcomingTools.
+Description 6: Fresh AI product video clips helped one shop clear dead stock in a festival dead stock sale, a timing idea from UpcomingTools and Radha Krishna.
