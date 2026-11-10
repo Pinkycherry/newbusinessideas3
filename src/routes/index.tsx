@@ -11,6 +11,7 @@ import { TOPIC_PAGES } from "@/data/topic-pages";
 import { getHomeLive, type HomeIdea } from "@/lib/home-live.functions";
 import { TEAM, contactEmail, ORGANISATION_NAME } from "@/lib/site-config";
 import { CountUp, HeroStreams } from "@/components/home/scroll-story";
+import { Film, type FilmPerson } from "@/components/home/film";
 import { Carousel, OrbitRing, ProcessBento, Quad, SearchDemand, StoryRail, Tunnel, useTypedPlaceholder, type VizKind } from "@/components/home/cinema";
 
 /**
@@ -164,6 +165,26 @@ const DEMAND = [
   { label: "small business ideas", n: 142339, to: "/lists" },
 ];
 
+const H = "/images/hero/";
+const D = (label: string) => DEMAND.find((d) => d.label === label)?.n ?? 0;
+/** Six fictional people, one per search. Sizes are the cut-out files' own. */
+const SEEKERS: FilmPerson[] = [
+  { src: H + "p-student.webp", w: 324, h: 912, at: [1, 2], group: 1, label: "side hustles", n: D("side hustles") },
+  { src: H + "p-jobholder.webp", w: 349, h: 917, at: [1, 2], group: 1, label: "new business ideas", n: D("new business ideas") },
+  { src: H + "p-wfh.webp", w: 285, h: 893, at: [1, 2], group: 1, label: "work from home ideas", n: D("work from home ideas") },
+  { src: H + "p-cook.webp", w: 316, h: 906, at: [2], group: 2, label: "small business ideas", n: D("small business ideas") },
+  { src: H + "p-village.webp", w: 425, h: 914, at: [2], group: 2, label: "low investment business ideas", n: D("low investment business ideas") },
+  { src: H + "p-tailor.webp", w: 413, h: 904, at: [2], group: 2, label: "zero investment business ideas", n: D("zero investment business ideas") },
+];
+const WALKERS: FilmPerson[] = [
+  { src: H + "p-student-after.webp", w: 333, h: 914, at: [3], group: 1 },
+  { src: H + "p-cook-after.webp", w: 261, h: 887, at: [3], group: 1 },
+  { src: H + "p-jobholder-after.webp", w: 354, h: 917, at: [3], group: 1 },
+  { src: H + "p-tailor-after.webp", w: 351, h: 881, at: [3], group: 3 },
+  { src: H + "p-village-after.webp", w: 434, h: 900, at: [3], group: 3 },
+  { src: H + "p-wfh-after.webp", w: 284, h: 891, at: [3], group: 3 },
+];
+
 /** The story, in order. Every line is already published on /about and /founders. */
 const STORY = [
   { ic: "/icons/ui/ui-startup-cost.webp", t: "Paid three platforms", d: "Our founder paid three validation platforms to check four business ideas." },
@@ -255,6 +276,35 @@ function HomePage() {
 
   return (
     <V2Frame active="/" ember orbit={ORBIT}>
+      {/* Hero film: one camera move into a small Indian town; six people, six searches */}
+      <Film id="top" alt="A peaceful small town street in India at sunset, seen from closer and closer" frames={[H + "town-1.webp", H + "town-2.webp", H + "town-3.webp", H + "town-4.webp"]} people={SEEKERS}
+        note="Monthly searches across India, from our own keyword research, November 2026."
+        slides={[
+          <>
+            <span className="fm-kick">Free for every reader in India</span>
+            <h1 className="fm-h">Tired of paying just to check if <em>your idea will work?</em></h1>
+            <p className="fm-p">We built a free home for real business ideas: side hustles, zero investment ideas, work from home ideas and low investment ideas. Every idea is researched, not guessed.</p>
+            <span className="fm-cue">Scroll</span>
+          </>,
+          <>
+            <span className="fm-kick">Every month, across India</span>
+            <p className="fm-h is-sm">Lakhs of people search for <em>a way to start.</em></p>
+          </>,
+          <>
+            <span className="fm-kick">Different lives</span>
+            <p className="fm-h is-sm">The <em>same</em> search.</p>
+          </>,
+          <>
+            <span className="fm-kick">You are not alone</span>
+            <p className="fm-h is-sm">Read one honest blueprint. <em>Before you spend a rupee.</em></p>
+            <form action="/search" method="get" className="fm-form">
+              <input name="q" type="search" placeholder="Try tiffin, tuition, tailoring…" aria-label="Search business ideas" />
+              <button type="submit">Search</button>
+            </form>
+            <div className="fm-row"><Link to="/browse" className={btnHero}>Explore the library <ArrowRight size={16} /></Link></div>
+          </>,
+        ]} />
+
       <div className="relative overflow-hidden bg-[linear-gradient(180deg,#f1efff_0%,#f7f6ff_45%,#ffffff_100%)]">
         <div aria-hidden className="pointer-events-none absolute -top-24 right-[-10%] h-[520px] w-[520px] rounded-full bg-[#cfc9ff]/50 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute top-64 left-[-12%] h-[380px] w-[380px] rounded-full bg-[#e5e1ff]/70 blur-3xl" />
@@ -268,13 +318,10 @@ function HomePage() {
               <span className="inline-flex items-center gap-1.5 rounded-full border border-[#4643ba]/25 bg-white/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#4643ba]">
                 <Sparkles aria-hidden size={13} /> Free for every reader in India
               </span>
-              <h1 className="eh-title mt-4 font-display text-[2.3rem] font-bold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.6rem]">
-                <span className="eh-kicker" data-keep-colour="">Tired of paying just to check if</span>{" "}
-                <span className="eh-giant">your idea will work?</span>
-              </h1>
-              <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
-                We built a free home for real business ideas: side hustles, zero investment ideas, work from home ideas and low investment ideas. Every idea is researched, not guessed.
-              </p>
+              <h2 className="eh-title mt-4 font-display text-[2.3rem] font-bold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.6rem]">
+                <span className="eh-kicker" data-keep-colour="">Open any idea and see</span>{" "}
+                <span className="eh-giant">a real blueprint.</span>
+              </h2>
               <form action="/search" method="get" className="mt-6 flex max-w-xl items-center gap-2 rounded-2xl bg-white p-1.5 shadow-[0_10px_30px_-15px_rgba(70,67,186,0.45)] ring-1 ring-[#4643ba]/15 focus-within:ring-2 focus-within:ring-[#4643ba]">
                 <Search aria-hidden className="ml-2 h-5 w-5 shrink-0 text-slate-400" />
                 <input name="q" type="search" placeholder="Try tiffin, tuition, tailoring…" aria-label="Search business ideas" className="min-w-0 flex-1 bg-transparent px-1 py-2.5 text-base outline-none" />
@@ -573,6 +620,15 @@ function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Validate road: the way through the library, gate by gate, ending at the open door */}
+      <Film id="how-it-works" alt="A stone road leaving the town through four gateways to an open wooden door and green fields" frames={[H + "road-1.webp", H + "road-2.webp", H + "road-3.webp", H + "road-4.webp"]} people={WALKERS}
+        slides={[
+          <><span className="fm-no" aria-hidden>01</span><h2 className="fm-h is-sm">Find <em>an idea</em></h2><p className="fm-p">Search, or open a category that fits your money, time and town.</p></>,
+          <><span className="fm-no" aria-hidden>02</span><p className="fm-h is-sm">Read the <em>four answers</em></p><p className="fm-p">Who pays, how the money works, what hurts, and a straight verdict.</p></>,
+          <><span className="fm-no" aria-hidden>03</span><p className="fm-h is-sm">Check it <em>for free</em></p><p className="fm-p">Press Validate on any blueprint. We never charge for it.</p><div className="fm-row"><Link to="/startup-idea-validation" className={btn3dLight}>How validating works</Link></div></>,
+          <><span className="fm-no" aria-hidden>04</span><p className="fm-h is-sm">Build it, <em>or walk away.</em></p><p className="fm-p">We say which. No sign-up, nothing to pay.</p><div className="fm-row"><Link to="/browse" className={btnHero}>Explore the library <ArrowRight size={16} /></Link></div></>,
+        ]} />
 
       {/* The ecosystem: every kind of page around one hub */}
       <section className={"relative overflow-hidden bg-[radial-gradient(ellipse_at_center,#efedff_0%,#faf9ff_55%,#ffffff_100%)] " + sec} data-reveal data-ember="hub">

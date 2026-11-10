@@ -396,6 +396,7 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
     const off = stored === "off" || (reduce && stored !== "on");
     setPaused(off);
     root.classList.toggle("ss-on", !off);
+    root.classList.toggle("ss-off", off);
     root.classList.add("has-orbit");
     // Cards rise into place as they scroll in (every page). Only cards that are below the screen when the
     // page opens are held back, so anything added later is never left hidden.
@@ -439,7 +440,7 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
       window.clearTimeout(riseTimer);
       rise?.disconnect();
       document.querySelectorAll(".ss-rise").forEach((el) => el.classList.remove("ss-rise", "ss-rise-in"));
-      root.classList.remove("ss-on", "has-orbit");
+      root.classList.remove("ss-on", "ss-off", "has-orbit");
     };
   }, []);
 
@@ -448,6 +449,7 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
     const next = !paused;
     setPaused(next);
     document.documentElement.classList.toggle("ss-on", !next);
+    document.documentElement.classList.toggle("ss-off", next);
     try { localStorage.setItem(KEY, next ? "off" : "on"); } catch { /* private window */ }
     window.dispatchEvent(new Event("ss-motion"));
     window.dispatchEvent(new Event("scroll"));

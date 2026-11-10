@@ -66,6 +66,7 @@ work from home ideas 3,49,721; side hustles 2,94,305; small business ideas 1,42,
 - Team tunnel with many ghost items overlapping. Now one item at a time.
 - Sticky scroll-pinned card reels (10 Nov, other session): confusing on phones. Replaced by the gliding rows.
 - The six search numbers as six big count-up cards. Founder: sloppy. Now one ring infographic.
+- Arrows, progress bar and Skip button under the rows. Founder hated them. Removed; never add buttons to rows.
 - Chubby doll characters for the hero: founder changed to ultra-realistic people.
 - Google Gemini video with watermark: not used. Never crop or remove a provider watermark.
 - Local preview cannot reach the database, so the hero preview card and the ideas row are empty locally. Check those on the live site.
@@ -96,6 +97,21 @@ of 1-5. Light always from the left, golden hour.
    inventory artifact).
 
 ## Log (newest first)
+
+- 11 Nov 2026 ~08:30 IST — Pinky 1 (claude-fable-5-2): BATCH 3. Founder sent 20 realistic images (no aerial shot, no
+  mist layer came). Used: four street frames (town-1..4) and four road frames (road-1..4) in public/images/hero/, plus
+  twelve people cut out of the grey sheets with OpenCV GrabCut (p-<role>.webp before, p-<role>-after.webp after).
+  Not used: the hoodie/laptop sheet (different people) and the hill shot (red flag on the tower reads as political).
+  NEW src/components/home/film.tsx (Film): sticky stage, frames zoom and dissolve as the page scrolls, text slides and
+  cut-out people per step, thought bubbles with the six monthly search counts drawn in code.
+  HOME: (1) hero film #top replaces the top of the page (h1 lives there now; the old hero block below it has an h2);
+  (2) validate road film #how-it-works before "Eight ways": Find an idea, Read the four answers, Check it for free,
+  Build it or walk away, ending at the open door with the six people walking out.
+  ROWS (categories, ideas, blog): founder rejected the arrows, bar and Skip button. Removed. Cards now pop up each time
+  the row scrolls into view (replays), the page scroll moves the row both ways, the middle card grows, pointing lifts
+  a card, the row still glides by itself and can be swiped.
+  html.ss-off is now set when motion is paused (film falls back to one picture with the text under it).
+  NEXT: founder review; phone and tablet pass; same row motion on inner pages; tall phone crops if he sends them.
 
 - 11 Nov 2026 ~06:20 IST — Pinky 1 (claude-fable-5-2): founder rejected the six numbers as plain count-up cards
   ("sloppy"). Rebuilt as one ring infographic (SearchDemand in cinema.tsx, .cn-demand / .cn-dm-* in cinema.css).

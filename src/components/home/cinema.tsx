@@ -43,7 +43,7 @@ export function Carousel({ head, children, label }: { head: ReactNode; children:
       list.forEach((el, i) => {
         const d = clamp((el.offsetLeft + el.offsetWidth / 2 - c) / (w * 0.7), -1, 1), a = Math.abs(d);
         el.classList.toggle("is-mid", i === m);
-        el.style.transform = on ? `perspective(1100px) rotateY(${(-d * 26).toFixed(2)}deg) translateY(${(a * 18).toFixed(1)}px) scale(${(1.03 - a * 0.13).toFixed(3)})` : "";
+        el.style.transform = on ? `perspective(1100px) rotateY(${(-d * 26).toFixed(2)}deg) translateY(${(a * 18).toFixed(1)}px) scale(${(1.1 - a * 0.22).toFixed(3)})` : "";
         el.style.opacity = on ? (1 - a * 0.5).toFixed(3) : "";
         el.style.zIndex = String(10 - Math.round(a * 10));
       });
@@ -74,8 +74,19 @@ export function Carousel({ head, children, label }: { head: ReactNode; children:
     const timer = 0;
     const stop = () => { hold.current = true; window.clearTimeout(resume); };
     const start = () => { window.clearTimeout(resume); resume = window.setTimeout(() => { hold.current = false; }, 2600); };
-    const io = new IntersectionObserver((e) => { seen = e.some((x) => x.isIntersecting); }, { threshold: 0.2 });
+    const io = new IntersectionObserver((e) => { seen = e.some((x) => x.isIntersecting); box.classList.toggle("is-pop", seen); }, { threshold: 0.12 });
     io.observe(tr);
+    kids().forEach((el, i) => el.style.setProperty("--k", String(i % 7)));
+    // The page scroll drives the row too (both ways), so cards keep arriving and popping as the reader scrolls.
+    let lastY = window.scrollY;
+    const onPage = () => {
+      const y = window.scrollY, dy = y - lastY; lastY = y;
+      if (!seen || hold.current || !isOn()) return;
+      const max = tr.scrollWidth - tr.clientWidth;
+      tr.scrollLeft = clamp(tr.scrollLeft + dy * 0.6, 0, max);
+      pos = -1;
+    };
+    window.addEventListener("scroll", onPage, { passive: true });
     tr.addEventListener("scroll", ask, { passive: true });
     tr.addEventListener("wheel", (e) => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { stop(); start(); } }, { passive: true });
     tr.addEventListener("touchstart", stop, { passive: true });
@@ -92,7 +103,7 @@ export function Carousel({ head, children, label }: { head: ReactNode; children:
     paint();
     const first = window.setTimeout(ask, 700);
     return () => {
-      window.clearTimeout(first); window.clearInterval(timer); cancelAnimationFrame(drift); window.clearTimeout(resume); io.disconnect();
+      window.clearTimeout(first); window.clearInterval(timer); cancelAnimationFrame(drift); window.removeEventListener("scroll", onPage); window.clearTimeout(resume); io.disconnect();
       tr.removeEventListener("scroll", ask); window.removeEventListener("resize", ask); window.removeEventListener("ss-motion", ask);
       box.removeEventListener("pointerdown", stop); box.removeEventListener("pointerup", start); box.removeEventListener("pointercancel", start);
       box.removeEventListener("mouseenter", stop); box.removeEventListener("mouseleave", start); box.removeEventListener("focusin", stop); box.removeEventListener("focusout", start);
@@ -100,21 +111,10 @@ export function Carousel({ head, children, label }: { head: ReactNode; children:
     };
   }, [n]);
 
-  const go = (d: number) => (wrap.current as (HTMLDivElement & { go?: (d: number) => void }) | null)?.go?.(d);
-  const skip = () => {
-    const next = wrap.current?.closest("section")?.nextElementSibling as HTMLElement | null;
-    if (next) window.scrollTo({ top: next.getBoundingClientRect().top + window.scrollY - 70, behavior: isOn() ? "smooth" : "auto" });
-  };
   return (
     <div ref={wrap} className="cn cn-car">
       {head}
       <ul ref={track} className="cn-car-track" aria-label={label} tabIndex={0}>{children}</ul>
-      <div className="cn-car-ctl">
-        <button type="button" className="cn-round" aria-label="Previous" onClick={() => go(-1)}><svg viewBox="0 0 24 24" aria-hidden><path d="M15 5l-7 7 7 7" /></svg></button>
-        <span className="cn-car-bar" aria-hidden><span ref={bar} /></span>
-        <button type="button" className="cn-round" aria-label="Next" onClick={() => go(1)}><svg viewBox="0 0 24 24" aria-hidden><path d="M9 5l7 7-7 7" /></svg></button>
-        <button type="button" className="cn-skip" onClick={skip}>Skip <svg viewBox="0 0 24 24" aria-hidden><path d="M6 9l6 6 6-6" /></svg></button>
-      </div>
     </div>
   );
 }

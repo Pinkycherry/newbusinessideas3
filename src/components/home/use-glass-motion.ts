@@ -15,7 +15,7 @@ function paletteGuard(scope: Element) {
   const hsl = (c: { r: number; g: number; b: number }) => { const r = c.r / 255, g = c.g / 255, b = c.b / 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b); let h = 0, s = 0; const l = (mx + mn) / 2; if (mx !== mn) { const d = mx - mn; s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn); h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h *= 60; } return { h, s, l }; };
   const offHue = (h: number, s: number) => s > 0.28 && h > 18 && h < 340;
   [scope as HTMLElement, ...Array.from(scope.querySelectorAll<HTMLElement>("*"))].forEach((el) => {
-    if (el.closest("svg,canvas,img,video,picture,.eh-stage,.cn,[data-keep-colour]") && el.tagName !== "svg") return;
+    if (el.closest("svg,canvas,img,video,picture,.eh-stage,.cn,.fm,[data-keep-colour]") && el.tagName !== "svg") return;
     if (guarded.has(el)) return;
     guarded.add(el);
     const cs = getComputedStyle(el);
