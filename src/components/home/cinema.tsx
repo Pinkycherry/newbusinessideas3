@@ -153,14 +153,17 @@ export function Tunnel({ head, children, tone = "", step = 62, skip }: { head?: 
   useStickyProgress(wrapRef, (p) => {
     items.current.forEach((el, i) => {
       if (!el) return;
-      // Each item owns one equal slice of the scroll: it rises from the distance, holds still in the
-      // middle of the frame, then passes the reader. Only one item is ever on screen, so nothing overlaps.
+      // 3D spatial scroll zoom: each person starts small, blurred and far off, grows and sharpens as
+      // they travel toward the reader, holds centred, then keeps closing in and fading as they pass.
+      // Each item owns one equal slice of the scroll, so only one is ever on screen.
       const t = p * n - i;
-      const inn = clamp(t / 0.28), out = clamp((t - 0.78) / 0.22);
-      const vis = t > -0.02 && t < 1.02;
-      const sc = 0.55 + 0.45 * (1 - Math.pow(1 - inn, 3)) + 0.7 * out * out;
+      const inn = clamp(t / 0.3), out = clamp((t - 0.72) / 0.28);
+      const vis = t >= 0 && t < 1;
+      const depth = 1 - inn;
+      const sc = 0.2 + 0.8 * (1 - Math.pow(depth, 3)) + 0.55 * out * out;
       el.style.transform = `translate(-50%,-50%) scale(${sc.toFixed(3)})`;
       el.style.opacity = vis ? (inn * (1 - out)).toFixed(3) : "0";
+      el.style.filter = `blur(${(depth * 9).toFixed(1)}px)`;
       el.style.visibility = vis ? "visible" : "hidden";
       el.style.zIndex = vis ? "50" : "1";
       el.style.pointerEvents = vis && out < 0.5 && inn > 0.6 ? "auto" : "none";
@@ -182,6 +185,63 @@ export function Tunnel({ head, children, tone = "", step = 62, skip }: { head?: 
           {[0, 1, 2, 3, 4].map((k) => <span key={k} aria-hidden ref={(el) => { rings.current[k] = el; }} className="cn-ring" />)}
           <span aria-hidden className="cn-beam" />
           {list.map((c, i) => <div key={i} ref={(el) => { items.current[i] = el; }} className="cn-fly">{c}</div>)}
+        </div>
+        {skip ? <button type="button" className="cn-tunnel-skip" onClick={jump}>{skip} <svg viewBox="0 0 24 24" aria-hidden><path d="M12 5v14M5 12l7 7 7-7" /></svg></button> : null}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ Stack */
+
+/**
+ * Layered card stack (pattern: veebilehed24.ee "Layered Card Stack Animation (Sticky)"). All cards sit
+ * pinned in one fanned pile, each one's own card on top of the one behind it; scrolling peels the top
+ * card up and away, revealing the next one already waiting beneath. Deliberately layered by design, so
+ * nothing is ever two full-size cards fighting for the same spot by accident.
+ */
+export function Stack({ head, children, skip, step = 18 }: { head?: ReactNode; children: ReactNode; skip?: string; step?: number }) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const items = useRef<(HTMLDivElement | null)[]>([]);
+  const list = Children.toArray(children);
+  const n = list.length;
+  const jump = () => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const y = el.getBoundingClientRect().bottom + window.scrollY - window.innerHeight * 0.6;
+    window.scrollTo({ top: Math.max(0, y), behavior: isOn() ? "smooth" : "auto" });
+  };
+
+  useStickyProgress(wrapRef, (p) => {
+    items.current.forEach((el, i) => {
+      if (!el) return;
+      const start = (i / n) * 0.82;
+      const dur = (1 / n) * 1.25;
+      const started = p >= start;
+      const t = clamp((p - start) / dur);
+      // Cards waiting their turn sit well back of the active one: pushed down, shrunk and blurred, so
+      // the one reader is reading is never fighting a second card's text for the same patch of screen.
+      const depth = Math.min(i, 3);
+      const restY = depth * 34;
+      const restRot = (i % 2 === 0 ? -1 : 1) * (3 + depth * 2.2);
+      const moveY = -t * 340;
+      const rot = restRot * (1 - t) + t * 10;
+      const sc = (1 - depth * 0.07) * (1 - t * 0.18) + t * depth * 0.07;
+      el.style.transform = `translate(-50%,-50%) translateY(${(restY + moveY).toFixed(1)}px) rotate(${rot.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
+      el.style.opacity = started ? (1 - t).toFixed(3) : Math.max(0.16, 0.55 - depth * 0.14).toFixed(3);
+      el.style.filter = started ? "none" : `blur(${(depth * 2.1).toFixed(1)}px)`;
+      el.style.zIndex = String(n - i + 10);
+      el.style.pointerEvents = started && t < 0.4 ? "auto" : "none";
+      el.classList.toggle("is-now", started && t < 0.5);
+    });
+  });
+
+  return (
+    <div ref={wrapRef} className="cn cn-stack" style={{ ["--n" as string]: String(n), ["--step" as string]: `${step}svh` }}>
+      <div className="cn-stack-stage">
+        {head ? <div className="cn-tunnel-head">{head}</div> : null}
+        <div className="cn-stack-space">
+          {list.map((c, i) => <div key={i} ref={(el) => { items.current[i] = el; }} className="cn-card">{c}</div>)}
         </div>
         {skip ? <button type="button" className="cn-tunnel-skip" onClick={jump}>{skip} <svg viewBox="0 0 24 24" aria-hidden><path d="M12 5v14M5 12l7 7 7-7" /></svg></button> : null}
       </div>

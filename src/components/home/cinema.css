@@ -73,6 +73,14 @@ html.ss-on .cn-fly{position:absolute;left:50%;top:50%;width:min(84vw,520px);opac
 .is-now .cn-post span,html:not(.ss-on) .cn-post span{opacity:1}
 html:not(.ss-on) .cn-tunnel-space{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
 
+/* ---------- Stack (layered card stack, sticky) */
+html.ss-on .cn-stack{height:calc(100svh + var(--n,4) * var(--step,18svh))}
+html.ss-on .cn-stack-stage{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;padding:70px 0 0;overflow:hidden;background:radial-gradient(ellipse at 50% 58%,rgba(224,27,31,.17),transparent 58%)}
+html.ss-on .cn-stack-space{position:relative;flex:1;min-height:0}
+html.ss-on .cn-card{position:absolute;left:50%;top:50%;width:min(84vw,520px);will-change:transform,opacity;transform-origin:50% 50%}
+html:not(.ss-on) .cn-stack-space{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+html:not(.ss-on) .cn-card{position:relative}
+
 /* ---------- Story rail */
 .cn-rail-map{position:relative;height:150px;margin:8px 10px 0}
 .cn-rail-map svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
