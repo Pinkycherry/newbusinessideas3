@@ -116,8 +116,8 @@ html.ss-on [data-reveal] .eh-h2{transition-delay:.08s}
   border:1px solid rgba(255,255,255,.12);box-shadow:0 40px 70px -40px rgba(224,27,31,.7),0 24px 50px -28px #000,inset 0 1px 0 rgba(255,255,255,.14);
   transition:border-color .3s,box-shadow .3s}
 .ss-cat::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.14) 50%,transparent 65%);transform:translateX(-120%);transition:transform .9s cubic-bezier(.2,.7,.2,1)}
-.is-mid>.ss-cat::before,.ss-cat:hover::before{transform:translateX(120%)}
-.is-mid>.ss-cat,.ss-cat:hover{border-color:rgba(224,27,31,.85);box-shadow:0 50px 90px -40px rgba(224,27,31,.95),0 30px 60px -28px #000,inset 0 1px 0 rgba(255,255,255,.2)}
+.is-mid>.ss-cat::before,.is-now>.ss-cat::before,.ss-cat:hover::before{transform:translateX(120%)}
+.is-mid>.ss-cat,.is-now>.ss-cat,.ss-cat:hover{border-color:rgba(224,27,31,.85);box-shadow:0 50px 90px -40px rgba(224,27,31,.95),0 30px 60px -28px #000,inset 0 1px 0 rgba(255,255,255,.2)}
 .ss-cat-no{position:absolute;right:14px;top:2px;font-family:Anton,Impact,sans-serif;font-size:7.2rem;line-height:1;color:transparent!important;-webkit-text-fill-color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.2)}
 .is-mid .ss-cat-no{-webkit-text-stroke-color:rgba(224,27,31,.9)}
 .ss-cat-count{align-self:flex-start;margin-bottom:auto;padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:12px;font-weight:700;color:#fff!important;background:rgba(0,0,0,.35)}

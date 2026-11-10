@@ -12,7 +12,7 @@ import { getHomeLive, type HomeIdea } from "@/lib/home-live.functions";
 import { TEAM, contactEmail, ORGANISATION_NAME } from "@/lib/site-config";
 import { CountUp, HeroStreams } from "@/components/home/scroll-story";
 import { Film, type FilmPerson } from "@/components/home/film";
-import { Carousel, OrbitRing, ProcessBento, Quad, SearchDemand, StoryRail, Tunnel, useTypedPlaceholder, type VizKind } from "@/components/home/cinema";
+import { OrbitRing, ProcessBento, Quad, SearchDemand, StoryRail, Tunnel, useTypedPlaceholder, type VizKind } from "@/components/home/cinema";
 
 /**
  * Home page for bbusiness.online (6 Nov 2026). Free for every reader in India: no prices, no
@@ -167,14 +167,14 @@ const DEMAND = [
 
 const H = "/images/hero/";
 const D = (label: string) => DEMAND.find((d) => d.label === label)?.n ?? 0;
-/** Six fictional people, one per search. Sizes are the cut-out files' own. */
+/** Six fictional people, one at a time, one search each, in their own safe step so nothing overlaps. */
 const SEEKERS: FilmPerson[] = [
-  { src: H + "p-student.webp", w: 324, h: 912, at: [1, 2], group: 1, label: "side hustles", n: D("side hustles") },
-  { src: H + "p-jobholder.webp", w: 349, h: 917, at: [1, 2], group: 1, label: "new business ideas", n: D("new business ideas") },
-  { src: H + "p-wfh.webp", w: 285, h: 893, at: [1, 2], group: 1, label: "work from home ideas", n: D("work from home ideas") },
-  { src: H + "p-cook.webp", w: 316, h: 906, at: [2], group: 2, label: "small business ideas", n: D("small business ideas") },
-  { src: H + "p-village.webp", w: 425, h: 914, at: [2], group: 2, label: "low investment business ideas", n: D("low investment business ideas") },
-  { src: H + "p-tailor.webp", w: 413, h: 904, at: [2], group: 2, label: "zero investment business ideas", n: D("zero investment business ideas") },
+  { src: H + "p-student.webp", w: 324, h: 912, at: [1], label: "side hustles", n: D("side hustles") },
+  { src: H + "p-jobholder.webp", w: 349, h: 917, at: [2], label: "new business ideas", n: D("new business ideas") },
+  { src: H + "p-wfh.webp", w: 285, h: 893, at: [3], label: "work from home ideas", n: D("work from home ideas") },
+  { src: H + "p-cook.webp", w: 316, h: 906, at: [4], label: "small business ideas", n: D("small business ideas") },
+  { src: H + "p-village.webp", w: 425, h: 914, at: [5], label: "low investment business ideas", n: D("low investment business ideas") },
+  { src: H + "p-tailor.webp", w: 413, h: 904, at: [6], label: "zero investment business ideas", n: D("zero investment business ideas") },
 ];
 const WALKERS: FilmPerson[] = [
   { src: H + "p-student-after.webp", w: 333, h: 914, at: [3], group: 1 },
@@ -277,33 +277,44 @@ function HomePage() {
   return (
     <V2Frame active="/" ember orbit={ORBIT}>
       {/* Hero film: one camera move into a small Indian town; six people, six searches */}
-      <Film id="top" alt="A peaceful small town street in India at sunset, seen from closer and closer" frames={[H + "town-1.webp", H + "town-2.webp", H + "town-3.webp", H + "town-4.webp"]} people={SEEKERS}
+      <Film id="top" solo alt="A peaceful small town street in India at sunset, seen from closer and closer" frames={[H + "town-1.webp", H + "town-1.webp", H + "town-2.webp", H + "town-2.webp", H + "town-3.webp", H + "town-3.webp", H + "town-4.webp", H + "town-4.webp"]} people={SEEKERS}
         note="Monthly searches across India, from our own keyword research, November 2026."
-        slides={[
-          <>
-            <span className="fm-kick">Free for every reader in India</span>
-            <h1 className="fm-h">Tired of paying just to check if <em>your idea will work?</em></h1>
-            <p className="fm-p">We built a free home for real business ideas: side hustles, zero investment ideas, work from home ideas and low investment ideas. Every idea is researched, not guessed.</p>
-            <span className="fm-cue">Scroll</span>
-          </>,
-          <>
-            <span className="fm-kick">Every month, across India</span>
-            <p className="fm-h is-sm">Lakhs of people search for <em>a way to start.</em></p>
-          </>,
-          <>
-            <span className="fm-kick">Different lives</span>
-            <p className="fm-h is-sm">The <em>same</em> search.</p>
-          </>,
-          <>
-            <span className="fm-kick">You are not alone</span>
-            <p className="fm-h is-sm">Read one honest blueprint. <em>Before you spend a rupee.</em></p>
-            <form action="/search" method="get" className="fm-form">
-              <input name="q" type="search" placeholder="Try tiffin, tuition, tailoring…" aria-label="Search business ideas" />
-              <button type="submit">Search</button>
-            </form>
-            <div className="fm-row"><Link to="/browse" className={btnHero}>Explore the library <ArrowRight size={16} /></Link></div>
-          </>,
-        ]} />
+        slides={(() => {
+          const intro = (
+            <>
+              <span className="fm-kick">Free for every reader in India</span>
+              <h1 className="fm-h">Tired of paying just to check if <em>your idea will work?</em></h1>
+              <p className="fm-p">We built a free home for real business ideas: side hustles, zero investment ideas, work from home ideas and low investment ideas. Every idea is researched, not guessed.</p>
+              <span className="fm-cue">Scroll</span>
+            </>
+          );
+          const searching = (
+            <>
+              <span className="fm-kick">Every month, across India</span>
+              <p className="fm-h is-sm">Lakhs of people search for <em>a way to start.</em></p>
+            </>
+          );
+          const same = (
+            <>
+              <span className="fm-kick">Different lives</span>
+              <p className="fm-h is-sm">The <em>same</em> search.</p>
+            </>
+          );
+          const cta = (
+            <>
+              <span className="fm-kick">You are not alone</span>
+              <p className="fm-h is-sm">Read one honest blueprint. <em>Before you spend a rupee.</em></p>
+              <form action="/search" method="get" className="fm-form">
+                <input name="q" type="search" placeholder="Try tiffin, tuition, tailoring…" aria-label="Search business ideas" />
+                <button type="submit">Search</button>
+              </form>
+              <div className="fm-row"><Link to="/browse" className={btnHero}>Explore the library <ArrowRight size={16} /></Link></div>
+            </>
+          );
+          // Step 0: intro. Steps 1-3: one seeker each, "Lakhs of people search" holds. Steps 4-6: one
+          // seeker each, "The same search" holds. Step 7: the closing search box. Never two people at once.
+          return [intro, searching, searching, searching, same, same, same, cta];
+        })()} />
 
       <div className="relative overflow-hidden bg-[linear-gradient(180deg,#f1efff_0%,#f7f6ff_45%,#ffffff_100%)]">
         <div aria-hidden className="pointer-events-none absolute -top-24 right-[-10%] h-[520px] w-[520px] rounded-full bg-[#cfc9ff]/50 blur-3xl" />
@@ -650,7 +661,7 @@ function HomePage() {
       {/* Category glimpse: eight image cards, the rest on /browse */}
       {topCats.length > 0 && (
         <section className={sec} data-reveal data-ember="glimpse">
-          <Carousel label="Main categories" head={
+          <Tunnel step={18} skip="Skip to ideas" head={
           <div className={wrap}>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
@@ -664,24 +675,24 @@ function HomePage() {
               {topCats.map((c, n) => {
                 const name = c.name.replace(/ Business Ideas$/, "");
                 return (
-                  <li key={c.slug} className="ss-cat-li">
+                  <div key={c.slug} className="ss-cat-li">
                     <Link to="/category/$categorySlug" params={{ categorySlug: c.slug }} className="ss-cat">
                       <span aria-hidden className="ss-cat-no">{String(n + 1).padStart(2, "0")}</span>
                       <span className="ss-cat-name">{name.split(" ").map((w, wi) => <span key={wi} className="ss-cat-w" style={{ "--w": wi } as CSSProperties}><i>{w}</i></span>)}</span>
                       <span className="ss-cat-subs">{c.subs.slice(0, 2).map((x) => x.name.replace(/ Business Ideas$/, "")).join(" · ")}</span>
                       <span aria-hidden className="ss-cat-go"><ArrowRight size={18} /></span>
                     </Link>
-                  </li>
+                  </div>
                 );
               })}
-          </Carousel>
+          </Tunnel>
         </section>
       )}
 
       {/* Good first reads: ideas from the home and street categories, ending with the way into the lists */}
       {reads.length > 4 && (
         <section data-reveal data-ember="reads" className={sec}>
-          <Carousel label="Ideas you can start from home or your own street" head={
+          <Tunnel step={16} skip="Skip to how it works" head={
           <div className={wrap}>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
@@ -693,22 +704,18 @@ function HomePage() {
           </div>
           }>
               {reads.map((i) => (
-                <li key={i.slug}>
-                  <a href={`/idea/${i.slug}`} className="cn-idea">
-                    <span className="cn-idea-cat">{i.category_name?.replace(/ Business Ideas$/, "")}</span>
-                    <span className="cn-idea-t">{i.title}</span>
-                    {i.summary && <span className="cn-idea-s">{i.summary}</span>}
-                    <span className="cn-idea-go">Read the blueprint <ArrowRight size={16} /></span>
-                  </a>
-                </li>
+                <a key={i.slug} href={`/idea/${i.slug}`} className="cn-idea">
+                  <span className="cn-idea-cat">{i.category_name?.replace(/ Business Ideas$/, "")}</span>
+                  <span className="cn-idea-t">{i.title}</span>
+                  {i.summary && <span className="cn-idea-s">{i.summary}</span>}
+                  <span className="cn-idea-go">Read the blueprint <ArrowRight size={16} /></span>
+                </a>
               ))}
-              <li>
-                <div className="cn-idea cn-end">
-                  <b>More ideas, sorted into lists</b>
-                  <Link to="/lists" className={btnHero}>Open the idea lists <ArrowRight size={16} /></Link>
-                </div>
-              </li>
-          </Carousel>
+              <div className="cn-idea cn-end">
+                <b>More ideas, sorted into lists</b>
+                <Link to="/lists" className={btnHero}>Open the idea lists <ArrowRight size={16} /></Link>
+              </div>
+          </Tunnel>
         </section>
       )}
 
@@ -771,7 +778,7 @@ function HomePage() {
       {/* Blog: heading and a 16:9 image only */}
       {posts.length > 0 && (
         <section data-reveal data-ember="blog" id="blog" className={sec}>
-          <Carousel label="Articles from the blog" head={
+          <Tunnel step={20} skip="Skip to FAQ" head={
           <div className={wrap}>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
@@ -783,15 +790,13 @@ function HomePage() {
           </div>
           }>
             {posts.map((p) => (
-              <li key={p.slug}>
-                <a href={`/blog/${p.slug}`} className="cn-postcard">
-                  {p.image && <img src={p.image} alt={p.imageAlt ?? ""} loading="lazy" width={640} height={360} />}
-                  <b>{p.title}</b>
-                  <span>Read the article <ArrowRight size={14} /></span>
-                </a>
-              </li>
+              <a key={p.slug} href={`/blog/${p.slug}`} className="cn-postcard">
+                {p.image && <img src={p.image} alt={p.imageAlt ?? ""} loading="lazy" width={640} height={360} />}
+                <b>{p.title}</b>
+                <span>Read the article <ArrowRight size={14} /></span>
+              </a>
             ))}
-          </Carousel>
+          </Tunnel>
         </section>
       )}
 

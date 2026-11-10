@@ -131,13 +131,24 @@ export function Carousel({ head, children, label }: { head: ReactNode; children:
 
 /* ------------------------------------------------------------------ Tunnel */
 
-/** Items fly towards the reader one by one through a light frame. Plain stacked list without motion. */
-export function Tunnel({ head, children, tone = "" }: { head?: ReactNode; children: ReactNode; tone?: string }) {
+/**
+ * Items fly towards the reader one by one through a light frame. Plain stacked list without motion.
+ * `step` sets how much page-scroll each item gets (svh); a long row (categories, ideas, blog) wants a
+ * short step so the whole thing does not take forever, and gets a Skip link so a reader can jump past
+ * it without scrolling through every item by hand.
+ */
+export function Tunnel({ head, children, tone = "", step = 62, skip }: { head?: ReactNode; children: ReactNode; tone?: string; step?: number; skip?: string }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const items = useRef<(HTMLDivElement | null)[]>([]);
   const rings = useRef<(HTMLSpanElement | null)[]>([]);
   const list = Children.toArray(children);
   const n = list.length;
+  const jump = () => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const y = el.getBoundingClientRect().bottom + window.scrollY - window.innerHeight * 0.6;
+    window.scrollTo({ top: Math.max(0, y), behavior: isOn() ? "smooth" : "auto" });
+  };
 
   useStickyProgress(wrapRef, (p) => {
     items.current.forEach((el, i) => {
@@ -164,7 +175,7 @@ export function Tunnel({ head, children, tone = "" }: { head?: ReactNode; childr
   });
 
   return (
-    <div ref={wrapRef} className={"cn cn-tunnel " + tone} style={{ ["--n" as string]: String(n) }}>
+    <div ref={wrapRef} className={"cn cn-tunnel " + tone} style={{ ["--n" as string]: String(n), ["--step" as string]: `${step}svh` }}>
       <div className="cn-tunnel-stage">
         {head ? <div className="cn-tunnel-head">{head}</div> : null}
         <div className="cn-tunnel-space">
@@ -172,6 +183,7 @@ export function Tunnel({ head, children, tone = "" }: { head?: ReactNode; childr
           <span aria-hidden className="cn-beam" />
           {list.map((c, i) => <div key={i} ref={(el) => { items.current[i] = el; }} className="cn-fly">{c}</div>)}
         </div>
+        {skip ? <button type="button" className="cn-tunnel-skip" onClick={jump}>{skip} <svg viewBox="0 0 24 24" aria-hidden><path d="M12 5v14M5 12l7 7 7-7" /></svg></button> : null}
       </div>
     </div>
   );

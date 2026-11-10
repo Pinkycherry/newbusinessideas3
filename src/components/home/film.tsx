@@ -10,7 +10,7 @@ import { clamp, isOn, useStickyProgress } from "./scroll-story";
  */
 export type FilmPerson = { src: string; w: number; h: number; at: number[]; group?: number; label?: string; n?: number };
 
-export function Film({ id, frames, slides, people = [], note, alt }: { id: string; frames: string[]; slides: ReactNode[]; people?: FilmPerson[]; note?: string; alt: string }) {
+export function Film({ id, frames, slides, people = [], note, alt, solo }: { id: string; frames: string[]; slides: ReactNode[]; people?: FilmPerson[]; note?: string; alt: string; solo?: boolean }) {
   const wrap = useRef<HTMLDivElement>(null);
   const imgs = useRef<(HTMLImageElement | null)[]>([]);
   const bar = useRef<HTMLSpanElement>(null);
@@ -34,7 +34,7 @@ export function Film({ id, frames, slides, people = [], note, alt }: { id: strin
         </div>
         <span aria-hidden className="fm-shade" />
         {people.length ? (
-          <ul className="fm-people" aria-label={note}>
+          <ul className={"fm-people" + (solo ? " fm-solo" : "")} aria-label={note}>
             {people.map((p, i) => (
               <li key={p.src} className={(p.at.includes(step) ? "is-on" : "") + (p.group ? " g" + p.group : "")} style={{ ["--i" as string]: String(i), ["--k" as string]: String(i % 3) }}>
                 {p.label ? <Bubble label={p.label} n={p.n ?? 0} on={p.at.includes(step)} /> : null}
