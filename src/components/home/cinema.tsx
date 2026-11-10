@@ -215,22 +215,19 @@ export function Stack({ head, children, skip, step = 18 }: { head?: ReactNode; c
   useStickyProgress(wrapRef, (p) => {
     items.current.forEach((el, i) => {
       if (!el) return;
-      const start = (i / n) * 0.82;
-      const dur = (1 / n) * 1.25;
-      const started = p >= start;
-      const t = clamp((p - start) / dur);
-      // Cards waiting their turn sit well back of the active one: pushed down, shrunk and blurred, so
-      // the one reader is reading is never fighting a second card's text for the same patch of screen.
-      const depth = Math.min(i, 3);
-      const restY = depth * 34;
-      const restRot = (i % 2 === 0 ? -1 : 1) * (3 + depth * 2.2);
-      const moveY = -t * 340;
-      const rot = restRot * (1 - t) + t * 10;
-      const sc = (1 - depth * 0.07) * (1 - t * 0.18) + t * depth * 0.07;
-      el.style.transform = `translate(-50%,-50%) translateY(${(restY + moveY).toFixed(1)}px) rotate(${rot.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
-      el.style.opacity = started ? (1 - t).toFixed(3) : Math.max(0.16, 0.55 - depth * 0.14).toFixed(3);
-      el.style.filter = started ? "none" : `blur(${(depth * 2.1).toFixed(1)}px)`;
-      el.style.zIndex = String(n - i + 10);
+      // One card on screen at a time, no tilt, no second card bleeding through behind it: only the
+      // active card is ever visible or interactive; everything else is fully hidden until its turn.
+      const t2 = p * n - i;
+      const inn = clamp(t2 / 0.3), out = clamp((t2 - 0.72) / 0.28);
+      const vis = t2 >= 0 && t2 < 1;
+      const moveY = -out * 160;
+      const sc = 0.82 + 0.18 * (1 - Math.pow(1 - inn, 3)) - 0.1 * out;
+      el.style.transform = `translate(-50%,-50%) translateY(${moveY.toFixed(1)}px) scale(${sc.toFixed(3)})`;
+      el.style.opacity = vis ? (inn * (1 - out)).toFixed(3) : "0";
+      el.style.filter = "none";
+      el.style.visibility = vis ? "visible" : "hidden";
+      el.style.zIndex = vis ? "50" : "1";
+      const started = vis, t = out;
       el.style.pointerEvents = started && t < 0.4 ? "auto" : "none";
       el.classList.toggle("is-now", started && t < 0.5);
     });
