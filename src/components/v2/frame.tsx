@@ -109,8 +109,8 @@ export function Header({ active: _active }: { active?: string | undefined }) {
       if (!pinned.current && !ref.current?.querySelector(".mm-panel:focus-within, .mm-disclosure:focus-within")) setOpen(null);
     }, 180);
   };
-  // Cinema header (founder, 10 Nov 2026): slides away while the reader scrolls down, returns on the first
-  // scroll up, and draws a thin red line showing how far down the page they are.
+  // Cinema header (founder, 10 Nov 2026): shown at the top of the page; it slides away once the reader
+  // scrolls and the round menu button takes over. The thin red line is the reading progress.
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -119,8 +119,9 @@ export function Header({ active: _active }: { active?: string | undefined }) {
       raf = 0;
       const y = window.scrollY, max = document.documentElement.scrollHeight - window.innerHeight;
       el.style.setProperty("--read", String(max > 0 ? Math.min(1, y / max) : 0));
-      if (y < 240 || y < last - 4) el.classList.remove("is-away");
-      else if (y > last + 4 && !el.querySelector('[aria-expanded="true"]')) el.classList.add("is-away");
+      // Reference behaviour: the header belongs to the top of the page; after that the round button is the menu.
+      if (y < 240) el.classList.remove("is-away");
+      else if (y > last && !el.querySelector('[aria-expanded="true"]')) el.classList.add("is-away");
       last = y;
     };
     const ask = () => { if (!raf) raf = requestAnimationFrame(run); };
@@ -309,15 +310,19 @@ function FounderShortlistTray({ shortlist }: { shortlist: ReturnType<typeof useF
   </aside>;
 }
 
-// Round menu on every page (founder, 10 Nov 2026). Pages may pass their own section links.
+// Round menu on every page (founder, 10 Nov 2026): the same main menu as the header, as on the reference
+// site. The `orbit` prop is kept for callers but the menu is the same everywhere.
 const ORBIT_DEFAULT: OrbitLink[] = [
-  { label: "Browse ideas", href: "/browse" },
-  { label: "Validate an idea", href: "/product" },
-  { label: "Startup cost calculators", href: "/calculator" },
-  { label: "Site map", href: "/sitemap" },
+  { label: "Ideas", href: "/browse" },
+  { label: "Lists", href: "/lists" },
+  { label: "Validate", href: "/product" },
+  { label: "Tools", href: "/tools" },
+  { label: "Learn", href: "/startup-guides" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Search", href: "/search" },
 ];
 
-export function V2Frame({ active, children, showShortlistTray = true, ember = true, orbit }: { active?: string | undefined; children: ReactNode; showShortlistTray?: boolean; ember?: boolean; orbit?: OrbitLink[] }) {
+export function V2Frame({ active, children, showShortlistTray = true, ember = true }: { active?: string | undefined; children: ReactNode; showShortlistTray?: boolean; ember?: boolean; orbit?: OrbitLink[] }) {
   useGlassMotion();
   const { shortlist } = useFounderWorkspace();
   const trayVisible = showShortlistTray && shortlist.length > 0;
@@ -327,7 +332,7 @@ export function V2Frame({ active, children, showShortlistTray = true, ember = tr
       <main className={"flex-grow " + (trayVisible ? "pb-56 sm:pb-40" : "")}>{children}</main>
       <Footer />
       {trayVisible && <FounderShortlistTray shortlist={shortlist} />}
-      <OrbitMenu links={orbit ?? ORBIT_DEFAULT} raised={trayVisible} />
+      <OrbitMenu links={ORBIT_DEFAULT} raised={trayVisible} />
     </div>
   );
 }
