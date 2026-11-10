@@ -456,31 +456,63 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
 
   const [host, setHost] = useState<HTMLElement | null>(null);
   useEffect(() => setHost(document.body), []);
+  const [wide, setWide] = useState(true);
+  useEffect(() => {
+    const m = window.matchMedia("(min-width: 1024px)");
+    const on = () => setWide(m.matches);
+    on();
+    m.addEventListener("change", on);
+    return () => m.removeEventListener("change", on);
+  }, []);
+  const closeTimer = useRef<number | null>(null);
+  const hoverOpen = () => { if (closeTimer.current) window.clearTimeout(closeTimer.current); if (wide) setOpen(true); };
+  const hoverClose = () => { if (wide) closeTimer.current = window.setTimeout(() => setOpen(false), 260); };
   if (!host) return null;
+
+  // The fan: every link sits on a curve beside the button, joined to it by a dotted line (as on the
+  // reference). Desktop: a column centred on the button. Phones: the column climbs up from the button.
+  type Item = { key: string; node: ReactNode; small?: boolean };
+  const items: Item[] = [
+    ...links.map((l) => ({ key: l.href, node: l.href.startsWith("#") ? <a href={l.href} onClick={() => setOpen(false)}>{l.label}</a> : <Link to={l.href} onClick={() => setOpen(false)}>{l.label}</Link> })),
+    { key: "top", small: true, node: <button type="button" onClick={toTop}>Back to top</button> },
+    { key: "motion", small: true, node: <button type="button" onClick={toggleMotion} aria-pressed={paused}>{paused ? "Play motion" : "Pause motion"}</button> },
+  ];
+  const n = items.length, gap = wide ? 50 : 46;
+  const place = (i: number) => {
+    if (wide) {
+      const u = n > 1 ? (i / (n - 1)) * 2 - 1 : 0; // -1 top, 1 bottom
+      return { x: -(58 + 64 * Math.cos((u * Math.PI) / 2)), y: (i - (n - 1) / 2) * gap };
+    }
+    const k = n - 1 - i; // first link highest, last one nearest the button
+    const u = n > 1 ? k / (n - 1) : 0;
+    return { x: -(6 + 44 * Math.sin(u * Math.PI)), y: -(62 + k * gap) };
+  };
+
   // On the body, so no page section or the footer can sit above it.
   return createPortal(
     <>
-    <span aria-hidden className="ss-vignette" />
-    <div className={"ss-orbit" + (open ? " is-open" : "") + (shown ? " is-shown" : "") + (raised ? " is-raised" : "")}>
-      <ul className="ss-orbit-links" hidden={!open}>
-        <li style={{ ["--i" as string]: "0" }}><button type="button" onClick={toTop}>Back to top</button></li>
-        {links.map((l, i) => (
-          <li key={l.href} style={{ ["--i" as string]: String(i) }}>
-            {l.href.startsWith("#") ? <a href={l.href} onClick={() => setOpen(false)}>{l.label}</a> : <Link to={l.href} onClick={() => setOpen(false)}>{l.label}</Link>}
-          </li>
-        ))}
-        <li style={{ ["--i" as string]: String(links.length) }}>
-          <button type="button" onClick={toggleMotion} aria-pressed={paused}>{paused ? "Play motion" : "Pause motion"}</button>
-        </li>
-      </ul>
-      <button type="button" className="ss-orbit-btn" aria-expanded={open} aria-label="Page sections" onClick={() => setOpen((o) => !o)}>
-        <svg viewBox="0 0 48 48" aria-hidden>
-          <circle cx="24" cy="24" r="21" className="ss-orbit-track" />
-          <circle ref={ring} cx="24" cy="24" r="21" pathLength={1} className="ss-orbit-fill" />
-        </svg>
-        <span className="ss-orbit-ic"><i /><i /><i /></span>
-      </button>
-    </div>
+      <span aria-hidden className="ss-vignette" />
+      <div className={"ss-orbit" + (open ? " is-open" : "") + (shown ? " is-shown" : "") + (raised ? " is-raised" : "")} onMouseEnter={hoverOpen} onMouseLeave={hoverClose}>
+        <ul className="ss-fan" aria-hidden={!open}>
+          {items.map((it, i) => {
+            const { x, y } = place(i);
+            const len = Math.hypot(x, y), ang = (Math.atan2(y, x) * 180) / Math.PI;
+            return (
+              <li key={it.key} className={it.small ? "is-small" : ""} style={{ ["--x" as string]: `${x.toFixed(1)}px`, ["--y" as string]: `${y.toFixed(1)}px`, ["--i" as string]: String(i) }}>
+                <span aria-hidden className="ss-fan-line" style={{ width: `${Math.max(0, len - 30).toFixed(1)}px`, transform: `rotate(${(ang + 180).toFixed(2)}deg)` }} />
+                {it.node}
+              </li>
+            );
+          })}
+        </ul>
+        <button type="button" className="ss-orbit-btn" aria-expanded={open} aria-label="Menu" onClick={() => setOpen((o) => (wide ? true : !o))}>
+          <svg viewBox="0 0 60 60" aria-hidden>
+            <circle cx="30" cy="30" r="27" className="ss-orbit-track" />
+            <circle ref={ring} cx="30" cy="30" r="27" pathLength={1} className="ss-orbit-fill" />
+          </svg>
+          <span className="ss-orbit-mark">b<b>b</b></span>
+        </button>
+      </div>
     </>,
     host,
   );

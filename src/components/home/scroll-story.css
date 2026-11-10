@@ -57,30 +57,32 @@ html.ss-on .ss-tunnel{display:block;height:calc(100svh + var(--n,6) * 38svh);bac
   box-shadow:0 30px 80px -30px #000;will-change:transform,opacity;opacity:0;cursor:pointer}
 .ss-q-n{display:block;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.14);font-size:12px!important;letter-spacing:.2em;color:#e01b1f!important}
 
-/* Orbit menu */
-.ss-orbit{position:fixed;right:12px;bottom:96px;z-index:95;opacity:0;transform:scale(.8);pointer-events:none;transition:opacity .3s,transform .3s}
+/* Orbit menu: the round brand button takes over from the header once the page scrolls; its links fan out
+   on a curve, each joined to the button by a dotted line. */
+.ss-orbit{position:fixed;right:14px;bottom:92px;z-index:95;width:60px;height:60px;opacity:0;transform:scale(.7);pointer-events:none;transition:opacity .35s,transform .35s cubic-bezier(.2,.7,.2,1)}
 .ss-orbit.is-shown,.ss-orbit.is-open{opacity:1;transform:none;pointer-events:auto}
-@media (min-width:1024px){.ss-orbit{right:20px;bottom:auto;top:50%;margin-top:-28px}}
-.ss-orbit-btn{position:relative;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:0;background:#141416;box-shadow:0 10px 30px -10px #000;cursor:pointer}
-.ss-orbit-btn svg{position:absolute;inset:2px;width:48px;height:48px;transform:rotate(-90deg)}
-.ss-orbit-track{fill:none;stroke:rgba(255,255,255,.22);stroke-width:2;stroke-dasharray:1.5 3.5}
-.ss-orbit-fill{fill:none;stroke:#e01b1f;stroke-width:2.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
-.ss-orbit-ic{display:grid;gap:4px}
-.ss-orbit-ic i{display:block;width:16px;height:2px;border-radius:2px;background:#fff;transition:transform .25s,opacity .25s}
-.ss-orbit.is-open .ss-orbit-ic i:nth-child(1){transform:translateY(6px) rotate(45deg)}
-.ss-orbit.is-open .ss-orbit-ic i:nth-child(2){opacity:0}
-.ss-orbit.is-open .ss-orbit-ic i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-.ss-orbit-links{position:absolute;right:0;bottom:62px;margin:0;padding:0;list-style:none;display:grid;gap:8px;justify-items:end;width:max-content}
-.ss-orbit-links[hidden]{display:none}
-.ss-orbit-links li{animation:ss-fan .35s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i,0) * 35ms)}
-@keyframes ss-fan{from{opacity:0;transform:translate(24px,16px) scale(.85)}}
-.ss-orbit-links a,.ss-orbit-links button{display:inline-flex;align-items:center;min-height:42px;padding:0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.16);
-  background:#141416;color:#fff;font-size:13px;font-weight:600;text-decoration:none;box-shadow:0 10px 24px -12px #000;cursor:pointer}
-.ss-orbit-links a:hover,.ss-orbit-links button:hover{background:#e01b1f;border-color:#e01b1f}
-@media (min-width:1024px){
-  .ss-orbit-links{right:62px;bottom:auto;top:50%;transform:translateY(-50%)}
-  .ss-orbit-links li{margin-right:calc((var(--k,0)) * 1px)}
-}
+@media (min-width:1024px){.ss-orbit{right:26px;bottom:auto;top:50%;margin-top:-30px}}
+.ss-orbit-btn{position:relative;display:grid;place-items:center;width:60px;height:60px;padding:0;border-radius:50%;border:0!important;background:radial-gradient(circle at 30% 25%,#2a2a2e,#0c0c0e 70%)!important;box-shadow:0 14px 34px -10px #000,0 0 0 1px rgba(255,255,255,.08)!important;cursor:pointer}
+.ss-orbit-btn svg{position:absolute;inset:0;width:60px;height:60px;transform:rotate(-90deg);overflow:visible}
+.ss-orbit-track{fill:none;stroke:rgba(255,255,255,.75);stroke-width:2.2;stroke-dasharray:.6 2.2;animation:ss-spin 24s linear infinite;transform-origin:30px 30px}
+.ss-orbit.is-open .ss-orbit-track{animation-duration:6s}
+@keyframes ss-spin{to{transform:rotate(360deg)}}
+html:not(.ss-on) .ss-orbit-track{animation:none}
+.ss-orbit-fill{fill:none;stroke:#e01b1f;stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.ss-orbit-mark{position:relative;font:800 19px/1 Inter,system-ui,sans-serif;letter-spacing:-.06em;color:#fff!important}
+.ss-orbit-mark b{color:#e01b1f!important;font-weight:800}
+.ss-fan{position:absolute;left:30px;top:30px;width:0;height:0;margin:0;padding:0;list-style:none}
+.ss-fan li{position:absolute;left:0;top:0;transform:translate(var(--x),var(--y)) translate(-100%,-50%);opacity:0;pointer-events:none;white-space:nowrap;
+  transition:opacity .25s ease,transform .45s cubic-bezier(.2,.8,.2,1);transition-delay:0s}
+.ss-orbit:not(.is-open) .ss-fan li{transform:translate(0,0) translate(-50%,-50%) scale(.4)}
+.ss-orbit.is-open .ss-fan li{opacity:1;pointer-events:auto;transition-delay:calc(var(--i,0) * 32ms)}
+.ss-fan-line{position:absolute;right:0;top:50%;height:0;border-top:2px dotted rgba(255,255,255,.55);transform-origin:100% 50%;pointer-events:none;translate:0 -1px}
+.ss-fan li>.ss-fan-line{left:100%;right:auto;transform-origin:0 50%}
+.ss-fan a,.ss-fan button{display:inline-flex;align-items:center;min-height:42px;padding:0 18px;border-radius:999px;border:1px solid rgba(255,255,255,.18)!important;
+  background:#0f0f11!important;color:#fff!important;font:600 14px/1 Inter,system-ui,sans-serif;text-decoration:none;box-shadow:0 12px 26px -12px #000!important;cursor:pointer}
+.ss-fan a:hover,.ss-fan button:hover{background:#e01b1f!important;border-color:#e01b1f!important}
+.ss-fan .is-small a,.ss-fan .is-small button{min-height:34px;padding:0 13px;font-size:12px;color:rgba(255,255,255,.8)!important}
+@media (max-height:560px){.ss-fan .is-small{display:none}}
 @media print{.ss-orbit,.ss-tunnel,.ss-streams{display:none!important}}
 
 /* position:sticky needs the page itself to be the scroller: the body's overflow-x:hidden made the body a
