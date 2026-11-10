@@ -348,43 +348,82 @@ export function OrbitRing({ items, centre }: { items: { img: string; t: string; 
 
 export type Demand = { label: string; n: number; to: string };
 
-/** The founder's own keyword research: monthly searches in India. Numbers count up when the row scrolls in. */
+/**
+ * The founder's own keyword research (monthly searches, all India) as one infographic: six rings, each as
+ * long as its search is big, drawn when the panel scrolls in. The panel takes the searches in turn: the
+ * active ring lights up and the centre shows its words and number. Tapping a row or ring picks it.
+ */
 export function SearchDemand({ rows, note }: { rows: Demand[]; note: string }) {
-  const ref = useRef<HTMLOListElement>(null);
+  const box = useRef<HTMLDivElement>(null);
+  const num = useRef<HTMLSpanElement>(null);
+  const [at, setAt] = useState(0);
+  const [seen, setSeen] = useState(false);
+  const hold = useRef(false);
   const max = Math.max(...rows.map((r) => r.n));
+  const fmt = (v: number) => Math.round(v).toLocaleString("en-IN");
   useEffect(() => {
-    const root = ref.current;
-    if (!root) return;
-    const fmt = (v: number) => Math.round(v).toLocaleString("en-IN");
-    const io = new IntersectionObserver((es) => es.forEach((e) => {
-      if (!e.isIntersecting) return;
-      io.unobserve(e.target);
-      const li = e.target as HTMLElement, out = li.querySelector<HTMLElement>("[data-n]");
-      li.classList.add("is-in");
-      if (!out) return;
-      const end = Number(out.dataset["n"]);
-      if (!isOn()) { out.textContent = fmt(end); return; }
-      const t0 = performance.now();
-      const tick = (now: number) => { const t = clamp((now - t0) / 1600); out.textContent = fmt(end * (1 - Math.pow(1 - t, 3))); if (t < 1) requestAnimationFrame(tick); };
-      requestAnimationFrame(tick);
-    }), { threshold: 0.4 });
-    Array.from(root.children).forEach((c) => io.observe(c));
+    const el = box.current;
+    if (!el) return;
+    const io = new IntersectionObserver((e) => { if (e.some((x) => x.isIntersecting)) { setSeen(true); io.disconnect(); } }, { threshold: 0.3 });
+    io.observe(el);
     return () => io.disconnect();
   }, []);
+  useEffect(() => {
+    if (!seen) return;
+    const t = window.setInterval(() => { if (!hold.current && !document.hidden && isOn()) setAt((i) => (i + 1) % rows.length); }, 2800);
+    return () => window.clearInterval(t);
+  }, [seen, rows.length]);
+  const cur = rows[at] ?? rows[0];
+  useEffect(() => {
+    const el = num.current;
+    if (!el || !cur) return;
+    if (!seen || !isOn()) { el.textContent = fmt(cur.n); return; }
+    let raf = 0;
+    const t0 = performance.now(), from = cur.n * 0.55;
+    const tick = (now: number) => { const t = clamp((now - t0) / 900); el.textContent = fmt(from + (cur.n - from) * (1 - Math.pow(1 - t, 3))); if (t < 1) raf = requestAnimationFrame(tick); };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [at, seen]);
+  const pick = (i: number) => { hold.current = true; setAt(i); };
+  const R0 = 146, STEP = 17;
   return (
-    <div className="cn cn-demand">
-      <ol ref={ref}>
+    <div ref={box} className={"cn cn-demand" + (seen ? " is-in" : "")}>
+      <span className="cn-b-tag">Monthly searches · India</span>
+      <div className="cn-dm-dial">
+        <svg viewBox="0 0 320 320" role="img" aria-label="Six rings, one for each search; a longer ring means more monthly searches">
+          <g className="cn-dm-ticks" aria-hidden>{Array.from({ length: 60 }, (_, k) => <line key={k} x1="160" y1="3" x2="160" y2={k % 5 ? 7 : 11} transform={`rotate(${k * 6} 160 160)`} />)}</g>
+          <line className="cn-dm-sweep" x1="160" y1="160" x2="160" y2="10" aria-hidden />
+          {rows.map((r, i) => {
+            const rad = R0 - i * STEP;
+            return (
+              <g key={r.label} className={"cn-dm-ring" + (i === at ? " is-on" : "")} onClick={() => pick(i)} style={{ ["--i" as string]: String(i), ["--len" as string]: String(((r.n / max) * 0.94).toFixed(4)) }}>
+                <circle cx="160" cy="160" r={rad} className="cn-dm-track" />
+                <circle cx="160" cy="160" r={rad} pathLength={1} className="cn-dm-arc" transform="rotate(-90 160 160)" />
+              </g>
+            );
+          })}
+        </svg>
+        {cur ? (
+          <div className="cn-dm-core" aria-live="polite">
+            <span key={at} className="cn-dm-q">{cur.label}</span>
+            <b><span ref={num}>{fmt(cur.n)}</span></b>
+            <small>searches a month</small>
+          </div>
+        ) : null}
+      </div>
+      <ol className="cn-dm-list">
         {rows.map((r, i) => (
-          <li key={r.label} style={{ ["--w" as string]: `${Math.round((r.n / max) * 100)}%`, ["--i" as string]: String(i) }}>
-            <a href={r.to}>
-              <span className="cn-d-q"><i aria-hidden>“</i>{r.label}<i aria-hidden>”</i></span>
-              <b data-n={r.n}>{r.n.toLocaleString("en-IN")}</b>
+          <li key={r.label} className={i === at ? "is-on" : ""} style={{ ["--w" as string]: `${Math.round((r.n / max) * 100)}%`, ["--i" as string]: String(i) }}>
+            <button type="button" onClick={() => pick(i)} aria-current={i === at ? "true" : undefined}>
+              <span className="cn-dm-no" aria-hidden>{String(i + 1).padStart(2, "0")}</span>
+              <span className="cn-dm-l">{r.label}</span>
+              <span className="cn-dm-n">{fmt(r.n)}</span>
               <span className="cn-d-bar" aria-hidden><u /></span>
-              <span className="cn-d-go">See these ideas <svg viewBox="0 0 24 24" aria-hidden><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
-            </a>
+            </button>
           </li>
         ))}
       </ol>
+      {cur ? <a href={cur.to} className="g-btn cn-dm-go">See ideas for “{cur.label}” <svg viewBox="0 0 24 24" aria-hidden><path d="M5 12h14M13 6l6 6-6 6" /></svg></a> : null}
       <p className="cn-d-note">{note}</p>
     </div>
   );

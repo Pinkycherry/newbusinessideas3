@@ -44,7 +44,7 @@ Files: `src/components/home/cinema.tsx` + `cinema.css` (new section components),
 | Categories row | "50+ main categories", no counts, glides left by itself, free swipe, arrows, Skip, middle card lit | cinema.tsx `Carousel` |
 | Ideas row | 24 real ideas from six home and street categories, ends with a button to /lists | home-live `street`, index.tsx `reads` |
 | Blog row | Every post as a 16:9 card in the same gliding row | index.tsx `#blog`, css `.cn-postcard` |
-| What India is searching for | Six monthly all-India search counts, count up on scroll (replaced the India map) | cinema.tsx `SearchDemand`, index.tsx `DEMAND` |
+| What India is searching for | One infographic panel: six rings (longer ring = more searches) that draw in, a sweep line, the centre and a ranked list take the six searches in turn; tap picks one (replaced the India map) | cinema.tsx `SearchDemand`, index.tsx `DEMAND` |
 | We have been where you are | Drawn line with a travelling light, four chapters | `StoryRail` |
 | Eight ways | Icons circle the centre | `OrbitRing` |
 | Working process | Four panels with small moving pictures (shapes and words only, no numbers) | `ProcessBento`, `Viz` |
@@ -65,6 +65,7 @@ work from home ideas 3,49,721; side hustles 2,94,305; small business ideas 1,42,
 - Blog as a fly-through tunnel: thumbnails wrong size, ghost items behind, unstable. Replaced by 16:9 cards in the row.
 - Team tunnel with many ghost items overlapping. Now one item at a time.
 - Sticky scroll-pinned card reels (10 Nov, other session): confusing on phones. Replaced by the gliding rows.
+- The six search numbers as six big count-up cards. Founder: sloppy. Now one ring infographic.
 - Chubby doll characters for the hero: founder changed to ultra-realistic people.
 - Google Gemini video with watermark: not used. Never crop or remove a provider watermark.
 - Local preview cannot reach the database, so the hero preview card and the ideas row are empty locally. Check those on the live site.
@@ -95,6 +96,10 @@ of 1-5. Light always from the left, golden hour.
    inventory artifact).
 
 ## Log (newest first)
+
+- 11 Nov 2026 ~06:20 IST — Pinky 1 (claude-fable-5-2): founder rejected the six numbers as plain count-up cards
+  ("sloppy"). Rebuilt as one ring infographic (SearchDemand in cinema.tsx, .cn-demand / .cn-dm-* in cinema.css).
+  Lesson: numbers are never shown as plain cards; they go into an infographic with motion.
 
 - 11 Nov 2026 ~05:40 IST — Pinky 1 (claude-fable-5-2): BATCH 2 committed to main through the GitHub upload: header
   connection lines, fan button with page sections, gliding rows, blog 16:9 cards, search numbers section replacing the
