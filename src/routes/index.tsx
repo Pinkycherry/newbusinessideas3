@@ -11,6 +11,7 @@ import { TOPIC_PAGES } from "@/data/topic-pages";
 import { getHomeLive, type HomeIdea } from "@/lib/home-live.functions";
 import { TEAM, contactEmail, ORGANISATION_NAME } from "@/lib/site-config";
 import { IndiaInfographic } from "@/components/home/india-infographic";
+import { CardReel, CountUp, FaqTunnel, HeroStreams, IndiaJourney } from "@/components/home/scroll-story";
 
 /**
  * Home page for bbusiness.online (6 Nov 2026). Free for every reader in India: no prices, no
@@ -94,6 +95,14 @@ function shortDate(iso: string | null): string {
 
 const card = "rounded-2xl border border-slate-200 bg-white transition duration-200 hover:-translate-y-0.5 hover:border-[#4643ba]/50 hover:shadow-[0_8px_24px_-12px_rgba(70,67,186,0.35)] motion-reduce:transform-none";
 const sec = "py-10 sm:py-14";
+// Round section menu (scroll story): labels are the page's own section names.
+const ORBIT = [
+  { label: "India map", href: "#india-map" },
+  { label: "Why we started", href: "#why-we-started" },
+  { label: "Our working process", href: "#how-we-research" },
+  { label: "FAQ", href: "#faq" },
+  { label: "Explore the library", href: "/browse" },
+];
 const more = "inline-flex items-center gap-1 text-sm font-semibold text-[#4643ba] hover:underline";
 
 const ICON_ROW = [
@@ -218,6 +227,8 @@ function HomePage() {
   const categories = hub.categories;
   const strip = STRIP.map((n) => categories.find((c) => c.name.startsWith(n))).filter((c): c is (typeof categories)[number] => Boolean(c));
   const sideCats = categories.slice(0, 7);
+  // Category reel (founder, 10 Nov 2026): twenty main categories as text cards, no images.
+  const topCats = [...categories].sort((x, y) => y.subs.reduce((a, s) => a + s.count, 0) - x.subs.reduce((a, s) => a + s.count, 0)).slice(0, 20);
   const glimpse = GLIMPSE.map(([n, img]) => ({ c: categories.find((c) => c.name.replace(/ Business Ideas$/, "") === n), img })).filter((g): g is { c: (typeof categories)[number]; img: string } => Boolean(g.c));
   const tools = READY_CALCULATORS.slice(0, 8);
   const topics = TOPIC_PAGES.slice(0, 6);
@@ -231,7 +242,7 @@ function HomePage() {
   ].filter(Boolean) as { ic: string; n: string; l: string }[];
 
   return (
-    <V2Frame active="/" ember>
+    <V2Frame active="/" ember orbit={ORBIT}>
       <div className="relative overflow-hidden bg-[linear-gradient(180deg,#f1efff_0%,#f7f6ff_45%,#ffffff_100%)]">
         <div aria-hidden className="pointer-events-none absolute -top-24 right-[-10%] h-[520px] w-[520px] rounded-full bg-[#cfc9ff]/50 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute top-64 left-[-12%] h-[380px] w-[380px] rounded-full bg-[#e5e1ff]/70 blur-3xl" />
@@ -239,6 +250,7 @@ function HomePage() {
         {/* Hero: poster stage (ember theme draws the red stage, light beam and grain) */}
         <section className="eh-hero relative pt-24 pb-8 sm:pt-28 lg:pb-12">
           <div aria-hidden className="eh-stage" />
+          <HeroStreams />
           <div className={wrap + " grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] [&>*]:min-w-0"}>
             <div>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-[#4643ba]/25 bg-white/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#4643ba]">
@@ -327,7 +339,7 @@ function HomePage() {
                 {floats.map(({ ic, n, l }) => (
                   <li key={l} className="rounded-2xl bg-white p-3 shadow-[0_16px_30px_-18px_rgba(70,67,186,0.6)] ring-1 ring-[#4643ba]/10 bbi-float-lg lg:p-4" style={{ animationDelay: `${floats.findIndex((f) => f.l === l) * 0.8}s` }}>
                     <img src={ic} alt="" width={40} height={42} loading="lazy" decoding="async" className="h-10 w-10 object-contain" />
-                    <span className="mt-2 block font-display text-lg font-bold leading-none text-slate-900 lg:text-2xl">{n}</span>
+                    <span className="mt-2 block font-display text-lg font-bold leading-none text-slate-900 lg:text-2xl"><CountUp value={n} /></span>
                     <span className="mt-1 block text-[11px] leading-tight text-slate-500 lg:text-xs">{l}</span>
                   </li>
                 ))}
@@ -433,14 +445,15 @@ function HomePage() {
       </section>
 
       {/* 3D India: where women are starting up, state by state */}
-      <section className={"relative overflow-hidden bg-[linear-gradient(180deg,#ffffff,#f3f1ff_40%,#faf9ff)] " + sec} data-reveal id="india-map">
+      <section className={"relative bg-[linear-gradient(180deg,#ffffff,#f3f1ff_40%,#faf9ff)] " + sec} data-reveal id="india-map">
         <div className={wrap}>
           <div className="mx-auto max-w-3xl text-center">
             <p className={eyebrow}>The anatomy of India's startups, 2026</p>
             <h2 className={h2}>1 lakh women are already building. Your state is on this map.</h2>
             <p className="mt-3 text-slate-600">The number of startups with at least one woman director or partner in each state, as recognised by the Government of India.</p>
           </div>
-          <div className="mt-8"><IndiaInfographic /></div>
+          <div className="mt-8"><IndiaJourney /></div>
+          <div className="mt-8"><IndiaInfographic hideMap /></div>
         </div>
       </section>
 
@@ -606,35 +619,34 @@ function HomePage() {
       </section>
 
       {/* Category glimpse: eight image cards, the rest on /browse */}
-      {glimpse.length > 0 && (
+      {topCats.length > 0 && (
         <section className={sec} data-reveal data-ember="glimpse">
+          <CardReel rev head={
           <div className={wrap}>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <p className={eyebrow}>The library</p>
-                <h2 className={h2}>{categories.length} categories. Here are eight to start with.</h2>
+                <h2 className={h2}>{categories.length} categories. Here are {topCats.length} to start with.</h2>
               </div>
               <Link to="/browse" className={more}>See all {categories.length} categories <ArrowRight size={16} /></Link>
             </div>
           </div>
-          <Marquee speed={55}>
-              {glimpse.map(({ c, img }) => (
-                <li key={c.slug} className="w-64 shrink-0 sm:w-72">
-                  <Link to="/category/$categorySlug" params={{ categorySlug: c.slug }} className="group relative block overflow-hidden rounded-2xl bg-white shadow-[0_16px_34px_-22px_rgba(70,67,186,0.7)] ring-1 ring-[#4643ba]/10 transition duration-300 hover:-translate-y-1 hover:shadow-[0_26px_40px_-22px_rgba(70,67,186,0.75)] motion-reduce:transform-none">
-                    <div className="relative aspect-[4/3] overflow-hidden">
-                      <img src={"/images/categories/" + img} alt={c.name} loading="lazy" width={640} height={480} className="h-full w-full object-cover" />
-                      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/45 to-transparent" />
-                      <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-[#4643ba] backdrop-blur">{c.subs.reduce((n, x) => n + x.count, 0)} ideas</span>
-                    </div>
-                    <div className="relative px-4 pb-4 pt-7">
-                      <img src="/icons/ui/ui-category.webp" alt="" width={52} height={54} loading="lazy" decoding="async" className="absolute -top-7 left-4 h-[3.25rem] w-[3.25rem] object-contain" />
-                      <span className="block font-display text-base font-semibold text-slate-900 group-hover:text-[#4643ba]">{c.name.replace(/ Business Ideas$/, "")}</span>
-                      <span className="mt-0.5 block truncate text-xs text-slate-500">{c.subs.slice(0, 2).map((x) => x.name.replace(/ Business Ideas$/, "")).join(" · ")}</span>
-                    </div>
-                  </Link>
-                </li>
-              ))}
-          </Marquee>
+          }>
+              {topCats.map((c, n) => {
+                const name = c.name.replace(/ Business Ideas$/, "");
+                return (
+                  <li key={c.slug} className="ss-cat-li shrink-0">
+                    <Link to="/category/$categorySlug" params={{ categorySlug: c.slug }} className="ss-cat">
+                      <span aria-hidden className="ss-cat-no">{String(n + 1).padStart(2, "0")}</span>
+                      <span className="ss-cat-count">{c.subs.reduce((a, x) => a + x.count, 0)} ideas</span>
+                      <span className="ss-cat-name">{name.split(" ").map((w, wi) => <span key={wi} className="ss-cat-w" style={{ "--w": wi } as CSSProperties}><i>{w}</i></span>)}</span>
+                      <span className="ss-cat-subs">{c.subs.slice(0, 2).map((x) => x.name.replace(/ Business Ideas$/, "")).join(" · ")}</span>
+                      <span aria-hidden className="ss-cat-go"><ArrowRight size={18} /></span>
+                    </Link>
+                  </li>
+                );
+              })}
+          </CardReel>
           <div>
           </div>
         </section>
@@ -643,6 +655,7 @@ function HomePage() {
       {/* Good first reads */}
       {fresh.length > 4 && (
         <section data-reveal data-ember="reads" className={"border-y border-slate-200 bg-slate-50 " + sec}>
+          <CardReel head={
           <div className={wrap}>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
@@ -652,7 +665,7 @@ function HomePage() {
               <Link to="/browse" className={more}>See every blueprint <ArrowRight size={16} /></Link>
             </div>
           </div>
-          <Marquee speed={60} rev>
+          }>
               {fresh.map((i) => (
                 <li key={i.slug} className="w-64 shrink-0 sm:w-72">
                   <a href={`/idea/${i.slug}`} className={card + " flex h-full flex-col p-4"}>
@@ -663,7 +676,7 @@ function HomePage() {
                   </a>
                 </li>
               ))}
-          </Marquee>
+          </CardReel>
           <div>
           </div>
         </section>
@@ -781,7 +794,8 @@ function HomePage() {
       )}
 
       {/* FAQ and the closing call */}
-      <section data-reveal data-ember="faq" className={sec}>
+      <FaqTunnel questions={FAQ.map((f) => f.q)} target="#faq" />
+      <section data-reveal data-ember="faq" id="faq" className={sec}>
         <div className={wrap}>
           <p className={eyebrow}>FAQ</p>
           <h2 className={h2}>Honest answers to fair questions.</h2>
