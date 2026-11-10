@@ -18,10 +18,10 @@ const shade = (n: number) => {
   return `rgb(${Math.round(70 + 170 * t)},${Math.round(8 + 22 * t)},${Math.round(12 + 18 * t)})`;
 };
 
-export function IndiaInfographic() {
+export function IndiaInfographic({ hideMap = false }: { hideMap?: boolean } = {}) {
   return (
-    <div className="e-india grid items-center gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-      <figure className="e-india-map relative mx-auto w-full max-w-[560px]">
+    <div className={"e-india grid items-center gap-6 " + (hideMap ? "mx-auto max-w-2xl" : "lg:grid-cols-[1.1fr_0.9fr]")}>
+      {hideMap ? null : <figure className="e-india-map relative mx-auto w-full max-w-[560px]">
         <svg viewBox={`0 0 ${MAP_W} ${MAP_H}`} role="img" aria-label="Map of India shaded by the number of women-led startups in each state" className="h-auto w-full">
           {MAP_STATES.map((s, i) => (
             <path key={s.id} d={s.d} fill={shade(s.total)} stroke="#1a0a0a" strokeWidth={0.8} style={{ ["--i" as string]: String(i % 12) }}>
@@ -38,7 +38,7 @@ export function IndiaInfographic() {
         <figcaption className="mt-2 flex items-center justify-center gap-2 text-[11px] text-slate-500">
           <span>Fewer</span><span aria-hidden className="h-2 w-28 rounded-full" style={{ background: `linear-gradient(90deg,${shade(40)},${shade(MAX)})` }} /><span>More</span>
         </figcaption>
-      </figure>
+      </figure>}
 
       <div className="g-tile p-5 sm:p-6">
         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#4643ba]">All of India</p>

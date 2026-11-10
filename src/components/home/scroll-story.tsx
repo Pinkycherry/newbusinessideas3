@@ -1,0 +1,487 @@
+import { Children, useEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
+import { createPortal } from "react-dom";
+import { Link } from "@tanstack/react-router";
+import { MAP_CITIES, MAP_H, MAP_STATES, MAP_W, type MapState } from "@/data/india-map";
+import "./scroll-story.css";
+
+/**
+ * Home page scroll story (founder, 10 Nov 2026). Layout and motion only; every word and number comes
+ * from content that was already on the page.
+ *  - HeroStreams: thin light lines flowing into the hero.
+ *  - IndiaJourney: the India map stays on screen while the page scrolls; it zooms into the leading
+ *    states one by one, then back out. Tapping any state zooms to it.
+ *  - FaqTunnel: the FAQ questions fly towards the reader before the answers.
+ *  - OrbitMenu: a round button that fills as the page scrolls and opens the section links; it also
+ *    holds the "Pause motion" switch.
+ * Phones first: no scroll hijacking, only position:sticky plus transform and opacity. Without script,
+ * with reduced motion, or with motion paused, everything falls back to the plain static layout
+ * (the "ss-on" class on <html> is what turns the tall scroll stages on).
+ */
+
+const fmt = (n: number) => n.toLocaleString("en-IN");
+const clamp = (n: number, a = 0, b = 1) => Math.min(b, Math.max(a, n));
+const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+const KEY = "bbi-motion";
+const isOn = () => typeof document !== "undefined" && document.documentElement.classList.contains("ss-on");
+
+/** Progress (0 to 1) of a tall wrapper as it scrolls past its sticky stage. One rAF per scroll burst. */
+function useStickyProgress(ref: RefObject<HTMLElement | null>, cb: (p: number) => void) {
+  const fn = useRef(cb);
+  fn.current = cb;
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let raf = 0, near = false;
+    const run = () => {
+      raf = 0;
+      if (!isOn()) return;
+      const r = el.getBoundingClientRect();
+      const span = r.height - window.innerHeight;
+      fn.current(span > 0 ? clamp(-r.top / span) : 0);
+    };
+    const ask = () => { if (near && !raf) raf = requestAnimationFrame(run); };
+    const io = new IntersectionObserver((e) => { near = e.some((x) => x.isIntersecting); ask(); }, { rootMargin: "200px 0px" });
+    io.observe(el);
+    window.addEventListener("scroll", ask, { passive: true });
+    window.addEventListener("resize", ask);
+    return () => { io.disconnect(); window.removeEventListener("scroll", ask); window.removeEventListener("resize", ask); if (raf) cancelAnimationFrame(raf); };
+  }, [ref]);
+}
+
+/* ------------------------------------------------------------------ Hero */
+
+export function HeroStreams() {
+  const ref = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const cv = ref.current;
+    const ctx = cv?.getContext("2d");
+    if (!cv || !ctx) return;
+    let raf = 0, seen = true, w = 0, h = 0, last = 0;
+    const N = window.innerWidth < 640 ? 22 : 44;
+    const lines = Array.from({ length: N }, (_, i) => ({ y: (i + 0.5) / N, bend: Math.random() * 0.5 - 0.25, sp: 0.05 + Math.random() * 0.09, off: Math.random(), red: i % 3 !== 0 }));
+    const size = () => {
+      const d = Math.min(window.devicePixelRatio || 1, 1.5);
+      w = cv.clientWidth; h = cv.clientHeight;
+      cv.width = Math.round(w * d); cv.height = Math.round(h * d);
+      ctx.setTransform(d, 0, 0, d, 0, 0);
+    };
+    const pt = (l: (typeof lines)[number], t: number, fx: number, fy: number) => {
+      const y0 = l.y * h, cx = fx * 0.45, cy = y0 + l.bend * h, u = 1 - t;
+      return [2 * u * t * cx + t * t * fx - 20 * u * u, u * u * y0 + 2 * u * t * cy + t * t * fy] as const;
+    };
+    const draw = (now: number) => {
+      raf = 0;
+      const wide = w >= 1024;
+      const fx = wide ? w * 0.74 : w * 0.5, fy = wide ? h * 0.5 : h * 0.86;
+      ctx.clearRect(0, 0, w, h);
+      for (const l of lines) {
+        ctx.beginPath();
+        ctx.moveTo(-20, l.y * h);
+        ctx.quadraticCurveTo(fx * 0.45, l.y * h + l.bend * h, fx, fy);
+        ctx.strokeStyle = l.red ? "rgba(224,27,31,.2)" : "rgba(255,255,255,.1)";
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+        const t = (l.off + (now / 1000) * l.sp) % 1;
+        const [x, y] = pt(l, t, fx, fy);
+        const [x2, y2] = pt(l, Math.max(0, t - 0.05), fx, fy);
+        const g = ctx.createLinearGradient(x2, y2, x, y);
+        g.addColorStop(0, "rgba(255,255,255,0)");
+        g.addColorStop(1, l.red ? "rgba(255,90,80,.9)" : "rgba(255,255,255,.75)");
+        ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x, y);
+        ctx.strokeStyle = g; ctx.lineWidth = 1.3; ctx.stroke();
+      }
+    };
+    const loop = (now: number) => {
+      if (!seen || document.hidden || !isOn()) { raf = 0; return; }
+      if (now - last > 32) { last = now; draw(now); }
+      raf = requestAnimationFrame(loop);
+    };
+    const wake = () => { if (!raf) raf = requestAnimationFrame(loop); };
+    size(); draw(0);
+    const io = new IntersectionObserver((e) => { seen = e.some((x) => x.isIntersecting); wake(); });
+    io.observe(cv);
+    const onResize = () => { size(); draw(performance.now()); };
+    window.addEventListener("resize", onResize);
+    document.addEventListener("visibilitychange", wake);
+    window.addEventListener("ss-motion", wake);
+    wake();
+    return () => { io.disconnect(); window.removeEventListener("resize", onResize); document.removeEventListener("visibilitychange", wake); window.removeEventListener("ss-motion", wake); if (raf) cancelAnimationFrame(raf); };
+  }, []);
+  return <canvas ref={ref} aria-hidden className="ss-streams" />;
+}
+
+/* ------------------------------------------------------------ Count up */
+
+export function CountUp({ value }: { value: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    const end = Number(value.replace(/[^\d]/g, ""));
+    if (!el || !end || !/^[\d,]+$/.test(value)) return;
+    const io = new IntersectionObserver((e) => {
+      if (!e.some((x) => x.isIntersecting)) return;
+      io.disconnect();
+      if (!isOn()) return;
+      const t0 = performance.now();
+      const tick = (now: number) => {
+        const t = clamp((now - t0) / 1400);
+        el.textContent = fmt(Math.round(end * ease(t)));
+        if (t < 1) requestAnimationFrame(tick); else el.textContent = value;
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.6 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [value]);
+  return <span ref={ref} className="tabular-nums">{value}</span>;
+}
+
+/* --------------------------------------------------------- India journey */
+
+const MAXT = Math.max(...MAP_STATES.map((s) => s.total));
+const TOTAL = MAP_STATES.reduce((a, s) => a + s.total, 0);
+const RANKED = [...MAP_STATES].sort((a, b) => b.total - a.total);
+const shade = (n: number) => {
+  const t = Math.sqrt(n / MAXT);
+  return `rgb(${Math.round(70 + 170 * t)},${Math.round(8 + 22 * t)},${Math.round(12 + 18 * t)})`;
+};
+const FULL = [0, 0, MAP_W, MAP_H];
+const boxFor = (s: MapState | null) => {
+  if (!s) return FULL;
+  const [x0 = 0, y0 = 0, x1 = MAP_W, y1 = MAP_H] = s.box;
+  const ratio = MAP_W / MAP_H;
+  let w = Math.max((x1 - x0) * 1.9, 150), h = Math.max((y1 - y0) * 1.9, 150 / ratio);
+  if (w / h > ratio) h = w / ratio; else w = h * ratio;
+  return [(x0 + x1) / 2 - w / 2, (y0 + y1) / 2 - h / 2, w, h];
+};
+
+export function IndiaJourney() {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const view = useRef(FULL);
+  const stops = useMemo<(MapState | null)[]>(() => [null, ...RANKED.slice(0, 6), null], []);
+  const [step, setStep] = useState(0);
+  const [picked, setPicked] = useState<MapState | null>(null);
+  const focus = picked ?? stops[step] ?? null;
+  const finale = !picked && step === stops.length - 1;
+
+  useStickyProgress(wrapRef, (p) => {
+    const next = Math.min(stops.length - 1, Math.floor(p * stops.length));
+    setStep((cur) => { if (cur !== next) setPicked(null); return next; });
+  });
+
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const from = view.current, to = boxFor(focus);
+    if (!isOn()) { view.current = to; svg.setAttribute("viewBox", to.join(" ")); return; }
+    let raf = 0;
+    const t0 = performance.now();
+    const tick = (now: number) => {
+      const t = ease(clamp((now - t0) / 750));
+      const v = from.map((a, i) => a + ((to[i] ?? a) - a) * t);
+      view.current = v;
+      svg.setAttribute("viewBox", v.map((n) => n.toFixed(1)).join(" "));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [focus]);
+
+  const delhi = MAP_CITIES.find((c) => c.name === "Delhi");
+  const rank = focus ? RANKED.indexOf(focus) + 1 : 0;
+
+  return (
+    <div ref={wrapRef} className="ss-india" style={{ ["--stops" as string]: String(stops.length) }}>
+      <div className="ss-india-stage">
+        <figure className="ss-india-map">
+          <svg ref={svgRef} viewBox={FULL.join(" ")} role="img" aria-label="Map of India shaded by the number of women-led startups in each state" preserveAspectRatio="xMidYMid meet">
+            {MAP_STATES.map((s) => (
+              <path
+                key={s.id}
+                d={s.d}
+                fill={focus === s ? "#ff3b30" : shade(s.total)}
+                stroke={focus === s ? "#fff" : "#1a0a0a"}
+                strokeWidth={focus === s ? 1.4 : 0.8}
+                vectorEffect="non-scaling-stroke"
+                className={"ss-state" + (focus && focus !== s ? " is-dim" : "")}
+                onClick={() => setPicked((cur) => (cur === s ? null : s))}
+              >
+                <title>{`${s.name}: ${fmt(s.total)}`}</title>
+              </path>
+            ))}
+            {finale && delhi ? (
+              <g className="ss-arcs" aria-hidden>
+                {MAP_CITIES.filter((c) => c !== delhi).map((c, i) => (
+                  <path key={c.name} pathLength={1} d={`M${c.x},${c.y} Q${(c.x + delhi.x) / 2},${Math.min(c.y, delhi.y) - 70} ${delhi.x},${delhi.y}`} style={{ animationDelay: `${i * 90}ms` }} />
+                ))}
+                {MAP_CITIES.map((c) => <circle key={c.name} cx={c.x} cy={c.y} r={3.2} />)}
+              </g>
+            ) : null}
+          </svg>
+        </figure>
+
+        <div className="ss-india-card g-tile" aria-live="polite">
+          {focus ? (
+            <div key={focus.id} className="ss-swap">
+              <p className="ss-eyebrow">No. {rank} of {MAP_STATES.length}</p>
+              <p className="ss-big">{focus.name}</p>
+              <p className="ss-num"><CountKey n={focus.total} /></p>
+              <p className="ss-sub">startups with at least one woman director or partner</p>
+              <p className="ss-sub"><b>{fmt(focus.y2025)}</b> of them were recognised in 2025 alone.</p>
+            </div>
+          ) : (
+            <div key="all" className="ss-swap">
+              <p className="ss-eyebrow">All of India</p>
+              <p className="ss-num"><CountKey n={TOTAL} /></p>
+              <p className="ss-sub">startups with at least one woman director or partner, out of 2,12,283 recognised by DPIIT</p>
+            </div>
+          )}
+          <div className="ss-dots">
+            {stops.map((s, i) => (
+              <span key={i} className={i === step && !picked ? "is-on" : ""} title={s ? s.name : "All of India"} />
+            ))}
+            {picked ? <button type="button" className="ss-reset" onClick={() => setPicked(null)}>All of India</button> : null}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Rolls to a new number each time it changes. */
+function CountKey({ n }: { n: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !isOn()) return;
+    let raf = 0;
+    const t0 = performance.now();
+    const tick = (now: number) => {
+      const t = clamp((now - t0) / 700);
+      el.textContent = fmt(Math.round(n * ease(t)));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [n]);
+  return <span ref={ref} className="tabular-nums">{fmt(n)}</span>;
+}
+
+/* ------------------------------------------------------------ FAQ tunnel */
+
+export function FaqTunnel({ questions, target }: { questions: string[]; target: string }) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const cards = useRef<(HTMLDivElement | null)[]>([]);
+  const rings = useRef<(HTMLSpanElement | null)[]>([]);
+  const n = questions.length;
+
+  useStickyProgress(wrapRef, (p) => {
+    cards.current.forEach((el, i) => {
+      if (!el) return;
+      const t = p * (n + 0.6) - i; // below 0: far away; 0 to 1: passing the reader; above 1: gone
+      const far = clamp(1 + t / 3);
+      const s = t < 0 ? 0.25 + 0.3 * far : 0.55 + 0.75 * clamp(t);
+      const o = t < 0 ? 0.12 + 0.4 * far : t < 0.7 ? 1 : clamp(1 - (t - 0.7) / 0.3);
+      const side = (i % 2 ? 1 : -1) * (t < 0 ? 14 * (1 - far) + 6 : 6 * (1 - clamp(t * 2)));
+      el.style.transform = `translate(-50%,-50%) translateX(${side.toFixed(1)}vw) scale(${s.toFixed(3)})`;
+      el.style.opacity = o.toFixed(3);
+      el.style.zIndex = String(t >= 0 && t <= 1 ? 50 : 20 - Math.abs(Math.round(t)));
+      el.style.pointerEvents = o > 0.6 ? "auto" : "none";
+    });
+    rings.current.forEach((el, k) => {
+      if (!el) return;
+      const t = (k / rings.current.length + p * 2.4) % 1;
+      el.style.transform = `translate(-50%,-50%) scale(${(0.15 + t * 1.5).toFixed(3)})`;
+      el.style.opacity = (t < 0.15 ? t / 0.15 : 1 - t).toFixed(3);
+    });
+  });
+
+  const open = (i: number) => {
+    const list = document.querySelectorAll<HTMLDetailsElement>(`${target} details`);
+    const d = list[i];
+    if (!d) return;
+    d.open = true;
+    d.scrollIntoView({ behavior: isOn() ? "smooth" : "auto", block: "center" });
+  };
+
+  return (
+    <div ref={wrapRef} className="ss-tunnel" aria-hidden style={{ ["--n" as string]: String(n) }}>
+      <div className="ss-tunnel-stage">
+        {[0, 1, 2, 3, 4].map((k) => <span key={k} ref={(el) => { rings.current[k] = el; }} className="ss-ring" />)}
+        <span className="ss-beam" />
+        {questions.map((q, i) => (
+          <div key={q} ref={(el) => { cards.current[i] = el; }} className="ss-q" onClick={() => open(i)}>
+            <span className="ss-q-n">{String(i + 1).padStart(2, "0")}</span>
+            {q}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------- Card reel */
+
+/**
+ * A row of cards that stays on screen and travels sideways while the page scrolls (rev = left to right).
+ * Cards turn towards the reader as they pass the middle, which lifts the centre card. Without motion the
+ * same list is a plain swipeable row.
+ */
+export function CardReel({ head, children, rev = false }: { head: ReactNode; children: ReactNode; rev?: boolean }) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLUListElement>(null);
+  const geo = useRef<{ max: number; vw: number; sw: number; mids: number[] }>({ max: 0, vw: 0, sw: 0, mids: [] });
+  useEffect(() => {
+    const measure = () => {
+      const tr = trackRef.current;
+      if (!tr) return;
+      const vw = window.innerWidth;
+      geo.current = { vw, sw: tr.offsetWidth, max: Math.max(0, tr.offsetWidth - vw), mids: Array.from(tr.children).map((c) => (c as HTMLElement).offsetLeft + (c as HTMLElement).offsetWidth / 2) };
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    window.addEventListener("ss-motion", measure);
+    const tr = trackRef.current;
+    const reset = () => { if (isOn() || !tr) return; tr.style.transform = ""; Array.from(tr.children).forEach((c) => { (c as HTMLElement).style.transform = ""; (c as HTMLElement).style.opacity = ""; }); };
+    window.addEventListener("ss-motion", reset);
+    return () => { window.removeEventListener("resize", measure); window.removeEventListener("ss-motion", measure); window.removeEventListener("ss-motion", reset); };
+  }, []);
+  useStickyProgress(wrapRef, (p) => {
+    const tr = trackRef.current;
+    if (!tr) return;
+    if (!geo.current.mids.length || geo.current.vw !== window.innerWidth || geo.current.sw !== tr.offsetWidth) {
+      geo.current = { vw: window.innerWidth, sw: tr.offsetWidth, max: Math.max(0, tr.offsetWidth - window.innerWidth), mids: Array.from(tr.children).map((c) => (c as HTMLElement).offsetLeft + (c as HTMLElement).offsetWidth / 2) };
+    }
+    const { max, vw, mids } = geo.current;
+    const x = -(rev ? 1 - p : p) * max;
+    tr.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`;
+    const kids = tr.children;
+    for (let i = 0; i < kids.length; i++) {
+      const d = clamp(((mids[i] ?? 0) + x - vw / 2) / (vw * 0.6), -1, 1), a = Math.abs(d);
+      const el = kids[i] as HTMLElement;
+      el.style.transform = `perspective(1000px) rotateY(${(-d * 24).toFixed(2)}deg) translateY(${(a * 22).toFixed(1)}px) scale(${(1.04 - a * 0.14).toFixed(3)})`;
+      el.style.opacity = (1 - a * 0.45).toFixed(3);
+      el.style.zIndex = String(10 - Math.round(a * 10));
+      el.classList.toggle("is-mid", a < 0.3);
+    }
+  });
+  return (
+    <div ref={wrapRef} className="ss-reel" style={{ ["--len" as string]: String(Children.count(children)) }}>
+      <div className="ss-reel-stage">
+        {head}
+        <ul ref={trackRef} className="ss-reel-track">{children}</ul>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------ Orbit menu */
+
+/** Headings, cards, panels and pictures that rise into place as the reader scrolls, on any page. */
+const CARD_SEL = '.ember main :is(h2, .g-tile, details, article, figure, [class*="rounded-2xl"], [class*="rounded-3xl"], a[href^="/idea/"][class*="rounded"], a[href^="/category/"][class*="rounded"])';
+
+export type OrbitLink = { label: string; href: string };
+
+export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raised?: boolean }) {
+  const ring = useRef<SVGCircleElement>(null);
+  const [open, setOpen] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    let stored: string | null = null;
+    try { stored = localStorage.getItem(KEY); } catch { /* private window */ }
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const off = stored === "off" || (reduce && stored !== "on");
+    setPaused(off);
+    root.classList.toggle("ss-on", !off);
+    root.classList.add("has-orbit");
+    // Cards rise into place as they scroll in (every page). Only cards that are below the screen when the
+    // page opens are held back, so anything added later is never left hidden.
+    let rise: IntersectionObserver | null = null;
+    const riseTimer = window.setTimeout(() => {
+      if (off || !("IntersectionObserver" in window)) return;
+      rise = new IntersectionObserver((es) => es.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("ss-rise-in");
+        rise?.unobserve(e.target);
+      }), { rootMargin: "0px 0px -6% 0px" });
+      let k = 0;
+      const vh = window.innerHeight;
+      Array.from(document.querySelectorAll<HTMLElement>(CARD_SEL)).slice(0, 500).forEach((el) => {
+        if (el.closest(".ss-reel,.ss-india,.ss-tunnel,.g-marquee,.e-mq,.mm-header,.v2-footer,[data-loop-copy]") || el.parentElement?.closest(".ss-rise")) return;
+        const r = el.getBoundingClientRect();
+        if (r.top < vh || r.height > vh * 1.4 || r.height < 24) return;
+        const pos = getComputedStyle(el).position;
+        if (pos === "fixed" || pos === "sticky") return;
+        // Headings come in from the left; everything else alternates left and right.
+        el.style.setProperty("--dx", el.tagName === "H2" ? "-30px" : k % 2 ? "22px" : "-22px");
+        el.style.setProperty("--k", String(k++ % 3));
+        el.classList.add("ss-rise");
+        rise?.observe(el);
+      });
+    }, 400);
+    let raf = 0;
+    const run = () => {
+      raf = 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? clamp(window.scrollY / max) : 0;
+      if (ring.current) ring.current.style.strokeDashoffset = String(1 - p);
+      setShown(window.scrollY > 320);
+    };
+    const ask = () => { if (!raf) raf = requestAnimationFrame(run); };
+    window.addEventListener("scroll", ask, { passive: true });
+    run();
+    return () => {
+      window.removeEventListener("scroll", ask);
+      if (raf) cancelAnimationFrame(raf);
+      window.clearTimeout(riseTimer);
+      rise?.disconnect();
+      document.querySelectorAll(".ss-rise").forEach((el) => el.classList.remove("ss-rise", "ss-rise-in"));
+      root.classList.remove("ss-on", "has-orbit");
+    };
+  }, []);
+
+  const toTop = () => { setOpen(false); window.scrollTo({ top: 0, behavior: isOn() ? "smooth" : "auto" }); };
+  const toggleMotion = () => {
+    const next = !paused;
+    setPaused(next);
+    document.documentElement.classList.toggle("ss-on", !next);
+    try { localStorage.setItem(KEY, next ? "off" : "on"); } catch { /* private window */ }
+    window.dispatchEvent(new Event("ss-motion"));
+    window.dispatchEvent(new Event("scroll"));
+  };
+
+  const [host, setHost] = useState<HTMLElement | null>(null);
+  useEffect(() => setHost(document.body), []);
+  if (!host) return null;
+  // On the body, so no page section or the footer can sit above it.
+  return createPortal(
+    <>
+    <span aria-hidden className="ss-vignette" />
+    <div className={"ss-orbit" + (open ? " is-open" : "") + (shown ? " is-shown" : "") + (raised ? " is-raised" : "")}>
+      <ul className="ss-orbit-links" hidden={!open}>
+        <li style={{ ["--i" as string]: "0" }}><button type="button" onClick={toTop}>Back to top</button></li>
+        {links.map((l, i) => (
+          <li key={l.href} style={{ ["--i" as string]: String(i) }}>
+            {l.href.startsWith("#") ? <a href={l.href} onClick={() => setOpen(false)}>{l.label}</a> : <Link to={l.href} onClick={() => setOpen(false)}>{l.label}</Link>}
+          </li>
+        ))}
+        <li style={{ ["--i" as string]: String(links.length) }}>
+          <button type="button" onClick={toggleMotion} aria-pressed={paused}>{paused ? "Play motion" : "Pause motion"}</button>
+        </li>
+      </ul>
+      <button type="button" className="ss-orbit-btn" aria-expanded={open} aria-label="Page sections" onClick={() => setOpen((o) => !o)}>
+        <svg viewBox="0 0 48 48" aria-hidden>
+          <circle cx="24" cy="24" r="21" className="ss-orbit-track" />
+          <circle ref={ring} cx="24" cy="24" r="21" pathLength={1} className="ss-orbit-fill" />
+        </svg>
+        <span className="ss-orbit-ic"><i /><i /><i /></span>
+      </button>
+    </div>
+    </>,
+    host,
+  );
+}
