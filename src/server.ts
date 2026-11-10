@@ -63,6 +63,16 @@ function isCacheablePage(request: Request): boolean {
   return !/sb-|auth|session/i.test(cookie);
 }
 
+// Each deploy gets its own cache shelf (10 Nov 2026): the commit is part of the cache key, so a new
+// deploy never serves pages rendered by the old code and nobody has to purge Cloudflare by hand.
+// Old entries are simply never asked for again and expire on their own.
+declare const __BBI_COMMIT__: string | undefined;
+function cacheKey(request: Request): Request {
+  const url = new URL(request.url);
+  url.searchParams.set("__bbi", typeof __BBI_COMMIT__ === "string" ? __BBI_COMMIT__.slice(0, 12) : "dev");
+  return new Request(url.toString(), { method: "GET" });
+}
+
 function edgeCache(): Cache | undefined {
   const store = (globalThis as { caches?: { default?: Cache } }).caches;
   return store?.default;
@@ -80,7 +90,7 @@ async function renderAndMaybeCache(request: Request, env: unknown, ctx: unknown)
     const copy = new Response(response.clone().body, response);
     copy.headers.set("cache-control", `public, max-age=${EDGE_TTL_SECONDS}`);
     // Awaited: under nitro the worker ctx is not always passed through, so waitUntil is unreliable.
-    await cache.put(request, copy).catch((error: unknown) => console.error("edge cache put", error));
+    await cache.put(cacheKey(request), copy).catch((error: unknown) => console.error("edge cache put", error));
   }
   return response;
 }
@@ -97,7 +107,7 @@ export default {
     try {
       if (isCacheablePage(request)) {
         const cache = edgeCache();
-        const hit = cache ? await cache.match(request) : undefined;
+        const hit = cache ? await cache.match(cacheKey(request)) : undefined;
         if (hit) {
           const served = new Response(hit.body, hit);
           served.headers.set("cache-control", "public, max-age=0, must-revalidate");
