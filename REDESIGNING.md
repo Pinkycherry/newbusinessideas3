@@ -4,6 +4,79 @@ Read this first if you are picking up the redesign. Newest entries at the top of
 Pinky 1 = this session (model: claude-fable-5-2, earlier claude-opus-5-5). Pinky 2 = the other Claude Code account.
 When Pinky 1 runs out of tokens, Pinky 2 continues from "NEXT STEPS" below. Update this file and commit it to main before you stop.
 
+## HANDOVER TO PINKY 2 — 11 Nov 2026 ~09:15 IST (written by Pinky 1, model claude-fable-5-2, out of tokens)
+
+Live commit: fce88f5 (batch 3). Cache purged after it. Nothing is half done locally; main is the truth.
+Founder's last order: STOP, no edits, only this log. Do not start until he says go.
+
+### 1. First job when he says go: the rows (HIS MAIN COMPLAINT, still broken)
+
+Rows = "50+ main categories", "Ideas you can start from home or your own street", "Long reads for the next decision"
+(home page, component `Carousel` in src/components/home/cinema.tsx, styles `.cn-car*` in cinema.css).
+He says: "the scroll is not working, just the carousel is working". Cause (my bug):
+- The row pauses (`hold.current = true`) on mouseenter, pointerdown, touchstart and focus so the reader can swipe.
+  The page-scroll link (`onPage` in the Carousel effect, moves `tr.scrollLeft` by 0.6 x scroll delta) returns early
+  while `hold.current` is true. So with the mouse over the cards, or a finger on the row, page scroll does nothing.
+  FIX: let `onPage` run even while held (only the self-glide should pause), or drop the hold on plain hover.
+- The pop-up (`.cn-car.is-pop li>*` animation `cn-pop`) plays only when the whole row enters the screen.
+  He wants EVERY card to pop up again and again as the reader scrolls or moves the mouse, like the reference site's
+  cards. FIX: per-card pop each time a card crosses into view / becomes the middle card (replay), both directions,
+  phone and desktop.
+- NEVER add buttons to these rows (arrows, progress bar, Skip were rejected with anger). No buttons at all.
+- Keep: self glide, free finger swipe, middle card lit, 16:9 blog thumbnails, no idea counts, "50+ main categories".
+
+### 2. Reference sites (study them live in his Chrome before building; patterns only, never copy code or art)
+
+- https://www.mbidirectmail.com/ (main reference). What to take:
+  header: hover a menu word, a red line drops to a hub, curves run to ringed items (done on desktop, check it);
+  round floating button on the right: fan of pills on a curve with dotted lines (done, pills = page sections);
+  four quarters around a centre logo ("Tap to explore"); pinned scroll scenes where things pop as you scroll;
+  bento cards with small live infographics; big count infographics (never plain number cards).
+- https://dairyfoodbg.com/ (hero reference): scroll-scrubbed film inside sticky sections, text fading over it.
+  We do it with still images (founder: no video, never remove or crop a provider watermark).
+
+### 3. Images: where they are
+
+- Founder's originals (ChatGPT, realistic): only in the chat uploads of Pinky 1's session, NOT in the repo.
+  If you need them again, ask him to re-send or drop them in the repo.
+- In the repo, public/images/hero/ (all WebP, used by src/components/home/film.tsx):
+  town-1..4.webp = the same South Indian street from wide to close (hero film, id #top);
+  road-1..4.webp = road leaving town through gateways, tiled gateways, walled doorway, open doors to fields
+  (validate film, id #how-it-works);
+  p-student, p-jobholder, p-wfh, p-cook, p-village, p-tailor (.webp, transparent) = six people "before";
+  p-<same>-after.webp = the same six "after". Cut from grey sheets with OpenCV GrabCut (script was in /tmp, gone;
+  method: border median as background, mask by colour distance and saturation, grabCut, split by column gaps).
+- Not used on purpose: the hoodie/laptop people sheet (different faces) and the hill shot (red flag on the tower
+  can read as political). Never came: aerial town shot, mist layer, tall phone versions (1080 x 1920).
+- Person to number mapping (SEEKERS in src/routes/index.tsx): student = side hustles, job holder = new business
+  ideas, work-from-home woman = work from home ideas, cook = small business ideas, village youth = low investment
+  business ideas, tailor = zero investment business ideas.
+
+### 4. Pending list, in order
+
+1. Fix the rows as in section 1. Then apply the same card motion wherever cards send people to articles, ideas and
+   lists (blog index, lists, category pages), motion only, no content change.
+2. Founder review of batch 3 (hero film, validate road). Not reviewed yet. Check on a real phone: people overlap,
+   bubble sizes, text over faces (he dislikes text over faces), scroll length (4 frames x 95svh each may feel long).
+3. Recompose the home page: it is long and repeats itself (old hero block still sits under the hero film; numbers
+   appear in the hero bubbles AND in the ring infographic "What India is searching for"). Ask him what to drop.
+4. Phone and tablet pass on every home section. He says every section is still sloppy on phone.
+5. Sections he flagged that may still need more: "Inside the library", "Our working process", "Built by hand",
+   "Four steps", "One free home, eight ways", "We have been where you are". He wants cinematic, not card grids.
+6. Round button: also missing on raw purchased pages (lists hub, failed startups, topic pages).
+7. Monthly: update the six search numbers in DEMAND (index.tsx) from his research. Never name the tool.
+8. Older open items: number icons 8-100, subcategory icons 21-42, batch 9 redo icons, answer page images (all from
+   him); Cloudflare paid plan; remaining seller template pages (HANDOFF.md, page inventory artifact).
+
+### 5. How to work with him (learned the hard way)
+
+- He reviews on the live site. Deploy = GitHub web upload in his Chrome (push from the sandbox is denied), wait for
+  /version.json, purge Cloudflare, then give https://bbusiness.online/ . The local build has no database: the hero
+  preview card and the ideas row are empty locally, check those live.
+- Short replies, plain words. If he says stop, stop. If he says note, only note.
+- Show, do not explain. He judges by motion on phone first.
+- Log every step here and in the memory work log.
+
 ## The goal (founder, 10-11 Nov 2026)
 
 Make the home page cinematic, not generic, on phone, tablet and desktop. Nothing static, no sloppy cards or buttons.
