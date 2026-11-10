@@ -105,7 +105,7 @@ html.ss-on [data-reveal] .eh-h2{transition-delay:.08s}
 
 /* Category cards: text only, lifted, the name animates when the card reaches the middle */
 .ss-cat-li{width:min(74vw,300px)}
-.ss-cat{position:relative;display:flex;flex-direction:column;justify-content:flex-end;height:min(108vw,400px);padding:22px 22px 24px;border-radius:26px;overflow:hidden;text-decoration:none;isolation:isolate;
+.ss-cat{position:relative;display:flex;flex-direction:column;justify-content:flex-end;height:min(108vw,400px,60svh);padding:22px 22px 24px;border-radius:26px;overflow:hidden;text-decoration:none;isolation:isolate;
   background:radial-gradient(120% 70% at 100% 0%,rgba(224,27,31,.62),transparent 62%),radial-gradient(90% 60% at 0% 100%,rgba(139,1,0,.55),transparent 65%),linear-gradient(160deg,#241214 0%,#0b0b0c 55%,#1d0709 100%)!important;
   border:1px solid rgba(255,255,255,.12);box-shadow:0 40px 70px -40px rgba(224,27,31,.7),0 24px 50px -28px #000,inset 0 1px 0 rgba(255,255,255,.14);
   transition:border-color .3s,box-shadow .3s}
@@ -145,3 +145,15 @@ html.has-orbit .e-totop{display:none!important}
 .ss-orbit.is-raised{bottom:236px}
 @media (min-width:640px){.ss-orbit.is-raised{bottom:176px}}
 @media (min-width:1024px){.ss-orbit.is-raised{bottom:auto}}
+
+/* Short or sideways screens: map and its card sit side by side, and the card type steps down */
+@media (min-aspect-ratio:1/1) and (max-width:1023px){
+  html.ss-on .ss-india-stage{grid-template-columns:1.1fr .9fr;grid-template-rows:minmax(0,1fr);gap:16px;padding-top:72px}
+}
+@media (max-height:620px){
+  .ss-india-card{min-height:0;padding:14px 16px}
+  .ss-num{font-size:clamp(1.8rem,7vw,2.6rem)}
+  .ss-big{font-size:clamp(1.25rem,4.5vw,1.8rem)}
+  .ss-cat-name{font-size:clamp(1.5rem,7vw,2rem)}
+  .ss-cat-no{font-size:5rem}
+}
