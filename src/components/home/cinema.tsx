@@ -43,6 +43,9 @@ export function Carousel({ head, children, label }: { head: ReactNode; children:
       list.forEach((el, i) => {
         const d = clamp((el.offsetLeft + el.offsetWidth / 2 - c) / (w * 0.7), -1, 1), a = Math.abs(d);
         el.classList.toggle("is-mid", i === m);
+        // A card "is in" while any part of it is inside the row's window: it pops up on the way in and drops on the way out, every time.
+        const left = el.offsetLeft - tr.scrollLeft, inView = seen && left < w - 24 && left + el.offsetWidth > 24;
+        if (inView !== el.classList.contains("is-in")) el.classList.toggle("is-in", inView);
         el.style.transform = on ? `perspective(1100px) rotateY(${(-d * 26).toFixed(2)}deg) translateY(${(a * 18).toFixed(1)}px) scale(${(1.1 - a * 0.22).toFixed(3)})` : "";
         el.style.opacity = on ? (1 - a * 0.5).toFixed(3) : "";
         el.style.zIndex = String(10 - Math.round(a * 10));
@@ -74,16 +77,23 @@ export function Carousel({ head, children, label }: { head: ReactNode; children:
     const timer = 0;
     const stop = () => { hold.current = true; window.clearTimeout(resume); };
     const start = () => { window.clearTimeout(resume); resume = window.setTimeout(() => { hold.current = false; }, 2600); };
-    const io = new IntersectionObserver((e) => { seen = e.some((x) => x.isIntersecting); box.classList.toggle("is-pop", seen); }, { threshold: 0.12 });
+    let touching = false;
+    const io = new IntersectionObserver((e) => { seen = e.some((x) => x.isIntersecting); box.classList.toggle("is-pop", seen); ask(); }, { threshold: 0.12 });
+    // Moving the mouse across the row pushes it the other way, so new cards keep arriving under the pointer.
+    const onMouse = (e: MouseEvent) => { if (!isOn() || e.buttons) return; tr.scrollLeft += e.movementX * -0.7; pos = -1; };
+    tr.addEventListener("mousemove", onMouse);
+    tr.addEventListener("touchstart", () => { touching = true; }, { passive: true });
+    tr.addEventListener("touchend", () => { touching = false; }, { passive: true });
+    tr.addEventListener("touchcancel", () => { touching = false; }, { passive: true });
     io.observe(tr);
     kids().forEach((el, i) => el.style.setProperty("--k", String(i % 7)));
     // The page scroll drives the row too (both ways), so cards keep arriving and popping as the reader scrolls.
     let lastY = window.scrollY;
     const onPage = () => {
       const y = window.scrollY, dy = y - lastY; lastY = y;
-      if (!seen || hold.current || !isOn()) return;
+      if (!seen || touching || !isOn()) return; // keeps working with the mouse resting on the row
       const max = tr.scrollWidth - tr.clientWidth;
-      tr.scrollLeft = clamp(tr.scrollLeft + dy * 0.6, 0, max);
+      tr.scrollLeft = clamp(tr.scrollLeft + dy * 0.9, 0, max);
       pos = -1;
     };
     window.addEventListener("scroll", onPage, { passive: true });
