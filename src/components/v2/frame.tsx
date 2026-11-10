@@ -6,6 +6,7 @@ import { LIVE_CATEGORY_SLUGS } from "@/config/live-categories";
 
 import "./v2.css";
 import { useGlassMotion } from "@/components/home/use-glass-motion";
+import { OrbitMenu, type OrbitLink } from "@/components/home/scroll-story";
 import { useFounderWorkspace, removeShortlistIdea, clearShortlist, MAX_SHORTLIST } from "@/lib/founder-workspace";
 
 /**
@@ -108,6 +109,24 @@ export function Header({ active: _active }: { active?: string | undefined }) {
       if (!pinned.current && !ref.current?.querySelector(".mm-panel:focus-within, .mm-disclosure:focus-within")) setOpen(null);
     }, 180);
   };
+  // Cinema header (founder, 10 Nov 2026): slides away while the reader scrolls down, returns on the first
+  // scroll up, and draws a thin red line showing how far down the page they are.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let last = window.scrollY, raf = 0;
+    const run = () => {
+      raf = 0;
+      const y = window.scrollY, max = document.documentElement.scrollHeight - window.innerHeight;
+      el.style.setProperty("--read", String(max > 0 ? Math.min(1, y / max) : 0));
+      if (y < 240 || y < last - 4) el.classList.remove("is-away");
+      else if (y > last + 4 && !el.querySelector('[aria-expanded="true"]')) el.classList.add("is-away");
+      last = y;
+    };
+    const ask = () => { if (!raf) raf = requestAnimationFrame(run); };
+    window.addEventListener("scroll", ask, { passive: true });
+    return () => { window.removeEventListener("scroll", ask); if (raf) cancelAnimationFrame(raf); };
+  }, []);
   useEffect(() => {
     const out = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -290,7 +309,15 @@ function FounderShortlistTray({ shortlist }: { shortlist: ReturnType<typeof useF
   </aside>;
 }
 
-export function V2Frame({ active, children, showShortlistTray = true, ember = true }: { active?: string | undefined; children: ReactNode; showShortlistTray?: boolean; ember?: boolean }) {
+// Round menu on every page (founder, 10 Nov 2026). Pages may pass their own section links.
+const ORBIT_DEFAULT: OrbitLink[] = [
+  { label: "Browse ideas", href: "/browse" },
+  { label: "Validate an idea", href: "/product" },
+  { label: "Startup cost calculators", href: "/calculator" },
+  { label: "Site map", href: "/sitemap" },
+];
+
+export function V2Frame({ active, children, showShortlistTray = true, ember = true, orbit }: { active?: string | undefined; children: ReactNode; showShortlistTray?: boolean; ember?: boolean; orbit?: OrbitLink[] }) {
   useGlassMotion();
   const { shortlist } = useFounderWorkspace();
   const trayVisible = showShortlistTray && shortlist.length > 0;
@@ -300,6 +327,7 @@ export function V2Frame({ active, children, showShortlistTray = true, ember = tr
       <main className={"flex-grow " + (trayVisible ? "pb-56 sm:pb-40" : "")}>{children}</main>
       <Footer />
       {trayVisible && <FounderShortlistTray shortlist={shortlist} />}
+      <OrbitMenu links={orbit ?? ORBIT_DEFAULT} raised={trayVisible} />
     </div>
   );
 }
