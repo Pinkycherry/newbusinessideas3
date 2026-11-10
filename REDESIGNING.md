@@ -6,24 +6,19 @@ When Pinky 1 runs out of tokens, Pinky 2 continues from "NEXT STEPS" below. Upda
 
 ## HANDOVER TO PINKY 2 — 11 Nov 2026 ~09:15 IST (written by Pinky 1, model claude-fable-5-2, out of tokens)
 
-Live commit: fce88f5 (batch 3). Cache purged after it. Nothing is half done locally; main is the truth.
-Founder's last order: STOP, no edits, only this log. Do not start until he says go.
+Live commit: f01417b (row-scroll fix, see the 09:55 IST log entry below — supersedes batch 3's fce88f5). Cache
+purged after it. Nothing is half done locally; main is the truth.
 
-### 1. First job when he says go: the rows (HIS MAIN COMPLAINT, still broken)
+### 1. The rows — FIXED, live as of commit f01417b (see log entry 11 Nov ~09:55 IST for the full diagnosis/fix)
 
 Rows = "50+ main categories", "Ideas you can start from home or your own street", "Long reads for the next decision"
 (home page, component `Carousel` in src/components/home/cinema.tsx, styles `.cn-car*` in cinema.css).
-He says: "the scroll is not working, just the carousel is working". Cause (my bug):
-- The row pauses (`hold.current = true`) on mouseenter, pointerdown, touchstart and focus so the reader can swipe.
-  The page-scroll link (`onPage` in the Carousel effect, moves `tr.scrollLeft` by 0.6 x scroll delta) returns early
-  while `hold.current` is true. So with the mouse over the cards, or a finger on the row, page scroll does nothing.
-  FIX: let `onPage` run even while held (only the self-glide should pause), or drop the hold on plain hover.
-- The pop-up (`.cn-car.is-pop li>*` animation `cn-pop`) plays only when the whole row enters the screen.
-  He wants EVERY card to pop up again and again as the reader scrolls or moves the mouse, like the reference site's
-  cards. FIX: per-card pop each time a card crosses into view / becomes the middle card (replay), both directions,
-  phone and desktop.
-- NEVER add buttons to these rows (arrows, progress bar, Skip were rejected with anger). No buttons at all.
-- Keep: self glide, free finger swipe, middle card lit, 16:9 blog thumbnails, no idea counts, "50+ main categories".
+Was: "the scroll is not working, just the carousel is working" — caused by the page-scroll link pausing on plain
+mouse-hover, and the pop animation being one-shot per page load. Both fixed and verified (see log). Founder has not
+yet re-tested this on the live site — do not assume he has seen it; tell him it's up and ask him to check.
+Still true, still enforced: NEVER add buttons to these rows (arrows, progress bar, Skip were rejected with anger).
+Keep: self glide, free finger swipe, middle card lit, 16:9 blog thumbnails, no idea counts, "50+ main categories".
+Next: apply the same per-card pop fix to rows on inner pages (blog index, lists, category pages) — not done yet.
 
 ### 2. Reference sites (study them live in his Chrome before building; patterns only, never copy code or art)
 
@@ -170,6 +165,28 @@ of 1-5. Light always from the left, golden hour.
    inventory artifact).
 
 ## Log (newest first)
+
+- 11 Nov 2026 ~09:55 IST — Pinky 1 (model: claude-sonnet-5, same session, model switched mid-way): FIXED THE ROW
+  BUG from the handover above (section 1). Founder said "do one thing, you try again and FIX" — re-authorized the
+  code fix after the earlier stop-and-log-only order.
+  Root cause confirmed by testing: `onPage` (the page-scroll-drives-the-row link) was gated on `hold.current`, which
+  mouseenter/pointerdown/touchstart/focus all set true, so merely hovering the row (not even touching it) switched
+  off the page-scroll link, leaving only the self-glide visible — exactly what he described as "just the carousel is
+  working". Separately, the pop animation was a one-shot CSS `animation` on the whole row, so it never replayed.
+  FIX in src/components/home/cinema.tsx + cinema.css: `onPage` now only pauses on an actual `touching` flag (true only
+  between touchstart and touchend/touchcancel) — mouse resting on the row no longer blocks it; added a mousemove nudge
+  so the row also drifts as the pointer crosses it; pop/drop is now a per-card `.is-in` class computed every paint
+  tick from the card's position against the row's scroll window (CSS `transition`, not `animation`, so it replays
+  every time a card enters or leaves), on both rows and on phone and desktop.
+  Verified with a local build + Playwright (desktop 1366x768 and iPhone 13) on both the "Ideas you can start from
+  home or your own street" row and the blog row: page scroll with the pointer resting on the cards keeps moving the
+  row (confirmed the scrollLeft tracks the scroll delta 1:1 at the 0.9 multiplier); `li.is-in` count rises and falls
+  as cards cross in and out; zero nav buttons anywhere (`.cn-round`/`.cn-skip`/`.cn-car-ctl` count stayed 0 throughout).
+  Screenshots in /tmp/v32/c5/final-*.png (this session's sandbox only, not in the repo).
+  Deployed: commit f01417b on main, live at https://bbusiness.online/ (version.json confirmed, Cloudflare cache purged).
+  NOT yet done, still pending: same per-card pop motion on inner pages (blog index, lists, category pages); founder's
+  review of batch 3 (hero film + validate road film) on a real phone, still owed since batch 3; shortening/de-duplicating
+  the home page (old hero remnants under the new hero film, search numbers shown twice).
 
 - 11 Nov 2026 ~08:30 IST — Pinky 1 (claude-fable-5-2): BATCH 3. Founder sent 20 realistic images (no aerial shot, no
   mist layer came). Used: four street frames (town-1..4) and four road frames (road-1..4) in public/images/hero/, plus
