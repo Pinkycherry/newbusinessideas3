@@ -878,18 +878,23 @@ body.ember main section{content-visibility:auto;contain-intrinsic-size:auto 700p
   @keyframes e-title{from{opacity:.01;filter:blur(10px);transform:translateY(16px) scale(1.05);clip-path:inset(0 0 100% 0)}to{clip-path:inset(-20% -20% -20% -20%)}}
 }
 
-/* Header light lines (11 Nov 2026): thin lines flow across the bar and meet beside the brand name */
-.mm-header .mm-nav{overflow:hidden;isolation:isolate}
-.mm-header .mm-nav>*:not(.mm-waves){position:relative;z-index:1}
-.mm-waves{position:absolute;left:clamp(150px,16vw,196px);right:0;top:0;width:auto;height:100%;z-index:0;pointer-events:none;fill:none;
-  -webkit-mask-image:linear-gradient(90deg,#000,#000 30%,rgba(0,0,0,.35));mask-image:linear-gradient(90deg,#000,#000 30%,rgba(0,0,0,.35))}
-.mm-wave{stroke:rgba(224,27,31,.3);stroke-width:.8}
-.mm-wave:nth-child(3n){stroke:rgba(255,255,255,.14)}
-.mm-wave-light{stroke:#ff5a4f;stroke-width:1.5;stroke-linecap:round;stroke-dasharray:.07 1;stroke-dashoffset:1.07;animation:mm-flow 6s linear infinite}
-.mm-wave-light.is-white{stroke:#fff}
-@keyframes mm-flow{to{stroke-dashoffset:0}}
-.mm-header .mm-brand{text-shadow:0 0 18px rgba(224,27,31,.55)}
-.mm-header .mm-brand::after{content:"";display:inline-block;width:7px;height:7px;margin-left:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(224,27,31,.3),0 0 16px 4px rgba(224,27,31,.9);vertical-align:middle;animation:mm-dot 2.4s ease-in-out infinite}
-@keyframes mm-dot{50%{transform:scale(.6);opacity:.7}}
-@media (prefers-reduced-motion:reduce){.mm-wave-light,.mm-header .mm-brand::after{animation:none}}
-@media print{.mm-waves{display:none}}
+/* Header connection lines (11 Nov 2026, reference pattern): hub under the open menu word, curves to a ring per column */
+@media (min-width:1024px){
+  .ember .mm-header .mm-panel.open{padding-top:84px!important}
+  .mm-wire{position:absolute;left:0;top:0;pointer-events:none;overflow:visible;fill:none}
+  .mm-wire path{stroke:#e01b1f;stroke-width:1.4;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:mm-wire .55s cubic-bezier(.3,.7,.2,1) forwards}
+  .mm-wire-hub{fill:#ff3b30;filter:drop-shadow(0 0 8px rgba(224,27,31,.95));transform-box:fill-box;transform-origin:center;animation:mm-pop .4s .1s cubic-bezier(.3,1.6,.5,1) both}
+  .mm-wire-ring{fill:#0f0c0c;stroke:#e01b1f;stroke-width:1.6;transform-box:fill-box;transform-origin:center;animation:mm-pop .35s cubic-bezier(.3,1.6,.5,1) both}
+  .ember .mm-header .mm-panel a.mm-wire-all{position:absolute;top:14px;font:700 15px/24px Inter,system-ui,sans-serif;color:#fff!important;text-decoration:none;white-space:nowrap;animation:mm-fade .4s .15s both}
+  .ember .mm-header .mm-panel a.mm-wire-all span{color:#ff4f4f!important;margin-left:6px;display:inline-block;transition:transform .25s}
+  .ember .mm-header .mm-panel a.mm-wire-all:hover span{transform:translateX(5px)}
+  .ember .mm-header .mm-panel.open .mm-col{animation:mm-col .45s cubic-bezier(.2,.7,.2,1) both}
+  .ember .mm-header .mm-panel.open .mm-col:nth-child(2){animation-delay:.05s}.ember .mm-header .mm-panel.open .mm-col:nth-child(3){animation-delay:.1s}
+  .ember .mm-header .mm-panel.open .mm-col:nth-child(4){animation-delay:.15s}.ember .mm-header .mm-panel.open .mm-col:nth-child(5){animation-delay:.2s}.ember .mm-header .mm-panel.open .mm-col:nth-child(6){animation-delay:.25s}
+}
+@media (max-width:1023px){.mm-wire,.mm-wire-all{display:none}}
+@keyframes mm-wire{to{stroke-dashoffset:0}}
+@keyframes mm-pop{from{transform:scale(0)}}
+@keyframes mm-fade{from{opacity:0;transform:translateX(-8px)}}
+@keyframes mm-col{from{opacity:0;transform:translateY(14px)}}
+@media (prefers-reduced-motion:reduce){.mm-wire path{animation:none;stroke-dashoffset:0}.mm-wire-hub,.mm-wire-ring,.mm-wire-all,.mm-col{animation:none!important}}

@@ -10,9 +10,8 @@ import { STARTUP_GUIDES } from "@/lib/guides-data";
 import { TOPIC_PAGES } from "@/data/topic-pages";
 import { getHomeLive, type HomeIdea } from "@/lib/home-live.functions";
 import { TEAM, contactEmail, ORGANISATION_NAME } from "@/lib/site-config";
-import { IndiaInfographic } from "@/components/home/india-infographic";
-import { CountUp, HeroStreams, IndiaJourney } from "@/components/home/scroll-story";
-import { Carousel, OrbitRing, ProcessBento, Quad, StoryRail, Tunnel, type VizKind } from "@/components/home/cinema";
+import { CountUp, HeroStreams } from "@/components/home/scroll-story";
+import { Carousel, OrbitRing, ProcessBento, Quad, SearchDemand, StoryRail, Tunnel, useTypedPlaceholder, type VizKind } from "@/components/home/cinema";
 
 /**
  * Home page for bbusiness.online (6 Nov 2026). Free for every reader in India: no prices, no
@@ -98,7 +97,6 @@ const card = "rounded-2xl border border-slate-200 bg-white transition duration-2
 const sec = "py-10 sm:py-14";
 // Round section menu (scroll story): labels are the page's own section names.
 const ORBIT = [
-  { label: "India map", href: "#india-map" },
   { label: "Why we started", href: "#why-we-started" },
   { label: "Our working process", href: "#how-we-research" },
   { label: "FAQ", href: "#faq" },
@@ -122,6 +120,7 @@ const INSIDE = [
   { ic: "/icons/ui/ui-launch.webp", t: "Made for your phone", d: "Light pages, no app needed" },
 ];
 
+const TYPED = ["tiffin service", "home tuition", "tailoring", "zero investment", "work from home", "side hustle"];
 const STRIP = ["Home Kitchen Food", "Tuition and Coaching", "Tailoring and Boutique", "Beauty", "Reselling", "Street Food"];
 
 /**
@@ -154,6 +153,16 @@ const GLIMPSE: [string, string][] = [
   ["Local Service", "small-town-business-ideas-india-local-market-shop-service-youth.webp"],
 ];
 
+
+/** Monthly searches across India: the founder's own paid keyword research, November 2026. Update monthly. */
+const DEMAND = [
+  { label: "new business ideas", n: 802911, to: "/browse" },
+  { label: "zero investment business ideas", n: 651371, to: "/category/side-hustle-business-ideas" },
+  { label: "low investment business ideas", n: 472897, to: "/category/home-based-business-ideas" },
+  { label: "work from home ideas", n: 349721, to: "/category/work-from-home-business-ideas" },
+  { label: "side hustles", n: 294305, to: "/category/side-hustle-business-ideas" },
+  { label: "small business ideas", n: 142339, to: "/lists" },
+];
 
 /** The story, in order. Every line is already published on /about and /founders. */
 const STORY = [
@@ -224,6 +233,7 @@ function HomePage() {
     return () => window.clearInterval(t);
   }, [heroPool.length, heroHold]);
   const featured = heroPool[heroAt] ?? live.recent[0];
+  const typed = useTypedPlaceholder(TYPED);
   const fresh = live.recent.slice(1, 9);
   const reads = live.street.length >= 12 ? live.street : fresh;
   const categories = hub.categories;
@@ -414,10 +424,10 @@ function HomePage() {
           </div>
           <div className="relative">
             <Sparkle className="absolute -top-6 left-4 hidden h-7 w-7 text-[#4643ba] lg:block" />
-            <div className="rounded-3xl bg-white p-3 shadow-[0_30px_60px_-35px_rgba(70,67,186,0.6)] ring-1 ring-[#4643ba]/10 sm:p-4">
+            <div className="cn-lib rounded-3xl bg-white p-3 shadow-[0_30px_60px_-35px_rgba(70,67,186,0.6)] ring-1 ring-[#4643ba]/10 sm:p-4">
               <form action="/search" method="get" className="eh-search flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2 ring-1 ring-slate-200">
                 <Search aria-hidden size={16} className="text-slate-400" />
-                <input name="q" type="search" placeholder="Search ideas, categories or keywords…" aria-label="Search the library" className="min-w-0 flex-1 bg-transparent text-sm outline-none" />
+                <input ref={typed} name="q" type="search" placeholder="Search ideas, categories or keywords…" aria-label="Search the library" className="min-w-0 flex-1 bg-transparent text-sm outline-none" />
               </form>
               <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-[11rem_1fr]">
                 <ul className="eh-cats hidden space-y-1 sm:block">
@@ -426,7 +436,7 @@ function HomePage() {
                     <li key={c.slug}><Link to="/category/$categorySlug" params={{ categorySlug: c.slug }} className="eh-cat block truncate rounded-lg px-2.5 py-1.5 text-xs text-slate-600">{c.name.replace(/ Business Ideas$/, "")}</Link></li>
                   ))}
                 </ul>
-                <ul className="space-y-2">
+                <ul className="cn-lib-rows space-y-2">
                   {fresh.slice(0, 4).map((i) => (
                     <li key={i.slug}>
                       <a href={`/idea/${i.slug}`} className="group flex items-center gap-3 rounded-xl p-2 ring-1 ring-slate-100 transition hover:bg-[#f6f5ff] hover:ring-[#4643ba]/20">
@@ -446,16 +456,15 @@ function HomePage() {
         </div>
       </section>
 
-      {/* 3D India: where women are starting up, state by state */}
-      <section className={"relative bg-[linear-gradient(180deg,#ffffff,#f3f1ff_40%,#faf9ff)] " + sec} data-reveal id="india-map">
+      {/* What India is searching for: the founder's own keyword research (monthly searches, all India) */}
+      <section className={"relative " + sec} data-reveal id="india-searches">
         <div className={wrap}>
           <div className="mx-auto max-w-3xl text-center">
-            <p className={eyebrow}>The anatomy of India's startups, 2026</p>
-            <h2 className={h2}>1 lakh women are already building. Your state is on this map.</h2>
-            <p className="mt-3 text-slate-600">The number of startups with at least one woman director or partner in each state, as recognised by the Government of India.</p>
+            <p className={eyebrow}>What India is searching for</p>
+            <h2 className={h2}>Lakhs of people search for a business idea every month. You are not alone.</h2>
+            <p className="mt-3 text-slate-600">Six searches people across India type when they want to start something of their own.</p>
           </div>
-          <div className="mt-8"><IndiaJourney /></div>
-          <div className="mt-8"><IndiaInfographic hideMap /></div>
+          <SearchDemand rows={DEMAND} note="Monthly searches across India, from our own keyword research, November 2026. We update these numbers every month." />
         </div>
       </section>
 
@@ -705,22 +714,28 @@ function HomePage() {
 
       {/* Blog: heading and a 16:9 image only */}
       {posts.length > 0 && (
-        <section data-ember="blog" id="blog">
-          <Tunnel head={
-            <>
-              <p className={eyebrow}>From the blog</p>
-              <h2 className={h2}>Long reads for the next decision.</h2>
-              <Link to="/blog" className={more + " mt-1"}>All articles <ArrowRight size={16} /></Link>
-            </>
+        <section data-reveal data-ember="blog" id="blog" className={sec}>
+          <Carousel label="Articles from the blog" head={
+          <div className={wrap}>
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <p className={eyebrow}>From the blog</p>
+                <h2 className={h2}>Long reads for the next decision.</h2>
+              </div>
+              <Link to="/blog" className={more}>All articles <ArrowRight size={16} /></Link>
+            </div>
+          </div>
           }>
-            {posts.slice(0, 6).map((p) => (
-              <a key={p.slug} href={`/blog/${p.slug}`} className="cn-post">
-                {p.image && <img src={p.image} alt={p.imageAlt ?? ""} loading="lazy" width={640} height={360} />}
-                <b>{p.title}</b>
-                <span>Read the article <ArrowRight size={14} /></span>
-              </a>
+            {posts.map((p) => (
+              <li key={p.slug}>
+                <a href={`/blog/${p.slug}`} className="cn-postcard">
+                  {p.image && <img src={p.image} alt={p.imageAlt ?? ""} loading="lazy" width={640} height={360} />}
+                  <b>{p.title}</b>
+                  <span>Read the article <ArrowRight size={14} /></span>
+                </a>
+              </li>
             ))}
-          </Tunnel>
+          </Carousel>
         </section>
       )}
 

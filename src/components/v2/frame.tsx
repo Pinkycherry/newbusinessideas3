@@ -82,11 +82,9 @@ function MegaPanel({ m }: { m: MMenu }) {
 
 const MEGA = MENUS.map((m) => ({ label: m.label, Panel: () => <MegaPanel m={m} /> }));
 
-/** Header light lines: each starts at the right edge and bends into one point beside the brand name. */
-const WAVES = [-34, -22, -12, -4, 4, 12, 22, 34, 48, -48].map((dy, i) => {
-  const y = 30 + dy * 1.7, c1 = 620 - i * 14, c2 = 240 + (i % 3) * 40;
-  return `M1000 ${y.toFixed(1)} C ${c1} ${(30 + dy * 2.2).toFixed(1)}, ${c2} ${(30 - dy * 0.5).toFixed(1)}, 0 30`;
-});
+/** Where each menu's "All ..." link goes: the hub of the connection lines in its panel. */
+const HUBS: Record<string, [string, string]> = { Ideas: ["All business ideas", "/browse"], Lists: ["All idea lists", "/lists"], Validate: ["Validate an idea", "/product"], Tools: ["All tools", "/tools"], Learn: ["All guides", "/startup-guides"] };
+type Wire = { i: number; w: number; hub: number; xs: number[] };
 
 function Logo({ footer = false }: { footer?: boolean }) {
   return <a className={footer ? "mm-brand mm-brand-footer" : "mm-brand"} href="/" aria-label="bbusiness.online home">
@@ -103,6 +101,26 @@ export function Header({ active: _active }: { active?: string | undefined }) {
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const ref = useRef<HTMLElement>(null);
   const pinned = useRef(false);
+  // Connection lines (founder, 11 Nov 2026, as on the reference): a red line drops from the open menu word
+  // to a hub, then curves run from the hub to a ring beside every column. Measured when a panel opens.
+  const [wire, setWire] = useState<Wire | null>(null);
+  useEffect(() => {
+    if (open === null) return;
+    const measure = () => {
+      const root = ref.current;
+      const panel = root?.querySelector<HTMLElement>(`#mm-panel-${open}`);
+      const trig = root?.querySelector<HTMLElement>(`#mm-trigger-${open}`);
+      if (!panel || !trig) return;
+      const pr = panel.getBoundingClientRect(), tr = trig.getBoundingClientRect();
+      const cols = Array.from(panel.querySelectorAll<HTMLElement>(".mm-col"));
+      const top = cols[0]?.getBoundingClientRect().top ?? 0;
+      const xs = cols.filter((c) => Math.abs(c.getBoundingClientRect().top - top) < 4).map((c) => c.getBoundingClientRect().left - pr.left + (c.classList.contains("mm-col-box") ? 22 : 6));
+      setWire({ i: open, w: pr.width, hub: Math.min(pr.width - 30, Math.max(30, tr.left + tr.width / 2 - pr.left)), xs });
+    };
+    const raf = requestAnimationFrame(measure);
+    window.addEventListener("resize", measure);
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", measure); };
+  }, [open]);
   const cancel = () => {
     if (timer.current) clearTimeout(timer.current);
     timer.current = null;
@@ -159,11 +177,6 @@ export function Header({ active: _active }: { active?: string | undefined }) {
   return (
     <header ref={ref} className="mm-header" data-header-version="2026-10-28">
       <nav className="mm-nav" aria-label="Main navigation">
-        {/* Light lines that flow across the bar into the brand name (founder, 11 Nov 2026; CSS only, so raw pages get them too) */}
-        <svg className="mm-waves" aria-hidden="true" viewBox="0 0 1000 60" preserveAspectRatio="none" focusable="false">
-          {WAVES.map((w, i) => <path key={"l" + i} d={w} className="mm-wave" vectorEffect="non-scaling-stroke" />)}
-          {WAVES.map((w, i) => <path key={"p" + i} d={w} pathLength={1} className={"mm-wave-light" + (i % 3 === 0 ? " is-white" : "")} vectorEffect="non-scaling-stroke" style={{ animationDelay: `${-(i * 0.83).toFixed(2)}s`, animationDuration: `${5 + (i % 4) * 1.3}s` }} />)}
-        </svg>
         <Logo />
         <div className="mm-desktop">
           {MEGA.map((m, i) => <div key={m.label} className="mm-disclosure" onMouseEnter={() => show(i)} onMouseLeave={hideSoon}>
@@ -187,6 +200,15 @@ export function Header({ active: _active }: { active?: string | undefined }) {
       {MEGA.map(({label, Panel}, i) => <div key={label} id={`mm-panel-${i}`} className={`mm-panel${open === i ? " open" : ""}`}
         aria-labelledby={`mm-trigger-${i}`} hidden={open !== i} onMouseEnter={cancel} onMouseLeave={hideSoon}
         onBlur={(e) => { if (!ref.current?.contains(e.relatedTarget as Node | null)) setOpen(null); }}>
+        {wire && wire.i === i && open === i ? <>
+          <svg className="mm-wire" aria-hidden="true" width={wire.w} height={66} viewBox={`0 0 ${wire.w} 66`} focusable="false">
+            <path pathLength={1} d={`M${wire.hub} 0 V26`} />
+            {wire.xs.map((x, k) => <path key={k} pathLength={1} style={{ animationDelay: `${0.12 + k * 0.05}s` }} d={`M${wire.hub} 26 C ${wire.hub} 50, ${x} 30, ${x} 58`} />)}
+            {wire.xs.map((x, k) => <circle key={"c" + k} cx={x} cy={60} r={4} className="mm-wire-ring" style={{ animationDelay: `${0.4 + k * 0.05}s` }} />)}
+            <circle cx={wire.hub} cy={26} r={5.5} className="mm-wire-hub" />
+          </svg>
+          {HUBS[label] ? <a className="mm-wire-all" href={HUBS[label][1]} style={wire.hub > wire.w * 0.7 ? { right: wire.w - wire.hub + 16 } : { left: wire.hub + 16 }}>{HUBS[label][0]} <span aria-hidden="true">→</span></a> : null}
+        </> : null}
         <Panel />
       </div>)}
       <nav id="mm-mobile" className="mm-mobile" aria-label="Mobile navigation" hidden={!mobile}>

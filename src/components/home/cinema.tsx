@@ -52,17 +52,34 @@ export function Carousel({ head, children, label }: { head: ReactNode; children:
     };
     const ask = () => { if (!raf) raf = requestAnimationFrame(paint); };
     const to = (i: number) => {
-      const list = kids(), el = list[(i + list.length) % list.length];
+      const list = kids(), el = list[Math.max(0, Math.min(list.length - 1, i))];
       if (el) tr.scrollTo({ left: el.offsetLeft + el.offsetWidth / 2 - tr.clientWidth / 2, behavior: isOn() ? "smooth" : "auto" });
     };
     (box as HTMLDivElement & { go?: (d: number) => void }).go = (d) => to(mid() + d);
-    // Drifts one card to the left every few seconds; stops while the reader touches, points at or tabs into it.
-    const timer = window.setInterval(() => { if (seen && !hold.current && !document.hidden && isOn()) to(mid() + 1); }, 3200);
+    // Cinematic drift: the row glides left by itself, slowly, and turns round at each end. Touching,
+    // pointing at or tabbing into the row hands it to the reader (free swipe); it starts again after a pause.
+    let drift = 0, dir = 1, pos = -1, lastT = 0;
+    const glide = (now: number) => {
+      drift = requestAnimationFrame(glide);
+      const dt = Math.min(48, now - (lastT || now)); lastT = now;
+      if (!seen || hold.current || document.hidden || !isOn()) { pos = -1; return; }
+      const max = tr.scrollWidth - tr.clientWidth;
+      if (max <= 0) return;
+      if (pos < 0) pos = tr.scrollLeft;
+      pos += dir * dt * 0.045;
+      if (pos >= max) { pos = max; dir = -1; } else if (pos <= 0) { pos = 0; dir = 1; }
+      tr.scrollLeft = pos;
+    };
+    drift = requestAnimationFrame(glide);
+    const timer = 0;
     const stop = () => { hold.current = true; window.clearTimeout(resume); };
-    const start = () => { window.clearTimeout(resume); resume = window.setTimeout(() => { hold.current = false; }, 5000); };
-    const io = new IntersectionObserver((e) => { seen = e.some((x) => x.isIntersecting); }, { threshold: 0.35 });
+    const start = () => { window.clearTimeout(resume); resume = window.setTimeout(() => { hold.current = false; }, 2600); };
+    const io = new IntersectionObserver((e) => { seen = e.some((x) => x.isIntersecting); }, { threshold: 0.2 });
     io.observe(tr);
     tr.addEventListener("scroll", ask, { passive: true });
+    tr.addEventListener("wheel", (e) => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { stop(); start(); } }, { passive: true });
+    tr.addEventListener("touchstart", stop, { passive: true });
+    tr.addEventListener("touchend", start, { passive: true });
     box.addEventListener("pointerdown", stop);
     box.addEventListener("pointerup", start);
     box.addEventListener("pointercancel", start);
@@ -75,7 +92,7 @@ export function Carousel({ head, children, label }: { head: ReactNode; children:
     paint();
     const first = window.setTimeout(ask, 700);
     return () => {
-      window.clearTimeout(first); window.clearInterval(timer); window.clearTimeout(resume); io.disconnect();
+      window.clearTimeout(first); window.clearInterval(timer); cancelAnimationFrame(drift); window.clearTimeout(resume); io.disconnect();
       tr.removeEventListener("scroll", ask); window.removeEventListener("resize", ask); window.removeEventListener("ss-motion", ask);
       box.removeEventListener("pointerdown", stop); box.removeEventListener("pointerup", start); box.removeEventListener("pointercancel", start);
       box.removeEventListener("mouseenter", stop); box.removeEventListener("mouseleave", start); box.removeEventListener("focusin", stop); box.removeEventListener("focusout", start);
@@ -115,16 +132,18 @@ export function Tunnel({ head, children, tone = "" }: { head?: ReactNode; childr
   useStickyProgress(wrapRef, (p) => {
     items.current.forEach((el, i) => {
       if (!el) return;
-      const t = p * (n + 0.35) - i; // below 0: far away; 0 to 1: passing the reader; above 1: gone
-      const far = clamp(1 + t / 3);
-      const s = t < 0 ? 0.22 + 0.33 * far : 0.55 + 0.6 * clamp(t * 1.6) + 0.5 * clamp((t - 0.75) / 0.25);
-      const o = t < 0 ? 0.04 + 0.3 * far : t < 0.75 ? 1 : clamp(1 - (t - 0.75) / 0.25);
-      const side = (i % 2 ? 1 : -1) * (t < 0 ? 16 * (1 - far) + 7 : 7 * (1 - clamp(t * 2.2)));
-      el.style.transform = `translate(-50%,-50%) translateX(${side.toFixed(1)}vw) scale(${s.toFixed(3)})`;
-      el.style.opacity = o.toFixed(3);
-      el.style.zIndex = String(t >= 0 && t <= 1 ? 50 : 20 - Math.abs(Math.round(t)));
-      el.style.pointerEvents = t >= 0 && o > 0.6 ? "auto" : "none";
-      el.classList.toggle("is-now", t >= 0 && t < 0.75);
+      // Each item owns one equal slice of the scroll: it rises from the distance, holds still in the
+      // middle of the frame, then passes the reader. Only one item is ever on screen, so nothing overlaps.
+      const t = p * n - i;
+      const inn = clamp(t / 0.28), out = clamp((t - 0.78) / 0.22);
+      const vis = t > -0.02 && t < 1.02;
+      const sc = 0.55 + 0.45 * (1 - Math.pow(1 - inn, 3)) + 0.7 * out * out;
+      el.style.transform = `translate(-50%,-50%) scale(${sc.toFixed(3)})`;
+      el.style.opacity = vis ? (inn * (1 - out)).toFixed(3) : "0";
+      el.style.visibility = vis ? "visible" : "hidden";
+      el.style.zIndex = vis ? "50" : "1";
+      el.style.pointerEvents = vis && out < 0.5 && inn > 0.6 ? "auto" : "none";
+      el.classList.toggle("is-now", vis && inn > 0.5 && out < 0.5);
     });
     rings.current.forEach((el, k) => {
       if (!el) return;
@@ -323,4 +342,73 @@ export function OrbitRing({ items, centre }: { items: { img: string; t: string; 
       <div className="cn-orbit-core">{centre}</div>
     </div>
   );
+}
+
+/* ------------------------------------------------------------ Search demand */
+
+export type Demand = { label: string; n: number; to: string };
+
+/** The founder's own keyword research: monthly searches in India. Numbers count up when the row scrolls in. */
+export function SearchDemand({ rows, note }: { rows: Demand[]; note: string }) {
+  const ref = useRef<HTMLOListElement>(null);
+  const max = Math.max(...rows.map((r) => r.n));
+  useEffect(() => {
+    const root = ref.current;
+    if (!root) return;
+    const fmt = (v: number) => Math.round(v).toLocaleString("en-IN");
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      const li = e.target as HTMLElement, out = li.querySelector<HTMLElement>("[data-n]");
+      li.classList.add("is-in");
+      if (!out) return;
+      const end = Number(out.dataset["n"]);
+      if (!isOn()) { out.textContent = fmt(end); return; }
+      const t0 = performance.now();
+      const tick = (now: number) => { const t = clamp((now - t0) / 1600); out.textContent = fmt(end * (1 - Math.pow(1 - t, 3))); if (t < 1) requestAnimationFrame(tick); };
+      requestAnimationFrame(tick);
+    }), { threshold: 0.4 });
+    Array.from(root.children).forEach((c) => io.observe(c));
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div className="cn cn-demand">
+      <ol ref={ref}>
+        {rows.map((r, i) => (
+          <li key={r.label} style={{ ["--w" as string]: `${Math.round((r.n / max) * 100)}%`, ["--i" as string]: String(i) }}>
+            <a href={r.to}>
+              <span className="cn-d-q"><i aria-hidden>“</i>{r.label}<i aria-hidden>”</i></span>
+              <b data-n={r.n}>{r.n.toLocaleString("en-IN")}</b>
+              <span className="cn-d-bar" aria-hidden><u /></span>
+              <span className="cn-d-go">See these ideas <svg viewBox="0 0 24 24" aria-hidden><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
+            </a>
+          </li>
+        ))}
+      </ol>
+      <p className="cn-d-note">{note}</p>
+    </div>
+  );
+}
+
+/** Types example searches into a search box placeholder, one after another. */
+export function useTypedPlaceholder(words: string[]) {
+  const ref = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !words.length) return;
+    const base = el.placeholder;
+    let w = 0, c = 0, del = false, t = 0;
+    const step = () => {
+      if (!isOn() || document.activeElement === el) { el.placeholder = base; t = window.setTimeout(step, 1200); return; }
+      const word = words[w % words.length] ?? "";
+      c += del ? -1 : 1;
+      el.placeholder = word.slice(0, c) + "▍";
+      let wait = del ? 40 : 95;
+      if (!del && c >= word.length) { del = true; wait = 1300; } else if (del && c <= 0) { del = false; w++; wait = 350; }
+      t = window.setTimeout(step, wait);
+    };
+    t = window.setTimeout(step, 1200);
+    return () => { window.clearTimeout(t); el.placeholder = base; };
+  }, [words]);
+  return ref;
 }

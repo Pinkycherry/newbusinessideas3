@@ -8,9 +8,9 @@
 .cn-round:active{transform:scale(.92)}
 
 /* ---------- Carousel */
-.cn-car-track{display:flex;gap:16px;margin:22px 0 0!important;padding:26px 0 34px!important;list-style:none;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory!important;scrollbar-width:none;-webkit-overflow-scrolling:touch;outline:none}
+.cn-car-track{display:flex;gap:16px;margin:22px 0 0!important;padding:26px 0 34px!important;list-style:none;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:none!important;scrollbar-width:none;-webkit-overflow-scrolling:touch;outline:none}
 .cn-car-track::-webkit-scrollbar{display:none}
-.cn-car-track>li{flex:none;scroll-snap-align:center!important;transform-origin:50% 60%;will-change:transform,opacity}
+.cn-car-track>li{flex:none;transform-origin:50% 60%;will-change:transform,opacity}
 .cn-car-ctl{display:flex;align-items:center;justify-content:center;gap:12px;padding:0 16px}
 .cn-car-bar{position:relative;flex:1;max-width:260px;height:3px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden}
 .cn-car-bar span{position:absolute;inset:0;border-radius:3px;background:linear-gradient(90deg,#8b0100,#e01b1f,#ff5a4f);transform:scaleX(0);transform-origin:left;transition:transform .2s linear}
@@ -212,3 +212,46 @@ html.ss-on .cn-fly :is(.cn-person span,.cn-person small,.cn-post b){transition:o
 html.ss-on .cn-fly:not(.is-now) .cn-person b{opacity:0}
 html.ss-on .cn-fly .cn-person b{transition:opacity .3s}
 .cn-car-track::before,.cn-car-track::after{content:"";flex:none;width:calc(50vw - min(37vw,150px) - 16px)}
+
+/* Carousel v2: free swipe, no snapping; wide screens start at the page gutter instead of the middle */
+.cn-car-track{cursor:grab;touch-action:pan-x pan-y}
+@media (min-width:900px){.cn-car-track::before{width:max(8px,calc((100vw - 72rem) / 2 + 8px))}.cn-car-track::after{width:calc(50vw - 170px)}}
+/* Blog cards: 16:9 picture on top, title under it */
+.cn-postcard{display:block;width:min(80vw,400px);border-radius:22px;overflow:hidden;text-decoration:none;background:linear-gradient(180deg,#1b1516,#0b0b0c)!important;border:1px solid var(--line);
+  box-shadow:0 34px 60px -38px rgba(224,27,31,.7),0 20px 44px -26px #000;transition:border-color .3s,box-shadow .3s}
+.cn-postcard img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.cn-postcard b{display:block;padding:14px 16px 4px;font-family:Anton,Impact,sans-serif;font-weight:400;font-size:1.2rem;line-height:1.2;color:rgba(255,255,255,.78)!important;transition:color .4s}
+.cn-postcard span{display:inline-flex;align-items:center;gap:6px;padding:6px 16px 16px;font:700 11.5px/1 Inter,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#ff4f4f!important}
+.cn-postcard span svg{width:14px;height:14px;transition:transform .3s}
+.is-mid>.cn-postcard,.cn-postcard:hover{border-color:rgba(224,27,31,.85);box-shadow:0 46px 80px -38px rgba(224,27,31,.95),0 26px 54px -26px #000}
+.is-mid>.cn-postcard b,.cn-postcard:hover b{color:#fff!important}
+.is-mid>.cn-postcard span svg,.cn-postcard:hover span svg{transform:translateX(6px)}
+/* Tunnel v2: steadier, one at a time */
+html.ss-on .cn-tunnel{height:calc(100svh + var(--n,4) * 62svh)}
+html.ss-on .cn-fly{visibility:hidden}
+html.ss-on .cn-fly:not(.is-now) :is(.cn-person span,.cn-person small,.cn-post b),html.ss-on .cn-fly:not(.is-now) .cn-person b{opacity:1}
+/* Search demand */
+.cn-demand ol{display:grid;gap:12px;margin:28px 0 0;padding:0;list-style:none}
+.cn-demand li{opacity:0;transform:translateY(34px) scale(.97);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.cn-demand li.is-in,html:not(.ss-on) .cn-demand li{opacity:1;transform:none}
+.cn-demand a{position:relative;display:grid;grid-template-columns:1fr;gap:6px;padding:18px 18px 16px;border-radius:22px;overflow:hidden;text-decoration:none;isolation:isolate;border:1px solid var(--line);
+  background:radial-gradient(90% 120% at 0% 0%,rgba(224,27,31,.26),transparent 60%),linear-gradient(165deg,#1c1617,#0a0a0b 65%)!important;box-shadow:0 30px 60px -40px rgba(224,27,31,.7),0 20px 40px -28px #000;transition:border-color .3s,transform .3s}
+.cn-demand a:hover{border-color:rgba(224,27,31,.85);transform:translateY(-3px)}
+.cn-d-q{font:600 14px/1.3 Inter,system-ui,sans-serif;color:rgba(255,255,255,.82)!important}
+.cn-d-q i{font-style:normal;color:#ff4f4f}
+.cn-demand b{font-family:Anton,Impact,sans-serif;font-weight:400;font-size:clamp(2.6rem,12vw,4.4rem);line-height:1;letter-spacing:.01em;color:#fff!important;font-variant-numeric:tabular-nums}
+.cn-d-bar{display:block;height:6px;border-radius:6px;background:rgba(255,255,255,.08);overflow:hidden}
+.cn-d-bar u{display:block;height:100%;width:var(--w);border-radius:6px;background:linear-gradient(90deg,#8b0100,#e01b1f,#ff5a4f);transform:scaleX(0);transform-origin:left;transition:transform 1.6s cubic-bezier(.2,.7,.2,1) .15s;box-shadow:0 0 14px rgba(224,27,31,.8)}
+.cn-demand li.is-in .cn-d-bar u,html:not(.ss-on) .cn-d-bar u{transform:none}
+.cn-d-go{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font:700 12px/1 Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#ff4f4f!important}
+.cn-d-go svg{width:15px;height:15px;transition:transform .3s}
+.cn-demand a:hover .cn-d-go svg{transform:translateX(6px)}
+.cn-d-note{margin:14px 0 0;font-size:12px;line-height:1.5;color:rgba(255,255,255,.55)!important}
+@media (min-width:760px){.cn-demand ol{grid-template-columns:repeat(2,1fr);gap:16px}.cn-demand a{padding:24px 26px 22px}}
+@media (min-width:1100px){.cn-demand ol{grid-template-columns:repeat(3,1fr)}}
+/* Inside the library: the mini browser tilts in and its rows take turns being lit */
+html.ss-on .cn-lib{animation:cn-lib linear both;animation-timeline:view();animation-range:entry 0% cover 40%;transform-origin:50% 100%}
+@keyframes cn-lib{from{opacity:.2;transform:perspective(1200px) rotateX(24deg) rotateY(-10deg) scale(.86);filter:blur(4px)}}
+html.ss-on .cn-lib-rows>li{animation:cn-lit 8s ease-in-out infinite;animation-delay:calc(var(--i,0) * 2s)}
+@keyframes cn-lit{0%,22%{transform:translateX(8px);filter:brightness(1.35)}26%,100%{transform:none;filter:none}}
+html.ss-on .cn-lib-rows>li:nth-child(1){--i:0}html.ss-on .cn-lib-rows>li:nth-child(2){--i:1}html.ss-on .cn-lib-rows>li:nth-child(3){--i:2}html.ss-on .cn-lib-rows>li:nth-child(4){--i:3}

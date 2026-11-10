@@ -480,28 +480,56 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
     window.scrollTo({ top, behavior: isOn() ? "smooth" : "auto" });
   };
   void links;
+  const [wide, setWide] = useState(true);
+  useEffect(() => {
+    const m = window.matchMedia("(min-width: 1024px)");
+    const on = () => setWide(m.matches);
+    on();
+    m.addEventListener("change", on);
+    return () => m.removeEventListener("change", on);
+  }, []);
   if (!host) return null;
+
+  // The fan (as on the reference): each section of THIS page is a pill on a curve beside the button, joined
+  // to it by a dotted line. At most seven sections, picked evenly, so the fan always fits the screen.
+  const pick = toc.length <= 7 ? toc : Array.from({ length: 7 }, (_, k) => toc[Math.round((k * (toc.length - 1)) / 6)]!).filter((x, k, a) => a.indexOf(x) === k);
+  type Item = { key: string; node: ReactNode; small?: boolean; on?: boolean };
+  const items: Item[] = [
+    ...pick.map((x, k) => ({ key: "s" + k, on: x.on, node: <button type="button" title={x.t} onClick={() => go(x.el)}><span className="ss-fan-no">{String(toc.indexOf(x) + 1).padStart(2, "0")}</span>{x.t}</button> })),
+    { key: "top", small: true, node: <button type="button" onClick={toTop}>Back to top</button> },
+    { key: "motion", small: true, node: <button type="button" onClick={toggleMotion} aria-pressed={paused}>{paused ? "Play motion" : "Pause motion"}</button> },
+  ];
+  const n = items.length;
+  const vh = typeof window === "undefined" ? 800 : window.innerHeight;
+  const gap = wide ? Math.min(50, (vh - 120) / Math.max(1, n)) : Math.min(46, (vh - 92 - 30 - 84) / Math.max(1, n));
+  const place = (i: number) => {
+    if (wide) {
+      const u = n > 1 ? (i / (n - 1)) * 2 - 1 : 0; // -1 top, 1 bottom
+      return { x: -(58 + 64 * Math.cos((u * Math.PI) / 2)), y: (i - (n - 1) / 2) * gap };
+    }
+    const k = n - 1 - i; // first section highest, last item nearest the button
+    const u = n > 1 ? k / (n - 1) : 0;
+    return { x: -(8 + 40 * Math.sin(u * Math.PI)), y: -(58 + k * gap) };
+  };
 
   // On the body, so no page section or the footer can sit above it.
   return createPortal(
     <>
       <span aria-hidden className="ss-vignette" />
       <div className={"ss-orbit" + (open ? " is-open" : "") + (shown ? " is-shown" : "") + (raised ? " is-raised" : "")}>
-        <div className="ss-toc" role="dialog" aria-label="On this page" hidden={!open}>
-          <p className="ss-toc-h">On this page</p>
-          <ol>
-            {toc.map((x, i) => (
-              <li key={i} style={{ ["--i" as string]: String(i) }}>
-                <button type="button" className={x.on ? "is-on" : ""} onClick={() => go(x.el)}><span>{String(i + 1).padStart(2, "0")}</span>{x.t}</button>
+        <ul className="ss-fan" aria-hidden={!open} aria-label="On this page">
+          {items.map((it, i) => {
+            const { x, y } = place(i);
+            const len = Math.hypot(x, y), ang = (Math.atan2(y, x) * 180) / Math.PI;
+            return (
+              <li key={it.key} className={(it.small ? "is-small" : "") + (it.on ? " is-on" : "")} style={{ ["--x" as string]: `${x.toFixed(1)}px`, ["--y" as string]: `${y.toFixed(1)}px`, ["--i" as string]: String(i) }}>
+                <span aria-hidden className="ss-fan-line" style={{ width: `${Math.max(0, len - 44).toFixed(1)}px`, transform: `rotate(${(ang + 180).toFixed(2)}deg)` }} />
+                {it.node}
               </li>
-            ))}
-          </ol>
-          <div className="ss-toc-foot">
-            <button type="button" onClick={toTop}>Back to top</button>
-            <button type="button" onClick={toggleMotion} aria-pressed={paused}>{paused ? "Play motion" : "Pause motion"}</button>
-          </div>
-        </div>
-        <button type="button" className="ss-orbit-btn" aria-expanded={open} aria-label="On this page: table of contents" onClick={toggle}>
+            );
+          })}
+        </ul>
+        <button type="button" className="ss-orbit-btn" aria-expanded={open} aria-label="On this page: sections and back to top" onClick={toggle}>
           <svg viewBox="0 0 60 60" aria-hidden>
             <circle cx="30" cy="30" r="27" className="ss-orbit-track" />
             <circle ref={ring} cx="30" cy="30" r="27" pathLength={1} className="ss-orbit-fill" />
