@@ -877,3 +877,19 @@ body.ember main section{content-visibility:auto;contain-intrinsic-size:auto 700p
   .ember main h1{animation:e-title 1s cubic-bezier(.2,.7,.2,1) both}
   @keyframes e-title{from{opacity:.01;filter:blur(10px);transform:translateY(16px) scale(1.05);clip-path:inset(0 0 100% 0)}to{clip-path:inset(-20% -20% -20% -20%)}}
 }
+
+/* Header light lines (11 Nov 2026): thin lines flow across the bar and meet beside the brand name */
+.mm-header .mm-nav{overflow:hidden;isolation:isolate}
+.mm-header .mm-nav>*:not(.mm-waves){position:relative;z-index:1}
+.mm-waves{position:absolute;left:clamp(150px,16vw,196px);right:0;top:0;width:auto;height:100%;z-index:0;pointer-events:none;fill:none;
+  -webkit-mask-image:linear-gradient(90deg,#000,#000 30%,rgba(0,0,0,.35));mask-image:linear-gradient(90deg,#000,#000 30%,rgba(0,0,0,.35))}
+.mm-wave{stroke:rgba(224,27,31,.3);stroke-width:.8}
+.mm-wave:nth-child(3n){stroke:rgba(255,255,255,.14)}
+.mm-wave-light{stroke:#ff5a4f;stroke-width:1.5;stroke-linecap:round;stroke-dasharray:.07 1;stroke-dashoffset:1.07;animation:mm-flow 6s linear infinite}
+.mm-wave-light.is-white{stroke:#fff}
+@keyframes mm-flow{to{stroke-dashoffset:0}}
+.mm-header .mm-brand{text-shadow:0 0 18px rgba(224,27,31,.55)}
+.mm-header .mm-brand::after{content:"";display:inline-block;width:7px;height:7px;margin-left:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(224,27,31,.3),0 0 16px 4px rgba(224,27,31,.9);vertical-align:middle;animation:mm-dot 2.4s ease-in-out infinite}
+@keyframes mm-dot{50%{transform:scale(.6);opacity:.7}}
+@media (prefers-reduced-motion:reduce){.mm-wave-light,.mm-header .mm-brand::after{animation:none}}
+@media print{.mm-waves{display:none}}

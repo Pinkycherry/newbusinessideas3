@@ -1,6 +1,5 @@
 import { Children, useEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import { createPortal } from "react-dom";
-import { Link } from "@tanstack/react-router";
 import { MAP_CITIES, MAP_H, MAP_STATES, MAP_W, type MapState } from "@/data/india-map";
 import "./scroll-story.css";
 
@@ -19,13 +18,13 @@ import "./scroll-story.css";
  */
 
 const fmt = (n: number) => n.toLocaleString("en-IN");
-const clamp = (n: number, a = 0, b = 1) => Math.min(b, Math.max(a, n));
+export const clamp = (n: number, a = 0, b = 1) => Math.min(b, Math.max(a, n));
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 const KEY = "bbi-motion";
-const isOn = () => typeof document !== "undefined" && document.documentElement.classList.contains("ss-on");
+export const isOn = () => typeof document !== "undefined" && document.documentElement.classList.contains("ss-on");
 
 /** Progress (0 to 1) of a tall wrapper as it scrolls past its sticky stage. One rAF per scroll burst. */
-function useStickyProgress(ref: RefObject<HTMLElement | null>, cb: (p: number) => void) {
+export function useStickyProgress(ref: RefObject<HTMLElement | null>, cb: (p: number) => void) {
   const fn = useRef(cb);
   fn.current = cb;
   useEffect(() => {
@@ -411,7 +410,7 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
       let k = 0;
       const vh = window.innerHeight;
       Array.from(document.querySelectorAll<HTMLElement>(CARD_SEL)).slice(0, 500).forEach((el) => {
-        if (el.closest(".ss-reel,.ss-india,.ss-tunnel,.g-marquee,.e-mq,.mm-header,.v2-footer,[data-loop-copy]") || el.parentElement?.closest(".ss-rise")) return;
+        if (el.closest(".cn,.ss-reel,.ss-india,.ss-tunnel,.g-marquee,.e-mq,.mm-header,.v2-footer,[data-loop-copy]") || el.parentElement?.closest(".ss-rise")) return;
         const r = el.getBoundingClientRect();
         if (r.top < vh || r.height > vh * 1.4 || r.height < 24) return;
         const pos = getComputedStyle(el).position;
@@ -456,56 +455,53 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
 
   const [host, setHost] = useState<HTMLElement | null>(null);
   useEffect(() => setHost(document.body), []);
-  const [wide, setWide] = useState(true);
-  useEffect(() => {
-    const m = window.matchMedia("(min-width: 1024px)");
-    const on = () => setWide(m.matches);
-    on();
-    m.addEventListener("change", on);
-    return () => m.removeEventListener("change", on);
-  }, []);
-  const closeTimer = useRef<number | null>(null);
-  const hoverOpen = () => { if (closeTimer.current) window.clearTimeout(closeTimer.current); if (wide) setOpen(true); };
-  const hoverClose = () => { if (wide) closeTimer.current = window.setTimeout(() => setOpen(false), 260); };
-  if (!host) return null;
-
-  // The fan: every link sits on a curve beside the button, joined to it by a dotted line (as on the
-  // reference). Desktop: a column centred on the button. Phones: the column climbs up from the button.
-  type Item = { key: string; node: ReactNode; small?: boolean };
-  const items: Item[] = [
-    ...links.map((l) => ({ key: l.href, node: l.href.startsWith("#") ? <a href={l.href} onClick={() => setOpen(false)}>{l.label}</a> : <Link to={l.href} onClick={() => setOpen(false)}>{l.label}</Link> })),
-    { key: "top", small: true, node: <button type="button" onClick={toTop}>Back to top</button> },
-    { key: "motion", small: true, node: <button type="button" onClick={toggleMotion} aria-pressed={paused}>{paused ? "Play motion" : "Pause motion"}</button> },
-  ];
-  const n = items.length, gap = wide ? 50 : 46;
-  const place = (i: number) => {
-    if (wide) {
-      const u = n > 1 ? (i / (n - 1)) * 2 - 1 : 0; // -1 top, 1 bottom
-      return { x: -(58 + 64 * Math.cos((u * Math.PI) / 2)), y: (i - (n - 1) / 2) * gap };
-    }
-    const k = n - 1 - i; // first link highest, last one nearest the button
-    const u = n > 1 ? k / (n - 1) : 0;
-    return { x: -(6 + 44 * Math.sin(u * Math.PI)), y: -(62 + k * gap) };
+  // Table of contents (founder, 11 Nov 2026): the round button lists THIS page's own sections, read from
+  // its headings each time it opens, plus Back to top. No site menu here: that is the header's job.
+  const [toc, setToc] = useState<{ t: string; el: HTMLElement; on: boolean }[]>([]);
+  const scan = () => {
+    const hs = Array.from(document.querySelectorAll<HTMLElement>("main h2")).filter((h) => h.offsetParent !== null && (h.textContent ?? "").trim().length > 2 && !h.closest("[aria-hidden=true],[data-loop-copy],details,.mm-header,.cn-fly"));
+    const y = window.innerHeight * 0.45;
+    let cur = -1;
+    hs.forEach((h, i) => { if (h.getBoundingClientRect().top < y) cur = i; });
+    setToc(hs.slice(0, 16).map((h, i) => ({ t: (h.textContent ?? "").trim().replace(/\s+/g, " "), el: h, on: i === cur })));
   };
+  const toggle = () => { if (!open) scan(); setOpen(!open); };
+  useEffect(() => {
+    if (!open) return;
+    const out = (e: Event) => { if (!(e.target as HTMLElement).closest?.(".ss-orbit")) setOpen(false); };
+    const esc = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    document.addEventListener("pointerdown", out);
+    document.addEventListener("keydown", esc);
+    return () => { document.removeEventListener("pointerdown", out); document.removeEventListener("keydown", esc); };
+  }, [open]);
+  const go = (el: HTMLElement) => {
+    setOpen(false);
+    const top = el.getBoundingClientRect().top + window.scrollY - 84;
+    window.scrollTo({ top, behavior: isOn() ? "smooth" : "auto" });
+  };
+  void links;
+  if (!host) return null;
 
   // On the body, so no page section or the footer can sit above it.
   return createPortal(
     <>
       <span aria-hidden className="ss-vignette" />
-      <div className={"ss-orbit" + (open ? " is-open" : "") + (shown ? " is-shown" : "") + (raised ? " is-raised" : "")} onMouseEnter={hoverOpen} onMouseLeave={hoverClose}>
-        <ul className="ss-fan" aria-hidden={!open}>
-          {items.map((it, i) => {
-            const { x, y } = place(i);
-            const len = Math.hypot(x, y), ang = (Math.atan2(y, x) * 180) / Math.PI;
-            return (
-              <li key={it.key} className={it.small ? "is-small" : ""} style={{ ["--x" as string]: `${x.toFixed(1)}px`, ["--y" as string]: `${y.toFixed(1)}px`, ["--i" as string]: String(i) }}>
-                <span aria-hidden className="ss-fan-line" style={{ width: `${Math.max(0, len - 30).toFixed(1)}px`, transform: `rotate(${(ang + 180).toFixed(2)}deg)` }} />
-                {it.node}
+      <div className={"ss-orbit" + (open ? " is-open" : "") + (shown ? " is-shown" : "") + (raised ? " is-raised" : "")}>
+        <div className="ss-toc" role="dialog" aria-label="On this page" hidden={!open}>
+          <p className="ss-toc-h">On this page</p>
+          <ol>
+            {toc.map((x, i) => (
+              <li key={i} style={{ ["--i" as string]: String(i) }}>
+                <button type="button" className={x.on ? "is-on" : ""} onClick={() => go(x.el)}><span>{String(i + 1).padStart(2, "0")}</span>{x.t}</button>
               </li>
-            );
-          })}
-        </ul>
-        <button type="button" className="ss-orbit-btn" aria-expanded={open} aria-label="Menu" onClick={() => setOpen((o) => (wide ? true : !o))}>
+            ))}
+          </ol>
+          <div className="ss-toc-foot">
+            <button type="button" onClick={toTop}>Back to top</button>
+            <button type="button" onClick={toggleMotion} aria-pressed={paused}>{paused ? "Play motion" : "Pause motion"}</button>
+          </div>
+        </div>
+        <button type="button" className="ss-orbit-btn" aria-expanded={open} aria-label="On this page: table of contents" onClick={toggle}>
           <svg viewBox="0 0 60 60" aria-hidden>
             <circle cx="30" cy="30" r="27" className="ss-orbit-track" />
             <circle ref={ring} cx="30" cy="30" r="27" pathLength={1} className="ss-orbit-fill" />

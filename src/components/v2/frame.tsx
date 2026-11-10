@@ -82,6 +82,12 @@ function MegaPanel({ m }: { m: MMenu }) {
 
 const MEGA = MENUS.map((m) => ({ label: m.label, Panel: () => <MegaPanel m={m} /> }));
 
+/** Header light lines: each starts at the right edge and bends into one point beside the brand name. */
+const WAVES = [-34, -22, -12, -4, 4, 12, 22, 34, 48, -48].map((dy, i) => {
+  const y = 30 + dy * 1.7, c1 = 620 - i * 14, c2 = 240 + (i % 3) * 40;
+  return `M1000 ${y.toFixed(1)} C ${c1} ${(30 + dy * 2.2).toFixed(1)}, ${c2} ${(30 - dy * 0.5).toFixed(1)}, 0 30`;
+});
+
 function Logo({ footer = false }: { footer?: boolean }) {
   return <a className={footer ? "mm-brand mm-brand-footer" : "mm-brand"} href="/" aria-label="bbusiness.online home">
     bbusiness<span>.online</span>
@@ -153,6 +159,11 @@ export function Header({ active: _active }: { active?: string | undefined }) {
   return (
     <header ref={ref} className="mm-header" data-header-version="2026-10-28">
       <nav className="mm-nav" aria-label="Main navigation">
+        {/* Light lines that flow across the bar into the brand name (founder, 11 Nov 2026; CSS only, so raw pages get them too) */}
+        <svg className="mm-waves" aria-hidden="true" viewBox="0 0 1000 60" preserveAspectRatio="none" focusable="false">
+          {WAVES.map((w, i) => <path key={"l" + i} d={w} className="mm-wave" vectorEffect="non-scaling-stroke" />)}
+          {WAVES.map((w, i) => <path key={"p" + i} d={w} pathLength={1} className={"mm-wave-light" + (i % 3 === 0 ? " is-white" : "")} vectorEffect="non-scaling-stroke" style={{ animationDelay: `${-(i * 0.83).toFixed(2)}s`, animationDuration: `${5 + (i % 4) * 1.3}s` }} />)}
+        </svg>
         <Logo />
         <div className="mm-desktop">
           {MEGA.map((m, i) => <div key={m.label} className="mm-disclosure" onMouseEnter={() => show(i)} onMouseLeave={hideSoon}>

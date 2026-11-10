@@ -11,7 +11,8 @@ import { TOPIC_PAGES } from "@/data/topic-pages";
 import { getHomeLive, type HomeIdea } from "@/lib/home-live.functions";
 import { TEAM, contactEmail, ORGANISATION_NAME } from "@/lib/site-config";
 import { IndiaInfographic } from "@/components/home/india-infographic";
-import { CardReel, CountUp, FaqTunnel, HeroStreams, IndiaJourney } from "@/components/home/scroll-story";
+import { CountUp, HeroStreams, IndiaJourney } from "@/components/home/scroll-story";
+import { Carousel, OrbitRing, ProcessBento, Quad, StoryRail, Tunnel, type VizKind } from "@/components/home/cinema";
 
 /**
  * Home page for bbusiness.online (6 Nov 2026). Free for every reader in India: no prices, no
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/")({
     const [hub, blog, live] = await Promise.all([
       getListsHub().catch(() => ({ total: 0, categories: [] })),
       getBlogPosts({ data: { page: 1 } }).catch(() => ({ posts: [] as { slug: string; title: string; image: string | null; imageAlt: string | null }[] })),
-      getHomeLive().catch(() => ({ recent: [] as HomeIdea[], weekCount: 0 })),
+      getHomeLive().catch(() => ({ recent: [] as HomeIdea[], weekCount: 0, street: [] as HomeIdea[] })),
     ]);
     return { hub, posts: blog.posts.slice(0, 8), live };
   },
@@ -224,6 +225,7 @@ function HomePage() {
   }, [heroPool.length, heroHold]);
   const featured = heroPool[heroAt] ?? live.recent[0];
   const fresh = live.recent.slice(1, 9);
+  const reads = live.street.length >= 12 ? live.street : fresh;
   const categories = hub.categories;
   const strip = STRIP.map((n) => categories.find((c) => c.name.startsWith(n))).filter((c): c is (typeof categories)[number] => Boolean(c));
   const sideCats = categories.slice(0, 7);
@@ -525,16 +527,7 @@ function HomePage() {
             </div>
           </div>
 
-          <ol className="relative mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
-            <span aria-hidden className="absolute left-[12.5%] right-[12.5%] top-7 hidden h-0.5 bg-gradient-to-r from-[#c3bbff] via-[#7b6ff0] to-[#c3bbff] lg:block" />
-            {STORY.map(({ ic, t, d }) => (
-              <li key={t} data-stagger className="relative text-center">
-                <img src={ic} alt="" width={64} height={67} loading="lazy" decoding="async" className="eh-story-ico relative mx-auto h-16 w-16 object-contain" />
-                <h3 className="mt-3 font-display text-base font-semibold text-slate-900">{t}</h3>
-                <p className="mx-auto mt-1 max-w-[16rem] text-sm leading-relaxed text-slate-600">{d}</p>
-              </li>
-            ))}
-          </ol>
+          <StoryRail steps={STORY} />
 
           <div className="mt-12 rounded-2xl border border-[#4643ba]/15 bg-[#f7f6ff] p-5 sm:p-6">
             <h3 className="font-display text-lg font-semibold text-slate-900">What is bbusiness.online?</h3>
@@ -579,66 +572,36 @@ function HomePage() {
             <p className={eyebrow}>The bbusiness.online ecosystem</p>
             <h2 className={h2}>One free home. Eight ways to make up your mind.</h2>
           </div>
-          <div className="relative mx-auto mt-10 max-w-5xl lg:h-[640px]">
-            <svg aria-hidden viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 hidden h-full w-full lg:block">
-              <defs>
-                <linearGradient id="hubline" x1="0" x2="1"><stop offset="0" stopColor="#7b6ff0" /><stop offset=".5" stopColor="#ff7ab6" /><stop offset="1" stopColor="#5aa3ff" /></linearGradient>
-              </defs>
-              {HUB.map((_, i) => {
-                const a = -Math.PI / 2 + (i * 2 * Math.PI) / HUB.length;
-                return <line key={i} x1="50" y1="50" x2={50 + 40 * Math.cos(a)} y2={50 + 40 * Math.sin(a)} stroke="url(#hubline)" strokeWidth="0.35" strokeLinecap="round" className="g-flow" vectorEffect="non-scaling-stroke" style={{ strokeWidth: 2 }} />;
-              })}
-            </svg>
-            <div className="relative mx-auto grid h-56 w-56 place-items-center lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2" data-stagger>
-              <span aria-hidden className="absolute inset-[-34px] rounded-full border border-[#7b6ff0]/25 [transform:rotateX(70deg)]" />
-              <span aria-hidden className="absolute inset-[-58px] rounded-full border border-[#ff7ab6]/20 [transform:rotateX(70deg)_rotateY(18deg)]" />
-              <div className="g-hub grid h-full w-full place-items-center text-center">
-                <div>
-                  <p className="font-display text-2xl font-bold tracking-tight"><span className="text-slate-900">bbusiness</span><span className="bg-gradient-to-r from-[#4643ba] to-[#d6337f] bg-clip-text text-transparent">.online</span></p>
-                  <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">Free business research</p>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">for India</p>
-                </div>
-              </div>
+          <OrbitRing items={HUB} centre={
+            <div>
+              <p className="font-display text-lg font-bold tracking-tight sm:text-2xl"><span className="text-white">bbusiness</span><span className="text-[#e01b1f]">.online</span></p>
+              <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70 sm:text-[11px]">Free business research</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70 sm:text-[11px]">for India</p>
             </div>
-            <ul className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:mt-0 lg:block">
-              {HUB.map(({ img, t, d, to }, i) => {
-                const a = -Math.PI / 2 + (i * 2 * Math.PI) / HUB.length;
-                return (
-                  <li key={t} data-stagger className="lg:absolute lg:w-48 lg:-translate-x-1/2 lg:-translate-y-1/2" style={{ left: `${50 + 40 * Math.cos(a)}%`, top: `${50 + 40 * Math.sin(a)}%` }}>
-                    <a href={to} className="eh-orb flex h-full flex-col items-center p-3 text-center" style={{ "--orb-delay": `${i * 0.35}s` } as CSSProperties}>
-                      <img src={img} alt="" width={76} height={80} loading="lazy" decoding="async" className="ember-ico h-[4.75rem] w-auto" />
-                      <span className="mt-3 font-display text-[15px] font-semibold text-slate-900">{t}</span>
-                      <span className="mt-0.5 text-xs text-slate-500">{d}</span>
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          } />
         </div>
       </section>
 
       {/* Category glimpse: eight image cards, the rest on /browse */}
       {topCats.length > 0 && (
         <section className={sec} data-reveal data-ember="glimpse">
-          <CardReel rev head={
+          <Carousel label="Main categories" head={
           <div className={wrap}>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <p className={eyebrow}>The library</p>
-                <h2 className={h2}>{categories.length} categories. Here are {topCats.length} to start with.</h2>
+                <h2 className={h2}>50+ main categories. Here are {topCats.length} to start with.</h2>
               </div>
-              <Link to="/browse" className={more}>See all {categories.length} categories <ArrowRight size={16} /></Link>
+              <Link to="/browse" className={more}>See all main categories <ArrowRight size={16} /></Link>
             </div>
           </div>
           }>
               {topCats.map((c, n) => {
                 const name = c.name.replace(/ Business Ideas$/, "");
                 return (
-                  <li key={c.slug} className="ss-cat-li shrink-0">
+                  <li key={c.slug} className="ss-cat-li">
                     <Link to="/category/$categorySlug" params={{ categorySlug: c.slug }} className="ss-cat">
                       <span aria-hidden className="ss-cat-no">{String(n + 1).padStart(2, "0")}</span>
-                      <span className="ss-cat-count">{c.subs.reduce((a, x) => a + x.count, 0)} ideas</span>
                       <span className="ss-cat-name">{name.split(" ").map((w, wi) => <span key={wi} className="ss-cat-w" style={{ "--w": wi } as CSSProperties}><i>{w}</i></span>)}</span>
                       <span className="ss-cat-subs">{c.subs.slice(0, 2).map((x) => x.name.replace(/ Business Ideas$/, "")).join(" · ")}</span>
                       <span aria-hidden className="ss-cat-go"><ArrowRight size={18} /></span>
@@ -646,39 +609,41 @@ function HomePage() {
                   </li>
                 );
               })}
-          </CardReel>
-          <div>
-          </div>
+          </Carousel>
         </section>
       )}
 
-      {/* Good first reads */}
-      {fresh.length > 4 && (
-        <section data-reveal data-ember="reads" className={"border-y border-slate-200 bg-slate-50 " + sec}>
-          <CardReel head={
+      {/* Good first reads: ideas from the home and street categories, ending with the way into the lists */}
+      {reads.length > 4 && (
+        <section data-reveal data-ember="reads" className={sec}>
+          <Carousel label="Ideas you can start from home or your own street" head={
           <div className={wrap}>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <p className={eyebrow}>Good first reads</p>
                 <h2 className={h2}>Ideas you can start from home or your own street.</h2>
               </div>
-              <Link to="/browse" className={more}>See every blueprint <ArrowRight size={16} /></Link>
+              <Link to="/lists" className={more}>See the idea lists <ArrowRight size={16} /></Link>
             </div>
           </div>
           }>
-              {fresh.map((i) => (
-                <li key={i.slug} className="w-64 shrink-0 sm:w-72">
-                  <a href={`/idea/${i.slug}`} className={card + " flex h-full flex-col p-4"}>
-                    <span className="text-xs font-medium text-[#4643ba]">{i.category_name?.replace(/ Business Ideas$/, "")}</span>
-                    <span className="mt-1 font-display text-base font-semibold leading-snug text-slate-900">{i.title}</span>
-                    {i.summary && <span className="mt-1.5 line-clamp-2 text-sm text-slate-600">{i.summary}</span>}
-                    <span className="mt-auto pt-3 text-xs text-slate-400">Updated {shortDate(i.updated_at)}</span>
+              {reads.map((i) => (
+                <li key={i.slug}>
+                  <a href={`/idea/${i.slug}`} className="cn-idea">
+                    <span className="cn-idea-cat">{i.category_name?.replace(/ Business Ideas$/, "")}</span>
+                    <span className="cn-idea-t">{i.title}</span>
+                    {i.summary && <span className="cn-idea-s">{i.summary}</span>}
+                    <span className="cn-idea-go">Read the blueprint <ArrowRight size={16} /></span>
                   </a>
                 </li>
               ))}
-          </CardReel>
-          <div>
-          </div>
+              <li>
+                <div className="cn-idea cn-end">
+                  <b>More ideas, sorted into lists</b>
+                  <Link to="/lists" className={btnHero}>Open the idea lists <ArrowRight size={16} /></Link>
+                </div>
+              </li>
+          </Carousel>
         </section>
       )}
 
@@ -689,45 +654,32 @@ function HomePage() {
             <p className={eyebrow}>How we research every blueprint</p>
             <h2 className={h2}>Our working process</h2>
           </div>
-          <div className="relative mt-10">
-            <svg aria-hidden viewBox="0 0 1000 200" preserveAspectRatio="none" className="absolute inset-x-0 top-6 hidden h-40 w-full lg:block">
-              <path className="bbi-path" d="M60 150 C 200 150, 220 40, 375 40 S 560 160, 625 160 S 800 40, 940 40" fill="none" stroke="#b9b2ff" strokeWidth="2.5" pathLength={1} strokeDasharray="1" strokeDashoffset="1" />
-            </svg>
-            <ol className="relative grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {PROCESS.map(({ t, d }, i) => (
-                <li key={t} data-stagger className={"flex flex-col items-center text-center " + (i % 2 === 0 ? "lg:pt-24" : "lg:pt-0")}>
-                  <img src={["/icons/home/home-who-pays-you.webp", "/icons/home/home-how-the-money-works.webp", "/icons/home/home-what-hurts-year-one.webp", "/icons/home/home-validate.webp"][i]} alt="" width={72} height={75} loading="lazy" decoding="async" className="h-[4.5rem] w-[4.5rem] object-contain" />
-                  <img src={`/icons/numbers/number-${i + 1}.webp`} alt={`Step ${i + 1}`} width={36} height={37} loading="lazy" decoding="async" className="mt-3 h-9 w-9 object-contain" />
-                  <h3 className="mt-2 font-display text-base font-semibold text-slate-900">{t}</h3>
-                  <p className="mt-1 max-w-[15rem] text-sm leading-relaxed text-slate-600">{d}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-[0.8fr_1.2fr] [&>*]:min-w-0">
-            <div>
-              <p className={eyebrow}>The people behind it</p>
-              <h2 className={h2}>Built by hand, not by a headcount.</h2>
-              <p className="mt-3 text-sm leading-relaxed text-slate-600">Every figure traces to a real source. If we cannot verify a number, we say so instead of making one up.</p>
-              <p className="mt-3 text-sm text-slate-600">
-                Questions or corrections: <a href={`mailto:${contactEmail()}`} className="font-semibold text-[#4643ba] hover:underline">{contactEmail()}</a>
-              </p>
-            </div>
-            <ul className="grid gap-3 sm:grid-cols-2">
-              {TEAM.map((m) => (
-                <li key={m.name} data-stagger className="flex gap-3 rounded-2xl bg-white p-4 shadow-[0_12px_26px_-20px_rgba(70,67,186,0.7)] ring-1 ring-[#4643ba]/10 transition hover:-translate-y-0.5 motion-reduce:transform-none">
-                  <img aria-hidden src={`/icons/letters/letter-${m.name[0]!.toLowerCase()}.webp`} alt="" width={56} height={58} loading="lazy" decoding="async" className="h-14 w-14 shrink-0 object-contain" />
-                  <span>
-                    <span className="block text-sm font-semibold text-slate-900">{m.name}</span>
-                    <span className="block text-xs leading-relaxed text-slate-600">{m.role}</span>
-                    <span className="mt-0.5 block text-[11px] text-slate-400">{m.credential}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ProcessBento steps={PROCESS.map((p, i) => ({ ...p, viz: (["pin", "bars", "list", "verdict"] as VizKind[])[i] ?? "pin", tag: ["The buyer", "The money", "The risks", "The verdict"][i] ?? "" }))} />
         </div>
+      </section>
+
+      {/* The people behind it: each name flies through the frame, no cards */}
+      <section data-ember="team" id="team">
+        <Tunnel head={
+          <>
+            <p className={eyebrow}>The people behind it</p>
+            <h2 className={h2}>Built by hand, not by a headcount.</h2>
+            <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-slate-600">Every figure traces to a real source. If we cannot verify a number, we say so instead of making one up.</p>
+          </>
+        }>
+          {TEAM.map((m) => (
+            <div key={m.name} className="cn-person">
+              <img aria-hidden src={`/icons/letters/letter-${m.name[0]!.toLowerCase()}.webp`} alt="" width={84} height={87} loading="lazy" decoding="async" />
+              <b><i>{m.name.split(" ")[0]}</i> {m.name.split(" ").slice(1).join(" ")}</b>
+              <span>{m.role}</span>
+              <small>{m.credential}</small>
+            </div>
+          ))}
+          <div className="cn-person">
+            <b><i>Questions</i> or corrections</b>
+            <span><a href={`mailto:${contactEmail()}`} className="font-semibold text-white underline">{contactEmail()}</a></span>
+          </div>
+        </Tunnel>
       </section>
 
       {/* Tools and reading: glass infographic cards */}
@@ -737,64 +689,42 @@ function HomePage() {
             <p className={eyebrow}>Free tools and reading</p>
             <h2 className={h2}>Four steps from a hunch to a decision.</h2>
           </div>
-          <div className="relative mt-10 grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-2">
-            {[
-              { n: "01", t: "Make the numbers add up", links: tools.slice(0, 6).map((x) => ({ href: `/calculator/${x.slug}`, label: x.title })), more: ["/calculator", "All calculators"] },
-              { n: "02", t: "Answers for India", links: topics.slice(0, 5).map((x) => ({ href: `/${x.slug}`, label: x.seo.title.replace(/:.*$/, "").replace(/\?.*$/, "?") })), more: ["/topics", "All answers"] },
-              { n: "03", t: "Read before you build", links: guides.slice(0, 5).map((g) => ({ href: `/startup-guides/${g.slug}`, label: g.title.replace(/:.*$/, "") })), more: ["/startup-guides", "All guides"] },
-              { n: "04", t: "Check your own idea", links: [
-                { href: "/startup-idea-validation", label: "Validate your idea for free" },
-                { href: "/how-to-validate-a-business-idea-in-india", label: "How validation works in India" },
-                { href: "/how-to-talk-to-customers-before-starting-a-business-in-india", label: "Talk to customers before you start" },
-                { href: "/how-to-check-if-your-business-idea-is-good-in-india", label: "Is my business idea good?" },
-              ], more: ["/startup-idea-validation", "Start validating"] },
-            ].map((c) => (
-              <div key={c.n} data-stagger className="g-step">
-                <img src={`/icons/numbers/number-${Number(c.n)}.webp`} alt={`Step ${Number(c.n)}`} width={64} height={66} loading="lazy" decoding="async" className="g-step-num" />
-                <div className="g-step-card p-5 pl-6 pt-8 sm:p-6 sm:pt-9">
-                  <h3 className="font-display text-xl font-semibold uppercase tracking-wide text-slate-800">{c.t}</h3>
-                  <ul className="mt-4 grid gap-2.5">
-                    {c.links.map((l) => (
-                      <li key={l.href}><a href={l.href} className="g-link"><span>{l.label}</span><span className="g-arrow"><ArrowRight aria-hidden size={15} /></span></a></li>
-                    ))}
-                  </ul>
-                  <a href={c.more[0]} className="g-btn-light mt-5 !min-h-11">{c.more[1]} <ArrowRight size={16} /></a>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
+        <Quad items={[
+          { n: "01", viz: "bars", t: "Make the numbers add up", links: tools.slice(0, 6).map((x) => ({ href: `/calculator/${x.slug}`, label: x.title })), more: ["/calculator", "All calculators"] },
+          { n: "02", viz: "feed", t: "Answers for India", links: topics.slice(0, 5).map((x) => ({ href: `/${x.slug}`, label: x.seo.title.replace(/:.*$/, "").replace(/\?.*$/, "?") })), more: ["/topics", "All answers"] },
+          { n: "03", viz: "list", t: "Read before you build", links: guides.slice(0, 5).map((g) => ({ href: `/startup-guides/${g.slug}`, label: g.title.replace(/:.*$/, "") })), more: ["/startup-guides", "All guides"] },
+          { n: "04", viz: "scan", t: "Check your own idea", links: [
+            { href: "/startup-idea-validation", label: "Validate your idea for free" },
+            { href: "/how-to-validate-a-business-idea-in-india", label: "How validation works in India" },
+            { href: "/how-to-talk-to-customers-before-starting-a-business-in-india", label: "Talk to customers before you start" },
+            { href: "/how-to-check-if-your-business-idea-is-good-in-india", label: "Is my business idea good?" },
+          ], more: ["/startup-idea-validation", "Start validating"] },
+        ]} />
       </section>
 
       {/* Blog: heading and a 16:9 image only */}
       {posts.length > 0 && (
-        <section data-reveal data-ember="blog" className={"border-y border-slate-200 bg-slate-50 " + sec}>
-          <div className={wrap}>
-            <div className="flex flex-wrap items-end justify-between gap-3">
-              <div>
-                <p className={eyebrow}>From the blog</p>
-                <h2 className={h2}>Long reads for the next decision.</h2>
-              </div>
-              <Link to="/blog" className={more}>All articles <ArrowRight size={16} /></Link>
-            </div>
-          </div>
-          <Marquee speed={70}>
-              {posts.map((p) => (
-                <li key={p.slug} className="w-64 shrink-0 sm:w-80">
-                  <a href={`/blog/${p.slug}`} className={card + " group block h-full overflow-hidden"}>
-                    {p.image && <img src={p.image} alt={p.imageAlt ?? ""} loading="lazy" width={640} height={360} className="aspect-video w-full object-cover" />}
-                    <h3 className="p-4 font-display text-sm font-semibold leading-snug text-slate-900 group-hover:text-[#4643ba]">{p.title}</h3>
-                  </a>
-                </li>
-              ))}
-          </Marquee>
-          <div>
-          </div>
+        <section data-ember="blog" id="blog">
+          <Tunnel head={
+            <>
+              <p className={eyebrow}>From the blog</p>
+              <h2 className={h2}>Long reads for the next decision.</h2>
+              <Link to="/blog" className={more + " mt-1"}>All articles <ArrowRight size={16} /></Link>
+            </>
+          }>
+            {posts.slice(0, 6).map((p) => (
+              <a key={p.slug} href={`/blog/${p.slug}`} className="cn-post">
+                {p.image && <img src={p.image} alt={p.imageAlt ?? ""} loading="lazy" width={640} height={360} />}
+                <b>{p.title}</b>
+                <span>Read the article <ArrowRight size={14} /></span>
+              </a>
+            ))}
+          </Tunnel>
         </section>
       )}
 
       {/* FAQ and the closing call */}
-      <FaqTunnel questions={FAQ.map((f) => f.q)} target="#faq" />
       <section data-reveal data-ember="faq" id="faq" className={sec}>
         <div className={wrap}>
           <p className={eyebrow}>FAQ</p>
