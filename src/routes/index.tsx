@@ -7,6 +7,7 @@ import { getListsHub } from "@/lib/lists.functions";
 import { getBlogPosts } from "@/lib/blog.functions";
 import { READY_CALCULATORS } from "@/lib/calculators";
 import { STARTUP_GUIDES } from "@/lib/guides-data";
+import { guideImage } from "@/config/guide-imagery";
 import { TOPIC_PAGES } from "@/data/topic-pages";
 import { getHomeLive, type HomeIdea } from "@/lib/home-live.functions";
 import { TEAM, contactEmail, ORGANISATION_NAME } from "@/lib/site-config";
@@ -178,9 +179,9 @@ const SEEKERS: FilmPerson[] = [
   { who: "A tailor", line: "One machine today. A shop of their own tomorrow.", src: H + "p-tailor.webp", w: 413, h: 904, at: [6], label: "zero investment business ideas", n: D("zero investment business ideas") },
 ];
 const WALKERS: FilmPerson[] = [
-  { src: H + "p-student-after.webp", w: 333, h: 914, at: [3], group: 1 },
-  { src: H + "p-cook-after.webp", w: 261, h: 887, at: [3], group: 1 },
-  { src: H + "p-jobholder-after.webp", w: 354, h: 917, at: [3], group: 1 },
+  { src: H + "p-student-after.webp", w: 333, h: 914, at: [0, 3], group: 1 },
+  { src: H + "p-cook-after.webp", w: 261, h: 887, at: [1, 3], group: 1 },
+  { src: H + "p-jobholder-after.webp", w: 354, h: 917, at: [2, 3], group: 1 },
   { src: H + "p-tailor-after.webp", w: 351, h: 881, at: [3], group: 3 },
   { src: H + "p-village-after.webp", w: 434, h: 900, at: [3], group: 3 },
   { src: H + "p-wfh-after.webp", w: 284, h: 891, at: [3], group: 3 },
@@ -675,17 +676,18 @@ function HomePage() {
             </div>
           </div>
           }>
-              {topCats.map((c, n) => {
+              {topCats.map((c) => {
                 const name = c.name.replace(/ Business Ideas$/, "");
+                // The longest word decides the type size, so no name is ever cut in the middle of a word.
+                const longest = Math.max(...name.split(" ").map((w) => w.length));
                 return (
-                  <div key={c.slug} className="ss-cat-li">
-                    <Link to="/category/$categorySlug" params={{ categorySlug: c.slug }} className="ss-cat">
-                      <span aria-hidden className="ss-cat-no">{String(n + 1).padStart(2, "0")}</span>
-                      <span className="ss-cat-name">{name.split(" ").map((w, wi) => <span key={wi} className="ss-cat-w" style={{ "--w": wi } as CSSProperties}><i>{w}</i></span>)}</span>
-                      <span className="ss-cat-subs">{c.subs.slice(0, 2).map((x) => x.name.replace(/ Business Ideas$/, "")).join(" · ")}</span>
-                      <span aria-hidden className="ss-cat-go"><ArrowRight size={18} /></span>
-                    </Link>
-                  </div>
+                  <Link key={c.slug} to="/category/$categorySlug" params={{ categorySlug: c.slug }} className={"kc" + (longest > 10 ? " kc-s" : longest > 7 ? " kc-m" : "")}>
+                    <span className="kc-eb">Business ideas</span>
+                    <span className="kc-name">{name.split(" ").map((w, wi) => <span key={wi} className="ss-cat-w" style={{ "--w": wi } as CSSProperties}><i>{w}</i></span>)}</span>
+                    <span aria-hidden className="kc-rule" />
+                    <span className="kc-chips">{c.subs.slice(0, 3).map((x) => <span key={x.slug ?? x.name}>{x.name.replace(/ Business Ideas$/, "")}</span>)}</span>
+                    <span className="kc-go">Open category <ArrowRight size={18} /></span>
+                  </Link>
                 );
               })}
           </Deck>
@@ -792,13 +794,23 @@ function HomePage() {
             </div>
           </div>
           }>
-            {posts.slice(0, 6).map((p) => (
+            {posts.map((p) => (
               <a key={p.slug} href={`/blog/${p.slug}`} className="cn-postcard">
                 {p.image && <img src={p.image} alt={p.imageAlt ?? ""} loading="lazy" width={640} height={360} />}
                 <b>{p.title}</b>
                 <span>Read the article <ArrowRight size={14} /></span>
               </a>
             ))}
+            {STARTUP_GUIDES.map((g) => {
+              const im = guideImage(g.slug);
+              return (
+                <a key={"g-" + g.slug} href={`/startup-guides/${g.slug}`} className="cn-postcard">
+                  {im ? <img src={im.src} alt={im.alt ?? ""} loading="lazy" width={640} height={360} /> : null}
+                  <b>{g.title}</b>
+                  <span>Read the guide <ArrowRight size={14} /></span>
+                </a>
+              );
+            })}
           </Deck>
         </section>
       )}
