@@ -1,4 +1,5 @@
 import { Children, useEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
+import { Link } from "@tanstack/react-router";
 import { createPortal } from "react-dom";
 import { MAP_CITIES, MAP_H, MAP_STATES, MAP_W, type MapState } from "@/data/india-map";
 import "./scroll-story.css";
@@ -57,7 +58,7 @@ export function HeroStreams() {
     if (!cv || !ctx) return;
     let raf = 0, seen = true, w = 0, h = 0, last = 0;
     const N = window.innerWidth < 640 ? 22 : 44;
-    const lines = Array.from({ length: N }, (_, i) => ({ y: (i + 0.5) / N, bend: Math.random() * 0.5 - 0.25, sp: 0.05 + Math.random() * 0.09, off: Math.random(), red: i % 3 !== 0 }));
+    const lines = Array.from({ length: N }, (_, i) => ({ y: (Math.floor(i / 2) * 2 + 1) / N, bend: Math.random() * 0.5 - 0.25, sp: 0.05 + Math.random() * 0.09, off: Math.random(), red: i % 3 !== 0, right: i % 2 === 1 }));
     const size = () => {
       const d = Math.min(window.devicePixelRatio || 1, 1.5);
       w = cv.clientWidth; h = cv.clientHeight;
@@ -65,18 +66,19 @@ export function HeroStreams() {
       ctx.setTransform(d, 0, 0, d, 0, 0);
     };
     const pt = (l: (typeof lines)[number], t: number, fx: number, fy: number) => {
-      const y0 = l.y * h, cx = fx * 0.45, cy = y0 + l.bend * h, u = 1 - t;
-      return [2 * u * t * cx + t * t * fx - 20 * u * u, u * u * y0 + 2 * u * t * cy + t * t * fy] as const;
+      const y0 = l.y * h, x0 = l.right ? w + 20 : -20, cx = l.right ? w - (w - fx) * 0.45 : fx * 0.45, cy = y0 + l.bend * h, u = 1 - t;
+      return [u * u * x0 + 2 * u * t * cx + t * t * fx, u * u * y0 + 2 * u * t * cy + t * t * fy] as const;
     };
     const draw = (now: number) => {
       raf = 0;
-      const wide = w >= 1024;
-      const fx = wide ? w * 0.74 : w * 0.5, fy = wide ? h * 0.5 : h * 0.86;
+      // Lines come in from both edges and meet in the middle (as on the reference), not only from the left.
+      const fx = w * 0.5, fy = h * 0.46;
       ctx.clearRect(0, 0, w, h);
       for (const l of lines) {
         ctx.beginPath();
-        ctx.moveTo(-20, l.y * h);
-        ctx.quadraticCurveTo(fx * 0.45, l.y * h + l.bend * h, fx, fy);
+        const x0 = l.right ? w + 20 : -20, cx = l.right ? w - (w - fx) * 0.45 : fx * 0.45;
+        ctx.moveTo(x0, l.y * h);
+        ctx.quadraticCurveTo(cx, l.y * h + l.bend * h, fx, fy);
         ctx.strokeStyle = l.red ? "rgba(224,27,31,.2)" : "rgba(255,255,255,.1)";
         ctx.lineWidth = 0.7;
         ctx.stroke();
@@ -496,8 +498,11 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
   // to it by a dotted line. At most seven sections, picked evenly, so the fan always fits the screen.
   const pick = toc.length <= 7 ? toc : Array.from({ length: 7 }, (_, k) => toc[Math.round((k * (toc.length - 1)) / 6)]!).filter((x, k, a) => a.indexOf(x) === k);
   type Item = { key: string; node: ReactNode; small?: boolean; on?: boolean };
+  void pick;
   const items: Item[] = [
-    ...pick.map((x, k) => ({ key: "s" + k, on: x.on, node: <button type="button" title={x.t} onClick={() => go(x.el)}><span className="ss-fan-no">{String(toc.indexOf(x) + 1).padStart(2, "0")}</span>{x.t}</button> })),
+    // Founder, 11 Nov 2026 (later): the numbered list of page sections made no sense to readers; the fan
+    // carries the main menu again.
+    ...links.map((l) => ({ key: l.href, on: false, node: l.href.startsWith("#") ? <a href={l.href} onClick={() => setOpen(false)}>{l.label}</a> : <Link to={l.href} onClick={() => setOpen(false)}>{l.label}</Link> })),
     { key: "top", small: true, node: <button type="button" onClick={toTop}>Back to top</button> },
     { key: "motion", small: true, node: <button type="button" onClick={toggleMotion} aria-pressed={paused}>{paused ? "Play motion" : "Pause motion"}</button> },
   ];
@@ -531,7 +536,7 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
             );
           })}
         </ul>
-        <button type="button" className="ss-orbit-btn" aria-expanded={open} aria-label="On this page: sections and back to top" onClick={toggle}>
+        <button type="button" className="ss-orbit-btn" aria-expanded={open} aria-label="Menu and back to top" onClick={toggle}>
           <svg viewBox="0 0 60 60" aria-hidden>
             <circle cx="30" cy="30" r="27" className="ss-orbit-track" />
             <circle ref={ring} cx="30" cy="30" r="27" pathLength={1} className="ss-orbit-fill" />

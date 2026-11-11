@@ -43,7 +43,7 @@ export function Deck({ head, children, skip, step = 18, size = "tall" }: { head?
   const n = list.length;
 
   useStickyProgress(wrapRef, (p) => {
-    const f = stepped(p * (n - 1), 0.34);
+    const f = stepped(p * (n - 1), 0.5);
     const now = Math.round(f);
     const stageH = wrapRef.current ? Math.min(window.innerHeight, wrapRef.current.offsetHeight) : window.innerHeight;
     cards.current.forEach((el, i) => {

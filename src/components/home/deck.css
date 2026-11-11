@@ -89,3 +89,83 @@ html.ss-on .dp-floor{display:block;position:absolute;left:-50%;right:-50%;top:58
   html.ss-on .dk-card .ss-cat-name{font-size:3.2rem}
   html.ss-on .dk-post .cn-postcard b{font-size:1.5rem}
 }
+
+/* ================================================================ 11 Nov 2026, founder review (phone first) */
+
+/* ---- Deck speed: one swipe = about one card. Each card owns most of a screen of scrolling on phones. */
+html.ss-on .dk{height:calc(100svh + (var(--n,8) - 1) * var(--dk-step,48svh))}
+@media (pointer:coarse){html.ss-on .dk{--dk-step:82svh}}
+/* Counter, line and Skip sit right under the heading on phones, where the thumb and the eye already are */
+@media (max-width:899px){
+  html.ss-on .dk-foot{order:1;padding:10px 16px 0;width:100%}
+  html.ss-on .dk-space{order:2}
+  .dk-skip{min-height:40px;background:linear-gradient(180deg,#e8262b,#9a0a0f)!important;border-color:transparent!important;font-size:12.5px}
+}
+
+/* ---- Blog cards: the picture is always 16:9 and never cropped by the card */
+html.ss-on .dk-post .dk-card{height:auto;max-height:100%;--dk-w:440px}
+.dk-card .cn-postcard img{width:100%!important;height:auto!important;aspect-ratio:16/9!important;object-fit:cover}
+.dk-card .cn-postcard b{flex:none!important;min-height:2.4em;-webkit-line-clamp:2!important;font-size:1.25rem}
+@media (min-width:900px) and (min-height:640px){html.ss-on .dk-post .dk-card{--dk-w:560px}}
+
+/* ---- Hero film: one person at a time, large, with a search card you can read from arm's length */
+.fm .fm-people.fm-solo{display:grid!important;grid-template-columns:minmax(0,1fr);justify-items:center;align-items:end;gap:0;padding:0;top:0;height:100%}
+.fm .fm-people.fm-solo li{grid-area:1/1!important;flex:none!important;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:end;column-gap:10px;width:min(100%,640px);margin:0!important;padding:0 12px}
+.fm .fm-people.fm-solo li:nth-child(even){grid-template-columns:minmax(0,1fr) auto}
+.fm .fm-people.fm-solo li>img{grid-row:1;grid-column:1;height:min(54svh,122vw)!important;width:auto}
+.fm .fm-people.fm-solo li:nth-child(even)>img{grid-column:2}
+.fm .fm-people.fm-solo .fm-bub{grid-row:1;grid-column:2;align-self:center;align-items:flex-start;margin:0 0 9svh;padding:14px 16px 15px;max-width:none!important;white-space:normal!important;text-align:left;border-radius:18px;
+  background:rgba(10,8,8,.9);animation:none!important}
+.fm .fm-people.fm-solo li:nth-child(even) .fm-bub{grid-column:1}
+.fm .fm-solo .fm-bub i{display:none}
+.fm .fm-solo .fm-who{font:700 10px/1 Inter,system-ui,sans-serif;font-style:normal;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)!important;margin-bottom:8px;padding-bottom:7px;border-bottom:1px solid rgba(255,255,255,.18);align-self:stretch}
+.fm .fm-solo .fm-bub small{font-size:10px!important}
+.fm .fm-solo .fm-bub>span{margin-top:5px;font:800 clamp(1.02rem,4.4vw,1.35rem)/1.12 Inter,system-ui,sans-serif!important;color:#fff!important;text-transform:capitalize}
+.fm .fm-solo .fm-bub b{margin-top:8px;font-size:clamp(2rem,9.6vw,3rem)!important;color:#ff3b30!important;-webkit-text-fill-color:#ff3b30}
+.fm .fm-solo .fm-per{margin-top:3px;letter-spacing:.08em!important;text-transform:none!important;color:rgba(255,255,255,.75)!important;font-weight:600!important;font-size:11.5px!important}
+.fm .fm-solo .fm-line{margin-top:10px;padding-top:9px;border-top:1px solid rgba(255,255,255,.18);font:500 13px/1.35 Inter,system-ui,sans-serif;font-style:italic;color:#f3ecec!important;quotes:none;align-self:stretch}
+.fm .fm-solo .fm-line::before,.fm .fm-solo .fm-line::after{content:none}
+@media (min-width:821px){
+  .fm .fm-people.fm-solo li{width:min(100%,820px);column-gap:26px}
+  .fm .fm-people.fm-solo li>img{height:min(60svh,46vw)!important}
+  .fm .fm-people.fm-solo .fm-bub{margin-bottom:14svh;padding:20px 24px 22px;max-width:380px!important;justify-self:start}
+  .fm .fm-people.fm-solo li:nth-child(even) .fm-bub{justify-self:end}
+  .fm .fm-solo .fm-line{font-size:15px}
+}
+/* Words over the photograph always sit on a dark ground */
+.fm-shade{background:linear-gradient(180deg,rgba(5,4,4,.9) 0%,rgba(5,4,4,.62) 30%,rgba(5,4,4,.12) 52%,rgba(5,4,4,.2) 72%,rgba(5,4,4,.92) 100%)}
+.fm-slide .fm-p{padding:12px 14px;border-radius:14px;background:rgba(5,4,4,.66);border:1px solid rgba(255,255,255,.14);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-weight:500}
+.fm-slide .fm-p.fm-p-sm{display:inline-block;margin-top:10px;padding:8px 14px;font-size:.95rem;border-radius:999px}
+.fm-tri{display:block;width:74px;height:4px;margin-top:8px;border-radius:4px;background:linear-gradient(90deg,#ff9933 0 33.3%,#fff 33.3% 66.6%,#138808 66.6%)}
+.fm .fm-h.is-sm{font-size:clamp(1.7rem,7vw,3.4rem)!important}
+@media (max-width:820px){.fm-slide{padding-top:76px}.fm-note{bottom:4px;padding:0 64px 0 12px;text-align:left;font-size:10px}}
+
+/* ---- "How it works" film on phones: the words sit at the bottom on a dark ground, the picture stays clear above */
+@media (max-width:820px){
+  #how-it-works .fm-slide{top:auto;bottom:0;padding:70px 18px 30px;background:linear-gradient(180deg,rgba(5,4,4,0),rgba(5,4,4,.9) 34%,#050404 100%)}
+  #how-it-works .fm-no{font-size:4.4rem}
+  #how-it-works .fm-h{font-size:2.2rem!important}
+  #how-it-works .fm-slide .fm-p{background:none;border:0;padding:0;-webkit-backdrop-filter:none;backdrop-filter:none;font-size:1.02rem}
+}
+
+/* ---- Search ring: thin rings, the words and the number fit inside */
+.cn-dm-track{stroke-width:5!important}
+.cn-dm-arc{stroke-width:5!important}
+.cn-dm-ring.is-on .cn-dm-arc{stroke-width:9!important}
+.cn-dm-core{width:54%!important}
+.cn-dm-q{font-size:clamp(11px,3.3vw,14px)!important;line-height:1.2!important}
+.cn-dm-core b{font-size:clamp(1.9rem,9.5vw,3rem)!important;margin-top:6px!important}
+.cn-dm-core small{font-size:clamp(11px,3vw,13px)!important}
+.cn-dm-dial{width:min(100%,400px)!important}
+
+/* ---- Hub ring on phones: smaller middle, tiles sit clear of it */
+@media (max-width:699px){
+  .cn-orbit{width:min(100%,400px);margin-top:18px}
+  .cn-orbit-core{width:34%!important}
+  .cn-orbit-ring a{width:86px!important;margin:-38px 0 0 -43px!important}
+  .cn-orbit-ring img{width:46px!important}
+  .cn-orbit-ring b{font-size:10.5px!important;line-height:1.1!important}
+  .cn-orbit-ring li{transform:rotate(var(--a)) translateX(calc(min(100vw - 32px,400px) * .4)) rotate(calc(var(--a) * -1))!important}
+}
+@media (max-width:820px){.fm .fm-people.fm-solo .fm-bub{margin-bottom:14svh}}
+@media (max-width:699px){.cn-orbit-core{width:38%!important}.cn-orbit-core :is(b,strong,span,p){font-size:.82em!important}}

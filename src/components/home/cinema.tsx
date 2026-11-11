@@ -464,7 +464,7 @@ export function SearchDemand({ rows, note }: { rows: Demand[]; note: string }) {
     return () => cancelAnimationFrame(raf);
   }, [at, seen]);
   const pick = (i: number) => { hold.current = true; setAt(i); };
-  const R0 = 146, STEP = 17;
+  const R0 = 150, STEP = 9; // thin rings (11 Nov 2026): the middle stays clear for the words and the number
   return (
     <div ref={box} className={"cn cn-demand" + (seen ? " is-in" : "")}>
       <span className="cn-b-tag">Monthly searches · India</span>

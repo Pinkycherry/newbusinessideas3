@@ -8,7 +8,7 @@ import { clamp, isOn, useStickyProgress } from "./scroll-story";
  * time. Numbers in the bubbles are the founder's own keyword research and are drawn here, never baked
  * into an image. With motion paused (html.ss-off) it is a plain picture with the text under it.
  */
-export type FilmPerson = { src: string; w: number; h: number; at: number[]; group?: number; label?: string; n?: number };
+export type FilmPerson = { src: string; w: number; h: number; at: number[]; group?: number; label?: string; n?: number; who?: string; line?: string };
 
 export function Film({ id, frames, slides, people = [], note, alt, solo }: { id: string; frames: string[]; slides: ReactNode[]; people?: FilmPerson[]; note?: string; alt: string; solo?: boolean }) {
   const wrap = useRef<HTMLDivElement>(null);
@@ -37,7 +37,7 @@ export function Film({ id, frames, slides, people = [], note, alt, solo }: { id:
           <ul className={"fm-people" + (solo ? " fm-solo" : "")} aria-label={note}>
             {people.map((p, i) => (
               <li key={p.src} className={(p.at.includes(step) ? "is-on" : "") + (p.group ? " g" + p.group : "")} style={{ ["--i" as string]: String(i), ["--k" as string]: String(i % 3) }}>
-                {p.label ? <Bubble label={p.label} n={p.n ?? 0} on={p.at.includes(step)} /> : null}
+                {p.label ? <Bubble label={p.label} n={p.n ?? 0} on={p.at.includes(step)} who={p.who} line={p.line} /> : null}
                 <img src={p.src} alt="" width={p.w} height={p.h} loading="lazy" decoding="async" />
               </li>
             ))}
@@ -51,7 +51,7 @@ export function Film({ id, frames, slides, people = [], note, alt, solo }: { id:
   );
 }
 
-function Bubble({ label, n, on }: { label: string; n: number; on: boolean }) {
+function Bubble({ label, n, on, who, line }: { label: string; n: number; on: boolean; who?: string | undefined; line?: string | undefined }) {
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     const el = ref.current;
@@ -66,9 +66,12 @@ function Bubble({ label, n, on }: { label: string; n: number; on: boolean }) {
   }, [on, n]);
   return (
     <span className="fm-bub">
+      {who ? <em className="fm-who">{who}</em> : null}
       <small>Looking for</small>
       <span>{label}</span>
       <b ref={ref}>{n.toLocaleString("en-IN")}</b>
+      <small className="fm-per">searches a month</small>
+      {line ? <q className="fm-line">{line}</q> : null}
       <i aria-hidden /><i aria-hidden />
     </span>
   );
