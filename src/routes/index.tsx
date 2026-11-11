@@ -639,10 +639,10 @@ function HomePage() {
       {/* Validate road: the way through the library, gate by gate, ending at the open door */}
       <Film id="how-it-works" alt="A stone road leaving the town through four gateways to an open wooden door and green fields" frames={[H + "road-1.webp", H + "road-2.webp", H + "road-3.webp", H + "road-4.webp"]} people={WALKERS}
         slides={[
-          <><span className="fm-no" aria-hidden>01</span><h2 className="fm-h is-sm">Find <em>an idea</em></h2><p className="fm-p">Search, or open a category that fits your money, time and town.</p></>,
-          <><span className="fm-no" aria-hidden>02</span><p className="fm-h is-sm">Read the <em>four answers</em></p><p className="fm-p">Who pays, how the money works, what hurts, and a straight verdict.</p></>,
-          <><span className="fm-no" aria-hidden>03</span><p className="fm-h is-sm">Check it <em>for free</em></p><p className="fm-p">Press Validate on any blueprint. We never charge for it.</p><div className="fm-row"><Link to="/startup-idea-validation" className={btn3dLight}>How validating works</Link></div></>,
-          <><span className="fm-no" aria-hidden>04</span><p className="fm-h is-sm">Build it, <em>or walk away.</em></p><p className="fm-p">We say which. No sign-up, nothing to pay.</p><div className="fm-row"><Link to="/browse" className={btnHero}>Explore the library <ArrowRight size={16} /></Link></div></>,
+          <><span className="fm-no" aria-hidden>01</span><h2 className="fm-h is-sm">Start with <em>your own street.</em></h2><p className="fm-p">Type one word, or open a category that fits your money, your time and your town.</p></>,
+          <><span className="fm-no" aria-hidden>02</span><p className="fm-h is-sm">Four truths, <em>before one rupee.</em></p><p className="fm-p">Who pays you. How the money moves. What will hurt. And our straight verdict.</p></>,
+          <><span className="fm-no" aria-hidden>03</span><p className="fm-h is-sm">Test it on paper, <em>not with your savings.</em></p><p className="fm-p">Tap Validate on any blueprint. It is free, every time.</p><div className="fm-row"><Link to="/startup-idea-validation" className={btn3dLight}>How validating works</Link></div></>,
+          <><span className="fm-no" aria-hidden>04</span><p className="fm-h is-sm">Walk in sure, <em>or walk away wiser.</em></p><p className="fm-p">We tell you which. No sign-up, nothing to pay.</p><div className="fm-row"><Link to="/browse" className={btnHero}>Explore the library <ArrowRight size={16} /></Link></div></>,
         ]} />
 
       {/* The ecosystem: every kind of page around one hub */}
