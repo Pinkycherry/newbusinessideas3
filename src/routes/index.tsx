@@ -170,12 +170,12 @@ const H = "/images/hero/";
 const D = (label: string) => DEMAND.find((d) => d.label === label)?.n ?? 0;
 /** Six fictional people, one at a time, one search each, in their own safe step so nothing overlaps. */
 const SEEKERS: FilmPerson[] = [
-  { src: H + "p-student.webp", w: 324, h: 912, at: [1], label: "side hustles", n: D("side hustles") },
-  { src: H + "p-jobholder.webp", w: 349, h: 917, at: [2], label: "new business ideas", n: D("new business ideas") },
-  { src: H + "p-wfh.webp", w: 285, h: 893, at: [3], label: "work from home ideas", n: D("work from home ideas") },
-  { src: H + "p-cook.webp", w: 316, h: 906, at: [4], label: "small business ideas", n: D("small business ideas") },
-  { src: H + "p-village.webp", w: 425, h: 914, at: [5], label: "low investment business ideas", n: D("low investment business ideas") },
-  { src: H + "p-tailor.webp", w: 413, h: 904, at: [6], label: "zero investment business ideas", n: D("zero investment business ideas") },
+  { who: "A student", line: "Classes by day. A plan of your own by night.", src: H + "p-student.webp", w: 324, h: 912, at: [1], label: "side hustles", n: D("side hustles") },
+  { who: "A job holder", line: "A salary that ends before the month does.", src: H + "p-jobholder.webp", w: 349, h: 917, at: [2], label: "new business ideas", n: D("new business ideas") },
+  { who: "At home", line: "Earning without leaving home.", src: H + "p-wfh.webp", w: 285, h: 893, at: [3], label: "work from home ideas", n: D("work from home ideas") },
+  { who: "A home cook", line: "The whole street already loves this cooking.", src: H + "p-cook.webp", w: 316, h: 906, at: [4], label: "small business ideas", n: D("small business ideas") },
+  { who: "In a village", line: "No city. No big capital. Still an idea.", src: H + "p-village.webp", w: 425, h: 914, at: [5], label: "low investment business ideas", n: D("low investment business ideas") },
+  { who: "A tailor", line: "One machine today. A shop of their own tomorrow.", src: H + "p-tailor.webp", w: 413, h: 904, at: [6], label: "zero investment business ideas", n: D("zero investment business ideas") },
 ];
 const WALKERS: FilmPerson[] = [
   { src: H + "p-student-after.webp", w: 333, h: 914, at: [3], group: 1 },
@@ -284,6 +284,7 @@ function HomePage() {
           const intro = (
             <>
               <span className="fm-kick">Free for every reader in India</span>
+              <span aria-hidden className="fm-tri" />
               <h1 className="fm-h">Tired of paying just to check if <em>your idea will work?</em></h1>
               <p className="fm-p">We built a free home for real business ideas: side hustles, zero investment ideas, work from home ideas and low investment ideas. Every idea is researched, not guessed.</p>
               <span className="fm-cue">Scroll</span>
@@ -299,6 +300,7 @@ function HomePage() {
             <>
               <span className="fm-kick">Different lives</span>
               <p className="fm-h is-sm">The <em>same</em> search.</p>
+              <p className="fm-p fm-p-sm">From Kashmir to Kanyakumari, one question: where do I start?</p>
             </>
           );
           const cta = (
@@ -704,7 +706,7 @@ function HomePage() {
             </div>
           </div>
           }>
-              {reads.map((i) => (
+              {reads.slice(0, 8).map((i) => (
                 <a key={i.slug} href={`/idea/${i.slug}`} className="cn-idea">
                   <span className="cn-idea-cat">{i.category_name?.replace(/ Business Ideas$/, "")}</span>
                   <span className="cn-idea-t">{i.title}</span>
@@ -790,7 +792,7 @@ function HomePage() {
             </div>
           </div>
           }>
-            {posts.map((p) => (
+            {posts.slice(0, 6).map((p) => (
               <a key={p.slug} href={`/blog/${p.slug}`} className="cn-postcard">
                 {p.image && <img src={p.image} alt={p.imageAlt ?? ""} loading="lazy" width={640} height={360} />}
                 <b>{p.title}</b>
