@@ -12,7 +12,8 @@ import { getHomeLive, type HomeIdea } from "@/lib/home-live.functions";
 import { TEAM, contactEmail, ORGANISATION_NAME } from "@/lib/site-config";
 import { CountUp, HeroStreams } from "@/components/home/scroll-story";
 import { Film, type FilmPerson } from "@/components/home/film";
-import { OrbitRing, ProcessBento, Quad, SearchDemand, Stack, StoryRail, Tunnel, useTypedPlaceholder, type VizKind } from "@/components/home/cinema";
+import { OrbitRing, ProcessBento, Quad, SearchDemand, StoryRail, useTypedPlaceholder, type VizKind } from "@/components/home/cinema";
+import { Deck, Depth } from "@/components/home/deck";
 
 /**
  * Home page for bbusiness.online (6 Nov 2026). Free for every reader in India: no prices, no
@@ -661,7 +662,7 @@ function HomePage() {
       {/* Category glimpse: eight image cards, the rest on /browse */}
       {topCats.length > 0 && (
         <section className={sec} data-reveal data-ember="glimpse">
-          <Stack step={18} skip="Skip to ideas" head={
+          <Deck step={18} skip="Skip to ideas" head={
           <div className={wrap}>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
@@ -685,14 +686,14 @@ function HomePage() {
                   </div>
                 );
               })}
-          </Stack>
+          </Deck>
         </section>
       )}
 
       {/* Good first reads: ideas from the home and street categories, ending with the way into the lists */}
       {reads.length > 4 && (
         <section data-reveal data-ember="reads" className={sec}>
-          <Stack step={16} skip="Skip to how it works" head={
+          <Deck size="idea" step={16} skip="Skip to how it works" head={
           <div className={wrap}>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
@@ -715,7 +716,7 @@ function HomePage() {
                 <b>More ideas, sorted into lists</b>
                 <Link to="/lists" className={btnHero}>Open the idea lists <ArrowRight size={16} /></Link>
               </div>
-          </Stack>
+          </Deck>
         </section>
       )}
 
@@ -730,9 +731,9 @@ function HomePage() {
         </div>
       </section>
 
-      {/* The people behind it: each name flies through the frame, no cards */}
+      {/* The people behind it: a 3D walk-through, each person at their own distance (Depth) */}
       <section data-ember="team" id="team">
-        <Tunnel head={
+        <Depth head={
           <>
             <p className={eyebrow}>The people behind it</p>
             <h2 className={h2}>Built by hand, not by a headcount.</h2>
@@ -751,7 +752,7 @@ function HomePage() {
             <b><i>Questions</i> or corrections</b>
             <span><a href={`mailto:${contactEmail()}`} className="font-semibold text-white underline">{contactEmail()}</a></span>
           </div>
-        </Tunnel>
+        </Depth>
       </section>
 
       {/* Tools and reading: glass infographic cards */}
@@ -778,7 +779,7 @@ function HomePage() {
       {/* Blog: heading and a 16:9 image only */}
       {posts.length > 0 && (
         <section data-reveal data-ember="blog" id="blog" className={sec}>
-          <Stack step={20} skip="Skip to FAQ" head={
+          <Deck size="post" step={20} skip="Skip to FAQ" head={
           <div className={wrap}>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
@@ -796,7 +797,7 @@ function HomePage() {
                 <span>Read the article <ArrowRight size={14} /></span>
               </a>
             ))}
-          </Stack>
+          </Deck>
         </section>
       )}
 
