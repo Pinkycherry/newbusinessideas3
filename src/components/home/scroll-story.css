@@ -177,3 +177,15 @@ html.has-orbit .e-totop{display:none!important}
 .ss-toc-foot button{min-height:38px;padding:0 14px;border-radius:999px!important;border:1px solid rgba(255,255,255,.22)!important;background:#17171a!important;box-shadow:none!important;font:700 12.5px/1 Inter,system-ui,sans-serif;color:#fff!important;cursor:pointer}
 .ss-toc-foot button:first-child{background:#e01b1f!important;border-color:#e01b1f!important}
 @media (min-width:1024px){.ss-toc{bottom:auto;top:50%;right:72px;transform:translateY(-50%)}}
+
+/* Fan as the page's table of contents (12 Nov 2026): section pills in order, the current one red */
+.ss-fan button{font-weight:600}
+.ss-fan .is-on button{background:#e01b1f!important;border-color:#e01b1f!important;color:#fff!important}
+.ss-fan .ss-fan-more{display:grid!important;place-items:center;width:38px;min-height:38px!important;height:38px;padding:0!important;line-height:1!important;border-radius:50%!important}
+.ss-fan .ss-fan-more svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.ss-fan .is-small .ss-fan-menu{color:#fff!important;border-color:#e01b1f!important}
+.ss-fan-line{opacity:.55!important}
+@media (max-width:1023px){.ss-fan a,.ss-fan button{max-width:min(70vw,300px)}}
+/* While the fan is open the page steps back, so the section names read cleanly on any background */
+.ss-orbit::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(120% 90% at 100% 60%,rgba(5,4,4,.96),rgba(5,4,4,.82) 60%,rgba(5,4,4,.7));opacity:0;pointer-events:none;transition:opacity .3s}
+.ss-orbit.is-open::before{opacity:1}

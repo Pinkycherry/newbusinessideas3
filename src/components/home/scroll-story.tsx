@@ -469,7 +469,23 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
     hs.forEach((h, i) => { if (h.getBoundingClientRect().top < y) cur = i; });
     setToc(hs.slice(0, 40).map((h, i) => ({ t: (h.textContent ?? "").trim().replace(/\s+/g, " "), el: h, on: i === cur })));
   };
-  const toggle = () => { if (!open) scan(); setOpen(!open); };
+  const [start, setStart] = useState(0);
+  const toggle = () => {
+    if (!open) {
+      scan();
+      const hs = document.querySelectorAll("main h2").length;
+      void hs;
+    }
+    setOpen(!open);
+  };
+  // Open on the part of the list that holds the section being read.
+  useEffect(() => {
+    if (!open) return;
+    const cur = toc.findIndex((x) => x.on);
+    const size = window.matchMedia("(min-width: 1024px)").matches ? 7 : 5;
+    setStart(Math.max(0, Math.min(Math.max(0, toc.length - size), cur - Math.floor(size / 2))));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, toc.length]);
   useEffect(() => {
     if (!open) return;
     const out = (e: Event) => { if (!(e.target as HTMLElement).closest?.(".ss-orbit")) setOpen(false); };
@@ -501,13 +517,24 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
 
   // The fan (as on the reference): each section of THIS page is a pill on a curve beside the button, joined
   // to it by a dotted line. At most seven sections, picked evenly, so the fan always fits the screen.
-  const pick = toc.length <= 7 ? toc : Array.from({ length: 7 }, (_, k) => toc[Math.round((k * (toc.length - 1)) / 6)]!).filter((x, k, a) => a.indexOf(x) === k);
+  // Founder, 12 Nov 2026: the fan look, organised. The fan shows the page's sections IN ORDER, a few at a time
+  // around the one being read (marked red); the arrows at each end move through the rest. No numbers, no
+  // skipped sections. Menu, Back to top and Pause motion sit closest to the button.
+  const WIN = wide ? 7 : 5;
+  const maxStart = Math.max(0, toc.length - WIN);
+  const from = Math.min(start, maxStart);
+  const win = toc.slice(from, from + WIN);
   type Item = { key: string; node: ReactNode; small?: boolean; on?: boolean };
-  void pick;
+  const arrow = (dir: -1 | 1) => (
+    <button type="button" className="ss-fan-more" aria-label={dir < 0 ? "Earlier sections" : "Later sections"} onClick={() => setStart(Math.max(0, Math.min(maxStart, from + dir * (WIN - 1))))}>
+      <svg viewBox="0 0 24 24" aria-hidden><path d={dir < 0 ? "M6 15l6-6 6 6" : "M6 9l6 6 6-6"} /></svg>
+    </button>
+  );
   const items: Item[] = [
-    // Founder, 11 Nov 2026 (later): the numbered list of page sections made no sense to readers; the fan
-    // carries the main menu again.
-    ...links.map((l) => ({ key: l.href, on: false, node: l.href.startsWith("#") ? <a href={l.href} onClick={() => setOpen(false)}>{l.label}</a> : <Link to={l.href} onClick={() => setOpen(false)}>{l.label}</Link> })),
+    ...(from > 0 ? [{ key: "up", small: true, node: arrow(-1) }] : []),
+    ...win.map((x, k) => ({ key: "s" + (from + k), on: x.on, node: <button type="button" title={x.t} onClick={() => go(x.el)}>{x.t}</button> })),
+    ...(from < maxStart ? [{ key: "down", small: true, node: arrow(1) }] : []),
+    { key: "menu", small: true, node: <button type="button" className="ss-fan-menu" onClick={showMenu}>Menu</button> },
     { key: "top", small: true, node: <button type="button" onClick={toTop}>Back to top</button> },
     { key: "motion", small: true, node: <button type="button" onClick={toggleMotion} aria-pressed={paused}>{paused ? "Play motion" : "Pause motion"}</button> },
   ];
@@ -524,27 +551,23 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
     return { x: -(8 + 40 * Math.sin(u * Math.PI)), y: -(58 + k * gap) };
   };
 
-  void items; void place; void gap; void n;
   // On the body, so no page section or the footer can sit above it.
   return createPortal(
     <>
       <span aria-hidden className="ss-vignette" />
       <div className={"ss-orbit" + (open ? " is-open" : "") + (shown ? " is-shown" : "") + (raised ? " is-raised" : "")}>
-        {/* On this page (founder, 12 Nov 2026): the round button is the page's own table of contents, every
-            section by its full name, no numbers. Menu brings the header back; Back to top and motion below. */}
-        <div className="ss-toc" hidden={!open} role="dialog" aria-label="On this page">
-          <p className="ss-toc-h">On this page</p>
-          <ul>
-            {toc.map((x, k) => (
-              <li key={k}><button type="button" className={x.on ? "is-on" : ""} onClick={() => go(x.el)}>{x.t}</button></li>
-            ))}
-          </ul>
-          <div className="ss-toc-foot">
-            <button type="button" onClick={showMenu}>Menu</button>
-            <button type="button" onClick={toTop}>Back to top</button>
-            <button type="button" onClick={toggleMotion} aria-pressed={paused}>{paused ? "Play motion" : "Pause motion"}</button>
-          </div>
-        </div>
+        <ul className="ss-fan" aria-hidden={!open}>
+          {items.map((it, i) => {
+            const { x, y } = place(i);
+            const len = Math.hypot(x, y), ang = (Math.atan2(y, x) * 180) / Math.PI;
+            return (
+              <li key={it.key} className={(it.small ? "is-small" : "") + (it.on ? " is-on" : "")} style={{ ["--x" as string]: `${x.toFixed(1)}px`, ["--y" as string]: `${y.toFixed(1)}px`, ["--i" as string]: String(i) }}>
+                <span aria-hidden className="ss-fan-line" style={{ width: `${Math.max(0, len - 34).toFixed(1)}px`, transform: `rotate(${(ang + 180).toFixed(2)}deg)` }} />
+                {it.node}
+              </li>
+            );
+          })}
+        </ul>
         <button type="button" className="ss-orbit-btn" aria-expanded={open} aria-label="On this page" onClick={toggle}>
           <svg viewBox="0 0 60 60" aria-hidden>
             <circle cx="30" cy="30" r="27" className="ss-orbit-track" />
