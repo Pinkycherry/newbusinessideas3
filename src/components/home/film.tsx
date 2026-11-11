@@ -20,6 +20,9 @@ export function Film({ id, frames, slides, people = [], note, alt, solo }: { id:
     imgs.current.forEach((el, i) => {
       if (!el) return;
       const t = p * n - i; // 0 to 1 while this frame is the scene
+      // Only the frame on screen and its neighbours are touched; the rest stay parked (smoother on phones).
+      if (i > 0 && (t < -0.4 || t > 2.4)) { if (el.style.visibility !== "hidden") el.style.visibility = "hidden"; return; }
+      el.style.visibility = "visible";
       el.style.opacity = i === 0 ? "1" : clamp((t + 0.3) / 0.3).toFixed(3);
       el.style.transform = `scale(${(1 + 0.24 * clamp(t + 0.3, 0, 1.3)).toFixed(4)})`;
     });

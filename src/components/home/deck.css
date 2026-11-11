@@ -169,3 +169,33 @@ html.ss-on .dk-post .dk-card{height:auto;max-height:100%;--dk-w:440px}
 }
 @media (max-width:820px){.fm .fm-people.fm-solo .fm-bub{margin-bottom:14svh}}
 @media (max-width:699px){.cn-orbit-core{width:38%!important}.cn-orbit-core :is(b,strong,span,p){font-size:.82em!important}}
+
+/* ================================================================ 11 Nov 2026 (night), founder review 2 */
+
+/* ---- Row headings read as real section headings again (they had shrunk to card-title size on desktop) */
+html.ss-on :is(.dk-head,.dp-head) .eh-eyebrow{display:block!important;opacity:1!important;font-size:13px!important;letter-spacing:.24em!important;color:#ff3b30!important}
+html.ss-on :is(.dk-head,.dp-head) :is(h2,.eh-h2){opacity:1!important;font-size:clamp(1.9rem,4.6vw,3.6rem)!important;line-height:1.02!important;color:#fff!important;text-shadow:0 4px 30px #000}
+@media (max-height:560px){html.ss-on :is(.dk-head,.dp-head) :is(h2,.eh-h2){font-size:1.6rem!important}}
+
+/* ---- Smoother on phones: no blur, no see-through glass, no full-screen overlay while the page moves */
+@media (pointer:coarse){
+  html.ss-on .ss-rise{filter:none!important}
+  .ss-vignette{display:none!important}
+  .fm-bub,.fm-slide .fm-p,.fm-form,.dk-skip{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  .fm-slide{filter:none!important;transition:opacity .4s ease,transform .5s cubic-bezier(.2,.7,.2,1)!important}
+  .fm-people li>img{filter:none!important}
+  html.ss-on .dk-card{box-shadow:0 30px 50px -30px rgba(224,27,31,.8)!important}
+  /* The two films are shorter on phones: less thumb travel per scene */
+  .fm{height:calc(100svh + var(--n,4) * 62svh)!important}
+}
+html.ss-on .dk-card::after{will-change:opacity}
+
+/* ---- "How it works" on phones: the walker stands on the road above the words */
+@media (max-width:820px){
+  #how-it-works .fm-people{bottom:27svh!important;top:auto!important;height:auto!important;display:flex!important;justify-content:center;gap:0}
+  #how-it-works .fm-people li{flex:0 0 auto!important;grid-column:auto!important;margin:0 -4vw!important}
+  #how-it-works .fm-people li:not(.is-on){display:none}
+  #how-it-works .fm-people li.g1{opacity:1!important}
+  #how-it-works .fm-people li>img{height:min(40svh,84vw)!important}
+  #how-it-works[data-step="3"] .fm-people li>img{height:min(34svh,58vw)!important}
+}

@@ -115,6 +115,7 @@ export function Depth({ head, children, step = 62 }: { head?: ReactNode; childre
   /** Each one stands a little to one side, so the camera drifts left and right as it moves in. */
   const side = (i: number) => (i % 2 ? 1 : -1) * (i === n - 1 ? 0 : 1);
 
+  const coarse = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
   useStickyProgress(wrapRef, (p) => {
     const f = stepped(p * (n - 1), 0.4);
     const cam = f * GAP;
@@ -132,7 +133,8 @@ export function Depth({ head, children, step = 62 }: { head?: ReactNode; childre
       const blur = dist < 0 ? Math.min(9, (-dist / GAP) * 7) : Math.min(6, (dist / GAP) * 14);
       el.style.visibility = "visible";
       el.style.opacity = o.toFixed(3);
-      el.style.filter = blur > 0.25 ? `blur(${blur.toFixed(1)}px)` : "none";
+      // Blur is costly on phones: there the distance is told by size and fade alone.
+      el.style.filter = !coarse && blur > 0.25 ? `blur(${blur.toFixed(1)}px)` : "none";
       el.style.transform = `translate(-50%,-50%) translate3d(${(side(i) * off).toFixed(1)}px,0,${(-i * GAP).toFixed(0)}px)`;
       el.style.pointerEvents = i === now ? "auto" : "none";
       el.classList.toggle("is-now", i === now && Math.abs(dist) < GAP * 0.22);
