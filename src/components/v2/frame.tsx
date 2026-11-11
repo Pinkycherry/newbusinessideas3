@@ -144,8 +144,10 @@ export function Header({ active: _active }: { active?: string | undefined }) {
       const y = window.scrollY, max = document.documentElement.scrollHeight - window.innerHeight;
       el.style.setProperty("--read", String(max > 0 ? Math.min(1, y / max) : 0));
       // Reference behaviour: the header belongs to the top of the page; after that the round button is the menu.
-      if (y < 240) el.classList.remove("is-away");
-      else if (y > last && !el.querySelector('[aria-expanded="true"]')) el.classList.add("is-away");
+      // Founder, 12 Nov 2026: readers must always be able to reach the menu, so the header comes back on the
+      // first scroll up (and from the round button's "Menu"); it only steps aside while scrolling down.
+      if (y < 240 || y < last - 6) el.classList.remove("is-away");
+      else if (y > last + 6 && !el.querySelector('[aria-expanded="true"]')) el.classList.add("is-away");
       last = y;
     };
     const ask = () => { if (!raf) raf = requestAnimationFrame(run); };
