@@ -467,7 +467,7 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
     const y = window.innerHeight * 0.45;
     let cur = -1;
     hs.forEach((h, i) => { if (h.getBoundingClientRect().top < y) cur = i; });
-    setToc(hs.slice(0, 16).map((h, i) => ({ t: (h.textContent ?? "").trim().replace(/\s+/g, " "), el: h, on: i === cur })));
+    setToc(hs.slice(0, 40).map((h, i) => ({ t: (h.textContent ?? "").trim().replace(/\s+/g, " "), el: h, on: i === cur })));
   };
   const toggle = () => { if (!open) scan(); setOpen(!open); };
   useEffect(() => {
@@ -484,6 +484,11 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
     window.scrollTo({ top, behavior: isOn() ? "smooth" : "auto" });
   };
   void links;
+  const showMenu = () => {
+    setOpen(false);
+    document.querySelector(".mm-header")?.classList.remove("is-away");
+    (document.querySelector(".mm-header button, .mm-header a") as HTMLElement | null)?.focus({ preventScroll: true });
+  };
   const [wide, setWide] = useState(true);
   useEffect(() => {
     const m = window.matchMedia("(min-width: 1024px)");
@@ -519,24 +524,28 @@ export function OrbitMenu({ links, raised = false }: { links: OrbitLink[]; raise
     return { x: -(8 + 40 * Math.sin(u * Math.PI)), y: -(58 + k * gap) };
   };
 
+  void items; void place; void gap; void n;
   // On the body, so no page section or the footer can sit above it.
   return createPortal(
     <>
       <span aria-hidden className="ss-vignette" />
       <div className={"ss-orbit" + (open ? " is-open" : "") + (shown ? " is-shown" : "") + (raised ? " is-raised" : "")}>
-        <ul className="ss-fan" aria-hidden={!open} aria-label="On this page">
-          {items.map((it, i) => {
-            const { x, y } = place(i);
-            const len = Math.hypot(x, y), ang = (Math.atan2(y, x) * 180) / Math.PI;
-            return (
-              <li key={it.key} className={(it.small ? "is-small" : "") + (it.on ? " is-on" : "")} style={{ ["--x" as string]: `${x.toFixed(1)}px`, ["--y" as string]: `${y.toFixed(1)}px`, ["--i" as string]: String(i) }}>
-                <span aria-hidden className="ss-fan-line" style={{ width: `${Math.max(0, len - 44).toFixed(1)}px`, transform: `rotate(${(ang + 180).toFixed(2)}deg)` }} />
-                {it.node}
-              </li>
-            );
-          })}
-        </ul>
-        <button type="button" className="ss-orbit-btn" aria-expanded={open} aria-label="Menu and back to top" onClick={toggle}>
+        {/* On this page (founder, 12 Nov 2026): the round button is the page's own table of contents, every
+            section by its full name, no numbers. Menu brings the header back; Back to top and motion below. */}
+        <div className="ss-toc" hidden={!open} role="dialog" aria-label="On this page">
+          <p className="ss-toc-h">On this page</p>
+          <ul>
+            {toc.map((x, k) => (
+              <li key={k}><button type="button" className={x.on ? "is-on" : ""} onClick={() => go(x.el)}>{x.t}</button></li>
+            ))}
+          </ul>
+          <div className="ss-toc-foot">
+            <button type="button" onClick={showMenu}>Menu</button>
+            <button type="button" onClick={toTop}>Back to top</button>
+            <button type="button" onClick={toggleMotion} aria-pressed={paused}>{paused ? "Play motion" : "Pause motion"}</button>
+          </div>
+        </div>
+        <button type="button" className="ss-orbit-btn" aria-expanded={open} aria-label="On this page" onClick={toggle}>
           <svg viewBox="0 0 60 60" aria-hidden>
             <circle cx="30" cy="30" r="27" className="ss-orbit-track" />
             <circle ref={ring} cx="30" cy="30" r="27" pathLength={1} className="ss-orbit-fill" />

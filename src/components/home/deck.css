@@ -242,3 +242,6 @@ html.ss-on .dk-idea .cn-idea-go{align-self:flex-start;margin-top:auto;padding:12
 html.ss-on .dk-post .cn-postcard b{font-size:1.45rem;line-height:1.12;color:#fff!important}
 html.ss-on .dk-post .cn-postcard span{font-size:12.5px}
 @media (min-width:900px) and (min-height:640px){html.ss-on .dk-idea .cn-idea-t{font-size:2.9rem}html.ss-on .dk-idea .cn-idea-s{font-size:17px}html.ss-on .dk-post .cn-postcard b{font-size:1.8rem}}
+
+/* 12 Nov 2026: a little less thumb travel per card on phones (founder: still too slow) */
+@media (pointer:coarse){html.ss-on .dk{--dk-step:60svh}.fm{height:calc(100svh + var(--n,4) * 52svh)!important}}

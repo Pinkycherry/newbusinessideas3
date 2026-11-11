@@ -898,3 +898,32 @@ body.ember main section{content-visibility:auto;contain-intrinsic-size:auto 700p
 @keyframes mm-fade{from{opacity:0;transform:translateX(-8px)}}
 @keyframes mm-col{from{opacity:0;transform:translateY(14px)}}
 @media (prefers-reduced-motion:reduce){.mm-wire path{animation:none;stroke-dashoffset:0}.mm-wire-hub,.mm-wire-ring,.mm-wire-all,.mm-col{animation:none!important}}
+
+/* ================================================================ Raw pages (topic pages and the like), 12 Nov 2026
+   Founder: on phones half the width was lost to double side padding, tables were unreadable, the highlighted
+   words in titles were invisible and the answer buttons were white. Phone rules are width-limited so the
+   desktop layout does not move. */
+.ember .gradient-text{background:none!important;color:#ff3b30!important;-webkit-text-fill-color:#ff3b30!important}
+.ember .topic-wiz{background:#111012!important;border:1px solid rgba(255,255,255,.14)!important;box-shadow:none!important}
+.ember .topic-chip{background:#19171a!important;background-image:none!important;border:1px solid rgba(255,255,255,.24)!important;color:#fff!important;font-weight:600;box-shadow:none!important}
+.ember .topic-chip:hover{border-color:#e01b1f!important}
+.ember .topic-chip[aria-pressed="true"]{background:#e01b1f!important;border-color:#e01b1f!important;color:#fff!important}
+.ember .topic-wiz-bar span{background:#e01b1f!important}
+.ember .overflow-x-auto.bg-white,.ember [data-topic-quiz].bg-white{background:#111012!important;border-color:rgba(255,255,255,.14)!important}
+.ember table th{color:#ff5a4f!important;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.ember table td{color:#f1eaea!important}
+@media (max-width:639px){
+  /* one 16px gutter, not two */
+  .ember section.px-4>.container,.ember section[class*="px-4"]>.container,.ember .topic-ask>.container{padding-left:0!important;padding-right:0!important;max-width:100%!important}
+  .ember .topic-ask{padding-left:16px!important;padding-right:16px!important}
+  .ember .topic-wiz{padding:14px!important}
+  /* tables become one block per row: the first cell is the row's title, each other cell carries its column name */
+  .ember .overflow-x-auto>table,.ember .overflow-x-auto>table>tbody,.ember .overflow-x-auto>table>tbody>tr,.ember .overflow-x-auto>table>tbody>tr>td{display:block;width:100%!important}
+  .ember .overflow-x-auto>table>thead{display:none}
+  .ember .overflow-x-auto>table>tbody>tr{padding:14px 14px 12px;border-top:1px solid rgba(255,255,255,.14)!important}
+  .ember .overflow-x-auto>table>tbody>tr:first-child{border-top:0!important}
+  .ember .overflow-x-auto>table>tbody>tr>td{padding:0!important;font-size:15px!important;line-height:1.45}
+  .ember .overflow-x-auto>table>tbody>tr>td:first-child{margin-bottom:8px;font-size:16.5px!important;font-weight:700;color:#fff!important}
+  .ember .overflow-x-auto>table>tbody>tr>td:not(:first-child){margin-top:6px}
+  .ember .overflow-x-auto>table>tbody>tr>td:not(:first-child)[data-l]:not([data-l=""])::before{content:attr(data-l);display:block;font:700 10.5px/1.2 Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#ff5a4f}
+}
