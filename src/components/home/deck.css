@@ -1,0 +1,91 @@
+/* Deck (layered card stack) and Depth (3D zoom). Plain layout by default; html.ss-on turns the scroll stage on. */
+
+/* ---------------------------------------------------------------- Deck: plain swipe row */
+.dk-space{display:flex;gap:14px;margin-top:20px;padding:10px 16px 22px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.dk-space::-webkit-scrollbar{display:none}
+.dk-card{position:relative;flex:0 0 auto;width:min(84vw,360px);scroll-snap-align:center;border-radius:26px}
+.dk-card>*{display:flex;width:100%!important;height:100%!important;min-height:0!important;margin:0!important}
+.dk-card .ss-cat{width:100%;height:100%!important;min-height:300px}
+.dk-card .cn-postcard{display:flex!important;flex-direction:column}
+.dk-card .cn-postcard img{flex:none}
+.dk-card .cn-postcard b{flex:1 1 auto;display:-webkit-box!important;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.dk-foot{display:none}
+
+/* ---------------------------------------------------------------- Deck: scroll stage */
+html.ss-on .dk{height:calc(100svh + (var(--n,8) - 1) * var(--step,18svh))}
+html.ss-on .dk-stage{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;padding:clamp(18px,5svh,56px) 0 12px;overflow:hidden}
+html.ss-on .dk-head{flex:none;position:relative;z-index:2}
+html.ss-on .dk-space{flex:1 1 0;min-height:0;display:grid;place-items:center;margin:0;padding:22px 16px 10px;overflow:visible;scroll-snap-type:none}
+html.ss-on .dk-card{grid-area:1/1;width:min(88vw,var(--dk-w,380px));height:min(100%,var(--dk-h,440px));border-radius:26px;overflow:hidden;
+  background:#0b0b0c;visibility:hidden;will-change:transform;transform-origin:50% 50%;backface-visibility:hidden;
+  box-shadow:0 -18px 40px -22px rgba(0,0,0,.9),0 40px 80px -40px rgba(224,27,31,.55)}
+html.ss-on .dk-card:first-child{visibility:visible}
+html.ss-on .dk-post .dk-card{--dk-w:440px;--dk-h:372px}
+html.ss-on .dk-idea .dk-card{--dk-w:400px;--dk-h:320px}
+html.ss-on .dk-idea .cn-idea-t{font-size:1.7rem}
+html.ss-on .dk-idea .cn-idea-s{font-size:14.5px;-webkit-line-clamp:4}
+html.ss-on .dk-card>*{border-radius:inherit!important}
+/* The cards under the top one darken; a solid layer, so nothing ever shows through a card */
+html.ss-on .dk-card::after{content:"";position:absolute;inset:0;z-index:5;border-radius:inherit;background:#000;opacity:var(--dim,0);pointer-events:none}
+html.ss-on .dk-card.is-now{box-shadow:0 -18px 40px -22px rgba(0,0,0,.9),0 50px 90px -36px rgba(224,27,31,.95),0 0 0 1px rgba(224,27,31,.8)}
+html.ss-on .dk-card.is-now .ss-cat-no{-webkit-text-stroke-color:rgba(224,27,31,.9)}
+html.ss-on .dk-card.is-now .ss-cat-name::after{transform:scaleX(1)}
+html.ss-on .dk-card.is-now .ss-cat-go{transform:translateX(8px)}
+html.ss-on .dk-card.is-now :is(.cn-idea-t,.cn-postcard b){color:#fff!important}
+html.ss-on .dk-card .ss-cat-w i{animation:none}
+html.ss-on .dk-card.is-now .ss-cat-w i{animation:dk-word .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--w,0) * 90ms)}
+@keyframes dk-word{from{transform:translateY(105%)}}
+
+html.ss-on .dk-foot{flex:none;display:flex;align-items:center;gap:12px;padding:6px 16px 0;margin:0 auto;width:min(100%,560px)}
+.dk-count{font:700 12px/1 Inter,system-ui,sans-serif;letter-spacing:.14em;color:rgba(255,255,255,.75);font-variant-numeric:tabular-nums}
+.dk-count span{color:#ff3b30}
+.dk-bar{flex:1;height:2px;border-radius:2px;background:rgba(255,255,255,.16);overflow:hidden}
+.dk-bar span{display:block;height:100%;background:linear-gradient(90deg,#8b0100,#e01b1f,#ff5a4f);transform:scaleX(0);transform-origin:left}
+.dk-skip{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,.28)!important;background:rgba(10,8,8,.72)!important;
+  color:#fff!important;font:700 12px/1 Inter,system-ui,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:none!important}
+.dk-skip svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.dk-skip:hover{background:#e01b1f!important;border-color:#e01b1f!important}
+@media (max-height:560px){
+  html.ss-on .dk-stage{padding-top:12px}
+  html.ss-on .dk-space{padding-top:12px}
+  html.ss-on .dk-head :is(h2,.eh-h2){font-size:1.35rem!important;line-height:1.1!important}
+}
+
+/* ---------------------------------------------------------------- Depth: plain grid */
+.dp-head{text-align:center;padding:0 16px}
+.dp-world{display:grid;gap:34px 24px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));max-width:72rem;margin:28px auto 0;padding:0 16px}
+.dp-floor{display:none}
+
+/* ---------------------------------------------------------------- Depth: 3D stage */
+html.ss-on .dp{height:calc(100svh + (var(--n,5) - 1) * var(--step,62svh))}
+html.ss-on .dp-stage{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;padding:clamp(18px,5svh,56px) 0 0;overflow:hidden;
+  background:radial-gradient(ellipse 70% 55% at 50% 62%,rgba(224,27,31,.22),transparent 70%)}
+html.ss-on .dp-head{flex:none;position:relative;z-index:3}
+html.ss-on .dp-space{position:relative;flex:1 1 0;min-height:0;overflow:hidden;perspective:900px;perspective-origin:50% 46%;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 9%,#000 100%);mask-image:linear-gradient(180deg,transparent 0,#000 9%,#000 100%)}
+html.ss-on .dp-world{position:absolute;inset:0;display:block;max-width:none;margin:0;padding:0;transform-style:preserve-3d;will-change:transform}
+html.ss-on .dp-item{position:absolute;left:50%;top:46%;width:min(86vw,560px);transform:translate(-50%,-50%);will-change:transform,opacity,filter;visibility:hidden;backface-visibility:hidden}
+html.ss-on .dp-item:first-child{visibility:visible}
+/* A lit floor running into the distance gives the eye something to travel along */
+html.ss-on .dp-floor{display:block;position:absolute;left:-50%;right:-50%;top:58%;height:160%;transform:rotateX(78deg);transform-origin:50% 0;pointer-events:none;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,transparent 1px 120px),repeating-linear-gradient(0deg,rgba(224,27,31,.22) 0 1px,transparent 1px 90px);
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 30%,transparent 95%);mask-image:linear-gradient(180deg,transparent,#000 30%,transparent 95%)}
+@media (max-height:560px){
+  html.ss-on .dp-stage{padding-top:10px}
+  html.ss-on .dp-head p:not(.eh-eyebrow){display:none}
+  html.ss-on .dp-head :is(h2,.eh-h2){font-size:1.35rem!important;line-height:1.1!important}
+  html.ss-on .dp-item .cn-person img{width:54px}
+  html.ss-on .dp-item .cn-person b{font-size:clamp(1.6rem,6vw,2.4rem)}
+}
+@media print{.dk-foot{display:none!important}}
+
+.dp-item .cn-person b i{color:#ff3b30!important}
+/* Wider screens: larger cards, so one card holds the stage */
+@media (min-width:900px) and (min-height:640px){
+  html.ss-on .dk-card{--dk-w:470px;--dk-h:480px}
+  html.ss-on .dk-idea .dk-card{--dk-w:560px;--dk-h:330px}
+  html.ss-on .dk-post .dk-card{--dk-w:540px;--dk-h:430px}
+  html.ss-on .dk-idea .cn-idea-t{font-size:2.1rem}
+  html.ss-on .dk-card .ss-cat-name{font-size:3.2rem}
+  html.ss-on .dk-post .cn-postcard b{font-size:1.5rem}
+}
