@@ -199,3 +199,46 @@ html.ss-on .dk-card::after{will-change:opacity}
   #how-it-works .fm-people li>img{height:min(40svh,84vw)!important}
   #how-it-works[data-step="3"] .fm-people li>img{height:min(34svh,58vw)!important}
 }
+
+/* ================================================================ Option B (founder's pick): fanned cards, large type, no numbers */
+html.ss-on .dk-card{transform-origin:50% 100%;--dk-w:330px;--dk-h:430px;width:min(78vw,var(--dk-w))}
+html.ss-on .dk-space{padding:18px 16px 22px}
+html.ss-on .dk-idea .dk-card{--dk-w:340px;--dk-h:380px}
+html.ss-on .dk-post .dk-card{--dk-w:350px}
+@media (min-width:900px) and (min-height:640px){
+  html.ss-on .dk-card{--dk-w:460px;--dk-h:500px}
+  html.ss-on .dk-idea .dk-card{--dk-w:500px;--dk-h:400px}
+  html.ss-on .dk-post .dk-card{--dk-w:520px}
+}
+.dk-count{display:none}
+
+/* Category card: the name is the picture */
+.kc{position:relative;display:flex!important;flex-direction:column;padding:24px 22px 22px;border-radius:26px;overflow:hidden;text-decoration:none;isolation:isolate;min-height:340px;
+  background:radial-gradient(120% 70% at 100% 0%,rgba(224,27,31,.62),transparent 62%),radial-gradient(90% 60% at 0% 100%,rgba(139,1,0,.5),transparent 65%),linear-gradient(160deg,#241214 0%,#0b0b0c 55%,#1d0709 100%)!important;
+  border:1.5px solid rgba(255,255,255,.16)}
+.is-now>.kc,.kc:hover{border-color:#e01b1f}
+.kc-eb{font:800 12px/1 Inter,system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.78)!important}
+.kc-name{display:flex;flex-wrap:wrap;gap:0 .26em;margin-top:auto;font-family:Anton,Impact,sans-serif;font-size:clamp(3.2rem,17vw,4.6rem);line-height:.95;text-transform:uppercase;color:#fff!important}
+.kc-m .kc-name{font-size:clamp(2.6rem,13.5vw,3.7rem)}
+.kc-s .kc-name{font-size:clamp(2.1rem,10.5vw,3rem)}
+.kc-name .ss-cat-w:first-child i{color:#ff3b30!important}
+.kc-rule{height:4px;margin:14px 0;border-radius:4px;background:linear-gradient(90deg,#e01b1f,#ff5a4f);transform:scaleX(.25);transform-origin:left;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.is-now .kc-rule,.kc:hover .kc-rule{transform:scaleX(1)}
+.kc-chips{display:flex;flex-wrap:wrap;gap:8px}
+.kc-chips span{padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.35);font:600 13.5px/1.15 Inter,system-ui,sans-serif;color:#fff!important}
+.kc-go{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;margin-top:18px;padding:13px 20px;border-radius:999px;background:#e01b1f;font:800 15px/1 Inter,system-ui,sans-serif;color:#fff!important}
+.kc-go svg{transition:transform .3s}.is-now .kc-go svg,.kc:hover .kc-go svg{transform:translateX(6px)}
+@media (min-width:900px) and (min-height:640px){
+  .kc{padding:32px 30px 30px}
+  .kc-name{font-size:5.6rem}.kc-m .kc-name{font-size:4.5rem}.kc-s .kc-name{font-size:3.5rem}
+  .kc-chips span{font-size:15px}.kc-go{font-size:16px}
+}
+/* Idea cards: bigger words, the same weight as the category cards */
+html.ss-on .dk-idea .cn-idea{padding:24px 22px 22px}
+html.ss-on .dk-idea .cn-idea-cat{font-size:12px}
+html.ss-on .dk-idea .cn-idea-t{font-size:clamp(1.9rem,8.6vw,2.4rem);line-height:1.04;text-transform:uppercase;color:#fff!important}
+html.ss-on .dk-idea .cn-idea-s{font-size:15px;line-height:1.45;-webkit-line-clamp:4;color:rgba(255,255,255,.82)!important}
+html.ss-on .dk-idea .cn-idea-go{align-self:flex-start;margin-top:auto;padding:12px 18px;border-radius:999px;background:#e01b1f;font-size:14.5px}
+html.ss-on .dk-post .cn-postcard b{font-size:1.45rem;line-height:1.12;color:#fff!important}
+html.ss-on .dk-post .cn-postcard span{font-size:12.5px}
+@media (min-width:900px) and (min-height:640px){html.ss-on .dk-idea .cn-idea-t{font-size:2.9rem}html.ss-on .dk-idea .cn-idea-s{font-size:17px}html.ss-on .dk-post .cn-postcard b{font-size:1.8rem}}

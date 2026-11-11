@@ -37,42 +37,45 @@ const stepped = (f: number, hold: number) => {
 export function Deck({ head, children, skip, step = 18, size = "tall" }: { head?: ReactNode; children: ReactNode; skip?: string; step?: number; size?: "tall" | "idea" | "post" }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const cards = useRef<(HTMLDivElement | null)[]>([]);
-  const count = useRef<HTMLSpanElement>(null);
   const bar = useRef<HTMLSpanElement>(null);
   const list = Children.toArray(children);
   const n = list.length;
 
+  // Fan (founder's pick, option B): the front card leans to 11 o'clock, the next one waits behind it at
+  // 1 o'clock. On each step the front card is dealt away to the left, the waiting card swings to the front
+  // and a new one slides in behind. Cards pivot from the bottom edge, like a hand of cards.
   useStickyProgress(wrapRef, (p) => {
     const f = stepped(p * (n - 1), 0.5);
     const now = Math.round(f);
     const stageH = wrapRef.current ? Math.min(window.innerHeight, wrapRef.current.offsetHeight) : window.innerHeight;
+    const lean = window.innerWidth < 700 ? 0.8 : 1; // a little less tilt on narrow screens so corners stay on screen
     cards.current.forEach((el, i) => {
       if (!el) return;
-      const d = f - i; // below -1: not yet; -1 to 0: coming up; 0 and above: on the pile, being covered
-      if (d <= -1 || d > 3.2) {
+      const d = f - i; // -2..-1 sliding in behind; -1..0 swinging to the front; 0..1 dealt away
+      if (d <= -2 || d >= 1) {
         if (el.style.visibility !== "hidden") el.style.visibility = "hidden";
         el.classList.remove("is-now");
         return;
       }
-      let y: number, s: number, dim: number;
-      if (d < 0) {
-        const e = easeOut(d + 1);
-        y = (1 - e) * stageH * 0.9;
-        s = 0.7 + 0.3 * e;
-        dim = 0;
+      let rot: number, x: number, y: number, s: number, dim: number, o = 1;
+      if (d <= -1) {
+        const e = easeOut(d + 2);
+        rot = 9; x = 34 + (1 - e) * 60; y = 6 + (1 - e) * stageH * 0.5; s = 0.94; dim = 0.5; o = e;
+      } else if (d <= 0) {
+        const e = smooth(d + 1);
+        rot = 9 - 15 * e; x = 34 * (1 - e); y = 6 * (1 - e); s = 0.94 + 0.06 * e; dim = 0.5 * (1 - e);
       } else {
-        y = -d * 14;
-        s = 1 - 0.05 * d;
-        dim = Math.min(0.78, d * 0.42);
+        const e = smooth(d);
+        rot = -6 - 16 * e; x = -e * 140; y = -e * 30; s = 1 - 0.06 * e; dim = 0; o = 1 - e;
       }
       el.style.visibility = "visible";
-      el.style.zIndex = String(10 + i);
-      el.style.transform = `translate3d(0,${y.toFixed(1)}px,0) scale(${s.toFixed(4)})`;
+      el.style.zIndex = String(200 - i);
+      el.style.opacity = o.toFixed(3);
+      el.style.transform = `translate3d(${(x * lean).toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${(rot * lean).toFixed(2)}deg) scale(${s.toFixed(4)})`;
       el.style.setProperty("--dim", dim.toFixed(3));
       el.style.pointerEvents = i === now ? "auto" : "none";
       el.classList.toggle("is-now", i === now);
     });
-    if (count.current) count.current.textContent = String(now + 1).padStart(2, "0");
     if (bar.current) bar.current.style.transform = `scaleX(${clamp(p).toFixed(4)})`;
   });
 
@@ -93,7 +96,6 @@ export function Deck({ head, children, skip, step = 18, size = "tall" }: { head?
           ))}
         </div>
         <div className="dk-foot">
-          <span className="dk-count"><span ref={count}>01</span> / {String(n).padStart(2, "0")}</span>
           <span aria-hidden className="dk-bar"><span ref={bar} /></span>
           {skip ? <button type="button" className="dk-skip" onClick={jump}>{skip} <svg viewBox="0 0 24 24" aria-hidden><path d="M12 5v14M5 12l7 7 7-7" /></svg></button> : null}
         </div>
