@@ -245,3 +245,24 @@ html.ss-on .dk-post .cn-postcard span{font-size:12.5px}
 
 /* 12 Nov 2026: a little less thumb travel per card on phones (founder: still too slow) */
 @media (pointer:coarse){html.ss-on .dk{--dk-step:60svh}.fm{height:calc(100svh + var(--n,4) * 52svh)!important}}
+
+/* ================================================================ "How it works" film on desktop (12 Nov 2026)
+   Founder: the people were too small and, on the last scene, the ones in the middle stood behind the words.
+   Desktop only (821px and up); the phone layout is untouched. The words become a short band at the top,
+   the step number sits beside the heading, and the people get the lower two thirds of the screen. */
+@media (min-width:821px){
+  #how-it-works .fm-slide{padding:96px 24px 0;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;column-gap:22px;row-gap:10px}
+  #how-it-works .fm-slide>*{margin:0}
+  #how-it-works .fm-no{font-size:clamp(3.6rem,6vw,5.4rem);line-height:.9}
+  #how-it-works .fm-h{max-width:none;font-size:clamp(2.2rem,4.4vw,4rem)!important;text-align:left}
+  #how-it-works .fm-slide .fm-p{flex-basis:100%;max-width:44rem;margin:0 auto;padding:10px 18px;font-size:1.12rem;text-align:center}
+  #how-it-works .fm-row{flex-basis:100%;margin:0}
+  #how-it-works .fm-people{padding:0 3vw;gap:.6vw;align-items:flex-end}
+  #how-it-works .fm-people li{flex:0 1 16vw}
+  #how-it-works .fm-people li>img{height:min(64svh,34vw)}
+  /* one walker alone on the road: larger, and nearer the middle */
+  #how-it-works:not([data-step="3"]) .fm-people{justify-content:center}
+  #how-it-works:not([data-step="3"]) .fm-people li:not(.is-on){display:none}
+  #how-it-works:not([data-step="3"]) .fm-people li>img{height:min(72svh,40vw)}
+  #how-it-works:not([data-step="3"]) .fm-people li{margin-right:34vw}
+}
